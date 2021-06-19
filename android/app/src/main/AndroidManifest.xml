@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.boilerplate">
+    package="com.example.hr_management">
    <application
-        android:label="boilerplate"
+        android:label="hr_management"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

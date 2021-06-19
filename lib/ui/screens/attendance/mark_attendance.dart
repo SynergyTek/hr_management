@@ -1,6 +1,6 @@
-import 'package:boilerplate/ui/widgets/appbar_widget.dart';
-import 'package:boilerplate/ui/widgets/internet_connectivity_widget.dart';
-import 'package:boilerplate/ui/widgets/location_connectivity_widget.dart';
+import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/ui/widgets/location_connectivity_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/mark_attendance_widget.dart';
@@ -12,7 +12,7 @@ class MarkAttendance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarWidget(
-        title: "Welcome Zlatan",
+        title: "Attendance",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(

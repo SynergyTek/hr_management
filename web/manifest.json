@@ -1,6 +1,6 @@
 {
-    "name": "boilerplate",
-    "short_name": "boilerplate",
+    "name": "hr_management",
+    "short_name": "hr_management",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
