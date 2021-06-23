@@ -1,4 +1,4 @@
-import 'package:hr_management/ui/screens/attendance/mark_attendance.dart';
+import '../ui/screens/attendance/mark_attendance.dart';
 import 'package:flutter/material.dart';
 
 import '../ui/screens/home_screen/home_screen.dart';
