@@ -11,17 +11,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   bloc: ^7.0.0
   connectivity: ^3.0.3
   cupertino_icons: ^1.0.2
+  dio: ^4.0.0
   equatable: ^2.0.0
   flutter_bloc: ^7.0.0
   flutter_svg: ^0.22.0
-  hydrated_bloc: ^7.0.0
   geolocator: ^7.1.0
+  hydrated_bloc: ^7.0.0
   location: ^4.3.0
   path_provider: ^2.0.1
+  rxdart: ^0.27.1
   sqflite: ^2.0.0+3
 
 dev_dependencies:
