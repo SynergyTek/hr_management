@@ -34,7 +34,9 @@ Widget drawerWidget(context) {
         ),
         ListTile(
           title: Text('Home'),
-          trailing: Icon(Icons.home_max_outlined),
+          trailing: Icon(
+            Icons.home,
+          ),
           onTap: () {
             Navigator.pushReplacementNamed(
               context,

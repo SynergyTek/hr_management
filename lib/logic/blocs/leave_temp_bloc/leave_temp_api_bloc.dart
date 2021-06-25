@@ -1,7 +1,6 @@
 import 'package:hr_management/data/models/leave_models/leave_res_model.dart';
 import 'package:hr_management/data/repositories/leave_temp_repo/leave_temp_repo.dart';
 
-import '../../../data/models/api_models/api_response_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LeaveTempAPIBloc {
@@ -14,6 +13,7 @@ class LeaveTempAPIBloc {
   /// Used to fetch new entries.
   getData() async {
     LeaveTempResponse response = await _apiRepository.getAPIData();
+    print("response: $response");
     _subject.sink.add(response);
   }
 

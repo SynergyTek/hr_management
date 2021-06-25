@@ -9,8 +9,6 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
-    String endpoint = APIEndpointConstants.GET_READSERVICETEMPLATE_URL;
-
     try {
       // TODO: Need to send this via UI and not hardcode here!
       queryparams = {
@@ -20,17 +18,19 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
       };
 
       Response response = await _dio.get(
-        endpoint,
+        APIEndpointConstants.GET_READSERVICETEMPLATE_URL,
         queryParameters: queryparams ?? {},
       );
-      print(response);
+      print("DIO Response: ${response.data} ${response.data.runtimeType}");
       return LeaveTempResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_MOVIES_URL}.");
-      print("Stacktrace: $stacktrace \nError: $err");
+          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_READSERVICETEMPLATE_URL}.");
 
-      return null;
+      print("Stack: \n\n\n $stacktrace");
+      print("Err: \n\n\n $err");
+
+      return LeaveTempResponse.withError("$err");
     }
   }
 
