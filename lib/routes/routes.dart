@@ -1,5 +1,6 @@
-import '../ui/screens/attendance/mark_attendance.dart';
+import 'package:hr_management/ui/screens/attendance/mark_attendance.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/ui/screens/leaves/leave_template.dart';
 
 import '../ui/screens/home_screen/home_screen.dart';
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
@@ -30,9 +31,15 @@ class AppRouter {
         );
         break;
 
-        case MARK_ATTENDANCE_ROUTE:
+      case MARK_ATTENDANCE_ROUTE:
         return MaterialPageRoute(
           builder: (_) => MarkAttendance(),
+        );
+        break;
+
+      case LEAVE_REQUEST:
+        return MaterialPageRoute(
+          builder: (_) => LeaveTemplate(),
         );
         break;
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../routes/route_constants.dart';
 
 import 'profile_settings_icon_button.dart';
 
@@ -7,8 +6,8 @@ import 'profile_settings_icon_button.dart';
 
 class AppbarWidget extends StatefulWidget with PreferredSizeWidget {
   final String title;
-  final PreferredSizeWidget bottom;
   final List<Widget> actions;
+  final PreferredSizeWidget bottom;
 
   const AppbarWidget({
     @required this.title,
