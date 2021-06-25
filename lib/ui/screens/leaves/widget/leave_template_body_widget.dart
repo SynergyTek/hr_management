@@ -51,7 +51,7 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
                     direction: FlipDirection.HORIZONTAL,
                     front: buildFront(snapshot.data.data[index].displayName,
                         snapshot.data.data[index].iconFileId),
-                    back: buildRear(snapshot.data.data[index].displayName),
+                    back: buildRear(snapshot.data.data[index].displayName,context),
                   );
                 },
               );
