@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
 part 'location_bloc_event.dart';
@@ -86,11 +85,9 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
           ",long:" +
           currentLocation.longitude.toString());
 
-     
       add(
         LocationChangedEvent(locationData: currentLocation),
       );
     });
   }
-
 }

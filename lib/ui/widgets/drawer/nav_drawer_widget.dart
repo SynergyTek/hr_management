@@ -33,8 +33,8 @@ Widget drawerWidget(context) {
           ),
         ),
         ListTile(
-          title: Text('New Leave Request'),
-          trailing: Icon(Icons.calendar_today_outlined),
+          title: Text('Home'),
+          trailing: Icon(Icons.home_max_outlined),
           onTap: () {
             Navigator.pushReplacementNamed(
               context,
@@ -49,6 +49,16 @@ Widget drawerWidget(context) {
             Navigator.pushReplacementNamed(
               context,
               MARK_ATTENDANCE_ROUTE,
+            );
+          },
+        ),
+        ListTile(
+          title: Text('New Leave Request'),
+          trailing: Icon(Icons.calendar_today_outlined),
+          onTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              LEAVE_REQUEST,
             );
           },
         ),

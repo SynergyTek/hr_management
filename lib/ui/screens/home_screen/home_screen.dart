@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: "Welcome Zlatan",
+        title: "Home",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
