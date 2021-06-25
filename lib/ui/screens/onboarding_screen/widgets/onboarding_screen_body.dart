@@ -68,7 +68,8 @@ class _OnboardingScreenBodyWidgetState
   void _continueOnPressed() {
     Navigator.pushReplacementNamed(
       context,
-      MARK_ATTENDANCE_ROUTE,
+      HOME_ROUTE,
+      // MARK_ATTENDANCE_ROUTE,
     );
   }
 }
