@@ -42,14 +42,15 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 200,
-                    childAspectRatio: 3 / 2,
+                    childAspectRatio: 2 / 2.2,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
                 itemCount: snapshot?.data?.data?.length ?? 0,
                 itemBuilder: (context, index) {
                   return FlipCard(
                     direction: FlipDirection.HORIZONTAL,
-                    front: buildFront(snapshot.data.data[index].displayName),
+                    front: buildFront(snapshot.data.data[index].displayName,
+                        snapshot.data.data[index].iconFileId),
                     back: buildRear(snapshot.data.data[index].displayName),
                   );
                 },
