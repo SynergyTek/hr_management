@@ -1,7 +1,9 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/api_models/leave_temp_model.dart';
-import 'package:hr_management/helper/http_helper.dart';
+import 'package:hr_management/data/models/leave_models/leave_res_model.dart';
+import 'package:hr_management/data/models/leave_models/leave_temp_model.dart';
+import 'package:hr_management/logic/blocs/leave_temp_bloc/leave_temp_api_bloc.dart';
+import 'package:hr_management/themes/theme_config.dart';
 
 import 'grid_widget.dart';
 
@@ -17,23 +19,18 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
 
   @override
   void initState() {
-    fetchLeaveTemplates = httpFetchLeaveTemplate(context: context);
     super.initState();
+    leaveTempBloc..getData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(color: Colors.white),
-        child: FutureBuilder<List<LeaveTemplateModel>>(
-            future: fetchLeaveTemplates,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+      padding: DEFAULT_LARGE_PADDING,
+      child: StreamBuilder<LeaveTempResponse>(
+          stream: leaveTempBloc.subject.stream,
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
               return GridView.builder(
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200,
@@ -48,6 +45,12 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
                         front: buildFront(t.displayName),
                         back: buildRear(t.displayName));
                   });
-            }));
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
+    );
   }
 }
