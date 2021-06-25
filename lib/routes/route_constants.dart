@@ -27,3 +27,4 @@ const String HOME_ROUTE = "/home";
 const String MARK_ATTENDANCE_ROUTE = "/mark_attendance";
 const String LEAVE_REQUEST = "/leave_request";
 const String REGISTRATION_ROUTE = "/registration_form";
+const String CREATE_SERVICE = "/create_service";

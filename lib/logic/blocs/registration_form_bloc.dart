@@ -61,7 +61,7 @@ class RegistrationFormBloc extends FormBloc<String, String> {
       saveData,
     ]);
 
-    firstName.updateInitialValue('Vidhisha');
+    // firstName.updateInitialValue('Vidhisha');
   }
 
   @override
