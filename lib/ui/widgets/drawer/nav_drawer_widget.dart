@@ -64,6 +64,16 @@ Widget drawerWidget(context) {
             );
           },
         ),
+        ListTile(
+          title: Text('UDF Demo'),
+          trailing: Icon(Icons.calendar_today_outlined),
+          onTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              REGISTRATION_ROUTE,
+            );
+          },
+        ),
       ],
     ),
   );
