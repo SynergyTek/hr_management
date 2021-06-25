@@ -30,21 +30,30 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
       child: StreamBuilder<LeaveTempResponse>(
           stream: leaveTempBloc.subject.stream,
           builder: (context, AsyncSnapshot snapshot) {
+            print("Snapshot data: ${snapshot.data}");
             if (snapshot.hasData) {
+              if (snapshot.data.error != null &&
+                  snapshot.data.error.length > 0) {
+                return Center(
+                  child: Text(snapshot.data.error),
+                );
+              }
+
               return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 3 / 2,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    final t = snapshot.data[index];
-                    return FlipCard(
-                        direction: FlipDirection.HORIZONTAL,
-                        front: buildFront(t.displayName),
-                        back: buildRear(t.displayName));
-                  });
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20),
+                itemCount: snapshot?.data?.data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return FlipCard(
+                    direction: FlipDirection.HORIZONTAL,
+                    front: buildFront(snapshot.data.data[index].displayName),
+                    back: buildRear(snapshot.data.data[index].displayName),
+                  );
+                },
+              );
             } else {
               return Center(
                 child: CircularProgressIndicator(),
