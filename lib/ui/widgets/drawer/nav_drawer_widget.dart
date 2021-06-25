@@ -34,7 +34,9 @@ Widget drawerWidget(context) {
         ),
         ListTile(
           title: Text('Home'),
-          trailing: Icon(Icons.home_max_outlined),
+          trailing: Icon(
+            Icons.home,
+          ),
           onTap: () {
             Navigator.pushReplacementNamed(
               context,
@@ -59,6 +61,16 @@ Widget drawerWidget(context) {
             Navigator.pushReplacementNamed(
               context,
               LEAVE_REQUEST,
+            );
+          },
+        ),
+        ListTile(
+          title: Text('UDF Demo'),
+          trailing: Icon(Icons.calendar_today_outlined),
+          onTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              REGISTRATION_ROUTE,
             );
           },
         ),

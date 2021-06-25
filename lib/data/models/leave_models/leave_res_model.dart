@@ -6,6 +6,7 @@ import 'package:hr_management/data/models/leave_models/leave_temp_model.dart';
 /// or returns an error in response.
 class LeaveTempResponse {
   final List<LeaveTemplateModel> data;
+  String error;
 
   LeaveTempResponse({
     @required this.data,
@@ -16,5 +17,7 @@ class LeaveTempResponse {
             .map((i) => new LeaveTemplateModel.fromJson(i))
             .toList();
 
-  LeaveTempResponse.withError(String errorValue) : data = [];
+  LeaveTempResponse.withError(String errorValue)
+      : data = [],
+        error = errorValue;
 }
