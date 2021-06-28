@@ -16,6 +16,17 @@ class APIEndpointConstants {
 
   static const MANAGE_SERVICE =
       'https://webapidev.aitalkx.com/nts/command/ManageService';
+  static const String GET_SERVICE_ATTACHMENT_COUNT =
+      "http://95.111.235.64:446/cms/GetServiceAttachmentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
+
+  static const String GET_SERVICE_SHARED_COUNT =
+      "http://95.111.235.64:446/cms/GetServiceSharedCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667588";
+
+  static const String GET_SERVICE_NOTIFICATION_COUNT =
+      "http://95.111.235.64:446/cms/GetServiceNotificationCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
+
+  static const String GET_SERVICE_COMMENTS_COUNT =
+      "http://95.111.235.64:446/cms/GetServiceCommentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667589";
 }
 
 // class APIEndpointConstants {

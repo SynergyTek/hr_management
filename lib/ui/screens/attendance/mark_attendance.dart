@@ -16,22 +16,7 @@ class MarkAttendance extends StatelessWidget {
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
         title: "Attendance",
-        actions: [
-          IconButton(
-            icon: Icon(Icons.wifi),
-            onPressed: () => Navigator.pushNamed(
-              context,
-              HOME_ROUTE,
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.home_repair_service),
-            onPressed: () => Navigator.pushNamed(
-              context,
-              SERVICE_ROUTE,
-            ),
-          ),
-        ],
+        actions: [],
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
