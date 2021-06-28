@@ -8,11 +8,11 @@ class APIEndpointConstants {
   // API Endpoints
   static const GET_MOVIES_URL = '$BASE_URL/nts/query/GetAllowedTempaltes';
   static const GET_READSERVICETEMPLATE_URL =
-      '$BASE_URL/nts/query/GetAllowedTempaltes?categoryCode=Leave&userid=45bba746-3309-49b7-9c03-b5793369d73c%2052m%2019s';
+      '$BASE_URL/nts/query/GetAllowedTempaltes?categoryCode=Leave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
   // '$BASE_URL/NtsService/ReadServiceTemplate?categoryCode=Leave';
 
   static const GET_SERVICE_DETAILS =
-      'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c%2052m%2019s';
+      'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const MANAGE_SERVICE =
       'https://webapidev.aitalkx.com/nts/command/ManageService';
