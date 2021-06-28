@@ -74,16 +74,16 @@ Widget drawerWidget(context) {
             );
           },
         ),
-        ListTile(
-          title: Text('Create Service'),
-          trailing: Icon(Icons.create),
-          onTap: () {
-            Navigator.pushReplacementNamed(
-              context,
-              CREATE_SERVICE,
-            );
-          },
-        ),
+        // ListTile(
+        //   title: Text('Create Service'),
+        //   trailing: Icon(Icons.create),
+        //   onTap: () {
+        //     Navigator.pushReplacementNamed(
+        //       context,
+        //       CREATE_SERVICE,
+        //     );
+        //   },
+        // ),
       ],
     ),
   );
