@@ -21,7 +21,7 @@ class LightTheme {
       appBarTheme: _lightAppbarTheme(),
       fontFamily: "Muli",
       textTheme: _lightTextTheme(),
-      inputDecorationTheme: _inputDecorationTheme(),
+      // inputDecorationTheme: _inputDecorationTheme(),
 
       // theme colors:
       scaffoldBackgroundColor: Colors.white,

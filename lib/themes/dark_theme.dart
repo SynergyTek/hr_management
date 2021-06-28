@@ -21,7 +21,7 @@ class DarkTheme {
       appBarTheme: _darkAppbarTheme(),
       fontFamily: "Muli",
       textTheme: _darkTextTheme(),
-      inputDecorationTheme: _inputDecorationTheme(),
+      // inputDecorationTheme: _inputDecorationTheme(),
 
       // theme colors:
       scaffoldBackgroundColor: _PRIMARY_COLOR,
