@@ -9,7 +9,7 @@ Widget drawerWidget(context) {
       children: [
         SafeArea(
           child: Container(
-            color: Theme.of(context).primaryColor.withOpacity(0.5),
+            color: Theme.of(context).primaryColor.withOpacity(0.85),
             padding: EdgeInsets.symmetric(vertical: 10),
             child: ListTile(
               leading: CircleAvatar(
@@ -18,7 +18,7 @@ Widget drawerWidget(context) {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    'T',
+                    'HR',
                     style: TextStyle(
                       fontSize: 24,
                     ),
@@ -26,7 +26,7 @@ Widget drawerWidget(context) {
                 ),
               ),
               title: Text(
-                'Title',
+                'HR Management',
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -64,27 +64,27 @@ Widget drawerWidget(context) {
             );
           },
         ),
-        ListTile(
-          title: Text('UDF Demo'),
-          trailing: Icon(Icons.app_registration),
-          onTap: () {
-            Navigator.pushReplacementNamed(
-              context,
-              REGISTRATION_ROUTE,
-            );
-          },
-        ),
-        ListTile(
-          title: Text('Create Service'),
-          trailing: Icon(Icons.create),
-          onTap: () {
-            Navigator.pushReplacementNamed(
-              context,
-              CREATE_SERVICE_ROUTE,
-              // CREATE_SERVICE,
-            );
-          },
-        ),
+        // ListTile(
+        //   title: Text('UDF Demo'),
+        //   trailing: Icon(Icons.app_registration),
+        //   onTap: () {
+        //     Navigator.pushReplacementNamed(
+        //       context,
+        //       REGISTRATION_ROUTE,
+        //     );
+        //   },
+        // ),
+        // ListTile(
+        //   title: Text('Create Service'),
+        //   trailing: Icon(Icons.create),
+        //   onTap: () {
+        //     Navigator.pushReplacementNamed(
+        //       context,
+        //       CREATE_SERVICE_ROUTE,
+        //       // CREATE_SERVICE,
+        //     );
+        //   },
+        // ),
       ],
     ),
   );

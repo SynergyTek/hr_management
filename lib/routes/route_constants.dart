@@ -30,3 +30,4 @@ const String REGISTRATION_ROUTE = "/registration_form";
 const String CREATE_SERVICE_ROUTE = "/create_service";
 const String NOTE_ROUTE = "/note";
 const String SERVICE_ROUTE = "/service";
+const String COUNTS_ROUTE = "/counts";
