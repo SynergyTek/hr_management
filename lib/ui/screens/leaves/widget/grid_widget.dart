@@ -37,7 +37,7 @@ Widget buildFront(String templateName, String templateImageCode) {
   );
 }
 
-Widget buildRear(String templateName ,BuildContext context) {
+Widget buildRear(String templateName, BuildContext context) {
   Color cardBackground =
       Colors.primaries[_random.nextInt(Colors.primaries.length)]
           [_random.nextInt(7) * 100];
@@ -71,7 +71,8 @@ Widget buildRear(String templateName ,BuildContext context) {
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
+                    // Navigator.pushReplacementNamed(
+                    Navigator.pushNamed(
                       context,
                       // HOME_ROUTE,
                       CREATE_SERVICE_ROUTE,

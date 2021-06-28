@@ -18,7 +18,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+//      drawer: drawerWidget(context),
       appBar: AppbarWidget(
         title: "Create Service",
         actions: [
