@@ -66,7 +66,7 @@ Widget drawerWidget(context) {
         ),
         ListTile(
           title: Text('UDF Demo'),
-          trailing: Icon(Icons.calendar_today_outlined),
+          trailing: Icon(Icons.app_registration),
           onTap: () {
             Navigator.pushReplacementNamed(
               context,
@@ -80,7 +80,8 @@ Widget drawerWidget(context) {
           onTap: () {
             Navigator.pushReplacementNamed(
               context,
-              CREATE_SERVICE,
+              CREATE_SERVICE_ROUTE,
+              // CREATE_SERVICE,
             );
           },
         ),
