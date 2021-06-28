@@ -1,7 +1,7 @@
 
 import 'package:dio/dio.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/models/api_models/api_response_model.dart';
+import '../../constants/api_endpoints.dart';
+import '../models/api_models/api_response_model.dart';
 
 import 'api_repository.dart';
 

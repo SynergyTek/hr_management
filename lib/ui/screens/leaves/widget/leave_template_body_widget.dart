@@ -1,9 +1,9 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/leave_models/leave_res_model.dart';
-import 'package:hr_management/data/models/leave_models/leave_temp_model.dart';
-import 'package:hr_management/logic/blocs/leave_temp_bloc/leave_temp_api_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
+import '../../../../data/models/leave_models/leave_res_model.dart';
+import '../../../../data/models/leave_models/leave_temp_model.dart';
+import '../../../../logic/blocs/leave_temp_bloc/leave_temp_api_bloc.dart';
+import '../../../../themes/theme_config.dart';
 
 import 'grid_widget.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/routes/route_constants.dart';
+import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
   return Drawer(
