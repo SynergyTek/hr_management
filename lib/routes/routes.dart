@@ -1,9 +1,13 @@
-import 'package:hr_management/ui/screens/attendance/mark_attendance.dart';
+import '../ui/screens/service_screen/service_screen.dart';
+
+import '../ui/screens/attendance/mark_attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/ui/screens/create_service/create_service.dart';
 import 'package:hr_management/ui/screens/leaves/leave_template.dart';
+import 'package:hr_management/ui/screens/note/note_screen.dart';
 import 'package:hr_management/ui/screens/registration/registration_form.dart';
 import 'package:hr_management/ui/screens/registration/registration_screen.dart';
+import '../ui/screens/leaves/leave_template.dart';
 
 import '../ui/screens/home_screen/home_screen.dart';
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
@@ -34,6 +38,11 @@ class AppRouter {
         );
         break;
 
+      case SERVICE_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => ServiceScreen(),
+        );
+        break;
       case MARK_ATTENDANCE_ROUTE:
         return MaterialPageRoute(
           builder: (_) => MarkAttendance(),
@@ -50,9 +59,14 @@ class AppRouter {
           builder: (_) => RegistrationScreen(),
         );
         break;
-      case CREATE_SERVICE:
+      case CREATE_SERVICE_ROUTE:
         return MaterialPageRoute(
           builder: (_) => CreateServiceScreen(),
+        );
+        break;
+      case NOTE_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => NoteScreen(),
         );
         break;
       // 404 route.

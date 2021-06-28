@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/leave_models/leave_res_model.dart';
-import 'package:hr_management/data/repositories/leave_temp_repo/leave_temp_repo.dart';
+import '../../../data/models/leave_models/leave_res_model.dart';
+import '../../../data/repositories/leave_temp_repo/leave_temp_repo.dart';
 
 import 'package:rxdart/rxdart.dart';
 

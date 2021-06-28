@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/routes/route_constants.dart';
+import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
   return Drawer(
@@ -74,16 +74,16 @@ Widget drawerWidget(context) {
             );
           },
         ),
-        ListTile(
-          title: Text('Create Service'),
-          trailing: Icon(Icons.create),
-          onTap: () {
-            Navigator.pushReplacementNamed(
-              context,
-              CREATE_SERVICE,
-            );
-          },
-        ),
+        // ListTile(
+        //   title: Text('Create Service'),
+        //   trailing: Icon(Icons.create),
+        //   onTap: () {
+        //     Navigator.pushReplacementNamed(
+        //       context,
+        //       CREATE_SERVICE,
+        //     );
+        //   },
+        // ),
       ],
     ),
   );

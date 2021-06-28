@@ -9,4 +9,7 @@ class APIEndpointConstants {
   static const GET_MOVIES_URL = '$BASE_URL/discover/movie';
   static const GET_READSERVICETEMPLATE_URL =
       '$BASE_URL/NtsService/ReadServiceTemplate?categoryCode=Leave';
+
+  static const GET_SERVICE_DETAILS =
+      'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c%2052m%2019s';
 }

@@ -1,4 +1,4 @@
-import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/appbar_widget.dart';

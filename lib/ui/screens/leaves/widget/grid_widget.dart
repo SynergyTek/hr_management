@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hr_management/constants/api_endpoints.dart';
+import 'package:hr_management/routes/route_constants.dart';
 
 final _random = Random();
 Widget buildFront(String templateName, String templateImageCode) {
@@ -36,7 +37,7 @@ Widget buildFront(String templateName, String templateImageCode) {
   );
 }
 
-Widget buildRear(String templateName) {
+Widget buildRear(String templateName ,BuildContext context) {
   Color cardBackground =
       Colors.primaries[_random.nextInt(Colors.primaries.length)]
           [_random.nextInt(7) * 100];
@@ -69,7 +70,13 @@ Widget buildRear(String templateName) {
             Container(
               width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      // HOME_ROUTE,
+                      CREATE_SERVICE_ROUTE,
+                    );
+                  },
                   child: Text(
                     "Create",
                     textAlign: TextAlign.center,
