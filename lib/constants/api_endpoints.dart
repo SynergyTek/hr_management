@@ -12,4 +12,7 @@ class APIEndpointConstants {
 
   static const GET_SERVICE_DETAILS =
       'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c%2052m%2019s';
+
+  static const MANAGE_SERVICE =
+      'https://webapidev.aitalkx.com/nts/command/ManageService';
 }
