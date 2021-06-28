@@ -66,7 +66,7 @@ Widget drawerWidget(context) {
         ),
         ListTile(
           title: Text('UDF Demo'),
-          trailing: Icon(Icons.calendar_today_outlined),
+          trailing: Icon(Icons.app_registration),
           onTap: () {
             Navigator.pushReplacementNamed(
               context,
@@ -74,16 +74,17 @@ Widget drawerWidget(context) {
             );
           },
         ),
-        // ListTile(
-        //   title: Text('Create Service'),
-        //   trailing: Icon(Icons.create),
-        //   onTap: () {
-        //     Navigator.pushReplacementNamed(
-        //       context,
-        //       CREATE_SERVICE,
-        //     );
-        //   },
-        // ),
+        ListTile(
+          title: Text('Create Service'),
+          trailing: Icon(Icons.create),
+          onTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              CREATE_SERVICE_ROUTE,
+              // CREATE_SERVICE,
+            );
+          },
+        ),
       ],
     ),
   );

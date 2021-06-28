@@ -32,13 +32,13 @@ class FormModel {
   bool canSelectTime;
 
   //For date and time picker
-  InputFieldBloc inputFieldBloc; 
+  InputFieldBloc inputFieldBloc;
 
   //For checkbox group
-  MultiSelectFieldBloc multiSelectFieldBloc; 
+  MultiSelectFieldBloc multiSelectFieldBloc;
 
   //For dropdown and radio button
-  SelectFieldBloc selectFieldBloc; 
+  SelectFieldBloc selectFieldBloc;
 
   //For switch and single checkbox
   BooleanFieldBloc booleanFieldBloc;
