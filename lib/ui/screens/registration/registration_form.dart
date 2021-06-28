@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/models/form_fields.dart';
 import 'package:hr_management/logic/blocs/registration_form_bloc.dart';
+import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_group_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
@@ -99,6 +100,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
       child: Builder(
         builder: (context) {
           return Scaffold(
+            drawer: drawerWidget(context),
             appBar: AppBar(title: Text('Registration')),
             body: FormBlocListener<RegistrationFormBloc, String, String>(
               onSubmitting: (context, state) {},

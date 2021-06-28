@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
+import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
