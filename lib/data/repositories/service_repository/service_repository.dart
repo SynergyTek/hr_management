@@ -1,30 +1,30 @@
-import '../../models/leave_models/leave_res_model.dart';
+import '../../models/service_models/service_response.dart';
 
 import '../../../constants/api_endpoints.dart';
 import 'package:dio/dio.dart';
 
-part 'leave_temp_implementation.dart';
+part 'service_repository_implementation.dart';
 
 // Overview of the repository class.
-abstract class AbstractLeaveTempRepository {
-  AbstractLeaveTempRepository();
+abstract class AbstractServiceRepository {
+  AbstractServiceRepository();
 
-  Future<LeaveTempResponse> getAPIData({
+  Future<ServiceResponse> getAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<LeaveTempResponse> postAPIData({
+  Future<ServiceResponse> postAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<LeaveTempResponse> putAPIData({
+  Future<ServiceResponse> putAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<LeaveTempResponse> deleteAPIData({
+  Future<ServiceResponse> deleteAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
