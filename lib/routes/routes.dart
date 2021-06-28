@@ -1,7 +1,6 @@
 import 'package:hr_management/ui/screens/create_service/create_service_screen.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
 
-import '../ui/screens/service_screen/service_screen.dart';
 
 import '../ui/screens/attendance/mark_attendance.dart';
 import 'package:flutter/material.dart';
@@ -35,12 +34,6 @@ class AppRouter {
       case HOME_ROUTE:
         return MaterialPageRoute(
           builder: (_) => CountsScreen(),
-        );
-        break;
-
-      case SERVICE_ROUTE:
-        return MaterialPageRoute(
-          builder: (_) => ServiceScreen(),
         );
         break;
 
