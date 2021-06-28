@@ -5,7 +5,7 @@ import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/routes/route_constants.dart';
 
 final _random = Random();
-Widget buildFront(String templateName, String templateImageCode) {
+Widget buildFront(String templateName, String templateImageCode, context) {
   return Card(
     elevation: 5.0,
     child: Container(
@@ -17,9 +17,15 @@ Widget buildFront(String templateName, String templateImageCode) {
             child: Container(
               margin: EdgeInsets.all(8),
               child: Center(
-                child: Image.network(APIEndpointConstants.BASE_URL +
-                    '/Document/GetImageMongo?id=' +
-                    templateImageCode),
+                child: templateImageCode == null
+                    ? Icon(
+                        Icons.image,
+                        size: MediaQuery.of(context).size.width * 0.28,
+                        color: Colors.grey[400],
+                      )
+                    : Image.network(APIEndpointConstants.BASE_URL +
+                        '/Document/GetImageMongo?id=' +
+                        templateImageCode),
               ),
             ),
           ),
@@ -37,7 +43,7 @@ Widget buildFront(String templateName, String templateImageCode) {
   );
 }
 
-Widget buildRear(String templateName ,BuildContext context) {
+Widget buildRear(String templateName, BuildContext context) {
   Color cardBackground =
       Colors.primaries[_random.nextInt(Colors.primaries.length)]
           [_random.nextInt(7) * 100];
@@ -71,7 +77,8 @@ Widget buildRear(String templateName ,BuildContext context) {
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
+                    // Navigator.pushReplacementNamed(
+                    Navigator.pushNamed(
                       context,
                       // HOME_ROUTE,
                       CREATE_SERVICE_ROUTE,

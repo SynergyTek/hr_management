@@ -4,12 +4,12 @@ part of 'service_repository.dart';
 /// which will be used to fetch data from Apis will map the JSON to its model.
 class ServiceRepository extends AbstractServiceRepository {
   final Dio _dio = Dio();
-  final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
 
   Future<ServiceResponse> getAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
+    final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
     try {
       Response response = await _dio.get(
         endpoint,
@@ -36,8 +36,22 @@ class ServiceRepository extends AbstractServiceRepository {
   }
 
   @override
-  Future<ServiceResponse> postAPIData({Map<String, dynamic> queryparams}) {
-    throw UnimplementedError();
+  Future<ServiceResponse> postAPIData(
+      {Map<String, dynamic> queryparams, ServiceResponse data}) async {
+    final String endpoint = APIEndpointConstants.MANAGE_SERVICE;
+    try {
+      Response response = await _dio
+          .post(endpoint, queryParameters: queryparams ?? {}, data: {});
+      return ServiceResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceResponse.withError("$err");
+    }
   }
 
   @override

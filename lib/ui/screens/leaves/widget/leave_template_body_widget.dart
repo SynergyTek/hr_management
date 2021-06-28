@@ -50,8 +50,9 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
                   return FlipCard(
                     direction: FlipDirection.HORIZONTAL,
                     front: buildFront(snapshot.data.data[index].displayName,
-                        snapshot.data.data[index].iconFileId),
-                    back: buildRear(snapshot.data.data[index].displayName,context),
+                        snapshot.data.data[index].iconFileId, context),
+                    back: buildRear(
+                        snapshot.data.data[index].displayName, context),
                   );
                 },
               );

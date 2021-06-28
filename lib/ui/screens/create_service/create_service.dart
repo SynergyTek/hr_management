@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/models/form_fields.dart';
-import 'package:hr_management/logic/blocs/registration_form_bloc.dart';
+import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_group_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_widget.dart';
@@ -12,110 +11,128 @@ import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.d
 import 'package:hr_management/ui/widgets/form_widgets/bloc_switch_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_time_picker_widget.dart';
+import 'package:hr_management/ui/widgets/primary_button.dart';
 
-class RegistrationForm extends StatefulWidget {
-  RegistrationForm({Key key}) : super(key: key);
+class CreateServiceScreen extends StatefulWidget {
+  const CreateServiceScreen({Key key}) : super(key: key);
 
   @override
-  _RegistrationFormState createState() => _RegistrationFormState();
+  _CreateServiceScreenState createState() => _CreateServiceScreenState();
 }
 
-class _RegistrationFormState extends State<RegistrationForm> {
+class _CreateServiceScreenState extends State<CreateServiceScreen> {
+  TextEditingController subjectController = TextEditingController();
   List<Widget> widgetList = [];
-  List<FormModel> model = [];
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
 
-    model.add(new FormModel(
-        labelName: 'First Name',
-        fieldName: 'firstName',
-        readOnly: false,
-        icon: Icon(Icons.person),
-        fieldType: FieldType.TextBox,
-        textFieldBloc: context.read<RegistrationFormBloc>().firstName));
-    model.add(new FormModel(
-        labelName: 'Last Name',
-        fieldName: 'lastName',
-        readOnly: false,
-        icon: Icon(Icons.person),
-        fieldType: FieldType.TextBox,
-        textFieldBloc: context.read<RegistrationFormBloc>().lastName));
-    model.add(new FormModel(
-        labelName: 'Email',
-        fieldName: 'email',
-        readOnly: false,
-        icon: Icon(Icons.email),
-        fieldType: FieldType.TextBox,
-        textFieldBloc: context.read<RegistrationFormBloc>().email));
-    model.add(new FormModel(
-        labelName: 'Phone Number',
-        fieldName: 'phoneNumber',
-        readOnly: false,
-        icon: Icon(Icons.phone_android_sharp),
-        fieldType: FieldType.NumberBox,
-        textFieldBloc: context.read<RegistrationFormBloc>().phoneNumber));
-    model.add(new FormModel(
-        labelName: 'Phone number type',
-        icon: Icon(Icons.home),
-        fieldType: FieldType.RadioButton,
-        selectFieldBloc: context.read<RegistrationFormBloc>().phoneNumberType));
-    model.add(new FormModel(
-        labelName: 'Date of Birth',
-        canSelectTime: false,
-        icon: Icon(Icons.calendar_today),
-        fieldType: FieldType.DatePicker,
-        inputFieldBloc: context.read<RegistrationFormBloc>().dob));
-    model.add(new FormModel(
-        labelName: 'Country',
-        icon: Icon(Icons.map),
-        fieldType: FieldType.DropDown,
-        selectFieldBloc: context.read<RegistrationFormBloc>().country));
-    model.add(new FormModel(
-        labelName: 'Language',
-        icon: Icon(Icons.language),
-        fieldType: FieldType.CheckBoxGroup,
-        multiSelectFieldBloc: context.read<RegistrationFormBloc>().language));
-    model.add(new FormModel(
-        labelName: 'Suitable Time',
-        fieldType: FieldType.TimePicker,
-        inputFieldBloc: context.read<RegistrationFormBloc>().suitableTime));
-    model.add(new FormModel(
-        labelName: 'Dark Mode On',
-        fieldType: FieldType.Switch,
-        booleanFieldBloc: context.read<RegistrationFormBloc>().mode));
-    model.add(new FormModel(
-        labelName: 'Save Data',
-        fieldType: FieldType.CheckBox,
-        booleanFieldBloc: context.read<RegistrationFormBloc>().saveData));
-
-    addDynamicFields(model);
+    // addDynamicFields(model);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RegistrationFormBloc(),
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            drawer: drawerWidget(context),
-            appBar: AppBar(title: Text('Registration')),
-            body: FormBlocListener<RegistrationFormBloc, String, String>(
-              onSubmitting: (context, state) {},
-              onSuccess: (context, state) {},
-              onFailure: (context, state) {},
-              child: SingleChildScrollView(
-                child: AutofillGroup(
-                  child: Column(
-                    children: widgetList,
-                  ),
-                ),
+    return Scaffold(
+//      drawer: drawerWidget(context),
+      appBar: AppbarWidget(
+        title: "Create Service",
+        actions: [
+          IconButton(
+            icon: Icon(Icons.attach_file),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.tag),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: SafeArea(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8.0),
+            height: 80,
+            color: Colors.blue[100],
+            child: Card(
+              elevation: 0,
+              color: Colors.blue[100],
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  rowChild('S-25.06.2021-5', 'Service No'),
+                  rowChild('Draft', 'Status'),
+                  rowChild('1', 'Version No'),
+                ],
               ),
             ),
-          );
-        },
+          ),
+          textField(
+              maxLines: 1, controller: subjectController, labelName: 'Subject'),
+          textField(
+              maxLines: 3,
+              controller: descriptionController,
+              labelName: 'Description'),
+          Column(
+            children: widgetList,
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: PrimaryButton(
+                  buttonText: 'Save As Draft',
+                  handleOnPressed: () {},
+                  width: 100,
+                ),
+              ),
+              Expanded(
+                child: PrimaryButton(
+                  buttonText: 'Submit',
+                  handleOnPressed: () {},
+                  width: 100,
+                ),
+              ),
+            ],
+          )
+        ],
+      )),
+    );
+  }
+
+  rowChild(String data, String field) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            data,
+            style: TextStyle(color: Colors.blue[800], fontSize: 16),
+          ),
+          Text(
+            field,
+            style: TextStyle(color: Colors.grey[700], fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+
+  textField(
+      {int maxLines, TextEditingController controller, String labelName}) {
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      child: TextField(
+        maxLines: maxLines ?? 1,
+        controller: controller,
+        keyboardType: TextInputType.name,
+        decoration: InputDecoration(
+          labelText: labelName,
+          hintText: labelName,
+        ),
       ),
     );
   }
@@ -201,7 +218,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
     widgetList.add(
       ElevatedButton(
-        onPressed: context.read<RegistrationFormBloc>().submit,
+        // onPressed: context.read<RegistrationFormBloc>().submit,
         child: Text('Register'),
       ),
     );
