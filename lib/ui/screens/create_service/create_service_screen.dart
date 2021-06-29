@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 
 import 'widget/create_service_body.dart';
@@ -11,7 +10,7 @@ class CreateServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: drawerWidget(context),
+
       appBar: AppbarWidget(
         title: "Create Service",
       ),

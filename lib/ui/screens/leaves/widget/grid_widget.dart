@@ -8,37 +8,48 @@ final _random = Random();
 Widget buildFront(String templateName, String templateImageCode, context) {
   return Card(
     elevation: 5.0,
-    child: Container(
-      child: Column(
-        children: [
-          Container(
+    child: Column(
+      children: [
+        Expanded(
+          flex: 8,
+          child: Container(
+            // color: Color(0xFFE5083F),
             color: Colors.primaries[_random.nextInt(Colors.primaries.length)]
                 [_random.nextInt(9) * 100],
-            child: Container(
-              margin: EdgeInsets.all(8),
-              child: Center(
-                child: templateImageCode == null
-                    ? Icon(
-                        Icons.image,
-                        size: MediaQuery.of(context).size.width * 0.28,
-                        color: Colors.grey[400],
-                      )
-                    : Image.network(APIEndpointConstants.BASE_URL +
-                        '/Document/GetImageMongo?id=' +
-                        templateImageCode),
-              ),
+            child: Center(
+              child: templateImageCode == null
+                  ? Icon(
+                      Icons.image,
+                      size: MediaQuery.of(context).size.width * 0.28,
+                      color: Colors.grey[400],
+                    )
+                  : Image.network(
+                      APIEndpointConstants.BASE_URL +
+                          '/Document/GetImageMongo?id=' +
+                          templateImageCode,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace stackTrace) {
+                        return Icon(
+                          Icons.image,
+                          size: MediaQuery.of(context).size.width * 0.28,
+                          color: Colors.grey[400],
+                        );
+                      },
+                    ),
             ),
           ),
-          SizedBox(
-            height: 5,
+        ),
+        Expanded(
+          flex: 3,
+          child: Center(
+            child: Text(
+              templateName,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+            ),
           ),
-          Text(
-            templateName,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-          ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }
@@ -54,45 +65,45 @@ Widget buildRear(String templateName, BuildContext context) {
       : Colors.black;
   return Card(
     elevation: 5.0,
-    child: Container(
-      color: cardBackground,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: double.infinity,
-              child: Container(
-                margin: EdgeInsets.all(8),
-                alignment: Alignment.center,
-                child: Text(
-                  templateName,
-                  style: TextStyle(color: textColor),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+    color: cardBackground,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          flex: 3,
+          child: Container(
+            width: double.infinity,
+            margin: EdgeInsets.all(8),
+            alignment: Alignment.center,
+            child: Text(
+              templateName,
+              style: TextStyle(color: textColor),
+              textAlign: TextAlign.center,
             ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                  onPressed: () {
-                    // Navigator.pushReplacementNamed(
-                    Navigator.pushNamed(
-                      context,
-                      // HOME_ROUTE,
-                      CREATE_SERVICE_ROUTE,
-                    );
-                  },
-                  child: Text(
-                    "Create",
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                  )),
-            ),
-          ],
+          ),
         ),
-      ),
+        Expanded(
+          flex: 1,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+            width: double.infinity,
+            child: ElevatedButton(
+                onPressed: () {
+                  // Navigator.pushReplacementNamed(
+                  Navigator.pushNamed(
+                    context,
+                    // HOME_ROUTE,
+                    CREATE_SERVICE_ROUTE,
+                  );
+                },
+                child: Text(
+                  "Create",
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                )),
+          ),
+        ),
+      ],
     ),
   );
 }
