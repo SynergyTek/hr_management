@@ -442,7 +442,19 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     await remoteAttendanceBloc.getData(isSignIn: true);
 
     print("Sign In isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
-    print("Sign In Error?: ${remoteAttendanceBloc.subject.value.error}");
+    print(
+        "Sign In Error?: ${remoteAttendanceBloc.subject.value.error}, ${remoteAttendanceBloc.subject.value.error.runtimeType}");
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          remoteAttendanceBloc.subject.value.isSignIn == 0 &&
+                  remoteAttendanceBloc.subject.value.error == null
+              ? "Sign in successful!"
+              : "Error occured please try again later.",
+        ),
+      ),
+    );
   }
 
   void _handleSignOutOnClick() async {
@@ -450,5 +462,16 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
     print("Sign Out isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
     print("Sign Out Error?: ${remoteAttendanceBloc.subject.value.error}");
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          remoteAttendanceBloc.subject.value.isSignIn == 1 &&
+                  remoteAttendanceBloc.subject.value.error == null
+              ? "Sign out successful!"
+              : "Error occured please try again later.",
+        ),
+      ),
+    );
   }
 }
