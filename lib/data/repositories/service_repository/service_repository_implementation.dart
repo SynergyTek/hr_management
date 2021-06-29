@@ -36,12 +36,21 @@ class ServiceRepository extends AbstractServiceRepository {
   }
 
   @override
-  Future<ServiceResponse> postAPIData(
-      {Map<String, dynamic> queryparams, ServiceResponse data}) async {
+  Future<ServiceResponse> postAPIData({
+    Map<String, dynamic> queryparams,
+    @required ServiceResponseModel serviceResponseModel,
+  }) async {
     final String endpoint = APIEndpointConstants.MANAGE_SERVICE;
     try {
-      Response response = await _dio
-          .post(endpoint, queryParameters: queryparams ?? {}, data: {});
+      Response response = await _dio.post(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        data: serviceResponseModel ?? {},
+      );
+
+      print("response: ${response.data}");
+
+      // TODO: response parsing
       return ServiceResponse.fromJson(
         response.data,
       );

@@ -1,4 +1,5 @@
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -318,36 +319,36 @@ class _DynamicCheckBoxValueState extends State<DynamicCheckBoxValue> {
   }
 }
 
-// class DynamicLink extends StatelessWidget {
-//   NetworkHelper _networkHelper = NetworkHelper();
-//   final String name;
-//   final String code;
-//   DynamicLink({this.name, this.code});
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Container(
-//         child: new Padding(
-//             padding: const EdgeInsets.all(15.0),
-//             child: new RichText(
-//                 text: new TextSpan(children: [
-//               new TextSpan(
-//                 text: name,
-//                 style: new TextStyle(color: Colors.blue, fontSize: 15),
-//                 recognizer: new TapGestureRecognizer()
-//                   ..onTap = () {
-//                     _networkHelper.initConnectivity().then((value) {
-//                       if (value) {
-//                         var domainuri = ApiEnvironment()
-//                             .getDomainUri(GraphQLConfiguration.synergyClient);
-//                         launch(domainuri + code);
-//                       } else {
-//                         return networkRaisedToast(context);
-//                       }
-//                     }, onError: (error) {
-//                       // print(error);
-//                     });
-//                   },
-//               ),
-//             ]))));
-//   }
-// }
+class DynamicLink extends StatelessWidget {
+  // NetworkHelper _networkHelper = NetworkHelper();
+  final String name;
+  final String code;
+  DynamicLink({this.name, this.code});
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+        child: new Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: new RichText(
+                text: new TextSpan(children: [
+              new TextSpan(
+                text: name,
+                style: new TextStyle(color: Colors.blue, fontSize: 15),
+                recognizer: new TapGestureRecognizer()
+                  ..onTap = () {
+                    // _networkHelper.initConnectivity().then((value) {
+                    //   if (value) {
+                    //     var domainuri = ApiEnvironment()
+                    //         .getDomainUri(GraphQLConfiguration.synergyClient);
+                    //     launch(domainuri + code);
+                    //   } else {
+                    //     return networkRaisedToast(context);
+                    //   }
+                    // }, onError: (error) {
+                    //   // print(error);
+                    // });
+                  },
+              ),
+            ]))));
+  }
+}

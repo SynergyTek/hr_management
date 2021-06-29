@@ -35,26 +35,27 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     locationStreamSubscription?.cancel();
   }
 
-  // TODO: make it like check everytime kinda thing.
-  void _isLocationServiceEnabled() async {
+  Future<bool> isLocationServiceEnabled() async {
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
-        return;
+        return await location.serviceEnabled();
       }
     }
+
+    return await location.serviceEnabled();
   }
 
-  // TODO: Refactor to check everytime
-  void _checkForLocationPermission() async {
+  Future<PermissionStatus> checkForLocationPermission() async {
     _permissionGranted = await location.hasPermission();
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        return;
+        return await location.hasPermission();
       }
     }
+    return await location.hasPermission();
   }
 
   _determinePosition() async {
@@ -66,25 +67,20 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     // Location services are not enabled don't continue
     // accessing the position and request users of the
     // App to enable the location services.
-    _isLocationServiceEnabled();
+    await isLocationServiceEnabled();
 
     // Permissions are denied, next time you could try
     // requesting permissions again (this is also where
     // Android's shouldShowRequestPermissionRationale
     // returned true. According to Android guidelines
     // your App should show an explanatory UI now.
-    _checkForLocationPermission();
+    await checkForLocationPermission();
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     // i.e. if everything is fine call the LocationChangedEvent.
     locationStreamSubscription =
         location.onLocationChanged.listen((LocationData currentLocation) {
-      print("latt:" +
-          currentLocation.latitude.toString() +
-          ",long:" +
-          currentLocation.longitude.toString());
-
       add(
         LocationChangedEvent(locationData: currentLocation),
       );

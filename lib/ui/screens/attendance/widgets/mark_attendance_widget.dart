@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,7 +67,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
   @override
   Widget build(BuildContext context) {
-   return BlocBuilder<LocationBloc, LocationState>(builder: (context, state) {
+    return BlocBuilder<LocationBloc, LocationState>(builder: (context, state) {
       print(calculateDistance(
           state.locationData.latitude, state.locationData.latitude));
       return Stack(
