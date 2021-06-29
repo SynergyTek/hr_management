@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class DarkTheme {
   static const Color _PRIMARY_COLOR = Color(0xFF1A2127);
   static const Color _PRIMARY_LIGHT_COLOR = Color(0xFFFFECDF);
-  static const Color _SECONDARY_COLOR = Color(0xFFFF7643);
+  static const Color _SECONDARY_COLOR = Colors.blue;
+  // static const Color _SECONDARY_COLOR = Color(0xFFFF7643);
   static const Color _TEXT_COLOR = Colors.white;
 
   // static const _PRIMARY_GRADIENT_COLOR = LinearGradient(

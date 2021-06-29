@@ -10,7 +10,7 @@ import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
-  const CreateServiceScreenBody({Key key}) : super(key: key);
+  const CreateServiceScreenBody({Key key});
 
   @override
   _CreateServiceScreenBodyState createState() =>
@@ -272,6 +272,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     serviceModel.dataAction = 1;
     serviceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
     serviceModel.json = jsonEncode(udfJson);
-    print(jsonEncode(udfJson));
+    print(udfJson);
+
+    serviceBloc.postData(
+      serviceResponseModel: serviceModel,
+    );
   }
 }
