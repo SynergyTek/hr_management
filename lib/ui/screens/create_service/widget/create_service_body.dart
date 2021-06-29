@@ -132,25 +132,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   textField(
       {int maxLines, TextEditingController controller, String labelName}) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        border: Border.all(width: 1.0, color: Colors.white),
-      ),
-      child: Container(
-        margin: EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          border: Border.all(width: 1.0, color: Colors.white),
-        ),
-        child: TextField(
-          maxLines: maxLines ?? 1,
-          controller: controller,
-          keyboardType: TextInputType.name,
-          decoration: InputDecoration(
-            labelText: labelName,
-            hintText: labelName,
-          ),
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      child: TextField(
+        maxLines: maxLines ?? 1,
+        controller: controller,
+        keyboardType: TextInputType.name,
+        decoration: InputDecoration(
+          labelText: labelName,
+          hintText: labelName,
         ),
       ),
     );
