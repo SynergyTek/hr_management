@@ -19,6 +19,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   List<Widget> listDynamic = [];
   TextEditingController descriptionController = TextEditingController();
   ServiceResponse serviceResponse;
+  final Map<String, String> udfJson = {};
 
   @override
   void initState() {
@@ -91,7 +92,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         Expanded(
           child: PrimaryButton(
             buttonText: 'Save As Draft',
-            handleOnPressed: () {},
+            handleOnPressed: () {
+              serviceViewModelPostRequest();
+            },
             width: 100,
           ),
         ),
@@ -267,8 +270,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             element.name,
             element.labelName,
             new TextEditingController(text: element.name),
-            true,
-            (String val) {}));
+            false, (String val) {
+          udfJson[element.name] = val;
+          // element.value = val;
+        }));
         // }
         // } else if (element.fieldPartialViewName == "NTS_Hyperlink") {
         //   return new DynamicLink(
@@ -285,10 +290,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     });
   }
 
-  serviceViewModelPostRequest(String action) async {
-    Map<String, dynamic> udfJson = {
-      'LeaveEndDate': '',
-    };
+  serviceViewModelPostRequest() async {
+    print(udfJson);
   }
 
   // addDynamic(List model) {

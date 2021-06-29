@@ -497,6 +497,7 @@ class ColumnList {
   String foreignKeyDisplayColumnLabelName;
   String foreignKeyDisplayColumnAlias;
   String foreignKeyConstraintName;
+  String value;
 
   ColumnList(
       {this.isForeignKeyTableColumn,
@@ -551,7 +552,8 @@ class ColumnList {
       this.foreignKeyTableSchemaName,
       this.foreignKeyDisplayColumnLabelName,
       this.foreignKeyDisplayColumnAlias,
-      this.foreignKeyConstraintName});
+      this.foreignKeyConstraintName,
+      this.value});
 
   ColumnList.fromJson(Map<String, dynamic> json) {
     isForeignKeyTableColumn = json['IsForeignKeyTableColumn'];
