@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/service_models/service_response_model.dart';
@@ -269,6 +271,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     serviceModel.serviceDescription = 'test description';
     serviceModel.dataAction = 1;
     serviceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
-    print(udfJson);
+    serviceModel.json = jsonEncode(udfJson);
+    print(jsonEncode(udfJson));
   }
 }
