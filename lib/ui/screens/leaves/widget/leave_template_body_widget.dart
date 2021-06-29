@@ -47,12 +47,19 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
                     mainAxisSpacing: 20),
                 itemCount: snapshot?.data?.data?.length ?? 0,
                 itemBuilder: (context, index) {
+                  LeaveTemplateModel leaveTempResponse =
+                      snapshot.data.data[index];
                   return FlipCard(
                     direction: FlipDirection.HORIZONTAL,
-                    front: buildFront(snapshot.data.data[index].displayName,
-                        snapshot.data.data[index].iconFileId, context),
+                    front: buildFront(
+                        templateName: leaveTempResponse.displayName,
+                        templateImageCode: leaveTempResponse.iconFileId,
+                        colorCode: leaveTempResponse.templateColor,
+                        context: context),
                     back: buildRear(
-                        snapshot.data.data[index].displayName, context),
+                        templateName: snapshot.data.data[index].displayName,
+                        colorCode: leaveTempResponse.templateColor,
+                        context: context),
                   );
                 },
               );

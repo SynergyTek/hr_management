@@ -1,11 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/routes/route_constants.dart';
 
-final _random = Random();
-Widget buildFront(String templateName, String templateImageCode, context) {
+Widget buildFront(
+    {String templateName,
+    String templateImageCode,
+    String colorCode,
+    context}) {
   return Card(
     elevation: 5.0,
     child: Column(
@@ -13,19 +14,12 @@ Widget buildFront(String templateName, String templateImageCode, context) {
         Expanded(
           flex: 8,
           child: Container(
-            // color: Color(0xFFE5083F),
-            color: Colors.primaries[_random.nextInt(Colors.primaries.length)]
-                [_random.nextInt(9) * 100],
+            color: hexToColor(colorCode),
             child: Center(
-              child: templateImageCode == null
-                  ? Icon(
-                      Icons.image,
-                      size: MediaQuery.of(context).size.width * 0.28,
-                      color: Colors.grey[400],
-                    )
-                  : Image.network(
+              child: templateImageCode != null
+                  ? Image.network(
                       APIEndpointConstants.BASE_URL +
-                          '/Document/GetImageMongo?id=' +
+                          '/common/query/GetFile?fileId=' +
                           templateImageCode,
                       errorBuilder: (BuildContext context, Object exception,
                           StackTrace stackTrace) {
@@ -35,12 +29,17 @@ Widget buildFront(String templateName, String templateImageCode, context) {
                           color: Colors.grey[400],
                         );
                       },
+                    )
+                  : Icon(
+                      Icons.image,
+                      size: MediaQuery.of(context).size.width * 0.28,
+                      color: Colors.grey[400],
                     ),
             ),
           ),
         ),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: Center(
             child: Text(
               templateName,
@@ -54,10 +53,9 @@ Widget buildFront(String templateName, String templateImageCode, context) {
   );
 }
 
-Widget buildRear(String templateName, BuildContext context) {
-  Color cardBackground =
-      Colors.primaries[_random.nextInt(Colors.primaries.length)]
-          [_random.nextInt(7) * 100];
+Widget buildRear(
+    {String templateName, String colorCode, BuildContext context}) {
+  Color cardBackground = hexToColor(colorCode);
   Color textColor = cardBackground != null
       ? cardBackground.computeLuminance() > 0.5
           ? Colors.black
@@ -65,12 +63,11 @@ Widget buildRear(String templateName, BuildContext context) {
       : Colors.black;
   return Card(
     elevation: 5.0,
-    color: cardBackground,
+    color: hexToColor(colorCode),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          flex: 3,
           child: Container(
             width: double.infinity,
             margin: EdgeInsets.all(8),
@@ -82,28 +79,29 @@ Widget buildRear(String templateName, BuildContext context) {
             ),
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: () {
-                  // Navigator.pushReplacementNamed(
-                  Navigator.pushNamed(
-                    context,
-                    // HOME_ROUTE,
-                    CREATE_SERVICE_ROUTE,
-                  );
-                },
-                child: Text(
-                  "Create",
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                )),
-          ),
+        Container(
+          margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+          width: double.infinity,
+          child: ElevatedButton(
+              onPressed: () {
+                // Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
+                  context,
+                  // HOME_ROUTE,
+                  CREATE_SERVICE_ROUTE,
+                );
+              },
+              child: Text(
+                "Create",
+                textAlign: TextAlign.center,
+                maxLines: 1,
+              )),
         ),
       ],
     ),
   );
+}
+
+Color hexToColor(String code) {
+  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }

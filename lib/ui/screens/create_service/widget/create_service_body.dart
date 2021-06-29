@@ -101,7 +101,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         Expanded(
           child: PrimaryButton(
             buttonText: 'Submit',
-            handleOnPressed: () {},
+            handleOnPressed: () {
+              serviceViewModelPostRequest();
+            },
             width: 100,
           ),
         ),
@@ -267,13 +269,14 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   serviceViewModelPostRequest() async {
+    serviceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    serviceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     serviceModel.serviceSubject = 'test Subject';
     serviceModel.serviceDescription = 'test description';
     serviceModel.dataAction = 1;
     serviceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
     serviceModel.json = jsonEncode(udfJson);
-    print(udfJson);
-
+    print(jsonEncode(udfJson));
     serviceBloc.postData(
       serviceResponseModel: serviceModel,
     );

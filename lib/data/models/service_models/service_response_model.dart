@@ -216,7 +216,7 @@ class ServiceResponseModel {
     templateCode = jsonResponse['TemplateCode'];
     templateDisplayName = jsonResponse['TemplateDisplayName'];
     if (jsonResponse['ColumnList'] != null) {
-      columnList = new List<ColumnList>();
+      columnList = [];
       jsonResponse['ColumnList'].forEach((v) {
         columnList.add(new ColumnList.fromJson(v));
       });
