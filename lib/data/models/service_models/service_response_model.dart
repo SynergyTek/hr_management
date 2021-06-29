@@ -5,6 +5,8 @@ class ServiceResponseModel {
   List<ColumnList> columnList;
   String udfTableMetadataId;
   String serviceNo;
+  String serviceSubject;
+  String serviceDescription;
   String startDate;
   String dueDate;
   String serviceSLA;
@@ -221,6 +223,8 @@ class ServiceResponseModel {
     }
     udfTableMetadataId = jsonResponse['UdfTableMetadataId'];
     serviceNo = jsonResponse['ServiceNo'];
+    serviceSubject = jsonResponse['ServiceSubject'];
+    serviceDescription = jsonResponse['ServiceDescription'];
     startDate = jsonResponse['StartDate'];
     dueDate = jsonResponse['DueDate'];
     serviceSLA = jsonResponse['ServiceSLA'];
@@ -337,6 +341,8 @@ class ServiceResponseModel {
     }
     data['UdfTableMetadataId'] = this.udfTableMetadataId;
     data['ServiceNo'] = this.serviceNo;
+    data['ServiceSubject'] = this.serviceSubject;
+    data['ServiceDescription'] = this.serviceDescription;
     data['StartDate'] = this.startDate;
     data['DueDate'] = this.dueDate;
     data['ServiceSLA'] = this.serviceSLA;

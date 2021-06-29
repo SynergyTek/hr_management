@@ -23,10 +23,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   ServiceResponseModel serviceModel;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     serviceBloc..getData();
-    // addDynamicFields(model);
   }
 
   @override
@@ -159,6 +157,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     //  String templateMasterName, String templateCategory) {
     model.forEach((element) {
       if (element.udfUIType == 6) {
+        udfJson[element.name] = '';
         // 'NTS_DropDownList') {
         TextEditingController _ddController = new TextEditingController();
         // _ddController.text = element.code != null
@@ -171,9 +170,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           // viewModelList: element.fieldDropDownItem,
           validationMessage: "Select " + element.name,
           isShowArrow: true,
-          onListTap: (dynamic value) {},
+          onListTap: (dynamic value) {
+            udfJson[element.name] = value.toString();
+          },
         ));
       } else if (element.udfUIType == 9) {
+        udfJson[element.name] = '';
         // "NTS_DatePicker") {
         listDynamic.add(new DynamicDateTimeBox(
           // code: element.code != null
@@ -185,6 +187,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           key: new Key(element.labelName),
           selectDate: (DateTime date) {
             if (date != null) {
+              udfJson[element.name] = date.toString();
               // element.code = date.toString();
               // if (templateCategory == "Leave Request" &&
               //     element.labelName == "startDate" &&
@@ -206,44 +209,55 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           },
         ));
       } else if (element.udfUIType == 3) {
+        udfJson[element.name] = '';
         listDynamic.add(new DynamicNumberBoxWidget(
             element.name,
             element.labelName,
             new TextEditingController(text: element.name ?? "0"), (String val) {
+          udfJson[element.name] = val;
           element.labelName = val.toString();
         }));
       } else if (element.udfUIType == 17) {
+        udfJson[element.name] = '';
         listDynamic.add(new DynamicIntegerBoxWidget(
             element.name,
             element.labelName,
             new TextEditingController(text: element.name ?? "0"), (String val) {
+          udfJson[element.name] = val;
           element.labelName = val.toString();
         }));
       } else if (element.udfUIType == 5) {
+        udfJson[element.name] = '';
         listDynamic.add(new DynamicCheckBoxValue(
           code: element.labelName,
           name: element.name,
           key: new Key(element.udfUIType),
           checkUpdate: (bool check) {
+            udfJson[element.name] = check.toString();
             element.labelName = check.toString();
           },
         ));
       } else if (element.udfUIType == 1 || element.udfUIType == 2) {
-        listDynamic.add(new DynamicTextBoxWidget(
-            element.name,
-            element.labelName,
-            new TextEditingController(text: element.name),
-            true,
-            (String val) {}));
-      } else if (element.udfUIType == 18) {
-        return new DynamicLink(
-            code: element.code, name: element.labelDisplayName);
-      } else {
+        udfJson[element.name] = '';
         listDynamic.add(new DynamicTextBoxWidget(
             element.name,
             element.labelName,
             new TextEditingController(text: element.name),
             false, (String val) {
+          udfJson[element.name] = val;
+          udfJson[element.name] = val;
+        }));
+      } else if (element.udfUIType == 18) {
+        udfJson[element.name] = '';
+        listDynamic.add(DynamicLink(code: element.code, name: element.name));
+      } else {
+        udfJson[element.name] = '';
+        listDynamic.add(new DynamicTextBoxWidget(
+            element.name,
+            element.labelName,
+            new TextEditingController(text: element.name),
+            false, (String val) {
+          udfJson[element.name] = val;
           element.labelName = val.toString();
         }));
       }
@@ -251,6 +265,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   serviceViewModelPostRequest() async {
+    serviceModel.serviceSubject = 'test Subject';
+    serviceModel.serviceDescription = 'test description';
+    serviceModel.dataAction = 1;
+    serviceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
     print(udfJson);
   }
 }
