@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/form_fields.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/data/models/service_models/service_response_model.dart';
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_group_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_dropdown_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_switch_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_time_picker_widget.dart';
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
@@ -31,6 +18,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController subjectController = TextEditingController();
   List<Widget> listDynamic = [];
   TextEditingController descriptionController = TextEditingController();
+  ServiceResponse serviceResponse;
 
   @override
   void initState() {
@@ -55,7 +43,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   child: Text(snapshot.data.error),
                 );
               }
-              addDynamic(snapshot.data.data.columnList);
+              serviceResponse = snapshot.data;
+              addDynamic(serviceResponse.data.columnList);
               return ListView(children: formFieldsWidgets());
             } else {
               return Center(
@@ -67,7 +56,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   List<Widget> formFieldsWidgets() {
-    List<Widget> widgets = new List<Widget>();
+    List<Widget> widgets = [];
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
       height: 80,
@@ -277,7 +266,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         listDynamic.add(new DynamicTextBoxWidget(
             element.name,
             element.labelName,
-            new TextEditingController(text:  element.name),
+            new TextEditingController(text: element.name),
             true,
             (String val) {}));
         // }
@@ -294,6 +283,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         }));
       }
     });
+  }
+
+  serviceViewModelPostRequest(String action) async {
+    Map<String, dynamic> udfJson = {
+      'LeaveEndDate': '',
+    };
   }
 
   // addDynamic(List model) {
