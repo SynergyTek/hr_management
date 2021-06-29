@@ -207,7 +207,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         listDynamic.add(new DynamicNumberBoxWidget(
             element.name,
             element.labelName,
-            new TextEditingController(text: element.name ?? "0"), (String val) {
+            new TextEditingController(text: "0"), (String val) {
           udfJson[element.name] = val;
           element.labelName = val.toString();
         }));
@@ -216,7 +216,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         listDynamic.add(new DynamicIntegerBoxWidget(
             element.name,
             element.labelName,
-            new TextEditingController(text: element.name ?? "0"), (String val) {
+            new TextEditingController(text: "0"), (String val) {
           udfJson[element.name] = val;
           element.labelName = val.toString();
         }));
@@ -234,10 +234,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       } else if (element.udfUIType == 1 || element.udfUIType == 2) {
         udfJson[element.name] = '';
         listDynamic.add(new DynamicTextBoxWidget(
-            element.name,
-            element.labelName,
-            new TextEditingController(text: element.name),
-            false, (String val) {
+            element.name, element.labelName, new TextEditingController(), false,
+            (String val) {
           udfJson[element.name] = val;
           udfJson[element.name] = val;
         }));
@@ -247,10 +245,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       } else {
         udfJson[element.name] = '';
         listDynamic.add(new DynamicTextBoxWidget(
-            element.name,
-            element.labelName,
-            new TextEditingController(text: element.name),
-            false, (String val) {
+            element.name, element.labelName, new TextEditingController(), false,
+            (String val) {
           udfJson[element.name] = val;
           element.labelName = val.toString();
         }));
