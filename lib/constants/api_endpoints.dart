@@ -16,6 +16,7 @@ class APIEndpointConstants {
 
   static const MANAGE_SERVICE =
       'https://webapidev.aitalkx.com/nts/command/ManageService';
+
   static const String GET_SERVICE_ATTACHMENT_COUNT =
       "http://95.111.235.64:446/cms/GetServiceAttachmentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
 

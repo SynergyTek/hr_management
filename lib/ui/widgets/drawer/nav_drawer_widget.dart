@@ -48,7 +48,7 @@ Widget drawerWidget(context) {
           title: Text('Remote Sign In/Out'),
           trailing: Icon(Icons.login),
           onTap: () {
-            Navigator.pushReplacementNamed(
+            Navigator.pushNamed(
               context,
               MARK_ATTENDANCE_ROUTE,
             );
@@ -58,7 +58,7 @@ Widget drawerWidget(context) {
           title: Text('New Leave Request'),
           trailing: Icon(Icons.calendar_today_outlined),
           onTap: () {
-            Navigator.pushReplacementNamed(
+            Navigator.pushNamed(
               context,
               LEAVE_REQUEST,
             );
@@ -68,23 +68,22 @@ Widget drawerWidget(context) {
         //   title: Text('UDF Demo'),
         //   trailing: Icon(Icons.app_registration),
         //   onTap: () {
-        //     Navigator.pushReplacementNamed(
+        //     Navigator.pushNamed(
         //       context,
         //       REGISTRATION_ROUTE,
         //     );
         //   },
         // ),
-        // ListTile(
-        //   title: Text('Create Service'),
-        //   trailing: Icon(Icons.create),
-        //   onTap: () {
-        //     Navigator.pushReplacementNamed(
-        //       context,
-        //       CREATE_SERVICE_ROUTE,
-        //       // CREATE_SERVICE,
-        //     );
-        //   },
-        // ),
+        ListTile(
+          title: Text('Create Service'),
+          trailing: Icon(Icons.create),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              CREATE_SERVICE_ROUTE,
+            );
+          },
+        ),
       ],
     ),
   );

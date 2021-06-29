@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/ui/widgets/primary_button.dart';
 
 import '../../constants/image_path_constants.dart';
 import '../../logic/blocs/location_bloc/location_bloc.dart';
@@ -37,6 +38,28 @@ class LocationConnectivityWidget extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                   ),
+                ),
+                SizedBox(
+                  height: 32.0,
+                ),
+                PrimaryButton(
+                  buttonText: "Enable Location service",
+                  handleOnPressed: () async {
+                    // Checking whether the Location Permissions are not given.
+                    await context
+                        .read<LocationBloc>()
+                        .checkForLocationPermission();
+
+                    // Asking for Location Service.
+                    bool isLocationEnabled = await context
+                        .read<LocationBloc>()
+                        .isLocationServiceEnabled();
+
+                    if (!!isLocationEnabled) {
+                      print(isLocationEnabled);
+                      context.read<LocationBloc>().add(LocationStartedEvent());
+                    }
+                  },
                 ),
               ],
             ),
