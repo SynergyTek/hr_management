@@ -60,7 +60,8 @@ class BlocNumberBoxWidget extends StatelessWidget {
         ],
         inputFormatters: [
           FilteringTextInputFormatter.allow(
-              new RegExp('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$'))
+              new RegExp('^\$|^(0|([1-9][0-9]{0,}))?\$'))
+          // new RegExp('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$'))
         ],
         onChanged: onChanged,
       ),
