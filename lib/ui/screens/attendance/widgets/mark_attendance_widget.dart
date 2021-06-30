@@ -1,3 +1,5 @@
+import 'package:hr_management/logic/blocs/remote_attendance_bloc/remote_attendance_bloc.dart';
+
 import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -275,22 +277,21 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                               child: Column(
                                 children: <Widget>[
                                   InkWell(
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      backgroundColor: Colors.green,
                                       child: CircleAvatar(
-                                        radius: 35,
-                                        backgroundColor: Colors.green,
-                                        child: CircleAvatar(
-                                          radius: 33,
-                                          backgroundColor: Colors.white,
-                                          child: Icon(
-                                            Icons.fingerprint,
-                                            color: Colors.green,
-                                            size: 40.0,
-                                          ),
+                                        radius: 33,
+                                        backgroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.fingerprint,
+                                          color: Colors.green,
+                                          size: 40.0,
                                         ),
                                       ),
-                                      onTap: () {
-                                        // sendaccessLogRequest("Checkin");
-                                      }),
+                                    ),
+                                    onTap: () => _handleSignInOnClick(),
+                                  ),
                                   Text("Sign In",
                                       style: TextStyle(color: Colors.green))
                                 ],
@@ -301,22 +302,21 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                               child: Column(
                                 children: <Widget>[
                                   InkWell(
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      backgroundColor: Colors.red,
                                       child: CircleAvatar(
-                                        radius: 35,
-                                        backgroundColor: Colors.red,
-                                        child: CircleAvatar(
-                                          radius: 33,
-                                          backgroundColor: Colors.white,
-                                          child: Icon(
-                                            Icons.power_settings_new,
-                                            color: Colors.red,
-                                            size: 40.0,
-                                          ),
+                                        radius: 33,
+                                        backgroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.power_settings_new,
+                                          color: Colors.red,
+                                          size: 40.0,
                                         ),
                                       ),
-                                      onTap: () {
-                                        // sendaccessLogRequest("Checkout");
-                                      }),
+                                    ),
+                                    onTap: () => _handleSignOutOnClick(),
+                                  ),
                                   Text("Sign Out",
                                       style: TextStyle(color: Colors.red))
                                 ],
@@ -434,6 +434,43 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
             child: Text("(You are in range to mark attendance)"),
           ),
         ],
+      ),
+    );
+  }
+
+  void _handleSignInOnClick() async {
+    await remoteAttendanceBloc.getData(isSignIn: true);
+
+    print("Sign In isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
+    print(
+        "Sign In Error?: ${remoteAttendanceBloc.subject.value.error}, ${remoteAttendanceBloc.subject.value.error.runtimeType}");
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          remoteAttendanceBloc.subject.value.isSignIn == 0 &&
+                  remoteAttendanceBloc.subject.value.error == null
+              ? "Sign in successful!"
+              : "Error occured please try again later.",
+        ),
+      ),
+    );
+  }
+
+  void _handleSignOutOnClick() async {
+    await remoteAttendanceBloc.getData(isSignIn: false);
+
+    print("Sign Out isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
+    print("Sign Out Error?: ${remoteAttendanceBloc.subject.value.error}");
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          remoteAttendanceBloc.subject.value.isSignIn == 1 &&
+                  remoteAttendanceBloc.subject.value.error == null
+              ? "Sign out successful!"
+              : "Error occured please try again later.",
+        ),
       ),
     );
   }

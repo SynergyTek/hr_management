@@ -45,7 +45,7 @@ class ServiceRepository extends AbstractServiceRepository {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: serviceResponseModel ?? {},
+        data: jsonEncode(serviceResponseModel.toJson()) ?? {},
       );
 
       print("response: ${response.data}");

@@ -10,6 +10,7 @@ class CreateServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppbarWidget(
         title: "Create Service",
       ),
