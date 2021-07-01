@@ -1,5 +1,6 @@
 import 'package:hr_management/ui/screens/create_service/create_service_screen.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
+import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import '../ui/screens/attendance/mark_attendance.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,10 @@ class AppRouter {
             subtitleText: "Synergy",
           ),
         );
+        break;
+
+      case LOGIN_ROUTE:
+        return MaterialPageRoute(builder: (_) => LoginScreen());
         break;
 
       case ONBOARDING_ROUTE:

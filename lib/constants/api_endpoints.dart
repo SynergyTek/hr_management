@@ -11,6 +11,9 @@ class APIEndpointConstants {
       '$BASE_URL/nts/query/GetAllowedTempaltes?categoryCode=Leave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
   // '$BASE_URL/NtsService/ReadServiceTemplate?categoryCode=Leave';
 
+  static const MANAGE_LOGIN =
+      'https://webapidev.aitalkx.com/api/Authenticate/login';
+
   static const GET_SERVICE_DETAILS =
       'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
