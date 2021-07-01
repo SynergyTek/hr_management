@@ -21,7 +21,7 @@ class NTSDdRepository extends AbstractNTSDdRepository {
       };
 
       Response response = await _dio.get(
-        url,
+       APIEndpointConstants.BASE_URL+'/'+url,
         queryParameters: queryparams ?? {},
       );
       print("DIO Response: ${response.data} ${response.data.runtimeType}");

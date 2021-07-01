@@ -14,6 +14,7 @@ import 'package:hr_management/ui/widgets/form_widgets/bloc_dropdown_widget.dart'
 import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
+import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 import 'package:sizer/sizer.dart';
@@ -21,7 +22,6 @@ import 'package:sizer/sizer.dart';
 import '../create_service_form_bloc.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
-  
   final String templateCode;
   const CreateServiceScreenBody({Key key, this.templateCode});
 
@@ -333,19 +333,22 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             // model[i].value = check.toString();
           },
         ));
-      }
-      //  else if (model[i].type == 'selectboxes') {
-      //   final dropDown$i = new SelectFieldBloc();
-      //   udfJson[model[i].key] = '';
-      //   listDynamic.add(
-      //     BlocDropDownWidget(
-      //       labelName: model[i].label,
-      //       selectFieldBloc: dropDown$i,
-      //     ),
-      //   );
-      //   createServiceFormBloc.addFieldBlocs(fieldBlocs: [dropDown$i]);
-      // }
-      else if (model[i].type == 'radio') {
+      } else if (model[i].type == 'selectboxes') {
+        TextEditingController _ddController = new TextEditingController();
+        listDynamic.add(NTSDropDownSelect(
+          title: model[i].label,
+          controller: _ddController,
+          hint: model[i].label,
+          validationMessage: "Select " + model[i].label,
+          isShowArrow: true,
+          nameKey: model[i].template,
+          idKey: model[i].idPath,
+          url: model[i].data,
+          onListTap: (dynamic value) {
+            udfJson[model[i].label] = value.toString();
+          },
+        ));
+      } else if (model[i].type == 'radio') {
         final radio$i = new SelectFieldBloc();
         udfJson[model[i].key] = '';
         listDynamic.add(
@@ -355,19 +358,22 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
-      }
-      //  else if (model[i].type == 'select') {
-      //   final dropDown$i = new SelectFieldBloc();
-      //   udfJson[model[i].key] = '';
-      //   listDynamic.add(
-      //     BlocDropDownWidget(
-      //       labelName: model[i].label,
-      //       selectFieldBloc: dropDown$i,
-      //     ),
-      //   );
-      //   createServiceFormBloc.addFieldBlocs(fieldBlocs: [dropDown$i]);
-      // }
-      else if (model[i].type == 'datetime') {
+      } else if (model[i].type == 'select') {
+        TextEditingController _ddController = new TextEditingController();
+        listDynamic.add(NTSDropDownSelect(
+          title: model[i].label,
+          controller: _ddController,
+          hint: model[i].label,
+          validationMessage: "Select " + model[i].label,
+          isShowArrow: true,
+          nameKey: model[i].template,
+          idKey: model[i].idPath,
+          url: model[i].data.url,
+          onListTap: (dynamic value) {
+            udfJson[model[i].label] = value.toString();
+          },
+        ));
+      } else if (model[i].type == 'datetime') {
         udfJson[model[i].key] = '';
         listDynamic.add(new DynamicDateTimeBox(
           name: model[i].key,

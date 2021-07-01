@@ -51,8 +51,8 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
               builder: (context, AsyncSnapshot<NTSDdResponse> snapshot) {
                 print("Snapshot data: ${snapshot.data}");
                 if (snapshot.hasData) {
-                  if (_idNameModelList == null ||
-                      _idNameModelList.length == 0) {
+                  if (snapshot.data.data == null ||
+                      snapshot.data.data.length == 0) {
                     return EmptyListWidget();
                   }
                   _idNameModelList = snapshot.data.data;
