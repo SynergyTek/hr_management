@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/data/models/api_models/post_response_model.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/service_models/service_response_model.dart';
 import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
@@ -20,7 +21,9 @@ import 'package:sizer/sizer.dart';
 import '../create_service_form_bloc.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
-  const CreateServiceScreenBody({Key key});
+  
+  final String templateCode;
+  const CreateServiceScreenBody({Key key, this.templateCode});
 
   @override
   _CreateServiceScreenBodyState createState() =>
@@ -40,7 +43,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   @override
   void initState() {
     super.initState();
-    serviceBloc..getData();
+    serviceBloc..getData(widget.templateCode);
   }
 
   @override
@@ -195,12 +198,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       textFieldBloc: createServiceFormBloc.description,
       prefixIcon: Icon(Icons.note),
     ));
-if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
-    widgets.addAll(columnComponentWidgets);
-}
-if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
-    widgets.addAll(componentComListWidgets);
-}
+    if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
+      widgets.addAll(columnComponentWidgets);
+    }
+    if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
+      widgets.addAll(componentComListWidgets);
+    }
     widgets.add(Row(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -295,7 +298,7 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: number$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.format_list_numbered),
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
             },
@@ -311,7 +314,7 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: password$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.visibility_off_rounded),
             obscureText: true,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -397,7 +400,7 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
             fieldName: model[i].label,
             readonly: true,
             textFieldBloc: hidden$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.visibility),
             maxLines: 1,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -415,7 +418,7 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: phoneNumber$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.phone_rounded),
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
             },
@@ -433,7 +436,7 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: email$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.email),
             maxLines: 1,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -450,7 +453,7 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: textField$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.note),
             maxLines: 1,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -543,7 +546,63 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
     );
   }
 
+  Future<void> _showPostAlertMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Something went wrong'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showPostAlertMyDialog2() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Leave Applied Successfully'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   serviceViewModelPostRequest() async {
+    serviceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    serviceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     serviceModel.serviceSubject = subjectController.text;
     serviceModel.serviceDescription = descriptionController.text;
     serviceModel.dataAction = 1;
@@ -551,8 +610,14 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
     serviceModel.json = jsonEncode(udfJson);
     print(udfJson);
 
-    serviceBloc.postData(
+    PostResponse result = await serviceBloc.postData(
       serviceResponseModel: serviceModel,
     );
+    if (result.isSuccess) {
+      _showPostAlertMyDialog2();
+    } else {
+      _showPostAlertMyDialog();
+    }
+    print(result);
   }
 }

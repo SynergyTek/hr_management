@@ -12,6 +12,7 @@ import '../ui/screens/leaves/leave_template.dart';
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
 import '../ui/screens/splash_screen/splash_screen.dart';
 import 'route_constants.dart';
+import 'screen_arguments.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -66,8 +67,9 @@ class AppRouter {
         break;
 
       case CREATE_SERVICE_ROUTE:
+      final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => CreateServiceScreen(),
+          builder: (_) => CreateServiceScreen(templateCode: args.arg1,),
         );
         break;
 

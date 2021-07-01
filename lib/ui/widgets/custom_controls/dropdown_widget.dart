@@ -56,14 +56,14 @@ class DropdownFormField<T> extends StatelessWidget {
                     child: isExpanded == true
                         ? new Text(
                             value.toString(),
-                            style: Theme.of(context).textTheme.body1,
+                            style: Theme.of(context).textTheme.bodyText2,
                             // overflow: TextOverflow.ellipsis,
                           )
                         : Container(
                             width: 180.0,
                             child: new Text(
                               value.toString(),
-                              style: Theme.of(context).textTheme.body1,
+                              style: Theme.of(context).textTheme.bodyText2,
                               // overflow: TextOverflow.ellipsis,
                             ),
                           ),
