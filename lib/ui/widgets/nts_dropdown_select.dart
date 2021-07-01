@@ -36,7 +36,7 @@ class NTSDropDownSelect extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           new TextFormField(
-            style: Theme.of(context).textTheme.body1,
+            style: Theme.of(context).textTheme.bodyText2,
             controller: controller,
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(

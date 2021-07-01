@@ -5,6 +5,7 @@ import 'service_response_model.dart';
 /// list of APIData and error string if our API call gets failed
 /// or returns an error in response.
 class ServiceResponse {
+  bool isSuccess;
   final ServiceResponseModel data;
   String error;
 

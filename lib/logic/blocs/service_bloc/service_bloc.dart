@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hr_management/data/models/api_models/post_response_model.dart';
 import 'package:hr_management/data/models/service_models/service_response_model.dart';
 
 import '../../../data/models/service_models/service_response.dart';
@@ -19,12 +20,14 @@ class ServiceBloc {
   }
 
   /// Used to create new entries.
-  postData({
+  Future<PostResponse> postData({
     @required ServiceResponseModel serviceResponseModel,
   }) async {
-    ServiceResponse response = await _serviceRepository.postAPIData(
+    PostResponse response = await _serviceRepository.postAPIData(
       serviceResponseModel: serviceResponseModel,
     );
+
+    return response;
 
     // print("Hulululu: ${response.data.toJson()} ${response.error}");
   }
