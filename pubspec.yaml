@@ -25,12 +25,14 @@ dependencies:
   rxdart: ^0.27.1
   sqflite: ^2.0.0+3
   flip_card: ^0.5.0
-  
+  sizer: ^2.0.13
   flutter_form_bloc: ^0.20.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  listizer:
+    path: ./listizer
 
 flutter:
   uses-material-design: true

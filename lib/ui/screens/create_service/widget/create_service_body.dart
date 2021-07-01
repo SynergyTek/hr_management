@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/service_models/service_response_model.dart';
+import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
@@ -14,6 +15,7 @@ import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.d
 import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
+import 'package:sizer/sizer.dart';
 
 import '../create_service_form_bloc.dart';
 
@@ -31,6 +33,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
   ServiceResponseModel serviceModel;
+  UdfJson udfJsonString;
+  List<ColumnComponent> columnComponent = [];
+  List<ComponentComponent> componentComList = [];
   @override
   void initState() {
     super.initState();
@@ -57,6 +62,27 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
+
+                udfJsonString =
+                    UdfJson.fromJson(jsonDecode(snapshot.data.data.json));
+                for (UdfJsonComponent component in udfJsonString.components) {
+                  if (component.columns != null &&
+                      component.columns.isNotEmpty) {
+                    for (Columns column in component.columns) {
+                      for (ColumnComponent columnCom in column.components) {
+                        columnComponent.add(columnCom);
+                      }
+                    }
+                    if (component.components != null &&
+                        component.components.isNotEmpty) {
+                      for (ComponentComponent componentComponent
+                          in component.components) {
+                        componentComList.add(componentComponent);
+                      }
+                    }
+                  }
+                }
+
                 addDynamic(
                   snapshot.data.data.columnList,
                   createServiceFormBloc,
@@ -90,19 +116,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     List<Widget> widgets = [];
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
-      height: 80,
+      height: 12.h,
       color: Colors.blue[100],
-      child: Card(
-        elevation: 0,
-        color: Colors.blue[100],
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            rowChild(serviceModel.serviceNo, 'Service No', 3),
-            rowChild(serviceModel.status.toString(), 'Status', 2),
-            rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
-          ],
-        ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          rowChild(serviceModel.serviceNo, 'Service No', 3),
+          rowChild(serviceModel.status.toString(), 'Status', 2),
+          rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
+        ],
       ),
     ));
 
@@ -199,6 +222,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     return Expanded(
       flex: flex ?? 0,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             data,
