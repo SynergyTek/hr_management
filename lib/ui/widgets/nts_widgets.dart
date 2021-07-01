@@ -426,6 +426,7 @@ class _DynamicCheckBoxValueState extends State<DynamicCheckBoxValue> {
   Widget build(BuildContext context) {
     return new Container(
         child: new CheckboxListTile(
+      secondary: Icon(Icons.check),
       title: new Text(widget.name),
       value: _isChecked,
       onChanged: (val) {
