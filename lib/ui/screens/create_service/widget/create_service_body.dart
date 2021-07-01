@@ -296,7 +296,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: number$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.format_list_numbered),
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
             },
@@ -312,7 +312,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: password$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.visibility_off_rounded),
             obscureText: true,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -398,7 +398,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             fieldName: model[i].label,
             readonly: true,
             textFieldBloc: hidden$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.visibility),
             maxLines: 1,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -416,7 +416,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: phoneNumber$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.phone_rounded),
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
             },
@@ -434,7 +434,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: email$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.email),
             maxLines: 1,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -451,7 +451,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: textField$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.note),
             maxLines: 1,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
