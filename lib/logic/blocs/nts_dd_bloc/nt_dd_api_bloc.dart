@@ -1,0 +1,49 @@
+import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
+import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
+import 'package:hr_management/data/repositories/nts_dd_repo/nts_dd_repo.dart';
+
+import 'package:rxdart/rxdart.dart';
+
+class NTSDdAPIBloc {
+  final NTSDdRepository _apiRepository = NTSDdRepository();
+
+  // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
+  final BehaviorSubject<NTSDdResponse> _subject =
+      BehaviorSubject<NTSDdResponse>();
+
+  /// Used to fetch new entries.
+  getData() async {
+    NTSDdResponse response = await _apiRepository.getAPIData();
+    print("response: $response");
+    _subject.sink.add(response);
+  }
+
+  /// Used to create new entries.
+  postData() async {}
+
+  /// Used to update an existing entry.
+  putData() async {
+    // Update here
+    // ...
+
+    // Update the list (in UI) with the getAPI call.
+    getData();
+  }
+
+  /// Used to delete a particular entry.
+  deleteData() async {
+    // Delete here
+    // ...
+
+    // Update the list (in UI) with the getAPI call.
+    getData();
+  }
+
+  dispose() {
+    _subject.close();
+  }
+
+  BehaviorSubject<NTSDdResponse> get subject => _subject;
+}
+
+final ntsDdBloc = NTSDdAPIBloc();

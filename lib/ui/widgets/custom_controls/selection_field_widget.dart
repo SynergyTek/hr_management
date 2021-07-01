@@ -29,7 +29,7 @@ class SelectTextField extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           new TextFormField(
-            style: Theme.of(context).textTheme.body1,
+            style: Theme.of(context).textTheme.bodyText2,
             controller: controller,
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
@@ -133,7 +133,7 @@ class StaticField extends StatelessWidget {
   final Widget prefixIcon;
   final FormFieldValidator<String> validator;
   final double width;
- final TextEditingController controller;
+  final TextEditingController controller;
 
   const StaticField(
       {this.callBack,
@@ -142,13 +142,15 @@ class StaticField extends StatelessWidget {
       this.validationMessage,
       this.initialValue,
       this.prefixIcon,
-      this.validator,this.controller, this.width});
+      this.validator,
+      this.controller,
+      this.width});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 65.0,
-      width:width,
+      width: width,
       child: Column(
         children: <Widget>[
           TextFormField(
@@ -158,8 +160,7 @@ class StaticField extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: hint,
                 labelText: hint,
-                labelStyle:
-                    TextStyle(color: Theme.of(context).primaryColor),
+                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                 // filled: true,
                 prefixIcon: Icon(Icons.timer),
               )),

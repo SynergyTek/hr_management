@@ -89,7 +89,7 @@ class DynamicIntegerBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return new TextFormField(
         keyboardType: TextInputType.number,
-        inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         textAlign: TextAlign.left,
         key: new Key(fieldName),
         controller: controller,
@@ -172,7 +172,7 @@ class DateTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle valueStyle = Theme.of(context).textTheme.body1;
+    final TextStyle valueStyle = Theme.of(context).textTheme.bodyText2;
     return new Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -369,7 +369,7 @@ class TimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle valueStyle = Theme.of(context).textTheme.body1;
+    final TextStyle valueStyle = Theme.of(context).textTheme.bodyText2;
     return new Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
