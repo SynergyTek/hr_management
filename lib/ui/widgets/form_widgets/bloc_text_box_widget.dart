@@ -12,6 +12,8 @@ class BlocTextBoxWidget extends StatelessWidget {
   final Iterable<String> autofillHints;
   final SuffixButton suffixButton;
   final Function onChanged;
+  final int maxLines;
+  final bool obscureText;
 
   const BlocTextBoxWidget(
       {this.labelName,
@@ -23,16 +25,20 @@ class BlocTextBoxWidget extends StatelessWidget {
       this.prefixIcon,
       this.autofillHints,
       this.suffixButton,
-      this.onChanged});
+      this.onChanged,
+      this.maxLines,
+      this.obscureText});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 0.0, left: 0.0),
       child: TextFieldBlocBuilder(
+        obscureText: obscureText ?? false,
+        maxLines: maxLines ?? 1,
         key: Key(fieldName),
         textFieldBloc: textFieldBloc,
-        readOnly: readonly,
+        readOnly: readonly ?? false,
         keyboardType: keyboardType ?? TextInputType.name,
         suffixButton: suffixButton,
         decoration: InputDecoration(

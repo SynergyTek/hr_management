@@ -6,12 +6,14 @@ class BlocDropDownWidget extends StatelessWidget {
   final DateTime selectedDate;
   final Widget prefixIcon;
   final SelectFieldBloc selectFieldBloc;
+  final Function onChanged;
 
   const BlocDropDownWidget({
     this.labelName,
     this.selectedDate,
     this.prefixIcon,
     this.selectFieldBloc,
+    this.onChanged,
   });
 
   @override
@@ -26,6 +28,7 @@ class BlocDropDownWidget extends StatelessWidget {
           prefixIcon: prefixIcon ?? Icon(Icons.sentiment_satisfied),
         ),
         itemBuilder: (context, value) => value,
+        onChanged: onChanged,
       ),
     );
   }
