@@ -1,14 +1,17 @@
-part of 'leave_temp_repo.dart';
+part of 'nts_dd_repo.dart';
 
 /// API Repository defines https client object, and our network call methods
 /// which will be used to fetch data from Apis will map the JSON to its model.
-class LeaveTempRepository extends AbstractLeaveTempRepository {
+class NTSDdRepository extends AbstractNTSDdRepository {
   final Dio _dio = Dio();
 
-  Future<LeaveTempResponse> getAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
-  }) async {
+  Future<NTSDdResponse> getAPIData(
+      {
+      // Optional Params to be added to the request if required.
+      Map<String, dynamic> queryparams,
+      String url,
+      String idKey,
+      String nameKey}) async {
     try {
       // TODO: Need to send this via UI and not hardcode here!
       queryparams = {
@@ -18,11 +21,11 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
       };
 
       Response response = await _dio.get(
-        APIEndpointConstants.GET_READSERVICETEMPLATE_URL,
+        url,
         queryParameters: queryparams ?? {},
       );
       print("DIO Response: ${response.data} ${response.data.runtimeType}");
-      return LeaveTempResponse.fromJson(response.data);
+      return NTSDdResponse.fromJson(response.data, idKey, nameKey);
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_READSERVICETEMPLATE_URL}.");
@@ -30,22 +33,22 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
       print("Stack: \n\n\n $stacktrace");
       print("Err: \n\n\n $err");
 
-      return LeaveTempResponse.withError("$err");
+      return NTSDdResponse.withError("$err");
     }
   }
 
   @override
-  Future<LeaveTempResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
+  Future<NTSDdResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<LeaveTempResponse> postAPIData({Map<String, dynamic> queryparams}) {
+  Future<NTSDdResponse> postAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<LeaveTempResponse> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<NTSDdResponse> putAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 }

@@ -39,7 +39,7 @@ class TypingTextAnimationState extends State<TypingTextAnimation>
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    TextStyle textStyle = theme.textTheme.title
+    TextStyle textStyle = theme.textTheme.headline6
         .copyWith(color: Colors.black, fontWeight: FontWeight.bold);
     return new Container(
       margin: new EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),

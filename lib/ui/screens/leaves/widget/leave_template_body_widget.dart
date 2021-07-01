@@ -15,8 +15,6 @@ class LeaveTemplateBody extends StatefulWidget {
 }
 
 class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
-  Future<List<LeaveTemplateModel>> fetchLeaveTemplates;
-
   @override
   void initState() {
     super.initState();

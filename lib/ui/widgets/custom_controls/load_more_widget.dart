@@ -25,7 +25,7 @@ class _LoadMoreWidgetState extends State<LoadMoreWidget> {
             color: Colors.white,
             child: widget.isLoading
                 ? Center(child: CircularProgressIndicator())
-                : FlatButton(
+                : TextButton(
                     child: Text('Load More'),
                     onPressed: widget.callBack,
                   ),

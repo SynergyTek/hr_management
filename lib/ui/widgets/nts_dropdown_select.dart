@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 typedef ListTapPressedCallBack = void Function(dynamic key);
+
 class NTSDropDownSelect extends StatelessWidget {
   final String title;
   final bool isShowArrow;
@@ -21,8 +22,7 @@ class NTSDropDownSelect extends StatelessWidget {
       this.prefixIcon,
       this.validator,
       // this.viewModelList,
-      this.onListTap
-      })
+      this.onListTap})
       : super(key: key);
 
   // NetworkHelper _networkHelper = NetworkHelper();
@@ -66,7 +66,7 @@ class NTSDropDownSelect extends StatelessWidget {
             onTap: () {
               // _networkHelper.initConnectivity().then((value) {
               //   if (value) {
-                  // pushtoNTSDropDownList(context, onListTap, viewModelList);
+              // pushtoNTSDropDownList(context, onListTap, viewModelList);
               //   } else {
               //     return networkRaisedToast(context);
               //   }
