@@ -5,18 +5,21 @@ import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 import 'widget/create_service_body.dart';
 
 class CreateServiceScreen extends StatelessWidget {
-  const CreateServiceScreen({Key key}) : super(key: key);
+
+  final String templateCode;
+  const CreateServiceScreen({Key key, this.templateCode}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
       appBar: AppbarWidget(
-        title: "Create Service",
+        title: "Create "+templateCode,
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: CreateServiceScreenBody(),
+          child: CreateServiceScreenBody(templateCode:templateCode),
         ),
       ),
     );

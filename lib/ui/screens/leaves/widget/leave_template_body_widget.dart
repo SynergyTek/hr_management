@@ -57,6 +57,7 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
                         colorCode: leaveTempResponse.templateColor,
                         context: context),
                     back: buildRear(
+                        templateCode: leaveTempResponse.code,
                         templateName: snapshot.data.data[index].displayName,
                         colorCode: leaveTempResponse.templateColor,
                         context: context),

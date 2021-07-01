@@ -14,8 +14,8 @@ class ServiceBloc {
       BehaviorSubject<ServiceResponse>();
 
   /// Used to fetch new entries.
-  getData() async {
-    ServiceResponse response = await _serviceRepository.getAPIData();
+  getData(templateCode) async {
+    ServiceResponse response = await _serviceRepository.getAPIData(templateCode);
     _subject.sink.add(response);
   }
 
@@ -38,7 +38,7 @@ class ServiceBloc {
     // ...
 
     // Update the list (in UI) with the getService call.
-    getData();
+    // getData();
   }
 
   /// Used to delete a particular entry.
@@ -47,7 +47,7 @@ class ServiceBloc {
     // ...
 
     // Update the list (in UI) with the getService call.
-    getData();
+    // getData();
   }
 
   dispose() {

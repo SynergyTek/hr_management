@@ -21,7 +21,9 @@ import 'package:sizer/sizer.dart';
 import '../create_service_form_bloc.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
-  const CreateServiceScreenBody({Key key});
+  
+  final String templateCode;
+  const CreateServiceScreenBody({Key key, this.templateCode});
 
   @override
   _CreateServiceScreenBodyState createState() =>
@@ -41,7 +43,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   @override
   void initState() {
     super.initState();
-    serviceBloc..getData();
+    serviceBloc..getData(widget.templateCode);
   }
 
   @override
