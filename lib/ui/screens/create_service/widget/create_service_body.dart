@@ -29,7 +29,8 @@ class CreateServiceScreenBody extends StatefulWidget {
 
 class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController subjectController = TextEditingController();
-  List<Widget> listDynamic = [];
+  List<Widget> columnComponentWidgets = [];
+  List<Widget> componentComListWidgets = [];
   TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
   ServiceResponseModel serviceModel;
@@ -62,7 +63,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
-
+                columnComponent = [];
+                componentComList = [];
                 udfJsonString =
                     UdfJson.fromJson(jsonDecode(snapshot.data.data.json));
                 for (UdfJsonComponent component in udfJsonString.components) {
@@ -82,11 +84,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     }
                   }
                 }
-
-                addDynamic(
-                  snapshot.data.data.columnList,
-                  createServiceFormBloc,
-                );
+                if (columnComponent != null && columnComponent.isNotEmpty) {
+                  columnComponentWidgets = addDynamic(
+                    columnComponent,
+                    createServiceFormBloc,
+                  );
+                }
+                if (componentComList != null && componentComList.isNotEmpty) {
+                  addDynamicComponentComponent(
+                      componentComList, createServiceFormBloc);
+                }
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {},
@@ -158,9 +165,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       labelName: 'Description',
       textFieldBloc: createServiceFormBloc.description,
     ));
-
-    widgets.addAll(listDynamic);
-
+if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
+    widgets.addAll(columnComponentWidgets);
+}
+if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
+    widgets.addAll(componentComListWidgets);
+}
     widgets.add(Row(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -206,186 +216,261 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
   }
 
-  addDynamic(model, createServiceFormBloc) {
+  List<Widget> addDynamic(model, createServiceFormBloc) {
+    List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      print(model[i].udfUIType);
-      if (model[i].udfUIType == 1) {
+      print(model[i].type);
+      if (model[i].type == 'textfield') {
         final textField$i = new TextFieldBloc();
-        udfJson[model[i].name] = '';
+        udfJson[model[i].key] = '';
         listDynamic.add(
           BlocTextBoxWidget(
-            labelName: model[i].labelName,
-            fieldName: model[i].labelName,
+            labelName: model[i].label,
+            fieldName: model[i].label,
             readonly: false,
             textFieldBloc: textField$i,
             prefixIcon: null,
             maxLines: 1,
             onChanged: (value) {
-              udfJson[model[i].name] = value.toString();
+              udfJson[model[i].key] = value.toString();
             },
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
-      } else if (model[i].udfUIType == 2) {
+      } else if (model[i].type == 'textarea') {
         final textArea$i = new TextFieldBloc();
-        udfJson[model[i].name] = '';
+        udfJson[model[i].key] = '';
         listDynamic.add(
           BlocTextBoxWidget(
-            labelName: model[i].labelName,
-            fieldName: model[i].labelName,
+            labelName: model[i].label,
+            fieldName: model[i].label,
             readonly: false,
             textFieldBloc: textArea$i,
             prefixIcon: null,
             maxLines: 3,
             onChanged: (value) {
-              udfJson[model[i].name] = value.toString();
+              udfJson[model[i].key] = value.toString();
             },
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
-      } else if (model[i].udfUIType == 3) {
+      } else if (model[i].type == 'number') {
         final number$i = new TextFieldBloc();
-        udfJson[model[i].name] = '';
+        udfJson[model[i].key] = '';
         listDynamic.add(
           BlocNumberBoxWidget(
-            labelName: model[i].labelName,
-            fieldName: model[i].labelName,
+            labelName: model[i].label,
+            fieldName: model[i].label,
             readonly: false,
             textFieldBloc: number$i,
             prefixIcon: null,
             onChanged: (value) {
-              udfJson[model[i].name] = value.toString();
+              udfJson[model[i].key] = value.toString();
             },
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
-      } else if (model[i].udfUIType == 4) {
+      } else if (model[i].type == 'password') {
         final password$i = new TextFieldBloc();
-        udfJson[model[i].name] = '';
+        udfJson[model[i].key] = '';
         listDynamic.add(
           BlocTextBoxWidget(
-            labelName: model[i].labelName,
-            fieldName: model[i].labelName,
+            labelName: model[i].label,
+            fieldName: model[i].label,
             readonly: false,
             textFieldBloc: password$i,
             prefixIcon: null,
             obscureText: true,
             onChanged: (value) {
-              udfJson[model[i].name] = value.toString();
+              udfJson[model[i].key] = value.toString();
             },
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
-      } else if (model[i].udfUIType == 5) {
-        udfJson[model[i].name] = '';
+      } else if (model[i].type == 'checkbox') {
+        udfJson[model[i].key] = '';
         listDynamic.add(new DynamicCheckBoxValue(
-          code: model[i].labelName,
-          name: model[i].name,
-          key: new Key(model[i].udfUIType),
+          code: model[i].label,
+          name: model[i].label,
+          key: new Key(model[i].type),
           checkUpdate: (bool check) {
-            udfJson[model[i].name] = check.toString();
-            model[i].labelName = check.toString();
+            udfJson[model[i].key] = check.toString();
+            // model[i].value = check.toString();
           },
         ));
-      } else if (model[i].udfUIType == 6) {
-        final dropDown$i = new SelectFieldBloc();
-        udfJson[model[i].name] = '';
-        listDynamic.add(
-          BlocDropDownWidget(
-            labelName: model[i].labelName,
-            selectFieldBloc: dropDown$i,
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [dropDown$i]);
-      } else if (model[i].udfUIType == 7) {
+      }
+      //  else if (model[i].type == 'selectboxes') {
+      //   final dropDown$i = new SelectFieldBloc();
+      //   udfJson[model[i].key] = '';
+      //   listDynamic.add(
+      //     BlocDropDownWidget(
+      //       labelName: model[i].label,
+      //       selectFieldBloc: dropDown$i,
+      //     ),
+      //   );
+      //   createServiceFormBloc.addFieldBlocs(fieldBlocs: [dropDown$i]);
+      // }
+      else if (model[i].type == 'radio') {
         final radio$i = new SelectFieldBloc();
-        udfJson[model[i].name] = '';
+        udfJson[model[i].key] = '';
         listDynamic.add(
           BlocRadioButtonWidget(
-            labelName: model[i].labelName,
+            labelName: model[i].label,
             selectFieldBloc: radio$i,
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
-      } else if (model[i].udfUIType == 9) {
-        udfJson[model[i].name] = '';
+      }
+      //  else if (model[i].type == 'select') {
+      //   final dropDown$i = new SelectFieldBloc();
+      //   udfJson[model[i].key] = '';
+      //   listDynamic.add(
+      //     BlocDropDownWidget(
+      //       labelName: model[i].label,
+      //       selectFieldBloc: dropDown$i,
+      //     ),
+      //   );
+      //   createServiceFormBloc.addFieldBlocs(fieldBlocs: [dropDown$i]);
+      // }
+      else if (model[i].type == 'datetime') {
+        udfJson[model[i].key] = '';
         listDynamic.add(new DynamicDateTimeBox(
-          name: model[i].name,
-          key: new Key(model[i].labelName),
+          name: model[i].key,
+          key: new Key(model[i].label),
           selectDate: (DateTime date) {
             if (date != null) {
-              udfJson[model[i].name] = date.toString();
+              udfJson[model[i].key] = date.toString();
             }
           },
         ));
-      } else if (model[i].udfUIType == 10) {
-        udfJson[model[i].name] = '';
+      } else if (model[i].type == 'time') {
+        udfJson[model[i].key] = '';
         listDynamic.add(new DynamicTimeBox(
-          name: model[i].name,
-          key: new Key(model[i].labelName),
+          name: model[i].label,
+          key: new Key(model[i].label),
           selectTime: (TimeOfDay time) {
             if (time != null) {
-              udfJson[model[i].name] = time.toString();
+              udfJson[model[i].key] = time.toString();
             }
           },
         ));
-      } else if (model[i].udfUIType == 12) {
+      } else if (model[i].type == 'hidden') {
         //Hidden Field
         final hidden$i = new TextFieldBloc();
-        udfJson[model[i].name] = '';
+        udfJson[model[i].key] = '';
         listDynamic.add(
           BlocTextBoxWidget(
             obscureText: true,
-            labelName: model[i].labelName,
-            fieldName: model[i].labelName,
+            labelName: model[i].label,
+            fieldName: model[i].label,
             readonly: true,
             textFieldBloc: hidden$i,
             prefixIcon: null,
             maxLines: 1,
             onChanged: (value) {
-              udfJson[model[i].name] = value.toString();
+              udfJson[model[i].key] = value.toString();
             },
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
-      } else if (model[i].udfUIType == 17) {
+      } else if (model[i].type == 'phoneNumber') {
         //Phone Number Field
         final phoneNumber$i = new TextFieldBloc();
-        udfJson[model[i].name] = '';
+        udfJson[model[i].key] = '';
         listDynamic.add(
           BlocNumberBoxWidget(
-            labelName: model[i].labelName,
-            fieldName: model[i].labelName,
+            labelName: model[i].label,
+            fieldName: model[i].label,
             readonly: false,
             textFieldBloc: phoneNumber$i,
             prefixIcon: null,
             onChanged: (value) {
-              udfJson[model[i].name] = value.toString();
+              udfJson[model[i].key] = value.toString();
             },
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
-      } else if (model[i].udfUIType == 19) {
+      } else if (model[i].type == 'email') {
         //Email Field
         final email$i =
             new TextFieldBloc(validators: [FieldBlocValidators.email]);
-        udfJson[model[i].name] = '';
+        udfJson[model[i].key] = '';
         listDynamic.add(
           BlocTextBoxWidget(
-            labelName: model[i].labelName,
-            fieldName: model[i].labelName,
+            labelName: model[i].label,
+            fieldName: model[i].label,
             readonly: false,
             textFieldBloc: email$i,
             prefixIcon: null,
             maxLines: 1,
             onChanged: (value) {
-              udfJson[model[i].name] = value.toString();
+              udfJson[model[i].key] = value.toString();
             },
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
+      } else {
+        final textField$i = new TextFieldBloc();
+        udfJson[model[i].key] = '';
+        listDynamic.add(
+          BlocTextBoxWidget(
+            labelName: model[i].label,
+            fieldName: model[i].label,
+            readonly: false,
+            textFieldBloc: textField$i,
+            prefixIcon: null,
+            maxLines: 1,
+            onChanged: (value) {
+              udfJson[model[i].key] = value.toString();
+            },
+          ),
+        );
+        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
       }
     }
+    return listDynamic;
+  }
+
+  addDynamicComponentComponent(model, createServiceFormBloc) {
+    List<TableRow> table = [];
+    // var groupControls = model?.controls
+    //     ?.where((x) => x.groupTemplateFieldId == element.templateFieldId);
+    // groupControls?.forEach((group) {
+    var tableWidgets = addDynamic(model, createServiceFormBloc);
+    table.add(TableRow(children: tableWidgets));
+    // });
+    // listDynamic.add(Padding(
+    //   padding: const EdgeInsets.only(top: 15, bottom: 10),
+    //   child: Text(
+    //     element.labelDisplayName,
+    //     style: TextStyle(fontSize: 13.0, color: Colors.grey),
+    //   ),
+    // ));
+    componentComListWidgets.add(Table(
+      border: TableBorder(
+        top: BorderSide(
+          color: Colors.grey,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+        bottom: BorderSide(
+          color: Colors.grey,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+        left: BorderSide(
+          color: Colors.grey,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+        right: BorderSide(
+          color: Colors.grey,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+      ),
+      children: table,
+    ));
   }
 
   serviceViewModelPostRequest() async {
