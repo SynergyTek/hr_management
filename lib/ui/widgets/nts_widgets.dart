@@ -178,6 +178,16 @@ class DateTimePicker extends StatelessWidget {
       children: <Widget>[
         new Expanded(
           flex: 4,
+          // child: new ListTile(
+          //   leading: Icon(Icons.calendar_today),
+          //   title: Text(labelText),
+          //   subtitle: Text(selectedDate != null
+          //       ? new DateFormat.yMMMd().format(selectedDate)
+          //       : "Select Date"),
+          //   onTap: () {
+          //     _selectDate(context);
+          //   },
+          // ),
           child: new _InputDropdown(
             labelText: labelText,
             valueText: selectedDate != null
@@ -217,18 +227,23 @@ class _InputDropdown extends StatelessWidget {
       onTap: onPressed,
       child: new InputDecorator(
         decoration: new InputDecoration(
-          labelText: labelText,
-        ),
+            // labelText: labelText,
+            ),
         baseStyle: valueStyle,
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Text(valueText, style: valueStyle),
-            new Icon(Icons.arrow_drop_down,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.grey.shade700
-                    : Colors.white70),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 12.0, right: 12.0, top: 10.0, bottom: 10.0),
+              child: Icon(Icons.calendar_today,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey.shade700
+                      : Colors.white70),
+            ),
+            Expanded(child: Text(labelText, style: valueStyle)),
+            Text(valueText, style: valueStyle),
           ],
         ),
       ),
@@ -411,6 +426,7 @@ class _DynamicCheckBoxValueState extends State<DynamicCheckBoxValue> {
   Widget build(BuildContext context) {
     return new Container(
         child: new CheckboxListTile(
+      secondary: Icon(Icons.check),
       title: new Text(widget.name),
       value: _isChecked,
       onChanged: (val) {

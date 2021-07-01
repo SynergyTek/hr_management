@@ -36,7 +36,7 @@ class ServiceRepository extends AbstractServiceRepository {
   }
 
   @override
-  Future<ServiceResponse> postAPIData({
+  Future<PostResponse> postAPIData({
     Map<String, dynamic> queryparams,
     @required ServiceResponseModel serviceResponseModel,
   }) async {
@@ -50,16 +50,17 @@ class ServiceRepository extends AbstractServiceRepository {
 
       print("response: ${response.data}");
 
-      // TODO: response parsing
-      return ServiceResponse.fromJson(
+      var result = PostResponse.fromJson(
         response.data,
       );
+      // TODO: response parsing
+      return result;
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return ServiceResponse.withError("$err");
+      return PostResponse.withError("$err");
     }
   }
 
