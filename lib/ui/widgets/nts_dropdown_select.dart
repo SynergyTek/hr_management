@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 
 typedef ListTapPressedCallBack = void Function(dynamic key);
 
@@ -10,6 +12,9 @@ class NTSDropDownSelect extends StatelessWidget {
   final TextEditingController controller;
   final Widget prefixIcon;
   final FormFieldValidator<String> validator;
+   final String url;
+  final String idKey;
+  final String nameKey;
   // final List<IdNameViewModel> viewModelList;
   final ListTapPressedCallBack onListTap;
   NTSDropDownSelect(
@@ -22,7 +27,7 @@ class NTSDropDownSelect extends StatelessWidget {
       this.prefixIcon,
       this.validator,
       // this.viewModelList,
-      this.onListTap})
+      this.onListTap, this.url, this.idKey, this.nameKey})
       : super(key: key);
 
   // NetworkHelper _networkHelper = NetworkHelper();
@@ -64,15 +69,18 @@ class NTSDropDownSelect extends StatelessWidget {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              // _networkHelper.initConnectivity().then((value) {
-              //   if (value) {
-              // pushtoNTSDropDownList(context, onListTap, viewModelList);
-              //   } else {
-              //     return networkRaisedToast(context);
-              //   }
-              // }, onError: (error) {
-              //   // print(error);
-              // });
+               Navigator.pushNamed(
+                  context,
+                  // HOME_ROUTE,
+                  NTS_DROPDOWN,
+                  arguments: ScreenArguments(
+                    arg1: url,
+                    arg2:idKey,
+                    arg3: nameKey,
+                    arg4: title,
+                    arg5: onListTap
+                  ),
+                );
             },
           )
         ],

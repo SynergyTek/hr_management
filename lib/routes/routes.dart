@@ -1,6 +1,11 @@
 import 'package:hr_management/ui/screens/create_service/create_service_screen.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
+
 import 'package:hr_management/ui/screens/login/login_screen.dart';
+
+import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
+import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
+
 
 import '../ui/screens/attendance/mark_attendance.dart';
 import 'package:flutter/material.dart';
@@ -67,15 +72,30 @@ class AppRouter {
         break;
 
       case CREATE_SERVICE_ROUTE:
-      final args = routeSettings.arguments as ScreenArguments;
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => CreateServiceScreen(templateCode: args.arg1,),
+          builder: (_) => CreateServiceScreen(
+            templateCode: args.arg1,
+          ),
         );
         break;
 
       case NOTE_ROUTE:
         return MaterialPageRoute(
           builder: (_) => NoteScreen(),
+        );
+        break;
+
+      case NTS_DROPDOWN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DropDownDefaultList(
+            url: args.arg1,
+            idKey: args.arg2,
+            nameKey: args.arg3,
+            ddName: args.arg4,
+            onListTap: args.arg5,
+          ),
         );
         break;
 

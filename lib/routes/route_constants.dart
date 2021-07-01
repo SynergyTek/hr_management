@@ -32,3 +32,4 @@ const String CREATE_SERVICE_ROUTE = "/create_service";
 const String NOTE_ROUTE = "/note";
 const String SERVICE_ROUTE = "/service";
 const String COUNTS_ROUTE = "/counts";
+const String NTS_DROPDOWN = "/nts_dropdown";
