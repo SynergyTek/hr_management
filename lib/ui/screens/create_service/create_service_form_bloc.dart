@@ -11,15 +11,9 @@ class CreateServiceFormBloc extends FormBloc<String, String> {
   final startDate = InputFieldBloc<DateTime, dynamic>();
   final endDate = InputFieldBloc<DateTime, dynamic>();
   final sla = TextFieldBloc();
-  
+
   CreateServiceFormBloc() {
-    addFieldBlocs(fieldBlocs: [
-      subject,
-      description,
-      startDate,
-      endDate,
-      sla
-    ]);
+    addFieldBlocs(fieldBlocs: [subject, description, startDate, endDate, sla]);
   }
 
   @override

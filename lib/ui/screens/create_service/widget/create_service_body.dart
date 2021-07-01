@@ -96,7 +96,13 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 }
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
-                  onSubmitting: (context, state) {},
+                  onSubmitting: (context, state) {
+                    if (createServiceFormBloc.startDate.value != null &&
+                        createServiceFormBloc.endDate.value != null) {
+                      compareStartEndDate(createServiceFormBloc.startDate.value,
+                          createServiceFormBloc.endDate.value, context);
+                    }
+                  },
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
                   child: ListView(
@@ -136,19 +142,41 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       maxLines: 1,
       labelName: 'Subject',
       textFieldBloc: createServiceFormBloc.subject,
+      prefixIcon: Icon(Icons.note),
     ));
 
-    widgets.add(BlocDatePickerWidget(
-      labelName: 'Start Date',
-      canSelectTime: false,
-      inputFieldBloc: createServiceFormBloc.startDate,
-    ));
+    // widgets.add(BlocDatePickerWidget(
+    //   labelName: 'Start Date',
+    //   canSelectTime: false,
+    //   inputFieldBloc: createServiceFormBloc.startDate,
+    // ));
 
-    widgets.add(BlocDatePickerWidget(
-      labelName: 'Due Date',
-      canSelectTime: false,
-      inputFieldBloc: createServiceFormBloc.endDate,
-    ));
+    // widgets.add(BlocDatePickerWidget(
+    //   labelName: 'Due Date',
+    //   canSelectTime: false,
+    //   inputFieldBloc: createServiceFormBloc.endDate,
+    // ));
+    widgets.add(
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          BlocDatePickerWidget(
+            labelName: 'Start Date',
+            canSelectTime: false,
+            inputFieldBloc: createServiceFormBloc.startDate,
+            height: 75.0,
+            width: MediaQuery.of(context).size.width / 2 - 20,
+          ),
+          BlocDatePickerWidget(
+            labelName: 'Due Date',
+            canSelectTime: false,
+            inputFieldBloc: createServiceFormBloc.endDate,
+            height: 75.0,
+            width: MediaQuery.of(context).size.width / 2 - 20,
+          )
+        ],
+      ),
+    );
 
     widgets.add(BlocTextBoxWidget(
       fieldName: 'SLA',
@@ -156,6 +184,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       maxLines: 1,
       labelName: 'SLA',
       textFieldBloc: createServiceFormBloc.sla,
+      prefixIcon: Icon(Icons.note),
     ));
 
     widgets.add(BlocTextBoxWidget(
@@ -164,6 +193,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       maxLines: 3,
       labelName: 'Description',
       textFieldBloc: createServiceFormBloc.description,
+      prefixIcon: Icon(Icons.note),
     ));
 if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
     widgets.addAll(columnComponentWidgets);
@@ -186,7 +216,9 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
         Expanded(
           child: PrimaryButton(
             buttonText: 'Submit',
-            handleOnPressed: () {},
+            handleOnPressed: () {
+              createServiceFormBloc.submit();
+            },
             width: 100,
           ),
         ),
@@ -229,7 +261,7 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: textField$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.note),
             maxLines: 1,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -246,7 +278,7 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
             fieldName: model[i].label,
             readonly: false,
             textFieldBloc: textArea$i,
-            prefixIcon: null,
+            prefixIcon: Icon(Icons.note),
             maxLines: 3,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
@@ -471,6 +503,44 @@ if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
       ),
       children: table,
     ));
+  }
+
+  bool compareStartEndDate(
+      DateTime startDate, DateTime enddate, BuildContext context) {
+    if (enddate.isBefore(startDate)) {
+      _showMyDialog();
+
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Start Date Should be greater than End Date.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   serviceViewModelPostRequest() async {

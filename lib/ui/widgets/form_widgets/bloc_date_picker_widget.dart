@@ -7,6 +7,9 @@ class BlocDatePickerWidget extends StatelessWidget {
   final DateTime selectedDate;
   final Widget prefixIcon;
   final bool canSelectTime;
+  final bool showClearIcon;
+  final double height;
+  final double width;
 
   const BlocDatePickerWidget({
     this.labelName,
@@ -14,13 +17,19 @@ class BlocDatePickerWidget extends StatelessWidget {
     this.selectedDate,
     this.prefixIcon,
     this.canSelectTime,
+    this.showClearIcon,
+    this.height,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
+      width: width,
       padding: const EdgeInsets.only(top: 0.0),
       child: DateTimeFieldBlocBuilder(
+        showClearIcon: showClearIcon ?? false,
         canSelectTime: canSelectTime ?? false,
         dateTimeFieldBloc: inputFieldBloc,
         format: DateFormat(canSelectTime ? 'dd-MM-yyyy  hh:mm' : 'dd-MM-yyyy'),
