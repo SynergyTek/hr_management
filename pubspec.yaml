@@ -31,6 +31,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  listizer:
+    path: ./listizer
 
 flutter:
   uses-material-design: true

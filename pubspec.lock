@@ -198,6 +198,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.20.4"
+  function_types:
+    dependency: transitive
+    description:
+      name: function_types
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   geolocator:
     dependency: "direct main"
     description:
@@ -254,6 +261,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  listizer:
+    dependency: "direct dev"
+    description:
+      path: listizer
+      relative: true
+    source: path
+    version: "0.0.1"
   location:
     dependency: "direct main"
     description:
@@ -394,6 +408,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
+  queries:
+    dependency: transitive
+    description:
+      name: queries
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.14"
   quiver:
     dependency: transitive
     description:
