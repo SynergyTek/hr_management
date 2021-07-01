@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +22,6 @@ class DynamicTextBoxWidget extends StatelessWidget {
             controller: controller,
             onChanged: (String val) {
               updateValue(val);
-
             },
             readOnly: readonly,
             //key: key,
@@ -285,6 +283,112 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DynamicTimeBox extends StatefulWidget {
+  final String name;
+  final String code;
+  final ValueChanged<TimeOfDay> selectTime;
+  DynamicTimeBox({this.name, this.code, Key key, this.selectTime})
+      : super(key: key);
+
+  @override
+  _DynamicTimeBoxState createState() => _DynamicTimeBoxState(
+      selectedTime: code != null
+          ? TimeOfDay(
+              hour: int.parse(code.split(":")[0]),
+              minute: int.parse(code.split(":")[1]))
+          : null);
+}
+
+class _DynamicTimeBoxState extends State<DynamicTimeBox> {
+  // String _value = '';
+  TimeOfDay selectedTime;
+  _DynamicTimeBoxState({this.selectedTime});
+  // Future _selectDate() async {
+  //   DateTime picked = await showDatePicker(
+  //       context: context,
+  //       initialDate: this.selectedDate ?? new DateTime.now(),
+  //       firstDate: DateTime(2015, 8),
+  //       lastDate: DateTime(2101));
+  //   if (picked != null) {
+  //     setState(() => _value = picked.toString());
+  //   }
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      child: new Center(
+        child: new Column(
+          children: <Widget>[
+            new TimePicker(
+              key: widget.key,
+              labelText: widget.name,
+              selectedTime: selectedTime,
+              selectTimeToModel: widget.selectTime,
+              selectTime: (TimeOfDay time) {
+                setState(() {
+                  selectedTime = time;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TimePicker extends StatelessWidget {
+  const TimePicker(
+      {Key key,
+      this.labelText,
+      this.selectedTime,
+      this.selectTimeToModel,
+      this.selectTime})
+      : super(key: key);
+
+  final String labelText;
+  final TimeOfDay selectedTime;
+  final ValueChanged<TimeOfDay> selectTime;
+  final ValueChanged<TimeOfDay> selectTimeToModel;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime ?? TimeOfDay.fromDateTime(DateTime.now()),
+    );
+    if (picked != null && picked != selectedTime) {
+      selectTime(picked);
+      selectTimeToModel(picked);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle valueStyle = Theme.of(context).textTheme.body1;
+    return new Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: <Widget>[
+        new Expanded(
+          flex: 4,
+          child: new _InputDropdown(
+            labelText: labelText,
+            valueText: selectTime != null
+                ? selectTime.toString()
+                // ? new DateFormat.yMMMd().format(selectTime)
+                : "Select Date",
+            valueStyle: valueStyle,
+            onPressed: () {
+              _selectDate(context);
+            },
+          ),
+        ),
+        const SizedBox(width: 12.0),
+      ],
     );
   }
 }

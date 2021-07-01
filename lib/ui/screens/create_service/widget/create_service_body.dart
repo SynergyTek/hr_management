@@ -7,13 +7,12 @@ import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/service_models/service_response_model.dart';
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_dropdown_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_time_picker_widget.dart';
+import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 
 import '../create_service_form_bloc.dart';
@@ -253,15 +252,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].udfUIType == 5) {
-        final checkbox$i = new BooleanFieldBloc();
         udfJson[model[i].name] = '';
-        listDynamic.add(
-          BlocCheckBoxWidget(
-            labelName: model[i].labelName,
-            booleanFieldBloc: checkbox$i,
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [checkbox$i]);
+        listDynamic.add(new DynamicCheckBoxValue(
+          code: model[i].labelName,
+          name: model[i].name,
+          key: new Key(model[i].udfUIType),
+          checkUpdate: (bool check) {
+            udfJson[model[i].name] = check.toString();
+            model[i].labelName = check.toString();
+          },
+        ));
       } else if (model[i].udfUIType == 6) {
         final dropDown$i = new SelectFieldBloc();
         udfJson[model[i].name] = '';
@@ -283,26 +283,27 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].udfUIType == 9) {
-        final dateTime$i = new InputFieldBloc<DateTime, dynamic>();
         udfJson[model[i].name] = '';
-        listDynamic.add(
-          BlocDatePickerWidget(
-            labelName: model[i].labelName,
-            canSelectTime: false,
-            inputFieldBloc: dateTime$i,
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [dateTime$i]);
+        listDynamic.add(new DynamicDateTimeBox(
+          name: model[i].name,
+          key: new Key(model[i].labelName),
+          selectDate: (DateTime date) {
+            if (date != null) {
+              udfJson[model[i].name] = date.toString();
+            }
+          },
+        ));
       } else if (model[i].udfUIType == 10) {
-        final time$i = new InputFieldBloc<DateTime, dynamic>();
         udfJson[model[i].name] = '';
-        listDynamic.add(
-          BlocTimePickerWidget(
-            labelName: model[i].labelName,
-            inputFieldBloc: time$i,
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [time$i]);
+        listDynamic.add(new DynamicTimeBox(
+          name: model[i].name,
+          key: new Key(model[i].labelName),
+          selectTime: (TimeOfDay time) {
+            if (time != null) {
+              udfJson[model[i].name] = time.toString();
+            }
+          },
+        ));
       } else if (model[i].udfUIType == 12) {
         //Hidden Field
         final hidden$i = new TextFieldBloc();
