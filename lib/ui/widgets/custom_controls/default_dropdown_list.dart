@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
+import 'package:hr_management/logic/blocs/nts_dd_bloc/nt_dd_api_bloc.dart';
+import 'package:hr_management/themes/theme_config.dart';
 import 'package:listizer/listizer.dart';
 import '../appbar_widget.dart';
 import '../circle_avatar.dart';
@@ -8,11 +11,17 @@ import '../nts_dropdown_select.dart';
 
 class DropDownDefaultList extends StatefulWidget {
   final ListTapPressedCallBack onListTap;
+  final String url;
   final String ddName;
   final String idKey;
   final String nameKey;
   DropDownDefaultList(
-      {Key key, this.onListTap, this.ddName, this.idKey, this.nameKey})
+      {Key key,
+      this.onListTap,
+      this.ddName,
+      this.idKey,
+      this.nameKey,
+      this.url})
       : super(key: key);
 
   @override
@@ -24,6 +33,8 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
   List<NTSDropdownModel> _filteredIdNameModelList = [];
   @override
   void initState() {
+    ntsDdBloc
+      ..getData(url: widget.url, idKey: widget.idKey, nameKey: widget.nameKey);
     super.initState();
   }
 
@@ -31,37 +42,54 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppbarWidget(
-          title: "Leave Template",
+          title: "Select " + widget.ddName,
         ),
-        body: _idNameModelList == null || _idNameModelList.length == 0
-            ? EmptyListWidget()
-            : Listizer(
-                showSearchBar: true,
-                listItems: _idNameModelList,
-                filteredSearchList: _filteredIdNameModelList,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: TextCircleAvater(
-                        text: _filteredIdNameModelList[index].name,
-                        context: context,
-                        radius: 20,
-                        fontSize: 18,
-                        color: Theme.of(context).primaryColorLight),
-                    title: Text(
-                      _filteredIdNameModelList[index].name != null
-                          ? _filteredIdNameModelList[index].name
-                          : "",
-                      maxLines: 2,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    onTap: () {
-                      if (widget.onListTap != null) {
-                        widget.onListTap(_filteredIdNameModelList[index]);
-                        Navigator.of(context).pop();
-                      }
+        body: Container(
+          padding: DEFAULT_LARGE_PADDING,
+          child: StreamBuilder<NTSDdResponse>(
+              stream: ntsDdBloc.subject.stream,
+              builder: (context, AsyncSnapshot<NTSDdResponse> snapshot) {
+                print("Snapshot data: ${snapshot.data}");
+                if (snapshot.hasData) {
+                  if (_idNameModelList == null ||
+                      _idNameModelList.length == 0) {
+                    return EmptyListWidget();
+                  }
+                  _idNameModelList = snapshot.data.data;
+                  return Listizer(
+                    showSearchBar: true,
+                    listItems: _idNameModelList,
+                    filteredSearchList: _filteredIdNameModelList,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: TextCircleAvater(
+                            text: _filteredIdNameModelList[index].name,
+                            context: context,
+                            radius: 20,
+                            fontSize: 18,
+                            color: Theme.of(context).primaryColorLight),
+                        title: Text(
+                          _filteredIdNameModelList[index].name != null
+                              ? _filteredIdNameModelList[index].name
+                              : "",
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        onTap: () {
+                          if (widget.onListTap != null) {
+                            widget.onListTap(_filteredIdNameModelList[index]);
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      );
                     },
                   );
-                },
-              ));
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
+        ));
   }
 }

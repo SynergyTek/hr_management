@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
-import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
 import 'package:hr_management/data/repositories/nts_dd_repo/nts_dd_repo.dart';
 
 import 'package:rxdart/rxdart.dart';
@@ -12,8 +12,12 @@ class NTSDdAPIBloc {
       BehaviorSubject<NTSDdResponse>();
 
   /// Used to fetch new entries.
-  getData() async {
-    NTSDdResponse response = await _apiRepository.getAPIData();
+  getData(
+      {@required String url,
+      @required String idKey,
+      @required String nameKey}) async {
+    NTSDdResponse response = await _apiRepository.getAPIData(
+        url: url, idKey: idKey, nameKey: nameKey);
     print("response: $response");
     _subject.sink.add(response);
   }
@@ -27,7 +31,7 @@ class NTSDdAPIBloc {
     // ...
 
     // Update the list (in UI) with the getAPI call.
-    getData();
+    // getData();
   }
 
   /// Used to delete a particular entry.
@@ -36,7 +40,7 @@ class NTSDdAPIBloc {
     // ...
 
     // Update the list (in UI) with the getAPI call.
-    getData();
+    // getData();
   }
 
   dispose() {
