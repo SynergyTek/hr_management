@@ -64,16 +64,16 @@ Widget drawerWidget(context) {
             );
           },
         ),
-        // ListTile(
-        //   title: Text('UDF Demo'),
-        //   trailing: Icon(Icons.app_registration),
-        //   onTap: () {
-        //     Navigator.pushNamed(
-        //       context,
-        //       REGISTRATION_ROUTE,
-        //     );
-        //   },
-        // ),
+        ListTile(
+          title: Text('Task Home'),
+          trailing: Icon(Icons.task),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              TASK_HOME,
+            );
+          },
+        ),
         // ListTile(
         //   title: Text('Create Service'),
         //   trailing: Icon(Icons.create),

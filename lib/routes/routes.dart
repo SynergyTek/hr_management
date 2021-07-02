@@ -1,5 +1,6 @@
 import 'package:hr_management/ui/screens/create_service/create_service_screen.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
+import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 
@@ -87,6 +88,11 @@ class AppRouter {
             nameKey: args.arg3,
             ddName: args.arg4,
             onListTap: args.arg5,
+          ),
+        );
+        case TASK_HOME:
+        return MaterialPageRoute(
+          builder: (_) => TaskHomeScreen(
           ),
         );
         break;
