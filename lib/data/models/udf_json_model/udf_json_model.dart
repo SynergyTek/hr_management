@@ -398,8 +398,6 @@ class DatePicker {
       };
 }
 
-enum EditableBy { REQUESTER, OWNER }
-
 class Indexeddb {
   Indexeddb({
     this.filter,

@@ -73,12 +73,11 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
                               ? _filteredIdNameModelList[index].name
                               : "",
                           maxLines: 2,
-                          style: Theme.of(context).textTheme.headline6,
                         ),
                         onTap: () {
                           if (widget.onListTap != null) {
                             widget.onListTap(_filteredIdNameModelList[index]);
-                            Navigator.of(context).pop();
+                            Navigator.pop(context);
                           }
                         },
                       );
@@ -91,5 +90,12 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
                 }
               }),
         ));
+  }
+
+  @override
+  void dispose() {
+    _idNameModelList = [];
+    _filteredIdNameModelList = [];
+    super.dispose();
   }
 }

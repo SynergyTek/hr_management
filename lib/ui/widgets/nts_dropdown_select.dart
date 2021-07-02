@@ -12,10 +12,9 @@ class NTSDropDownSelect extends StatelessWidget {
   final TextEditingController controller;
   final Widget prefixIcon;
   final FormFieldValidator<String> validator;
-   final String url;
+  final String url;
   final String idKey;
   final String nameKey;
-  // final List<IdNameViewModel> viewModelList;
   final ListTapPressedCallBack onListTap;
   NTSDropDownSelect(
       {Key key,
@@ -26,16 +25,15 @@ class NTSDropDownSelect extends StatelessWidget {
       this.controller,
       this.prefixIcon,
       this.validator,
-      // this.viewModelList,
-      this.onListTap, this.url, this.idKey, this.nameKey})
+      this.onListTap,
+      this.url,
+      this.idKey,
+      this.nameKey})
       : super(key: key);
-
-  // NetworkHelper _networkHelper = NetworkHelper();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: EdgeInsets.only(bottom: 10.0),
       alignment: Alignment.bottomLeft,
       height: 80.0,
       child: Stack(
@@ -57,11 +55,8 @@ class NTSDropDownSelect extends StatelessWidget {
             maxLines: 1,
             validator: validator != null
                 ? validator
-                : (String value) {
-                    if (value.isEmpty) {
-                      return validationMessage;
-                    }
-                  },
+                : (val) =>
+                    (val == null || val.isEmpty) ? validationMessage : null,
             onSaved: (String value) {
               controller.text = value;
             },
@@ -69,18 +64,16 @@ class NTSDropDownSelect extends StatelessWidget {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-               Navigator.pushNamed(
-                  context,
-                  // HOME_ROUTE,
-                  NTS_DROPDOWN,
-                  arguments: ScreenArguments(
+              Navigator.pushNamed(
+                context,
+                NTS_DROPDOWN,
+                arguments: ScreenArguments(
                     arg1: url,
-                    arg2:idKey,
+                    arg2: idKey,
                     arg3: nameKey,
                     arg4: title,
-                    arg5: onListTap
-                  ),
-                );
+                    arg5: onListTap),
+              );
             },
           )
         ],
