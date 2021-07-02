@@ -67,37 +67,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
-                columnComponent = [];
-                componentComList = [];
-                udfJsonString =
-                    UdfJson.fromJson(jsonDecode(snapshot.data.data.json));
-                for (UdfJsonComponent component in udfJsonString.components) {
-                  if (component.columns != null &&
-                      component.columns.isNotEmpty) {
-                    for (Columns column in component.columns) {
-                      for (ColumnComponent columnCom in column.components) {
-                        columnComponent.add(columnCom);
-                      }
-                    }
-                    if (component.components != null &&
-                        component.components.isNotEmpty) {
-                      for (ComponentComponent componentComponent
-                          in component.components) {
-                        componentComList.add(componentComponent);
-                      }
-                    }
-                  }
-                }
-                if (columnComponent != null && columnComponent.isNotEmpty) {
-                  columnComponentWidgets = addDynamic(
-                    columnComponent,
-                    createServiceFormBloc,
-                  );
-                }
-                if (componentComList != null && componentComList.isNotEmpty) {
-                  addDynamicComponentComponent(
-                      componentComList, createServiceFormBloc);
-                }
+
+                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json);
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -121,6 +92,36 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             }),
       ),
     );
+  }
+
+  parseJsonToUDFModel(
+      CreateServiceFormBloc createServiceFormBloc, udfJsonString) {
+    columnComponent = [];
+    componentComList = [];
+    udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
+    for (UdfJsonComponent component in udfJsonString.components) {
+      if (component.columns != null && component.columns.isNotEmpty) {
+        for (Columns column in component.columns) {
+          for (ColumnComponent columnCom in column.components) {
+            columnComponent.add(columnCom);
+          }
+        }
+        if (component.components != null && component.components.isNotEmpty) {
+          for (ComponentComponent componentComponent in component.components) {
+            componentComList.add(componentComponent);
+          }
+        }
+      }
+    }
+    if (columnComponent != null && columnComponent.isNotEmpty) {
+      columnComponentWidgets = addDynamic(
+        columnComponent,
+        createServiceFormBloc,
+      );
+    }
+    if (componentComList != null && componentComList.isNotEmpty) {
+      addDynamicComponentComponent(componentComList, createServiceFormBloc);
+    }
   }
 
   List<Widget> formFieldsWidgets(context, createServiceFormBloc) {
