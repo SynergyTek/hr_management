@@ -37,7 +37,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   @override
   void initState() {
     super.initState();
-    // serviceBloc..getData();
   }
 
   @override

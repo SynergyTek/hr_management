@@ -439,7 +439,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   void _handleSignInOnClick() async {
-    await remoteAttendanceBloc.getData(isSignIn: true);
+    await remoteAttendanceBloc.getInsertAccessLog(isSignIn: true);
 
     print("Sign In isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
     print(
@@ -458,7 +458,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   void _handleSignOutOnClick() async {
-    await remoteAttendanceBloc.getData(isSignIn: false);
+    await remoteAttendanceBloc.getInsertAccessLog(isSignIn: false);
 
     print("Sign Out isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
     print("Sign Out Error?: ${remoteAttendanceBloc.subject.value.error}");

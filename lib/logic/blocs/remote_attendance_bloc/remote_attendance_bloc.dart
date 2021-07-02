@@ -13,14 +13,14 @@ class RemoteAttendanceBloc {
       BehaviorSubject<RemoteAttendanceResponse>();
 
   /// Used to fetch new entries.
-  getData({
+  getInsertAccessLog({
     @required bool isSignIn,
   }) async {
     Map<String, dynamic> queryparams = Map();
     queryparams["punchingTime"] = DateTime.now().toString();
     queryparams["punchingTye"] = isSignIn ? "0" : "1";
 
-    RemoteAttendanceResponse response = await _serviceRepository.getAPIData(
+    RemoteAttendanceResponse response = await _serviceRepository.getInsertAccessLog(
       queryparams: queryparams,
     );
     _subject.sink.add(response);
