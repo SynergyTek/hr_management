@@ -225,27 +225,20 @@ class _InputDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return new InkWell(
       onTap: onPressed,
-      child: new InputDecorator(
-        decoration: new InputDecoration(
-            // labelText: labelText,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, top: 10.0, bottom: 10.0),
+            child: new InputDecorator(
+              decoration: new InputDecoration(
+                icon: Icon(Icons.calendar_today),
+                labelText: labelText,
+              ),
+              baseStyle: valueStyle,
+              child: Text(valueText, style: valueStyle),
             ),
-        baseStyle: valueStyle,
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 12.0, right: 12.0, top: 10.0, bottom: 10.0),
-              child: Icon(Icons.calendar_today,
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.grey.shade700
-                      : Colors.white70),
-            ),
-            Expanded(child: Text(labelText, style: valueStyle)),
-            Text(valueText, style: valueStyle),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -281,6 +274,8 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
   @override
   Widget build(BuildContext context) {
     return new Container(
+      height: 80,
+      width: MediaQuery.of(context).size.width / 2 - 20,
       child: new Center(
         child: new Column(
           children: <Widget>[
@@ -336,6 +331,8 @@ class _DynamicTimeBoxState extends State<DynamicTimeBox> {
   @override
   Widget build(BuildContext context) {
     return new Container(
+      height: 80,
+      width: MediaQuery.of(context).size.width / 2 - 20,
       child: new Center(
         child: new Column(
           children: <Widget>[
