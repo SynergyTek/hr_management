@@ -570,32 +570,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          // Visibility(
-          //   visible: serviceModel.is,
-          //   child: PrimaryButton(
-          //     buttonText: 'Edit',
-          //     handleOnPressed: () {
-          //     },
-          //     width: 100,
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: serviceModel.isCancelButtonVisible,
-          //   child: PrimaryButton(
-          //     buttonText: 'Cancel Edit',
-          //     handleOnPressed: () {},
-          //     width: 100,
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: serviceModel,
-          //   child: PrimaryButton(
-          //     buttonText: 'Save',
-          //     handleOnPressed: () {
-          //     },
-          //     width: 100,
-          //   ),
-          // ),
           Visibility(
             visible: serviceModel.isCompleteButtonVisible,
             child: PrimaryButton(
@@ -605,7 +579,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             ),
           ),
           Visibility(
-            // visible: true,
             visible: serviceModel.isCancelButtonVisible,
             child: PrimaryButton(
               buttonText: 'Cancel',
