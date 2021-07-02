@@ -18,7 +18,7 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
   @override
   void initState() {
     super.initState();
-    leaveTempBloc..getData();
+    leaveTempBloc..getAllowedTemplateData();
   }
 
   @override
