@@ -17,6 +17,7 @@ import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart'
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
+import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 
 import '../create_service_form_bloc.dart';
@@ -44,11 +45,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
+  final formReason = GlobalKey<FormState>();
+  TextEditingController cancelReason = TextEditingController();
+  DateTime startDate;
+  DateTime dueDate;
 
   @override
   void initState() {
     super.initState();
-    serviceBloc..getData(widget.templateCode);
+    serviceBloc..getServiceDetail(widget.templateCode);
   }
 
   @override
@@ -76,17 +81,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
-                    if (createServiceFormBloc.startDate.value != null &&
-                        createServiceFormBloc.endDate.value != null) {
-                      compareStartEndDate(createServiceFormBloc.startDate.value,
-                          createServiceFormBloc.endDate.value, context);
-                    }
+                    // if (createServiceFormBloc.startDate.value != null &&
+                    //     createServiceFormBloc.endDate.value != null) {
+                    //   compareStartEndDate(createServiceFormBloc.startDate.value,
+                    //       createServiceFormBloc.endDate.value, context);
+                    // }
                   },
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
-                  child: ListView(
-                      children:
-                          formFieldsWidgets(context, createServiceFormBloc)),
+                  child: setServiceView(context, createServiceFormBloc,
+                      serviceModel, columnComponent),
                 );
               } else {
                 return Center(
@@ -133,7 +137,39 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     }
   }
 
-  List<Widget> formFieldsWidgets(context, createServiceFormBloc) {
+  Widget setServiceView(
+      BuildContext context,
+      CreateServiceFormBloc createServiceFormBloc,
+      ServiceResponseModel serviceModel,
+      List<ColumnComponent> columnComponent) {
+    createServiceFormBloc.subject
+        .updateInitialValue(serviceModel.serviceSubject);
+    createServiceFormBloc.description
+        .updateInitialValue(serviceModel.serviceDescription);
+    createServiceFormBloc.sla.updateInitialValue(serviceModel.serviceSLA);
+
+    return Stack(
+      children: [
+        ListView(
+          children:
+              formFieldsWidgets(context, createServiceFormBloc, serviceModel),
+        ),
+        Column(
+          children: <Widget>[
+            Expanded(child: Container()),
+            Container(
+              height: 50,
+              color: Colors.grey[100],
+              child: displayFooterWidget(serviceModel, columnComponent),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  List<Widget> formFieldsWidgets(
+      context, createServiceFormBloc, ServiceResponseModel serviceModel) {
     List<Widget> widgets = [];
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -144,105 +180,94 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           rowChild(serviceModel.serviceNo, 'Service No', 3),
-          rowChild(serviceModel.status.toString(), 'Status', 2),
+          rowChild(serviceModel.serviceStatusName, 'Status', 2),
           rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
         ],
       ),
     ));
+    if (!serviceModel.hideSubject)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'Subject',
+        readonly: false,
+        maxLines: 1,
+        labelName: 'Subject',
+        textFieldBloc: createServiceFormBloc.subject,
+        prefixIcon: Icon(Icons.note),
+      ));
 
-    widgets.add(BlocTextBoxWidget(
-      fieldName: 'Subject',
-      readonly: false,
-      maxLines: 1,
-      labelName: 'Subject',
-      textFieldBloc: createServiceFormBloc.subject,
-      prefixIcon: Icon(Icons.note),
-    ));
+    if (!serviceModel.hideStartDate)
+      widgets.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            DynamicDateTimeBox(
+              code: serviceModel.startDate,
+              name: 'Start Date',
+              key: new Key('Start Date'),
+              selectDate: (DateTime date) {
+                if (date != null) {
+                  setState(() async {
+                    startDate = date;
+                  });
+                  // udfJson[model[i].key] = date.toString();
+                }
+              },
+            ),
+            DynamicDateTimeBox(
+              code: serviceModel.dueDate,
+              name: 'Due Date',
+              key: new Key('Due Date'),
+              selectDate: (DateTime date) {
+                if (date != null) {
+                  setState(() async {
+                    dueDate = date;
+                    compareStartEndDate(startDate, dueDate, context);
+                  });
+                  // udfJson[model[i].key] = date.toString();
+                }
+              },
+            )
+          ],
+        ),
+      );
 
-    // widgets.add(BlocDatePickerWidget(
-    //   labelName: 'Start Date',
-    //   canSelectTime: false,
-    //   inputFieldBloc: createServiceFormBloc.startDate,
-    // ));
+    if (!serviceModel.hideSLA)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'SLA',
+        readonly: false,
+        maxLines: 1,
+        labelName: 'SLA',
+        textFieldBloc: createServiceFormBloc.sla,
+        prefixIcon: Icon(Icons.note),
+      ));
 
-    // widgets.add(BlocDatePickerWidget(
-    //   labelName: 'Due Date',
-    //   canSelectTime: false,
-    //   inputFieldBloc: createServiceFormBloc.endDate,
-    // ));
-    widgets.add(
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          BlocDatePickerWidget(
-            labelName: 'Start Date',
-            canSelectTime: false,
-            inputFieldBloc: createServiceFormBloc.startDate,
-            height: 75.0,
-            width: MediaQuery.of(context).size.width / 2 - 20,
-          ),
-          BlocDatePickerWidget(
-            labelName: 'Due Date',
-            canSelectTime: false,
-            inputFieldBloc: createServiceFormBloc.endDate,
-            height: 75.0,
-            width: MediaQuery.of(context).size.width / 2 - 20,
-          )
-        ],
-      ),
-    );
+    if (!serviceModel.hideExpiryDate)
+      widgets.add(BlocDatePickerWidget(
+        labelName: 'Expiry Date',
+        canSelectTime: false,
+        inputFieldBloc: createServiceFormBloc.expiryDate,
+        height: 75.0,
+        width: MediaQuery.of(context).size.width / 2 - 20,
+      ));
 
-    widgets.add(BlocTextBoxWidget(
-      fieldName: 'SLA',
-      readonly: false,
-      maxLines: 1,
-      labelName: 'SLA',
-      textFieldBloc: createServiceFormBloc.sla,
-      prefixIcon: Icon(Icons.note),
-    ));
-
-    widgets.add(BlocTextBoxWidget(
-      fieldName: 'Description',
-      readonly: false,
-      maxLines: 3,
-      labelName: 'Description',
-      textFieldBloc: createServiceFormBloc.description,
-      prefixIcon: Icon(Icons.note),
-    ));
-    if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
-      widgets.addAll(udfJsonCompWidgetList);
-    }
+    if (!serviceModel.hideDescription)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'Description',
+        readonly: false,
+        maxLines: 3,
+        labelName: 'Description',
+        textFieldBloc: createServiceFormBloc.description,
+        prefixIcon: Icon(Icons.note),
+      ));
     if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
       widgets.addAll(columnComponentWidgets);
     }
     if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
       widgets.addAll(componentComListWidgets);
     }
-
-    widgets.add(Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          child: PrimaryButton(
-            buttonText: 'Save As Draft',
-            handleOnPressed: () {
-              serviceViewModelPostRequest();
-            },
-            width: 100,
-          ),
-        ),
-        Expanded(
-          child: PrimaryButton(
-            buttonText: 'Submit',
-            handleOnPressed: () {
-              createServiceFormBloc.submit();
-            },
-            width: 100,
-          ),
-        ),
-      ],
+    widgets.add(Container(
+      height: 50,
     ));
-
     return widgets;
   }
 
@@ -539,15 +564,165 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     ));
   }
 
-  bool compareStartEndDate(
-      DateTime startDate, DateTime enddate, BuildContext context) {
-    if (enddate.isBefore(startDate)) {
-      _showMyDialog();
+  displayFooterWidget(ServiceResponseModel serviceModel,
+      List<ColumnComponent> columnComponent) {
+    return Container(
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          // Visibility(
+          //   visible: serviceModel.is,
+          //   child: PrimaryButton(
+          //     buttonText: 'Edit',
+          //     handleOnPressed: () {
+          //     },
+          //     width: 100,
+          //   ),
+          // ),
+          // Visibility(
+          //   visible: serviceModel.isCancelButtonVisible,
+          //   child: PrimaryButton(
+          //     buttonText: 'Cancel Edit',
+          //     handleOnPressed: () {},
+          //     width: 100,
+          //   ),
+          // ),
+          // Visibility(
+          //   visible: serviceModel,
+          //   child: PrimaryButton(
+          //     buttonText: 'Save',
+          //     handleOnPressed: () {
+          //     },
+          //     width: 100,
+          //   ),
+          // ),
+          Visibility(
+            visible: serviceModel.isCompleteButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Complete',
+              handleOnPressed: () {},
+              width: 100,
+            ),
+          ),
+          Visibility(
+            // visible: true,
+            visible: serviceModel.isCancelButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Cancel',
+              handleOnPressed: () {
+                if (serviceModel.isCancelReasonRequired)
+                  enterReasonAlertDialog(context);
+              },
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: serviceModel.isCloseButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Close',
+              handleOnPressed: () {},
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: serviceModel.isDraftButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Draft',
+              handleOnPressed: () {},
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: serviceModel.isSubmitButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Submit',
+              handleOnPressed: () {
+                for (var i = 0; i < columnComponent.length; i++) {
+                  if (columnComponent[i]?.validate?.required != null &&
+                      columnComponent[i].validate.required == true &&
+                      udfJson.containsKey(columnComponent[i].key) &&
+                      (udfJson[columnComponent[i].key] == null ||
+                          udfJson[columnComponent[i].key].isEmpty)) {
+                    displaySnackBar(
+                        text: 'Please enter ${columnComponent[i].label}',
+                        context: context);
+                    return;
+                  }
+                }
+              },
+              width: 100,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-      return false;
-    } else {
-      return true;
-    }
+  enterReasonAlertDialog(BuildContext context) {
+    return showDialog<dynamic>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Enter reason',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                color: Colors.black),
+          ),
+          backgroundColor: Colors.grey[350],
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          content: Form(
+            key: formReason,
+            child: new TextFormField(
+              controller: cancelReason,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Please enter reason'),
+              validator: (value) {
+                return ((value == null || value.isEmpty)
+                    ? 'Please Enter Reason'
+                    : null);
+              },
+            ),
+          ),
+          actions: <Widget>[
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PrimaryButton(
+                    buttonText: 'Cancel',
+                    handleOnPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    width: 80,
+                  ),
+                  SizedBox(width: 2.w),
+                  PrimaryButton(
+                    buttonText: 'Save',
+                    handleOnPressed: () {
+                      if (formReason.currentState.validate()) {}
+                      Navigator.of(context)
+                          .pop(); //TODO:add appropriate save action
+                    },
+                    width: 80,
+                  ),
+                ],
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void compareStartEndDate(
+      DateTime startDate, DateTime enddate, BuildContext context) {
+    if (enddate.isBefore(startDate)) _showMyDialog();
   }
 
   Future<void> _showMyDialog() async {

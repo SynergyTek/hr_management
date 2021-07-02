@@ -17,7 +17,7 @@ class NoteRepository extends AbstractAPIRepository{
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
-    String endpoint = APIEndpointConstants.GET_READSERVICETEMPLATE_URL;
+    String endpoint ='';// APIEndpointConstants.GET_READSERVICETEMPLATE_URL;
 
     try {
       // TODO: Need to send this via UI and not hardcode here!
@@ -41,8 +41,8 @@ class NoteRepository extends AbstractAPIRepository{
         response.data,
       );
     } catch (err, stacktrace) {
-      print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_READSERVICETEMPLATE_URL}.");
+      // print(
+      //     "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_READSERVICETEMPLATE_URL}.");
       print("Stacktrace: $stacktrace \nError: $err");
 
       return APIResponse.withError("$err");

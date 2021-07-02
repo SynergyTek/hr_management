@@ -5,7 +5,7 @@ part of 'leave_temp_repo.dart';
 class LeaveTempRepository extends AbstractLeaveTempRepository {
   final Dio _dio = Dio();
 
-  Future<LeaveTempResponse> getAPIData({
+  Future<LeaveTempResponse> getAllowedTemplateData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
@@ -18,14 +18,14 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
       };
 
       Response response = await _dio.get(
-        APIEndpointConstants.GET_READSERVICETEMPLATE_URL,
+        APIEndpointConstants.GET_ALLOWED_TEMPLATES,
         queryParameters: queryparams ?? {},
       );
       print("DIO Response: ${response.data} ${response.data.runtimeType}");
       return LeaveTempResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_READSERVICETEMPLATE_URL}.");
+          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_ALLOWED_TEMPLATES}.");
 
       print("Stack: \n\n\n $stacktrace");
       print("Err: \n\n\n $err");

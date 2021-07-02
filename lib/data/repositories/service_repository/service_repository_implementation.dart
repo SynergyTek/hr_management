@@ -5,7 +5,7 @@ part of 'service_repository.dart';
 class ServiceRepository extends AbstractServiceRepository {
   final Dio _dio = Dio();
 
-  Future<ServiceResponse> getAPIData(templatecode)//{
+  Future<ServiceResponse> getServiceDetail(templatecode)//{
     // Optional Params to be added to the request if required.
     //Map<String, dynamic> queryparams,templatecode}
    async {
@@ -56,7 +56,7 @@ class ServiceRepository extends AbstractServiceRepository {
       var result = PostResponse.fromJson(
         response.data,
       );
-      // TODO: response parsing
+    
       return result;
     } catch (err, stacktrace) {
       print(
