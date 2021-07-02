@@ -9,9 +9,9 @@ class ServiceRepository extends AbstractServiceRepository {
     // Optional Params to be added to the request if required.
     //Map<String, dynamic> queryparams,templatecode}
    async {
-    final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
-    // final String endpoint =
-    //   'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode='+templatecode+'&userid=45bba746-3309-49b7-9c03-b5793369d73c';
+    // final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
+    final String endpoint =
+      'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode='+templatecode+'&userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
     try {
       Response response = await _dio.get(
