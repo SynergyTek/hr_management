@@ -24,7 +24,7 @@ class TextCircleAvater extends StatelessWidget {
           backgroundColor: color,
           child: Text(
             avatarText(text),
-            style: TextStyle(color: Colors.white, fontSize: fontSize),
+            style: TextStyle(color: Colors.black, fontSize: fontSize),
           ),
         ));
   }

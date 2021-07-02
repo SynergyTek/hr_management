@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/models/api_models/post_response_model.dart';
+import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/service_models/service_response_model.dart';
 import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
@@ -346,7 +347,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           idKey: model[i].idPath,
           url: model[i].data,
           onListTap: (dynamic value) {
-            udfJson[model[i].label] = value.toString();
+            NTSDropdownModel _selectedIdNameViewModel = value;
+            _ddController.text = _selectedIdNameViewModel.name;
+            udfJson[model[i].label] = _selectedIdNameViewModel.id;
+            // udfJson[model[i].label] = value.toString();
           },
         ));
       } else if (model[i].type == 'radio') {
@@ -367,11 +371,18 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           hint: model[i].label,
           validationMessage: "Select " + model[i].label,
           isShowArrow: true,
-          nameKey: model[i].template,
+          nameKey: (model[i].template)
+              .toString()
+              .replaceAll('<span>{{', '')
+              .replaceAll('}}</span>', '')
+              .trim()
+              .split('.')[1],
           idKey: model[i].idPath,
           url: model[i].data.url,
           onListTap: (dynamic value) {
-            udfJson[model[i].label] = value.toString();
+            NTSDropdownModel _selectedIdNameViewModel = value;
+            _ddController.text = _selectedIdNameViewModel.name;
+            udfJson[model[i].label] = _selectedIdNameViewModel.id;
           },
         ));
       } else if (model[i].type == 'datetime') {
