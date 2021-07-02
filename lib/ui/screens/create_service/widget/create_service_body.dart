@@ -11,7 +11,6 @@ import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_dropdown_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
@@ -33,14 +32,19 @@ class CreateServiceScreenBody extends StatefulWidget {
 
 class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController subjectController = TextEditingController();
+
+  // to render UDFS
   List<Widget> columnComponentWidgets = [];
   List<Widget> componentComListWidgets = [];
+  List<Widget> udfJsonCompWidgetList = [];
+
   TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
   ServiceResponseModel serviceModel;
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
+
   @override
   void initState() {
     super.initState();
@@ -122,6 +126,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     if (componentComList != null && componentComList.isNotEmpty) {
       addDynamicComponentComponent(componentComList, createServiceFormBloc);
     }
+    if (udfJsonString.components != null &&
+        udfJsonString.components.isNotEmpty) {
+      udfJsonCompWidgetList =
+          addDynamic(udfJsonString.components, createServiceFormBloc);
+    }
   }
 
   List<Widget> formFieldsWidgets(context, createServiceFormBloc) {
@@ -200,12 +209,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       textFieldBloc: createServiceFormBloc.description,
       prefixIcon: Icon(Icons.note),
     ));
+    if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
+      widgets.addAll(udfJsonCompWidgetList);
+    }
     if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
       widgets.addAll(columnComponentWidgets);
     }
     if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
       widgets.addAll(componentComListWidgets);
     }
+
     widgets.add(Row(
       mainAxisSize: MainAxisSize.max,
       children: [
