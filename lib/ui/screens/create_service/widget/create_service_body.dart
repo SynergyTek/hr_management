@@ -33,8 +33,12 @@ class CreateServiceScreenBody extends StatefulWidget {
 
 class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController subjectController = TextEditingController();
+
+  // to render UDFS
   List<Widget> columnComponentWidgets = [];
   List<Widget> componentComListWidgets = [];
+  List<Widget> udfJsonCompWidgetList = [];
+
   TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
   ServiceResponseModel serviceModel;
@@ -125,6 +129,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     }
     if (componentComList != null && componentComList.isNotEmpty) {
       addDynamicComponentComponent(componentComList, createServiceFormBloc);
+    }
+    if (udfJsonString.components != null &&
+        udfJsonString.components.isNotEmpty) {
+      udfJsonCompWidgetList =
+          addDynamic(udfJsonString.components, createServiceFormBloc);
     }
   }
 
@@ -561,32 +570,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          // Visibility(
-          //   visible: serviceModel.is,
-          //   child: PrimaryButton(
-          //     buttonText: 'Edit',
-          //     handleOnPressed: () {
-          //     },
-          //     width: 100,
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: serviceModel.isCancelButtonVisible,
-          //   child: PrimaryButton(
-          //     buttonText: 'Cancel Edit',
-          //     handleOnPressed: () {},
-          //     width: 100,
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: serviceModel,
-          //   child: PrimaryButton(
-          //     buttonText: 'Save',
-          //     handleOnPressed: () {
-          //     },
-          //     width: 100,
-          //   ),
-          // ),
           Visibility(
             visible: serviceModel.isCompleteButtonVisible,
             child: PrimaryButton(
@@ -596,7 +579,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             ),
           ),
           Visibility(
-            // visible: true,
             visible: serviceModel.isCancelButtonVisible,
             child: PrimaryButton(
               buttonText: 'Cancel',
