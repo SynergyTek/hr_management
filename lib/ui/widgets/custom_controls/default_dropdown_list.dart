@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
-import 'package:hr_management/logic/blocs/nts_dd_bloc/nt_dd_api_bloc.dart';
+import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:listizer/listizer.dart';
 import '../appbar_widget.dart';
