@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/models/api_models/post_response_model.dart';
+import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/service_models/service_response_model.dart';
 import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
@@ -42,6 +43,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   List<ComponentComponent> componentComList = [];
   final formReason = GlobalKey<FormState>();
   TextEditingController cancelReason = TextEditingController();
+  DateTime startDate;
+  DateTime dueDate;
 
   @override
   void initState() {
@@ -69,45 +72,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
-                columnComponent = [];
-                componentComList = [];
-                udfJsonString =
-                    UdfJson.fromJson(jsonDecode(snapshot.data.data.json));
-                for (UdfJsonComponent component in udfJsonString.components) {
-                  if (component.columns != null &&
-                      component.columns.isNotEmpty) {
-                    for (Columns column in component.columns) {
-                      for (ColumnComponent columnCom in column.components) {
-                        columnComponent.add(columnCom);
-                      }
-                    }
-                    if (component.components != null &&
-                        component.components.isNotEmpty) {
-                      for (ComponentComponent componentComponent
-                          in component.components) {
-                        componentComList.add(componentComponent);
-                      }
-                    }
-                  }
-                }
-                if (columnComponent != null && columnComponent.isNotEmpty) {
-                  columnComponentWidgets = addDynamic(
-                    columnComponent,
-                    createServiceFormBloc,
-                  );
-                }
-                if (componentComList != null && componentComList.isNotEmpty) {
-                  addDynamicComponentComponent(
-                      componentComList, createServiceFormBloc);
-                }
+
+                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json);
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
-                    if (createServiceFormBloc.startDate.value != null &&
-                        createServiceFormBloc.endDate.value != null) {
-                      compareStartEndDate(createServiceFormBloc.startDate.value,
-                          createServiceFormBloc.endDate.value, context);
-                    }
+                    // if (createServiceFormBloc.startDate.value != null &&
+                    //     createServiceFormBloc.endDate.value != null) {
+                    //   compareStartEndDate(createServiceFormBloc.startDate.value,
+                    //       createServiceFormBloc.endDate.value, context);
+                    // }
                   },
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
@@ -122,6 +96,36 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             }),
       ),
     );
+  }
+
+  parseJsonToUDFModel(
+      CreateServiceFormBloc createServiceFormBloc, udfJsonString) {
+    columnComponent = [];
+    componentComList = [];
+    udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
+    for (UdfJsonComponent component in udfJsonString.components) {
+      if (component.columns != null && component.columns.isNotEmpty) {
+        for (Columns column in component.columns) {
+          for (ColumnComponent columnCom in column.components) {
+            columnComponent.add(columnCom);
+          }
+        }
+        if (component.components != null && component.components.isNotEmpty) {
+          for (ComponentComponent componentComponent in component.components) {
+            componentComList.add(componentComponent);
+          }
+        }
+      }
+    }
+    if (columnComponent != null && columnComponent.isNotEmpty) {
+      columnComponentWidgets = addDynamic(
+        columnComponent,
+        createServiceFormBloc,
+      );
+    }
+    if (componentComList != null && componentComList.isNotEmpty) {
+      addDynamicComponentComponent(componentComList, createServiceFormBloc);
+    }
   }
 
   Widget setServiceView(
@@ -156,11 +160,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   List<Widget> formFieldsWidgets(
-      BuildContext context,
-      CreateServiceFormBloc createServiceFormBloc,
-      ServiceResponseModel serviceModel) {
-    DateTime startDate;
-    DateTime dueDate;
+      context, createServiceFormBloc, ServiceResponseModel serviceModel) {
     List<Widget> widgets = [];
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -376,7 +376,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           idKey: model[i].idPath,
           url: model[i].data,
           onListTap: (dynamic value) {
-            udfJson[model[i].label] = value.toString();
+            NTSDropdownModel _selectedIdNameViewModel = value;
+            _ddController.text = _selectedIdNameViewModel.name;
+            udfJson[model[i].label] = _selectedIdNameViewModel.id;
+            // udfJson[model[i].label] = value.toString();
           },
         ));
       } else if (model[i].type == 'radio') {
@@ -397,11 +400,18 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           hint: model[i].label,
           validationMessage: "Select " + model[i].label,
           isShowArrow: true,
-          nameKey: model[i].template,
+          nameKey: (model[i].template)
+              .toString()
+              .replaceAll('<span>{{', '')
+              .replaceAll('}}</span>', '')
+              .trim()
+              .split('.')[1],
           idKey: model[i].idPath,
           url: model[i].data.url,
           onListTap: (dynamic value) {
-            udfJson[model[i].label] = value.toString();
+            NTSDropdownModel _selectedIdNameViewModel = value;
+            _ddController.text = _selectedIdNameViewModel.name;
+            udfJson[model[i].label] = _selectedIdNameViewModel.id;
           },
         ));
       } else if (model[i].type == 'datetime') {
