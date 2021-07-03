@@ -41,6 +41,9 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
                   child: Text(snapshot.data.error),
                 );
               }
+              var list=snapshot.data.data;
+             List<LeaveTemplateModel> model = list.where((e) => e.templateType == 6).toList();
+
 
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -48,10 +51,10 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
                     childAspectRatio: 2 / 2.2,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
-                itemCount: snapshot?.data?.data?.length ?? 0,
+                itemCount: model.length ?? 0,
                 itemBuilder: (context, index) {
                   LeaveTemplateModel leaveTempResponse =
-                      snapshot.data.data[index];
+                      model[index];
                   return FlipCard(
                     direction: FlipDirection.HORIZONTAL,
                     front: buildFront(
@@ -61,7 +64,7 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
                         context: context),
                     back: buildRear(
                         templateCode: leaveTempResponse.code,
-                        templateName: snapshot.data.data[index].displayName,
+                        templateName: model[index].displayName,
                         colorCode: leaveTempResponse.templateColor,
                         context: context),
                   );
