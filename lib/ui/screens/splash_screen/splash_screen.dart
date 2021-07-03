@@ -29,7 +29,7 @@ class SplashScreen extends StatelessWidget {
             ),
             () => Navigator.pushReplacementNamed(
               context,
-              LEAVE_REQUEST,
+              LOGIN_ROUTE,
             ),
           ),
           builder: (context, snapshot) {

@@ -64,6 +64,16 @@ Widget drawerWidget(context) {
             );
           },
         ),
+        ListTile(
+          title: Text('Logout'),
+          trailing: Icon(Icons.logout),
+          onTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              LOGIN_ROUTE,
+            );
+          },
+        ),
         // ListTile(
         //   title: Text('UDF Demo'),
         //   trailing: Icon(Icons.app_registration),
