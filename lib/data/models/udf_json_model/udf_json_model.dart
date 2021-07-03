@@ -34,7 +34,8 @@ class UdfJsonComponent {
       this.title,
       this.data,
       this.idPath,
-      this.template});
+      this.template,
+      this.inputFormat});
 
   String label;
   List<Columns> columns;
@@ -47,27 +48,28 @@ class UdfJsonComponent {
   String title;
   String idPath;
   String template;
+  String inputFormat;
 
   factory UdfJsonComponent.fromJson(Map<String, dynamic> json) =>
       UdfJsonComponent(
-        label: json["label"],
-        columns: json["columns"] == null
-            ? null
-            : List<Columns>.from(
-                json["columns"].map((x) => Columns.fromJson(x))),
-        key: json["key"],
-        type: json["type"],
-        input: json["input"],
-        tableView: json["tableView"],
-        components: json["components"] == null
-            ? null
-            : List<ComponentComponent>.from(
-                json["components"].map((x) => ComponentComponent.fromJson(x))),
-        title: json["title"] == null ? null : json["title"],
-        data: json['data'] != null ? Data.fromJson(json['data']) : null,
-        idPath: json['idPath'],
-        template: json['template'],
-      );
+          label: json["label"],
+          columns: json["columns"] == null
+              ? null
+              : List<Columns>.from(
+                  json["columns"].map((x) => Columns.fromJson(x))),
+          key: json["key"],
+          type: json["type"],
+          input: json["input"],
+          tableView: json["tableView"],
+          components: json["components"] == null
+              ? null
+              : List<ComponentComponent>.from(json["components"]
+                  .map((x) => ComponentComponent.fromJson(x))),
+          title: json["title"] == null ? null : json["title"],
+          data: json['data'] != null ? Data.fromJson(json['data']) : null,
+          idPath: json['idPath'],
+          template: json['template'],
+          inputFormat: json['inputFormat']);
 
   Map<String, dynamic> toJson() => {
         "label": label,
@@ -84,7 +86,8 @@ class UdfJsonComponent {
         "title": title == null ? null : title,
         'data': this.data != null ? this.data.toJson() : null,
         'idPath': this.idPath,
-        'template': this.template
+        'template': this.template,
+        'inputFormat': this.inputFormat,
       };
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:sizer/sizer.dart';
 
 typedef ListTapPressedCallBack = void Function(dynamic key);
 
@@ -35,7 +36,7 @@ class NTSDropDownSelect extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomLeft,
-      height: 80.0,
+      height: 10.h,
       child: Stack(
         children: <Widget>[
           new TextFormField(

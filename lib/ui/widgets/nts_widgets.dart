@@ -275,7 +275,7 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      height: 10.h,
+      height: 11.h,
       width: MediaQuery.of(context).size.width / 2 - 20,
       child: new Center(
         child: new Column(
