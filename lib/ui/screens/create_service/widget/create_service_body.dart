@@ -426,10 +426,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       } else if (model[i].type == 'datetime') {
         udfJson[model[i].key] = '';
         listDynamic.add(new DynamicDateTimeBox(
+          code: model[i].inputFormat != null || model[i].inputFormat != ''
+              ? model[i].inputFormat
+              : null,
           name: model[i].key,
           key: new Key(model[i].label),
           selectDate: (DateTime date) {
             if (date != null) {
+              model[i].inputFormat = date.toString();
+              print(model[i].inputFormat);
               udfJson[model[i].key] = date.toString();
             }
           },
@@ -813,7 +818,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     print(result);
     if (result.isSuccess) {
       resultMsg = 'Leave Applied Successfully';
-     
     } else {
       //  resultMsg = result.messages;
       resultMsg = 'SomeThing Went Wrong.Try Again later';

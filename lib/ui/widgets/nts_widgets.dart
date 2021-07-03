@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 class DynamicTextBoxWidget extends StatelessWidget {
   final String labelName;
@@ -274,7 +275,7 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      height: 80,
+      height: 10.h,
       width: MediaQuery.of(context).size.width / 2 - 20,
       child: new Center(
         child: new Column(
