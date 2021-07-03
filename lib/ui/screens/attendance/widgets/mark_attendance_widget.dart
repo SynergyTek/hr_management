@@ -218,9 +218,9 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                               SizedBox(
                                 height: 28,
                               ),
-                              Text("User Name"),
-                              Text("Email"),
-                              Text("Job Name"),
+                              Text("Administrator Administrator"),
+                              Text("admin@synergy.com"),
+                              Text("Admin"),
                               // Text(
                               //   settingInheritedWidget
                               //                   .userDetails.username !=
@@ -384,7 +384,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                     ),
                     onPressed: () async {
                       // await Geolocator.openAppSettings();
-// await Geolocator.openLocationSettings();
+                      await Geolocator.openLocationSettings();
                     },
                   ),
                   Text(

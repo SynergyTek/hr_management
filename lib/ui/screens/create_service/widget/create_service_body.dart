@@ -251,7 +251,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
     if (!serviceModel.hideExpiryDate)
       widgets.add(BlocDatePickerWidget(
-        labelName: 'Expiry Date',
+        labelName: 'Reminder Date',
         canSelectTime: false,
         inputFieldBloc: createServiceFormBloc.expiryDate,
         height: 75.0,
@@ -866,6 +866,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         isVisible = false;
       });
       resultMsg = 'Leave Applied Successfully';
+      Navigator.pop(context);
     } else {
       //  resultMsg = result.messages;
 
@@ -875,6 +876,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       resultMsg = 'SomeThing Went Wrong.Try Again later';
     }
     displaySnackBar(text: resultMsg, context: context);
+    
   }
 
   @override
