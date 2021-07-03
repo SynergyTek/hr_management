@@ -814,4 +814,14 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     }
     print(result);
   }
+
+  @override
+  void dispose() {
+    columnComponentWidgets = [];
+    componentComListWidgets = [];
+    udfJsonCompWidgetList = [];
+    columnComponent = [];
+    componentComList = [];
+    super.dispose();
+  }
 }
