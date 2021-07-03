@@ -1,4 +1,5 @@
 import 'package:hr_management/logic/blocs/remote_attendance_bloc/remote_attendance_bloc.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,9 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
           attendanceTab(),
           Visibility(
             visible: false,
-            child: Center(child: new CircularProgressIndicator()),
+            child: Center(
+              child: CustomProgressIndicator(),
+            ),
           ),
         ],
       );

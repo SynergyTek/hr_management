@@ -1,3 +1,5 @@
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
+
 import '../../../../data/models/api_models/api_response_model.dart';
 import '../../../../logic/blocs/api_bloc/api_bloc.dart';
 import '../../../../themes/theme_config.dart';
@@ -49,7 +51,7 @@ class _HomeScreenBodyWidgetState extends State<HomeScreenBodyWidget> {
 
   Widget _loadingWidget() {
     return Center(
-      child: CircularProgressIndicator(),
+      child: CustomProgressIndicator(),
     );
   }
 

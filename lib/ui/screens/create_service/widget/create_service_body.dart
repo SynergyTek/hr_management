@@ -17,6 +17,7 @@ import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart'
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -94,7 +95,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 );
               } else {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CustomProgressIndicator(),
                 );
               }
             }),

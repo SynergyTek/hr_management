@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../data/models/api_models/api_response_model.dart';
 import '../../../../themes/theme_config.dart';
@@ -50,7 +51,7 @@ class _NoteScreenBodyWidgetState extends State<NoteScreenBodyWidget> {
 
   Widget _loadingWidget() {
     return Center(
-      child: CircularProgressIndicator(),
+      child: CustomProgressIndicator(),
     );
   }
 

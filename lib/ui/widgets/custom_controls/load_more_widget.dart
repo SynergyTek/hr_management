@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../progress_indicator.dart';
+
 class LoadMoreWidget extends StatefulWidget {
   LoadMoreWidget({Key key, this.callBack, this.isVisible, this.isLoading})
       : super(key: key);
@@ -24,7 +26,7 @@ class _LoadMoreWidgetState extends State<LoadMoreWidget> {
             width: MediaQuery.of(context).size.width,
             color: Colors.white,
             child: widget.isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? Center(child: CustomProgressIndicator())
                 : TextButton(
                     child: Text('Load More'),
                     onPressed: widget.callBack,

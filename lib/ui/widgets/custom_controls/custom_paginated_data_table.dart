@@ -9,6 +9,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 
+import '../progress_indicator.dart';
+
 /// A material design data table that shows data using multiple pages.
 ///
 /// A paginated data table shows [rowsPerPage] rows of data per page and
@@ -286,13 +288,13 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
         widget.columns.map<DataCell>((DataColumn column) {
       if (!column.numeric) {
         haveProgressIndicator = true;
-        return const DataCell(CircularProgressIndicator());
+        return const DataCell(CustomProgressIndicator());
       }
       return DataCell.empty;
     }).toList();
     if (!haveProgressIndicator) {
       haveProgressIndicator = true;
-      cells[0] = const DataCell(CircularProgressIndicator());
+      cells[0] = const DataCell(CustomProgressIndicator());
     }
     return DataRow.byIndex(
       index: index,

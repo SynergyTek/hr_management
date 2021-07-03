@@ -1,5 +1,6 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../../data/models/leave_models/leave_res_model.dart';
 import '../../../../data/models/leave_models/leave_temp_model.dart';
 import '../../../../logic/blocs/leave_temp_bloc/leave_temp_api_bloc.dart';
@@ -64,7 +65,7 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
               );
             } else {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CustomProgressIndicator(),
               );
             }
           }),
