@@ -819,4 +819,14 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     }
     displaySnackBar(text: resultMsg, context: context);
   }
+
+  @override
+  void dispose() {
+    columnComponentWidgets = [];
+    componentComListWidgets = [];
+    udfJsonCompWidgetList = [];
+    columnComponent = [];
+    componentComList = [];
+    super.dispose();
+  }
 }
