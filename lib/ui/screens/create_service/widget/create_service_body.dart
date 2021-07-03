@@ -43,11 +43,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
   ServiceResponseModel serviceModel;
-  ServiceResponseModel postServiceModel=new ServiceResponseModel();
+  ServiceResponseModel postServiceModel = new ServiceResponseModel();
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
-   List<UdfJsonComponent> udfJsonComponent = [];
+  List<UdfJsonComponent> udfJsonComponent = [];
   final formReason = GlobalKey<FormState>();
   TextEditingController cancelReason = TextEditingController();
   DateTime startDate;
@@ -93,8 +93,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   },
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
-                  child: setServiceView(context, createServiceFormBloc,
-                      serviceModel),
+                  child: setServiceView(
+                      context, createServiceFormBloc, serviceModel),
                 );
               } else {
                 return Center(
@@ -110,7 +110,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       CreateServiceFormBloc createServiceFormBloc, udfJsonString) {
     columnComponent = [];
     componentComList = [];
-    udfJsonComponent=[];
+    udfJsonComponent = [];
     udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
     for (UdfJsonComponent component in udfJsonString.components) {
       if (component.columns != null && component.columns.isNotEmpty) {
@@ -137,7 +137,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     }
     if (udfJsonString.components != null &&
         udfJsonString.components.isNotEmpty) {
-          udfJsonComponent.addAll(udfJsonString.components);
+      udfJsonComponent.addAll(udfJsonString.components);
       udfJsonCompWidgetList =
           addDynamic(udfJsonComponent, createServiceFormBloc);
     }
@@ -251,7 +251,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
     if (!serviceModel.hideExpiryDate)
       widgets.add(BlocDatePickerWidget(
-        labelName: 'Expiry Date',
+        labelName: 'Reminder Date',
         canSelectTime: false,
         inputFieldBloc: createServiceFormBloc.expiryDate,
         height: 75.0,
@@ -268,7 +268,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         prefixIcon: Icon(Icons.note),
       ));
 
-       if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
+    if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
     }
     if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
@@ -840,9 +840,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   String resultMsg = '';
   serviceViewModelPostRequest() async {
-    String stringModel=jsonEncode(serviceModel);
-    var jsonModel=jsonDecode(stringModel);
-    postServiceModel=ServiceResponseModel.fromJson(jsonModel);
+    String stringModel = jsonEncode(serviceModel);
+    var jsonModel = jsonDecode(stringModel);
+    postServiceModel = ServiceResponseModel.fromJson(jsonModel);
 
     postServiceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     postServiceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
@@ -862,17 +862,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
     print(result);
     if (result.isSuccess) {
-      
-    setState(() {
-      isVisible = false;
-    });
+      setState(() {
+        isVisible = false;
+      });
       resultMsg = 'Leave Applied Successfully';
     } else {
       //  resultMsg = result.messages;
-      
-    setState(() {
-      isVisible = false;
-    });
+
+      setState(() {
+        isVisible = false;
+      });
       resultMsg = 'SomeThing Went Wrong.Try Again later';
     }
     displaySnackBar(text: resultMsg, context: context);
