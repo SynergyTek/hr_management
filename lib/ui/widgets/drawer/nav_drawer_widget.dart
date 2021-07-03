@@ -32,18 +32,18 @@ Widget drawerWidget(context) {
             ),
           ),
         ),
-        ListTile(
-          title: Text('Home'),
-          trailing: Icon(
-            Icons.home,
-          ),
-          onTap: () {
-            Navigator.pushReplacementNamed(
-              context,
-              HOME_ROUTE,
-            );
-          },
-        ),
+        // ListTile(
+        //   title: Text('Home'),
+        //   trailing: Icon(
+        //     Icons.home,
+        //   ),
+        //   onTap: () {
+        //     Navigator.pushReplacementNamed(
+        //       context,
+        //       HOME_ROUTE,
+        //     );
+        //   },
+        // ),
         ListTile(
           title: Text('Remote Sign In/Out'),
           trailing: Icon(Icons.login),
@@ -64,6 +64,7 @@ Widget drawerWidget(context) {
             );
           },
         ),
+
         ListTile(
           title: Text('Logout'),
           trailing: Icon(Icons.logout),
@@ -94,6 +95,18 @@ Widget drawerWidget(context) {
             );
           },
         ),
+
+
+        // ListTile(
+        //   title: Text('Task Home'),
+        //   // trailing: Icon(Icons.task),
+        //   onTap: () {
+        //     Navigator.pushNamed(
+        //       context,
+        //       TASK_HOME,
+        //     );
+        //   },
+        // ),
 
         // ListTile(
         //   title: Text('Create Service'),
