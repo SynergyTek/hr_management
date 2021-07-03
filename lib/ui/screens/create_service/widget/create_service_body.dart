@@ -46,6 +46,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
+   List<UdfJsonComponent> udfJsonComponent = [];
   final formReason = GlobalKey<FormState>();
   TextEditingController cancelReason = TextEditingController();
   DateTime startDate;
@@ -92,7 +93,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
                   child: setServiceView(context, createServiceFormBloc,
-                      serviceModel, columnComponent),
+                      serviceModel),
                 );
               } else {
                 return Center(
@@ -108,6 +109,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       CreateServiceFormBloc createServiceFormBloc, udfJsonString) {
     columnComponent = [];
     componentComList = [];
+    udfJsonComponent=[];
     udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
     for (UdfJsonComponent component in udfJsonString.components) {
       if (component.columns != null && component.columns.isNotEmpty) {
@@ -134,16 +136,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     }
     if (udfJsonString.components != null &&
         udfJsonString.components.isNotEmpty) {
+          udfJsonComponent.addAll(udfJsonString.components);
       udfJsonCompWidgetList =
-          addDynamic(udfJsonString.components, createServiceFormBloc);
+          addDynamic(udfJsonComponent, createServiceFormBloc);
     }
   }
 
   Widget setServiceView(
       BuildContext context,
       CreateServiceFormBloc createServiceFormBloc,
-      ServiceResponseModel serviceModel,
-      List<ColumnComponent> columnComponent) {
+      ServiceResponseModel serviceModel) {
     createServiceFormBloc.subject
         .updateInitialValue(serviceModel.serviceSubject);
     createServiceFormBloc.description
@@ -162,7 +164,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             Container(
               height: 50,
               color: Colors.grey[100],
-              child: displayFooterWidget(serviceModel, columnComponent),
+              child: displayFooterWidget(serviceModel),
             ),
           ],
         ),
@@ -264,6 +266,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         textFieldBloc: createServiceFormBloc.description,
         prefixIcon: Icon(Icons.note),
       ));
+
+       if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
+      widgets.addAll(udfJsonCompWidgetList);
+    }
     if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
       widgets.addAll(columnComponentWidgets);
     }
@@ -569,8 +575,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     ));
   }
 
-  displayFooterWidget(ServiceResponseModel serviceModel,
-      List<ColumnComponent> columnComponent) {
+  displayFooterWidget(
+    ServiceResponseModel serviceModel,
+  ) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -641,6 +648,30 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                         return;
                       }
                     }
+                    // for (var i = 0; i < componentComList.length; i++) {
+                    //   if (componentComList[i]?.validate?.required != null &&
+                    //       componentComList[i].validate.required == true &&
+                    //       udfJson.containsKey(componentComList[i].key) &&
+                    //       (udfJson[componentComList[i].key] == null ||
+                    //           udfJson[componentComList[i].key].isEmpty)) {
+                    //     displaySnackBar(
+                    //         text: 'Please enter ${componentComList[i].label}',
+                    //         context: context);
+                    //     return;
+                    //   }
+                    // }
+                    // for (var i = 0; i < udfJsonComponent.length; i++) {
+                    //   if (udfJsonComponent[i]?.validate?.required != null &&
+                    //       udfJsonComponent[i].validate.required == true &&
+                    //       udfJson.containsKey(udfJsonComponent[i].key) &&
+                    //       (udfJson[udfJsonComponent[i].key] == null ||
+                    //           udfJson[udfJsonComponent[i].key].isEmpty)) {
+                    //     displaySnackBar(
+                    //         text: 'Please enter ${udfJsonComponent[i].label}',
+                    //         context: context);
+                    //     return;
+                    //   }
+                    // }
                     serviceViewModelPostRequest();
                   },
                   width: 100,
@@ -824,7 +855,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       resultMsg = 'Leave Applied Successfully';
     } else {
       //  resultMsg = result.messages;
-      resultMsg = 'SomeThing went wrong';
+      resultMsg = 'SomeThing Went Wrong.Try Again later';
     }
     // setState(() {
     //   isVisible = false;
@@ -834,6 +865,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   @override
   void dispose() {
+    udfJsonString = null;
     columnComponentWidgets = [];
     componentComListWidgets = [];
     udfJsonCompWidgetList = [];
