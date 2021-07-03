@@ -8,6 +8,7 @@ import '../appbar_widget.dart';
 import '../circle_avatar.dart';
 import '../empty_list_widget.dart';
 import '../nts_dropdown_select.dart';
+import '../progress_indicator.dart';
 
 class DropDownDefaultList extends StatefulWidget {
   final ListTapPressedCallBack onListTap;
@@ -85,7 +86,7 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
                   );
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CustomProgressIndicator(),
                   );
                 }
               }),

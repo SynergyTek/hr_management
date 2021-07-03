@@ -1,4 +1,5 @@
 import 'package:hr_management/logic/blocs/remote_attendance_bloc/remote_attendance_bloc.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   // GeoLocationHelper _geoLocationHelper = new GeoLocationHelper();
   Location _locationService = new Location();
   // late StreamSubscription<LocationData> _locationSubscription;
+
+  bool isVisible = false;
   @override
   void initState() {
     super.initState();
@@ -76,8 +79,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         children: <Widget>[
           attendanceTab(),
           Visibility(
-            visible: false,
-            child: Center(child: new CircularProgressIndicator()),
+            visible: isVisible,
+            child: Center(
+              child: CustomProgressIndicator(),
+            ),
           ),
         ],
       );
@@ -439,7 +444,13 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   void _handleSignInOnClick() async {
+    setState(() {
+      isVisible = true;
+    });
     await remoteAttendanceBloc.getInsertAccessLog(isSignIn: true);
+    setState(() {
+      isVisible = false;
+    });
 
     print("Sign In isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
     print(
@@ -458,7 +469,13 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   void _handleSignOutOnClick() async {
+    setState(() {
+      isVisible = true;
+    });
     await remoteAttendanceBloc.getInsertAccessLog(isSignIn: false);
+    setState(() {
+      isVisible = false;
+    });
 
     print("Sign Out isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
     print("Sign Out Error?: ${remoteAttendanceBloc.subject.value.error}");

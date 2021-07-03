@@ -10,6 +10,7 @@ import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
   const CreateServiceScreenBody({Key key});
@@ -59,7 +60,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               return ListView(children: formFieldsWidgets());
             } else {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CustomProgressIndicator(),
               );
             }
           }),
