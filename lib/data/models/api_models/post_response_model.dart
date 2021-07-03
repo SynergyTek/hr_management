@@ -17,5 +17,6 @@ class PostResponse {
 
   PostResponse.withError(String errorValue)
       : item = null,
+        isSuccess = false,
         messages = errorValue;
 }

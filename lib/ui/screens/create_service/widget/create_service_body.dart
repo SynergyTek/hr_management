@@ -872,8 +872,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         isVisible = false;
       });
       resultMsg = result.messages;
-
-      // resultMsg = 'SomeThing Went Wrong.Try Again later';
+      Navigator.pop(context);
     }
     displaySnackBar(text: resultMsg, context: context);
   }
