@@ -623,6 +623,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 child: PrimaryButton(
                   buttonText: 'Submit',
                   handleOnPressed: () {
+                    bool isValid = false;
                     for (var i = 0; i < columnComponent.length; i++) {
                       if (columnComponent[i]?.validate?.required != null &&
                           columnComponent[i].validate.required == true &&
@@ -635,6 +636,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                         return;
                       }
                     }
+                    serviceViewModelPostRequest();
                   },
                   width: 100,
                 ),
@@ -777,7 +779,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Leave Applied Successfully'),
+                Text(''),
               ],
             ),
           ),
@@ -794,6 +796,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
   }
 
+  String resultMsg = '';
   serviceViewModelPostRequest() async {
     serviceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     serviceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
@@ -807,12 +810,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     PostResponse result = await serviceBloc.postData(
       serviceResponseModel: serviceModel,
     );
-    if (result.isSuccess) {
-      _showPostAlertMyDialog2();
-    } else {
-      _showPostAlertMyDialog();
-    }
     print(result);
+    if (result.isSuccess) {
+      resultMsg = 'Leave Applied Successfully';
+     
+    } else {
+      //  resultMsg = result.messages;
+      resultMsg = 'SomeThing Went Wrong.Try Again later';
+    }
+    displaySnackBar(text: resultMsg, context: context);
   }
 
   @override
