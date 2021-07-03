@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+
+import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
-import 'package:hr_management/data/repositories/nts_dd_repo/nts_dd_repo.dart';
+import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
 
 import 'package:rxdart/rxdart.dart';
 
@@ -16,7 +17,7 @@ class NTSDdAPIBloc {
       {@required String url,
       @required String idKey,
       @required String nameKey}) async {
-    NTSDdResponse response = await _apiRepository.getAPIData(
+    NTSDdResponse response = await _apiRepository.getdynamicUrlData(
         url: url, idKey: idKey, nameKey: nameKey);
     print("response: $response");
     _subject.sink.add(response);

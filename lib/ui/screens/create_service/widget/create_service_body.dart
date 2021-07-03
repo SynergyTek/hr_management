@@ -4,19 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/models/api_models/post_response_model.dart';
+import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/service_models/service_response_model.dart';
 import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_dropdown_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
 import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 
 import '../create_service_form_bloc.dart';
@@ -32,18 +34,30 @@ class CreateServiceScreenBody extends StatefulWidget {
 
 class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController subjectController = TextEditingController();
+
+  // to render UDFS
   List<Widget> columnComponentWidgets = [];
   List<Widget> componentComListWidgets = [];
+  List<Widget> udfJsonCompWidgetList = [];
+
   TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
   ServiceResponseModel serviceModel;
+  ServiceResponseModel postServiceModel=new ServiceResponseModel();
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
+   List<UdfJsonComponent> udfJsonComponent = [];
+  final formReason = GlobalKey<FormState>();
+  TextEditingController cancelReason = TextEditingController();
+  DateTime startDate;
+  DateTime dueDate;
+  bool isVisible = false;
+
   @override
   void initState() {
     super.initState();
-    serviceBloc..getData(widget.templateCode);
+    serviceBloc..getServiceDetail(widget.templateCode);
   }
 
   @override
@@ -66,55 +80,25 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
-                columnComponent = [];
-                componentComList = [];
-                udfJsonString =
-                    UdfJson.fromJson(jsonDecode(snapshot.data.data.json));
-                for (UdfJsonComponent component in udfJsonString.components) {
-                  if (component.columns != null &&
-                      component.columns.isNotEmpty) {
-                    for (Columns column in component.columns) {
-                      for (ColumnComponent columnCom in column.components) {
-                        columnComponent.add(columnCom);
-                      }
-                    }
-                    if (component.components != null &&
-                        component.components.isNotEmpty) {
-                      for (ComponentComponent componentComponent
-                          in component.components) {
-                        componentComList.add(componentComponent);
-                      }
-                    }
-                  }
-                }
-                if (columnComponent != null && columnComponent.isNotEmpty) {
-                  columnComponentWidgets = addDynamic(
-                    columnComponent,
-                    createServiceFormBloc,
-                  );
-                }
-                if (componentComList != null && componentComList.isNotEmpty) {
-                  addDynamicComponentComponent(
-                      componentComList, createServiceFormBloc);
-                }
+
+                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json);
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
-                    if (createServiceFormBloc.startDate.value != null &&
-                        createServiceFormBloc.endDate.value != null) {
-                      compareStartEndDate(createServiceFormBloc.startDate.value,
-                          createServiceFormBloc.endDate.value, context);
-                    }
+                    // if (createServiceFormBloc.startDate.value != null &&
+                    //     createServiceFormBloc.endDate.value != null) {
+                    //   compareStartEndDate(createServiceFormBloc.startDate.value,
+                    //       createServiceFormBloc.endDate.value, context);
+                    // }
                   },
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
-                  child: ListView(
-                      children:
-                          formFieldsWidgets(context, createServiceFormBloc)),
+                  child: setServiceView(context, createServiceFormBloc,
+                      serviceModel),
                 );
               } else {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CustomProgressIndicator(),
                 );
               }
             }),
@@ -122,7 +106,78 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
   }
 
-  List<Widget> formFieldsWidgets(context, createServiceFormBloc) {
+  parseJsonToUDFModel(
+      CreateServiceFormBloc createServiceFormBloc, udfJsonString) {
+    columnComponent = [];
+    componentComList = [];
+    udfJsonComponent=[];
+    udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
+    for (UdfJsonComponent component in udfJsonString.components) {
+      if (component.columns != null && component.columns.isNotEmpty) {
+        for (Columns column in component.columns) {
+          for (ColumnComponent columnCom in column.components) {
+            columnComponent.add(columnCom);
+          }
+        }
+        if (component.components != null && component.components.isNotEmpty) {
+          for (ComponentComponent componentComponent in component.components) {
+            componentComList.add(componentComponent);
+          }
+        }
+      }
+    }
+    if (columnComponent != null && columnComponent.isNotEmpty) {
+      columnComponentWidgets = addDynamic(
+        columnComponent,
+        createServiceFormBloc,
+      );
+    }
+    if (componentComList != null && componentComList.isNotEmpty) {
+      addDynamicComponentComponent(componentComList, createServiceFormBloc);
+    }
+    if (udfJsonString.components != null &&
+        udfJsonString.components.isNotEmpty) {
+          udfJsonComponent.addAll(udfJsonString.components);
+      udfJsonCompWidgetList =
+          addDynamic(udfJsonComponent, createServiceFormBloc);
+    }
+  }
+
+  Widget setServiceView(
+      BuildContext context,
+      CreateServiceFormBloc createServiceFormBloc,
+      ServiceResponseModel serviceModel) {
+    createServiceFormBloc.subject
+        .updateInitialValue(serviceModel.serviceSubject);
+    createServiceFormBloc.description
+        .updateInitialValue(serviceModel.serviceDescription);
+    createServiceFormBloc.sla.updateInitialValue(serviceModel.serviceSLA);
+
+    return Stack(
+      children: [
+        ListView(
+          children:
+              formFieldsWidgets(context, createServiceFormBloc, serviceModel),
+        ),
+        Column(
+          children: <Widget>[
+            Expanded(child: Container()),
+            Container(
+              height: 50,
+              color: Colors.grey[100],
+              child: displayFooterWidget(serviceModel),
+            ),
+          ],
+        ),
+        // Visibility(
+        //     visible: isVisible,
+        //     child: Center(child: CustomProgressIndicator())),
+      ],
+    );
+  }
+
+  List<Widget> formFieldsWidgets(
+      context, createServiceFormBloc, ServiceResponseModel serviceModel) {
     List<Widget> widgets = [];
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -133,101 +188,98 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           rowChild(serviceModel.serviceNo, 'Service No', 3),
-          rowChild(serviceModel.status.toString(), 'Status', 2),
+          rowChild(serviceModel.serviceStatusName, 'Status', 2),
           rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
         ],
       ),
     ));
+    if (!serviceModel.hideSubject)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'Subject',
+        readonly: false,
+        maxLines: 1,
+        labelName: 'Subject',
+        textFieldBloc: createServiceFormBloc.subject,
+        prefixIcon: Icon(Icons.note),
+      ));
 
-    widgets.add(BlocTextBoxWidget(
-      fieldName: 'Subject',
-      readonly: false,
-      maxLines: 1,
-      labelName: 'Subject',
-      textFieldBloc: createServiceFormBloc.subject,
-      prefixIcon: Icon(Icons.note),
-    ));
+    if (!serviceModel.hideStartDate)
+      widgets.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            DynamicDateTimeBox(
+              code: serviceModel.startDate,
+              name: 'Start Date',
+              key: new Key('Start Date'),
+              selectDate: (DateTime date) {
+                if (date != null) {
+                  setState(() async {
+                    startDate = date;
+                  });
+                  // udfJson[model[i].key] = date.toString();
+                }
+              },
+            ),
+            DynamicDateTimeBox(
+              code: serviceModel.dueDate,
+              name: 'Due Date',
+              key: new Key('Due Date'),
+              selectDate: (DateTime date) {
+                if (date != null) {
+                  setState(() async {
+                    dueDate = date;
+                    compareStartEndDate(startDate, dueDate, context);
+                  });
+                  // udfJson[model[i].key] = date.toString();
+                }
+              },
+            )
+          ],
+        ),
+      );
 
-    // widgets.add(BlocDatePickerWidget(
-    //   labelName: 'Start Date',
-    //   canSelectTime: false,
-    //   inputFieldBloc: createServiceFormBloc.startDate,
-    // ));
+    if (!serviceModel.hideSLA)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'SLA',
+        readonly: false,
+        maxLines: 1,
+        labelName: 'SLA',
+        textFieldBloc: createServiceFormBloc.sla,
+        prefixIcon: Icon(Icons.note),
+      ));
 
-    // widgets.add(BlocDatePickerWidget(
-    //   labelName: 'Due Date',
-    //   canSelectTime: false,
-    //   inputFieldBloc: createServiceFormBloc.endDate,
-    // ));
-    widgets.add(
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          BlocDatePickerWidget(
-            labelName: 'Start Date',
-            canSelectTime: false,
-            inputFieldBloc: createServiceFormBloc.startDate,
-            height: 75.0,
-            width: MediaQuery.of(context).size.width / 2 - 20,
-          ),
-          BlocDatePickerWidget(
-            labelName: 'Due Date',
-            canSelectTime: false,
-            inputFieldBloc: createServiceFormBloc.endDate,
-            height: 75.0,
-            width: MediaQuery.of(context).size.width / 2 - 20,
-          )
-        ],
-      ),
-    );
+    if (!serviceModel.hideExpiryDate)
+      widgets.add(BlocDatePickerWidget(
+        labelName: 'Expiry Date',
+        canSelectTime: false,
+        inputFieldBloc: createServiceFormBloc.expiryDate,
+        height: 75.0,
+        width: MediaQuery.of(context).size.width / 2 - 20,
+      ));
 
-    widgets.add(BlocTextBoxWidget(
-      fieldName: 'SLA',
-      readonly: false,
-      maxLines: 1,
-      labelName: 'SLA',
-      textFieldBloc: createServiceFormBloc.sla,
-      prefixIcon: Icon(Icons.note),
-    ));
+    if (!serviceModel.hideDescription)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'Description',
+        readonly: false,
+        maxLines: 3,
+        labelName: 'Description',
+        textFieldBloc: createServiceFormBloc.description,
+        prefixIcon: Icon(Icons.note),
+      ));
 
-    widgets.add(BlocTextBoxWidget(
-      fieldName: 'Description',
-      readonly: false,
-      maxLines: 3,
-      labelName: 'Description',
-      textFieldBloc: createServiceFormBloc.description,
-      prefixIcon: Icon(Icons.note),
-    ));
+       if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
+      widgets.addAll(udfJsonCompWidgetList);
+    }
     if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
       widgets.addAll(columnComponentWidgets);
     }
     if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
       widgets.addAll(componentComListWidgets);
     }
-    widgets.add(Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          child: PrimaryButton(
-            buttonText: 'Save As Draft',
-            handleOnPressed: () {
-              serviceViewModelPostRequest();
-            },
-            width: 100,
-          ),
-        ),
-        Expanded(
-          child: PrimaryButton(
-            buttonText: 'Submit',
-            handleOnPressed: () {
-              createServiceFormBloc.submit();
-            },
-            width: 100,
-          ),
-        ),
-      ],
+    widgets.add(Container(
+      height: 50,
     ));
-
     return widgets;
   }
 
@@ -345,7 +397,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           idKey: model[i].idPath,
           url: model[i].data,
           onListTap: (dynamic value) {
-            udfJson[model[i].label] = value.toString();
+            NTSDropdownModel _selectedIdNameViewModel = value;
+            _ddController.text = _selectedIdNameViewModel.name;
+            udfJson[model[i].label] = _selectedIdNameViewModel.id;
+            // udfJson[model[i].label] = value.toString();
           },
         ));
       } else if (model[i].type == 'radio') {
@@ -366,20 +421,32 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           hint: model[i].label,
           validationMessage: "Select " + model[i].label,
           isShowArrow: true,
-          nameKey: model[i].template,
+          nameKey: (model[i].template)
+              .toString()
+              .replaceAll('<span>{{', '')
+              .replaceAll('}}</span>', '')
+              .trim()
+              .split('.')[1],
           idKey: model[i].idPath,
           url: model[i].data.url,
           onListTap: (dynamic value) {
-            udfJson[model[i].label] = value.toString();
+            NTSDropdownModel _selectedIdNameViewModel = value;
+            _ddController.text = _selectedIdNameViewModel.name;
+            udfJson[model[i].label] = _selectedIdNameViewModel.id;
           },
         ));
       } else if (model[i].type == 'datetime') {
         udfJson[model[i].key] = '';
         listDynamic.add(new DynamicDateTimeBox(
+          code: model[i].inputFormat != null || model[i].inputFormat != ''
+              ? model[i].inputFormat
+              : null,
           name: model[i].key,
           key: new Key(model[i].label),
           selectDate: (DateTime date) {
             if (date != null) {
+              model[i].inputFormat = date.toString();
+              print(model[i].inputFormat);
               udfJson[model[i].key] = date.toString();
             }
           },
@@ -514,15 +581,180 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     ));
   }
 
-  bool compareStartEndDate(
-      DateTime startDate, DateTime enddate, BuildContext context) {
-    if (enddate.isBefore(startDate)) {
-      _showMyDialog();
+  displayFooterWidget(
+    ServiceResponseModel serviceModel,
+  ) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              Visibility(
+                visible: serviceModel.isCompleteButtonVisible,
+                child: Expanded(
+                  flex: 1,
+                  child: PrimaryButton(
+                    buttonText: 'Complete',
+                    handleOnPressed: () {},
+                    width: 100,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: serviceModel.isCancelButtonVisible,
+                child: Expanded(
+                  flex: 1,
+                  child: PrimaryButton(
+                    buttonText: 'Cancel',
+                    handleOnPressed: () {
+                      if (serviceModel.isCancelReasonRequired)
+                        enterReasonAlertDialog(context);
+                    },
+                    width: 100,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: serviceModel.isCloseButtonVisible,
+                child: Expanded(
+                  flex: 1,
+                  child: PrimaryButton(
+                    buttonText: 'Close',
+                    handleOnPressed: () {},
+                    width: 100,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: serviceModel.isDraftButtonVisible,
+                child: PrimaryButton(
+                  buttonText: 'Draft',
+                  handleOnPressed: () {},
+                  width: 100,
+                ),
+              ),
+              Visibility(
+                visible: serviceModel.isSubmitButtonVisible,
+                child: PrimaryButton(
+                  buttonText: 'Submit',
+                  handleOnPressed: () {
+                    bool isValid = false;
+                    for (var i = 0; i < columnComponent.length; i++) {
+                      if (columnComponent[i]?.validate?.required != null &&
+                          columnComponent[i].validate.required == true &&
+                          udfJson.containsKey(columnComponent[i].key) &&
+                          (udfJson[columnComponent[i].key] == null ||
+                              udfJson[columnComponent[i].key].isEmpty)) {
+                        displaySnackBar(
+                            text: 'Please enter ${columnComponent[i].label}',
+                            context: context);
+                        return;
+                      }
+                    }
+                    // for (var i = 0; i < componentComList.length; i++) {
+                    //   if (componentComList[i]?.validate?.required != null &&
+                    //       componentComList[i].validate.required == true &&
+                    //       udfJson.containsKey(componentComList[i].key) &&
+                    //       (udfJson[componentComList[i].key] == null ||
+                    //           udfJson[componentComList[i].key].isEmpty)) {
+                    //     displaySnackBar(
+                    //         text: 'Please enter ${componentComList[i].label}',
+                    //         context: context);
+                    //     return;
+                    //   }
+                    // }
+                    // for (var i = 0; i < udfJsonComponent.length; i++) {
+                    //   if (udfJsonComponent[i]?.validate?.required != null &&
+                    //       udfJsonComponent[i].validate.required == true &&
+                    //       udfJson.containsKey(udfJsonComponent[i].key) &&
+                    //       (udfJson[udfJsonComponent[i].key] == null ||
+                    //           udfJson[udfJsonComponent[i].key].isEmpty)) {
+                    //     displaySnackBar(
+                    //         text: 'Please enter ${udfJsonComponent[i].label}',
+                    //         context: context);
+                    //     return;
+                    //   }
+                    // }
+                    serviceViewModelPostRequest();
+                  },
+                  width: 100,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
-      return false;
-    } else {
-      return true;
-    }
+  enterReasonAlertDialog(BuildContext context) {
+    return showDialog<dynamic>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Enter reason',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                color: Colors.black),
+          ),
+          backgroundColor: Colors.grey[350],
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          content: Form(
+            key: formReason,
+            child: new TextFormField(
+              controller: cancelReason,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Please enter reason'),
+              validator: (value) {
+                return ((value == null || value.isEmpty)
+                    ? 'Please Enter Reason'
+                    : null);
+              },
+            ),
+          ),
+          actions: <Widget>[
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PrimaryButton(
+                    buttonText: 'Cancel',
+                    handleOnPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    width: 80,
+                  ),
+                  SizedBox(width: 2.w),
+                  PrimaryButton(
+                    buttonText: 'Save',
+                    handleOnPressed: () {
+                      if (formReason.currentState.validate()) {}
+                      Navigator.of(context)
+                          .pop(); //TODO:add appropriate save action
+                    },
+                    width: 80,
+                  ),
+                ],
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void compareStartEndDate(
+      DateTime startDate, DateTime enddate, BuildContext context) {
+    if (enddate.isBefore(startDate)) _showMyDialog();
   }
 
   Future<void> _showMyDialog() async {
@@ -589,7 +821,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Leave Applied Successfully'),
+                Text(''),
               ],
             ),
           ),
@@ -606,24 +838,54 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
   }
 
+  String resultMsg = '';
   serviceViewModelPostRequest() async {
-    serviceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    serviceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    serviceModel.serviceSubject = subjectController.text;
-    serviceModel.serviceDescription = descriptionController.text;
-    serviceModel.dataAction = 1;
-    serviceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
-    serviceModel.json = jsonEncode(udfJson);
+    String stringModel=jsonEncode(serviceModel);
+    var jsonModel=jsonDecode(stringModel);
+    postServiceModel=ServiceResponseModel.fromJson(jsonModel);
+
+    postServiceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postServiceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postServiceModel.serviceSubject = subjectController.text;
+    postServiceModel.serviceDescription = descriptionController.text;
+    postServiceModel.dataAction = 1;
+    postServiceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
+    postServiceModel.json = jsonEncode(udfJson);
     print(udfJson);
 
+    setState(() {
+      isVisible = true;
+    });
+
     PostResponse result = await serviceBloc.postData(
-      serviceResponseModel: serviceModel,
+      serviceResponseModel: postServiceModel,
     );
-    if (result.isSuccess) {
-      _showPostAlertMyDialog2();
-    } else {
-      _showPostAlertMyDialog();
-    }
     print(result);
+    if (result.isSuccess) {
+      
+    setState(() {
+      isVisible = false;
+    });
+      resultMsg = 'Leave Applied Successfully';
+    } else {
+      //  resultMsg = result.messages;
+      
+    setState(() {
+      isVisible = false;
+    });
+      resultMsg = 'SomeThing Went Wrong.Try Again later';
+    }
+    displaySnackBar(text: resultMsg, context: context);
+  }
+
+  @override
+  void dispose() {
+    udfJsonString = null;
+    columnComponentWidgets = [];
+    componentComListWidgets = [];
+    udfJsonCompWidgetList = [];
+    columnComponent = [];
+    componentComList = [];
+    super.dispose();
   }
 }

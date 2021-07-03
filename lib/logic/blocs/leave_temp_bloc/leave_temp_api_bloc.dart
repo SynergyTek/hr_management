@@ -11,8 +11,8 @@ class LeaveTempAPIBloc {
       BehaviorSubject<LeaveTempResponse>();
 
   /// Used to fetch new entries.
-  getData() async {
-    LeaveTempResponse response = await _apiRepository.getAPIData();
+  getAllowedTemplateData() async {
+    LeaveTempResponse response = await _apiRepository.getAllowedTemplateData();
     print("response: $response");
     _subject.sink.add(response);
   }
@@ -26,7 +26,7 @@ class LeaveTempAPIBloc {
     // ...
 
     // Update the list (in UI) with the getAPI call.
-    getData();
+    // getData();
   }
 
   /// Used to delete a particular entry.
@@ -35,7 +35,7 @@ class LeaveTempAPIBloc {
     // ...
 
     // Update the list (in UI) with the getAPI call.
-    getData();
+    // getData();
   }
 
   dispose() {

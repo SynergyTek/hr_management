@@ -14,8 +14,8 @@ class ServiceBloc {
       BehaviorSubject<ServiceResponse>();
 
   /// Used to fetch new entries.
-  getData(templateCode) async {
-    ServiceResponse response = await _serviceRepository.getAPIData(templateCode);
+  getServiceDetail(templateCode) async {
+    ServiceResponse response = await _serviceRepository.getServiceDetail(templateCode);
     _subject.sink.add(response);
   }
 

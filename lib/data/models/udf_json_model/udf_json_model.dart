@@ -23,25 +23,30 @@ class UdfJson {
 }
 
 class UdfJsonComponent {
-  UdfJsonComponent({
-    this.label,
-    this.columns,
-    this.key,
-    this.type,
-    this.input,
-    this.tableView,
-    this.components,
-    this.title,
-  });
+  UdfJsonComponent(
+      {this.label,
+      this.columns,
+      this.key,
+      this.type,
+      this.input,
+      this.tableView,
+      this.components,
+      this.title,
+      this.data,
+      this.idPath,
+      this.template});
 
   String label;
   List<Columns> columns;
   String key;
   String type;
+  Data data;
   bool input;
   bool tableView;
   List<ComponentComponent> components;
   String title;
+  String idPath;
+  String template;
 
   factory UdfJsonComponent.fromJson(Map<String, dynamic> json) =>
       UdfJsonComponent(
@@ -59,6 +64,9 @@ class UdfJsonComponent {
             : List<ComponentComponent>.from(
                 json["components"].map((x) => ComponentComponent.fromJson(x))),
         title: json["title"] == null ? null : json["title"],
+        data: json['data'] != null ? Data.fromJson(json['data']) : null,
+        idPath: json['idPath'],
+        template: json['template'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,6 +82,9 @@ class UdfJsonComponent {
             ? null
             : List<ComponentComponent>.from(components.map((x) => x.toJson())),
         "title": title == null ? null : title,
+        'data': this.data != null ? this.data.toJson() : null,
+        'idPath': this.idPath,
+        'template': this.template
       };
 }
 
@@ -397,8 +408,6 @@ class DatePicker {
         "disableWeekdays": disableWeekdays,
       };
 }
-
-enum EditableBy { REQUESTER, OWNER }
 
 class Indexeddb {
   Indexeddb({

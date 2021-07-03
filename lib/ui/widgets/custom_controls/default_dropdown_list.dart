@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
-import 'package:hr_management/logic/blocs/nts_dd_bloc/nt_dd_api_bloc.dart';
+import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:listizer/listizer.dart';
 import '../appbar_widget.dart';
 import '../circle_avatar.dart';
 import '../empty_list_widget.dart';
 import '../nts_dropdown_select.dart';
+import '../progress_indicator.dart';
 
 class DropDownDefaultList extends StatefulWidget {
   final ListTapPressedCallBack onListTap;
@@ -73,12 +74,11 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
                               ? _filteredIdNameModelList[index].name
                               : "",
                           maxLines: 2,
-                          style: Theme.of(context).textTheme.headline6,
                         ),
                         onTap: () {
                           if (widget.onListTap != null) {
                             widget.onListTap(_filteredIdNameModelList[index]);
-                            Navigator.of(context).pop();
+                            Navigator.pop(context);
                           }
                         },
                       );
@@ -86,10 +86,17 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
                   );
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CustomProgressIndicator(),
                   );
                 }
               }),
         ));
+  }
+
+  @override
+  void dispose() {
+    _idNameModelList = [];
+    _filteredIdNameModelList = [];
+    super.dispose();
   }
 }

@@ -5,11 +5,11 @@ part of 'remote_attendance_repository.dart';
 class RemoteAttendanceRepository extends AbstractRemoteAttendanceRepository {
   final Dio _dio = Dio();
 
-  Future<RemoteAttendanceResponse> getAPIData({
+  Future<RemoteAttendanceResponse> getInsertAccessLog({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.GET_REMOTE_ATTENDANCE_DATA;
+    final String endpoint = APIEndpointConstants.INSERT_ACCESS_LOG;
 
     try {
       Response response = await _dio.get(

@@ -84,6 +84,17 @@ Widget drawerWidget(context) {
         //     );
         //   },
         // ),
+        ListTile(
+          title: Text('Task Home'),
+          trailing: Icon(Icons.home),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              TASK_HOME,
+            );
+          },
+        ),
+
         // ListTile(
         //   title: Text('Create Service'),
         //   trailing: Icon(Icons.create),

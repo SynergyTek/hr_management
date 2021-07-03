@@ -9,7 +9,7 @@ part 'leave_temp_implementation.dart';
 abstract class AbstractLeaveTempRepository {
   AbstractLeaveTempRepository();
 
-  Future<LeaveTempResponse> getAPIData({
+  Future<LeaveTempResponse> getAllowedTemplateData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });

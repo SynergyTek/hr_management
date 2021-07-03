@@ -9,7 +9,7 @@ part 'remote_attendance_repository_implementation.dart';
 abstract class AbstractRemoteAttendanceRepository {
   AbstractRemoteAttendanceRepository();
 
-  Future<RemoteAttendanceResponse> getAPIData({
+  Future<RemoteAttendanceResponse> getInsertAccessLog({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
