@@ -816,7 +816,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
      
     } else {
       //  resultMsg = result.messages;
-      resultMsg = 'SomeThing went wrong';
+      resultMsg = 'SomeThing Went Wrong.Try Again later';
     }
     displaySnackBar(text: resultMsg, context: context);
   }
