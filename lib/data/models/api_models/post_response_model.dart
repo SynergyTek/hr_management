@@ -8,7 +8,7 @@ class PostResponse {
   PostResponse.fromJson(Map<String, dynamic> jsonResponse) {
     isSuccess = jsonResponse['IsSuccess'];
     // templateCode = jsonResponse['TemplateCode'];
-    // messages = jsonResponse['Messages'];
+    messages = jsonResponse['Messages']['Validate']!=null?jsonResponse['Messages']['Validate']:'';
   }
 
   PostResponse.withError(String errorValue)

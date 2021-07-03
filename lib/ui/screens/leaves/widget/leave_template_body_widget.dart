@@ -1,6 +1,7 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import 'package:location/location.dart';
 import '../../../../data/models/leave_models/leave_res_model.dart';
 import '../../../../data/models/leave_models/leave_temp_model.dart';
 import '../../../../logic/blocs/leave_temp_bloc/leave_temp_api_bloc.dart';
@@ -16,9 +17,12 @@ class LeaveTemplateBody extends StatefulWidget {
 }
 
 class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
+  Location location = new Location();
+  PermissionStatus _permissionGranted;
   @override
   void initState() {
     super.initState();
+    checkPermission();
     leaveTempBloc..getAllowedTemplateData();
   }
 
@@ -70,5 +74,15 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
             }
           }),
     );
+  }
+
+  checkPermission() async {
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
   }
 }
