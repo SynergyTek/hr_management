@@ -823,7 +823,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     if (result.isSuccess) {
       resultMsg = 'Leave Applied Successfully';
     } else {
-      resultMsg = result.messages;
+      //  resultMsg = result.messages;
+      resultMsg = 'SomeThing went wrong';
     }
     setState(() {
       isVisible = false;
