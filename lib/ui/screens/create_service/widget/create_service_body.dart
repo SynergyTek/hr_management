@@ -567,64 +567,79 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   displayFooterWidget(ServiceResponseModel serviceModel,
       List<ColumnComponent> columnComponent) {
     return Container(
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Visibility(
-            visible: serviceModel.isCompleteButtonVisible,
-            child: PrimaryButton(
-              buttonText: 'Complete',
-              handleOnPressed: () {},
-              width: 100,
-            ),
-          ),
-          Visibility(
-            visible: serviceModel.isCancelButtonVisible,
-            child: PrimaryButton(
-              buttonText: 'Cancel',
-              handleOnPressed: () {
-                if (serviceModel.isCancelReasonRequired)
-                  enterReasonAlertDialog(context);
-              },
-              width: 100,
-            ),
-          ),
-          Visibility(
-            visible: serviceModel.isCloseButtonVisible,
-            child: PrimaryButton(
-              buttonText: 'Close',
-              handleOnPressed: () {},
-              width: 100,
-            ),
-          ),
-          Visibility(
-            visible: serviceModel.isDraftButtonVisible,
-            child: PrimaryButton(
-              buttonText: 'Draft',
-              handleOnPressed: () {},
-              width: 100,
-            ),
-          ),
-          Visibility(
-            visible: serviceModel.isSubmitButtonVisible,
-            child: PrimaryButton(
-              buttonText: 'Submit',
-              handleOnPressed: () {
-                for (var i = 0; i < columnComponent.length; i++) {
-                  if (columnComponent[i]?.validate?.required != null &&
-                      columnComponent[i].validate.required == true &&
-                      udfJson.containsKey(columnComponent[i].key) &&
-                      (udfJson[columnComponent[i].key] == null ||
-                          udfJson[columnComponent[i].key].isEmpty)) {
-                    displaySnackBar(
-                        text: 'Please enter ${columnComponent[i].label}',
-                        context: context);
-                    return;
-                  }
-                }
-              },
-              width: 100,
-            ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              Visibility(
+                visible: serviceModel.isCompleteButtonVisible,
+                child: Expanded(
+                  flex: 1,
+                  child: PrimaryButton(
+                    buttonText: 'Complete',
+                    handleOnPressed: () {},
+                    width: 100,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: serviceModel.isCancelButtonVisible,
+                child: Expanded(
+                  flex: 1,
+                  child: PrimaryButton(
+                    buttonText: 'Cancel',
+                    handleOnPressed: () {
+                      if (serviceModel.isCancelReasonRequired)
+                        enterReasonAlertDialog(context);
+                    },
+                    width: 100,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: serviceModel.isCloseButtonVisible,
+                child: Expanded(
+                  flex: 1,
+                  child: PrimaryButton(
+                    buttonText: 'Close',
+                    handleOnPressed: () {},
+                    width: 100,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: serviceModel.isDraftButtonVisible,
+                child: PrimaryButton(
+                  buttonText: 'Draft',
+                  handleOnPressed: () {},
+                  width: 100,
+                ),
+              ),
+              Visibility(
+                visible: serviceModel.isSubmitButtonVisible,
+                child: PrimaryButton(
+                  buttonText: 'Submit',
+                  handleOnPressed: () {
+                    for (var i = 0; i < columnComponent.length; i++) {
+                      if (columnComponent[i]?.validate?.required != null &&
+                          columnComponent[i].validate.required == true &&
+                          udfJson.containsKey(columnComponent[i].key) &&
+                          (udfJson[columnComponent[i].key] == null ||
+                              udfJson[columnComponent[i].key].isEmpty)) {
+                        displaySnackBar(
+                            text: 'Please enter ${columnComponent[i].label}',
+                            context: context);
+                        return;
+                      }
+                    }
+                  },
+                  width: 100,
+                ),
+              ),
+            ],
           ),
         ],
       ),
