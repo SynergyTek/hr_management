@@ -50,7 +50,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController cancelReason = TextEditingController();
   DateTime startDate;
   DateTime dueDate;
-  bool isVisible = false;
+  // bool isVisible = false;
 
   @override
   void initState() {
@@ -166,9 +166,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             ),
           ],
         ),
-        Visibility(
-            visible: isVisible,
-            child: Center(child: CustomProgressIndicator())),
+        // Visibility(
+        //     visible: isVisible,
+        //     child: Center(child: CustomProgressIndicator())),
       ],
     );
   }
@@ -812,9 +812,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     serviceModel.json = jsonEncode(udfJson);
     print(udfJson);
 
-    setState(() {
-      isVisible = true;
-    });
+    // setState(() {
+    //   isVisible = true;
+    // });
 
     PostResponse result = await serviceBloc.postData(
       serviceResponseModel: serviceModel,
@@ -826,9 +826,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       //  resultMsg = result.messages;
       resultMsg = 'SomeThing went wrong';
     }
-    setState(() {
-      isVisible = false;
-    });
+    // setState(() {
+    //   isVisible = false;
+    // });
     displaySnackBar(text: resultMsg, context: context);
   }
 
