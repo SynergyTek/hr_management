@@ -35,7 +35,8 @@ class UdfJsonComponent {
       this.data,
       this.idPath,
       this.template,
-      this.inputFormat});
+      this.inputFormat,
+      this.validate});
 
   String label;
   List<Columns> columns;
@@ -49,27 +50,32 @@ class UdfJsonComponent {
   String idPath;
   String template;
   String inputFormat;
+  Validate validate;
 
   factory UdfJsonComponent.fromJson(Map<String, dynamic> json) =>
       UdfJsonComponent(
-          label: json["label"],
-          columns: json["columns"] == null
-              ? null
-              : List<Columns>.from(
-                  json["columns"].map((x) => Columns.fromJson(x))),
-          key: json["key"],
-          type: json["type"],
-          input: json["input"],
-          tableView: json["tableView"],
-          components: json["components"] == null
-              ? null
-              : List<ComponentComponent>.from(json["components"]
-                  .map((x) => ComponentComponent.fromJson(x))),
-          title: json["title"] == null ? null : json["title"],
-          data: json['data'] != null ? Data.fromJson(json['data']) : null,
-          idPath: json['idPath'],
-          template: json['template'],
-          inputFormat: json['inputFormat']);
+        label: json["label"],
+        columns: json["columns"] == null
+            ? null
+            : List<Columns>.from(
+                json["columns"].map((x) => Columns.fromJson(x))),
+        key: json["key"],
+        type: json["type"],
+        input: json["input"],
+        tableView: json["tableView"],
+        components: json["components"] == null
+            ? null
+            : List<ComponentComponent>.from(
+                json["components"].map((x) => ComponentComponent.fromJson(x))),
+        title: json["title"] == null ? null : json["title"],
+        data: json['data'] != null ? Data.fromJson(json['data']) : null,
+        idPath: json['idPath'],
+        template: json['template'],
+        inputFormat: json['inputFormat'],
+        validate: json['validate'] != null
+            ? Validate.fromJson(json['validate'])
+            : null,
+      );
 
   Map<String, dynamic> toJson() => {
         "label": label,
@@ -88,6 +94,8 @@ class UdfJsonComponent {
         'idPath': this.idPath,
         'template': this.template,
         'inputFormat': this.inputFormat,
+        'validate':
+            this.validate.toJson() != null ? this.validate.toJson() : null,
       };
 }
 
@@ -548,6 +556,7 @@ class ComponentComponent {
   bool input;
   String columnMetadataId;
   bool autoExpand;
+  Validate validate;
 
   ComponentComponent(
       {this.label,
@@ -561,7 +570,8 @@ class ComponentComponent {
       this.type,
       this.input,
       this.columnMetadataId,
-      this.autoExpand});
+      this.autoExpand,
+      this.validate});
 
   ComponentComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
@@ -576,6 +586,8 @@ class ComponentComponent {
     input = json['input'];
     columnMetadataId = json['columnMetadataId'];
     autoExpand = json['autoExpand'];
+    validate =
+        json['validate'] != null ? Validate.fromJson(json['validate']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -592,6 +604,9 @@ class ComponentComponent {
     data['input'] = this.input;
     data['columnMetadataId'] = this.columnMetadataId;
     data['autoExpand'] = this.autoExpand;
+    if (this.validate != null) {
+      data['validate'] = this.validate.toJson();
+    }
     return data;
   }
 }

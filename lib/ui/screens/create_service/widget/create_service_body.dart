@@ -169,9 +169,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             ),
           ],
         ),
-        // Visibility(
-        //     visible: isVisible,
-        //     child: Center(child: CustomProgressIndicator())),
+        Visibility(
+            visible: isVisible,
+            child: Center(child: CustomProgressIndicator())),
       ],
     );
   }
@@ -654,30 +654,30 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                         return;
                       }
                     }
-                    // for (var i = 0; i < componentComList.length; i++) {
-                    //   if (componentComList[i]?.validate?.required != null &&
-                    //       componentComList[i].validate.required == true &&
-                    //       udfJson.containsKey(componentComList[i].key) &&
-                    //       (udfJson[componentComList[i].key] == null ||
-                    //           udfJson[componentComList[i].key].isEmpty)) {
-                    //     displaySnackBar(
-                    //         text: 'Please enter ${componentComList[i].label}',
-                    //         context: context);
-                    //     return;
-                    //   }
-                    // }
-                    // for (var i = 0; i < udfJsonComponent.length; i++) {
-                    //   if (udfJsonComponent[i]?.validate?.required != null &&
-                    //       udfJsonComponent[i].validate.required == true &&
-                    //       udfJson.containsKey(udfJsonComponent[i].key) &&
-                    //       (udfJson[udfJsonComponent[i].key] == null ||
-                    //           udfJson[udfJsonComponent[i].key].isEmpty)) {
-                    //     displaySnackBar(
-                    //         text: 'Please enter ${udfJsonComponent[i].label}',
-                    //         context: context);
-                    //     return;
-                    //   }
-                    // }
+                    for (var i = 0; i < componentComList.length; i++) {
+                      if (componentComList[i]?.validate?.required != null &&
+                          componentComList[i].validate.required == true &&
+                          udfJson.containsKey(componentComList[i].key) &&
+                          (udfJson[componentComList[i].key] == null ||
+                              udfJson[componentComList[i].key].isEmpty)) {
+                        displaySnackBar(
+                            text: 'Please enter ${componentComList[i].label}',
+                            context: context);
+                        return;
+                      }
+                    }
+                    for (var i = 0; i < udfJsonComponent.length; i++) {
+                      if (udfJsonComponent[i]?.validate?.required != null &&
+                          udfJsonComponent[i].validate.required == true &&
+                          udfJson.containsKey(udfJsonComponent[i].key) &&
+                          (udfJson[udfJsonComponent[i].key] == null ||
+                              udfJson[udfJsonComponent[i].key].isEmpty)) {
+                        displaySnackBar(
+                            text: 'Please enter ${udfJsonComponent[i].label}',
+                            context: context);
+                        return;
+                      }
+                    }
                     serviceViewModelPostRequest();
                   },
                   width: 100,
