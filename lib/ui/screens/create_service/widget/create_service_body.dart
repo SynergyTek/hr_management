@@ -43,6 +43,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
   ServiceResponseModel serviceModel;
+  ServiceResponseModel postServiceModel=new ServiceResponseModel();
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
@@ -51,7 +52,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController cancelReason = TextEditingController();
   DateTime startDate;
   DateTime dueDate;
-  // bool isVisible = false;
+  bool isVisible = false;
 
   @override
   void initState() {
@@ -437,10 +438,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       } else if (model[i].type == 'datetime') {
         udfJson[model[i].key] = '';
         listDynamic.add(new DynamicDateTimeBox(
+          code: model[i].inputFormat != null || model[i].inputFormat != ''
+              ? model[i].inputFormat
+              : null,
           name: model[i].key,
           key: new Key(model[i].label),
           selectDate: (DateTime date) {
             if (date != null) {
+              model[i].inputFormat = date.toString();
+              print(model[i].inputFormat);
               udfJson[model[i].key] = date.toString();
             }
           },
@@ -834,32 +840,41 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   String resultMsg = '';
   serviceViewModelPostRequest() async {
-    serviceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    serviceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    serviceModel.serviceSubject = subjectController.text;
-    serviceModel.serviceDescription = descriptionController.text;
-    serviceModel.dataAction = 1;
-    serviceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
-    serviceModel.json = jsonEncode(udfJson);
+    String stringModel=jsonEncode(serviceModel);
+    var jsonModel=jsonDecode(stringModel);
+    postServiceModel=ServiceResponseModel.fromJson(jsonModel);
+
+    postServiceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postServiceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postServiceModel.serviceSubject = subjectController.text;
+    postServiceModel.serviceDescription = descriptionController.text;
+    postServiceModel.dataAction = 1;
+    postServiceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
+    postServiceModel.json = jsonEncode(udfJson);
     print(udfJson);
 
-    // setState(() {
-    //   isVisible = true;
-    // });
+    setState(() {
+      isVisible = true;
+    });
 
     PostResponse result = await serviceBloc.postData(
-      serviceResponseModel: serviceModel,
+      serviceResponseModel: postServiceModel,
     );
     print(result);
     if (result.isSuccess) {
+      
+    setState(() {
+      isVisible = false;
+    });
       resultMsg = 'Leave Applied Successfully';
     } else {
       //  resultMsg = result.messages;
+      
+    setState(() {
+      isVisible = false;
+    });
       resultMsg = 'SomeThing Went Wrong.Try Again later';
     }
-    // setState(() {
-    //   isVisible = false;
-    // });
     displaySnackBar(text: resultMsg, context: context);
   }
 
