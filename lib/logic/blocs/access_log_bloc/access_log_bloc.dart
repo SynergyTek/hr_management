@@ -1,16 +1,16 @@
-import 'package:hr_management/data/models/remote_attendance_models/remote_attendance_response.dart';
-import 'package:hr_management/data/repositories/remote_attendance_repository/remote_attendance_repository.dart';
+import 'package:hr_management/data/models/access_log/access_log_response.dart';
+import 'package:hr_management/data/repositories/access_log/abstract_access_log_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:meta/meta.dart';
 
-class RemoteAttendanceBloc {
-  final RemoteAttendanceRepository _serviceRepository =
-      RemoteAttendanceRepository();
+class AccessLogBloc {
+  final AccessLogRepository _accessLogRepository =
+      AccessLogRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<RemoteAttendanceResponse> _subject =
-      BehaviorSubject<RemoteAttendanceResponse>();
+  final BehaviorSubject<AccessLogResponse> _subject =
+      BehaviorSubject<AccessLogResponse>();
 
   /// Used to fetch new entries.
   getInsertAccessLog({
@@ -20,9 +20,15 @@ class RemoteAttendanceBloc {
     queryparams["punchingTime"] = DateTime.now().toString();
     queryparams["punchingTye"] = isSignIn ? "0" : "1";
 
-    RemoteAttendanceResponse response = await _serviceRepository.getInsertAccessLog(
+    AccessLogResponse response =
+        await _accessLogRepository.getInsertAccessLog(
       queryparams: queryparams,
     );
+    _subject.sink.add(response);
+  }
+
+  getAccessLogs() async {
+    AccessLogResponse response = await _accessLogRepository.getAccessLogs();
     _subject.sink.add(response);
   }
 
@@ -34,7 +40,7 @@ class RemoteAttendanceBloc {
     // Update here
     // ...
 
-    // Update the list (in UI) with the getRemoteAttendance call.
+    // Update the list (in UI) with the getAccessLog call.
     // getData();
   }
 
@@ -43,7 +49,7 @@ class RemoteAttendanceBloc {
     // Delete here
     // ...
 
-    // Update the list (in UI) with the getRemoteAttendance call.
+    // Update the list (in UI) with the getAccessLog call.
     // getData();
   }
 
@@ -51,7 +57,7 @@ class RemoteAttendanceBloc {
     _subject.close();
   }
 
-  BehaviorSubject<RemoteAttendanceResponse> get subject => _subject;
+  BehaviorSubject<AccessLogResponse> get subject => _subject;
 }
 
-final remoteAttendanceBloc = RemoteAttendanceBloc();
+final accessLogBloc = AccessLogBloc();

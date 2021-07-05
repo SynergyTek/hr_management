@@ -1,0 +1,3 @@
+class AccessLog{
+  String name;
+}

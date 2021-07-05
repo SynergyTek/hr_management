@@ -6,7 +6,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/models/api_models/post_response_model.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/data/models/service_models/service_response_model.dart';
+import 'package:hr_management/data/models/service_models/service.dart';
 import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
@@ -42,8 +42,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
-  ServiceResponseModel serviceModel;
-  ServiceResponseModel postServiceModel = new ServiceResponseModel();
+  Service serviceModel;
+  Service postServiceModel = new Service();
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
@@ -146,7 +146,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   Widget setServiceView(
       BuildContext context,
       CreateServiceFormBloc createServiceFormBloc,
-      ServiceResponseModel serviceModel) {
+      Service serviceModel) {
     createServiceFormBloc.subject
         .updateInitialValue(serviceModel.serviceSubject);
     createServiceFormBloc.description
@@ -177,7 +177,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   List<Widget> formFieldsWidgets(
-      context, createServiceFormBloc, ServiceResponseModel serviceModel) {
+      context, createServiceFormBloc, Service serviceModel) {
     List<Widget> widgets = [];
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -582,7 +582,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   displayFooterWidget(
-    ServiceResponseModel serviceModel,
+    Service serviceModel,
   ) {
     return Container(
       child: Row(
@@ -633,7 +633,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 visible: serviceModel.isDraftButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Draft',
-                  handleOnPressed: () {},
+                  handleOnPressed: () {
+                    serviceViewModelPostRequest(2);
+                  },
                   width: 100,
                 ),
               ),
@@ -679,7 +681,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                         return;
                       }
                     }
-                    serviceViewModelPostRequest();
+                    serviceViewModelPostRequest(1);
                   },
                   width: 100,
                 ),
@@ -840,16 +842,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   String resultMsg = '';
-  serviceViewModelPostRequest() async {
+  serviceViewModelPostRequest(int postDataAction) async {
     String stringModel = jsonEncode(serviceModel);
     var jsonModel = jsonDecode(stringModel);
-    postServiceModel = ServiceResponseModel.fromJson(jsonModel);
+    postServiceModel = Service.fromJson(jsonModel);
 
     postServiceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     postServiceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     postServiceModel.serviceSubject = subjectController.text;
     postServiceModel.serviceDescription = descriptionController.text;
-    postServiceModel.dataAction = 1;
+    postServiceModel.dataAction = postDataAction;
     postServiceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
     postServiceModel.json = jsonEncode(udfJson);
     print(udfJson);
@@ -859,7 +861,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     });
 
     PostResponse result = await serviceBloc.postData(
-      serviceResponseModel: postServiceModel,
+      service: postServiceModel,
     );
     print(result);
     if (result.isSuccess) {

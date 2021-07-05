@@ -1,4 +1,4 @@
-part of 'service_repository.dart';
+part of 'abstract_service_repo.dart';
 
 /// API Repository defines https client object, and our network call methods
 /// which will be used to fetch data from Apis will map the JSON to its model.
@@ -33,6 +33,28 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
+
+  Future<ServiceResponse> getLeaves()
+    // Optional Params to be added to the request if required.
+    //Map<String, dynamic> queryparams,templatecode}
+   async {
+    final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
+  
+    try {
+      Response response = await _dio.get(
+        endpoint,
+      );
+
+      return ServiceResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceResponse.withError("$err");
+    }
+  }
+
   @override
   Future<ServiceResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
@@ -41,14 +63,14 @@ class ServiceRepository extends AbstractServiceRepository {
   @override
   Future<PostResponse> postAPIData({
     Map<String, dynamic> queryparams,
-    @required ServiceResponseModel serviceResponseModel,
+    @required Service Service,
   }) async {
     final String endpoint = APIEndpointConstants.MANAGE_SERVICE;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(serviceResponseModel.toJson()) ?? {},
+        data: jsonEncode(Service.toJson()) ?? {},
       );
 
       print("response: ${response.data}");
@@ -71,4 +93,6 @@ class ServiceRepository extends AbstractServiceRepository {
   Future<ServiceResponse> putAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
+
+  
 }

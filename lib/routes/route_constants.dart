@@ -33,3 +33,5 @@ const String SERVICE_ROUTE = "/service";
 const String COUNTS_ROUTE = "/counts";
 const String NTS_DROPDOWN = "/nts_dropdown";
 const String TASK_HOME = "/task_home";
+const String DISPLAY_LEAVES = "/display_leaves";
+const String DISPLAY_ACCESS_LOG = "/display_access_logs";

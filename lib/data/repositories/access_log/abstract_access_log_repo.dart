@@ -1,30 +1,35 @@
-import 'package:hr_management/data/models/remote_attendance_models/remote_attendance_response.dart';
+import 'package:hr_management/data/models/access_log/access_log_response.dart';
 
 import '../../../constants/api_endpoints.dart';
 import 'package:dio/dio.dart';
 
-part 'remote_attendance_repository_implementation.dart';
+part 'access_log_repo.dart';
 
 // Overview of the repository class.
-abstract class AbstractRemoteAttendanceRepository {
-  AbstractRemoteAttendanceRepository();
+abstract class AbstractAccessLogRepository {
+  AbstractAccessLogRepository();
 
-  Future<RemoteAttendanceResponse> getInsertAccessLog({
+  Future<AccessLogResponse> getInsertAccessLog({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<RemoteAttendanceResponse> postAPIData({
+  Future<AccessLogResponse> getAccessLogs({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<RemoteAttendanceResponse> putAPIData({
+  Future<AccessLogResponse> postAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<RemoteAttendanceResponse> deleteAPIData({
+  Future<AccessLogResponse> putAPIData({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic> queryparams,
+  });
+
+  Future<AccessLogResponse> deleteAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });

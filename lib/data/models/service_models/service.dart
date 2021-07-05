@@ -1,4 +1,4 @@
-class ServiceResponseModel {
+class Service {
   String json;
   String templateCode;
   String templateDisplayName;
@@ -105,7 +105,7 @@ class ServiceResponseModel {
   int status;
   int versionNo;
 
-  ServiceResponseModel({
+  Service({
     this.json,
     this.templateCode,
     this.templateDisplayName,
@@ -211,7 +211,7 @@ class ServiceResponseModel {
     this.versionNo,
   });
 
-  ServiceResponseModel.fromJson(Map<String, dynamic> jsonResponse) {
+  Service.fromJson(Map<String, dynamic> jsonResponse) {
     json = jsonResponse['Json'];
     templateCode = jsonResponse['TemplateCode'];
     templateDisplayName = jsonResponse['TemplateDisplayName'];

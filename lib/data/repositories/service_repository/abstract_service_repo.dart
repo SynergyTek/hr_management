@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/service_models/service_response_model.dart';
+import 'package:hr_management/data/models/service_models/service.dart';
 
 import '../../models/service_models/service_response.dart';
 
 import '../../../constants/api_endpoints.dart';
 import 'package:dio/dio.dart';
 
-part 'service_repository_implementation.dart';
+part 'service_repo.dart';
 
 // Overview of the repository class.
 abstract class AbstractServiceRepository {
@@ -18,6 +18,8 @@ abstract class AbstractServiceRepository {
   Future<ServiceResponse> getServiceDetail(String templatecode);//{
     // Optional Params to be added to the request if required.
   //  Map<String, dynamic> queryparams,});
+
+    Future<ServiceResponse> getLeaves();
 
   Future<PostResponse> postAPIData({
     // Optional Params to be added to the request if required.
