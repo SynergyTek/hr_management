@@ -54,6 +54,24 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   DateTime dueDate;
   bool isVisible = false;
 
+  DateTime leaveStartDate;
+  DateTime leaveEnddate;
+  TextEditingController leaveDurationControllerCalendarDays =
+      new TextEditingController();
+  TextEditingController leaveDurationControllerWorkingDays =
+      new TextEditingController();
+
+  void updateLeaveDuration() {
+    if (leaveStartDate != null && leaveEnddate != null) {
+      var durationCalendarDays = leaveEnddate.difference(leaveStartDate);
+
+      setState(() {
+        leaveDurationControllerCalendarDays.text =
+            (durationCalendarDays.inDays + 1).toString();
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -216,6 +234,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 if (date != null) {
                   setState(() async {
                     startDate = date;
+                    if (dueDate != null && dueDate.toString().isNotEmpty)
+                      compareStartEndDate(startDate, dueDate, context);
                   });
                   // udfJson[model[i].key] = date.toString();
                 }
@@ -229,7 +249,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 if (date != null) {
                   setState(() async {
                     dueDate = date;
-                    compareStartEndDate(startDate, dueDate, context);
+                    if (startDate != null && startDate.toString().isNotEmpty)
+                      compareStartEndDate(startDate, dueDate, context);
                   });
                   // udfJson[model[i].key] = date.toString();
                 }
@@ -342,7 +363,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
       } else if (model[i].type == 'number') {
-        final number$i = new TextFieldBloc();
+        String initialValue;
+        if (model[i].key == 'LeaveDurationCalendarDays') {
+          initialValue = leaveDurationControllerCalendarDays.text;
+        } else {}
+        final number$i = new TextFieldBloc(initialValue: initialValue);
         udfJson[model[i].key] = '';
         listDynamic.add(
           BlocNumberBoxWidget(
@@ -441,13 +466,25 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           code: model[i].inputFormat != null || model[i].inputFormat != ''
               ? model[i].inputFormat
               : null,
-          name: model[i].key,
+          name: model[i].label,
           key: new Key(model[i].label),
           selectDate: (DateTime date) {
             if (date != null) {
               model[i].inputFormat = date.toString();
               print(model[i].inputFormat);
               udfJson[model[i].key] = date.toString();
+              if (model[i].key == 'LeaveStartDate') {
+                leaveStartDate = date;
+                print(date.toString());
+                print('LeaveStartDate');
+              } else if (model[i].key == 'LeaveEndDate') {
+                leaveEnddate = date;
+                print(date.toString());
+                print('LeaveEndDate');
+              }
+              if (leaveStartDate != null && leaveEnddate != null) {
+                updateLeaveDuration();
+              }
             }
           },
         ));
@@ -755,7 +792,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   void compareStartEndDate(
       DateTime startDate, DateTime enddate, BuildContext context) {
-    if (enddate.isBefore(startDate)) _showMyDialog();
+    if (enddate.isBefore(startDate))
+      _showMyDialog();
+    else
+      updateLeaveDuration();
   }
 
   Future<void> _showMyDialog() async {
