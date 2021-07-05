@@ -14,7 +14,7 @@ class CustomProgressIndicator extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+    //              color: Theme.of(context).primaryColor,
                 ),
                 SizedBox(
                   width: 16,
