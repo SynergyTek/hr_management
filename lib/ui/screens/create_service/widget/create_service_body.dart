@@ -604,14 +604,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 ),
               ),
               Visibility(
-                visible: serviceModel.isCancelButtonVisible,
+                visible: true,
+                // visible: serviceModel.isCancelButtonVisible,
                 child: Expanded(
                   flex: 1,
                   child: PrimaryButton(
                     buttonText: 'Cancel',
                     handleOnPressed: () {
-                      if (serviceModel.isCancelReasonRequired)
-                        enterReasonAlertDialog(context);
+                      // if (serviceModel.isCancelReasonRequired)
+                      enterReasonAlertDialog(context);
                     },
                     width: 100,
                   ),
@@ -698,14 +699,14 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           title: Text(
             'Enter reason',
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w400,
-                color: Colors.black),
+            // style: TextStyle(
+            //     fontSize: 16.sp,
+            //     fontWeight: FontWeight.w400,
+            //     color: Colors.black),
           ),
-          backgroundColor: Colors.grey[350],
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          // backgroundColor: Colors.grey[350],
+          // shape: RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.all(Radius.circular(15.0))),
           content: Form(
             key: formReason,
             child: new TextFormField(
@@ -876,7 +877,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       resultMsg = 'SomeThing Went Wrong.Try Again later';
     }
     displaySnackBar(text: resultMsg, context: context);
-    
   }
 
   @override
