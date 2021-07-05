@@ -604,15 +604,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 ),
               ),
               Visibility(
-                visible: true,
-                // visible: serviceModel.isCancelButtonVisible,
+                // visible: true,
+                visible: serviceModel.isCancelButtonVisible,
                 child: Expanded(
                   flex: 1,
                   child: PrimaryButton(
                     buttonText: 'Cancel',
                     handleOnPressed: () {
-                      // if (serviceModel.isCancelReasonRequired)
-                      enterReasonAlertDialog(context);
+                      if (serviceModel.isCancelReasonRequired)
+                        enterReasonAlertDialog(context);
                     },
                     width: 100,
                   ),
@@ -873,7 +873,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         isVisible = false;
       });
       resultMsg = result.messages;
-      Navigator.pop(context);
+      // Navigator.pop(context);
     }
     displaySnackBar(text: resultMsg, context: context);
   }
