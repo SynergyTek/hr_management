@@ -66,6 +66,11 @@ class AppRouter {
 
       case CREATE_SERVICE_ROUTE:
         final args = routeSettings.arguments as ScreenArguments;
+        print("args: $args");
+
+        // if (args?.arg1 == null || args.arg1.isEmpty)
+        //   throw Exception("Template Code cannot be empty or null.");
+
         return MaterialPageRoute(
           builder: (_) => CreateServiceScreen(
             templateCode: args.arg1,
@@ -90,10 +95,9 @@ class AppRouter {
             onListTap: args.arg5,
           ),
         );
-        case TASK_HOME:
+      case TASK_HOME:
         return MaterialPageRoute(
-          builder: (_) => TaskHomeScreen(
-          ),
+          builder: (_) => TaskHomeScreen(),
         );
         break;
 

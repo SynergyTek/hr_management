@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
@@ -81,6 +82,9 @@ Widget drawerWidget(context) {
         //     Navigator.pushNamed(
         //       context,
         //       CREATE_SERVICE_ROUTE,
+        //       // arguments: ScreenArguments(
+        //       //   arg1: "",
+        //       // ),
         //     );
         //   },
         // ),

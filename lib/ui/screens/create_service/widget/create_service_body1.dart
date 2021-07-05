@@ -29,7 +29,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   TextEditingController _startDateController = new TextEditingController();
   TextEditingController _endDateController = new TextEditingController();
   TextEditingController _reminderDateController = new TextEditingController();
-  
+
   int difference = 0;
   DateTime startDate = DateTime.now();
   DateTime enddate = DateTime.now();
@@ -112,20 +112,19 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             isShowArrow: true,
             callBack: () {
               // if (widget.templateMasterId != 0) {
-                setState(() async {
-                  enddate = await _selectDate(context);
-                  var validate =
-                      compareStartEndDate(startDate, enddate, context);
-                  if (validate) {
-                    setState(() {
-                      difference = (enddate.difference(startDate)).inDays;
-                      _slaController.text = difference.toString() + ' days';
-                    });
-                  } else {
-                    enddate = startDate;
-                  }
-                  _endDateController.text = dateformatter.format(enddate);
-                });
+              setState(() async {
+                enddate = await _selectDate(context);
+                var validate = compareStartEndDate(startDate, enddate, context);
+                if (validate) {
+                  setState(() {
+                    difference = (enddate.difference(startDate)).inDays;
+                    _slaController.text = difference.toString() + ' days';
+                  });
+                } else {
+                  enddate = startDate;
+                }
+                _endDateController.text = dateformatter.format(enddate);
+              });
               // }
             },
           ),
@@ -162,34 +161,39 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       ),
     );
 
-    widgets.add(textField(
+    widgets.add(
+      textField(
         maxLines: 3,
         controller: descriptionController,
-        labelName: 'Description'));
+        labelName: 'Description',
+      ),
+    );
 
     widgets.addAll(listDynamic);
 
-    widgets.add(Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          child: PrimaryButton(
-            buttonText: 'Save As Draft',
-            handleOnPressed: () {
-              serviceViewModelPostRequest();
-            },
-            width: 100,
+    widgets.add(
+      Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+            child: PrimaryButton(
+              buttonText: 'Save As Draft',
+              handleOnPressed: () {
+                serviceViewModelPostRequest();
+              },
+              width: 100,
+            ),
           ),
-        ),
-        Expanded(
-          child: PrimaryButton(
-            buttonText: 'Submit',
-            handleOnPressed: () {},
-            width: 100,
+          Expanded(
+            child: PrimaryButton(
+              buttonText: 'Submit',
+              handleOnPressed: () {},
+              width: 100,
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
 
     return widgets;
   }
@@ -227,7 +231,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
   }
 
-   Future<DateTime> _selectDate(BuildContext context) async {
+  Future<DateTime> _selectDate(BuildContext context) async {
     DateTime selectedDate = DateTime.now();
     final DateTime picked = await showDatePicker(
         context: context,
@@ -242,44 +246,42 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   bool compareStartEndDate(
-    DateTime startDate, DateTime enddate, BuildContext context) {
-  if (enddate.isBefore(startDate)) {
-  _showMyDialog();
-    
-    return false;
-  } else {
-    return true;
+      DateTime startDate, DateTime enddate, BuildContext context) {
+    if (enddate.isBefore(startDate)) {
+      _showMyDialog();
+
+      return false;
+    } else {
+      return true;
+    }
   }
-}
 
-Future<void> _showMyDialog() async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Alert'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: const <Widget>[
-              Text('Start Date Should be greater than End Date.'),
-            ],
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Start Date Should be greater than End Date.'),
+              ],
+            ),
           ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   addDynamic(model) {
     //,

@@ -112,7 +112,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
                   child: setServiceView(
-                      context, createServiceFormBloc, serviceModel),
+                    context,
+                    createServiceFormBloc,
+                    serviceModel,
+                  ),
                 );
               } else {
                 return Center(
@@ -162,20 +165,34 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   Widget setServiceView(
-      BuildContext context,
-      CreateServiceFormBloc createServiceFormBloc,
-      ServiceResponseModel serviceModel) {
-    createServiceFormBloc.subject
-        .updateInitialValue(serviceModel.serviceSubject);
-    createServiceFormBloc.description
-        .updateInitialValue(serviceModel.serviceDescription);
-    createServiceFormBloc.sla.updateInitialValue(serviceModel.serviceSLA);
+    BuildContext context,
+    CreateServiceFormBloc createServiceFormBloc,
+    ServiceResponseModel serviceModel,
+  ) {
+    createServiceFormBloc.subject.updateInitialValue(
+      serviceModel.serviceSubject,
+    );
+
+    createServiceFormBloc.description.updateInitialValue(
+      serviceModel.serviceDescription,
+    );
+
+    createServiceFormBloc.sla.updateInitialValue(
+      serviceModel.serviceSLA,
+    );
 
     return Stack(
       children: [
-        ListView(
-          children:
-              formFieldsWidgets(context, createServiceFormBloc, serviceModel),
+        SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: formFieldsWidgets(
+              context,
+              createServiceFormBloc,
+              serviceModel,
+            ),
+          ),
         ),
         Column(
           children: <Widget>[
@@ -183,13 +200,18 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             Container(
               height: 50,
               color: Colors.grey[100],
-              child: displayFooterWidget(serviceModel),
+              child: displayFooterWidget(
+                serviceModel,
+              ),
             ),
           ],
         ),
         Visibility(
-            visible: isVisible,
-            child: Center(child: CustomProgressIndicator())),
+          visible: isVisible,
+          child: Center(
+            child: CustomProgressIndicator(),
+          ),
+        ),
       ],
     );
   }
@@ -224,37 +246,49 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     if (!serviceModel.hideStartDate)
       widgets.add(
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            DynamicDateTimeBox(
-              code: serviceModel.startDate,
-              name: 'Start Date',
-              key: new Key('Start Date'),
-              selectDate: (DateTime date) {
-                if (date != null) {
-                  setState(() async {
-                    startDate = date;
-                    if (dueDate != null && dueDate.toString().isNotEmpty)
-                      compareStartEndDate(startDate, dueDate, context);
-                  });
-                  // udfJson[model[i].key] = date.toString();
-                }
-              },
+            Expanded(
+              child: DynamicDateTimeBox(
+                code: serviceModel.startDate,
+                name: 'Start Date',
+                key: new Key('Start Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {
+                      startDate = date;
+                      if (dueDate != null && dueDate.toString().isNotEmpty)
+                        compareStartEndDate(
+                            startDate: startDate,
+                            enddate: dueDate,
+                            context: context,
+                            updateDuration: false);
+                    });
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
+              ),
             ),
-            DynamicDateTimeBox(
-              code: serviceModel.dueDate,
-              name: 'Due Date',
-              key: new Key('Due Date'),
-              selectDate: (DateTime date) {
-                if (date != null) {
-                  setState(() async {
-                    dueDate = date;
-                    if (startDate != null && startDate.toString().isNotEmpty)
-                      compareStartEndDate(startDate, dueDate, context);
-                  });
-                  // udfJson[model[i].key] = date.toString();
-                }
-              },
+            Expanded(
+              child: DynamicDateTimeBox(
+                code: serviceModel.dueDate,
+                name: 'Due Date',
+                key: new Key('Due Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {
+                      dueDate = date;
+                      if (startDate != null && startDate.toString().isNotEmpty)
+                        compareStartEndDate(
+                            startDate: startDate,
+                            enddate: dueDate,
+                            context: context,
+                            updateDuration: false);
+                    });
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
+              ),
             )
           ],
         ),
@@ -276,7 +310,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         canSelectTime: false,
         inputFieldBloc: createServiceFormBloc.expiryDate,
         height: 75.0,
-        width: MediaQuery.of(context).size.width / 2 - 20,
+        width: MediaQuery.of(context).size.width,
       ));
 
     if (!serviceModel.hideDescription)
@@ -475,30 +509,32 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               udfJson[model[i].key] = date.toString();
               if (model[i].key == 'LeaveStartDate') {
                 leaveStartDate = date;
-                print(date.toString());
-                print('LeaveStartDate');
               } else if (model[i].key == 'LeaveEndDate') {
                 leaveEnddate = date;
-                print(date.toString());
-                print('LeaveEndDate');
               }
               if (leaveStartDate != null && leaveEnddate != null) {
-                updateLeaveDuration();
+                compareStartEndDate(
+                    startDate: leaveStartDate,
+                    enddate: leaveEnddate,
+                    context: context,
+                    updateDuration: true);
               }
             }
           },
         ));
       } else if (model[i].type == 'time') {
         udfJson[model[i].key] = '';
-        listDynamic.add(new DynamicTimeBox(
-          name: model[i].label,
-          key: new Key(model[i].label),
-          selectTime: (TimeOfDay time) {
-            if (time != null) {
-              udfJson[model[i].key] = time.toString();
-            }
-          },
-        ));
+        listDynamic.add(
+          new DynamicTimeBox(
+            name: model[i].label,
+            key: new Key(model[i].label),
+            selectTime: (TimeOfDay time) {
+              if (time != null) {
+                udfJson[model[i].key] = time.toString();
+              }
+            },
+          ),
+        );
       } else if (model[i].type == 'hidden') {
         //Hidden Field
         final hidden$i = new TextFieldBloc();
@@ -670,7 +706,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 visible: serviceModel.isDraftButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Draft',
-                  handleOnPressed: () {},
+                  handleOnPressed: () => _handleDraftOnClick(),
                   width: 100,
                 ),
               ),
@@ -791,11 +827,13 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   void compareStartEndDate(
-      DateTime startDate, DateTime enddate, BuildContext context) {
+      {DateTime startDate,
+      DateTime enddate,
+      BuildContext context,
+      bool updateDuration}) {
     if (enddate.isBefore(startDate))
       _showMyDialog();
-    else
-      updateLeaveDuration();
+    else if (updateDuration) updateLeaveDuration();
   }
 
   Future<void> _showMyDialog() async {
@@ -916,6 +954,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       // Navigator.pop(context);
     }
     displaySnackBar(text: resultMsg, context: context);
+  }
+
+  void _handleDraftOnClick() {
+    print("Draft clicked.");
+    // TODO: if existing value is not overwritten by the user, use the default values else use the new overridden values.
+
+    // serviceBloc.postData(
+    //   serviceResponseModel: serviceModel,
+    // );
   }
 
   @override
