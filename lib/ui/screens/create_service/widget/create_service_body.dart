@@ -866,15 +866,14 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       setState(() {
         isVisible = false;
       });
-      resultMsg = 'Leave Applied Successfully';
+      resultMsg = result.messages;
       Navigator.pop(context);
     } else {
-      //  resultMsg = result.messages;
-
       setState(() {
         isVisible = false;
       });
-      resultMsg = 'SomeThing Went Wrong.Try Again later';
+      resultMsg = result.messages;
+      Navigator.pop(context);
     }
     displaySnackBar(text: resultMsg, context: context);
   }
