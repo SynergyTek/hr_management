@@ -4,8 +4,7 @@ import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 
 Widget buildFront(
-    {
-      String templateName,
+    {String templateName,
     String templateImageCode,
     String colorCode,
     context}) {
@@ -56,7 +55,10 @@ Widget buildFront(
 }
 
 Widget buildRear(
-    {String templateCode,String templateName, String colorCode, BuildContext context}) {
+    {String templateCode,
+    String templateName,
+    String colorCode,
+    BuildContext context}) {
   Color cardBackground = hexToColor(colorCode);
   Color textColor = cardBackground != null
       ? cardBackground.computeLuminance() > 0.5

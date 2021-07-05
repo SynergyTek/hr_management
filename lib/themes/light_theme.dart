@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class LightTheme {
   static const Color _PRIMARY_COLOR = Colors.blue;
@@ -36,6 +37,18 @@ class LightTheme {
       checkboxTheme: CheckboxThemeData(
         checkColor: MaterialStateProperty.all(Colors.white),
         fillColor: MaterialStateProperty.all(_PRIMARY_COLOR),
+      ),
+
+      // dialog color theme:
+      dialogTheme: DialogTheme(
+        backgroundColor: _PRIMARY_LIGHT_COLOR,
+        // elevation: 10,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        titleTextStyle: TextStyle(
+            fontSize: 16.sp, fontWeight: FontWeight.w400, color: _TEXT_COLOR),
+        contentTextStyle: TextStyle(
+            fontSize: 12.sp, fontWeight: FontWeight.w400, color: _TEXT_COLOR),
       ),
     );
   }

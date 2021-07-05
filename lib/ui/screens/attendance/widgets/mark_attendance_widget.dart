@@ -1,5 +1,6 @@
 import 'package:hr_management/logic/blocs/remote_attendance_bloc/remote_attendance_bloc.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import 'package:hr_management/ui/widgets/snack_bar.dart';
 
 import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,11 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isPermissonGranted = false;
   dynamic isInLocation;
   String _location = "Test Location...";
+
+  // signed in/out check
+  bool isSignedIn = false;
+  bool isSignedOut = true;
+
   // GeoLocationHelper _geoLocationHelper = new GeoLocationHelper();
   Location _locationService = new Location();
   // late StreamSubscription<LocationData> _locationSubscription;
@@ -444,51 +450,73 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   void _handleSignInOnClick() async {
-    setState(() {
-      isVisible = true;
-    });
-    await remoteAttendanceBloc.getInsertAccessLog(isSignIn: true);
-    setState(() {
-      isVisible = false;
-    });
+    if (isSignedOut == true) {
+      setState(() {
+        isVisible = true;
+      });
+      await remoteAttendanceBloc.getInsertAccessLog(isSignIn: true);
+      setState(() {
+        isVisible = false;
+      });
 
-    print("Sign In isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
-    print(
-        "Sign In Error?: ${remoteAttendanceBloc.subject.value.error}, ${remoteAttendanceBloc.subject.value.error.runtimeType}");
+      print(
+          "Sign In isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
+      print(
+          "Sign In Error?: ${remoteAttendanceBloc.subject.value.error}, ${remoteAttendanceBloc.subject.value.error.runtimeType}");
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          remoteAttendanceBloc.subject.value.isSignIn == 0 &&
-                  remoteAttendanceBloc.subject.value.error == null
-              ? "Sign in successful!"
-              : "Error occured please try again later.",
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            remoteAttendanceBloc.subject.value.isSignIn == 0 &&
+                    remoteAttendanceBloc.subject.value.error == null
+                ? "Sign in successful!"
+                : "Error occured please try again later.",
+          ),
         ),
-      ),
-    );
+      );
+      if (remoteAttendanceBloc.subject.value.isSignIn == 0 &&
+          remoteAttendanceBloc.subject.value.error == null) {
+        isSignedOut = false;
+        isSignedIn = true;
+      }
+    } else
+      displaySnackBar(
+          text:
+              'You are already signed in. Please Sign Out before signing in again.',
+          context: context);
   }
 
   void _handleSignOutOnClick() async {
-    setState(() {
-      isVisible = true;
-    });
-    await remoteAttendanceBloc.getInsertAccessLog(isSignIn: false);
-    setState(() {
-      isVisible = false;
-    });
+    if (isSignedIn == true) {
+      setState(() {
+        isVisible = true;
+      });
+      await remoteAttendanceBloc.getInsertAccessLog(isSignIn: false);
+      setState(() {
+        isVisible = false;
+      });
 
-    print("Sign Out isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
-    print("Sign Out Error?: ${remoteAttendanceBloc.subject.value.error}");
+      print(
+          "Sign Out isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
+      print("Sign Out Error?: ${remoteAttendanceBloc.subject.value.error}");
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          remoteAttendanceBloc.subject.value.isSignIn == 1 &&
-                  remoteAttendanceBloc.subject.value.error == null
-              ? "Sign out successful!"
-              : "Error occured please try again later.",
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            remoteAttendanceBloc.subject.value.isSignIn == 1 &&
+                    remoteAttendanceBloc.subject.value.error == null
+                ? "Sign out successful!"
+                : "Error occured please try again later.",
+          ),
         ),
-      ),
-    );
+      );
+      if (remoteAttendanceBloc.subject.value.isSignIn == 1 &&
+          remoteAttendanceBloc.subject.value.error == null) {
+        isSignedOut = true;
+        isSignedIn = false;
+      }
+    } else {
+      displaySnackBar(text: 'You have already signed out.', context: context);
+    }
   }
 }
