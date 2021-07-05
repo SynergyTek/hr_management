@@ -94,7 +94,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
                   child: setServiceView(
-                      context, createServiceFormBloc, serviceModel),
+                    context,
+                    createServiceFormBloc,
+                    serviceModel,
+                  ),
                 );
               } else {
                 return Center(
@@ -144,20 +147,34 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   Widget setServiceView(
-      BuildContext context,
-      CreateServiceFormBloc createServiceFormBloc,
-      ServiceResponseModel serviceModel) {
-    createServiceFormBloc.subject
-        .updateInitialValue(serviceModel.serviceSubject);
-    createServiceFormBloc.description
-        .updateInitialValue(serviceModel.serviceDescription);
-    createServiceFormBloc.sla.updateInitialValue(serviceModel.serviceSLA);
+    BuildContext context,
+    CreateServiceFormBloc createServiceFormBloc,
+    ServiceResponseModel serviceModel,
+  ) {
+    createServiceFormBloc.subject.updateInitialValue(
+      serviceModel.serviceSubject,
+    );
+
+    createServiceFormBloc.description.updateInitialValue(
+      serviceModel.serviceDescription,
+    );
+
+    createServiceFormBloc.sla.updateInitialValue(
+      serviceModel.serviceSLA,
+    );
 
     return Stack(
       children: [
-        ListView(
-          children:
-              formFieldsWidgets(context, createServiceFormBloc, serviceModel),
+        SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: formFieldsWidgets(
+              context,
+              createServiceFormBloc,
+              serviceModel,
+            ),
+          ),
         ),
         Column(
           children: <Widget>[
@@ -165,13 +182,18 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             Container(
               height: 50,
               color: Colors.grey[100],
-              child: displayFooterWidget(serviceModel),
+              child: displayFooterWidget(
+                serviceModel,
+              ),
             ),
           ],
         ),
         Visibility(
-            visible: isVisible,
-            child: Center(child: CustomProgressIndicator())),
+          visible: isVisible,
+          child: Center(
+            child: CustomProgressIndicator(),
+          ),
+        ),
       ],
     );
   }
@@ -437,31 +459,34 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ));
       } else if (model[i].type == 'datetime') {
         udfJson[model[i].key] = '';
-        listDynamic.add(new DynamicDateTimeBox(
-          code: model[i].inputFormat != null || model[i].inputFormat != ''
-              ? model[i].inputFormat
-              : null,
-          name: model[i].key,
-          key: new Key(model[i].label),
-          selectDate: (DateTime date) {
-            if (date != null) {
-              model[i].inputFormat = date.toString();
-              print(model[i].inputFormat);
-              udfJson[model[i].key] = date.toString();
-            }
-          },
-        ));
+        listDynamic.add(
+          new DynamicDateTimeBox(
+            code: model[i].inputFormat != null || model[i].inputFormat != ''
+                ? model[i].inputFormat
+                : null,
+            name: model[i].key,
+            key: new Key(model[i].label),
+            selectDate: (DateTime date) {
+              if (date != null) {
+                model[i].inputFormat = date.toString();
+                udfJson[model[i].key] = date.toString();
+              }
+            },
+          ),
+        );
       } else if (model[i].type == 'time') {
         udfJson[model[i].key] = '';
-        listDynamic.add(new DynamicTimeBox(
-          name: model[i].label,
-          key: new Key(model[i].label),
-          selectTime: (TimeOfDay time) {
-            if (time != null) {
-              udfJson[model[i].key] = time.toString();
-            }
-          },
-        ));
+        listDynamic.add(
+          new DynamicTimeBox(
+            name: model[i].label,
+            key: new Key(model[i].label),
+            selectTime: (TimeOfDay time) {
+              if (time != null) {
+                udfJson[model[i].key] = time.toString();
+              }
+            },
+          ),
+        );
       } else if (model[i].type == 'hidden') {
         //Hidden Field
         final hidden$i = new TextFieldBloc();
@@ -633,7 +658,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 visible: serviceModel.isDraftButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Draft',
-                  handleOnPressed: () {},
+                  handleOnPressed: () => _handleDraftOnClick(),
                   width: 100,
                 ),
               ),
@@ -876,6 +901,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       // Navigator.pop(context);
     }
     displaySnackBar(text: resultMsg, context: context);
+  }
+
+  void _handleDraftOnClick() {
+    print("Draft clicked.");
+    // TODO: if existing value is not overwritten by the user, use the default values else use the new overridden values.
+
+    // serviceBloc.postData(
+    //   serviceResponseModel: serviceModel,
+    // );
   }
 
   @override
