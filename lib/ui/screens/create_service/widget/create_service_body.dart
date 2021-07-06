@@ -707,7 +707,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 child: PrimaryButton(
                   buttonText: 'Draft',
                   handleOnPressed: () {
-                    serviceViewModelPostRequest(2);
+                    serviceViewModelPostRequest(1,'SERVICE_STATUS_DRAFT');
                   },
                   width: 100,
                 ),
@@ -754,7 +754,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                         return;
                       }
                     }
-                    serviceViewModelPostRequest(1);
+                    serviceViewModelPostRequest(1,'SERVICE_STATUS_INPROGRESS');
                   },
                   width: 100,
                 ),
@@ -920,7 +920,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   String resultMsg = '';
-  serviceViewModelPostRequest(int postDataAction) async {
+  serviceViewModelPostRequest(int postDataAction,String serviceStatusCode) async {
     String stringModel = jsonEncode(serviceModel);
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
@@ -930,7 +930,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     postServiceModel.serviceSubject = subjectController.text;
     postServiceModel.serviceDescription = descriptionController.text;
     postServiceModel.dataAction = postDataAction;
-    postServiceModel.serviceStatusCode = 'SERVICE_STATUS_INPROGRESS';
+    postServiceModel.serviceStatusCode = serviceStatusCode;
     postServiceModel.json = jsonEncode(udfJson);
     print(udfJson);
 

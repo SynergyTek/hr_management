@@ -29,7 +29,7 @@ class ServiceBloc {
     @required Service service,
   }) async {
     PostResponse response = await _serviceRepository.postAPIData(
-      Service: service,
+      service: service,
     );
 
     return response;
