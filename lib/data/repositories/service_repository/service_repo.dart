@@ -34,24 +34,24 @@ class ServiceRepository extends AbstractServiceRepository {
   }
 
 
-  Future<ServiceResponse> getLeaves()
+  Future<ServiceListResponse> getLeavesDetails()
     // Optional Params to be added to the request if required.
     //Map<String, dynamic> queryparams,templatecode}
    async {
-    final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
+    final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
   
     try {
       Response response = await _dio.get(
         endpoint,
       );
 
-      return ServiceResponse.fromJson(
+      return ServiceListResponse.fromJson(
         response.data,
       );
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return ServiceResponse.withError("$err");
+      return ServiceListResponse.withError("$err");
     }
   }
 

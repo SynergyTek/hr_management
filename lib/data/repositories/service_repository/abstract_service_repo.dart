@@ -15,11 +15,11 @@ part 'service_repo.dart';
 abstract class AbstractServiceRepository {
   AbstractServiceRepository();
 
-  Future<ServiceResponse> getServiceDetail(String templatecode);//{
-    // Optional Params to be added to the request if required.
+  Future<ServiceResponse> getServiceDetail(String templatecode); //{
+  // Optional Params to be added to the request if required.
   //  Map<String, dynamic> queryparams,});
 
-    Future<ServiceResponse> getLeaves();
+  Future<ServiceListResponse> getLeavesDetails();
 
   Future<PostResponse> postAPIData({
     // Optional Params to be added to the request if required.

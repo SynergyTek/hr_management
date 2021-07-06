@@ -13,15 +13,19 @@ class ServiceBloc {
   final BehaviorSubject<ServiceResponse> _subject =
       BehaviorSubject<ServiceResponse>();
 
+    final BehaviorSubject<ServiceListResponse> _subjectServiceList =
+      BehaviorSubject<ServiceListResponse>();
+  
+
 
   getServiceDetail(templateCode) async {
     ServiceResponse response = await _serviceRepository.getServiceDetail(templateCode);
     _subject.sink.add(response);
   }
 
-  getLeaves() async {
-    ServiceResponse response = await _serviceRepository.getLeaves();
-    _subject.sink.add(response);
+  getLeavesDetails() async {
+    ServiceListResponse response = await _serviceRepository.getLeavesDetails();
+    _subjectServiceList.sink.add(response);
   }
 
   /// Used to create new entries.
@@ -58,6 +62,7 @@ class ServiceBloc {
   }
 
   BehaviorSubject<ServiceResponse> get subject => _subject;
+  BehaviorSubject<ServiceListResponse> get subjectServiceList => _subjectServiceList;
 }
 
 final serviceBloc = ServiceBloc();

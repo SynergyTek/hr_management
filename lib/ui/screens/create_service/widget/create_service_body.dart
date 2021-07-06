@@ -404,6 +404,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         String initialValue;
         if (model[i].key == 'LeaveDurationCalendarDays') {
           initialValue = leaveDurationControllerCalendarDays.text;
+          udfJson[model[i].key] = initialValue;
         } else {}
         final number$i = new TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key)) {
@@ -737,7 +738,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 child: PrimaryButton(
                   buttonText: 'Draft',
                   handleOnPressed: () {
-                    serviceViewModelPostRequest(1,'SERVICE_STATUS_DRAFT');
+                    serviceViewModelPostRequest(1, 'SERVICE_STATUS_DRAFT');
                   },
                   width: 100,
                 ),
@@ -784,7 +785,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                         return;
                       }
                     }
-                    serviceViewModelPostRequest(1,'SERVICE_STATUS_INPROGRESS');
+                    serviceViewModelPostRequest(1, 'SERVICE_STATUS_INPROGRESS');
                   },
                   width: 100,
                 ),
@@ -950,7 +951,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   String resultMsg = '';
-  serviceViewModelPostRequest(int postDataAction,String serviceStatusCode) async {
+  serviceViewModelPostRequest(
+      int postDataAction, String serviceStatusCode) async {
     String stringModel = jsonEncode(serviceModel);
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
