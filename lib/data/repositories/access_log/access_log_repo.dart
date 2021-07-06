@@ -5,6 +5,7 @@ part of 'abstract_access_log_repo.dart';
 class AccessLogRepository extends AbstractAccessLogRepository {
   final Dio _dio = Dio();
 
+  /// getInsertAccessLog: is used for Sign-in and Signout using UI.
   Future<AccessLogResponse> getInsertAccessLog({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
@@ -36,37 +37,30 @@ class AccessLogRepository extends AbstractAccessLogRepository {
     }
   }
 
-
- Future<AccessLogResponse> getAccessLogs({
+  /// getAccessLogsListData
+  Future<AccessLogListDataResponse> getAccessLogsListData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
     try {
-      // TODO: Need to send this via UI and not hardcode here!
-      queryparams = {
-        // 'api_key': APIEndpointConstants.API_KEY,
-        // 'language': 'en-US',
-        // 'page': 1
-      };
-
       Response response = await _dio.get(
-        APIEndpointConstants.GET_ALLOWED_TEMPLATES,
+        APIEndpointConstants.GET_ACCESS_LOG_LIST_DATA,
         queryParameters: queryparams ?? {},
       );
-      print("DIO Response: ${response.data} ${response.data.runtimeType}");
-      return AccessLogResponse.fromJson(response.data);
-    } catch (err, stacktrace) {
-      
-      print("Stack: \n\n\n $stacktrace");
-      print("Err: \n\n\n $err");
 
-      return AccessLogResponse.withError("$err");
+      print(
+          "DIO Response for ListData AccessLog: ${response.data} ${response.data.runtimeType}");
+      return AccessLogListDataResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print("Err: \n $err");
+      print("Stack: \n $stacktrace");
+
+      return AccessLogListDataResponse.withError("$err");
     }
   }
 
   @override
-  Future<AccessLogResponse> deleteAPIData(
-      {Map<String, dynamic> queryparams}) {
+  Future<AccessLogResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 
@@ -78,8 +72,7 @@ class AccessLogRepository extends AbstractAccessLogRepository {
   }
 
   @override
-  Future<AccessLogResponse> putAPIData(
-      {Map<String, dynamic> queryparams}) {
+  Future<AccessLogResponse> putAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 }

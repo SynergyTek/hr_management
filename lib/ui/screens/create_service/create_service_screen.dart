@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import '../../widgets/appbar_widget.dart';
+import '../../widgets/internet_connectivity_widget.dart';
 
 import 'widget/create_service_body.dart';
 

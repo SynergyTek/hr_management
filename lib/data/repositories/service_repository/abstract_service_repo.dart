@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
+import '../../models/api_models/post_response_model.dart';
+import '../../models/service_models/service.dart';
 
 import '../../models/service_models/service_response.dart';
 

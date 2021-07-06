@@ -3,22 +3,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
-import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
-import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
-import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
-import 'package:hr_management/ui/widgets/nts_widgets.dart';
-import 'package:hr_management/ui/widgets/primary_button.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../../data/models/api_models/post_response_model.dart';
+import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../data/models/service_models/service.dart';
+import '../../../../data/models/udf_json_model/udf_json_model.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../themes/theme_config.dart';
+import '../../../widgets/form_widgets/bloc_date_picker_widget.dart';
+import '../../../widgets/form_widgets/bloc_number_box_widget.dart';
+import '../../../widgets/form_widgets/bloc_radio_button_widget.dart';
+import '../../../widgets/form_widgets/bloc_text_box_widget.dart';
+import '../../../widgets/nts_dropdown_select.dart';
+import '../../../widgets/nts_widgets.dart';
+import '../../../widgets/primary_button.dart';
+import '../../../widgets/progress_indicator.dart';
+import '../../../widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 
 import '../create_service_form_bloc.dart';
@@ -737,7 +737,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 child: PrimaryButton(
                   buttonText: 'Draft',
                   handleOnPressed: () {
-                    serviceViewModelPostRequest(1,'SERVICE_STATUS_DRAFT');
+                    serviceViewModelPostRequest(1, 'SERVICE_STATUS_DRAFT');
                   },
                   width: 100,
                 ),
@@ -784,7 +784,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                         return;
                       }
                     }
-                    serviceViewModelPostRequest(1,'SERVICE_STATUS_INPROGRESS');
+                    serviceViewModelPostRequest(1, 'SERVICE_STATUS_INPROGRESS');
                   },
                   width: 100,
                 ),
@@ -950,7 +950,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   String resultMsg = '';
-  serviceViewModelPostRequest(int postDataAction,String serviceStatusCode) async {
+  serviceViewModelPostRequest(
+      int postDataAction, String serviceStatusCode) async {
     String stringModel = jsonEncode(serviceModel);
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
@@ -986,15 +987,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       // Navigator.pop(context);
     }
     displaySnackBar(text: resultMsg, context: context);
-  }
-
-  void _handleDraftOnClick() {
-    print("Draft clicked.");
-    // TODO: if existing value is not overwritten by the user, use the default values else use the new overridden values.
-
-    // serviceBloc.postData(
-    //   serviceResponseModel: serviceModel,
-    // );
   }
 
   @override

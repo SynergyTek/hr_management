@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
-import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
+import '../../../data/models/nts_dropdown/nts_dd_res_model.dart';
+import '../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
 
 import 'package:rxdart/rxdart.dart';
 

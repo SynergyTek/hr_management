@@ -1,6 +1,6 @@
-import 'package:hr_management/data/models/counts_api_models/counts_api_response.dart';
-import 'package:hr_management/logic/blocs/counts_api_bloc/counts_api_bloc.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/models/counts_api_models/counts_api_response.dart';
+import '../../../../logic/blocs/counts_api_bloc/counts_api_bloc.dart';
+import '../../../widgets/progress_indicator.dart';
 
 import '../../../../themes/theme_config.dart';
 import 'package:flutter/material.dart';

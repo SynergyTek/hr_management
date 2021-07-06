@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import 'progress_indicator.dart';
 
 import '../../constants/image_path_constants.dart';
 import '../../logic/blocs/internet_bloc/internet_bloc.dart';

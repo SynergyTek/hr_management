@@ -1,4 +1,4 @@
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../widgets/progress_indicator.dart';
 
 import '../../../../data/models/api_models/api_response_model.dart';
 import '../../../../logic/blocs/api_bloc/api_bloc.dart';
