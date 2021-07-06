@@ -49,7 +49,7 @@ class AccessLogRepository extends AbstractAccessLogRepository {
       );
 
       print(
-          "DIO Response for ListData AccessLog: ${response.data} ${response.data.runtimeType}");
+          "DIO Response for ListData AccessLog:  ${response.data.length}, ${response.data} ${response.data.runtimeType},");
       return AccessLogListDataResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Err: \n $err");

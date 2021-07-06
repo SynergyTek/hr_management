@@ -32,26 +32,29 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
           ListTile(
             title: Text(
               eachAccessLogModelElement?.personFullName ?? '',
-            ),
-            subtitle: Text(
-              eachAccessLogModelElement?.personId ?? 'NA',
               style: TextStyle(
                 color: Theme.of(context).textHeadingColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            trailing: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  eachAccessLogModelElement?.devicePunchingTypeText ?? 'NA',
-                  style: TextStyle(
-                    color: Theme.of(context).textHeadingColor,
-                    fontWeight: FontWeight.bold,
+            subtitle: Text(
+              eachAccessLogModelElement?.personId ?? 'NA',
+            ),
+            trailing: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    eachAccessLogModelElement?.devicePunchingTypeText ?? 'NA',
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                      color: Theme.of(context).textHeadingColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text("Status"),
-              ],
+                  Text("Status"),
+                ],
+              ),
             ),
           ),
 

@@ -42,141 +42,133 @@ class AccessLogModel {
   int status;
   int versionNo;
 
-  AccessLogModel({
-    this.deviceId,
-    this.biometricId,
-    this.punchingTime,
-    this.deviceName,
-    this.deviceMachineNo,
-    this.deviceIpAddress,
-    this.devicePortNo,
-    this.deviceSerialNo,
-    this.devicePunchingType,
-    this.devicePunchingTypeText,
-    this.userInfoId,
-    this.userId,
-    this.personId,
-    this.firstName,
-    this.middleName,
-    this.lastName,
-    this.punchingTimeArray,
-    this.accessLogText,
-    this.accessLogSource,
-    this.personFullName,
-    this.sponsorshipNo,
-    this.startDate,
-    this.endDate,
-    this.serviceNo,
-    this.serviceId,
-    this.signInType,
-    this.accessLogStatus,
-    this.serviceOwner,
-    this.signInLocation,
-    this.id,
-    this.createdDate,
-    this.createdBy,
-    this.lastUpdatedDate,
-    this.lastUpdatedBy,
-    this.isDeleted,
-    this.sequenceOrder,
-    this.companyId,
-    this.dataAction,
-    this.status,
-    this.versionNo,
-  });
+  AccessLogModel(
+      {this.deviceId,
+      this.biometricId,
+      this.punchingTime,
+      this.deviceName,
+      this.deviceMachineNo,
+      this.deviceIpAddress,
+      this.devicePortNo,
+      this.deviceSerialNo,
+      this.devicePunchingType,
+      this.devicePunchingTypeText,
+      this.userInfoId,
+      this.userId,
+      this.personId,
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.punchingTimeArray,
+      this.accessLogText,
+      this.accessLogSource,
+      this.personFullName,
+      this.sponsorshipNo,
+      this.startDate,
+      this.endDate,
+      this.serviceNo,
+      this.serviceId,
+      this.signInType,
+      this.accessLogStatus,
+      this.serviceOwner,
+      this.signInLocation,
+      this.id,
+      this.createdDate,
+      this.createdBy,
+      this.lastUpdatedDate,
+      this.lastUpdatedBy,
+      this.isDeleted,
+      this.sequenceOrder,
+      this.companyId,
+      this.dataAction,
+      this.status,
+      this.versionNo});
 
-  Map<String, dynamic> toMap() {
-    return {
-      'deviceId': deviceId,
-      'biometricId': biometricId,
-      'punchingTime': punchingTime,
-      'deviceName': deviceName,
-      'deviceMachineNo': deviceMachineNo,
-      'deviceIpAddress': deviceIpAddress,
-      'devicePortNo': devicePortNo,
-      'deviceSerialNo': deviceSerialNo,
-      'devicePunchingType': devicePunchingType,
-      'devicePunchingTypeText': devicePunchingTypeText,
-      'userInfoId': userInfoId,
-      'userId': userId,
-      'personId': personId,
-      'firstName': firstName,
-      'middleName': middleName,
-      'lastName': lastName,
-      'punchingTimeArray': punchingTimeArray,
-      'accessLogText': accessLogText,
-      'accessLogSource': accessLogSource,
-      'personFullName': personFullName,
-      'sponsorshipNo': sponsorshipNo,
-      'startDate': startDate,
-      'endDate': endDate,
-      'serviceNo': serviceNo,
-      'serviceId': serviceId,
-      'signInType': signInType,
-      'accessLogStatus': accessLogStatus,
-      'serviceOwner': serviceOwner,
-      'signInLocation': signInLocation,
-      'id': id,
-      'createdDate': createdDate,
-      'createdBy': createdBy,
-      'lastUpdatedDate': lastUpdatedDate,
-      'lastUpdatedBy': lastUpdatedBy,
-      'isDeleted': isDeleted,
-      'sequenceOrder': sequenceOrder,
-      'companyId': companyId,
-      'dataAction': dataAction,
-      'status': status,
-      'versionNo': versionNo,
-    };
+  AccessLogModel.fromJson(Map<String, dynamic> json) {
+    deviceId = json['DeviceId'];
+    biometricId = json['BiometricId'];
+    punchingTime = json['PunchingTime'];
+    deviceName = json['DeviceName'];
+    deviceMachineNo = json['DeviceMachineNo'];
+    deviceIpAddress = json['DeviceIpAddress'];
+    devicePortNo = json['DevicePortNo'];
+    deviceSerialNo = json['DeviceSerialNo'];
+    devicePunchingType = json['DevicePunchingType'];
+    devicePunchingTypeText = json['DevicePunchingTypeText'];
+    userInfoId = json['UserInfoId'];
+    userId = json['UserId'];
+    personId = json['PersonId'];
+    firstName = json['FirstName'];
+    middleName = json['MiddleName'];
+    lastName = json['LastName'];
+    punchingTimeArray = json['PunchingTimeArray'];
+    accessLogText = json['AccessLogText'];
+    accessLogSource = json['AccessLogSource'];
+    personFullName = json['PersonFullName'];
+    sponsorshipNo = json['SponsorshipNo'];
+    startDate = json['StartDate'];
+    endDate = json['EndDate'];
+    serviceNo = json['ServiceNo'];
+    serviceId = json['ServiceId'];
+    signInType = json['SignInType'];
+    accessLogStatus = json['AccessLogStatus'];
+    serviceOwner = json['ServiceOwner'];
+    signInLocation = json['SignInLocation'];
+    id = json['Id'];
+    createdDate = json['CreatedDate'];
+    createdBy = json['CreatedBy'];
+    lastUpdatedDate = json['LastUpdatedDate'];
+    lastUpdatedBy = json['LastUpdatedBy'];
+    isDeleted = json['IsDeleted'];
+    sequenceOrder = json['SequenceOrder'];
+    companyId = json['CompanyId'];
+    dataAction = json['DataAction'];
+    status = json['Status'];
+    versionNo = json['VersionNo'];
   }
 
-  factory AccessLogModel.fromMap(Map<String, dynamic> map) {
-    return AccessLogModel(
-      deviceId: map['deviceId'],
-      biometricId: map['biometricId'],
-      punchingTime: map['punchingTime'],
-      deviceName: map['deviceName'],
-      deviceMachineNo: map['deviceMachineNo'],
-      deviceIpAddress: map['deviceIpAddress'],
-      devicePortNo: map['devicePortNo'],
-      deviceSerialNo: map['deviceSerialNo'],
-      devicePunchingType: map['devicePunchingType'],
-      devicePunchingTypeText: map['devicePunchingTypeText'],
-      userInfoId: map['userInfoId'],
-      userId: map['userId'],
-      personId: map['personId'],
-      firstName: map['firstName'],
-      middleName: map['middleName'],
-      lastName: map['lastName'],
-      punchingTimeArray: map['punchingTimeArray'],
-      accessLogText: map['accessLogText'],
-      accessLogSource: map['accessLogSource'],
-      personFullName: map['personFullName'],
-      sponsorshipNo: map['sponsorshipNo'],
-      startDate: map['startDate'],
-      endDate: map['endDate'],
-      serviceNo: map['serviceNo'],
-      serviceId: map['serviceId'],
-      signInType: map['signInType'],
-      accessLogStatus: map['accessLogStatus'],
-      serviceOwner: map['serviceOwner'],
-      signInLocation: map['signInLocation'],
-      id: map['id'],
-      createdDate: map['createdDate'],
-      createdBy: map['createdBy'],
-      lastUpdatedDate: map['lastUpdatedDate'],
-      lastUpdatedBy: map['lastUpdatedBy'],
-      isDeleted: map['isDeleted'],
-      sequenceOrder: map['sequenceOrder'],
-      companyId: map['companyId'],
-      dataAction: map['dataAction'],
-      status: map['status'],
-      versionNo: map['versionNo'],
-    );
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['DeviceId'] = this.deviceId;
+    data['BiometricId'] = this.biometricId;
+    data['PunchingTime'] = this.punchingTime;
+    data['DeviceName'] = this.deviceName;
+    data['DeviceMachineNo'] = this.deviceMachineNo;
+    data['DeviceIpAddress'] = this.deviceIpAddress;
+    data['DevicePortNo'] = this.devicePortNo;
+    data['DeviceSerialNo'] = this.deviceSerialNo;
+    data['DevicePunchingType'] = this.devicePunchingType;
+    data['DevicePunchingTypeText'] = this.devicePunchingTypeText;
+    data['UserInfoId'] = this.userInfoId;
+    data['UserId'] = this.userId;
+    data['PersonId'] = this.personId;
+    data['FirstName'] = this.firstName;
+    data['MiddleName'] = this.middleName;
+    data['LastName'] = this.lastName;
+    data['PunchingTimeArray'] = this.punchingTimeArray;
+    data['AccessLogText'] = this.accessLogText;
+    data['AccessLogSource'] = this.accessLogSource;
+    data['PersonFullName'] = this.personFullName;
+    data['SponsorshipNo'] = this.sponsorshipNo;
+    data['StartDate'] = this.startDate;
+    data['EndDate'] = this.endDate;
+    data['ServiceNo'] = this.serviceNo;
+    data['ServiceId'] = this.serviceId;
+    data['SignInType'] = this.signInType;
+    data['AccessLogStatus'] = this.accessLogStatus;
+    data['ServiceOwner'] = this.serviceOwner;
+    data['SignInLocation'] = this.signInLocation;
+    data['Id'] = this.id;
+    data['CreatedDate'] = this.createdDate;
+    data['CreatedBy'] = this.createdBy;
+    data['LastUpdatedDate'] = this.lastUpdatedDate;
+    data['LastUpdatedBy'] = this.lastUpdatedBy;
+    data['IsDeleted'] = this.isDeleted;
+    data['SequenceOrder'] = this.sequenceOrder;
+    data['CompanyId'] = this.companyId;
+    data['DataAction'] = this.dataAction;
+    data['Status'] = this.status;
+    data['VersionNo'] = this.versionNo;
+    return data;
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory AccessLogModel.fromJson(String source) =>
-      AccessLogModel.fromMap(json.decode(source));
 }

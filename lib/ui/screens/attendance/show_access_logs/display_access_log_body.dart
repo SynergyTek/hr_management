@@ -34,7 +34,6 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
           stream: accessLogBloc.getAccessLogListDataSubject.stream,
           builder:
               (context, AsyncSnapshot<AccessLogListDataResponse> snapshot) {
-            print("Snapshot data: ${snapshot.data}");
             if (snapshot.hasData) {
               if (snapshot.data.data == null ||
                   snapshot.data.data.length == 0) {

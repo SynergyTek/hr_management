@@ -8,7 +8,7 @@ class AccessLogListTileWidget extends StatelessWidget {
 
   AccessLogListTileWidget({
     @required this.eachAccessLogModelElement,
-  }) : assert(eachAccessLogModelElement.firstName != null);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +62,7 @@ class AccessLogListTileWidget extends StatelessWidget {
 
   /// Helper function that returns formatted employee name.
   String employeeName() {
-    return eachAccessLogModelElement.firstName +
-            " " +
-            eachAccessLogModelElement?.lastName ??
-        "";
+    return eachAccessLogModelElement?.personFullName ?? 'NA';
   }
 
   /// Helper function that returns formatted Punching time.

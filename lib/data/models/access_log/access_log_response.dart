@@ -30,7 +30,9 @@ class AccessLogListDataResponse {
   });
 
   // todo: need to complete this.
-  AccessLogListDataResponse.fromJson(dynamic response) : data = [];
+  AccessLogListDataResponse.fromJson(List response)
+      : data = response.map((i) => new AccessLogModel.fromJson(i)).toList(),
+        error = "";
 
   AccessLogListDataResponse.withError(String errorValue)
       : data = [],
