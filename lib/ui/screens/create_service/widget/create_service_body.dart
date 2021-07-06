@@ -99,7 +99,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
 
-                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json);
+                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json);//////////
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -323,7 +323,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         prefixIcon: Icon(Icons.note),
       ));
 
-    if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
+    if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {//////////////////
       widgets.addAll(udfJsonCompWidgetList);
     }
     if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
@@ -718,42 +718,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   buttonText: 'Submit',
                   handleOnPressed: () {
                     bool isValid = false;
-                    for (var i = 0; i < columnComponent.length; i++) {
-                      if (columnComponent[i]?.validate?.required != null &&
-                          columnComponent[i].validate.required == true &&
-                          udfJson.containsKey(columnComponent[i].key) &&
-                          (udfJson[columnComponent[i].key] == null ||
-                              udfJson[columnComponent[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${columnComponent[i].label}',
-                            context: context);
-                        return;
-                      }
-                    }
-                    for (var i = 0; i < componentComList.length; i++) {
-                      if (componentComList[i]?.validate?.required != null &&
-                          componentComList[i].validate.required == true &&
-                          udfJson.containsKey(componentComList[i].key) &&
-                          (udfJson[componentComList[i].key] == null ||
-                              udfJson[componentComList[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${componentComList[i].label}',
-                            context: context);
-                        return;
-                      }
-                    }
-                    for (var i = 0; i < udfJsonComponent.length; i++) {
-                      if (udfJsonComponent[i]?.validate?.required != null &&
-                          udfJsonComponent[i].validate.required == true &&
-                          udfJson.containsKey(udfJsonComponent[i].key) &&
-                          (udfJson[udfJsonComponent[i].key] == null ||
-                              udfJson[udfJsonComponent[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${udfJsonComponent[i].label}',
-                            context: context);
-                        return;
-                      }
-                    }
+                    requiredFieldValidations();
                     serviceViewModelPostRequest(1);
                   },
                   width: 100,
@@ -764,6 +729,44 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ],
       ),
     );
+  }
+
+  requiredFieldValidations() {
+    for (var i = 0; i < columnComponent.length; i++) {
+      if (columnComponent[i]?.validate?.required != null &&
+          columnComponent[i].validate.required == true &&
+          udfJson.containsKey(columnComponent[i].key) &&
+          (udfJson[columnComponent[i].key] == null ||
+              udfJson[columnComponent[i].key].isEmpty)) {
+        displaySnackBar(
+            text: 'Please enter ${columnComponent[i].label}', context: context);
+        return;
+      }
+    }
+    for (var i = 0; i < componentComList.length; i++) {
+      if (componentComList[i]?.validate?.required != null &&
+          componentComList[i].validate.required == true &&
+          udfJson.containsKey(componentComList[i].key) &&
+          (udfJson[componentComList[i].key] == null ||
+              udfJson[componentComList[i].key].isEmpty)) {
+        displaySnackBar(
+            text: 'Please enter ${componentComList[i].label}',
+            context: context);
+        return;
+      }
+    }
+    for (var i = 0; i < udfJsonComponent.length; i++) {
+      if (udfJsonComponent[i]?.validate?.required != null &&
+          udfJsonComponent[i].validate.required == true &&
+          udfJson.containsKey(udfJsonComponent[i].key) &&
+          (udfJson[udfJsonComponent[i].key] == null ||
+              udfJson[udfJsonComponent[i].key].isEmpty)) {
+        displaySnackBar(
+            text: 'Please enter ${udfJsonComponent[i].label}',
+            context: context);
+        return;
+      }
+    }
   }
 
   enterReasonAlertDialog(BuildContext context) {
