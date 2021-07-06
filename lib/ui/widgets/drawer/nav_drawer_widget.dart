@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
@@ -88,16 +87,16 @@ Widget drawerWidget(context) {
         //     );
         //   },
         // ),
-        ListTile(
-          title: Text('Access Logs'),
-          trailing: Icon(Icons.create),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              DISPLAY_ACCESS_LOG,
-            );
-          },
-        ),
+        // ListTile(
+        //   title: Text('Access Logs'),
+        //   trailing: Icon(Icons.create),
+        //   onTap: () {
+        //     Navigator.pushNamed(
+        //       context,
+        //       DISPLAY_ACCESS_LOG,
+        //     );
+        //   },
+        // ),
         ListTile(
           title: Text('Leaves'),
           trailing: Icon(Icons.create),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/task_models/task_response_model.dart';
-import 'package:hr_management/data/repositories/task_repository/task_repository.dart';
+import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/task_models/task_response_model.dart';
+import '../../../data/repositories/task_repository/task_repository.dart';
 import 'package:rxdart/subjects.dart';
 
 class TaskBloc {

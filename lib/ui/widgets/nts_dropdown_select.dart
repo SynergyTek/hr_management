@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
+import '../../routes/route_constants.dart';
+import '../../routes/screen_arguments.dart';
 import 'package:sizer/sizer.dart';
 
 typedef ListTapPressedCallBack = void Function(dynamic key);

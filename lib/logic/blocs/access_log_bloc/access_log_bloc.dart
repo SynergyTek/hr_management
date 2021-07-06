@@ -1,18 +1,21 @@
-import 'package:hr_management/data/models/access_log/access_log_response.dart';
-import 'package:hr_management/data/repositories/access_log/abstract_access_log_repo.dart';
+import '../../../data/models/access_log/access_log_response.dart';
+import '../../../data/repositories/access_log/abstract_access_log_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:meta/meta.dart';
 
 class AccessLogBloc {
-  final AccessLogRepository _accessLogRepository =
-      AccessLogRepository();
+  final AccessLogRepository _accessLogRepository = AccessLogRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<AccessLogResponse> _subject =
+  final BehaviorSubject<AccessLogResponse> _insertAccessLogSubject =
       BehaviorSubject<AccessLogResponse>();
 
-  /// Used to fetch new entries.
+  final BehaviorSubject<AccessLogListDataResponse>
+      _getAccessLogListDataSubject =
+      BehaviorSubject<AccessLogListDataResponse>();
+
+  /// Used to insert new entries.
   getInsertAccessLog({
     @required bool isSignIn,
   }) async {
@@ -20,16 +23,17 @@ class AccessLogBloc {
     queryparams["punchingTime"] = DateTime.now().toString();
     queryparams["punchingTye"] = isSignIn ? "0" : "1";
 
-    AccessLogResponse response =
-        await _accessLogRepository.getInsertAccessLog(
+    AccessLogResponse response = await _accessLogRepository.getInsertAccessLog(
       queryparams: queryparams,
     );
-    _subject.sink.add(response);
+    _insertAccessLogSubject.sink.add(response);
   }
 
-  getAccessLogs() async {
-    AccessLogResponse response = await _accessLogRepository.getAccessLogs();
-    _subject.sink.add(response);
+  /// getAccessLogsListData: is used to fetch all access log data for a particular period.
+  getAccessLogsListData() async {
+    AccessLogListDataResponse response =
+        await _accessLogRepository.getAccessLogsListData();
+    _getAccessLogListDataSubject.sink.add(response);
   }
 
   /// Used to create new entries.
@@ -54,10 +58,12 @@ class AccessLogBloc {
   }
 
   dispose() {
-    _subject.close();
+    _insertAccessLogSubject.close();
   }
 
-  BehaviorSubject<AccessLogResponse> get subject => _subject;
+  BehaviorSubject<AccessLogResponse> get subject => _insertAccessLogSubject;
+  BehaviorSubject<AccessLogListDataResponse> get getAccessLogListDataSubject =>
+      _getAccessLogListDataSubject;
 }
 
 final accessLogBloc = AccessLogBloc();

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
+import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/service_models/service.dart';
 
 import '../../../data/models/service_models/service_response.dart';
 import '../../../data/repositories/service_repository/abstract_service_repo.dart';

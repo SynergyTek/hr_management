@@ -1,7 +1,7 @@
 
-import 'package:hr_management/logic/blocs/access_log_bloc/access_log_bloc.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
+import '../../../widgets/progress_indicator.dart';
+import '../../../widgets/snack_bar.dart';
 
 import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
