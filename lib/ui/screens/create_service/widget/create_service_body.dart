@@ -364,7 +364,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       print(model[i].type);
       if (model[i].type == 'textfield') {
         final textField$i = new TextFieldBloc();
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocTextBoxWidget(
             labelName: model[i].label,
@@ -381,7 +383,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
       } else if (model[i].type == 'textarea') {
         final textArea$i = new TextFieldBloc();
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocTextBoxWidget(
             labelName: model[i].label,
@@ -402,7 +406,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           initialValue = leaveDurationControllerCalendarDays.text;
         } else {}
         final number$i = new TextFieldBloc(initialValue: initialValue);
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocNumberBoxWidget(
             labelName: model[i].label,
@@ -418,7 +424,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password') {
         final password$i = new TextFieldBloc();
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocTextBoxWidget(
             labelName: model[i].label,
@@ -434,7 +442,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox') {
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(new DynamicCheckBoxValue(
           code: model[i].label,
           name: model[i].label,
@@ -446,6 +456,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ));
       } else if (model[i].type == 'selectboxes') {
         TextEditingController _ddController = new TextEditingController();
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,
           controller: _ddController,
@@ -464,7 +477,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ));
       } else if (model[i].type == 'radio') {
         final radio$i = new SelectFieldBloc();
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocRadioButtonWidget(
             labelName: model[i].label,
@@ -474,6 +489,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select') {
         TextEditingController _ddController = new TextEditingController();
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,
           controller: _ddController,
@@ -495,7 +513,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           },
         ));
       } else if (model[i].type == 'datetime') {
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(new DynamicDateTimeBox(
           code: model[i].inputFormat != null || model[i].inputFormat != ''
               ? model[i].inputFormat
@@ -523,7 +543,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           },
         ));
       } else if (model[i].type == 'time') {
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           new DynamicTimeBox(
             name: model[i].label,
@@ -538,7 +560,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       } else if (model[i].type == 'hidden') {
         //Hidden Field
         final hidden$i = new TextFieldBloc();
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocTextBoxWidget(
             obscureText: true,
@@ -557,7 +581,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       } else if (model[i].type == 'phoneNumber') {
         //Phone Number Field
         final phoneNumber$i = new TextFieldBloc();
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocNumberBoxWidget(
             labelName: model[i].label,
@@ -575,7 +601,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         //Email Field
         final email$i =
             new TextFieldBloc(validators: [FieldBlocValidators.email]);
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocTextBoxWidget(
             labelName: model[i].label,
@@ -592,7 +620,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else {
         final textField$i = new TextFieldBloc();
-        udfJson[model[i].key] = '';
+        if (!udfJson.containsKey(model[i].key)) {
+          udfJson[model[i].key] = '';
+        }
         listDynamic.add(
           BlocTextBoxWidget(
             labelName: model[i].label,
