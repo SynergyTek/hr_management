@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
@@ -13,12 +12,16 @@ class NTSDdAPIBloc {
       BehaviorSubject<NTSDdResponse>();
 
   /// Used to fetch new entries.
-  getData(
-      {@required String url,
-      @required String idKey,
-      @required String nameKey}) async {
+  getData({
+    @required String url,
+    @required String idKey,
+    @required String nameKey,
+  }) async {
     NTSDdResponse response = await _apiRepository.getdynamicUrlData(
-        url: url, idKey: idKey, nameKey: nameKey);
+      url: url,
+      idKey: idKey,
+      nameKey: nameKey,
+    );
     print("response: $response");
     _subject.sink.add(response);
   }
