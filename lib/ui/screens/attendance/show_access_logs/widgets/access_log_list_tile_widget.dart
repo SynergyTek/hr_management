@@ -24,7 +24,20 @@ class AccessLogListTileWidget extends StatelessWidget {
               tileColor: Theme.of(context).notInvertedColor,
               title: Text(employeeName()),
               subtitle: Text(punchingTime()),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    eachAccessLogModelElement?.devicePunchingTypeText ?? 'NA',
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyText1.fontSize,
+                      color: _handleListTileColor(context),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Icon(Icons.chevron_right),
+                ],
+              ),
               onTap: () => _handleListTileOnTap(context),
             ),
           ),

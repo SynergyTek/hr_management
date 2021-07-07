@@ -48,7 +48,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
                     eachAccessLogModelElement?.devicePunchingTypeText ?? 'NA',
                     style: TextStyle(
                       fontSize: Theme.of(context).textTheme.headline6.fontSize,
-                      color: Theme.of(context).textHeadingColor,
+                      color: _handleListTileColor(context),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -129,5 +129,16 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _handleListTileColor(BuildContext context) {
+    // Guard clause
+    if (eachAccessLogModelElement?.devicePunchingType == null ||
+        eachAccessLogModelElement.devicePunchingType.isNaN)
+      return Colors.white54;
+
+    return eachAccessLogModelElement.devicePunchingType == 0
+        ? Theme.of(context).textHeadingColor
+        : Theme.of(context).invertedColor;
   }
 }
