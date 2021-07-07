@@ -46,16 +46,16 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                 listItems: _serviceList,
                 filteredSearchList: _filteredServiceList,
                 itemBuilder: (context, index) {
-                   return Slidable(
+                  return Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.25,
                     child: ListTile(
                       leading: TextCircleAvater(
-                        text: _filteredServiceList[index].serviceSubject,
-                        context: context,
-                        radius: 20,
-                        fontSize: 18,
-                        color: Theme.of(context).primaryColorLight),
+                          text: _filteredServiceList[index].serviceSubject,
+                          context: context,
+                          radius: 20,
+                          fontSize: 18,
+                          color: Theme.of(context).primaryColorLight),
                       title: Text(
                         _serviceList[index].serviceSubject != null
                             ? _serviceList[index].serviceSubject
@@ -124,13 +124,11 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                           ],
                         ),
                       ),
-                      onTap: () async {
-                        
-                      },
+                      onTap: () async {},
                     ),
                     // secondaryActions: _slideWidget(index),
                   );
-                
+
                   // return ListTile(
                   //   leading: TextCircleAvater(
                   //       text: _filteredServiceList[index].serviceSubject,
