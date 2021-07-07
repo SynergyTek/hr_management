@@ -30,7 +30,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: DEFAULT_LARGE_PADDING,
+      padding: DEFAULT_PADDING,
       child: StreamBuilder<ServiceListResponse>(
           stream: serviceBloc.subjectServiceList.stream,
           builder: (context, AsyncSnapshot<ServiceListResponse> snapshot) {
@@ -46,16 +46,18 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                 listItems: _serviceList,
                 filteredSearchList: _filteredServiceList,
                 itemBuilder: (context, index) {
-                   return Slidable(
+                  return Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.25,
                     child: ListTile(
                       leading: TextCircleAvater(
-                        text: _filteredServiceList[index].serviceSubject,
-                        context: context,
-                        radius: 20,
-                        fontSize: 18,
-                        color: Theme.of(context).primaryColorLight),
+                          text: _serviceList[index].serviceSubject != null
+                              ? _serviceList[index].serviceSubject
+                              : "-",
+                          context: context,
+                          radius: 20,
+                          fontSize: 18,
+                          color: Theme.of(context).primaryColorLight),
                       title: Text(
                         _serviceList[index].serviceSubject != null
                             ? _serviceList[index].serviceSubject
@@ -75,7 +77,9 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                   children: <Widget>[
                                     Row(children: <Widget>[
                                       Text("Service No: "),
-                                      Text(_serviceList[index].serviceNo),
+                                      Text(_serviceList[index].serviceNo != null
+                                          ? _serviceList[index].serviceNo
+                                          : "-"),
                                     ])
                                   ]),
                             ),
@@ -87,36 +91,41 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                       "From Date: ",
                                     ),
                                     Text(
-                                      dayformatter.format(DateTime.parse(
-                                          _serviceList[index]
-                                              .startDate
-                                              .substring(0, 19))),
+                                      _serviceList[index].formattedStartDate !=
+                                              null
+                                          ? _serviceList[index]
+                                              .formattedStartDate
+                                          : "",
                                       style: TextStyle(color: Colors.blue),
                                     ),
                                     Text(
                                       " to ",
                                     ),
                                     Text(
-                                      dayformatter.format(DateTime.parse(
-                                          _serviceList[index]
-                                              .dueDate
-                                              .substring(0, 19))),
+                                      _serviceList[index].formattedEndDate !=
+                                              null
+                                          ? _serviceList[index].formattedEndDate
+                                          : "",
                                       style: TextStyle(color: Colors.blue),
                                     ),
                                   ],
                                 )),
                             Row(
                               children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    "Assigned by: " +
-                                        _serviceList[index].ownerUserName,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.fade,
-                                  ),
-                                ),
+                                // Expanded(
+                                //   child: Text(
+                                //     "Status: "+  
+                                //     _serviceList[index].leaveStatus !=
+                                //               null
+                                //           ? _serviceList[index].leaveStatus
+                                //           : "",
+                                   
+                                //     maxLines: 2,
+                                //     // overflow: TextOverflow.fade,
+                                //   ),
+                                // ),
                                 Text(
-                                  _serviceList[index].serviceStatusCode,
+                                  _serviceList[index].leaveStatus,
                                   style: TextStyle(color: Colors.green),
                                 ),
                               ],
@@ -124,13 +133,11 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                           ],
                         ),
                       ),
-                      onTap: () async {
-                        
-                      },
+                      onTap: () async {},
                     ),
                     // secondaryActions: _slideWidget(index),
                   );
-                
+
                   // return ListTile(
                   //   leading: TextCircleAvater(
                   //       text: _filteredServiceList[index].serviceSubject,
