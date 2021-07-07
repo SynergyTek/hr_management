@@ -3,22 +3,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
-import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
-import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
-import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
-import 'package:hr_management/ui/widgets/nts_widgets.dart';
-import 'package:hr_management/ui/widgets/primary_button.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../../data/models/api_models/post_response_model.dart';
+import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../data/models/service_models/service.dart';
+import '../../../../data/models/udf_json_model/udf_json_model.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../themes/theme_config.dart';
+import '../../../widgets/form_widgets/bloc_date_picker_widget.dart';
+import '../../../widgets/form_widgets/bloc_number_box_widget.dart';
+import '../../../widgets/form_widgets/bloc_radio_button_widget.dart';
+import '../../../widgets/form_widgets/bloc_text_box_widget.dart';
+import '../../../widgets/nts_dropdown_select.dart';
+import '../../../widgets/nts_widgets.dart';
+import '../../../widgets/primary_button.dart';
+import '../../../widgets/progress_indicator.dart';
+import '../../../widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 
 import '../create_service_form_bloc.dart';
@@ -53,8 +53,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   DateTime startDate;
   DateTime dueDate;
   bool isVisible = false;
-  bool canUpdate = true;
-  List<Widget> formWidgets;
+  List<String> selectValue = [];
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
@@ -100,8 +99,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
-                if (canUpdate)
-                  parseJsonToUDFModel(createServiceFormBloc, serviceModel.json);
+
+                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json);
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -221,127 +220,123 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, Service serviceModel) {
     List<Widget> widgets = [];
-    if (canUpdate) {
-      widgets.add(Container(
-        padding: EdgeInsets.all(8.0),
-        height: 12.h,
-        color: Colors.blue[100],
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            rowChild(serviceModel.serviceNo, 'Service No', 3),
-            rowChild(serviceModel.serviceStatusName, 'Status', 2),
-            rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
+
+    widgets.add(Container(
+      padding: EdgeInsets.all(8.0),
+      height: 12.h,
+      color: Colors.blue[100],
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          rowChild(serviceModel.serviceNo, 'Service No', 3),
+          rowChild(serviceModel.serviceStatusName, 'Status', 2),
+          rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
+        ],
+      ),
+    ));
+    if (!serviceModel.hideSubject)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'Subject',
+        readonly: false,
+        maxLines: 1,
+        labelName: 'Subject',
+        textFieldBloc: createServiceFormBloc.subject,
+        prefixIcon: Icon(Icons.note),
+      ));
+
+    if (!serviceModel.hideStartDate)
+      widgets.add(
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: DynamicDateTimeBox(
+                code: serviceModel.startDate,
+                name: 'Start Date',
+                key: new Key('Start Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {
+                      startDate = date;
+                      if (dueDate != null && dueDate.toString().isNotEmpty)
+                        compareStartEndDate(
+                            startDate: startDate,
+                            enddate: dueDate,
+                            context: context,
+                            updateDuration: false);
+                    });
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
+              ),
+            ),
+            Expanded(
+              child: DynamicDateTimeBox(
+                code: serviceModel.dueDate,
+                name: 'Due Date',
+                key: new Key('Due Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {
+                      dueDate = date;
+                      if (startDate != null && startDate.toString().isNotEmpty)
+                        compareStartEndDate(
+                            startDate: startDate,
+                            enddate: dueDate,
+                            context: context,
+                            updateDuration: false);
+                    });
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
+              ),
+            )
           ],
         ),
+      );
+
+    if (!serviceModel.hideSLA)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'SLA',
+        readonly: false,
+        maxLines: 1,
+        labelName: 'SLA',
+        textFieldBloc: createServiceFormBloc.sla,
+        prefixIcon: Icon(Icons.note),
       ));
-      if (!serviceModel.hideSubject)
-        widgets.add(BlocTextBoxWidget(
-          fieldName: 'Subject',
-          readonly: false,
-          maxLines: 1,
-          labelName: 'Subject',
-          textFieldBloc: createServiceFormBloc.subject,
-          prefixIcon: Icon(Icons.note),
-        ));
 
-      if (!serviceModel.hideStartDate)
-        widgets.add(
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: DynamicDateTimeBox(
-                  code: serviceModel.startDate,
-                  name: 'Start Date',
-                  key: new Key('Start Date'),
-                  selectDate: (DateTime date) {
-                    if (date != null) {
-                      setState(() async {
-                        startDate = date;
-                        if (dueDate != null && dueDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate,
-                              enddate: dueDate,
-                              context: context,
-                              updateDuration: false);
-                      });
-                      // udfJson[model[i].key] = date.toString();
-                    }
-                  },
-                ),
-              ),
-              Expanded(
-                child: DynamicDateTimeBox(
-                  code: serviceModel.dueDate,
-                  name: 'Due Date',
-                  key: new Key('Due Date'),
-                  selectDate: (DateTime date) {
-                    if (date != null) {
-                      setState(() async {
-                        dueDate = date;
-                        if (startDate != null &&
-                            startDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate,
-                              enddate: dueDate,
-                              context: context,
-                              updateDuration: false);
-                      });
-                      // udfJson[model[i].key] = date.toString();
-                    }
-                  },
-                ),
-              )
-            ],
-          ),
-        );
-
-      if (!serviceModel.hideSLA)
-        widgets.add(BlocTextBoxWidget(
-          fieldName: 'SLA',
-          readonly: false,
-          maxLines: 1,
-          labelName: 'SLA',
-          textFieldBloc: createServiceFormBloc.sla,
-          prefixIcon: Icon(Icons.note),
-        ));
-
-      if (!serviceModel.hideExpiryDate)
-        widgets.add(BlocDatePickerWidget(
-          labelName: 'Reminder Date',
-          canSelectTime: false,
-          inputFieldBloc: createServiceFormBloc.expiryDate,
-          height: 75.0,
-          width: MediaQuery.of(context).size.width,
-        ));
-
-      if (!serviceModel.hideDescription)
-        widgets.add(BlocTextBoxWidget(
-          fieldName: 'Description',
-          readonly: false,
-          maxLines: 3,
-          labelName: 'Description',
-          textFieldBloc: createServiceFormBloc.description,
-          prefixIcon: Icon(Icons.note),
-        ));
-      if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
-        widgets.addAll(udfJsonCompWidgetList);
-      }
-      if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
-        widgets.addAll(columnComponentWidgets);
-      }
-      if (componentComListWidgets != null &&
-          componentComListWidgets.isNotEmpty) {
-        widgets.addAll(componentComListWidgets);
-      }
-      widgets.add(Container(
-        height: 50,
+    if (!serviceModel.hideExpiryDate)
+      widgets.add(BlocDatePickerWidget(
+        labelName: 'Reminder Date',
+        canSelectTime: false,
+        inputFieldBloc: createServiceFormBloc.expiryDate,
+        height: 75.0,
+        width: MediaQuery.of(context).size.width,
       ));
-      formWidgets = widgets;
+
+    if (!serviceModel.hideDescription)
+      widgets.add(BlocTextBoxWidget(
+        fieldName: 'Description',
+        readonly: false,
+        maxLines: 3,
+        labelName: 'Description',
+        textFieldBloc: createServiceFormBloc.description,
+        prefixIcon: Icon(Icons.note),
+      ));
+    if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
+      widgets.addAll(udfJsonCompWidgetList);
     }
-    return formWidgets;
+    if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
+      widgets.addAll(columnComponentWidgets);
+    }
+    if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
+      widgets.addAll(componentComListWidgets);
+    }
+    widgets.add(Container(
+      height: 50,
+    ));
+    return widgets;
   }
 
   rowChild(String data, String field, int flex) {
@@ -411,6 +406,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
       } else if (model[i].type == 'number') {
         String initialValue;
+        if (model[i].key == 'LeaveDurationCalendarDays') {
+          initialValue = leaveDurationControllerCalendarDays.text;
+          udfJson[model[i].key] = initialValue;
+        } else {}
+        // final number$i = new TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key)) {
           udfJson[model[i].key] = '';
         }
@@ -504,6 +504,13 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         TextEditingController _ddController = new TextEditingController();
         if (!udfJson.containsKey(model[i].key)) {
           udfJson[model[i].key] = '';
+          if (selectValue.length < model.length) {
+            for (var j = selectValue.length; j < model.length; j++) {
+              selectValue.add(null);
+            }
+          }
+        } else {
+          _ddController.text = selectValue[i];
         }
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,
@@ -522,6 +529,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           onListTap: (dynamic value) {
             NTSDropdownModel _selectedIdNameViewModel = value;
             _ddController.text = _selectedIdNameViewModel.name;
+            selectValue[i] = _selectedIdNameViewModel.name;
             udfJson[model[i].key] = _selectedIdNameViewModel.id;
           },
         ));
@@ -1037,23 +1045,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       resultMsg = result.messages;
       Navigator.pop(context);
     } else {
-      canUpdate = false;
       setState(() {
         isVisible = false;
       });
       resultMsg = result.messages;
-      // Navigator.pop(context);
     }
     displaySnackBar(text: resultMsg, context: context);
-  }
-
-  void _handleDraftOnClick() {
-    print("Draft clicked.");
-    // TODO: if existing value is not overwritten by the user, use the default values else use the new overridden values.
-
-    // serviceBloc.postData(
-    //   serviceResponseModel: serviceModel,
-    // );
   }
 
   @override

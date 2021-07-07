@@ -21,4 +21,8 @@ extension ThemeExtras on ThemeData {
   // Color get textHeadingColor => Color(0xFFFF7643);
   Color get invertedColor =>
       this.brightness == Brightness.light ? Color(0xFF757575) : Colors.white;
+
+  Color get notInvertedColor => this.brightness == Brightness.light
+      ? Colors.white
+      : Color(0xFF1A2127); // 0xFF757575 ???
 }

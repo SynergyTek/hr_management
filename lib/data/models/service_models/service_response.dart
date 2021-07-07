@@ -7,7 +7,6 @@ import 'service.dart';
 class ServiceResponse {
   bool isSuccess;
   final Service data;
-  List<Service> list;
   String error;
 
   ServiceResponse({
@@ -19,6 +18,23 @@ class ServiceResponse {
 
   ServiceResponse.withError(String errorValue)
       : data = null,
+        error = errorValue;
+}
+
+class ServiceListResponse {
+  bool isSuccess;
+  List<Service> list;
+  String error;
+
+  ServiceListResponse({
+    @required this.list,
+  });
+
+  ServiceListResponse.fromJson(List response)
+      : list = (response).map((i) => new Service.fromJson(i)).toList();
+
+  ServiceListResponse.withError(String errorValue)
+      : list = null,
         error = errorValue;
 }
 

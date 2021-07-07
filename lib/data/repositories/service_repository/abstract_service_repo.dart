@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
+import '../../models/api_models/post_response_model.dart';
+import '../../models/service_models/service.dart';
 
 import '../../models/service_models/service_response.dart';
 
@@ -15,11 +15,11 @@ part 'service_repo.dart';
 abstract class AbstractServiceRepository {
   AbstractServiceRepository();
 
-  Future<ServiceResponse> getServiceDetail(String templatecode);//{
-    // Optional Params to be added to the request if required.
+  Future<ServiceResponse> getServiceDetail(String templatecode); //{
+  // Optional Params to be added to the request if required.
   //  Map<String, dynamic> queryparams,});
 
-    Future<ServiceResponse> getLeaves();
+  Future<ServiceListResponse> getLeavesDetails();
 
   Future<PostResponse> postAPIData({
     // Optional Params to be added to the request if required.

@@ -1,3 +1,0 @@
-class AccessLog{
-  String name;
-}

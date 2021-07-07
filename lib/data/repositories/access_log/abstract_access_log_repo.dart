@@ -1,4 +1,4 @@
-import 'package:hr_management/data/models/access_log/access_log_response.dart';
+import '../../models/access_log/access_log_response.dart';
 
 import '../../../constants/api_endpoints.dart';
 import 'package:dio/dio.dart';
@@ -14,7 +14,7 @@ abstract class AbstractAccessLogRepository {
     Map<String, dynamic> queryparams,
   });
 
-  Future<AccessLogResponse> getAccessLogs({
+  Future<AccessLogListDataResponse> getAccessLogsListData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });

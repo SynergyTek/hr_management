@@ -1,9 +1,9 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:location/location.dart';
 import '../../../../data/models/leave_models/leave_res_model.dart';
 import '../../../../data/models/leave_models/leave_temp_model.dart';

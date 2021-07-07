@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
-  const CustomProgressIndicator({Key key}) : super(key: key);
+  final String loadingText;
+
+  CustomProgressIndicator({
+    this.loadingText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class CustomProgressIndicator extends StatelessWidget {
                   width: 16,
                 ),
                 Text(
-                  "Please Wait...",
+                  loadingText ?? "Please Wait...",
                   style: TextStyle(fontSize: 18),
                 )
               ],

@@ -1,4 +1,4 @@
-import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
+import '../../models/nts_dropdown/nts_dd_res_model.dart';
 
 import '../../../constants/api_endpoints.dart';
 import 'package:dio/dio.dart';

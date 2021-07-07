@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
-import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/circle_avatar.dart';
-import 'package:hr_management/ui/widgets/empty_list_widget.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/models/service_models/service.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../themes/theme_config.dart';
+import '../../../widgets/circle_avatar.dart';
+import '../../../widgets/empty_list_widget.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 class DisplayLeavesBody extends StatefulWidget {
@@ -21,7 +21,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
 
   @override
   void initState() {
-    serviceBloc..getLeaves();
+    serviceBloc..getLeavesDetails();
     super.initState();
   }
 
@@ -29,12 +29,12 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_LARGE_PADDING,
-      child: StreamBuilder<ServiceResponse>(
-          stream: serviceBloc.subject.stream,
-          builder: (context, AsyncSnapshot<ServiceResponse> snapshot) {
+      child: StreamBuilder<ServiceListResponse>(
+          stream: serviceBloc.subjectServiceList.stream,
+          builder: (context, AsyncSnapshot<ServiceListResponse> snapshot) {
             print("Snapshot data: ${snapshot.data}");
             if (snapshot.hasData) {
-              if (snapshot.data.data == null ||
+              if (snapshot.data.list == null ||
                   snapshot.data.list.length == 0) {
                 return EmptyListWidget();
               }

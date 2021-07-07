@@ -18,7 +18,6 @@ class APIEndpointConstants {
   static const GET_TASK_HOME_DATA =
       '$BASE_URL/nts/query/ReadTaskHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c&';
 
-
   //Task API Endpoints Block End
 
   //************************************************************************//
@@ -28,6 +27,9 @@ class APIEndpointConstants {
   static const GET_SERVICE_DETAILS =
       '$BASE_URL/nts/query/GetServiceDetails?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
+      static const LEAVE_DETAILS =
+      '$BASE_URL/taa/query/leavedetail?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
   static const String GET_SERVICE_ATTACHMENT_COUNT =
@@ -48,8 +50,7 @@ class APIEndpointConstants {
 
   static const GET_ALLOWED_TEMPLATES =
       '$BASE_URL/nts/query/GetAllowedTempaltes?categoryCode=Leave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
-  
-  
+
   //************************************************************************//
   //Access Log API Endpoints Block Start
 
@@ -57,7 +58,9 @@ class APIEndpointConstants {
       '$BASE_URL/common/query/InsertAccessLog?userid=45bba746-3309-49b7-9c03-b5793369d73c&';
   // static String GET_REMOTE_ATTENDANCE_DATA = 'https://webapidev.aitalkx.com/common/query/InsertAccessLog?userid=45bba746-3309-49b7-9c03-b5793369d73c&punchingTime=Datetime.Now&punchingTye=0';
 
+  static const String GET_ACCESS_LOG_LIST_DATA =
+      '$BASE_URL/taa/query/accessloglist?startDate=2021-06-20 00:00:00.000&dueDate=2021-07-06 00:00:00.000&userId=cb9272df-0a2c-401b-aed8-b73488ae03aa';
+
   //Access Log API Endpoints Block End
   //************************************************************************//
 }
-

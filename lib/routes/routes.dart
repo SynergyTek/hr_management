@@ -1,16 +1,16 @@
-import 'package:hr_management/ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
-import 'package:hr_management/ui/screens/create_service/create_service_screen.dart';
-import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
-import 'package:hr_management/ui/screens/leaves/display_leaves/display_leaves_screen.dart';
-import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
-import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
-import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
+import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
+import '../ui/screens/create_service/create_service_screen.dart';
+import '../ui/screens/counts_screen/counts_screen.dart';
+import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
+import '../ui/screens/tasks/task_home_screen.dart';
+import '../ui/widgets/custom_controls/default_dropdown_list.dart';
+import '../ui/widgets/nts_dropdown_select.dart';
 
 import '../ui/screens/attendance/mark_attendance.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/leaves/leave_template.dart';
-import 'package:hr_management/ui/screens/note/note_screen.dart';
-import 'package:hr_management/ui/screens/registration/registration_screen.dart';
+import '../ui/screens/leaves/leave_template.dart';
+import '../ui/screens/note/note_screen.dart';
+import '../ui/screens/registration/registration_screen.dart';
 import '../ui/screens/leaves/leave_template.dart';
 
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
@@ -103,16 +103,14 @@ class AppRouter {
         );
         break;
 
-        case DISPLAY_LEAVES:
+      case DISPLAY_LEAVES:
         return MaterialPageRoute(
-          builder: (_) => DisplayLeaves(
-          ),
+          builder: (_) => DisplayLeaves(),
         );
         break;
-        case DISPLAY_ACCESS_LOG:
+      case DISPLAY_ACCESS_LOG:
         return MaterialPageRoute(
-          builder: (_) => DisplayAccessLog(
-          ),
+          builder: (_) => DisplayAccessLog(),
         );
         break;
 

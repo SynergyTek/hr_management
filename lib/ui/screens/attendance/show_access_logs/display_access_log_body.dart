@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/access_log/access_log.dart';
-import 'package:hr_management/data/models/access_log/access_log_response.dart';
-import 'package:hr_management/logic/blocs/access_log_bloc/access_log_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/circle_avatar.dart';
-import 'package:hr_management/ui/widgets/empty_list_widget.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/models/access_log/access_log_model.dart';
+import '../../../../data/models/access_log/access_log_response.dart';
+import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
+import '../../../../themes/theme_config.dart';
+import '../../../widgets/empty_list_widget.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
+
+import 'widgets/access_log_list_tile_widget.dart';
 
 class DisplayAccessLogBody extends StatefulWidget {
   DisplayAccessLogBody({Key key}) : super(key: key);
@@ -16,60 +17,46 @@ class DisplayAccessLogBody extends StatefulWidget {
 }
 
 class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
-List<AccessLog> _accessLogList = [];
-  List<AccessLog> _filteredAccessLogList = [];
+  List<AccessLogModel> _accessLogList = [];
+  List<AccessLogModel> _filteredAccessLogList = [];
 
   @override
   void initState() {
-    accessLogBloc
-      ..getAccessLogs();
+    accessLogBloc..getAccessLogsListData();
     super.initState();
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_LARGE_PADDING,
-      child: StreamBuilder<AccessLogResponse>(
-          stream: accessLogBloc.subject.stream,
-          builder: (context, AsyncSnapshot<AccessLogResponse> snapshot) {
-            print("Snapshot data: ${snapshot.data}");
+      child: StreamBuilder<AccessLogListDataResponse>(
+          stream: accessLogBloc.getAccessLogListDataSubject.stream,
+          builder:
+              (context, AsyncSnapshot<AccessLogListDataResponse> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.list == null ||
-                  snapshot.data.list.length == 0) {
+              if (snapshot.data.data == null ||
+                  snapshot.data.data.length == 0) {
                 return EmptyListWidget();
               }
-              _accessLogList = snapshot.data.list;
+              _accessLogList = snapshot.data.data;
               return Listizer(
                 showSearchBar: true,
                 listItems: _accessLogList,
                 filteredSearchList: _filteredAccessLogList,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: TextCircleAvater(
-                        text: _filteredAccessLogList[index].name,
-                        context: context,
-                        radius: 20,
-                        fontSize: 18,
-                        color: Theme.of(context).primaryColorLight),
-                    title: Text(
-                      _filteredAccessLogList[index].name != null
-                          ? _filteredAccessLogList[index].name
-                          : "",
-                      maxLines: 2,
-                    ),
-                    onTap: () {
-                      // if (widget.onListTap != null) {
-                      //   widget.onListTap(_filteredAccessLogList[index]);
-                      //   Navigator.pop(context);
-                      // }
-                    },
+                  return AccessLogListTileWidget(
+                    // TODO: figure out which one needs to be shown.
+                    // eachAccessLogModelElement: _filteredAccessLogList.elementAt(index),
+                    eachAccessLogModelElement: _accessLogList.elementAt(index),
                   );
                 },
               );
             } else {
               return Center(
-                child: CustomProgressIndicator(),
+                child: CustomProgressIndicator(
+                  loadingText: 'Fetching data',
+                ),
               );
             }
           }),
