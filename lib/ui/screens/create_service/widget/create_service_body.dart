@@ -26,7 +26,8 @@ import '../create_service_form_bloc.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
   final String templateCode;
-  const CreateServiceScreenBody({Key key, this.templateCode});
+  final String serviceId;
+  const CreateServiceScreenBody({Key key, this.templateCode, this.serviceId});
 
   @override
   _CreateServiceScreenBodyState createState() =>
@@ -77,7 +78,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   @override
   void initState() {
     super.initState();
-    serviceBloc..getServiceDetail(widget.templateCode);
+    serviceBloc
+      ..getServiceDetail(
+          templateCode: widget.templateCode,
+          serviceId: widget.serviceId,
+          userId: '45bba746-3309-49b7-9c03-b5793369d73c');
   }
 
   @override

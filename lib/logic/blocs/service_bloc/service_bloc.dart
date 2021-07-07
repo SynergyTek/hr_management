@@ -13,13 +13,16 @@ class ServiceBloc {
   final BehaviorSubject<ServiceResponse> _subject =
       BehaviorSubject<ServiceResponse>();
 
-    final BehaviorSubject<ServiceListResponse> _subjectServiceList =
+  final BehaviorSubject<ServiceListResponse> _subjectServiceList =
       BehaviorSubject<ServiceListResponse>();
-  
 
-
-  getServiceDetail(templateCode) async {
-    ServiceResponse response = await _serviceRepository.getServiceDetail(templateCode);
+  getServiceDetail({templateCode, serviceId, userId}) async {
+    Map<String, dynamic> queryparams = Map();
+    queryparams["templateCode"] = templateCode ?? '';
+    queryparams["serviceId"] = serviceId ?? '';
+    queryparams["userid"] = userId ?? '';
+    ServiceResponse response =
+        await _serviceRepository.getServiceDetail(queryparams: queryparams);
     _subject.sink.add(response);
   }
 
@@ -62,7 +65,8 @@ class ServiceBloc {
   }
 
   BehaviorSubject<ServiceResponse> get subject => _subject;
-  BehaviorSubject<ServiceListResponse> get subjectServiceList => _subjectServiceList;
+  BehaviorSubject<ServiceListResponse> get subjectServiceList =>
+      _subjectServiceList;
 }
 
 final serviceBloc = ServiceBloc();

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/constants/formats.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/ui/widgets/circle_avatar.dart';
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
@@ -130,8 +134,17 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                             ),
                           ],
                         ),
-                        onTap: () async {},
+                        // onTap: () async {},
                         // onTap: () => _handleListTileOnTap(index, context),
+                        // ),
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            CREATE_SERVICE_ROUTE,
+                            arguments: ScreenArguments(
+                                arg1: '', arg2: _serviceList[index].serviceId),
+                          );
+                        },
                       ),
                     ),
                     // secondaryActions: _slideWidget(index),
