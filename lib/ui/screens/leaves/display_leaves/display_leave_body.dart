@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/formats.dart';
-import 'package:hr_management/ui/widgets/circle_avatar.dart';
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
@@ -9,6 +7,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
+
+import 'widget/leave_details_bottom_sheet_widget.dart';
 
 class DisplayLeavesBody extends StatefulWidget {
   DisplayLeavesBody({Key key}) : super(key: key);
@@ -30,7 +30,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: DEFAULT_LARGE_PADDING,
+      padding: DEFAULT_PADDING,
       child: StreamBuilder<ServiceListResponse>(
           stream: serviceBloc.subjectServiceList.stream,
           builder: (context, AsyncSnapshot<ServiceListResponse> snapshot) {
@@ -42,30 +42,24 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
               }
               _serviceList = snapshot.data.list;
               return Listizer(
-                showSearchBar: true,
                 listItems: _serviceList,
                 filteredSearchList: _filteredServiceList,
                 itemBuilder: (context, index) {
                   return Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.25,
-                    child: ListTile(
-                      leading: TextCircleAvater(
-                          text: _filteredServiceList[index].serviceSubject,
-                          context: context,
-                          radius: 20,
-                          fontSize: 18,
-                          color: Theme.of(context).primaryColorLight),
-                      title: Text(
-                        _serviceList[index].serviceSubject != null
-                            ? _serviceList[index].serviceSubject
-                            : "",
-                        maxLines: 2,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Column(
+                    child: Card(
+                      elevation: 4,
+                      child: ListTile(
+                        tileColor: Theme.of(context).notInvertedColor,
+                        title: Text(
+                          _serviceList[index].serviceSubject != null
+                              ? _serviceList[index].serviceSubject
+                              : "",
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        subtitle: Column(
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(top: 6.0),
@@ -75,56 +69,70 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                   children: <Widget>[
                                     Row(children: <Widget>[
                                       Text("Service No: "),
-                                      Text(_serviceList[index].serviceNo),
+                                      Text(_serviceList[index].serviceNo != null
+                                          ? _serviceList[index].serviceNo
+                                          : "-"),
                                     ])
                                   ]),
                             ),
                             Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
+                                padding: const EdgeInsets.only(
+                                    top: 6.0, bottom: 6.0),
                                 child: Row(
                                   children: <Widget>[
-                                    Text(
-                                      "From Date: ",
+                                    Expanded(
+                                      child: Text(
+                                        "From Date: ",
+                                      ),
                                     ),
                                     Text(
-                                      dayformatter.format(DateTime.parse(
-                                          _serviceList[index]
-                                              .startDate
-                                              .substring(0, 19))),
-                                      style: TextStyle(color: Colors.blue),
+                                      _serviceList[index].formattedStartDate !=
+                                              null
+                                          ? _serviceList[index]
+                                              .formattedStartDate
+                                          : "",
+                                      style: TextStyle(color: Colors.blue[700]),
+                                    ),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        "To Date: ",
+                                      ),
                                     ),
                                     Text(
-                                      " to ",
-                                    ),
-                                    Text(
-                                      dayformatter.format(DateTime.parse(
-                                          _serviceList[index]
-                                              .dueDate
-                                              .substring(0, 19))),
+                                      _serviceList[index].formattedEndDate !=
+                                              null
+                                          ? _serviceList[index].formattedEndDate
+                                          : "",
                                       style: TextStyle(color: Colors.blue),
                                     ),
                                   ],
                                 )),
                             Row(
                               children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    "Assigned by: " +
-                                        _serviceList[index].ownerUserName,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.fade,
-                                  ),
-                                ),
+                                // Expanded(
+                                //   child: Text(
+                                //     "Status: "+
+                                //     _serviceList[index].leaveStatus !=
+                                //               null
+                                //           ? _serviceList[index].leaveStatus
+                                //           : "",
+
+                                //     maxLines: 2,
+                                //     // overflow: TextOverflow.fade,
+                                //   ),
+                                // ),
                                 Text(
-                                  _serviceList[index].serviceStatusCode,
+                                  _serviceList[index].leaveStatus,
                                   style: TextStyle(color: Colors.green),
                                 ),
                               ],
                             ),
                           ],
                         ),
+                        onTap: () async {},
+                        // onTap: () => _handleListTileOnTap(index, context),
                       ),
-                      onTap: () async {},
                     ),
                     // secondaryActions: _slideWidget(index),
                   );
@@ -157,6 +165,20 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
               );
             }
           }),
+    );
+  }
+
+  void _handleListTileOnTap(int index, BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return LeaveDetailsBottomSheetWidget(
+          duration: _serviceList[index].duration,
+        );
+      },
     );
   }
 

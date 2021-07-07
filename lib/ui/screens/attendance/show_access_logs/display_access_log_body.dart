@@ -96,7 +96,6 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
                     }
                     _accessLogList = snapshot.data.data;
                     return Listizer(
-                      showSearchBar: true,
                       listItems: _accessLogList,
                       filteredSearchList: _filteredAccessLogList,
                       itemBuilder: (context, index) {
