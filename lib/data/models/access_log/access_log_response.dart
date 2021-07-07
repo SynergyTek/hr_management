@@ -29,7 +29,6 @@ class AccessLogListDataResponse {
     @required this.data,
   });
 
-  // todo: need to complete this.
   AccessLogListDataResponse.fromJson(List response)
       : data = response.map((i) => new AccessLogModel.fromJson(i)).toList(),
         error = "";
