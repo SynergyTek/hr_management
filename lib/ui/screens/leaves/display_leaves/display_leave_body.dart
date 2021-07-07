@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/constants/formats.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/circle_avatar.dart';
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
@@ -46,16 +48,16 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                 listItems: _serviceList,
                 filteredSearchList: _filteredServiceList,
                 itemBuilder: (context, index) {
-                   return Slidable(
+                  return Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.25,
                     child: ListTile(
                       leading: TextCircleAvater(
-                        text: _filteredServiceList[index].serviceSubject,
-                        context: context,
-                        radius: 20,
-                        fontSize: 18,
-                        color: Theme.of(context).primaryColorLight),
+                          text: _filteredServiceList[index].serviceSubject,
+                          context: context,
+                          radius: 20,
+                          fontSize: 18,
+                          color: Theme.of(context).primaryColorLight),
                       title: Text(
                         _serviceList[index].serviceSubject != null
                             ? _serviceList[index].serviceSubject
@@ -124,13 +126,18 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                           ],
                         ),
                       ),
-                      onTap: () async {
-                        
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          CREATE_SERVICE_ROUTE,
+                          arguments: ScreenArguments(
+                              arg1: '', arg2: _serviceList[index].serviceId),
+                        );
                       },
                     ),
                     // secondaryActions: _slideWidget(index),
                   );
-                
+
                   // return ListTile(
                   //   leading: TextCircleAvater(
                   //       text: _filteredServiceList[index].serviceSubject,

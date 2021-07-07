@@ -5,18 +5,22 @@ part of 'abstract_service_repo.dart';
 class ServiceRepository extends AbstractServiceRepository {
   final Dio _dio = Dio();
 
-  Future<ServiceResponse> getServiceDetail(templatecode)//{
-    // Optional Params to be added to the request if required.
-    //Map<String, dynamic> queryparams,templatecode}
-   async {
-    // final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
-    final String endpoint =
-      'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode='+templatecode+'&userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  Future<ServiceResponse> getServiceDetail({
+    Map<String, dynamic> queryparams,
+  }) //{
+  // Optional Params to be added to the request if required.
+  //Map<String, dynamic> queryparams,templatecode}
+  async {
+    final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
+    // final String endpoint =
+    //     'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode=' +
+    //         // templatecode +
+    //         // '&userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
     try {
       Response response = await _dio.get(
         endpoint,
-        //queryParameters: queryparams ?? {},
+        queryParameters: queryparams ?? {},
       );
 
       // print("DIO Response: ${response.data.runtimeType}");
@@ -33,13 +37,12 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
-
   Future<ServiceListResponse> getLeavesDetails()
-    // Optional Params to be added to the request if required.
-    //Map<String, dynamic> queryparams,templatecode}
-   async {
+  // Optional Params to be added to the request if required.
+  //Map<String, dynamic> queryparams,templatecode}
+  async {
     final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
-  
+
     try {
       Response response = await _dio.get(
         endpoint,
@@ -78,7 +81,7 @@ class ServiceRepository extends AbstractServiceRepository {
       var result = PostResponse.fromJson(
         response.data,
       );
-    
+
       return result;
     } catch (err, stacktrace) {
       print(
@@ -93,6 +96,4 @@ class ServiceRepository extends AbstractServiceRepository {
   Future<ServiceResponse> putAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
-
-  
 }
