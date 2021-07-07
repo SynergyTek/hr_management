@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../data/models/service_models/service_response.dart';
@@ -527,6 +528,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           idKey: model[i].idPath,
           url: model[i].data.url,
           onListTap: (dynamic value) {
+            ntsDdBloc.subject.sink.add(null);
             NTSDropdownModel _selectedIdNameViewModel = value;
             _ddController.text = _selectedIdNameViewModel.name;
             selectValue[i] = _selectedIdNameViewModel.name;
