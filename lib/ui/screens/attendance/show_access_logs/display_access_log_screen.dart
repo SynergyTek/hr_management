@@ -10,8 +10,8 @@ class DisplayAccessLog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-       drawer: drawerWidget(context),
+    return Scaffold(
+      drawer: drawerWidget(context),
       appBar: AppbarWidget(
         title: "Access Logs",
       ),

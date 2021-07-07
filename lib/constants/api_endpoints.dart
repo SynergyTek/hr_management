@@ -59,8 +59,8 @@ class APIEndpointConstants {
   // static String GET_REMOTE_ATTENDANCE_DATA = 'https://webapidev.aitalkx.com/common/query/InsertAccessLog?userid=45bba746-3309-49b7-9c03-b5793369d73c&punchingTime=Datetime.Now&punchingTye=0';
 
   static const String GET_ACCESS_LOG_LIST_DATA =
-      '$BASE_URL/taa/query/accessloglist?startDate=2021-06-20 00:00:00.000&dueDate=2021-07-06 00:00:00.000';
-  // &userId=cb9272df-0a2c-401b-aed8-b73488ae03aa';
+      '$BASE_URL/taa/query/accessloglist';
+  // ?startDate=2021-06-20 00:00:00.000&dueDate=2021-07-06 00:00:00.000&userId=cb9272df-0a2c-401b-aed8-b73488ae03aa';
 
   //Access Log API Endpoints Block End
   //************************************************************************//

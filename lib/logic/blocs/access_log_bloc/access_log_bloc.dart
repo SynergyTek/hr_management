@@ -30,9 +30,19 @@ class AccessLogBloc {
   }
 
   /// getAccessLogsListData: is used to fetch all access log data for a particular period.
-  getAccessLogsListData() async {
-    AccessLogListDataResponse response =
-        await _accessLogRepository.getAccessLogsListData();
+  getAccessLogsListData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    // adding default values.
+    if (queryparams == null) {
+      // startDate=2021-06-20 00:00:00.000&dueDate=2021-07-06 00:00:00.000
+      queryparams = {
+        'startdate': DateTime.now(),
+      };
+    }
+
+    AccessLogListDataResponse response = await _accessLogRepository
+        .getAccessLogsListData(queryparams: queryparams);
     _getAccessLogListDataSubject.sink.add(response);
   }
 
