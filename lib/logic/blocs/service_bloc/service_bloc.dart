@@ -18,7 +18,7 @@ class ServiceBloc {
 
   getServiceDetail({templateCode, serviceId, userId}) async {
     Map<String, dynamic> queryparams = Map();
-    queryparams["templateCode"] = templateCode ?? '';
+    queryparams["templatecode"] = templateCode ?? '';
     queryparams["serviceId"] = serviceId ?? '';
     queryparams["userid"] = userId ?? '';
     ServiceResponse response =

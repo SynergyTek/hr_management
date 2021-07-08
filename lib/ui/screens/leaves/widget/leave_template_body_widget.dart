@@ -1,5 +1,6 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
@@ -210,12 +211,11 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
         width: double.infinity,
         child: ElevatedButton(
             onPressed: () {
+              serviceBloc.subject.sink.add(null);
               Navigator.pushNamed(
                 context,
                 CREATE_SERVICE_ROUTE,
-                arguments: ScreenArguments(
-                  arg1: templateCode,
-                ),
+                arguments: ScreenArguments(arg1: templateCode, arg2: ''),
               );
               resetCards();
             },

@@ -36,7 +36,8 @@ class UdfJsonComponent {
       this.idPath,
       this.template,
       this.inputFormat,
-      this.validate});
+      this.validate,
+      this.value});
 
   String label;
   List<Columns> columns;
@@ -51,31 +52,32 @@ class UdfJsonComponent {
   String template;
   String inputFormat;
   Validate validate;
+  String value;
 
   factory UdfJsonComponent.fromJson(Map<String, dynamic> json) =>
       UdfJsonComponent(
-        label: json["label"],
-        columns: json["columns"] == null
-            ? null
-            : List<Columns>.from(
-                json["columns"].map((x) => Columns.fromJson(x))),
-        key: json["key"],
-        type: json["type"],
-        input: json["input"],
-        tableView: json["tableView"],
-        components: json["components"] == null
-            ? null
-            : List<ComponentComponent>.from(
-                json["components"].map((x) => ComponentComponent.fromJson(x))),
-        title: json["title"] == null ? null : json["title"],
-        data: json['data'] != null ? Data.fromJson(json['data']) : null,
-        idPath: json['idPath'],
-        template: json['template'],
-        inputFormat: json['inputFormat'],
-        validate: json['validate'] != null
-            ? Validate.fromJson(json['validate'])
-            : null,
-      );
+          label: json["label"],
+          columns: json["columns"] == null
+              ? null
+              : List<Columns>.from(
+                  json["columns"].map((x) => Columns.fromJson(x))),
+          key: json["key"],
+          type: json["type"],
+          input: json["input"],
+          tableView: json["tableView"],
+          components: json["components"] == null
+              ? null
+              : List<ComponentComponent>.from(json["components"]
+                  .map((x) => ComponentComponent.fromJson(x))),
+          title: json["title"] == null ? null : json["title"],
+          data: json['data'] != null ? Data.fromJson(json['data']) : null,
+          idPath: json['idPath'],
+          template: json['template'],
+          inputFormat: json['inputFormat'],
+          validate: json['validate'] != null
+              ? Validate.fromJson(json['validate'])
+              : null,
+          value: json['value']);
 
   Map<String, dynamic> toJson() => {
         "label": label,
@@ -96,6 +98,7 @@ class UdfJsonComponent {
         'inputFormat': this.inputFormat,
         'validate':
             this.validate.toJson() != null ? this.validate.toJson() : null,
+        'value': this.value,
       };
 }
 
@@ -138,50 +141,50 @@ class Columns {
 }
 
 class ColumnComponent {
-  ColumnComponent({
-    this.label,
-    this.tableView,
-    this.ntsType,
-    this.editableContext,
-    this.viewableContext,
-    this.viewableBy,
-    this.editableBy,
-    this.key,
-    this.type,
-    this.input,
-    this.hideOnChildrenHidden,
-    this.columnMetadataId,
-    this.format,
-    this.enableMinDateInput,
-    this.datePicker,
-    this.enableMaxDateInput,
-    this.enableTime,
-    this.onChangeServerLogic,
-    this.validate,
-    this.widget,
-    this.mask,
-    this.spellcheck,
-    this.disabled,
-    this.delimiter,
-    this.requireDecimal,
-    this.inputFormat,
-    this.loadTable,
-    this.parameterCode,
-    this.dataSrc,
-    this.data,
-    this.valueProperty,
-    this.idPath,
-    this.template,
-    this.selectThreshold,
-    this.indexeddb,
-    this.isDependantComponent,
-    this.disableLimit,
-    this.allTable,
-    this.mapId,
-    this.mapValue,
-    this.rowDataValue,
-    this.autoExpand,
-  });
+  ColumnComponent(
+      {this.label,
+      this.tableView,
+      this.ntsType,
+      this.editableContext,
+      this.viewableContext,
+      this.viewableBy,
+      this.editableBy,
+      this.key,
+      this.type,
+      this.input,
+      this.hideOnChildrenHidden,
+      this.columnMetadataId,
+      this.format,
+      this.enableMinDateInput,
+      this.datePicker,
+      this.enableMaxDateInput,
+      this.enableTime,
+      this.onChangeServerLogic,
+      this.validate,
+      this.widget,
+      this.mask,
+      this.spellcheck,
+      this.disabled,
+      this.delimiter,
+      this.requireDecimal,
+      this.inputFormat,
+      this.loadTable,
+      this.parameterCode,
+      this.dataSrc,
+      this.data,
+      this.valueProperty,
+      this.idPath,
+      this.template,
+      this.selectThreshold,
+      this.indexeddb,
+      this.isDependantComponent,
+      this.disableLimit,
+      this.allTable,
+      this.mapId,
+      this.mapValue,
+      this.rowDataValue,
+      this.autoExpand,
+      this.value});
 
   String label;
   bool tableView;
@@ -225,6 +228,7 @@ class ColumnComponent {
   String mapValue;
   String rowDataValue;
   bool autoExpand;
+  String value;
 
   ColumnComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
@@ -275,6 +279,7 @@ class ColumnComponent {
     mapValue = json['mapValue'];
     rowDataValue = json['rowDataValue'];
     autoExpand = json['autoExpand'];
+    value = json['value'];
   }
 
   Map<String, dynamic> toJson() {
@@ -331,6 +336,7 @@ class ColumnComponent {
     data['mapValue'] = this.mapValue;
     data['rowDataValue'] = this.rowDataValue;
     data['autoExpand'] = this.autoExpand;
+    data['value'] = this.value;
     return data;
   }
 }
@@ -557,6 +563,7 @@ class ComponentComponent {
   String columnMetadataId;
   bool autoExpand;
   Validate validate;
+  String value;
 
   ComponentComponent(
       {this.label,
@@ -571,7 +578,8 @@ class ComponentComponent {
       this.input,
       this.columnMetadataId,
       this.autoExpand,
-      this.validate});
+      this.validate,
+      this.value});
 
   ComponentComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
@@ -588,6 +596,7 @@ class ComponentComponent {
     autoExpand = json['autoExpand'];
     validate =
         json['validate'] != null ? Validate.fromJson(json['validate']) : null;
+    value = json['value'];
   }
 
   Map<String, dynamic> toJson() {
@@ -607,6 +616,7 @@ class ComponentComponent {
     if (this.validate != null) {
       data['validate'] = this.validate.toJson();
     }
+    data['value'] = this.value;
     return data;
   }
 }

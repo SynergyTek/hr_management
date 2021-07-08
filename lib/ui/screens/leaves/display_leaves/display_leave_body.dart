@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/formats.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/circle_avatar.dart';
@@ -136,6 +135,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                         ),
                       ),
                       onTap: () {
+                        serviceBloc.subject.sink.add(null);
                         Navigator.pushNamed(
                           context,
                           CREATE_SERVICE_ROUTE,

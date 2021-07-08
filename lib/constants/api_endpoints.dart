@@ -24,12 +24,11 @@ class APIEndpointConstants {
 
   //Sevice API Endpoints Block Start
 
-  static const GET_SERVICE_DETAILS =
-      '$BASE_URL/nts/query/GetServiceDetails?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
-      static const LEAVE_DETAILS =
+  static const LEAVE_DETAILS =
       '$BASE_URL/taa/query/leavedetail?userid=45bba746-3309-49b7-9c03-b5793369d73c';
-      
+
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
   static const String GET_SERVICE_ATTACHMENT_COUNT =

@@ -106,7 +106,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
 
-                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json);
+                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json,
+                    serviceModel.columnList);
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -134,8 +135,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
   }
 
-  parseJsonToUDFModel(
-      CreateServiceFormBloc createServiceFormBloc, udfJsonString) {
+  parseJsonToUDFModel(CreateServiceFormBloc createServiceFormBloc,
+      udfJsonString, List<ColumnList> columnList) {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
@@ -150,6 +151,30 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         if (component.components != null && component.components.isNotEmpty) {
           for (ComponentComponent componentComponent in component.components) {
             componentComList.add(componentComponent);
+          }
+        }
+      }
+    }
+    if (widget.serviceId.isNotEmpty && widget.serviceId != null) {
+      for (ColumnList columnListItem in columnList) {
+        for (UdfJsonComponent component in udfJsonString.components) {
+          if (component.columns != null && component.columns.isNotEmpty) {
+            for (Columns column in component.columns) {
+              for (ColumnComponent columnCom in column.components) {
+                if (columnListItem.alias == columnCom.key) {
+                  columnCom.value = columnListItem.value;
+                }
+              }
+            }
+            if (component.components != null &&
+                component.components.isNotEmpty) {
+              for (ComponentComponent componentComponent
+                  in component.components) {
+                if (columnListItem.alias == componentComponent.key) {
+                  componentComponent.value = columnListItem.value;
+                }
+              }
+            }
           }
         }
       }
@@ -731,39 +756,30 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             children: <Widget>[
               Visibility(
                 visible: serviceModel.isCompleteButtonVisible,
-                child: Expanded(
-                  flex: 1,
-                  child: PrimaryButton(
-                    buttonText: 'Complete',
-                    handleOnPressed: () {},
-                    width: 100,
-                  ),
+                child: PrimaryButton(
+                  buttonText: 'Complete',
+                  handleOnPressed: () {},
+                  width: 100,
                 ),
               ),
               Visibility(
                 // visible: true,
                 visible: serviceModel.isCancelButtonVisible,
-                child: Expanded(
-                  flex: 1,
-                  child: PrimaryButton(
-                    buttonText: 'Cancel',
-                    handleOnPressed: () {
-                      if (serviceModel.isCancelReasonRequired)
-                        enterReasonAlertDialog(context);
-                    },
-                    width: 100,
-                  ),
+                child: PrimaryButton(
+                  buttonText: 'Cancel',
+                  handleOnPressed: () {
+                    if (serviceModel.isCancelReasonRequired)
+                      enterReasonAlertDialog(context);
+                  },
+                  width: 100,
                 ),
               ),
               Visibility(
                 visible: serviceModel.isCloseButtonVisible,
-                child: Expanded(
-                  flex: 1,
-                  child: PrimaryButton(
-                    buttonText: 'Close',
-                    handleOnPressed: () {},
-                    width: 100,
-                  ),
+                child: PrimaryButton(
+                  buttonText: 'Close',
+                  handleOnPressed: () {},
+                  width: 100,
                 ),
               ),
               Visibility(

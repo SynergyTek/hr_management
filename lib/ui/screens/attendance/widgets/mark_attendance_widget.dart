@@ -1,3 +1,4 @@
+import 'package:geocoder/geocoder.dart';
 
 import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
@@ -26,19 +27,9 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isSignedIn = false;
   bool isSignedOut = true;
 
-  // GeoLocationHelper _geoLocationHelper = new GeoLocationHelper();
   Location _locationService = new Location();
-  // late StreamSubscription<LocationData> _locationSubscription;
 
   bool isVisible = false;
-  @override
-  void initState() {
-    super.initState();
-
-    // if (isPermissonGranted) {
-    // getCurrentLocation();
-    // }
-  }
 
   calculateDistance(double latitude, double longitude) async {
     bool result = false;
@@ -49,7 +40,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     var newLatitude = 23.27268409729004; //lalghati square
     var newLongitude = 77.36927032470703;
 
-    print("location:" + latitude.toString() + longitude.toString());
+    // print("location:" + latitude.toString() + longitude.toString());
 
     // for (var i = 0; i <= locationList.length - 1; i++) {
     // print("count:" + i.toString());
@@ -80,8 +71,9 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LocationBloc, LocationState>(builder: (context, state) {
-      print(calculateDistance(
-          state.locationData.latitude, state.locationData.latitude));
+      // print(calculateDistance(
+      //     state.locationData.latitude, state.locationData.latitude));
+      getUserAddressFromCoord(locationData: state.locationData);
       return Stack(
         children: <Widget>[
           attendanceTab(),
@@ -460,8 +452,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         isVisible = false;
       });
 
-      print(
-          "Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
+      print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
       print(
           "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
 
@@ -497,8 +488,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         isVisible = false;
       });
 
-      print(
-          "Sign Out isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
+      print("Sign Out isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
       print("Sign Out Error?: ${accessLogBloc.subject.value.error}");
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -519,5 +509,18 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     } else {
       displaySnackBar(text: 'You have already signed out.', context: context);
     }
+  }
+
+  getUserAddressFromCoord({LocationData locationData}) async {
+    // From coordinates
+    final coordinates =
+        new Coordinates(locationData.latitude, locationData.longitude);
+    List<Address> addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    Address first = addresses.first;
+    // print("${first.featureName} : ${first.addressLine}");
+    setState(() {
+      _location = first.addressLine;
+    });
   }
 }
