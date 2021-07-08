@@ -11,6 +11,8 @@ import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
+import 'widget/leave_details_bottom_sheet_widget.dart';
+
 class DisplayLeavesBody extends StatefulWidget {
   DisplayLeavesBody({Key key}) : super(key: key);
 
@@ -43,32 +45,24 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
               }
               _serviceList = snapshot.data.list;
               return Listizer(
-                showSearchBar: true,
                 listItems: _serviceList,
                 filteredSearchList: _filteredServiceList,
                 itemBuilder: (context, index) {
                   return Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.25,
-                    child: ListTile(
-                      leading: TextCircleAvater(
-                          text: _serviceList[index].serviceSubject != null
+                    child: Card(
+                      elevation: 4,
+                      child: ListTile(
+                        tileColor: Theme.of(context).notInvertedColor,
+                        title: Text(
+                          _serviceList[index].serviceSubject != null
                               ? _serviceList[index].serviceSubject
-                              : "-",
-                          context: context,
-                          radius: 20,
-                          fontSize: 18,
-                          color: Theme.of(context).primaryColorLight),
-                      title: Text(
-                        _serviceList[index].serviceSubject != null
-                            ? _serviceList[index].serviceSubject
-                            : "",
-                        maxLines: 2,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Column(
+                              : "",
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        subtitle: Column(
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(top: 6.0),
@@ -85,11 +79,14 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                   ]),
                             ),
                             Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
+                                padding: const EdgeInsets.only(
+                                    top: 6.0, bottom: 6.0),
                                 child: Row(
                                   children: <Widget>[
-                                    Text(
-                                      "From Date: ",
+                                    Expanded(
+                                      child: Text(
+                                        "From Date: ",
+                                      ),
                                     ),
                                     Text(
                                       _serviceList[index].formattedStartDate !=
@@ -97,10 +94,13 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                           ? _serviceList[index]
                                               .formattedStartDate
                                           : "",
-                                      style: TextStyle(color: Colors.blue),
+                                      style: TextStyle(color: Colors.blue[700]),
                                     ),
-                                    Text(
-                                      " to ",
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        "To Date: ",
+                                      ),
                                     ),
                                     Text(
                                       _serviceList[index].formattedEndDate !=
@@ -133,16 +133,18 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                             ),
                           ],
                         ),
+                        // onTap: () async {},
+                        // onTap: () => _handleListTileOnTap(index, context),
+                        // ),
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            CREATE_SERVICE_ROUTE,
+                            arguments: ScreenArguments(
+                                arg1: '', arg2: _serviceList[index].serviceId),
+                          );
+                        },
                       ),
-                      onTap: () {
-                        serviceBloc.subject.sink.add(null);
-                        Navigator.pushNamed(
-                          context,
-                          CREATE_SERVICE_ROUTE,
-                          arguments: ScreenArguments(
-                              arg1: '', arg2: _serviceList[index].serviceId),
-                        );
-                      },
                     ),
                     // secondaryActions: _slideWidget(index),
                   );
@@ -175,6 +177,20 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
               );
             }
           }),
+    );
+  }
+
+  void _handleListTileOnTap(int index, BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return LeaveDetailsBottomSheetWidget(
+          duration: _serviceList[index].duration,
+        );
+      },
     );
   }
 
