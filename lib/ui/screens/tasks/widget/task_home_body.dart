@@ -28,7 +28,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     return Container(
       padding: DEFAULT_LARGE_PADDING,
       child: StreamBuilder<TaskListResponseModel>(
-          stream: taskBloc.subject.stream,
+          stream: taskBloc.subjectTaskList.stream,
           builder: (context, AsyncSnapshot snapshot) {
             print("Snapshot data: ${snapshot.data}");
             if (snapshot.hasData) {
