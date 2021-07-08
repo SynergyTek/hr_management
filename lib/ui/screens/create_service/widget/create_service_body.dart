@@ -35,14 +35,11 @@ class CreateServiceScreenBody extends StatefulWidget {
 }
 
 class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
-  TextEditingController subjectController = TextEditingController();
-
   // to render UDFS
   List<Widget> columnComponentWidgets = [];
   List<Widget> componentComListWidgets = [];
   List<Widget> udfJsonCompWidgetList = [];
 
-  TextEditingController descriptionController = TextEditingController();
   final Map<String, String> udfJson = {};
   Service serviceModel;
   Service postServiceModel = new Service();
@@ -56,6 +53,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   DateTime dueDate;
   bool isVisible = false;
   List<String> selectValue = [];
+  String subjectValue;
+  String descriptionValue;
+  String slaValue;
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
@@ -176,18 +176,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     CreateServiceFormBloc createServiceFormBloc,
     Service serviceModel,
   ) {
-    createServiceFormBloc.subject.updateInitialValue(
-      serviceModel.serviceSubject,
-    );
-
-    createServiceFormBloc.description.updateInitialValue(
-      serviceModel.serviceDescription,
-    );
-
-    createServiceFormBloc.sla.updateInitialValue(
-      serviceModel.serviceSLA,
-    );
-
     return Stack(
       children: [
         SingleChildScrollView(
@@ -209,6 +197,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               color: Colors.grey[100],
               child: displayFooterWidget(
                 serviceModel,
+                createServiceFormBloc,
               ),
             ),
           ],
@@ -241,7 +230,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ],
       ),
     ));
-    if (!serviceModel.hideSubject)
+    if (!serviceModel.hideSubject) {
+      createServiceFormBloc.subject
+          .updateInitialValue(subjectValue ?? serviceModel.serviceSubject);
       widgets.add(BlocTextBoxWidget(
         fieldName: 'Subject',
         readonly: false,
@@ -249,7 +240,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         labelName: 'Subject',
         textFieldBloc: createServiceFormBloc.subject,
         prefixIcon: Icon(Icons.note),
+        onChanged: (value) {
+          subjectValue = value.toString();
+        },
       ));
+    }
 
     if (!serviceModel.hideStartDate)
       widgets.add(
@@ -302,7 +297,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ),
       );
 
-    if (!serviceModel.hideSLA)
+    if (!serviceModel.hideSLA) {
+      createServiceFormBloc.sla
+          .updateInitialValue(slaValue ?? serviceModel.serviceSLA);
       widgets.add(BlocTextBoxWidget(
         fieldName: 'SLA',
         readonly: false,
@@ -310,7 +307,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         labelName: 'SLA',
         textFieldBloc: createServiceFormBloc.sla,
         prefixIcon: Icon(Icons.note),
+        onChanged: (value) {
+          slaValue = value.toString();
+        },
       ));
+    }
 
     if (!serviceModel.hideExpiryDate)
       widgets.add(BlocDatePickerWidget(
@@ -321,7 +322,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         width: MediaQuery.of(context).size.width,
       ));
 
-    if (!serviceModel.hideDescription)
+    if (!serviceModel.hideDescription) {
+      createServiceFormBloc.description.updateInitialValue(
+          descriptionValue ?? serviceModel.serviceDescription);
       widgets.add(BlocTextBoxWidget(
         fieldName: 'Description',
         readonly: false,
@@ -329,7 +332,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         labelName: 'Description',
         textFieldBloc: createServiceFormBloc.description,
         prefixIcon: Icon(Icons.note),
+        onChanged: (value) {
+          descriptionValue = value.toString();
+        },
       ));
+    }
+
     if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
     }
@@ -720,6 +728,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   displayFooterWidget(
     Service serviceModel,
+    CreateServiceFormBloc createServiceFormBloc,
   ) {
     return Container(
       child: Row(
@@ -771,7 +780,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 child: PrimaryButton(
                   buttonText: 'Draft',
                   handleOnPressed: () {
-                    serviceViewModelPostRequest(1, 'SERVICE_STATUS_DRAFT');
+                    serviceViewModelPostRequest(
+                      1,
+                      'SERVICE_STATUS_DRAFT',
+                      createServiceFormBloc,
+                    );
                   },
                   width: 100,
                 ),
@@ -818,7 +831,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                         return;
                       }
                     }
-                    serviceViewModelPostRequest(1, 'SERVICE_STATUS_INPROGRESS');
+                    serviceViewModelPostRequest(
+                      1,
+                      'SERVICE_STATUS_INPROGRESS',
+                      createServiceFormBloc,
+                    );
                   },
                   width: 100,
                 ),
@@ -1022,16 +1039,17 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   String resultMsg = '';
-  serviceViewModelPostRequest(
-      int postDataAction, String serviceStatusCode) async {
+  serviceViewModelPostRequest(int postDataAction, String serviceStatusCode,
+      CreateServiceFormBloc createServiceFormBloc) async {
     String stringModel = jsonEncode(serviceModel);
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
 
     postServiceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     postServiceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    postServiceModel.serviceSubject = subjectController.text;
-    postServiceModel.serviceDescription = descriptionController.text;
+    postServiceModel.serviceSubject = createServiceFormBloc.subject.value;
+    postServiceModel.serviceDescription =
+        createServiceFormBloc.description.value;
     postServiceModel.dataAction = postDataAction;
     postServiceModel.serviceStatusCode = serviceStatusCode;
     postServiceModel.json = jsonEncode(udfJson);
