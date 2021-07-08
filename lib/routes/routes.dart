@@ -1,4 +1,5 @@
 import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
+import 'package:hr_management/ui/screens/tasks/widget/task_home_filter_widget.dart';
 
 import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
 import '../ui/screens/counts_screen/counts_screen.dart';
@@ -100,6 +101,12 @@ class AppRouter {
       case TASK_HOME:
         return MaterialPageRoute(
           builder: (_) => TaskHomeScreen(),
+        );
+        break;
+
+      case TASK_FILTER:
+        return MaterialPageRoute(
+          builder: (_) => TaskHomeFilterWidget(),
         );
         break;
 
