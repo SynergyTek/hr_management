@@ -9,8 +9,11 @@ class TaskBloc {
   final TaskRepository _taskRepository = TaskRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<TaskListResponseModel> _subject =
+  final BehaviorSubject<TaskListResponseModel> _subjectTaskList =
       BehaviorSubject<TaskListResponseModel>();
+
+  final BehaviorSubject<TaskResponseModel> _subjectGetTaskDetails =
+      BehaviorSubject<TaskResponseModel>();
 
   /// Used to fetch new entries.
   getTaskHomeListData(
@@ -42,7 +45,17 @@ class TaskBloc {
     TaskListResponseModel response = await _taskRepository.getTaskHomeListData(
       queryparams: queryparams,
     );
-    _subject.sink.add(response);
+    _subjectTaskList.sink.add(response);
+  }
+
+  getTaskDetails({String templateId, String taskId}) async {
+    Map<String, dynamic> queryparams = Map();
+    queryparams["taskId"] = taskId;
+    queryparams["templateid"] = templateId;
+    TaskResponseModel response = await _taskRepository.getTaskDetailsData(
+      queryparams: queryparams,
+    );
+    _subjectGetTaskDetails.sink.add(response);
   }
 
   /// Used to create new entries.
@@ -75,10 +88,14 @@ class TaskBloc {
   }
 
   dispose() {
-    _subject.close();
+    _subjectTaskList.close();
+    _subjectGetTaskDetails.close();
   }
 
-  BehaviorSubject<TaskListResponseModel> get subject => _subject;
+  BehaviorSubject<TaskListResponseModel> get subjectTaskList =>
+      _subjectTaskList;
+  BehaviorSubject<TaskResponseModel> get subjectGetTaskDetails =>
+      _subjectGetTaskDetails;
 }
 
 final taskBloc = TaskBloc();

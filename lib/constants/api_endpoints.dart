@@ -18,6 +18,9 @@ class APIEndpointConstants {
   static const GET_TASK_HOME_DATA =
       '$BASE_URL/nts/query/ReadTaskHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c&';
 
+  static const String GET_TASK_DETAILS =
+      '$BASE_URL/nts/query/GetTaskDetails?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
   //Task API Endpoints Block End
 
   //************************************************************************//
@@ -63,4 +66,5 @@ class APIEndpointConstants {
 
   //Access Log API Endpoints Block End
   //************************************************************************//
+
 }
