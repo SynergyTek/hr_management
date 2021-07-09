@@ -73,27 +73,28 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
           trailing: Icon(Icons.filter_list),
           title: Text("Filter"),
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customButton(
-                  buttonText: 'Home',
-                  handleOnPressed: () => _homeFilter(),
-                ),
-                customButton(
-                  buttonText: 'Pending Till Today',
-                  handleOnPressed: () => _pendingTillTodayFilter(),
-                ),
-                customButton(
-                  buttonText: 'Ending in Next 7 Days',
-                  handleOnPressed: () => _endingInWeekFilter(),
-                ),
-                customButton(
-                  buttonText: 'More',
-                  handleOnPressed: () => _moreFilter(),
-                ),
-              ],
+            Container(
+              width: double.infinity,
+              child: Wrap(
+                children: [
+                  customButton(
+                    buttonText: 'Home',
+                    handleOnPressed: () => _homeFilter(),
+                  ),
+                  customButton(
+                    buttonText: 'Pending Till Today',
+                    handleOnPressed: () => _pendingTillTodayFilter(),
+                  ),
+                  customButton(
+                    buttonText: 'Ending in Next 7 Days',
+                    handleOnPressed: () => _endingInWeekFilter(),
+                  ),
+                  customButton(
+                    buttonText: 'More...',
+                    handleOnPressed: () => _moreFilter(),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -248,25 +249,20 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     String buttonText,
     Function handleOnPressed,
   }) {
-    return Container(
-      padding: EdgeInsets.only(left: 8.0),
-      width: double.infinity,
-      child: Row(
-        children: [
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Theme.of(context).textHeadingColor),
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
-                ),
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.blue[300]),
+          // MaterialStateProperty.all(Theme.of(context).textHeadingColor),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
             ),
-            onPressed: () => handleOnPressed(),
-            child: Text(buttonText),
           ),
-        ],
+        ),
+        onPressed: () => handleOnPressed(),
+        child: Text(buttonText),
       ),
     );
   }
