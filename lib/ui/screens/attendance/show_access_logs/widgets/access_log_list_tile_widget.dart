@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/constants/formats.dart';
 import 'package:hr_management/data/models/access_log/access_log_model.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/screens/attendance/show_access_logs/widgets/access_log_bottom_sheet_widget.dart';
@@ -80,6 +81,8 @@ class AccessLogListTileWidget extends StatelessWidget {
 
   /// Helper function that returns formatted Punching time.
   String punchingTime() {
-    return eachAccessLogModelElement?.punchingTime ?? 'NA';
+    return dateTimeformatter
+            .format(DateTime.parse(eachAccessLogModelElement?.punchingTime)) ??
+        'NA';
   }
 }
