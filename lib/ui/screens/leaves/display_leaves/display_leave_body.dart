@@ -43,7 +43,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                   snapshot.data.list.length == 0) {
                 return EmptyListWidget();
               }
-              _serviceList = snapshot.data.list;
+              _serviceList = snapshot.data.list.reversed.toList();
               return Listizer(
                 listItems: _serviceList,
                 filteredSearchList: _filteredServiceList,

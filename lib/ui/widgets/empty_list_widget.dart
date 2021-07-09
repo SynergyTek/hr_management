@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/themes/theme_config.dart';
 
 class EmptyListWidget extends StatelessWidget {
   @override
@@ -6,8 +7,8 @@ class EmptyListWidget extends StatelessWidget {
     return Scaffold(
         body: Container(
       alignment: Alignment.center,
-      // padding: EdgeInsets.only(top: 30),
       child: Card(
+        elevation: 0,
         child: ListTile(
           title: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +27,7 @@ class EmptyListWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.black54,
+                  color: Theme.of(context).invertedColor,
                 ),
               )
             ],

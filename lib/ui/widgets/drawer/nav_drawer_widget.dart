@@ -73,6 +73,18 @@ Widget drawerWidget(context) {
             );
           },
         ),
+
+        // ListTile(
+        //   title: Text('Attendance View'),
+        //   trailing: Icon(Icons.ac_unit),
+        //   onTap: () {
+        //     Navigator.pushNamed(
+        //       context,
+        //       ATTENDANCE_VIEW_ROUTE,
+        //     );
+        //   },
+        // ),
+
         ListTile(
           title: Text(
             'REMOTE SIGNIN/SIGNOUT',
