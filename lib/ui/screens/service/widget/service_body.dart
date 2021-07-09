@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/constants/api_endpoints.dart';
+import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
+import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
 import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
@@ -557,7 +560,18 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          _ddController.text = udfJson[model[i].key];
+          // _ddController.text = udfJson[model[i].key];
+          // _ddController.text = editServiceDDValue(
+          //         code: udfJson[model[i].key],
+          //         idKey: model[i].idPath,
+          //         nameKey: (model[i].template)
+          //             .toString()
+          //             .replaceAll('<span>{{', '')
+          //             .replaceAll('}}</span>', '')
+          //             .trim()
+          //             .split('.')[1],
+          //         url: model[i].data.url) ??
+          //     '';
         } else {
           _ddController.text = selectValue[i];
         }
@@ -1139,6 +1153,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       resultMsg = result.messages;
     }
     displaySnackBar(text: resultMsg, context: context);
+  }
+
+  editServiceDDValue({String idKey, String nameKey, String url, String code}) {
+    NTSDdRepository ntsDdRepository = NTSDdRepository();
+    String completeUrl = url + "&filterKey=$idKey&filterValue=$code";
+    ntsDdRepository
+        .getFilteredDDData(idKey: idKey, nameKey: nameKey, url: completeUrl)
+        .then((value) {
+      return value.data[0].name;
+    });
   }
 
   @override

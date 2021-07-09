@@ -22,14 +22,14 @@ Widget drawerWidget(context) {
                   child: Text(
                     'HR',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                     ),
                   ),
                 ),
               ),
               title: Text(
                 'HR Management',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
           ),
