@@ -105,8 +105,11 @@ class AppRouter {
         break;
 
       case TASK_FILTER:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => TaskHomeFilterWidget(),
+          builder: (_) => TaskHomeFilterWidget(
+            onListTap: args.arg5,
+          ),
         );
         break;
 

@@ -1,43 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
 import '../../../data/models/api_models/post_response_model.dart';
 import '../../../data/models/task_models/task_response_model.dart';
-import '../../../data/repositories/task_repository/task_repository.dart';
+import '../../../data/repositories/task_repository/abstract_task_repo.dart';
 import 'package:rxdart/subjects.dart';
 
 class TaskBloc {
   final TaskRepository _taskRepository = TaskRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<TaskResponseModel> _subject =
-      BehaviorSubject<TaskResponseModel>();
+  final BehaviorSubject<TaskListResponseModel> _subject =
+      BehaviorSubject<TaskListResponseModel>();
 
   /// Used to fetch new entries.
   getTaskHomeListData({
-      // String userId,
-      String moduleId,
-      String mode,
-      String taskNo,
-      String taskStatus,
-      String taskAssigneeIds,
-      String subject,
-      DateTime startDate,
-      DateTime dueDate,
-      DateTime completionDate,
-      String templateMasterCode,
-      String text}) async {
-    Map<String, dynamic> queryparams = Map();
-    queryparams["moduleId"] = moduleId;
-    queryparams["mode"] = mode;
-    queryparams["taskNo"] = taskNo;
-    queryparams["taskStatus"] = taskStatus;
-    queryparams["taskAssigneeIds"] = taskAssigneeIds;
-    queryparams["subject"] = subject;
-    queryparams["startDate"] = startDate;
-    queryparams["dueDate"] = dueDate;
-    queryparams["completionDate"] = completionDate;
-    queryparams["templateMasterCode"] = templateMasterCode;
-    queryparams["text"] = text;
-    TaskResponseModel response = await _taskRepository.getTaskHomeListData(queryparams: queryparams,);
+    Map<String, dynamic> queryparams, // String userId,
+  }) async {
+    TaskListResponseModel response = await _taskRepository.getTaskHomeListData(
+      queryparams: queryparams,
+    );
     _subject.sink.add(response);
   }
 
@@ -74,7 +55,7 @@ class TaskBloc {
     _subject.close();
   }
 
-  BehaviorSubject<TaskResponseModel> get subject => _subject;
+  BehaviorSubject<TaskListResponseModel> get subject => _subject;
 }
 
 final taskBloc = TaskBloc();

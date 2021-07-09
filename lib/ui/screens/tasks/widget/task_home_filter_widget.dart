@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
+
 import 'package:hr_management/themes/theme_config.dart';
+import 'package:hr_management/ui/screens/tasks/widget/task_home_body.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
-import 'package:hr_management/ui/widgets/primary_button.dart';
 
 class TaskHomeFilterWidget extends StatefulWidget {
+  final FilterListTapCallBack onListTap;
+  const TaskHomeFilterWidget({
+    Key key,
+    this.onListTap,
+  }) : super(key: key);
   @override
   _TaskHomeFilterWidgetState createState() => _TaskHomeFilterWidgetState();
 }
 
 class _TaskHomeFilterWidgetState extends State<TaskHomeFilterWidget> {
-  final List<String> filterOptions = [
-    'Draft Task',
-    'Canceled Task',
-    'Completed Task',
-    'Overdue Task',
-    'Reject Task',
-    'In Progress Task',
-    'Assigned to me Task',
-    'Requested by me Task',
-    'Shared with me/Team Task',
-  ];
+  Map<String, String> filterOptionsMap = {
+    "TASK_STATUS_DRAFT": "Draft Task",
+    "TASK_STATUS_CANCEL": "Canceled Task",
+    "TASK_STATUS_COMPLETE": "Completed Task",
+    "TASK_STATUS_OVERDUE": "Overdue Task",
+    "TASK_STATUS_REJECT": "Reject Task",
+    "TASK_STATUS_INPROGRESS": "In Progress Task",
+    "ASSIGN_TO": "Assigned to me Task",
+    "ASSIGN_BY": "Requested by me Task",
+    "SHARE_TO": "Shared with me/Team Task",
+  };
 
   bool showFilter = false;
 
@@ -44,13 +50,6 @@ class _TaskHomeFilterWidgetState extends State<TaskHomeFilterWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            optionsRow(icons: Icons.home, text: 'Home'),
-                            optionsRow(
-                                icons: Icons.calendar_today,
-                                text: 'Pending Till Today'),
-                            optionsRow(
-                                icons: Icons.calendar_view_day,
-                                text: 'Ending in Next 7 Days'),
                             optionsRow(text: 'Modules'),
                             optionsRow(
                               text: 'Filters',
@@ -63,6 +62,7 @@ class _TaskHomeFilterWidgetState extends State<TaskHomeFilterWidget> {
                           ],
                         ),
                       ),
+                      VerticalDivider(color: Colors.grey),
                       Expanded(
                         flex: 3,
                         child: Column(
@@ -70,10 +70,17 @@ class _TaskHomeFilterWidgetState extends State<TaskHomeFilterWidget> {
                             if (showFilter)
                               ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: filterOptions.length,
+                                itemCount: filterOptionsMap.keys.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return ListTile(
-                                    title: Text(filterOptions[index]),
+                                    title: Text(filterOptionsMap[
+                                        filterOptionsMap.keys
+                                            .elementAt(index)]),
+                                    onTap: () {
+                                      widget.onListTap(filterOptionsMap.keys
+                                          .elementAt(index));
+                                      Navigator.pop(context);
+                                    },
                                   );
                                 },
                               )
@@ -83,21 +90,21 @@ class _TaskHomeFilterWidgetState extends State<TaskHomeFilterWidget> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PrimaryButton(
-                      buttonText: 'Cancel',
-                      handleOnPressed: Navigator.pop,
-                      width: 100,
-                    ),
-                    PrimaryButton(
-                      buttonText: 'Apply',
-                      handleOnPressed: Navigator.pop,
-                      width: 100,
-                    )
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     PrimaryButton(
+                //       buttonText: 'Cancel',
+                //       handleOnPressed: Navigator.pop,
+                //       width: 100,
+                //     ),
+                //     PrimaryButton(
+                //       buttonText: 'Apply',
+                //       handleOnPressed: Navigator.pop,
+                //       width: 100,
+                //     )
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -106,17 +113,15 @@ class _TaskHomeFilterWidgetState extends State<TaskHomeFilterWidget> {
     );
   }
 
-  optionsRow({IconData icons, String text, Function onTap}) {
+  optionsRow({String text, Function onTap}) {
     return InkWell(
       child: Row(
         children: [
-          Icon(icons ?? null),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 text,
-                style: TextStyle(fontSize: 14, color: Colors.grey[800]),
               ),
             ),
           ),
