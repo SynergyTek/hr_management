@@ -249,18 +249,34 @@ class DynamicDateTimeBox extends StatefulWidget {
   final String name;
   final String code;
   final ValueChanged<DateTime> selectDate;
-  DynamicDateTimeBox({this.name, this.code, Key key, this.selectDate})
-      : super(key: key);
+  DynamicDateTimeBox({
+    this.name,
+    this.code,
+    Key key,
+    this.selectDate,
+  }) : super(key: key);
 
   @override
   _DynamicDateTimeBoxState createState() => _DynamicDateTimeBoxState(
-      selectedDate: code != null ? DateTime.parse(code) : null);
+      // selectedDate: code != null ? DateTime.parse(code) : null,
+      );
 }
 
 class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
   // String _value = '';
+
   DateTime selectedDate;
   _DynamicDateTimeBoxState({this.selectedDate});
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      selectedDate = widget?.code == null ? null : DateTime.parse(widget.code);
+    });
+  }
+
   // Future _selectDate() async {
   //   DateTime picked = await showDatePicker(
   //       context: context,
@@ -276,7 +292,7 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
   Widget build(BuildContext context) {
     return new Container(
       height: 11.h,
-      width: MediaQuery.of(context).size.width / 2 - 20,
+      width: MediaQuery.of(context).size.width,
       child: new Center(
         child: new Column(
           children: <Widget>[
@@ -445,28 +461,31 @@ class DynamicLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        child: new Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: new RichText(
-                text: new TextSpan(children: [
-              new TextSpan(
-                text: name,
-                style: new TextStyle(color: Colors.blue, fontSize: 15),
-                recognizer: new TapGestureRecognizer()
-                  ..onTap = () {
-                    // _networkHelper.initConnectivity().then((value) {
-                    //   if (value) {
-                    //     var domainuri = ApiEnvironment()
-                    //         .getDomainUri(GraphQLConfiguration.synergyClient);
-                    //     launch(domainuri + code);
-                    //   } else {
-                    //     return networkRaisedToast(context);
-                    //   }
-                    // }, onError: (error) {
-                    //   // print(error);
-                    // });
-                  },
-              ),
-            ]))));
+      child: new Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: new RichText(
+          text: new TextSpan(children: [
+            new TextSpan(
+              text: name,
+              style: new TextStyle(color: Colors.blue, fontSize: 15),
+              recognizer: new TapGestureRecognizer()
+                ..onTap = () {
+                  // _networkHelper.initConnectivity().then((value) {
+                  //   if (value) {
+                  //     var domainuri = ApiEnvironment()
+                  //         .getDomainUri(GraphQLConfiguration.synergyClient);
+                  //     launch(domainuri + code);
+                  //   } else {
+                  //     return networkRaisedToast(context);
+                  //   }
+                  // }, onError: (error) {
+                  //   // print(error);
+                  // });
+                },
+            ),
+          ]),
+        ),
+      ),
+    );
   }
 }

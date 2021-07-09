@@ -288,13 +288,13 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
         widget.columns.map<DataCell>((DataColumn column) {
       if (!column.numeric) {
         haveProgressIndicator = true;
-        return const DataCell(CustomProgressIndicator());
+        return DataCell(CustomProgressIndicator());
       }
       return DataCell.empty;
     }).toList();
     if (!haveProgressIndicator) {
       haveProgressIndicator = true;
-      cells[0] = const DataCell(CustomProgressIndicator());
+      cells[0] = DataCell(CustomProgressIndicator());
     }
     return DataRow.byIndex(
       index: index,

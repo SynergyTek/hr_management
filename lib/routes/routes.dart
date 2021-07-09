@@ -1,4 +1,5 @@
-import 'package:hr_management/ui/screens/create_service/create_service_screen.dart';
+
+
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
 
 import 'package:hr_management/ui/screens/login/login_screen.dart';
@@ -8,12 +9,20 @@ import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 
+import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
+
+import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
+import '../ui/screens/counts_screen/counts_screen.dart';
+import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
+import '../ui/screens/tasks/task_home_screen.dart';
+import '../ui/widgets/custom_controls/default_dropdown_list.dart';
+
+
 import '../ui/screens/attendance/mark_attendance.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/leaves/leave_template.dart';
-import 'package:hr_management/ui/screens/note/note_screen.dart';
-import 'package:hr_management/ui/screens/registration/registration_screen.dart';
 import '../ui/screens/leaves/leave_template.dart';
+import '../ui/screens/note/note_screen.dart';
+import '../ui/screens/registration/registration_screen.dart';
 
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
 import '../ui/screens/splash_screen/splash_screen.dart';
@@ -74,9 +83,15 @@ class AppRouter {
 
       case CREATE_SERVICE_ROUTE:
         final args = routeSettings.arguments as ScreenArguments;
+        print("args: $args");
+
+        // if (args?.arg1 == null || args.arg1.isEmpty)
+        //   throw Exception("Template Code cannot be empty or null.");
+
         return MaterialPageRoute(
           builder: (_) => CreateServiceScreen(
             templateCode: args.arg1,
+            serviceId: args.arg2,
           ),
         );
         break;
@@ -101,6 +116,20 @@ class AppRouter {
       case TASK_HOME:
         return MaterialPageRoute(
           builder: (_) => TaskHomeScreen(),
+
+
+        );
+        break;
+
+      case DISPLAY_LEAVES:
+        return MaterialPageRoute(
+          builder: (_) => DisplayLeaves(),
+        );
+        break;
+      case DISPLAY_ACCESS_LOG:
+        return MaterialPageRoute(
+          builder: (_) => DisplayAccessLog(),
+
         );
         break;
 

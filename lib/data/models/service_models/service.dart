@@ -1,4 +1,4 @@
-class ServiceResponseModel {
+class Service {
   String json;
   String templateCode;
   String templateDisplayName;
@@ -104,8 +104,17 @@ class ServiceResponseModel {
   int dataAction;
   int status;
   int versionNo;
+  String formattedStartDate;
+  String formattedEndDate;
+  String leaveStatus;
+  String duration;
+  String workingDuration;
+  String appliedDate;
+  // String cancelLeave;
+  // String leaveDetails;
+  // String handoverService;
 
-  ServiceResponseModel({
+  Service({
     this.json,
     this.templateCode,
     this.templateDisplayName,
@@ -209,9 +218,20 @@ class ServiceResponseModel {
     this.dataAction,
     this.status,
     this.versionNo,
+    this.formattedStartDate,
+    this.formattedEndDate,
+    this.serviceSubject,
+    this.serviceDescription,
+    this.leaveStatus,
+    this.duration,
+    this.workingDuration,
+    this.appliedDate,
+    // this.cancelLeave,
+    // this.leaveDetails,
+    // this.handoverService,
   });
 
-  ServiceResponseModel.fromJson(Map<String, dynamic> jsonResponse) {
+  Service.fromJson(Map<String, dynamic> jsonResponse) {
     json = jsonResponse['Json'];
     templateCode = jsonResponse['TemplateCode'];
     templateDisplayName = jsonResponse['TemplateDisplayName'];
@@ -329,6 +349,16 @@ class ServiceResponseModel {
     dataAction = jsonResponse['DataAction'];
     status = jsonResponse['Status'];
     versionNo = jsonResponse['VersionNo'];
+
+    formattedStartDate = jsonResponse['FormattedStartDate'];
+    formattedEndDate = jsonResponse['FormattedEndDate'];
+    leaveStatus = jsonResponse['LeaveStatus'];
+    duration = jsonResponse['Duration'];
+    workingDuration = jsonResponse['WorkingDuration'];
+    appliedDate = jsonResponse['AppliedDate'];
+    // cancelLeave = jsonResponse['CancelLeave'];
+    // leaveDetails = jsonResponse['leaveDetails'];
+    // handoverService = jsonResponse['HandoverServiceId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -445,6 +475,14 @@ class ServiceResponseModel {
     data['DataAction'] = this.dataAction;
     data['Status'] = this.status;
     data['VersionNo'] = this.versionNo;
+
+    data['FormattedStartDate'] = this.formattedStartDate;
+    data['FormattedEndDate'] = this.formattedEndDate;
+    data['LeaveStatus'] = this.leaveStatus;
+    data['Duration'] = this.duration;
+    data['WorkingDuration'] = this.workingDuration;
+    data['AppliedDate'] = this.appliedDate;
+
     return data;
   }
 }

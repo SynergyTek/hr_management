@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/logic/blocs/registration_form_bloc.dart';
-import 'package:hr_management/ui/screens/registration/registration_form.dart';
+import '../../../logic/blocs/registration_form_bloc.dart';
+import 'registration_form.dart';
 
 class RegistrationScreen extends StatelessWidget {
   RegistrationFormBloc registrationFormBloc = RegistrationFormBloc();

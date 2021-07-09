@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/service_models/service_response_model.dart';
+import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/service_models/service.dart';
 
 import '../../../data/models/service_models/service_response.dart';
-import '../../../data/repositories/service_repository/service_repository.dart';
+import '../../../data/repositories/service_repository/abstract_service_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ServiceBloc {
@@ -13,23 +13,33 @@ class ServiceBloc {
   final BehaviorSubject<ServiceResponse> _subject =
       BehaviorSubject<ServiceResponse>();
 
-  /// Used to fetch new entries.
-  getServiceDetail(templateCode) async {
-    ServiceResponse response = await _serviceRepository.getServiceDetail(templateCode);
+  final BehaviorSubject<ServiceListResponse> _subjectServiceList =
+      BehaviorSubject<ServiceListResponse>();
+
+  getServiceDetail({templateCode, serviceId, userId}) async {
+    Map<String, dynamic> queryparams = Map();
+    queryparams["templatecode"] = templateCode ?? '';
+    queryparams["serviceId"] = serviceId ?? '';
+    queryparams["userid"] = userId ?? '';
+    ServiceResponse response =
+        await _serviceRepository.getServiceDetail(queryparams: queryparams);
     _subject.sink.add(response);
+  }
+
+  getLeavesDetails() async {
+    ServiceListResponse response = await _serviceRepository.getLeavesDetails();
+    _subjectServiceList.sink.add(response);
   }
 
   /// Used to create new entries.
   Future<PostResponse> postData({
-    @required ServiceResponseModel serviceResponseModel,
+    @required Service service,
   }) async {
     PostResponse response = await _serviceRepository.postAPIData(
-      serviceResponseModel: serviceResponseModel,
+      service: service,
     );
 
     return response;
-
-    // print("Hulululu: ${response.data.toJson()} ${response.error}");
   }
 
   /// Used to update an existing entry.
@@ -52,9 +62,12 @@ class ServiceBloc {
 
   dispose() {
     _subject.close();
+    _subjectServiceList.close();
   }
 
   BehaviorSubject<ServiceResponse> get subject => _subject;
+  BehaviorSubject<ServiceListResponse> get subjectServiceList =>
+      _subjectServiceList;
 }
 
 final serviceBloc = ServiceBloc();

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/data/models/form_fields.dart';
-import 'package:hr_management/logic/blocs/registration_form_bloc.dart';
-import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_group_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_checkbox_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_dropdown_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_switch_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_time_picker_widget.dart';
+import '../../../data/models/form_fields.dart';
+import '../../../logic/blocs/registration_form_bloc.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
+import '../../widgets/form_widgets/bloc_checkbox_group_widget.dart';
+import '../../widgets/form_widgets/bloc_checkbox_widget.dart';
+import '../../widgets/form_widgets/bloc_date_picker_widget.dart';
+import '../../widgets/form_widgets/bloc_dropdown_widget.dart';
+import '../../widgets/form_widgets/bloc_number_box_widget.dart';
+import '../../widgets/form_widgets/bloc_radio_button_widget.dart';
+import '../../widgets/form_widgets/bloc_switch_widget.dart';
+import '../../widgets/form_widgets/bloc_text_box_widget.dart';
+import '../../widgets/form_widgets/bloc_time_picker_widget.dart';
 
 class RegistrationForm extends StatefulWidget {
   RegistrationForm({Key key}) : super(key: key);

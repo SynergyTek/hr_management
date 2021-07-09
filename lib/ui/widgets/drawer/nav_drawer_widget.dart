@@ -115,9 +115,32 @@ Widget drawerWidget(context) {
         //     Navigator.pushNamed(
         //       context,
         //       CREATE_SERVICE_ROUTE,
+        //       // arguments: ScreenArguments(
+        //       //   arg1: "",
+        //       // ),
         //     );
         //   },
         // ),
+        ListTile(
+          title: Text('Access Logs'),
+          trailing: Icon(Icons.create),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              DISPLAY_ACCESS_LOG,
+            );
+          },
+        ),
+        ListTile(
+          title: Text('Leaves'),
+          trailing: Icon(Icons.create),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              DISPLAY_LEAVES,
+            );
+          },
+        ),
       ],
     ),
   );

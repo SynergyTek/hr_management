@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
+import 'nts_dropdown_model.dart';
 
 class NTSDdResponse {
   final List<NTSDropdownModel> data;

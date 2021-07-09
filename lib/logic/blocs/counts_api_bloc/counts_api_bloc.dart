@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/counts_api_models/counts_api_response.dart';
-import 'package:hr_management/data/repositories/counts_api_repository/counts_api_repository.dart';
+import '../../../data/models/counts_api_models/counts_api_response.dart';
+import '../../../data/repositories/counts_api_repository/counts_api_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CountsAPIBloc {

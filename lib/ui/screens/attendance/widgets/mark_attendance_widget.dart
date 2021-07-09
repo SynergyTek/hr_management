@@ -1,6 +1,8 @@
-import 'package:hr_management/logic/blocs/remote_attendance_bloc/remote_attendance_bloc.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:hr_management/ui/widgets/snack_bar.dart';
+import 'package:geocoder/geocoder.dart';
+
+import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
+import '../../../widgets/progress_indicator.dart';
+import '../../../widgets/snack_bar.dart';
 
 import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
@@ -25,19 +27,9 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isSignedIn = false;
   bool isSignedOut = true;
 
-  // GeoLocationHelper _geoLocationHelper = new GeoLocationHelper();
   Location _locationService = new Location();
-  // late StreamSubscription<LocationData> _locationSubscription;
 
   bool isVisible = false;
-  @override
-  void initState() {
-    super.initState();
-
-    // if (isPermissonGranted) {
-    // getCurrentLocation();
-    // }
-  }
 
   calculateDistance(double latitude, double longitude) async {
     bool result = false;
@@ -48,7 +40,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     var newLatitude = 23.27268409729004; //lalghati square
     var newLongitude = 77.36927032470703;
 
-    print("location:" + latitude.toString() + longitude.toString());
+    // print("location:" + latitude.toString() + longitude.toString());
 
     // for (var i = 0; i <= locationList.length - 1; i++) {
     // print("count:" + i.toString());
@@ -79,8 +71,9 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LocationBloc, LocationState>(builder: (context, state) {
-      print(calculateDistance(
-          state.locationData.latitude, state.locationData.latitude));
+      // print(calculateDistance(
+      //     state.locationData.latitude, state.locationData.latitude));
+      getUserAddressFromCoord(locationData: state.locationData);
       return Stack(
         children: <Widget>[
           attendanceTab(),
@@ -454,28 +447,27 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       setState(() {
         isVisible = true;
       });
-      await remoteAttendanceBloc.getInsertAccessLog(isSignIn: true);
+      await accessLogBloc.getInsertAccessLog(isSignIn: true);
       setState(() {
         isVisible = false;
       });
 
+      print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
       print(
-          "Sign In isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
-      print(
-          "Sign In Error?: ${remoteAttendanceBloc.subject.value.error}, ${remoteAttendanceBloc.subject.value.error.runtimeType}");
+          "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            remoteAttendanceBloc.subject.value.isSignIn == 0 &&
-                    remoteAttendanceBloc.subject.value.error == null
+            accessLogBloc.subject.value.isSignIn == 0 &&
+                    accessLogBloc.subject.value.error == null
                 ? "Sign in successful!"
                 : "Error occured please try again later.",
           ),
         ),
       );
-      if (remoteAttendanceBloc.subject.value.isSignIn == 0 &&
-          remoteAttendanceBloc.subject.value.error == null) {
+      if (accessLogBloc.subject.value.isSignIn == 0 &&
+          accessLogBloc.subject.value.error == null) {
         isSignedOut = false;
         isSignedIn = true;
       }
@@ -491,32 +483,44 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       setState(() {
         isVisible = true;
       });
-      await remoteAttendanceBloc.getInsertAccessLog(isSignIn: false);
+      await accessLogBloc.getInsertAccessLog(isSignIn: false);
       setState(() {
         isVisible = false;
       });
 
-      print(
-          "Sign Out isSignIn?: ${remoteAttendanceBloc.subject.value.isSignIn}");
-      print("Sign Out Error?: ${remoteAttendanceBloc.subject.value.error}");
+      print("Sign Out isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
+      print("Sign Out Error?: ${accessLogBloc.subject.value.error}");
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            remoteAttendanceBloc.subject.value.isSignIn == 1 &&
-                    remoteAttendanceBloc.subject.value.error == null
+            accessLogBloc.subject.value.isSignIn == 1 &&
+                    accessLogBloc.subject.value.error == null
                 ? "Sign out successful!"
                 : "Error occured please try again later.",
           ),
         ),
       );
-      if (remoteAttendanceBloc.subject.value.isSignIn == 1 &&
-          remoteAttendanceBloc.subject.value.error == null) {
+      if (accessLogBloc.subject.value.isSignIn == 1 &&
+          accessLogBloc.subject.value.error == null) {
         isSignedOut = true;
         isSignedIn = false;
       }
     } else {
       displaySnackBar(text: 'You have already signed out.', context: context);
     }
+  }
+
+  getUserAddressFromCoord({LocationData locationData}) async {
+    // From coordinates
+    final coordinates =
+        new Coordinates(locationData.latitude, locationData.longitude);
+    List<Address> addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    Address first = addresses.first;
+    // print("${first.featureName} : ${first.addressLine}");
+    setState(() {
+      _location = first.addressLine;
+    });
   }
 }

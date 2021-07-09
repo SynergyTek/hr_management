@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/task_models/task_response_model.dart';
-import 'package:hr_management/data/repositories/task_repository/task_repository.dart';
+import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
+import 'package:hr_management/data/models/task_models/task_model.dart';
+import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/task_models/task_response_model.dart';
+import '../../../data/repositories/task_repository/abstract_task_repo.dart';
 import 'package:rxdart/subjects.dart';
 
 class TaskBloc {
   final TaskRepository _taskRepository = TaskRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<TaskResponseModel> _subject =
+  final BehaviorSubject<TaskListResponseModel> _subjectTaskList =
+      BehaviorSubject<TaskListResponseModel>();
+
+  final BehaviorSubject<TaskResponseModel> _subjectGetTaskDetails =
       BehaviorSubject<TaskResponseModel>();
 
   /// Used to fetch new entries.
-  getTaskHomeListData({
+  getTaskHomeListData(
+      {
       // String userId,
       String moduleId,
       String mode,
@@ -37,13 +43,26 @@ class TaskBloc {
     queryparams["completionDate"] = completionDate;
     queryparams["templateMasterCode"] = templateMasterCode;
     queryparams["text"] = text;
-    TaskResponseModel response = await _taskRepository.getTaskHomeListData(queryparams: queryparams,);
-    _subject.sink.add(response);
+    TaskListResponseModel response = await _taskRepository.getTaskHomeListData(
+      queryparams: queryparams,
+    );
+    _subjectTaskList.sink.add(response);
+  }
+
+  getTaskDetails({String templateCode, String taskId, String userId}) async {
+    Map<String, dynamic> queryparams = Map();
+    queryparams["taskId"] = taskId;
+    queryparams["templateid"] = templateCode;
+    queryparams["userId"] = userId;
+    TaskResponseModel response = await _taskRepository.getTaskDetailsData(
+      queryparams: queryparams,
+    );
+    _subjectGetTaskDetails.sink.add(response);
   }
 
   /// Used to create new entries.
   Future<PostResponse> postData({
-    @required TaskResponseModel taskResponseModel,
+    @required TaskModel taskModel,
   }) async {
     // PostResponse response = await _taskRepository.postAPIData(
     //   TaskResponseModel: taskResponseModel,
@@ -71,10 +90,14 @@ class TaskBloc {
   }
 
   dispose() {
-    _subject.close();
+    _subjectTaskList.close();
+    _subjectGetTaskDetails.close();
   }
 
-  BehaviorSubject<TaskResponseModel> get subject => _subject;
+  BehaviorSubject<TaskListResponseModel> get subjectTaskList =>
+      _subjectTaskList;
+  BehaviorSubject<TaskResponseModel> get subjectGetTaskDetails =>
+      _subjectGetTaskDetails;
 }
 
 final taskBloc = TaskBloc();
