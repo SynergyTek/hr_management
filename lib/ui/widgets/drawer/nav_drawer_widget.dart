@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
+  var fontSize = 16.0;
+  Color fontColor = Colors.black87;
   return Drawer(
     child: Column(
       mainAxisSize: MainAxisSize.max,
@@ -27,7 +29,7 @@ Widget drawerWidget(context) {
               ),
               title: Text(
                 'HR Management',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           ),
@@ -45,8 +47,11 @@ Widget drawerWidget(context) {
         //   },
         // ),
         ListTile(
-          title: Text('Remote Sign In/Out'),
-          trailing: Icon(Icons.login),
+          title: Text(
+            'REMOTE SIGNIN/SIGNOUT',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.settings_remote),
           onTap: () {
             Navigator.pushNamed(
               context,
@@ -55,8 +60,11 @@ Widget drawerWidget(context) {
           },
         ),
         ListTile(
-          title: Text('New Leave Request'),
-          trailing: Icon(Icons.calendar_today_outlined),
+          title: Text(
+            'NEW LEAVE REQUEST',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.loupe),
           onTap: () {
             Navigator.pushNamed(
               context,
@@ -65,16 +73,6 @@ Widget drawerWidget(context) {
           },
         ),
 
-        ListTile(
-          title: Text('Logout'),
-          trailing: Icon(Icons.logout),
-          onTap: () {
-            Navigator.pushReplacementNamed(
-              context,
-              LOGIN_ROUTE,
-            );
-          },
-        ),
         // ListTile(
         //   title: Text('UDF Demo'),
         //   trailing: Icon(Icons.app_registration),
@@ -86,8 +84,11 @@ Widget drawerWidget(context) {
         //   },
         // ),
         ListTile(
-          title: Text('Task Home'),
-          trailing: Icon(Icons.home),
+          title: Text(
+            'TASK HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
           onTap: () {
             Navigator.pushNamed(
               context,
@@ -95,7 +96,6 @@ Widget drawerWidget(context) {
             );
           },
         ),
-
 
         // ListTile(
         //   title: Text('Task Home'),
@@ -122,8 +122,11 @@ Widget drawerWidget(context) {
         //   },
         // ),
         ListTile(
-          title: Text('Access Logs'),
-          trailing: Icon(Icons.create),
+          title: Text(
+            'ACCESS LOGS',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.sync_alt),
           onTap: () {
             Navigator.pushNamed(
               context,
@@ -132,8 +135,11 @@ Widget drawerWidget(context) {
           },
         ),
         ListTile(
-          title: Text('Leaves'),
-          trailing: Icon(Icons.create),
+          title: Text(
+            'LEAVES',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.fact_check),
           onTap: () {
             Navigator.pushNamed(
               context,
@@ -141,6 +147,19 @@ Widget drawerWidget(context) {
             );
           },
         ),
+        // ListTile(
+        //   title: Text(
+        //     'LOGOUT',
+        //     style: TextStyle(fontSize: fontSize, color: fontColor),
+        //   ),
+        //   trailing: Icon(Icons.logout),
+        //   onTap: () {
+        //     Navigator.pushReplacementNamed(
+        //       context,
+        //       LOGIN_ROUTE,
+        //     );
+        //   },
+        // ),
       ],
     ),
   );
