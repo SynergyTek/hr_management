@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
-import '../../../../data/models/access_log/access_log_model.dart';
-import '../../../../data/models/access_log/access_log_response.dart';
-import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
-import '../../../../themes/theme_config.dart';
-import '../../../widgets/empty_list_widget.dart';
-import '../../../widgets/progress_indicator.dart';
+import '../../../../../data/models/access_log/access_log_model.dart';
+import '../../../../../data/models/access_log/access_log_response.dart';
+import '../../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
+import '../../../../../themes/theme_config.dart';
+import '../../../../widgets/empty_list_widget.dart';
+import '../../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
-import 'widgets/access_log_list_tile_widget.dart';
+import 'access_log_list_tile_widget.dart';
 
 class DisplayAccessLogBody extends StatefulWidget {
   DisplayAccessLogBody({Key key}) : super(key: key);
@@ -94,8 +94,9 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
                         snapshot.data.data.length == 0) {
                       return EmptyListWidget();
                     }
-                    _accessLogList = snapshot.data.data;
+                    _accessLogList = snapshot.data.data.reversed.toList();
                     return Listizer(
+                      showSearchBar: true,
                       listItems: _accessLogList,
                       filteredSearchList: _filteredAccessLogList,
                       itemBuilder: (context, index) {

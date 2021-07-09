@@ -37,3 +37,4 @@ const String TASK_HOME = "/task_home";
 const String TASK_FILTER = "/task_filter";
 const String DISPLAY_LEAVES = "/display_leaves";
 const String DISPLAY_ACCESS_LOG = "/display_access_logs";
+const String ATTENDANCE_VIEW_ROUTE = "/attendance_view";

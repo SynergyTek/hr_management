@@ -4,8 +4,12 @@ import 'package:sizer/sizer.dart';
 class LightTheme {
   static const Color _PRIMARY_COLOR = Colors.blue;
   // static const Color _PRIMARY_COLOR = Color(0xFFFF7643);
-  static const Color _PRIMARY_LIGHT_COLOR = Color(0xFFFFECDF);
+
+  static const Color _PRIMARY_LIGHT_COLOR = Colors.lightBlueAccent;
+  // static const Color _PRIMARY_LIGHT_COLOR = Color(0xFFFFECDF);
+
   static const Color _SECONDARY_COLOR = Color(0xFF979797);
+  
   static const Color _TEXT_COLOR = Color(0xFF757575);
 
   // static const _PRIMARY_GRADIENT_COLOR = LinearGradient(

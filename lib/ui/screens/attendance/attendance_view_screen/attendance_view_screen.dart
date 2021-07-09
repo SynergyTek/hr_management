@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import '../../../widgets/appbar_widget.dart';
 import '../../../widgets/drawer/nav_drawer_widget.dart';
 import '../../../widgets/internet_connectivity_widget.dart';
+import 'widgets/attendance_view_body_widget.dart';
 
-import 'widgets/display_access_log_body.dart';
-
-class DisplayAccessLog extends StatelessWidget {
-  const DisplayAccessLog({Key key}) : super(key: key);
+class AttendanceViewScreen extends StatelessWidget {
+  const AttendanceViewScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: "Access Logs",
+        title: "Attendance View",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: DisplayAccessLogBody(),
+          child: AttendanceViewBodyWidget(),
         ),
       ),
     );
