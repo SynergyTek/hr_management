@@ -2,7 +2,7 @@
 
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
 
-import 'package:hr_management/ui/screens/login/login_screen.dart';
+// import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
 
@@ -10,6 +10,7 @@ import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.d
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 
 import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
+import 'package:hr_management/ui/screens/tasks/widget/task_home_filter_widget.dart';
 
 import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
 import '../ui/screens/counts_screen/counts_screen.dart';
@@ -41,9 +42,9 @@ class AppRouter {
         );
         break;
 
-      case LOGIN_ROUTE:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
-        break;
+      // case LOGIN_ROUTE:
+      //   return MaterialPageRoute(builder: (_) => LoginScreen());
+      //   break;
 
       case ONBOARDING_ROUTE:
         return MaterialPageRoute(
@@ -118,6 +119,15 @@ class AppRouter {
           builder: (_) => TaskHomeScreen(),
 
 
+        );
+        break;
+
+      case TASK_FILTER:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => TaskHomeFilterWidget(
+            onListTap: args.arg5,
+          ),
         );
         break;
 

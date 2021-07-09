@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
-  var fontSize = 16.0;
+  var fontSize = 15.0;
   Color fontColor = Colors.black87;
   return Drawer(
     child: Column(
@@ -34,18 +34,45 @@ Widget drawerWidget(context) {
             ),
           ),
         ),
-        // ListTile(
-        //   title: Text('Home'),
-        //   trailing: Icon(
-        //     Icons.home,
-        //   ),
-        //   onTap: () {
-        //     Navigator.pushReplacementNamed(
-        //       context,
-        //       HOME_ROUTE,
-        //     );
-        //   },
-        // ),
+        ListTile(
+          title: Text(
+            'NEW LEAVE REQUEST',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.loupe),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              LEAVE_REQUEST,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'REQUESTED LEAVES',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.fact_check),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              DISPLAY_LEAVES,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'TASK HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              TASK_HOME,
+            );
+          },
+        ),
         ListTile(
           title: Text(
             'REMOTE SIGNIN/SIGNOUT',
@@ -61,68 +88,6 @@ Widget drawerWidget(context) {
         ),
         ListTile(
           title: Text(
-            'NEW LEAVE REQUEST',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.loupe),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              LEAVE_REQUEST,
-            );
-          },
-        ),
-
-        // ListTile(
-        //   title: Text('UDF Demo'),
-        //   trailing: Icon(Icons.app_registration),
-        //   onTap: () {
-        //     Navigator.pushNamed(
-        //       context,
-        //       REGISTRATION_ROUTE,
-        //     );
-        //   },
-        // ),
-        ListTile(
-          title: Text(
-            'TASK HOME',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.add_to_home_screen),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              TASK_HOME,
-            );
-          },
-        ),
-
-        // ListTile(
-        //   title: Text('Task Home'),
-        //   // trailing: Icon(Icons.task),
-        //   onTap: () {
-        //     Navigator.pushNamed(
-        //       context,
-        //       TASK_HOME,
-        //     );
-        //   },
-        // ),
-
-        // ListTile(
-        //   title: Text('Create Service'),
-        //   trailing: Icon(Icons.create),
-        //   onTap: () {
-        //     Navigator.pushNamed(
-        //       context,
-        //       CREATE_SERVICE_ROUTE,
-        //       // arguments: ScreenArguments(
-        //       //   arg1: "",
-        //       // ),
-        //     );
-        //   },
-        // ),
-        ListTile(
-          title: Text(
             'ACCESS LOGS',
             style: TextStyle(fontSize: fontSize, color: fontColor),
           ),
@@ -134,19 +99,7 @@ Widget drawerWidget(context) {
             );
           },
         ),
-        ListTile(
-          title: Text(
-            'LEAVES',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.fact_check),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              DISPLAY_LEAVES,
-            );
-          },
-        ),
+
         // ListTile(
         //   title: Text(
         //     'LOGOUT',

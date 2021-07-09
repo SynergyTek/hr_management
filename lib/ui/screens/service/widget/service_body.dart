@@ -558,7 +558,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           _ddController.text = udfJson[model[i].key];
+        } else {
+          _ddController.text = selectValue[i];
         }
+
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,
           controller: _ddController,

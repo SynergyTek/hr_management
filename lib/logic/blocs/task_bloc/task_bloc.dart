@@ -17,32 +17,9 @@ class TaskBloc {
       BehaviorSubject<TaskResponseModel>();
 
   /// Used to fetch new entries.
-  getTaskHomeListData(
-      {
-      // String userId,
-      String moduleId,
-      String mode,
-      String taskNo,
-      String taskStatus,
-      String taskAssigneeIds,
-      String subject,
-      DateTime startDate,
-      DateTime dueDate,
-      DateTime completionDate,
-      String templateMasterCode,
-      String text}) async {
-    Map<String, dynamic> queryparams = Map();
-    queryparams["moduleId"] = moduleId;
-    queryparams["mode"] = mode;
-    queryparams["taskNo"] = taskNo;
-    queryparams["taskStatus"] = taskStatus;
-    queryparams["taskAssigneeIds"] = taskAssigneeIds;
-    queryparams["subject"] = subject;
-    queryparams["startDate"] = startDate;
-    queryparams["dueDate"] = dueDate;
-    queryparams["completionDate"] = completionDate;
-    queryparams["templateMasterCode"] = templateMasterCode;
-    queryparams["text"] = text;
+  getTaskHomeListData({
+    Map<String, dynamic> queryparams, // String userId,
+  }) async {
     TaskListResponseModel response = await _taskRepository.getTaskHomeListData(
       queryparams: queryparams,
     );
