@@ -1,5 +1,3 @@
-
-
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
@@ -11,6 +9,9 @@ import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 
 import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/screens/tasks/widget/task_home_filter_widget.dart';
+import 'package:flutter/material.dart';
+
+import 'package:hr_management/ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
 
 import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
 import '../ui/screens/counts_screen/counts_screen.dart';
@@ -18,9 +19,7 @@ import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
 import '../ui/screens/tasks/task_home_screen.dart';
 import '../ui/widgets/custom_controls/default_dropdown_list.dart';
 
-
 import '../ui/screens/attendance/mark_attendance.dart';
-import 'package:flutter/material.dart';
 import '../ui/screens/leaves/leave_template.dart';
 import '../ui/screens/note/note_screen.dart';
 import '../ui/screens/registration/registration_screen.dart';
@@ -117,8 +116,6 @@ class AppRouter {
       case TASK_HOME:
         return MaterialPageRoute(
           builder: (_) => TaskHomeScreen(),
-
-
         );
         break;
 
@@ -136,10 +133,16 @@ class AppRouter {
           builder: (_) => DisplayLeaves(),
         );
         break;
+
       case DISPLAY_ACCESS_LOG:
         return MaterialPageRoute(
           builder: (_) => DisplayAccessLog(),
+        );
+        break;
 
+      case ATTENDANCE_VIEW_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => AttendanceViewScreen(),
         );
         break;
 
