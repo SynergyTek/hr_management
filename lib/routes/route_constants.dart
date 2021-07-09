@@ -3,7 +3,8 @@
 // ---------------------------//
 // * PRE-AUTHENTICATION Routes:
 // ---------------------------//
-
+//Login Screen Route
+const String LOGIN_ROUTE = "/login";
 // Splash Screen Route
 // * Important: The first route should not contain the forward slash (/).
 const String SPLASH_ROUTE = "splash";

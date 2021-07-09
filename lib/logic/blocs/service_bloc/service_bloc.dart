@@ -62,6 +62,7 @@ class ServiceBloc {
 
   dispose() {
     _subject.close();
+    _subjectServiceList.close();
   }
 
   BehaviorSubject<ServiceResponse> get subject => _subject;

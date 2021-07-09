@@ -18,16 +18,27 @@ class APIEndpointConstants {
   static const GET_TASK_HOME_DATA =
       '$BASE_URL/nts/query/ReadTaskHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
+  static const String GET_TASK_DETAILS =
+      '$BASE_URL/nts/query/GetTaskDetails?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
   //Task API Endpoints Block End
 
   //************************************************************************//
 
   //Sevice API Endpoints Block Start
 
-  static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
+
+  static const MANAGE_LOGIN =
+      'https://webapidev.aitalkx.com/api/Authenticate/login';
+
+  static const GET_SERVICE_DETAILS =
+      '$BASE_URL/nts/query/GetServiceDetails?templateCode=AnnualLeave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  //static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
   static const LEAVE_DETAILS =
       '$BASE_URL/taa/query/leavedetail?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
 
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
@@ -63,4 +74,5 @@ class APIEndpointConstants {
 
   //Access Log API Endpoints Block End
   //************************************************************************//
+
 }

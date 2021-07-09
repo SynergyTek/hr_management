@@ -43,7 +43,8 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
   }
 
   apiCall() {
-    taskBloc.subject.sink.add(null);
+    taskBloc.subjectTaskList.sink.add(null);
+    // taskBloc.subject.sink.add(null);
     Map<String, dynamic> queryparams = Map();
 
     if (moduleId != null) queryparams['moduleId'] = moduleId;
@@ -108,7 +109,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
         // ),
         Expanded(
           child: StreamBuilder<TaskListResponseModel>(
-              stream: taskBloc.subject.stream,
+              stream: taskBloc.subjectTaskList.stream,
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data.error != null &&

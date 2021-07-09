@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/data/models/task_models/task_model.dart';
+import 'package:hr_management/data/models/task_models/task_response_model.dart';
 import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
+import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
 import 'package:hr_management/ui/screens/service/create_service_form_bloc.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
-import '../../../../data/models/service_models/service_response.dart';
-import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/udf_json_model/udf_json_model.dart';
-import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/form_widgets/bloc_date_picker_widget.dart';
 import '../../../widgets/form_widgets/bloc_number_box_widget.dart';
@@ -39,8 +39,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   List<Widget> udfJsonCompWidgetList = [];
 
   final Map<String, String> udfJson = {};
-  Service serviceModel;
-  Service postServiceModel = new Service();
+  TaskModel taskModel;
+  TaskModel postTaskModel = TaskModel();
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
@@ -76,10 +76,10 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   @override
   void initState() {
     super.initState();
-    serviceBloc
-      ..getServiceDetail(
+    taskBloc
+      ..getTaskDetails()(
           templateCode: widget.templateCode,
-          serviceId: widget.taskId,
+          taskId: widget.taskId,
           userId: '45bba746-3309-49b7-9c03-b5793369d73c');
   }
 
@@ -89,8 +89,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       create: (context) => CreateServiceFormBloc(),
       child: Container(
         padding: DEFAULT_PADDING,
-        child: StreamBuilder<ServiceResponse>(
-            stream: serviceBloc.subject.stream,
+        child: StreamBuilder<TaskResponseModel>(
+            stream: taskBloc.subjectGetTaskDetails.stream,
             builder: (context, AsyncSnapshot snapshot) {
               print("Snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
@@ -102,10 +102,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 }
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
-                serviceModel = snapshot.data.data;
+                taskModel = snapshot.data.data;
 
-                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json,
-                    serviceModel.columnList);
+                parseJsonToUDFModel(
+                  createServiceFormBloc,
+                  taskModel.json,
+                );
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -117,10 +119,10 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                   },
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
-                  child: setServiceView(
+                  child: setTaskView(
                     context,
                     createServiceFormBloc,
-                    serviceModel,
+                    taskModel,
                   ),
                 );
               } else {
@@ -133,8 +135,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     );
   }
 
-  parseJsonToUDFModel(CreateServiceFormBloc createServiceFormBloc,
-      udfJsonString, List<ColumnList> columnList) {
+  parseJsonToUDFModel(
+      CreateServiceFormBloc createServiceFormBloc, udfJsonString) {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
@@ -170,10 +172,10 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     }
   }
 
-  Widget setServiceView(
+  Widget setTaskView(
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
-    Service serviceModel,
+    TaskModel taskModel,
   ) {
     return Stack(
       children: [
@@ -184,7 +186,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             children: formFieldsWidgets(
               context,
               createServiceFormBloc,
-              serviceModel,
+              taskModel,
             ),
           ),
         ),
@@ -195,7 +197,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               height: 50,
               color: Colors.grey[100],
               child: displayFooterWidget(
-                serviceModel,
+                taskModel,
                 createServiceFormBloc,
               ),
             ),
@@ -212,7 +214,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   }
 
   List<Widget> formFieldsWidgets(
-      context, createServiceFormBloc, Service serviceModel) {
+      context, createServiceFormBloc, TaskModel taskModel) {
     List<Widget> widgets = [];
 
     widgets.add(Container(
@@ -223,15 +225,15 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          rowChild(serviceModel.serviceNo, 'Service No', 3),
-          rowChild(serviceModel.serviceStatusName, 'Status', 2),
-          rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
+          rowChild(taskModel.taskNo, 'Task No', 3),
+          rowChild(taskModel.taskStatusName, 'Status', 2),
+          rowChild(taskModel.versionNo.toString(), 'Version No', 2),
         ],
       ),
     ));
-    if (!serviceModel.hideSubject) {
+    if (!taskModel.hideSubject) {
       createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? serviceModel.serviceSubject);
+          .updateInitialValue(subjectValue ?? taskModel.taskSubject);
       widgets.add(BlocTextBoxWidget(
         fieldName: 'Subject',
         readonly: false,
@@ -245,14 +247,14 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ));
     }
 
-    if (!serviceModel.hideStartDate)
+    if (!taskModel.hideStartDate)
       widgets.add(
         Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Expanded(
               child: DynamicDateTimeBox(
-                code: serviceModel.startDate,
+                code: taskModel.startDate,
                 name: 'Start Date',
                 key: new Key('Start Date'),
                 selectDate: (DateTime date) {
@@ -273,7 +275,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             ),
             Expanded(
               child: DynamicDateTimeBox(
-                code: serviceModel.dueDate,
+                code: taskModel.dueDate,
                 name: 'Due Date',
                 key: new Key('Due Date'),
                 selectDate: (DateTime date) {
@@ -296,9 +298,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         ),
       );
 
-    if (!serviceModel.hideSLA) {
+    if (!taskModel.hideSla) {
       createServiceFormBloc.sla
-          .updateInitialValue(slaValue ?? serviceModel.serviceSLA);
+          .updateInitialValue(slaValue ?? taskModel.taskSla);
       widgets.add(BlocTextBoxWidget(
         fieldName: 'SLA',
         readonly: false,
@@ -312,18 +314,18 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ));
     }
 
-    if (!serviceModel.hideExpiryDate)
-      widgets.add(BlocDatePickerWidget(
-        labelName: 'Reminder Date',
-        canSelectTime: false,
-        inputFieldBloc: createServiceFormBloc.expiryDate,
-        height: 75.0,
-        width: MediaQuery.of(context).size.width,
-      ));
+    // if (!taskModel.hideRe)
+    //   widgets.add(BlocDatePickerWidget(
+    //     labelName: 'Reminder Date',
+    //     canSelectTime: false,
+    //     inputFieldBloc: createServiceFormBloc.expiryDate,
+    //     height: 75.0,
+    //     width: MediaQuery.of(context).size.width,
+    //   ));
 
-    if (!serviceModel.hideDescription) {
-      createServiceFormBloc.description.updateInitialValue(
-          descriptionValue ?? serviceModel.serviceDescription);
+    if (!taskModel.hideDescription) {
+      createServiceFormBloc.description
+          .updateInitialValue(descriptionValue ?? taskModel.taskDescription);
       widgets.add(BlocTextBoxWidget(
         fieldName: 'Description',
         readonly: false,
@@ -726,7 +728,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   }
 
   displayFooterWidget(
-    Service serviceModel,
+    TaskModel taskModel,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
     return Container(
@@ -738,7 +740,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               Visibility(
-                visible: serviceModel.isCompleteButtonVisible,
+                visible: taskModel.isCompleteButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Complete',
                   handleOnPressed: () {},
@@ -747,18 +749,18 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               ),
               Visibility(
                 // visible: true,
-                visible: serviceModel.isCancelButtonVisible,
+                visible: taskModel.isCancelReasonRequired,
                 child: PrimaryButton(
                   buttonText: 'Cancel',
                   handleOnPressed: () {
-                    if (serviceModel.isCancelReasonRequired)
+                    if (taskModel.isCancelReasonRequired)
                       enterReasonAlertDialog(context);
                   },
                   width: 100,
                 ),
               ),
               Visibility(
-                visible: serviceModel.isCloseButtonVisible,
+                visible: taskModel.isCloseButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Close',
                   handleOnPressed: () {},
@@ -766,7 +768,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 ),
               ),
               Visibility(
-                visible: serviceModel.isDraftButtonVisible,
+                visible: taskModel.isDraftButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Draft',
                   handleOnPressed: () {
@@ -780,7 +782,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 ),
               ),
               Visibility(
-                visible: serviceModel.isSubmitButtonVisible,
+                visible: taskModel.isSubmitButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Submit',
                   handleOnPressed: () {
@@ -1029,28 +1031,27 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   }
 
   String resultMsg = '';
-  serviceViewModelPostRequest(int postDataAction, String serviceStatusCode,
+  serviceViewModelPostRequest(int postDataAction, String taskStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
-    String stringModel = jsonEncode(serviceModel);
+    String stringModel = jsonEncode(taskModel);
     var jsonModel = jsonDecode(stringModel);
-    postServiceModel = Service.fromJson(jsonModel);
+    postTaskModel = TaskModel.fromJson(jsonModel);
 
-    postServiceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    postServiceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    postServiceModel.serviceSubject = createServiceFormBloc.subject.value;
-    postServiceModel.serviceDescription =
-        createServiceFormBloc.description.value;
-    postServiceModel.dataAction = postDataAction;
-    postServiceModel.serviceStatusCode = serviceStatusCode;
-    postServiceModel.json = jsonEncode(udfJson);
+    postTaskModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postTaskModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postTaskModel.taskSubject = createServiceFormBloc.subject.value;
+    postTaskModel.taskDescription = createServiceFormBloc.description.value;
+    postTaskModel.dataAction = postDataAction;
+    postTaskModel.taskStatusCode = taskStatusCode;
+    postTaskModel.json = jsonEncode(udfJson);
     print(udfJson);
 
     setState(() {
       isVisible = true;
     });
 
-    PostResponse result = await serviceBloc.postData(
-      service: postServiceModel,
+    PostResponse result = await taskBloc.postData(
+      taskModel: postTaskModel,
     );
     print(result);
     if (result.isSuccess) {

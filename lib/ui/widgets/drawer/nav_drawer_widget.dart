@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
+  var fontSize = 15.0;
+  Color fontColor = Colors.black87;
   return Drawer(
     child: Column(
       mainAxisSize: MainAxisSize.max,
@@ -27,36 +29,17 @@ Widget drawerWidget(context) {
               ),
               title: Text(
                 'HR Management',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           ),
         ),
-        // ListTile(
-        //   title: Text('Home'),
-        //   trailing: Icon(
-        //     Icons.home,
-        //   ),
-        //   onTap: () {
-        //     Navigator.pushReplacementNamed(
-        //       context,
-        //       HOME_ROUTE,
-        //     );
-        //   },
-        // ),
         ListTile(
-          title: Text('Remote Sign In/Out'),
-          trailing: Icon(Icons.login),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              MARK_ATTENDANCE_ROUTE,
-            );
-          },
-        ),
-        ListTile(
-          title: Text('New Leave Request'),
-          trailing: Icon(Icons.calendar_today_outlined),
+          title: Text(
+            'NEW LEAVE REQUEST',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.loupe),
           onTap: () {
             Navigator.pushNamed(
               context,
@@ -65,41 +48,11 @@ Widget drawerWidget(context) {
           },
         ),
         ListTile(
-          title: Text('Task Home'),
-          // trailing: Icon(Icons.task),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              TASK_HOME,
-            );
-          },
-        ),
-        // ListTile(
-        //   title: Text('Create Service'),
-        //   trailing: Icon(Icons.create),
-        //   onTap: () {
-        //     Navigator.pushNamed(
-        //       context,
-        //       CREATE_SERVICE_ROUTE,
-        //       // arguments: ScreenArguments(
-        //       //   arg1: "",
-        //       // ),
-        //     );
-        //   },
-        // ),
-        ListTile(
-          title: Text('Access Logs'),
-          trailing: Icon(Icons.create),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              DISPLAY_ACCESS_LOG,
-            );
-          },
-        ),
-        ListTile(
-          title: Text('Leaves'),
-          trailing: Icon(Icons.create),
+          title: Text(
+            'REQUESTED LEAVES',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.fact_check),
           onTap: () {
             Navigator.pushNamed(
               context,
@@ -107,6 +60,59 @@ Widget drawerWidget(context) {
             );
           },
         ),
+        ListTile(
+          title: Text(
+            'TASK HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              TASK_HOME,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'REMOTE SIGNIN/SIGNOUT',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.settings_remote),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              MARK_ATTENDANCE_ROUTE,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'ACCESS LOGS',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.sync_alt),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              DISPLAY_ACCESS_LOG,
+            );
+          },
+        ),
+
+        // ListTile(
+        //   title: Text(
+        //     'LOGOUT',
+        //     style: TextStyle(fontSize: fontSize, color: fontColor),
+        //   ),
+        //   trailing: Icon(Icons.logout),
+        //   onTap: () {
+        //     Navigator.pushReplacementNamed(
+        //       context,
+        //       LOGIN_ROUTE,
+        //     );
+        //   },
+        // ),
       ],
     ),
   );

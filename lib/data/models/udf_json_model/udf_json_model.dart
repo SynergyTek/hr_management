@@ -37,7 +37,8 @@ class UdfJsonComponent {
       this.template,
       this.inputFormat,
       this.validate,
-      this.value});
+      this.value,
+      this.udfValue});
 
   String label;
   List<Columns> columns;
@@ -53,6 +54,7 @@ class UdfJsonComponent {
   String inputFormat;
   Validate validate;
   String value;
+  String udfValue;
 
   factory UdfJsonComponent.fromJson(Map<String, dynamic> json) =>
       UdfJsonComponent(
@@ -77,7 +79,8 @@ class UdfJsonComponent {
           validate: json['validate'] != null
               ? Validate.fromJson(json['validate'])
               : null,
-          value: json['value']);
+          value: json['value'],
+          udfValue: json['udfValue']);
 
   Map<String, dynamic> toJson() => {
         "label": label,
@@ -99,6 +102,7 @@ class UdfJsonComponent {
         'validate':
             this.validate.toJson() != null ? this.validate.toJson() : null,
         'value': this.value,
+        'udfValue': this.udfValue
       };
 }
 
@@ -184,7 +188,8 @@ class ColumnComponent {
       this.mapValue,
       this.rowDataValue,
       this.autoExpand,
-      this.value});
+      this.value,
+      this.udfValue});
 
   String label;
   bool tableView;
@@ -229,6 +234,7 @@ class ColumnComponent {
   String rowDataValue;
   bool autoExpand;
   String value;
+  String udfValue;
 
   ColumnComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
@@ -280,6 +286,7 @@ class ColumnComponent {
     rowDataValue = json['rowDataValue'];
     autoExpand = json['autoExpand'];
     value = json['value'];
+    udfValue = json['udfValue'];
   }
 
   Map<String, dynamic> toJson() {
@@ -337,6 +344,7 @@ class ColumnComponent {
     data['rowDataValue'] = this.rowDataValue;
     data['autoExpand'] = this.autoExpand;
     data['value'] = this.value;
+    data['udfValue'] = this.udfValue;
     return data;
   }
 }
@@ -564,6 +572,7 @@ class ComponentComponent {
   bool autoExpand;
   Validate validate;
   String value;
+  String udfValue;
 
   ComponentComponent(
       {this.label,
@@ -579,7 +588,8 @@ class ComponentComponent {
       this.columnMetadataId,
       this.autoExpand,
       this.validate,
-      this.value});
+      this.value,
+      this.udfValue});
 
   ComponentComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
@@ -597,6 +607,7 @@ class ComponentComponent {
     validate =
         json['validate'] != null ? Validate.fromJson(json['validate']) : null;
     value = json['value'];
+    udfValue = json['udfValue'];
   }
 
   Map<String, dynamic> toJson() {
@@ -617,6 +628,7 @@ class ComponentComponent {
       data['validate'] = this.validate.toJson();
     }
     data['value'] = this.value;
+    data['udfValue'] = this.udfValue;
     return data;
   }
 }
