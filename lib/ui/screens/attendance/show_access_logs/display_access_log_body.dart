@@ -33,7 +33,7 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: DEFAULT_LARGE_PADDING,
+      padding: DEFAULT_PADDING,
       child: Column(
         children: [
           ExpansionTile(
