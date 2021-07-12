@@ -384,10 +384,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     for (var i = 0; i < model.length; i++) {
       print(model[i].type);
       if (model[i].type == 'textfield') {
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final textField$i =
@@ -407,10 +409,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
       } else if (model[i].type == 'textarea') {
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         // final textArea$i = new TextFieldBloc();
@@ -437,10 +441,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           udfJson[model[i].key] = initialValue;
         } else {}
         // final number$i = new TextFieldBloc(initialValue: initialValue);
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (model[i].key == 'LeaveDurationCalendarDays') {
@@ -463,10 +469,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password') {
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final password$i =
@@ -486,10 +494,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox') {
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         listDynamic.add(new DynamicCheckBoxValue(
@@ -503,10 +513,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         ));
       } else if (model[i].type == 'selectboxes') {
         TextEditingController _ddController = new TextEditingController();
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         listDynamic.add(NTSDropDownSelect(
@@ -526,10 +538,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           },
         ));
       } else if (model[i].type == 'radio') {
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final radio$i =
@@ -543,10 +557,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select') {
         TextEditingController _ddController = new TextEditingController();
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
@@ -579,10 +595,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           },
         ));
       } else if (model[i].type == 'datetime') {
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         listDynamic.add(new DynamicDateTimeBox(
@@ -615,10 +633,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           },
         ));
       } else if (model[i].type == 'time') {
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         listDynamic.add(
@@ -634,10 +654,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         );
       } else if (model[i].type == 'hidden') {
         //Hidden Field
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final hidden$i = new TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -658,10 +680,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
       } else if (model[i].type == 'phoneNumber') {
         //Phone Number Field
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final phoneNumber$i =
@@ -681,10 +705,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
       } else if (model[i].type == 'email') {
         //Email Field
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final email$i = new TextFieldBloc(
@@ -705,10 +731,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else {
-        if (!udfJson.containsKey(model[i].key) && widget.taskId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.taskId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final textField$i =
@@ -787,25 +815,35 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               Visibility(
-                visible: taskModel.isCompleteButtonVisible,
+                visible: taskModel.isAcceptButtonVisible,
                 child: PrimaryButton(
-                  buttonText: 'Complete',
+                  buttonText: 'Accept',
                   handleOnPressed: () {},
                   width: 100,
                 ),
               ),
               Visibility(
-                // visible: true,
-                visible: taskModel.isRejectButtonVisible,
+                visible: taskModel.isAddCommentEnabled,
                 child: PrimaryButton(
-                  buttonText: 'Reject',
+                  buttonText: 'Add comment',
                   handleOnPressed: () {
-                    if (taskModel.isRejectReasonRequired)
-                      enterReasonAlertDialog(context);
+                    enterReasonAlertDialog(
+                        context, 'Enter Comment', 'Please enter Comment');
                   },
                   width: 100,
                 ),
               ),
+              // Visibility(
+              //   visible: taskModel.enableCancelButton,
+              //   child: PrimaryButton(
+              //     buttonText: 'Cancel',
+              //     handleOnPressed: () {
+              //       if (taskModel.isCancelReasonRequired)
+              //         enterReasonAlertDialog(context);
+              //     },
+              //     width: 100,
+              //   ),
+              // ),
               Visibility(
                 visible: taskModel.isCloseButtonVisible,
                 child: PrimaryButton(
@@ -815,16 +853,53 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 ),
               ),
               Visibility(
+                visible: taskModel.isCompleteButtonVisible,
+                child: PrimaryButton(
+                  buttonText: 'Complete',
+                  handleOnPressed: () {
+                    if (taskModel.isCompleteReasonRequired)
+                      enterReasonAlertDialog(
+                          context, 'Enter Reason', 'Please enter reason');
+                  },
+                  width: 100,
+                ),
+              ),
+              Visibility(
                 visible: taskModel.isDraftButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Draft',
                   handleOnPressed: () {
-                    serviceViewModelPostRequest(
+                    taskViewModelPostRequest(
                       1,
                       'SERVICE_STATUS_DRAFT',
                       createServiceFormBloc,
                     );
                   },
+                  width: 100,
+                ),
+              ),
+              Visibility(
+                visible: taskModel.isRejectButtonVisible,
+                child: PrimaryButton(
+                  buttonText: 'Reject',
+                  handleOnPressed: () {
+                    if (taskModel.isRejectReasonRequired)
+                      enterReasonAlertDialog(
+                          context, 'Enter Reason', 'Please enter reason');
+                    taskViewModelPostRequest(
+                      1,
+                      'TASK_STATUS_REJECT',
+                      createServiceFormBloc,
+                    );
+                  },
+                  width: 100,
+                ),
+              ),
+              Visibility(
+                visible: taskModel.isReplyButtonVisible,
+                child: PrimaryButton(
+                  buttonText: 'Reply',
+                  handleOnPressed: () {},
                   width: 100,
                 ),
               ),
@@ -870,9 +945,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                         return;
                       }
                     }
-                    serviceViewModelPostRequest(
+                    taskViewModelPostRequest(
                       1,
-                      'SERVICE_STATUS_INPROGRESS',
+                      'TASK_STATUS_INPROGRESS',
                       createServiceFormBloc,
                     );
                   },
@@ -924,13 +999,13 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     }
   }
 
-  enterReasonAlertDialog(BuildContext context) {
+  enterReasonAlertDialog(BuildContext context, String title, String label) {
     return showDialog<dynamic>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'Enter reason',
+            title,
             textAlign: TextAlign.center,
             // style: TextStyle(
             //     fontSize: 16.sp,
@@ -945,12 +1020,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             child: new TextFormField(
               controller: cancelReason,
               decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Please enter reason'),
+                  border: OutlineInputBorder(), labelText: label),
               validator: (value) {
-                return ((value == null || value.isEmpty)
-                    ? 'Please Enter Reason'
-                    : null);
+                return ((value == null || value.isEmpty) ? label : null);
               },
             ),
           ),
@@ -1078,7 +1150,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   }
 
   String resultMsg = '';
-  serviceViewModelPostRequest(int postDataAction, String taskStatusCode,
+  taskViewModelPostRequest(int postDataAction, String taskStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
     String stringModel = jsonEncode(taskModel);
     var jsonModel = jsonDecode(stringModel);

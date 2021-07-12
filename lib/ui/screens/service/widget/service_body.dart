@@ -383,10 +383,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     for (var i = 0; i < model.length; i++) {
       print(model[i].type);
       if (model[i].type == 'textfield') {
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId == null || widget.serviceId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final textField$i =
@@ -406,10 +408,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
       } else if (model[i].type == 'textarea') {
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId == null || widget.serviceId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         // final textArea$i = new TextFieldBloc();
@@ -432,10 +436,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       } else if (model[i].type == 'number') {
         String initialValue;
         // final number$i = new TextFieldBloc(initialValue: initialValue);
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId == null || widget.serviceId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           leaveDurationControllerCalendarDays.text = model[i].udfValue;
           initialValue = leaveDurationControllerCalendarDays.text;
@@ -461,10 +467,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password') {
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId == null || widget.serviceId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final password$i =
@@ -484,10 +492,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox') {
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId == null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId == null || widget.serviceId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) && widget.serviceId != null) {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(new DynamicCheckBoxValue(

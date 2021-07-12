@@ -41,11 +41,11 @@ class TaskBloc {
   Future<PostResponse> postData({
     @required TaskModel taskModel,
   }) async {
-    // PostResponse response = await _taskRepository.postAPIData(
-    //   TaskResponseModel: taskResponseModel,
-    // );
+    PostResponse response = await _taskRepository.postAPIData(
+      taskModel: taskModel,
+    );
 
-    // return response;
+    return response;
   }
 
   /// Used to update an existing entry.

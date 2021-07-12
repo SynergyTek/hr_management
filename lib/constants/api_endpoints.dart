@@ -20,6 +20,8 @@ class APIEndpointConstants {
 
   static const String GET_TASK_DETAILS = '$BASE_URL/nts/query/GetTaskDetails';
 
+  static const String MANAGE_TASK = '$BASE_URL/nts/command/ManageTask';
+
   //Task API Endpoints Block End
 
   //************************************************************************//
