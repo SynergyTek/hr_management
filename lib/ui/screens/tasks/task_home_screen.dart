@@ -10,15 +10,15 @@ class TaskHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       drawer: drawerWidget(context),
+      drawer: drawerWidget(context),
       appBar: AppbarWidget(
         title: "Task Home",
       ),
       body: SafeArea(
-        child: InternetConnectivityWidget(
-          child: TaskHomeBody(),
-        ),
+        // child: InternetConnectivityWidget(
+        child: TaskHomeBody(),
       ),
+      // ),
     );
   }
 }
