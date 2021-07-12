@@ -205,7 +205,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                               context,
                               CREATE_EDIT_TASK_ROUTE,
                               arguments: ScreenArguments(
-                                  arg1: '', arg2: _taskList[index].taskNo),
+                                  arg1: '', arg2: _taskList[index].id),
                             );
                           },
                         ),
