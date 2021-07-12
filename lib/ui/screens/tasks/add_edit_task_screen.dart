@@ -13,7 +13,7 @@ class AddEditTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarWidget(
-        title: "Create " + templateCode,
+        title: "Edit " + templateCode,
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
