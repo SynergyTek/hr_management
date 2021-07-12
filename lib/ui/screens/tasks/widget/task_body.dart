@@ -78,7 +78,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   void initState() {
     super.initState();
     taskBloc
-      ..getTaskDetails()(
+      ..getTaskDetails(
           templateCode: widget.templateCode,
           taskId: widget.taskId,
           userId: '45bba746-3309-49b7-9c03-b5793369d73c');
@@ -105,10 +105,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                     context.read<CreateServiceFormBloc>();
                 taskModel = snapshot.data.data;
 
-                parseJsonToUDFModel(
-                  createServiceFormBloc,
-                  taskModel.json,
-                );
+                if (taskModel.json != null) {
+                  parseJsonToUDFModel(
+                    createServiceFormBloc,
+                    taskModel.json,
+                  );
+                }
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -120,11 +122,13 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                   },
                   onSuccess: (context, state) {},
                   onFailure: (context, state) {},
-                  child: setTaskView(
-                    context,
-                    createServiceFormBloc,
-                    taskModel,
-                  ),
+                  child: taskModel.id != null
+                      ? setTaskView(
+                          context,
+                          createServiceFormBloc,
+                          taskModel,
+                        )
+                      : SizedBox(),
                 );
               } else {
                 return Center(
