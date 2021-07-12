@@ -201,6 +201,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                           //   style: Theme.of(context).textTheme.headline6,
                           // ),
                           onTap: () {
+                            taskBloc.subjectGetTaskDetails.sink.add(null);
                             Navigator.pushNamed(
                               context,
                               CREATE_EDIT_TASK_ROUTE,

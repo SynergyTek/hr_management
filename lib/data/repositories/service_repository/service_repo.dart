@@ -24,7 +24,7 @@ class ServiceRepository extends AbstractServiceRepository {
       );
 
       // print("DIO Response: ${response.data.runtimeType}");
-
+      print(response.data);
       return ServiceResponse.fromJson(
         response.data,
       );
