@@ -1,4 +1,5 @@
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
+import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
@@ -41,9 +42,9 @@ class AppRouter {
         );
         break;
 
-      // case LOGIN_ROUTE:
-      //   return MaterialPageRoute(builder: (_) => LoginScreen());
-      //   break;
+      case LOGIN_ROUTE:
+        return MaterialPageRoute(builder: (_) => LoginScreen());
+        break;
 
       case ONBOARDING_ROUTE:
         return MaterialPageRoute(
