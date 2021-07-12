@@ -754,11 +754,11 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               ),
               Visibility(
                 // visible: true,
-                visible: taskModel.isCancelReasonRequired,
+                visible: taskModel.isRejectButtonVisible,
                 child: PrimaryButton(
-                  buttonText: 'Cancel',
+                  buttonText: 'Reject',
                   handleOnPressed: () {
-                    if (taskModel.isCancelReasonRequired)
+                    if (taskModel.isRejectReasonRequired)
                       enterReasonAlertDialog(context);
                   },
                   width: 100,

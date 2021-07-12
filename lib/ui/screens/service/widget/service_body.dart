@@ -562,21 +562,20 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           editServiceDDValue(
-            code: udfJson[model[i].key],
-            idKey: model[i].idPath,
-            nameKey: (model[i].template)
-                .toString()
-                .replaceAll('<span>{{', '')
-                .replaceAll('}}</span>', '')
-                .trim()
-                .split('.')[1],
-            url: model[i].data.url,
-          ).then(
-            (value) => _ddController.text = value ?? "NA",
-          );
-        } else {
-          _ddController.text = selectValue[i];
+              code: udfJson[model[i].key],
+              idKey: model[i].idPath,
+              nameKey: (model[i].template)
+                  .toString()
+                  .replaceAll('<span>{{', '')
+                  .replaceAll('}}</span>', '')
+                  .trim()
+                  .split('.')[1],
+              url: model[i].data.url,
+              ddController: _ddController);
         }
+        // } else {
+        //   _ddController.text = selectValue[i];
+        // }
 
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,
@@ -1157,12 +1156,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     displaySnackBar(text: resultMsg, context: context);
   }
 
-  Future<String> editServiceDDValue({
-    String idKey,
-    String nameKey,
-    String url,
-    String code,
-  }) async {
+  editServiceDDValue(
+      {String idKey,
+      String nameKey,
+      String url,
+      String code,
+      TextEditingController ddController}) async {
     NTSDdRepository ntsDdRepository = NTSDdRepository();
     String completeUrl = url + "&filterKey=$idKey&filterValue=$code";
     NTSDdResponse ntsDdResponse = await ntsDdRepository.getFilteredDDData(
@@ -1172,8 +1171,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
 
     print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
-
-    return ntsDdResponse?.data?.elementAt(0)?.name;
+    ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
+    // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
 
   @override
