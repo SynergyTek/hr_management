@@ -1,4 +1,5 @@
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
+import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
@@ -124,6 +125,21 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => TaskHomeFilterWidget(
             onListTap: args.arg5,
+          ),
+        );
+        break;
+
+      case CREATE_EDIT_TASK_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+        print("args: $args");
+
+        // if (args?.arg1 == null || args.arg1.isEmpty)
+        //   throw Exception("Template Code cannot be empty or null.");
+
+        return MaterialPageRoute(
+          builder: (_) => AddEditTaskScreen(
+            templateCode: args.arg1,
+            taskId: args.arg2,
           ),
         );
         break;
