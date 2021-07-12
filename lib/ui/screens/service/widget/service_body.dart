@@ -116,8 +116,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   onSubmitting: (context, state) {
                     // if (createServiceFormBloc.startDate.value != null &&
                     //     createServiceFormBloc.endDate.value != null) {
-                    //   compareStartEndDate(createServiceFormBloc.startDate.value,
-                    //       createServiceFormBloc.endDate.value, context);
+                    //   compareStartEndDate(
+                    //       startDate: createServiceFormBloc.startDate.value,
+                    //       enddate: createServiceFormBloc.endDate.value,
+                    //       context: context,
+                    //       updateDuration: true);
                     // }
                   },
                   onSuccess: (context, state) {},
@@ -264,6 +267,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   if (date != null) {
                     setState(() async {
                       startDate = date;
+                      if (dueDate == null && serviceModel.dueDate != null) {
+                        dueDate = DateTime.parse(serviceModel.dueDate);
+                      }
                       if (dueDate != null && dueDate.toString().isNotEmpty)
                         compareStartEndDate(
                             startDate: startDate,
@@ -285,6 +291,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   if (date != null) {
                     setState(() async {
                       dueDate = date;
+                      if (startDate == null && serviceModel.startDate != null) {
+                        startDate = DateTime.parse(serviceModel.startDate);
+                      }
                       if (startDate != null && startDate.toString().isNotEmpty)
                         compareStartEndDate(
                             startDate: startDate,
@@ -1044,7 +1053,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Start Date Should be greater than End Date.'),
+                Text('End Date Should be greater than Start Date.'),
               ],
             ),
           ),
