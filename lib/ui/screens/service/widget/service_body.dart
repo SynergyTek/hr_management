@@ -83,9 +83,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     super.initState();
     serviceBloc
       ..getServiceDetail(
-          templateCode: widget.templateCode,
-          serviceId: widget.serviceId,
-          userId: '45bba746-3309-49b7-9c03-b5793369d73c');
+        templateCode: widget.templateCode,
+        serviceId: widget.serviceId,
+        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+      );
   }
 
   @override
@@ -560,21 +561,21 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          // _ddController.text = udfJson[model[i].key];
-          // _ddController.text = editServiceDDValue(
-          //         code: udfJson[model[i].key],
-          //         idKey: model[i].idPath,
-          //         nameKey: (model[i].template)
-          //             .toString()
-          //             .replaceAll('<span>{{', '')
-          //             .replaceAll('}}</span>', '')
-          //             .trim()
-          //             .split('.')[1],
-          //         url: model[i].data.url) ??
-          //     '';
-        } else {
-          _ddController.text = selectValue[i];
+          editServiceDDValue(
+              code: udfJson[model[i].key],
+              idKey: model[i].idPath,
+              nameKey: (model[i].template)
+                  .toString()
+                  .replaceAll('<span>{{', '')
+                  .replaceAll('}}</span>', '')
+                  .trim()
+                  .split('.')[1],
+              url: model[i].data.url,
+              ddController: _ddController);
         }
+        // } else {
+        //   _ddController.text = selectValue[i];
+        // }
 
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,
@@ -1155,14 +1156,23 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     displaySnackBar(text: resultMsg, context: context);
   }
 
-  editServiceDDValue({String idKey, String nameKey, String url, String code}) {
+  editServiceDDValue(
+      {String idKey,
+      String nameKey,
+      String url,
+      String code,
+      TextEditingController ddController}) async {
     NTSDdRepository ntsDdRepository = NTSDdRepository();
     String completeUrl = url + "&filterKey=$idKey&filterValue=$code";
-    ntsDdRepository
-        .getFilteredDDData(idKey: idKey, nameKey: nameKey, url: completeUrl)
-        .then((value) {
-      return value.data[0].name;
-    });
+    NTSDdResponse ntsDdResponse = await ntsDdRepository.getFilteredDDData(
+      idKey: idKey,
+      nameKey: nameKey,
+      url: completeUrl,
+    );
+
+    print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
+    ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
+    // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
 
   @override
