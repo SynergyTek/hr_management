@@ -160,10 +160,25 @@ class DateTimePicker extends StatelessWidget {
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate ?? new DateTime.now(),
-        firstDate: new DateTime(1970, 8),
-        lastDate: new DateTime(2101));
+      context: context,
+      initialDate: selectedDate ?? new DateTime.now(),
+      firstDate: new DateTime(1970, 8),
+      lastDate: new DateTime(2101),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: Theme.of(context).primaryColor,
+              onPrimary: Colors.white,
+              surface: Theme.of(context).primaryColor,
+              onSurface: Colors.white,
+            ),
+            // dialogBackgroundColor: Colors.white,
+          ),
+          child: child,
+        );
+      },
+    );
 
     if (picked != null && picked != selectedDate) {
       selectDate(picked);

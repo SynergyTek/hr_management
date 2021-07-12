@@ -200,12 +200,14 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                           //   maxLines: 2,
                           //   style: Theme.of(context).textTheme.headline6,
                           // ),
-                          // onTap: () {
-                          //   if (widget.onListTap != null) {
-                          //     widget.onListTap(_filteredTaskList[index]);
-                          //     Navigator.of(context).pop();
-                          //   }
-                          // },
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              CREATE_EDIT_TASK_ROUTE,
+                              arguments: ScreenArguments(
+                                  arg1: '', arg2: _taskList[index].id),
+                            );
+                          },
                         ),
                       );
                     },

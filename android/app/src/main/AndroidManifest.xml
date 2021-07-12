@@ -2,7 +2,7 @@
     package="com.example.hr_management">
 
    <application
-        android:label="hr_management"
+        android:label="Synergy HRM"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         >
