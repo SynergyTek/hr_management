@@ -44,7 +44,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
 
   apiCall() {
     taskBloc.subjectTaskList.sink.add(null);
-    // taskBloc.subject.sink.add(null);
+
     Map<String, dynamic> queryparams = Map();
 
     if (moduleId != null) queryparams['moduleId'] = moduleId;
