@@ -13,12 +13,18 @@ class UdfJson {
 
   factory UdfJson.fromJson(Map<String, dynamic> json) => UdfJson(
         components: List<UdfJsonComponent>.from(
-            json["components"].map((x) => UdfJsonComponent.fromJson(x))),
+          json["components"].map(
+            (x) => UdfJsonComponent.fromJson(x),
+          ),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
-        "components":
-            List<UdfJsonComponent>.from(components.map((x) => x.toJson())),
+        "components": List<UdfJsonComponent>.from(
+          components.map(
+            (x) => x.toJson(),
+          ),
+        ),
       };
 }
 

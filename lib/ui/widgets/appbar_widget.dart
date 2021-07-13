@@ -29,9 +29,12 @@ class _AppbarWidgetState extends State<AppbarWidget> {
     return AppBar(
       elevation: 0,
       bottom: widget.bottom,
-      actions: [
-        ProfileSettingsIconButton(),
-      ]..addAll(widget?.actions ?? []),
+      actions: []
+        ..addAll(widget?.actions ?? [])
+        ..add(ProfileSettingsIconButton()),
+      // actions: [
+      //   ProfileSettingsIconButton(),
+      // ]..addAll(widget?.actions ?? []),
       title: Text(widget.title),
     );
   }

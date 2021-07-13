@@ -79,9 +79,10 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     super.initState();
     taskBloc
       ..getTaskDetails(
-          templateCode: widget.templateCode,
-          taskId: widget.taskId,
-          userId: '45bba746-3309-49b7-9c03-b5793369d73c');
+        templateCode: widget.templateCode,
+        taskId: widget.taskId,
+        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+      );
   }
 
   @override
@@ -383,6 +384,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
       print(model[i].type);
+      print(model[i].udfValue);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
@@ -436,25 +438,29 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
       } else if (model[i].type == 'number') {
         String initialValue;
-        if (model[i].key == 'LeaveDurationCalendarDays') {
-          initialValue = leaveDurationControllerCalendarDays.text;
-          udfJson[model[i].key] = initialValue;
-        } else {}
+        // if (model[i].key == 'LeaveDurationCalendarDays' &&
+        //     (leaveDurationControllerCalendarDays.text != null &&
+        //         leaveDurationControllerCalendarDays.text.isNotEmpty)) {
+        //   initialValue = leaveDurationControllerCalendarDays.text;
+        // udfJson[model[i].key] = initialValue;
+        // }
         // final number$i = new TextFieldBloc(initialValue: initialValue);
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        if (model[i].key == 'LeaveDurationCalendarDays') {
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
+        }
+        if (model[i].key == 'LeaveDurationCalendarDays' &&
+            (leaveDurationControllerCalendarDays.text != null &&
+                leaveDurationControllerCalendarDays.text.isNotEmpty)) {
           initialValue = leaveDurationControllerCalendarDays.text;
-        } else {
+          udfJson[model[i].key] = initialValue;
           initialValue = udfJson[model[i].key];
         }
-        final number$i = new TextFieldBloc(initialValue: initialValue);
+        final number$i = new TextFieldBloc(initialValue: udfJson[model[i].key]);
         listDynamic.add(
           BlocNumberBoxWidget(
             labelName: model[i].label,
@@ -596,17 +602,21 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         ));
       } else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
+        }
         listDynamic.add(new DynamicDateTimeBox(
-          code: model[i].inputFormat != null || model[i].inputFormat != ''
-              ? model[i].inputFormat
+          code: udfJson[model[i].key].isNotEmpty
+              ? DateFormat("yyyy-MM-dd").parse(udfJson[model[i].key]).toString()
               : null,
+
+          // code: model[i].inputFormat != null || model[i].inputFormat != ''
+          //     ? model[i].inputFormat
+          //     : null,
           name: model[i].label,
           key: new Key(model[i].label),
           selectDate: (DateTime date) {
@@ -807,154 +817,155 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     CreateServiceFormBloc createServiceFormBloc,
   ) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              Visibility(
-                visible: taskModel.isAcceptButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Accept',
-                  handleOnPressed: () {},
-                  width: 100,
-                ),
-              ),
-              Visibility(
-                visible: taskModel.isAddCommentEnabled,
-                child: PrimaryButton(
-                  buttonText: 'Add comment',
-                  handleOnPressed: () {
-                    enterReasonAlertDialog(
-                        context, 'Enter Comment', 'Please enter Comment');
-                  },
-                  width: 100,
-                ),
-              ),
-              // Visibility(
-              //   visible: taskModel.enableCancelButton,
-              //   child: PrimaryButton(
-              //     buttonText: 'Cancel',
-              //     handleOnPressed: () {
-              //       if (taskModel.isCancelReasonRequired)
-              //         enterReasonAlertDialog(context);
-              //     },
-              //     width: 100,
-              //   ),
-              // ),
-              Visibility(
-                visible: taskModel.isCloseButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Close',
-                  handleOnPressed: () {},
-                  width: 100,
-                ),
-              ),
-              Visibility(
-                visible: taskModel.isCompleteButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Complete',
-                  handleOnPressed: () {
-                    if (taskModel.isCompleteReasonRequired)
-                      enterReasonAlertDialog(
-                          context, 'Enter Reason', 'Please enter reason');
-                  },
-                  width: 100,
-                ),
-              ),
-              Visibility(
-                visible: taskModel.isDraftButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Draft',
-                  handleOnPressed: () {
-                    taskViewModelPostRequest(
-                      1,
-                      'SERVICE_STATUS_DRAFT',
-                      createServiceFormBloc,
-                    );
-                  },
-                  width: 100,
-                ),
-              ),
-              Visibility(
-                visible: taskModel.isRejectButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Reject',
-                  handleOnPressed: () {
-                    if (taskModel.isRejectReasonRequired)
-                      enterReasonAlertDialog(
-                          context, 'Enter Reason', 'Please enter reason');
-                    taskViewModelPostRequest(
-                      1,
-                      'TASK_STATUS_REJECT',
-                      createServiceFormBloc,
-                    );
-                  },
-                  width: 100,
-                ),
-              ),
-              Visibility(
-                visible: taskModel.isReplyButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Reply',
-                  handleOnPressed: () {},
-                  width: 100,
-                ),
-              ),
-              Visibility(
-                visible: taskModel.isSubmitButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Submit',
-                  handleOnPressed: () {
-                    bool isValid = false;
-                    for (var i = 0; i < columnComponent.length; i++) {
-                      if (columnComponent[i]?.validate?.required != null &&
-                          columnComponent[i].validate.required == true &&
-                          udfJson.containsKey(columnComponent[i].key) &&
-                          (udfJson[columnComponent[i].key] == null ||
-                              udfJson[columnComponent[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${columnComponent[i].label}',
-                            context: context);
-                        return;
-                      }
-                    }
-                    for (var i = 0; i < componentComList.length; i++) {
-                      if (componentComList[i]?.validate?.required != null &&
-                          componentComList[i].validate.required == true &&
-                          udfJson.containsKey(componentComList[i].key) &&
-                          (udfJson[componentComList[i].key] == null ||
-                              udfJson[componentComList[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${componentComList[i].label}',
-                            context: context);
-                        return;
-                      }
-                    }
-                    for (var i = 0; i < udfJsonComponent.length; i++) {
-                      if (udfJsonComponent[i]?.validate?.required != null &&
-                          udfJsonComponent[i].validate.required == true &&
-                          udfJson.containsKey(udfJsonComponent[i].key) &&
-                          (udfJson[udfJsonComponent[i].key] == null ||
-                              udfJson[udfJsonComponent[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${udfJsonComponent[i].label}',
-                            context: context);
-                        return;
-                      }
-                    }
-                    taskViewModelPostRequest(
-                      1,
-                      'TASK_STATUS_INPROGRESS',
-                      createServiceFormBloc,
-                    );
-                  },
-                  width: 100,
-                ),
-              ),
-            ],
+      child: ListView(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          Visibility(
+            visible: taskModel.isAcceptButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Accept',
+              handleOnPressed: () {},
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: taskModel.isAddCommentEnabled,
+            child: PrimaryButton(
+              buttonText: 'Add comment',
+              handleOnPressed: () {
+                enterReasonAlertDialog(
+                    context, 'Enter Comment', 'Please enter Comment');
+              },
+              width: 100,
+            ),
+          ),
+          // Visibility(
+          //   visible: taskModel.enableCancelButton,
+          //   child: PrimaryButton(
+          //     buttonText: 'Cancel',
+          //     handleOnPressed: () {
+          //       if (taskModel.isCancelReasonRequired)
+          //         enterReasonAlertDialog(context);
+          //     },
+          //     width: 100,
+          //   ),
+          // ),
+          Visibility(
+            visible: taskModel.isCloseButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Close',
+              handleOnPressed: () {},
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: taskModel.isCompleteButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Complete',
+              handleOnPressed: () {
+                taskViewModelPostRequest(
+                  1,
+                  'TASK_STATUS_COMPLETE',
+                  createServiceFormBloc,
+                );
+
+                // if (taskModel.isCompleteReasonRequired)
+                //   enterReasonAlertDialog(
+                //       context, 'Enter Reason', 'Please enter reason');
+              },
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: taskModel.isDraftButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Draft',
+              handleOnPressed: () {
+                taskViewModelPostRequest(
+                  1,
+                  'TASK_STATUS_DRAFT',
+                  createServiceFormBloc,
+                );
+              },
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: taskModel.isRejectButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Reject',
+              handleOnPressed: () {
+                if (taskModel.isRejectReasonRequired)
+                  enterReasonAlertDialog(
+                      context, 'Enter Reason', 'Please enter reason');
+                taskViewModelPostRequest(
+                  1,
+                  'TASK_STATUS_REJECT',
+                  createServiceFormBloc,
+                );
+              },
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: taskModel.isReplyButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Reply',
+              handleOnPressed: () {},
+              width: 100,
+            ),
+          ),
+          Visibility(
+            visible: taskModel.isSubmitButtonVisible,
+            child: PrimaryButton(
+              buttonText: 'Submit',
+              handleOnPressed: () {
+                bool isValid = false;
+                for (var i = 0; i < columnComponent.length; i++) {
+                  if (columnComponent[i]?.validate?.required != null &&
+                      columnComponent[i].validate.required == true &&
+                      udfJson.containsKey(columnComponent[i].key) &&
+                      (udfJson[columnComponent[i].key] == null ||
+                          udfJson[columnComponent[i].key].isEmpty)) {
+                    displaySnackBar(
+                        text: 'Please enter ${columnComponent[i].label}',
+                        context: context);
+                    return;
+                  }
+                }
+                for (var i = 0; i < componentComList.length; i++) {
+                  if (componentComList[i]?.validate?.required != null &&
+                      componentComList[i].validate.required == true &&
+                      udfJson.containsKey(componentComList[i].key) &&
+                      (udfJson[componentComList[i].key] == null ||
+                          udfJson[componentComList[i].key].isEmpty)) {
+                    displaySnackBar(
+                        text: 'Please enter ${componentComList[i].label}',
+                        context: context);
+                    return;
+                  }
+                }
+                for (var i = 0; i < udfJsonComponent.length; i++) {
+                  if (udfJsonComponent[i]?.validate?.required != null &&
+                      udfJsonComponent[i].validate.required == true &&
+                      udfJson.containsKey(udfJsonComponent[i].key) &&
+                      (udfJson[udfJsonComponent[i].key] == null ||
+                          udfJson[udfJsonComponent[i].key].isEmpty)) {
+                    displaySnackBar(
+                        text: 'Please enter ${udfJsonComponent[i].label}',
+                        context: context);
+                    return;
+                  }
+                }
+                taskViewModelPostRequest(
+                  1,
+                  'TASK_STATUS_INPROGRESS',
+                  createServiceFormBloc,
+                );
+              },
+              width: 100,
+            ),
           ),
         ],
       ),
@@ -1158,6 +1169,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
 
     postTaskModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     postTaskModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postTaskModel.assignedToUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     postTaskModel.taskSubject = createServiceFormBloc.subject.value;
     postTaskModel.taskDescription = createServiceFormBloc.description.value;
     postTaskModel.dataAction = postDataAction;

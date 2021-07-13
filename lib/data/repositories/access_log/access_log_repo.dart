@@ -22,16 +22,16 @@ class AccessLogRepository extends AbstractAccessLogRepository {
 
       if (response?.data != null)
         return AccessLogResponse.fromJson(
-          queryparams["punchingTye"],
+          queryparams["punchingType"],
         );
 
       // i.e. Something went wrong!?
       // Some corner case.
       return AccessLogResponse.withError("-1");
     } catch (err, stacktrace) {
-      print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
-      print("Stacktrace: $stacktrace \nError: $err");
+      // print(
+      //     "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      // print("Stacktrace: $stacktrace \nError: $err");
 
       return AccessLogResponse.withError("$err");
     }
