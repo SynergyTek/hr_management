@@ -1,9 +1,9 @@
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
 
 import 'package:hr_management/ui/screens/login/login_screen.dart';
+import 'package:hr_management/ui/screens/nts_comment/add_edit_comment_screen.dart';
 
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
-
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
@@ -98,6 +98,11 @@ class AppRouter {
             templateCode: args.arg1,
             serviceId: args.arg2,
           ),
+        );
+        break;
+      case COMMENT_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => AddEditCommentScreen(),
         );
         break;
 

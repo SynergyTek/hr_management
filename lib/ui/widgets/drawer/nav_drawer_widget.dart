@@ -125,6 +125,19 @@ Widget drawerWidget(context) {
         //     );
         //   },
         // ),
+        ListTile(
+          title: Text(
+            'COMMENTS',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.comment),
+          onTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              COMMENT_ROUTE,
+            );
+          },
+        ),
       ],
     ),
   );
