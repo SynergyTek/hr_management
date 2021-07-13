@@ -58,8 +58,9 @@ class DynamicNumberBoxWidget extends StatelessWidget {
     return new TextFormField(
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          WhitelistingTextInputFormatter(
-              new RegExp('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$'))
+          FilteringTextInputFormatter(
+              RegExp('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$'),
+              allow: true)
         ],
         textAlign: TextAlign.left,
         key: new Key(fieldName),

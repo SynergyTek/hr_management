@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class AccessLogModel {
   String deviceId;
   String biometricId;

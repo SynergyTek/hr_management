@@ -45,11 +45,7 @@ class SelectTextField extends StatelessWidget {
             maxLines: 1,
             validator: validator != null
                 ? validator
-                : (String value) {
-                    if (value.isEmpty) {
-                      return validationMessage;
-                    }
-                  },
+                : (String value) => value.isEmpty ? validationMessage : null,
             onSaved: (String value) {
               controller.text = value;
             },

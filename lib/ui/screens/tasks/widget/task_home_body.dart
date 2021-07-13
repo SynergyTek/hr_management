@@ -4,7 +4,6 @@ import 'package:hr_management/data/models/task_models/task_list_resp_model.dart'
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../../logic/blocs/task_bloc/task_bloc.dart';
-import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
 
 import 'package:listizer/listizer.dart';

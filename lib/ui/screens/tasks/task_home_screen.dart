@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'widget/task_home_body.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
-import '../../widgets/internet_connectivity_widget.dart';
 
 class TaskHomeScreen extends StatelessWidget {
   const TaskHomeScreen({Key key}) : super(key: key);
