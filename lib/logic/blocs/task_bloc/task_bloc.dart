@@ -28,8 +28,9 @@ class TaskBloc {
 
   getTaskDetails({String templateCode, String taskId, String userId}) async {
     Map<String, dynamic> queryparams = Map();
-    queryparams["taskId"] = taskId;
-    queryparams["templateid"] = templateCode;
+    if (taskId != null && taskId.isNotEmpty) queryparams["taskId"] = taskId;
+    if (templateCode != null && templateCode.isNotEmpty)
+      queryparams["templateCode"] = templateCode;
     queryparams["userId"] = userId;
     TaskResponseModel response = await _taskRepository.getTaskDetailsData(
       queryparams: queryparams,

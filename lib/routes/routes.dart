@@ -96,6 +96,7 @@ class AppRouter {
           builder: (_) => CreateServiceScreen(
             templateCode: args.arg1,
             serviceId: args.arg2,
+            title: args.arg3,
           ),
         );
         break;
@@ -143,6 +144,7 @@ class AppRouter {
           builder: (_) => AddEditTaskScreen(
             templateCode: args.arg1,
             taskId: args.arg2,
+            title: args.arg3,
           ),
         );
         break;

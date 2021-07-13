@@ -7,7 +7,9 @@ import 'widget/service_body.dart';
 class CreateServiceScreen extends StatelessWidget {
   final String templateCode;
   final String serviceId;
-  const CreateServiceScreen({Key key, this.templateCode, this.serviceId})
+  final String title;
+  const CreateServiceScreen(
+      {Key key, this.templateCode, this.serviceId, this.title})
       : super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class CreateServiceScreen extends StatelessWidget {
       appBar: AppbarWidget(
           title: serviceId == null || serviceId.isEmpty
               ? "Create " + templateCode
-              : "Edit " + templateCode),
+              : "Edit " + title),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: CreateServiceScreenBody(
