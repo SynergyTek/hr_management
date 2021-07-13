@@ -79,9 +79,10 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     super.initState();
     taskBloc
       ..getTaskDetails(
-          templateCode: widget.templateCode,
-          taskId: widget.taskId,
-          userId: '45bba746-3309-49b7-9c03-b5793369d73c');
+        templateCode: widget.templateCode,
+        taskId: widget.taskId,
+        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+      );
   }
 
   @override
