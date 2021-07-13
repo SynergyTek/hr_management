@@ -17,7 +17,7 @@ enum TaskFilterOptions {
   SHARE_TO,
 }
 
-enum NTSTemplateType {
+enum NTSType {
   service,
   task,
   note,

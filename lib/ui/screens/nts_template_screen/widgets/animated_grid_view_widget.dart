@@ -9,11 +9,11 @@ import 'package:hr_management/ui/screens/leaves/widget/grid_widget.dart';
 
 class AnimatedGridViewWidget extends StatefulWidget {
   final dynamic model;
-  final NTSTemplateType ntsTemplateType;
+  final NTSType ntsType;
 
   AnimatedGridViewWidget({
     @required this.model,
-    @required this.ntsTemplateType,
+    @required this.ntsType,
   });
 
   @override
@@ -47,7 +47,7 @@ class _AnimatedGridViewWidgetState extends State<AnimatedGridViewWidget> {
           index: index,
           cardKeys: cardKeys,
           response: widget.model[index],
-          ntsTemplateType: widget.ntsTemplateType,
+          ntsType: widget.ntsType,
         );
       },
     );
@@ -58,13 +58,13 @@ class GridViewFlipWidget extends StatefulWidget {
   final int index;
   final List<GlobalKey<FlipCardState>> cardKeys;
   final dynamic response;
-  final NTSTemplateType ntsTemplateType;
+  final NTSType ntsType;
 
   GridViewFlipWidget({
     @required this.index,
     @required this.cardKeys,
     @required this.response,
-    @required this.ntsTemplateType,
+    @required this.ntsType,
   });
 
   @override
@@ -186,7 +186,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
             serviceBloc.subject.sink.add(null);
             Navigator.pushNamed(
               context,
-              widget.ntsTemplateType == NTSTemplateType.service
+              widget.ntsType == NTSType.service
                   ? CREATE_SERVICE_ROUTE
                   : CREATE_EDIT_TASK_ROUTE,
               arguments: ScreenArguments(

@@ -9,11 +9,11 @@ class NTSTemplateBodyWidget extends StatefulWidget {
   /// T.subject.stream.
   /// Example: leaveTempBloc.subject.stream
   final Stream<dynamic> stream;
-  final NTSTemplateType ntsTemplateType;
+  final NTSType ntsType;
 
   NTSTemplateBodyWidget({
     @required this.stream,
-    @required this.ntsTemplateType,
+    @required this.ntsType,
   });
 
   @override
@@ -41,13 +41,13 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
                 child: Text("No data available."),
               );
 
-            // List model = widget.ntsTemplateType == NTSTemplateType.service
+            // List model = widget.ntsType == ntsType.service
             //     ? snapshot.data.data.where((e) => e.templateType == 6).toList()
             //     : snapshot.data.data;
 
             return AnimatedGridViewWidget(
               model: snapshot.data.data,
-              ntsTemplateType: widget.ntsTemplateType,
+              ntsType: widget.ntsType,
             );
           } else {
             return Center(

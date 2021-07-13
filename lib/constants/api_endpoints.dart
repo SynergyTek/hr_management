@@ -9,6 +9,9 @@ class APIEndpointConstants {
 
   //Note API Endpoints Block Start
 
+  static const POST_NOTE_COMMENT =
+      '$BASE_URL/nts/command/PostNoteComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
+
   //Note API Endpoints Block End
 
   //************************************************************************//
@@ -18,9 +21,12 @@ class APIEndpointConstants {
   static const GET_TASK_HOME_DATA =
       '$BASE_URL/nts/query/ReadTaskHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
-  static const String GET_TASK_DETAILS = '$BASE_URL/nts/query/GetTaskDetails';
+  static const GET_TASK_DETAILS = '$BASE_URL/nts/query/GetTaskDetails';
 
-  static const String MANAGE_TASK = '$BASE_URL/nts/command/ManageTask';
+  static const MANAGE_TASK = '$BASE_URL/nts/command/ManageTask';
+
+  static const POST_TASK_COMMENT =
+      '$BASE_URL/nts/command/PostTaskComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
 
   //Task API Endpoints Block End
 
@@ -38,16 +44,20 @@ class APIEndpointConstants {
 
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
-  static const String GET_SERVICE_ATTACHMENT_COUNT =
+    static const POST_SERVICE_COMMENT =
+      '$BASE_URL/nts/command/PostServiceComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
+
+
+  static const GET_SERVICE_ATTACHMENT_COUNT =
       "$BASE_URL/cms/GetServiceAttachmentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
 
-  static const String GET_SERVICE_SHARED_COUNT =
+  static const GET_SERVICE_SHARED_COUNT =
       "http://95.111.235.64:446/cms/GetServiceSharedCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667588";
 
-  static const String GET_SERVICE_NOTIFICATION_COUNT =
+  static const GET_SERVICE_NOTIFICATION_COUNT =
       "http://95.111.235.64:446/cms/GetServiceNotificationCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
 
-  static const String GET_SERVICE_COMMENTS_COUNT =
+  static const GET_SERVICE_COMMENTS_COUNT =
       "http://95.111.235.64:446/cms/GetServiceCommentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667589";
 
   //Service API Endpoints Block End
@@ -65,7 +75,7 @@ class APIEndpointConstants {
       '$BASE_URL/common/query/InsertAccessLog?userid=45bba746-3309-49b7-9c03-b5793369d73c&';
   // static String GET_REMOTE_ATTENDANCE_DATA = 'https://webapidev.aitalkx.com/common/query/InsertAccessLog?userid=45bba746-3309-49b7-9c03-b5793369d73c&punchingTime=Datetime.Now&punchingTye=0';
 
-  static const String GET_ACCESS_LOG_LIST_DATA =
+  static const GET_ACCESS_LOG_LIST_DATA =
       '$BASE_URL/taa/query/accessloglist?userid=45bba746-3309-49b7-9c03-b5793369d73c';
   // ?startDate=2021-06-20 00:00:00.000&dueDate=2021-07-06 00:00:00.000&userId=cb9272df-0a2c-401b-aed8-b73488ae03aa';
 

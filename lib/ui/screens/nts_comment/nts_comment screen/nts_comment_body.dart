@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/comment_model/comment_model.dart';
+import 'package:hr_management/logic/blocs/nts_comments/nts_comments_bloc.dart';
 
-class AddEditCommentBody extends StatefulWidget {
-  AddEditCommentBody({Key key}) : super(key: key);
+class NTSCommentBody extends StatefulWidget {
+  NTSCommentBody({Key key, this.ntsType, this.ntsId}) : super(key: key);
+  final NTSType ntsType;
+  final String ntsId;
 
   @override
-  _AddEditCommentBodyState createState() => _AddEditCommentBodyState();
+  _NTSCommentBodyState createState() => _NTSCommentBodyState();
 }
 
-class _AddEditCommentBodyState extends State<AddEditCommentBody> {
+class _NTSCommentBodyState extends State<NTSCommentBody> {
+  TextEditingController _commentController=new TextEditingController();
   List<CommentMessage> messages = [
     CommentMessage(messageContent: "Hello, Will", messageType: "receiver"),
     CommentMessage(
@@ -20,6 +25,8 @@ class _AddEditCommentBodyState extends State<AddEditCommentBody> {
     CommentMessage(
         messageContent: "Is there any thing wrong?", messageType: "sender"),
   ];
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +92,7 @@ class _AddEditCommentBodyState extends State<AddEditCommentBody> {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: _commentController,
                     decoration: InputDecoration(
                         hintText: "Write message...",
                         hintStyle: TextStyle(color: Colors.black54),
@@ -95,7 +103,10 @@ class _AddEditCommentBodyState extends State<AddEditCommentBody> {
                   width: 15,
                 ),
                 FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ntsCommentBloc..postCommentData(ntsType:widget.ntsType,comment: 
+                      _commentController.text,ntsId: widget.ntsId,commentToUserId: null);
+                  },
                   child: Icon(
                     Icons.send,
                     color: Colors.white,

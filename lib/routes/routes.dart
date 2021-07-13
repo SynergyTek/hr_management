@@ -1,6 +1,6 @@
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
-import 'package:hr_management/ui/screens/nts_comment/add_edit_comment_screen.dart';
+import 'package:hr_management/ui/screens/nts_comment/nts_comment_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
@@ -26,7 +26,6 @@ import '../ui/screens/tasks/task_home_screen.dart';
 import '../ui/widgets/custom_controls/default_dropdown_list.dart';
 
 import '../ui/screens/attendance/mark_attendance.dart';
-import '../ui/screens/leaves/leave_template.dart';
 import '../ui/screens/note/note_screen.dart';
 import '../ui/screens/registration/registration_screen.dart';
 
@@ -79,7 +78,7 @@ class AppRouter {
         return MaterialPageRoute(
           // builder: (_) => LeaveTemplate(),
           builder: (_) => NTSTemplateScreen(
-            ntsTemplateType: NTSTemplateType.service,
+            ntsType: NTSType.service,
           ),
         );
         break;
@@ -88,7 +87,7 @@ class AppRouter {
         return MaterialPageRoute(
           // builder: (_) => LeaveTemplate(),
           builder: (_) => NTSTemplateScreen(
-            ntsTemplateType: NTSTemplateType.task,
+            ntsType: NTSType.task,
           ),
         );
         break;
@@ -111,11 +110,6 @@ class AppRouter {
             templateCode: args.arg1,
             serviceId: args.arg2,
           ),
-        );
-        break;
-      case COMMENT_ROUTE:
-        return MaterialPageRoute(
-          builder: (_) => AddEditCommentScreen(),
         );
         break;
 
@@ -184,6 +178,11 @@ class AppRouter {
         );
         break;
 
+      case COMMENT_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => NTSCommentScreen(),
+        );
+        break;
       // 404 route.
       default:
         return MaterialPageRoute(

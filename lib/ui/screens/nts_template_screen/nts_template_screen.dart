@@ -9,10 +9,10 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widgets/nts_template_body_widget.dart';
 
 class NTSTemplateScreen extends StatefulWidget {
-  final NTSTemplateType ntsTemplateType;
+  final NTSType ntsType;
 
   const NTSTemplateScreen({
-    @required this.ntsTemplateType,
+    @required this.ntsType,
   });
 
   @override
@@ -24,12 +24,12 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
   void initState() {
     super.initState();
 
-    if (widget.ntsTemplateType == NTSTemplateType.service)
+    if (widget.ntsType == NTSType.service)
       leaveTempBloc.getAllowedTemplateData();
-    else if (widget.ntsTemplateType == NTSTemplateType.task)
+    else if (widget.ntsType == NTSType.task)
       ntsTemplateBloc.getData();
     else {
-      // TODO: for the NTSTemplateType.note type
+      // TODO: for the NTSType.note type
     }
   }
 
@@ -38,15 +38,15 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: (widget.ntsTemplateType == NTSTemplateType.service)
+        title: (widget.ntsType == NTSType.service)
             ? "Leave Request"
             : "Task Request",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: NTSTemplateBodyWidget(
-            ntsTemplateType: widget.ntsTemplateType,
-            stream: (widget.ntsTemplateType == NTSTemplateType.service)
+            ntsType: widget.ntsType,
+            stream: (widget.ntsType == NTSType.service)
                 ? leaveTempBloc.subject.stream
                 : ntsTemplateBloc.subject.stream,
           ),
