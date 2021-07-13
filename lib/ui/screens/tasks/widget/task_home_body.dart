@@ -44,7 +44,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
 
   apiCall() {
     taskBloc.subjectTaskList.sink.add(null);
-    // taskBloc.subject.sink.add(null);
+
     Map<String, dynamic> queryparams = Map();
 
     if (moduleId != null) queryparams['moduleId'] = moduleId;
@@ -206,7 +206,9 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                               context,
                               CREATE_EDIT_TASK_ROUTE,
                               arguments: ScreenArguments(
-                                  arg1: '', arg2: _taskList[index].id),
+                                arg1: '',
+                                arg2: _taskList[index].id,
+                              ),
                             );
                           },
                         ),

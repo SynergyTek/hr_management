@@ -10,11 +10,9 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
     Map<String, dynamic> queryparams,
   }) async {
     try {
-      // TODO: Need to send this via UI and not hardcode here!
       queryparams = {
-        // 'api_key': APIEndpointConstants.API_KEY,
-        // 'language': 'en-US',
-        // 'page': 1
+        "categoryCode": "Leave",
+        "templateType": "Service",
       };
 
       Response response = await _dio.get(

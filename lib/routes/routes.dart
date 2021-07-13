@@ -1,8 +1,9 @@
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
 
-import 'package:hr_management/ui/screens/login/login_screen.dart';
-import 'package:hr_management/ui/screens/nts_comment/add_edit_comment_screen.dart';
+// import 'package:hr_management/ui/screens/login/login_screen.dart';
 
+import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
@@ -46,9 +47,9 @@ class AppRouter {
         );
         break;
 
-      case LOGIN_ROUTE:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
-        break;
+      // case LOGIN_ROUTE:
+      //   return MaterialPageRoute(builder: (_) => LoginScreen());
+      //   break;
 
       case ONBOARDING_ROUTE:
         return MaterialPageRoute(
@@ -76,7 +77,19 @@ class AppRouter {
 
       case LEAVE_REQUEST:
         return MaterialPageRoute(
-          builder: (_) => LeaveTemplate(),
+          // builder: (_) => LeaveTemplate(),
+          builder: (_) => NTSTemplateScreen(
+            ntsTemplateType: NTSTemplateType.service,
+          ),
+        );
+        break;
+
+      case TASK_REQUEST:
+        return MaterialPageRoute(
+          // builder: (_) => LeaveTemplate(),
+          builder: (_) => NTSTemplateScreen(
+            ntsTemplateType: NTSTemplateType.task,
+          ),
         );
         break;
 

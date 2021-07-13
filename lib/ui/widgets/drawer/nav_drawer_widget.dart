@@ -34,6 +34,7 @@ Widget drawerWidget(context) {
             ),
           ),
         ),
+
         ListTile(
           title: Text(
             'NEW LEAVE REQUEST',
@@ -47,6 +48,21 @@ Widget drawerWidget(context) {
             );
           },
         ),
+
+        ListTile(
+          title: Text(
+            'NEW TASK REQUEST',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.today),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              TASK_REQUEST,
+            );
+          },
+        ),
+
         ListTile(
           title: Text(
             'REQUESTED LEAVES',
@@ -60,6 +76,7 @@ Widget drawerWidget(context) {
             );
           },
         ),
+
         ListTile(
           title: Text(
             'TASK HOME',
@@ -98,6 +115,7 @@ Widget drawerWidget(context) {
             );
           },
         ),
+
         ListTile(
           title: Text(
             'ACCESS LOGS',

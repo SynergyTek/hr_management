@@ -56,26 +56,26 @@ class TaskRepository extends AbstractTaskRepository {
   @override
   Future<PostResponse> postAPIData({
     Map<String, dynamic> queryparams,
-    @required TaskResponseModel taskResponseModel,
+    @required TaskModel taskModel,
   }) async {
-    // final String endpoint = APIEndpointConstants.MANAGE_Task;
+    final String endpoint = APIEndpointConstants.MANAGE_TASK;
     try {
-      //   Response response = await _dio.post(
-      //     endpoint,
-      //     queryParameters: queryparams ?? {},
-      //     data: jsonEncode(TaskResponseModel.toJson()) ?? {},
-      //   );
+      Response response = await _dio.post(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        data: jsonEncode(taskModel.toJson()) ?? {},
+      );
 
-      //   print("response: ${response.data}");
+      print("response: ${response.data}");
 
-      //   var result = PostResponse.fromJson(
-      //     response.data,
-      //   );
-      //   // TODO: response parsing
-      //   return result;
+      var result = PostResponse.fromJson(
+        response.data,
+      );
+
+      return result;
     } catch (err, stacktrace) {
-      // print(
-      //     "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
       return PostResponse.withError("$err");

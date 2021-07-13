@@ -27,6 +27,7 @@ const String FORGOT_PASSWORD_ROUTE = "/forgot_password";
 const String HOME_ROUTE = "/home";
 const String MARK_ATTENDANCE_ROUTE = "/mark_attendance";
 const String LEAVE_REQUEST = "/leave_request";
+const String TASK_REQUEST = "/task_request";
 const String REGISTRATION_ROUTE = "/registration_form";
 const String CREATE_SERVICE_ROUTE = "/create_service";
 const String CREATE_EDIT_TASK_ROUTE = "/create_task";

@@ -16,3 +16,9 @@ enum TaskFilterOptions {
   ASSIGN_BY,
   SHARE_TO,
 }
+
+enum NTSTemplateType {
+  service,
+  task,
+  note,
+}

@@ -278,7 +278,7 @@ class TaskModel {
   dynamic returnedDate;
   dynamic reopenedDate;
   dynamic closedDate;
-  dynamic closeComment;
+  String closeComment;
   dynamic rejectionReason;
   dynamic returnReason;
   dynamic reopenReason;

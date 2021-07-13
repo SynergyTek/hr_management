@@ -20,6 +20,8 @@ class APIEndpointConstants {
 
   static const String GET_TASK_DETAILS = '$BASE_URL/nts/query/GetTaskDetails';
 
+  static const String MANAGE_TASK = '$BASE_URL/nts/command/ManageTask';
+
   //Task API Endpoints Block End
 
   //************************************************************************//
@@ -53,7 +55,8 @@ class APIEndpointConstants {
   //************************************************************************//
 
   static const GET_ALLOWED_TEMPLATES =
-      '$BASE_URL/nts/query/GetAllowedTempaltes?categoryCode=Leave&userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/GetAllowedTempaltes?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  // nts/query/GetAllowedTempaltes?categoryCode=STEP_TASK_CATEGORY&userid=45bba746-3309-49b7-9c03-b5793369d73c&templateType=Task&taskType=StepTask
 
   //************************************************************************//
   //Access Log API Endpoints Block Start
