@@ -21,7 +21,7 @@ class AccessLogBloc {
   }) async {
     Map<String, dynamic> queryparams = Map();
     queryparams["punchingTime"] = DateTime.now().toString();
-    queryparams["punchingTye"] = isSignIn ? "0" : "1";
+    queryparams["punchingType"] = isSignIn ? "0" : "1";
 
     AccessLogResponse response = await _accessLogRepository.getInsertAccessLog(
       queryparams: queryparams,
