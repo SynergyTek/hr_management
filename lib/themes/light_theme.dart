@@ -6,10 +6,10 @@ class LightTheme {
   // static const Color _PRIMARY_COLOR = Color(0xFFFF7643);
 
   static const Color _PRIMARY_LIGHT_COLOR = Colors.lightBlueAccent;
-  // static const Color _PRIMARY_LIGHT_COLOR = Color(0xFFFFECDF);
+  static const Color _SECONDARY_LIGHT_COLOR = Color(0xFFFFECDF);
 
   static const Color _SECONDARY_COLOR = Color(0xFF979797);
-  
+
   static const Color _TEXT_COLOR = Color(0xFF757575);
 
   // static const _PRIMARY_GRADIENT_COLOR = LinearGradient(
@@ -45,7 +45,7 @@ class LightTheme {
 
       // dialog color theme:
       dialogTheme: DialogTheme(
-        backgroundColor: _PRIMARY_LIGHT_COLOR,
+        backgroundColor: _SECONDARY_LIGHT_COLOR,
         // elevation: 10,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
