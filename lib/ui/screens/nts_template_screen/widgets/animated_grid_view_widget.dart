@@ -47,6 +47,7 @@ class _AnimatedGridViewWidgetState extends State<AnimatedGridViewWidget> {
           index: index,
           cardKeys: cardKeys,
           response: widget.model[index],
+          ntsTemplateType: widget.ntsTemplateType,
         );
       },
     );
@@ -189,7 +190,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
                   ? CREATE_SERVICE_ROUTE
                   : CREATE_EDIT_TASK_ROUTE,
               arguments: ScreenArguments(
-                arg1: "PROJECT_ADHOC_TASK" ?? templateCode,
+                arg1:  templateCode,
                 arg2: '',
               ),
             );
