@@ -14,6 +14,8 @@ class APIEndpointConstants {
 
   //Note API Endpoints Block End
 
+  static const GET_NOTE_DETAILS = '$BASE_URL/nts/query/GetNoteDetails';
+
   //************************************************************************//
 
   //Task API Endpoints Block Start
@@ -44,9 +46,8 @@ class APIEndpointConstants {
 
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
-    static const POST_SERVICE_COMMENT =
+  static const POST_SERVICE_COMMENT =
       '$BASE_URL/nts/command/PostServiceComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
-
 
   static const GET_SERVICE_ATTACHMENT_COUNT =
       "$BASE_URL/cms/GetServiceAttachmentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";

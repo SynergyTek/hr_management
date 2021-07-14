@@ -5,19 +5,19 @@ import 'package:hr_management/data/models/note/note_model.dart';
 /// APIResponse is a high-level model class which we will consist of a
 /// list of APIData and error string if our API call gets failed
 /// or returns an error in response.
-class ServiceResponse {
+class NoteResponse {
   bool isSuccess;
   final NoteModel data;
   String error;
 
-  ServiceResponse({
+  NoteResponse({
     @required this.data,
   });
 
-  ServiceResponse.fromJson(Map<String, dynamic> response)
+  NoteResponse.fromJson(Map<String, dynamic> response)
       : data = NoteModel.fromJson(response);
 
-  ServiceResponse.withError(String errorValue)
+  NoteResponse.withError(String errorValue)
       : data = null,
         error = errorValue;
 }

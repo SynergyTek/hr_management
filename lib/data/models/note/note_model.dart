@@ -202,7 +202,7 @@ class NoteModel {
   String noteNo;
   String noteId;
   String udfNoteTableId;
-  DateTime startDate;
+  String startDate;
   dynamic expiryDate;
   dynamic slaSeconds;
   String actualSla;
@@ -377,7 +377,7 @@ class NoteModel {
         noteNo: json["NoteNo"],
         noteId: json["NoteId"],
         udfNoteTableId: json["UdfNoteTableId"],
-        startDate: DateTime.parse(json["StartDate"]),
+        startDate: json["StartDate"],
         expiryDate: json["ExpiryDate"],
         slaSeconds: json["SLASeconds"],
         actualSla: json["ActualSLA"],
@@ -552,7 +552,7 @@ class NoteModel {
         "NoteNo": noteNo,
         "NoteId": noteId,
         "UdfNoteTableId": udfNoteTableId,
-        "StartDate": startDate.toIso8601String(),
+        "StartDate": startDate,
         "ExpiryDate": expiryDate,
         "SLASeconds": slaSeconds,
         "ActualSLA": actualSla,
