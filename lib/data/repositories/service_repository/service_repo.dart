@@ -85,8 +85,10 @@ class ServiceRepository extends AbstractServiceRepository {
       if (result.isSuccess) {
         if (service.serviceStatusCode == 'SERVICE_STATUS_DRAFT')
           result.messages = 'Leave saved as Draft';
-        else if (service.serviceStatusCode == 'SERVICE_STATUS_INROGRESS')
+        else if (service.serviceStatusCode == 'SERVICE_STATUS_INPROGRESS')
           result.messages = 'Leave Applied Successfully';
+        else
+          result.messages = 'Leave Saved Successfully';
       }
 
       return result;

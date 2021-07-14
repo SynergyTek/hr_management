@@ -301,7 +301,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     Navigator.pushNamed(
       context,
       TASK_FILTER,
-      arguments: ScreenArguments(arg5: filterData),
+      arguments: ScreenArguments(func: filterData),
     );
   }
 

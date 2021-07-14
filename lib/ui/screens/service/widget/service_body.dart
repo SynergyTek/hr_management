@@ -576,6 +576,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         // } else {
         //   _ddController.text = selectValue[i];
         // }
+        if ((selectValue != null && selectValue.isNotEmpty) &&
+            (selectValue[i] != null && selectValue[i].isNotEmpty)) {
+          _ddController.text = selectValue[i];
+        }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
@@ -847,7 +851,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 visible: serviceModel.isCompleteButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Complete',
-                  handleOnPressed: () {},
+                  handleOnPressed: () => serviceViewModelPostRequest(
+                    1,
+                    'SERVICE_STATUS_COMPLETE',
+                    createServiceFormBloc,
+                  ),
                   width: 100,
                 ),
               ),
@@ -859,6 +867,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   handleOnPressed: () {
                     if (serviceModel.isCancelReasonRequired)
                       enterReasonAlertDialog(context);
+                    serviceViewModelPostRequest(
+                      1,
+                      'SERVICE_STATUS_CANCEL',
+                      createServiceFormBloc,
+                    );
                   },
                   width: 100,
                 ),
