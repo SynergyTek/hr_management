@@ -19,6 +19,8 @@ class APIEndpointConstants {
       '$BASE_URL/nts/query/GetTaskCommentCount';
   //Note API Endpoints Block End
 
+  static const GET_NOTE_DETAILS = '$BASE_URL/nts/query/GetNoteDetails';
+
   //************************************************************************//
 
   //Task API Endpoints Block Start

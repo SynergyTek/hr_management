@@ -26,7 +26,7 @@ import '../ui/screens/tasks/task_home_screen.dart';
 import '../ui/widgets/custom_controls/default_dropdown_list.dart';
 
 import '../ui/screens/attendance/mark_attendance.dart';
-import '../ui/screens/note/note_screen.dart';
+import '../ui/screens/note/add_edit_note.dart';
 import '../ui/screens/registration/registration_screen.dart';
 
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
@@ -116,7 +116,7 @@ class AppRouter {
 
       case NOTE_ROUTE:
         return MaterialPageRoute(
-          builder: (_) => NoteScreen(),
+          builder: (_) => AddEditNote(),
         );
         break;
 

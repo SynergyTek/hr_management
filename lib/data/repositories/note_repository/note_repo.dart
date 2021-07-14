@@ -1,20 +1,24 @@
-part of 'abstract_task_repo.dart';
+part of 'abstract_note_repo.dart';
 
 /// API Repository defines https client object, and our network call methods
 /// which will be used to fetch data from Apis will map the JSON to its model.
-class TaskRepository extends AbstractTaskRepository {
+class NoteRepository extends AbstractNoteRepository {
   final Dio _dio = Dio();
 
-  Future<TaskListResponseModel> getTaskHomeListData(
-      {Map<String, dynamic> queryparams}) async {
-    final String endpoint = APIEndpointConstants.GET_TASK_HOME_DATA;
+  Future<NoteResponse> getNoteDetail({
+    Map<String, dynamic> queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_NOTE_DETAILS;
 
     try {
       Response response = await _dio.get(
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      return TaskListResponseModel.fromJson(
+
+      // print("DIO Response: ${response.data.runtimeType}");
+      print(response.data);
+      return NoteResponse.fromJson(
         response.data,
       );
     } catch (err, stacktrace) {
@@ -22,48 +26,44 @@ class TaskRepository extends AbstractTaskRepository {
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return TaskListResponseModel.withError("$err");
+      return NoteResponse.withError("$err");
     }
   }
 
-  Future<TaskResponseModel> getTaskDetailsData(
-      {Map<String, dynamic> queryparams}) async {
-    final String endpoint = APIEndpointConstants.GET_TASK_DETAILS;
+  Future<NoteListResponse> getNoteList() async {
+    final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
 
     try {
       Response response = await _dio.get(
         endpoint,
-        queryParameters: queryparams ?? {},
       );
-      print(response.data);
-      return TaskResponseModel.fromJson(
+
+      return NoteListResponse.fromJson(
         response.data,
       );
     } catch (err, stacktrace) {
-      print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return TaskResponseModel.withError("$err");
+      return NoteListResponse.withError("$err");
     }
   }
 
   @override
-  Future<TaskResponseModel> deleteAPIData({Map<String, dynamic> queryparams}) {
+  Future<NoteResponse> deleteNoteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<PostResponse> postAPIData({
+  Future<PostResponse> postNoteAPIData({
     Map<String, dynamic> queryparams,
-    @required TaskModel taskModel,
+    @required NoteModel note,
   }) async {
-    final String endpoint = APIEndpointConstants.MANAGE_TASK;
+    final String endpoint = APIEndpointConstants.MANAGE_SERVICE;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(taskModel.toJson()) ?? {},
+        data: jsonEncode(note.toJson()) ?? {},
       );
 
       print("response: ${response.data}");
@@ -71,9 +71,13 @@ class TaskRepository extends AbstractTaskRepository {
       var result = PostResponse.fromJson(
         response.data,
       );
-      result.isSuccess
-          ? result.messages = 'Task saved successfully'
-          : result.messages = 'Unable to submit task';
+
+      if (result.isSuccess) {
+        if (note.noteStatusCode == 'SERVICE_STATUS_DRAFT')
+          result.messages = 'Leave saved as Draft';
+        else if (note.noteStatusCode == 'SERVICE_STATUS_INROGRESS')
+          result.messages = 'Leave Applied Successfully';
+      }
 
       return result;
     } catch (err, stacktrace) {
@@ -86,7 +90,7 @@ class TaskRepository extends AbstractTaskRepository {
   }
 
   @override
-  Future<TaskResponseModel> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<NoteResponse> putNoteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 }
