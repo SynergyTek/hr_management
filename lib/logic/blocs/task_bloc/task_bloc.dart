@@ -54,6 +54,8 @@ class TaskBloc {
       taskModel: taskModel,
     );
 
+    taskBloc..getTaskHomeListData(queryparams: null);
+
     return response;
   }
 
