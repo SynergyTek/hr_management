@@ -5,13 +5,19 @@ part of 'abstract_nts_comments_repo.dart';
 class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   final Dio _dio = Dio();
 
-  Future<ServiceResponse> getCommentsData({
-    Map<String, dynamic> queryparams,
-  }) //{
-  // Optional Params to be added to the request if required.
-  //Map<String, dynamic> queryparams,templatecode}
+  Future<CommentResponse> getCommentsData(
+      {Map<String, dynamic> queryparams, NTSType ntsType}) 
+  // Optional Params to be added to the request if required
   async {
-    final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
+    
+    String endpoint = '';
+    if (ntsType == NTSType.service) {
+      endpoint = APIEndpointConstants.GET_SERVICE_COMMENT_DATA;
+    } else if (ntsType == NTSType.note) {
+      endpoint = APIEndpointConstants.GET_NOTE_COMMENT_DATA;
+    } else if (ntsType == NTSType.note) {
+      endpoint = APIEndpointConstants.GET_TASK_COMMENT_DATA;
+    }
 
     try {
       Response response = await _dio.get(
@@ -20,35 +26,38 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       );
 
       print(response.data);
-      return ServiceResponse.fromJson(
-        response.data,
-      );
+      return CommentResponse();
+      // return CommentResponse.fromJson(
+      //   response.data,
+      // );
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return ServiceResponse.withError("$err");
+      return CommentResponse.withError("$err");
     }
   }
 
   @override
   Future<PostResponse> postCommentData({
-    Map<String, dynamic> queryparams,
+    PostComment comment,
     NTSType ntsType,
   }) async {
+
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.POST_SERVICE_COMMENT;
-    } else if (ntsType ==NTSType.note) {
-      endpoint = APIEndpointConstants.POST_NOTE_COMMENT;
     } else if (ntsType == NTSType.note) {
+      endpoint = APIEndpointConstants.POST_NOTE_COMMENT;
+    } else if (ntsType == NTSType.task) {
       endpoint = APIEndpointConstants.POST_TASK_COMMENT;
     }
+
     try {
       Response response = await _dio.post(
         endpoint,
-        queryParameters: queryparams ?? {},
+        data: jsonEncode(comment.toJson()) ?? {}
       );
 
       print("response: ${response.data}");
@@ -58,6 +67,7 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       );
 
       return result;
+
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
@@ -68,12 +78,12 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   }
 
   @override
-  Future<ServiceResponse> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<CommentResponse> putAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<ServiceResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
+  Future<CommentResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 }

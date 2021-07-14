@@ -128,7 +128,7 @@ class AppRouter {
             idKey: args.arg2,
             nameKey: args.arg3,
             ddName: args.arg4,
-            onListTap: args.arg5,
+            onListTap: args.func,
           ),
         );
       case TASK_HOME:
@@ -141,7 +141,7 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => TaskHomeFilterWidget(
-            onListTap: args.arg5,
+            onListTap: args.func,
           ),
         );
         break;
@@ -181,10 +181,15 @@ class AppRouter {
         break;
 
       case COMMENT_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => NTSCommentScreen(),
+          builder: (_) => NTSCommentScreen(
+            ntsType: args.ntstype,
+            ntsId: args.arg1,
+          ),
         );
         break;
+
       // 404 route.
       default:
         return MaterialPageRoute(

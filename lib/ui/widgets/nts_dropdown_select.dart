@@ -73,7 +73,7 @@ class NTSDropDownSelect extends StatelessWidget {
                     arg2: idKey,
                     arg3: nameKey,
                     arg4: title,
-                    arg5: onListTap),
+                    func: onListTap),
               );
             },
           )

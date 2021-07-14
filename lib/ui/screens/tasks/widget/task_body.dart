@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/task_models/task_model.dart';
 import 'package:hr_management/data/models/task_models/task_response_model.dart';
 import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/service/create_service_form_bloc.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
@@ -835,8 +838,14 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             child: PrimaryButton(
               buttonText: 'Add comment',
               handleOnPressed: () {
-                enterReasonAlertDialog(
-                    context, 'Enter Comment', 'Please enter Comment');
+                  Navigator.pushNamed(
+                  context,
+                  COMMENT_ROUTE,
+                   arguments: ScreenArguments(
+                                ntstype: NTSType.task,
+                                arg1: taskModel.taskId,
+                   )
+                );
               },
               width: 100,
             ),

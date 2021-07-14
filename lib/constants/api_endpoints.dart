@@ -12,6 +12,11 @@ class APIEndpointConstants {
   static const POST_NOTE_COMMENT =
       '$BASE_URL/nts/command/PostNoteComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
 
+  static const GET_NOTE_COMMENT_DATA =
+      '$BASE_URL/nts/query/GetNoteCommentCount';
+
+  static const GET_NOTE_COMMENT_COUNT =
+      '$BASE_URL/nts/query/GetTaskCommentCount';
   //Note API Endpoints Block End
 
   //************************************************************************//
@@ -26,8 +31,13 @@ class APIEndpointConstants {
   static const MANAGE_TASK = '$BASE_URL/nts/command/ManageTask';
 
   static const POST_TASK_COMMENT =
-      '$BASE_URL/nts/command/PostTaskComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/command/PostTaskComment';
 
+  static const GET_TASK_COMMENT_DATA =
+      '$BASE_URL/nts/query/ReadTaskCommentData';
+
+  static const GET_TASK_COMMENT_COUNT =
+      '$BASE_URL/nts/query/GetTaskCommentCount';
   //Task API Endpoints Block End
 
   //************************************************************************//
@@ -44,9 +54,14 @@ class APIEndpointConstants {
 
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
-    static const POST_SERVICE_COMMENT =
+  static const POST_SERVICE_COMMENT =
       '$BASE_URL/nts/command/PostServiceComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
 
+  static const GET_SERVICE_COMMENT_DATA =
+      '$BASE_URL/nts/query/ReadServiceCommentData';
+
+  static const GET_SERVICE_COMMENT_COUNT =
+      '$BASE_URL/nts/query/GetServiceCommentCount';
 
   static const GET_SERVICE_ATTACHMENT_COUNT =
       "$BASE_URL/cms/GetServiceAttachmentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
