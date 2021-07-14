@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
@@ -153,6 +154,23 @@ Widget drawerWidget(context) {
             Navigator.pushReplacementNamed(
               context,
               COMMENT_ROUTE,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'NOTE',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              ADD_EDIT_NOTE_ROUTE,
+              arguments: ScreenArguments(
+                  arg1: '',
+                  arg2: 'e05dbbbb-4855-4cea-8f60-94f8ff096c78',
+                  arg3: 'Note'),
             );
           },
         ),

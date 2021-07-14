@@ -114,9 +114,15 @@ class AppRouter {
         );
         break;
 
-      case NOTE_ROUTE:
+      case ADD_EDIT_NOTE_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+        print("args: $args");
         return MaterialPageRoute(
-          builder: (_) => AddEditNote(),
+          builder: (_) => AddEditNote(
+            templateCode: args.arg1,
+            noteId: args.arg2,
+            title: args.arg3,
+          ),
         );
         break;
 
