@@ -26,8 +26,6 @@ class _NTSCommentBodyState extends State<NTSCommentBody> {
         messageContent: "Is there any thing wrong?", messageType: "sender"),
   ];
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Stack(
