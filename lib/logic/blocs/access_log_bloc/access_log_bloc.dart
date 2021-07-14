@@ -69,6 +69,7 @@ class AccessLogBloc {
 
   dispose() {
     _insertAccessLogSubject.close();
+    _getAccessLogListDataSubject.close();
   }
 
   BehaviorSubject<AccessLogResponse> get subject => _insertAccessLogSubject;

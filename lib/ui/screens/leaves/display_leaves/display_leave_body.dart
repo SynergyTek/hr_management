@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/circle_avatar.dart';
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';

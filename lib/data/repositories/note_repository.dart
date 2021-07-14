@@ -1,11 +1,9 @@
-
 import 'package:dio/dio.dart';
-import '../../constants/api_endpoints.dart';
 import '../models/api_models/api_response_model.dart';
 
 import 'api_repository.dart';
 
-class NoteRepository extends AbstractAPIRepository{
+class NoteRepository extends AbstractAPIRepository {
   final Dio _dio = Dio();
   @override
   Future<APIResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
@@ -13,11 +11,11 @@ class NoteRepository extends AbstractAPIRepository{
     throw UnimplementedError();
   }
 
-    Future<APIResponse> getAPIData({
+  Future<APIResponse> getAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
-    String endpoint ='';// APIEndpointConstants.GET_READSERVICETEMPLATE_URL;
+    String endpoint = ''; // APIEndpointConstants.GET_READSERVICETEMPLATE_URL;
 
     try {
       // TODO: Need to send this via UI and not hardcode here!
@@ -34,8 +32,7 @@ class NoteRepository extends AbstractAPIRepository{
 
       print(response);
 
-      if(response.statusCode==200)
-      {}
+      if (response.statusCode == 200) {}
 
       return APIResponse.fromJson(
         response.data,
@@ -48,7 +45,6 @@ class NoteRepository extends AbstractAPIRepository{
       return APIResponse.withError("$err");
     }
   }
-
 
   @override
   Future<APIResponse> postAPIData({Map<String, dynamic> queryparams}) {

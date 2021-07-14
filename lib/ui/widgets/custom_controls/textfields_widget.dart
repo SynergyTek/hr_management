@@ -79,11 +79,7 @@ class DescriptionTextWithValidation extends StatelessWidget {
         ),
         validator: validator != null
             ? validator
-            : (String value) {
-                if (value.isEmpty) {
-                  return validationMessage;
-                }
-              },
+            : (String value) => value.isEmpty ? validationMessage : null,
       ),
     );
   }
@@ -136,13 +132,9 @@ class HollowTextBoxField extends StatelessWidget {
             // filled: true,
             errorStyle: TextStyle(fontSize: 12.0)),
         maxLines: 1,
-        validator: (validator != null || validator != "")
+        validator: (validator != null)
             ? validator
-            : (String value) {
-                if (value.isEmpty) {
-                  return validationMessage;
-                }
-              },
+            : (String value) => value.isEmpty ? validationMessage : null,
       ),
     );
   }

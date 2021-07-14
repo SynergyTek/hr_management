@@ -3,7 +3,6 @@ import '../../../widgets/progress_indicator.dart';
 import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../data/models/api_models/api_response_model.dart';
 import '../../../../themes/theme_config.dart';
-import '../../../../logic/blocs/api_bloc/api_bloc.dart';
 
 class NoteScreenBodyWidget extends StatefulWidget {
   NoteScreenBodyWidget();

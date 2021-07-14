@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'widget/task_home_body.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
-import '../../widgets/internet_connectivity_widget.dart';
 
 class TaskHomeScreen extends StatelessWidget {
   const TaskHomeScreen({Key key}) : super(key: key);
@@ -22,20 +22,22 @@ class TaskHomeScreen extends StatelessWidget {
       ),
       // ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        child: Icon(
-          Icons.add,
-          size: 32,
-        ),
-        onPressed: () => Navigator.pushNamed(
-          context,
-          CREATE_EDIT_TASK_ROUTE,
-          arguments: ScreenArguments(
-            arg1: 'PROJECT_ADHOC_TASK',
-            arg2: '',
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(
+            Icons.add,
+            size: 32,
           ),
-        ),
-      ),
+          onPressed: () {
+            taskBloc.subjectGetTaskDetails.sink.add(null);
+            Navigator.pushNamed(
+              context,
+              CREATE_EDIT_TASK_ROUTE,
+              arguments: ScreenArguments(
+                arg1: 'PROJECT_ADHOC_TASK',
+                arg2: '',
+              ),
+            );
+          }),
     );
   }
 }
