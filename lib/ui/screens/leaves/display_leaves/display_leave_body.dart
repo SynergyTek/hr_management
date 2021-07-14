@@ -136,6 +136,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                         // onTap: () => _handleListTileOnTap(index, context),
                         // ),
                         onTap: () {
+                          serviceBloc.subject.sink.add(null);
                           Navigator.pushNamed(
                             context,
                             CREATE_SERVICE_ROUTE,

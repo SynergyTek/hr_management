@@ -74,6 +74,7 @@ class TaskRepository extends AbstractTaskRepository {
       result.isSuccess
           ? result.messages = 'Task saved successfully'
           : result.messages = 'Unable to submit task';
+
       return result;
     } catch (err, stacktrace) {
       print(
