@@ -1,39 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/comment_model/comment_model.dart';
+import 'package:hr_management/data/models/nts_comments/nts_comments.dart';
 import 'package:hr_management/logic/blocs/nts_comments/nts_comments_bloc.dart';
 
-class NTSCommentBody extends StatefulWidget {
-  NTSCommentBody({Key key, this.ntsType, this.ntsId}) : super(key: key);
+class NTSCommentsBody extends StatefulWidget {
+  NTSCommentsBody({Key key, this.ntsType, this.ntsId}) : super(key: key);
   final NTSType ntsType;
   final String ntsId;
-
   @override
-  _NTSCommentBodyState createState() => _NTSCommentBodyState();
+  _NTSCommentsBodyState createState() => _NTSCommentsBodyState();
 }
 
-class _NTSCommentBodyState extends State<NTSCommentBody> {
-  TextEditingController _commentController=new TextEditingController();
-  List<CommentMessage> messages = [
-    CommentMessage(messageContent: "Hello, Will", messageType: "receiver"),
-    CommentMessage(
-        messageContent: "How have you been?", messageType: "receiver"),
-    CommentMessage(
-        messageContent: "Hey Kriss, I am doing fine dude. wbu?",
-        messageType: "sender"),
-    CommentMessage(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
-    CommentMessage(
-        messageContent: "Is there any thing wrong?", messageType: "sender"),
-  ];
-
-  
-
+class _NTSCommentsBodyState extends State<NTSCommentsBody> {
+  TextEditingController _commentController = new TextEditingController();
+  PostComment comment = new PostComment();
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         ListView.builder(
-          itemCount: messages.length,
+          itemCount: 5,
           shrinkWrap: true,
           padding: EdgeInsets.only(top: 10, bottom: 10),
           physics: NeverScrollableScrollPhysics(),
@@ -42,19 +28,19 @@ class _NTSCommentBodyState extends State<NTSCommentBody> {
               padding:
                   EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
               child: Align(
-                alignment: (messages[index].messageType == "receiver"
-                    ? Alignment.topLeft
-                    : Alignment.topRight),
+                alignment: //(messages[index].messageType == "receiver"
+                    // ? Alignment.topLeft:
+                    Alignment.topRight, //),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: (messages[index].messageType == "receiver"
-                        ? Colors.grey.shade200
-                        : Colors.blue[200]),
+                    color: // (messages[index].messageType == "receiver"
+                        //? Colors.grey.shade200:
+                        Colors.blue[200], //),
                   ),
                   padding: EdgeInsets.all(16),
                   child: Text(
-                    messages[index].messageContent,
+                    'hi..its a new comment',
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
@@ -104,8 +90,14 @@ class _NTSCommentBodyState extends State<NTSCommentBody> {
                 ),
                 FloatingActionButton(
                   onPressed: () {
-                    // ntsCommentBloc..postCommentData(ntsType:widget.ntsType,comment: 
-                    //   _commentController.text,ntsId: widget.ntsId,commentToUserId: null);
+                    comment.comment = _commentController.text;
+                    comment.ntsTaskId = widget.ntsId;
+                    comment.commentToUserId = null;
+                    comment.commentedByUserId =
+                        '45bba746-3309-49b7-9c03-b5793369d73c';
+                    ntsCommentBloc
+                      ..postCommentData(
+                          ntsType: widget.ntsType, comment: comment);
                   },
                   child: Icon(
                     Icons.send,
