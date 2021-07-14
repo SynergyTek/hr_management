@@ -566,6 +566,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
+          _ddController.text = udfJson[model[i].key];
         }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
@@ -575,7 +576,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               selectValue.add(null);
             }
           }
-        } else {
+        } else if (selectValue != null && selectValue.isNotEmpty) {
           _ddController.text = selectValue[i];
         }
         listDynamic.add(NTSDropDownSelect(
