@@ -367,7 +367,9 @@ class Data {
   List<Header> headers;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        values: List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
+        values: json["values"] == null
+            ? null
+            : List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
         url: json["url"],
         headers:
             List<Header>.from(json["headers"].map((x) => Header.fromJson(x))),
