@@ -12,34 +12,45 @@ class NtsCommentBloc {
   final BehaviorSubject<PostResponse> _subject =
       BehaviorSubject<PostResponse>();
 
-  final BehaviorSubject<CommentResponse> _subjectGetComments =
-      BehaviorSubject<CommentResponse>();
+  final BehaviorSubject<CommentListResponse> _subjectGetComments =
+      BehaviorSubject<CommentListResponse>();
 
-  getCommentsData({String ntsId}) async {
-
+  getCommentsData({String ntsId, NTSType ntsType}) async {
     Map<String, dynamic> queryparams = Map();
-    queryparams["ntsId"] = ntsId ?? '';
+    if (ntsType == NTSType.service) {
+      queryparams["serviceIdId"] = ntsId ?? '';
+    } else if (ntsType == NTSType.note) {
+      queryparams["noteId"] = ntsId ?? '';
+    } else if (ntsType == NTSType.task) {
+      queryparams["taskId"] = ntsId ?? '';
+    }
 
-    CommentResponse response =
-        await _ntsRepository.getCommentsData(queryparams: queryparams);
-        
+    CommentListResponse response = await _ntsRepository.getCommentsData(
+        queryparams: queryparams, ntsType: ntsType);
+
     _subjectGetComments.sink.add(response);
   }
 
   /// Used to create new entries.
   Future<PostResponse> postCommentData(
-      {PostComment comment,
-      NTSType ntsType}) async {
-
+      {PostComment comment, NTSType ntsType}) async {
     // PostComment comment=new PostComment();
     // comment.comment = comment ?? '';
     // comment.ntsTaskId = ntsId ?? '';
     // comment.commentToUserId = commentToUserId ?? null;
     // comment.commentedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    
 
     PostResponse response = await _ntsRepository.postCommentData(
-        comment:comment, ntsType: ntsType);
+        comment: comment, ntsType: ntsType);
+    // String ntsId = '';
+    // if (ntsType == NTSType.service) {
+    //   ntsId = response.item["NtsServiceId"] ?? '';
+    // } else if (ntsType == NTSType.note) {
+    //   ntsId = response.item["NtsNoteId"] ?? '';
+    // } else if (ntsType == NTSType.task) {
+    //   ntsId = response.item["NtsTaskId"] ?? '';
+    // }
+    // getCommentsData(ntsType: ntsType);
 
     return response;
   }
@@ -67,7 +78,7 @@ class NtsCommentBloc {
   }
 
   BehaviorSubject<PostResponse> get subject => _subject;
-  BehaviorSubject<CommentResponse> get subjectGetComments =>
+  BehaviorSubject<CommentListResponse> get subjectGetComments =>
       _subjectGetComments;
 }
 

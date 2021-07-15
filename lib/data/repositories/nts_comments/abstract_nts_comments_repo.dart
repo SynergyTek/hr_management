@@ -15,7 +15,7 @@ part 'nts_comments_repo.dart';
 abstract class AbstractNTSCommentsRepository {
   AbstractNTSCommentsRepository();
 
-  Future<CommentResponse> getCommentsData({
+  Future<CommentListResponse> getCommentsData({
     Map<String, dynamic> queryparams,
   });
 
