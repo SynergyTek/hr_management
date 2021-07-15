@@ -12,6 +12,13 @@ class NTSCommentsBody extends StatefulWidget {
 }
 
 class _NTSCommentsBodyState extends State<NTSCommentsBody> {
+
+  @override
+  void initState() { 
+    ntsCommentBloc.getCommentsData(ntsId: widget.ntsId);
+    super.initState();
+    
+  }
   TextEditingController _commentController = new TextEditingController();
   PostComment comment = new PostComment();
   @override
