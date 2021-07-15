@@ -145,6 +145,17 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
                             ),
                           ],
                         ),
+                        onTap: () {
+                          noteBloc.subjectNoteDetails.sink.add(null);
+                          Navigator.pushNamed(
+                            context,
+                            ADD_EDIT_NOTE_ROUTE,
+                            arguments: ScreenArguments(
+                                arg1: '',
+                                arg2: _noteList[index].id,
+                                arg3: _noteList[index].noteSubject),
+                          );
+                        },
                       ),
                     );
                   },

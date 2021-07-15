@@ -157,23 +157,23 @@ Widget drawerWidget(context) {
             );
           },
         ),
-        ListTile(
-          title: Text(
-            'NOTE',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.add_to_home_screen),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              ADD_EDIT_NOTE_ROUTE,
-              arguments: ScreenArguments(
-                  arg1: '',
-                  arg2: 'e05dbbbb-4855-4cea-8f60-94f8ff096c78',
-                  arg3: 'Note'),
-            );
-          },
-        ),
+        // ListTile(
+        //   title: Text(
+        //     'NOTE',
+        //     style: TextStyle(fontSize: fontSize, color: fontColor),
+        //   ),
+        //   trailing: Icon(Icons.add_to_home_screen),
+        //   onTap: () {
+        //     Navigator.pushNamed(
+        //       context,
+        //       ADD_EDIT_NOTE_ROUTE,
+        //       arguments: ScreenArguments(
+        //           arg1: '',
+        //           arg2: 'e05dbbbb-4855-4cea-8f60-94f8ff096c78',
+        //           arg3: 'Note'),
+        //     );
+        //   },
+        // ),
         ListTile(
           title: Text(
             'NOTE HOME',

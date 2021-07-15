@@ -819,7 +819,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 visible: noteModel.isCompleteButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Complete',
-                  handleOnPressed: () {},
+                  handleOnPressed: () {
+                    noteViewModelPostRequest(
+                      1,
+                      ' NOTE_STATUS_COMPLETE',
+                      createServiceFormBloc,
+                    );
+                  },
                   width: 100,
                 ),
               ),
@@ -850,7 +856,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   handleOnPressed: () {
                     noteViewModelPostRequest(
                       1,
-                      'SERVICE_STATUS_DRAFT',
+                      'NOTE_STATUS_DRAFT',
                       createServiceFormBloc,
                     );
                   },
@@ -901,7 +907,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                     }
                     noteViewModelPostRequest(
                       1,
-                      'SERVICE_STATUS_INPROGRESS',
+                      'NOTE_STATUS_INPROGRESS',
                       createServiceFormBloc,
                     );
                   },
