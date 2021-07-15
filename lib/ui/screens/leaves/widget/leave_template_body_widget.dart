@@ -128,11 +128,12 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
     }
   }
 
-  List<Widget> frontWidgets(
-      {String templateName,
-      String templateImageCode,
-      String colorCode,
-      context,}) {
+  List<Widget> frontWidgets({
+    String templateName,
+    String templateImageCode,
+    String colorCode,
+    context,
+  }) {
     List<Widget> widgets = [];
     widgets.add(
       Expanded(
@@ -178,11 +179,12 @@ class _LeaveTemplateBodyState extends State<LeaveTemplateBody> {
     return widgets;
   }
 
-  List<Widget> backWidgets(
-      {String templateCode,
-      String templateName,
-      String colorCode,
-      BuildContext context,}) {
+  List<Widget> backWidgets({
+    String templateCode,
+    String templateName,
+    String colorCode,
+    BuildContext context,
+  }) {
     List<Widget> widgets = [];
     Color cardBackground = hexToColor(colorCode);
     Color textColor = cardBackground != null

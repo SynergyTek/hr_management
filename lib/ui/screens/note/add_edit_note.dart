@@ -20,7 +20,10 @@ class AddEditNote extends StatelessWidget {
               : "Edit " + title),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: AddEditNoteBody(),
+          child: AddEditNoteBody(
+            templateCode: templateCode,
+            noteId: noteId,
+          ),
         ),
       ),
     );

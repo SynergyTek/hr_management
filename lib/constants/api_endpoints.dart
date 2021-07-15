@@ -9,17 +9,20 @@ class APIEndpointConstants {
 
   //Note API Endpoints Block Start
 
-  static const POST_NOTE_COMMENT =
-      '$BASE_URL/nts/command/PostNoteComment';
+  static const POST_NOTE_COMMENT = '$BASE_URL/nts/command/PostNoteComment';
 
   static const GET_NOTE_COMMENT_DATA =
       '$BASE_URL/nts/query/GetNoteCommentCount';
 
   static const GET_NOTE_COMMENT_COUNT =
       '$BASE_URL/nts/query/GetTaskCommentCount';
-  //Note API Endpoints Block End
 
   static const GET_NOTE_DETAILS = '$BASE_URL/nts/query/GetNoteDetails';
+
+  static const MANAGE_NOTE = '$BASE_URL/nts/command/ManageNote';
+
+  static const READ_NOTE_HOME_DATA =
+      '$BASE_URL/nts/query/ReadNoteHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   //************************************************************************//
 
@@ -32,8 +35,7 @@ class APIEndpointConstants {
 
   static const MANAGE_TASK = '$BASE_URL/nts/command/ManageTask';
 
-  static const POST_TASK_COMMENT =
-      '$BASE_URL/nts/command/PostTaskComment';
+  static const POST_TASK_COMMENT = '$BASE_URL/nts/command/PostTaskComment';
 
   static const GET_TASK_COMMENT_DATA =
       '$BASE_URL/nts/query/ReadTaskCommentData';

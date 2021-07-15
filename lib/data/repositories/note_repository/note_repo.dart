@@ -30,14 +30,16 @@ class NoteRepository extends AbstractNoteRepository {
     }
   }
 
-  Future<NoteListResponse> getNoteList() async {
-    final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
+  Future<NoteListResponse> getNoteList(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.READ_NOTE_HOME_DATA;
 
     try {
       Response response = await _dio.get(
         endpoint,
+        queryParameters: queryparams ?? {},
       );
-
+      print(response.data);
       return NoteListResponse.fromJson(
         response.data,
       );
@@ -58,7 +60,7 @@ class NoteRepository extends AbstractNoteRepository {
     Map<String, dynamic> queryparams,
     @required NoteModel note,
   }) async {
-    final String endpoint = APIEndpointConstants.MANAGE_SERVICE;
+    final String endpoint = APIEndpointConstants.MANAGE_NOTE;
     try {
       Response response = await _dio.post(
         endpoint,
