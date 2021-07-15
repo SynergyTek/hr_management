@@ -2,6 +2,7 @@ import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
 import 'package:hr_management/ui/screens/note/note_home_screen.dart';
 import 'package:hr_management/ui/screens/nts_comment/nts_comment_screen.dart';
+import 'package:hr_management/ui/screens/nts_comments/nts_comments_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
@@ -115,9 +116,15 @@ class AppRouter {
         );
         break;
 
-      case NOTE_ROUTE:
+      case ADD_EDIT_NOTE_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+        print("args: $args");
         return MaterialPageRoute(
-          builder: (_) => AddEditNote(),
+          builder: (_) => AddEditNote(
+            templateCode: args.arg1,
+            noteId: args.arg2,
+            title: args.arg3,
+          ),
         );
         break;
 
@@ -185,7 +192,7 @@ class AppRouter {
       case COMMENT_ROUTE:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => NTSCommentScreen(
+          builder: (_) => NTSCommentsScreen(
             ntsType: args.ntstype,
             ntsId: args.arg1,
           ),

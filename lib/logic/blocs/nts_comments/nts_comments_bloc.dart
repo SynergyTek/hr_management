@@ -28,16 +28,14 @@ class NtsCommentBloc {
 
   /// Used to create new entries.
   Future<PostResponse> postCommentData(
-      {String comment,
-      String ntsId,
-      String commentToUserId,
+      {PostComment comment,
       NTSType ntsType}) async {
 
-    PostComment comment=new PostComment();
-    comment.comment = comment ?? '';
-    comment.ntsTaskId = ntsId ?? '';
-    comment.commentToUserId = commentToUserId ?? null;
-    comment.commentedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    // PostComment comment=new PostComment();
+    // comment.comment = comment ?? '';
+    // comment.ntsTaskId = ntsId ?? '';
+    // comment.commentToUserId = commentToUserId ?? null;
+    // comment.commentedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     
 
     PostResponse response = await _ntsRepository.postCommentData(

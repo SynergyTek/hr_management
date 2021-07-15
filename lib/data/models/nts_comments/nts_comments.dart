@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-class Comment{}
-
-
-
+class Comment {}
 
 class PostComment {
   String comment;
@@ -11,20 +8,18 @@ class PostComment {
   String commentToUserId;
   String commentedByUserId;
   PostComment({
-     this.comment,
-     this.ntsTaskId,
-     this.commentToUserId,
-     this.commentedByUserId,
+    this.comment,
+    this.ntsTaskId,
+    this.commentToUserId,
+    this.commentedByUserId,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'comment': comment,
-      'ntsTaskId': ntsTaskId,
-      'commentToUserId': commentToUserId,
-      'commentedByUserId': commentedByUserId,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        "Comment": comment,
+        "NtsTaskId": ntsTaskId,
+        "CommentToUserId": commentToUserId,
+        "CommentedByUserId": commentedByUserId,
+      };
 
   factory PostComment.fromMap(Map<String, dynamic> map) {
     return PostComment(
@@ -35,7 +30,6 @@ class PostComment {
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory PostComment.fromJson(String source) => PostComment.fromMap(json.decode(source));
+  factory PostComment.fromJson(String source) =>
+      PostComment.fromMap(json.decode(source));
 }

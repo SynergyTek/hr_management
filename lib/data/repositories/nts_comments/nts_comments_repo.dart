@@ -6,10 +6,9 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   final Dio _dio = Dio();
 
   Future<CommentResponse> getCommentsData(
-      {Map<String, dynamic> queryparams, NTSType ntsType}) 
+      {Map<String, dynamic> queryparams, NTSType ntsType})
   // Optional Params to be added to the request if required
   async {
-    
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.GET_SERVICE_COMMENT_DATA;
@@ -44,7 +43,6 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
     PostComment comment,
     NTSType ntsType,
   }) async {
-
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.POST_SERVICE_COMMENT;
@@ -53,12 +51,9 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
     } else if (ntsType == NTSType.task) {
       endpoint = APIEndpointConstants.POST_TASK_COMMENT;
     }
-
+    dynamic model = jsonEncode(comment.toJson());
     try {
-      Response response = await _dio.post(
-        endpoint,
-        data: jsonEncode(comment.toJson()) ?? {}
-      );
+      Response response = await _dio.post(endpoint, data: model);
 
       print("response: ${response.data}");
 
@@ -67,7 +62,6 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       );
 
       return result;
-
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");

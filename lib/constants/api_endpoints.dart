@@ -10,7 +10,7 @@ class APIEndpointConstants {
   //Note API Endpoints Block Start
 
   static const POST_NOTE_COMMENT =
-      '$BASE_URL/nts/command/PostNoteComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/command/PostNoteComment';
 
   static const GET_NOTE_COMMENT_DATA =
       '$BASE_URL/nts/query/GetNoteCommentCount';
@@ -59,7 +59,7 @@ class APIEndpointConstants {
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
   static const POST_SERVICE_COMMENT =
-      '$BASE_URL/nts/command/PostServiceComment?CommentedByUserId=45bba746=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/command/PostServiceComment';
 
   static const GET_SERVICE_COMMENT_DATA =
       '$BASE_URL/nts/query/ReadServiceCommentData';
