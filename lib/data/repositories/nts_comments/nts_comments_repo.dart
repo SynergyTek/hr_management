@@ -5,7 +5,7 @@ part of 'abstract_nts_comments_repo.dart';
 class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   final Dio _dio = Dio();
 
-  Future<CommentResponse> getCommentsData(
+  Future<CommentListResponse> getCommentsData(
       {Map<String, dynamic> queryparams, NTSType ntsType})
   // Optional Params to be added to the request if required
   async {
@@ -14,7 +14,7 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       endpoint = APIEndpointConstants.GET_SERVICE_COMMENT_DATA;
     } else if (ntsType == NTSType.note) {
       endpoint = APIEndpointConstants.GET_NOTE_COMMENT_DATA;
-    } else if (ntsType == NTSType.note) {
+    } else if (ntsType == NTSType.task) {
       endpoint = APIEndpointConstants.GET_TASK_COMMENT_DATA;
     }
 
@@ -25,16 +25,15 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       );
 
       print(response.data);
-      return CommentResponse();
-      // return CommentResponse.fromJson(
-      //   response.data,
-      // );
+      return CommentListResponse.fromJson(
+        response.data,
+      );
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return CommentResponse.withError("$err");
+      return CommentListResponse.withError("$err");
     }
   }
 
