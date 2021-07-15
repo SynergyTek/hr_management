@@ -58,7 +58,7 @@ class NoteRepository extends AbstractNoteRepository {
     Map<String, dynamic> queryparams,
     @required NoteModel note,
   }) async {
-    final String endpoint = APIEndpointConstants.MANAGE_SERVICE;
+    final String endpoint = APIEndpointConstants.MANAGE_NOTE;
     try {
       Response response = await _dio.post(
         endpoint,
