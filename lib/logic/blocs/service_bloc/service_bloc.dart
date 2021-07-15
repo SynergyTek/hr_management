@@ -39,6 +39,7 @@ class ServiceBloc {
       service: service,
     );
 
+    serviceBloc..getLeavesDetails();
     return response;
   }
 
