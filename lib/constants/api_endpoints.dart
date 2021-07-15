@@ -21,7 +21,8 @@ class APIEndpointConstants {
 
   static const MANAGE_NOTE = '$BASE_URL/nts/command/ManageNote';
 
-  //Note API Endpoints Block End
+  static const READ_NOTE_HOME_DATA =
+      '$BASE_URL/nts/query/ReadNoteHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   //************************************************************************//
 

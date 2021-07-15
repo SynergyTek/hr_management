@@ -174,6 +174,19 @@ Widget drawerWidget(context) {
             );
           },
         ),
+        ListTile(
+          title: Text(
+            'NOTE HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.note),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              NOTE_HOME,
+            );
+          },
+        ),
       ],
     ),
   );
