@@ -25,8 +25,10 @@ class NoteBloc {
     _subjectNoteDetails.sink.add(response);
   }
 
-  getNoteList() async {
-    NoteListResponse response = await _noteRepository.getNoteList();
+  getNoteList({
+    Map<String, dynamic> queryparams, // String userId,
+  }) async {
+    NoteListResponse response = await _noteRepository.getNoteList(queryparams: queryparams);
     _subjectNoteList.sink.add(response);
   }
 

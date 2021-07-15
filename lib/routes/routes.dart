@@ -1,5 +1,6 @@
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
+import 'package:hr_management/ui/screens/note/note_home_screen.dart';
 import 'package:hr_management/ui/screens/nts_comment/nts_comment_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
@@ -14,7 +15,7 @@ import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
 
 import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
-import 'package:hr_management/ui/screens/tasks/widget/task_home_filter_widget.dart';
+import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hr_management/ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
@@ -140,7 +141,8 @@ class AppRouter {
       case TASK_FILTER:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => TaskHomeFilterWidget(
+          builder: (_) => NTSFilterWidget(
+            filterType: args.ntstype,
             onListTap: args.func,
           ),
         );
@@ -190,7 +192,12 @@ class AppRouter {
         );
         break;
 
-      // 404 route.
+      case NOTE_HOME:
+        return MaterialPageRoute(
+          builder: (_) => NoteHomeScreen(),
+        );
+        break;
+// 404 route.
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

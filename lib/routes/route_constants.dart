@@ -41,3 +41,4 @@ const String DISPLAY_LEAVES = "/display_leaves";
 const String DISPLAY_ACCESS_LOG = "/display_access_logs";
 const String ATTENDANCE_VIEW_ROUTE = "/attendance_view";
 const String COMMENT_ROUTE = "/comments";
+const String NOTE_HOME = "/note_home";

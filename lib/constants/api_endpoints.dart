@@ -21,6 +21,9 @@ class APIEndpointConstants {
 
   static const GET_NOTE_DETAILS = '$BASE_URL/nts/query/GetNoteDetails';
 
+  static const READ_NOTE_HOME_DATA =
+      '$BASE_URL/nts/query/ReadNoteHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
   //************************************************************************//
 
   //Task API Endpoints Block Start
@@ -32,8 +35,7 @@ class APIEndpointConstants {
 
   static const MANAGE_TASK = '$BASE_URL/nts/command/ManageTask';
 
-  static const POST_TASK_COMMENT =
-      '$BASE_URL/nts/command/PostTaskComment';
+  static const POST_TASK_COMMENT = '$BASE_URL/nts/command/PostTaskComment';
 
   static const GET_TASK_COMMENT_DATA =
       '$BASE_URL/nts/query/ReadTaskCommentData';
