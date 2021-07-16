@@ -190,7 +190,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
                   ? CREATE_SERVICE_ROUTE
                   : CREATE_EDIT_TASK_ROUTE,
               arguments: ScreenArguments(
-                arg1:  templateCode,
+                arg1: templateCode,
                 arg2: '',
               ),
             );

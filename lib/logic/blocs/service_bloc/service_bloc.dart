@@ -21,6 +21,9 @@ class ServiceBloc {
     queryparams["templatecode"] = templateCode ?? '';
     queryparams["serviceId"] = serviceId ?? '';
     queryparams["userid"] = userId ?? '';
+
+    print("Queryparams: ${queryparams.entries}");
+
     ServiceResponse response =
         await _serviceRepository.getServiceDetail(queryparams: queryparams);
     _subject.sink.add(response);
