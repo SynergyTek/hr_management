@@ -408,7 +408,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textField$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 1,
@@ -434,7 +434,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textArea$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 3,
@@ -492,7 +492,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: password$i,
             prefixIcon: Icon(Icons.visibility_off_rounded),
             obscureText: true,
@@ -756,7 +756,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+           readonly: model[i].disabled,
             textFieldBloc: email$i,
             prefixIcon: Icon(Icons.email),
             maxLines: 1,
@@ -781,7 +781,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+             readonly: model[i].disabled,
             textFieldBloc: textField$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 1,
