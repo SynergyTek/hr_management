@@ -157,10 +157,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             columnComponent.add(columnCom);
           }
         }
-        if (component.components != null && component.components.isNotEmpty) {
-          for (ComponentComponent componentComponent in component.components) {
-            componentComList.add(componentComponent);
-          }
+      }
+      if (component.components != null && component.components.isNotEmpty) {
+        for (ComponentComponent componentComponent in component.components) {
+          componentComList.add(componentComponent);
         }
       }
     }
@@ -173,12 +173,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     if (componentComList != null && componentComList.isNotEmpty) {
       addDynamicComponentComponent(componentComList, createServiceFormBloc);
     }
-    if (udfJsonString.components != null &&
-        udfJsonString.components.isNotEmpty) {
-      udfJsonComponent.addAll(udfJsonString.components);
-      udfJsonCompWidgetList =
-          addDynamic(udfJsonComponent, createServiceFormBloc);
-    }
+    // if (udfJsonString.components != null &&
+    //     udfJsonString.components.isNotEmpty) {
+    //   udfJsonComponent.addAll(udfJsonString.components);
+    //   udfJsonCompWidgetList =
+    //       addDynamic(udfJsonComponent, createServiceFormBloc);
+    // }
   }
 
   Widget setServiceView(
@@ -802,7 +802,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     //     ?.where((x) => x.groupTemplateFieldId == element.templateFieldId);
     // groupControls?.forEach((group) {
     var tableWidgets = addDynamic(model, createServiceFormBloc);
-    table.add(TableRow(children: tableWidgets));
+    for (var row in tableWidgets) {
+      table.add(TableRow(children: [row]));
+    }
+    // table.add(TableRow(children: tableWidgets));
     // });
     // listDynamic.add(Padding(
     //   padding: const EdgeInsets.only(top: 15, bottom: 10),
@@ -812,6 +815,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     //   ),
     // ));
     componentComListWidgets.add(Table(
+      defaultVerticalAlignment: TableCellVerticalAlignment.top,
       border: TableBorder(
         top: BorderSide(
           color: Colors.grey,

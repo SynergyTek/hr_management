@@ -151,10 +151,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             columnComponent.add(columnCom);
           }
         }
-        if (component.components != null && component.components.isNotEmpty) {
-          for (ComponentComponent componentComponent in component.components) {
-            componentComList.add(componentComponent);
-          }
+      }
+      if (component.components != null && component.components.isNotEmpty) {
+        for (ComponentComponent componentComponent in component.components) {
+          componentComList.add(componentComponent);
         }
       }
     }
@@ -767,7 +767,9 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     //     ?.where((x) => x.groupTemplateFieldId == element.templateFieldId);
     // groupControls?.forEach((group) {
     var tableWidgets = addDynamic(model, createServiceFormBloc);
-    table.add(TableRow(children: tableWidgets));
+    for (var row in tableWidgets) {
+      table.add(TableRow(children: [row]));
+    }
     // });
     // listDynamic.add(Padding(
     //   padding: const EdgeInsets.only(top: 15, bottom: 10),
