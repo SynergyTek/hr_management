@@ -157,10 +157,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             columnComponent.add(columnCom);
           }
         }
-        if (component.components != null && component.components.isNotEmpty) {
-          for (ComponentComponent componentComponent in component.components) {
-            componentComList.add(componentComponent);
-          }
+      }
+      if (component.components != null && component.components.isNotEmpty) {
+        for (ComponentComponent componentComponent in component.components) {
+          componentComList.add(componentComponent);
         }
       }
     }
@@ -173,12 +173,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     if (componentComList != null && componentComList.isNotEmpty) {
       addDynamicComponentComponent(componentComList, createServiceFormBloc);
     }
-    if (udfJsonString.components != null &&
-        udfJsonString.components.isNotEmpty) {
-      udfJsonComponent.addAll(udfJsonString.components);
-      udfJsonCompWidgetList =
-          addDynamic(udfJsonComponent, createServiceFormBloc);
-    }
+    // if (udfJsonString.components != null &&
+    //     udfJsonString.components.isNotEmpty) {
+    //   udfJsonComponent.addAll(udfJsonString.components);
+    //   udfJsonCompWidgetList =
+    //       addDynamic(udfJsonComponent, createServiceFormBloc);
+    // }
   }
 
   Widget setServiceView(
@@ -408,7 +408,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textField$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 1,
@@ -434,7 +434,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textArea$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 3,
@@ -492,7 +492,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: password$i,
             prefixIcon: Icon(Icons.visibility_off_rounded),
             obscureText: true,
@@ -756,7 +756,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+           readonly: model[i].disabled,
             textFieldBloc: email$i,
             prefixIcon: Icon(Icons.email),
             maxLines: 1,
@@ -781,7 +781,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+             readonly: model[i].disabled,
             textFieldBloc: textField$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 1,
@@ -802,7 +802,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     //     ?.where((x) => x.groupTemplateFieldId == element.templateFieldId);
     // groupControls?.forEach((group) {
     var tableWidgets = addDynamic(model, createServiceFormBloc);
-    table.add(TableRow(children: tableWidgets));
+    for (var row in tableWidgets) {
+      table.add(TableRow(children: [row]));
+    }
+    // table.add(TableRow(children: tableWidgets));
     // });
     // listDynamic.add(Padding(
     //   padding: const EdgeInsets.only(top: 15, bottom: 10),
@@ -812,6 +815,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     //   ),
     // ));
     componentComListWidgets.add(Table(
+      defaultVerticalAlignment: TableCellVerticalAlignment.top,
       border: TableBorder(
         top: BorderSide(
           color: Colors.grey,

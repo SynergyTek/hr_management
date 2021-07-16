@@ -157,12 +157,13 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             columnComponent.add(columnCom);
           }
         }
+      }
         if (component.components != null && component.components.isNotEmpty) {
           for (ComponentComponent componentComponent in component.components) {
             componentComList.add(componentComponent);
           }
         }
-      }
+      
     }
     if (columnComponent != null && columnComponent.isNotEmpty) {
       columnComponentWidgets = addDynamic(
@@ -780,7 +781,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     //     ?.where((x) => x.groupTemplateFieldId == element.templateFieldId);
     // groupControls?.forEach((group) {
     var tableWidgets = addDynamic(model, createServiceFormBloc);
-    table.add(TableRow(children: tableWidgets));
+    for (var row in tableWidgets) {
+      table.add(TableRow(children: [row]));
+    }
     // });
     // listDynamic.add(Padding(
     //   padding: const EdgeInsets.only(top: 15, bottom: 10),

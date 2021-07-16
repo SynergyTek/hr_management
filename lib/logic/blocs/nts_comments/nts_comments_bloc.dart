@@ -33,7 +33,7 @@ class NtsCommentBloc {
 
   /// Used to create new entries.
   Future<PostResponse> postCommentData(
-      {PostComment comment, NTSType ntsType}) async {
+      {PostComment comment,String ntsId, NTSType ntsType}) async {
     // PostComment comment=new PostComment();
     // comment.comment = comment ?? '';
     // comment.ntsTaskId = ntsId ?? '';
@@ -50,7 +50,7 @@ class NtsCommentBloc {
     // } else if (ntsType == NTSType.task) {
     //   ntsId = response.item["NtsTaskId"] ?? '';
     // }
-    // getCommentsData(ntsType: ntsType);
+    getCommentsData(ntsType: ntsType,ntsId: ntsId);
 
     return response;
   }

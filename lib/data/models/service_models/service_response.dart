@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'service.dart';
+import '../nts_charts/chart_model.dart';
 
 /// APIResponse is a high-level model class which we will consist of a
 /// list of APIData and error string if our API call gets failed
