@@ -824,7 +824,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   handleOnPressed: () {
                     noteViewModelPostRequest(
                       1,
-                      ' NOTE_STATUS_COMPLETE',
+                      'NOTE_STATUS_COMPLETE',
                       createServiceFormBloc,
                     );
                   },
