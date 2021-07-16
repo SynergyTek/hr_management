@@ -44,56 +44,67 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                 return EmptyListWidget();
               }
               _commentsList = snapshot.data.list;
-              return Listizer(
-                doAddSeperator: false,
-                listItems: _commentsList,
-                filteredSearchList: _filteredCommentsList,
-                itemBuilder: (context, index) {
-                  // print("Snapshot data: ${snapshot.data.data[index].taskNo}");
-                  return Container(
-                    padding: EdgeInsets.only(
-                        left: 14, right: 14, top: 10, bottom: 10),
-                    child: Align(
-                      alignment: //(messages[index].messageType == "receiver"
-                          // ? Alignment.topLeft:
-                          Alignment.topRight, //),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: // (messages[index].messageType == "receiver"
-                              //? Colors.grey.shade200:
-                              Colors.blue[200], //),
-                        ),
-                        padding: EdgeInsets.all(16),
-                        child: Column(
-                          children: [
-                            Text(
-                              _commentsList[index].comment,
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black87),
-                              textAlign: TextAlign.left,
-                            ),
-                            Text(
-                              dateformatter.format(DateTime.parse(
-                                  _commentsList[index].commentedDate)),
-                              style: TextStyle(
-                                fontSize: 13,
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 50.0),
+                child: Listizer(
+                  doAddSeperator: false,
+                  listItems: _commentsList,
+                  filteredSearchList: _filteredCommentsList,
+                  itemBuilder: (context, index) {
+                    // print("Snapshot data: ${snapshot.data.data[index].taskNo}");
+                    return Container(
+                      padding: EdgeInsets.only(
+                          left: 14, right: 14, top: 10, bottom: 10),
+                      child: Align(
+                        alignment: //(messages[index].messageType == "receiver"
+                            // ? Alignment.topLeft:
+                            Alignment.topRight, //),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: // (messages[index].messageType == "receiver"
+                                //? Colors.grey.shade200:
+                                Colors.blue[200], //),
+                          ),
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              Text(
+                                _commentsList[index].comment,
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black87),
+                                textAlign: TextAlign.left,
                               ),
-                              textAlign: TextAlign.right,
-                            ),
-                          ],
+                              Text(
+                                dateformatter.format(DateTime.parse(
+                                    _commentsList[index].commentedDate)),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                               Text(
+                                "Commented by: "+
+                                    _commentsList[index].commentedByUserName,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               );
             } else {
-              return Visibility(
-                visible: isVisible,
-                child: Center(
+              // return Visibility(
+              //   visible: isVisible,
+                return Center(
                   child: CustomProgressIndicator(),
-                ),
+                // ),
               );
             }
           },
@@ -150,13 +161,15 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                     });
                     String resultMsg = '';
                     PostResponse result = await ntsCommentBloc.postCommentData(
-                        ntsType: widget.ntsType, comment: comment);
+                        ntsType: widget.ntsType,ntsId: widget.ntsId, comment: comment);
                     if (result.isSuccess) {
                       setState(() {
                         isVisible = false;
                       });
+                      _commentController.text="";
+                      FocusScope.of(context).requestFocus(new FocusNode());
                       resultMsg = result.messages;
-                      Navigator.pop(context);
+                      // Navigator.pop(context);
                     } else {
                       setState(() {
                         isVisible = false;

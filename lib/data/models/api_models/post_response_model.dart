@@ -7,7 +7,7 @@ class PostResponse {
 
   PostResponse.fromJson(Map<String, dynamic> jsonResponse) {
     isSuccess = jsonResponse['IsSuccess'];
-    // item= jsonResponse['Item'];
+    item= jsonResponse['Item'];
     // templateCode = jsonResponse['TemplateCode'];
     messages = jsonResponse['IsSuccess'] == false
         ? jsonResponse['Messages']['Validate'] != null
