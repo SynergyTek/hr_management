@@ -104,6 +104,17 @@ Widget drawerWidget(context) {
         // ),
 
         ListTile(
+          title: Text('Home'),
+          trailing: Icon(Icons.home),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              HOME_ROUTE,
+            );
+          },
+        ),
+
+        ListTile(
           title: Text(
             'REMOTE SIGNIN/SIGNOUT',
             style: TextStyle(fontSize: fontSize, color: fontColor),

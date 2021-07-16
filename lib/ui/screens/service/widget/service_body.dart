@@ -141,8 +141,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
   }
 
-  parseJsonToUDFModel(CreateServiceFormBloc createServiceFormBloc,
-      udfJsonString, List<ColumnList> columnList) {
+  parseJsonToUDFModel(
+    CreateServiceFormBloc createServiceFormBloc,
+    udfJsonString,
+    List<ColumnList> columnList,
+  ) {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];

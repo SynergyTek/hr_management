@@ -35,6 +35,7 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
                   child: Text(snapshot.data.error),
                 );
               }
+
               return _listWidget(
                 snapshot.data,
               );
