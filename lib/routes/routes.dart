@@ -7,6 +7,7 @@ import 'package:hr_management/ui/screens/home_screen/home_screen.dart';
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
+import 'package:hr_management/ui/screens/service/service_dashboard.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
@@ -194,6 +195,10 @@ class AppRouter {
             ntsId: args.arg1,
           ),
         );
+        break;
+
+      case SERVICE_DASHBOARD:
+        return MaterialPageRoute(builder: (_) => ServiceDashboard());
         break;
 
       case NOTE_HOME:

@@ -24,19 +24,17 @@ class APIEndpointConstants {
   static const READ_NOTE_HOME_DATA =
       '$BASE_URL/nts/query/ReadNoteHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
-      
   static const GET_NOTE_CHART_BY_STATUS =
       '$BASE_URL/nts/query/GetNoteChartByStatus?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const GET_NOTE_CHART_BY_USERTYPE =
       '$BASE_URL/nts/query/GetNoteChartByUserType?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
-  // static const READ_DATEWISE_NOTE_SLA =
-  //     '$BASE_URL/nts/query/ReadDatewiseServiceSLA?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const READ_DATEWISE_NOTE_SLA =
+      '$BASE_URL/nts/query/ReadDatewiseServiceSLA?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const READ_NOTE_DASHBOARD_DATA =
       '$BASE_URL/nts/query/ReadNoteDashBoardGridData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
-
 
   //************************************************************************//
 
@@ -57,7 +55,6 @@ class APIEndpointConstants {
   static const GET_TASK_COMMENT_COUNT =
       '$BASE_URL/nts/query/GetTaskCommentCount';
 
-      
   static const GET_TASK_CHART_BY_STATUS =
       '$BASE_URL/nts/query/GetTaskChartByStatus?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
@@ -98,7 +95,6 @@ class APIEndpointConstants {
   static const GET_SERVICE_ATTACHMENT_COUNT =
       "$BASE_URL/cms/GetServiceAttachmentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
 
-      
   static const GET_SERVICE_CHART_BY_STATUS =
       '$BASE_URL/nts/query/GetServiceChartByStatus?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
