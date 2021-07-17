@@ -15,9 +15,11 @@ part 'task_repo.dart';
 abstract class AbstractTaskRepository {
   AbstractTaskRepository();
 
-  Future<TaskListResponseModel> getTaskHomeListData(); //{
-  // Optional Params to be added to the request if required.
-  //  Map<String, dynamic> queryparams,});
+  Future<TaskListResponseModel> getTaskHomeListData(); 
+
+  Future<TaskListResponseModel> getTaskDashBoardData({
+    Map<String, dynamic> queryparams,
+  });
 
   Future<PostResponse> postAPIData({
     // Optional Params to be added to the request if required.

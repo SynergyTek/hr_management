@@ -38,7 +38,8 @@ class NTSChartRepository extends AbstractNTSChartRepository {
   }
 
   @override
-  Future<ChartResponse> getChartByUserType({Map<String, dynamic> queryparams, NTSType ntsType})  async {
+  Future<ChartResponse> getChartByUserType(
+      {Map<String, dynamic> queryparams, NTSType ntsType}) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.GET_SERVICE_CHART_BY_USERTYPE;
@@ -68,12 +69,13 @@ class NTSChartRepository extends AbstractNTSChartRepository {
   }
 
   @override
-  Future<ChartResponse> getDatewiseSLA({Map<String, dynamic> queryparams, NTSType ntsType})  async {
+  Future<ChartResponse> getDatewiseSLA(
+      {Map<String, dynamic> queryparams, NTSType ntsType}) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.READ_DATEWISE_SERVICE_SLA;
-    // } else if (ntsType == NTSType.note) {
-    //   endpoint = APIEndpointConstants.GET_NOTE_CHART_BY_STATUS;
+    } else if (ntsType == NTSType.note) {
+      endpoint = APIEndpointConstants.READ_DATEWISE_NOTE_SLA;
     } else if (ntsType == NTSType.task) {
       endpoint = APIEndpointConstants.READ_DATEWISE_TASK_SLA;
     }
@@ -96,6 +98,4 @@ class NTSChartRepository extends AbstractNTSChartRepository {
       return ChartResponse.withError("$err");
     }
   }
-
-
 }

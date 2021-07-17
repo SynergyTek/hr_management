@@ -30,8 +30,8 @@ class APIEndpointConstants {
   static const GET_NOTE_CHART_BY_USERTYPE =
       '$BASE_URL/nts/query/GetNoteChartByUserType?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
-  // static const READ_DATEWISE_NOTE_SLA =
-  //     '$BASE_URL/nts/query/ReadDatewiseServiceSLA?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const READ_DATEWISE_NOTE_SLA =
+      '$BASE_URL/nts/query/ReadDatewiseServiceSLA?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const READ_NOTE_DASHBOARD_DATA =
       '$BASE_URL/nts/query/ReadNoteDashBoardGridData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
