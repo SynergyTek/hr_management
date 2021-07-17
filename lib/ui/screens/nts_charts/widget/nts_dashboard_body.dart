@@ -30,9 +30,9 @@ class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
       NTSChart(
         ntsType: widget.ntsType,
       ),
-      ServiceDashboardList(
+     ServiceDashboardList(
         // 'Index 1: Service Details',
-        // style: optionStyle,
+         // style: optionStyle,
       ),
     ];
   }
