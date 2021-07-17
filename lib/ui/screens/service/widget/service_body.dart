@@ -164,6 +164,14 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         }
       }
     }
+
+    for (UdfJsonComponent component in udfJsonString.components) {
+      if (component.columns == null &&(component.components==null || component.components.length == 0)) {
+        udfJsonComponent.add(component);
+      } else if (component.components == null && component.columns.length == 0) {
+        udfJsonComponent.add(component);
+      }
+    }
     if (columnComponent != null && columnComponent.isNotEmpty) {
       columnComponentWidgets = addDynamic(
         columnComponent,
@@ -173,12 +181,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     if (componentComList != null && componentComList.isNotEmpty) {
       addDynamicComponentComponent(componentComList, createServiceFormBloc);
     }
-    // if (udfJsonString.components != null &&
-    //     udfJsonString.components.isNotEmpty) {
-    //   udfJsonComponent.addAll(udfJsonString.components);
-    //   udfJsonCompWidgetList =
-    //       addDynamic(udfJsonComponent, createServiceFormBloc);
-    // }
+    if (udfJsonComponent.length > 0) {
+      // udfJsonComponent.addAll(udfJsonString.components);
+      udfJsonCompWidgetList =
+          addDynamic(udfJsonComponent, createServiceFormBloc);
+    }
   }
 
   Widget setServiceView(
@@ -404,20 +411,29 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         }
         final textField$i =
             new TextFieldBloc(initialValue: udfJson[model[i].key]);
-        listDynamic.add(
-          BlocTextBoxWidget(
-            labelName: model[i].label,
-            fieldName: model[i].label,
-            readonly: model[i].disabled,
-            textFieldBloc: textField$i,
-            prefixIcon: Icon(Icons.note),
-            maxLines: 1,
-            onChanged: (value) {
-              udfJson[model[i].key] = value.toString();
-            },
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        if (!model[i].disabled) {
+          listDynamic.add(
+            BlocTextBoxWidget(
+              labelName: model[i].label,
+              fieldName: model[i].label,
+              readonly: model[i].disabled,
+              textFieldBloc: textField$i,
+              prefixIcon: Icon(Icons.note),
+              maxLines: 1,
+              onChanged: (value) {
+                udfJson[model[i].key] = value.toString();
+              },
+            ),
+          );
+          createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        } else {
+          listDynamic.add(new DynamicTextBoxWidget(
+              model[i].label,
+              model[i].label,
+              new TextEditingController(),
+              true,
+              (String val) {}));
+        }
       } else if (model[i].type == 'textarea') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
