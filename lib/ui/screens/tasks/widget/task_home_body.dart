@@ -226,7 +226,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           suffixIcon: IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.search,color: Colors.blue,),
             onPressed: () => _searchSubject(),
           ),
         ),

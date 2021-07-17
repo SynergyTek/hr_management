@@ -391,7 +391,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           suffixIcon: IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.search,color: Colors.blue,),
             onPressed: () => _searchSubject(),
           ),
         ),
