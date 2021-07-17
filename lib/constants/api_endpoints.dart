@@ -116,6 +116,9 @@ class APIEndpointConstants {
   static const GET_SERVICE_COMMENTS_COUNT =
       "http://95.111.235.64:446/cms/GetServiceCommentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667589";
 
+  static const READ_SERVICE_HOME_DATA =
+      "$BASE_URL/nts/query/ReadServiceHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c";
+
   //Service API Endpoints Block End
 
   //************************************************************************//

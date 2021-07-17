@@ -22,6 +22,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
   String noteStatus;
   String text;
+  String userId;
+  String moduleId;
+  String mode;
 
   @override
   void initState() {
@@ -36,6 +39,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
     if (noteStatus != null) queryparams['noteStatus'] = noteStatus;
     if (text != null) queryparams['text'] = text;
+    if (userId != null) queryparams['userId'] = userId;
+    if (moduleId != null) queryparams['moduleId'] = moduleId;
+    if (mode != null) queryparams['mode'] = mode;
 
     noteBloc.getNoteList(queryparams: queryparams);
   }
@@ -45,33 +51,11 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
     return Column(
       children: [
         ExpansionTile(
+          collapsedBackgroundColor: Colors.grey[200],
+          backgroundColor: Colors.grey[200],
           trailing: Icon(Icons.filter_list),
           title: Text("Filter"),
-          children: [
-            Container(
-              width: double.infinity,
-              child: Wrap(
-                children: [
-                  customButton(
-                    buttonText: 'Home',
-                    handleOnPressed: () => _homeFilter(),
-                  ),
-                  customButton(
-                    buttonText: 'Pending Till Today',
-                    handleOnPressed: () => _pendingTillTodayFilter(),
-                  ),
-                  customButton(
-                    buttonText: 'Ending in Next 7 Days',
-                    handleOnPressed: () => _endingInWeekFilter(),
-                  ),
-                  customButton(
-                    buttonText: 'More...',
-                    handleOnPressed: () => _moreFilter(),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          children: [wrappedButtons()],
         ),
         Expanded(
           child: StreamBuilder(
@@ -172,6 +156,33 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
     );
   }
 
+  Widget wrappedButtons() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      width: double.infinity,
+      child: Wrap(
+        children: [
+          customButton(
+            buttonText: 'Home',
+            handleOnPressed: () => _homeFilter(),
+          ),
+          customButton(
+            buttonText: 'Pending Till Today',
+            handleOnPressed: () => _pendingTillTodayFilter(),
+          ),
+          customButton(
+            buttonText: 'Ending in Next 7 Days',
+            handleOnPressed: () => _endingInWeekFilter(),
+          ),
+          customButton(
+            buttonText: 'More...',
+            handleOnPressed: () => _moreFilter(),
+          ),
+        ],
+      ),
+    );
+  }
+
   String noteSubject(int index) {
     return _noteList[index].noteSubject ?? "-";
   }
@@ -247,7 +258,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
     Navigator.pushNamed(
       context,
-      TASK_FILTER,
+      NTS_FILTER,
       arguments: ScreenArguments(func: filterData, ntstype: NTSType.note),
     );
   }
@@ -255,5 +266,8 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
   _setParamsToNull() {
     noteStatus = null;
     text = null;
+    userId = null;
+    moduleId = null;
+    mode = null;
   }
 }

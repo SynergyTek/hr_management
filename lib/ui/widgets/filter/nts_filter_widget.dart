@@ -23,7 +23,24 @@ class NTSFilterWidget extends StatefulWidget {
 
 class _NTSFilterWidgetState extends State<NTSFilterWidget> {
   bool showFilter = false;
+  // bool showSort = false;
   Map<String, String> filterOptions = Map();
+  // List<String> sortByOptions = [];
+
+  // List<String> taskSortByOptions = [
+  //   'Sort by Date',
+  //   'Sort by Subject',
+  //   'Sort by Owner',
+  //   'Sort by Assignee',
+  //   'Reset'
+  // ];
+
+  // List<String> noteSortByOptions = [
+  //   'Sort by Date',
+  //   'Sort by Subject',
+  //   'Sort by Owner',
+  //   'Reset'
+  // ];
 
   @override
   void initState() {
@@ -36,12 +53,15 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     switch (widget.filterType) {
       case NTSType.service:
         filterOptions = filterServiceOptionsMap;
+        // sortByOptions = [];
         break;
       case NTSType.task:
         filterOptions = filterTaskOptionsMap;
+        // sortByOptions = taskSortByOptions;
         break;
       case NTSType.note:
         filterOptions = filterNoteOptionsMap;
+        // sortByOptions = noteSortByOptions;
         break;
       default:
     }
@@ -67,15 +87,25 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            optionsRow(text: 'Modules'),
+                            // optionsRow(text: 'Modules'),
                             optionsRow(
                               text: 'Filters',
                               onTap: () {
                                 setState(() {
-                                  showFilter = !showFilter;
+                                  showFilter = true;
+                                  // showSort = false;
                                 });
                               },
                             ),
+                            // optionsRow(
+                            //   text: 'Sort By',
+                            //   onTap: () {
+                            //     setState(() {
+                            //       showSort = true;
+                            //       showFilter = false;
+                            //     });
+                            //   },
+                            // ),
                           ],
                         ),
                       ),
@@ -100,6 +130,17 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                                   );
                                 },
                               )
+                            // else if (showSort)
+                            //   ListView.builder(
+                            //     shrinkWrap: true,
+                            //     itemCount: sortByOptions.length,
+                            //     itemBuilder: (BuildContext context, int index) {
+                            //       return ListTile(
+                            //         title: Text(sortByOptions[index]),
+                            //         onTap: () {},
+                            //       );
+                            //     },
+                            //   )
                           ],
                         ),
                       ),

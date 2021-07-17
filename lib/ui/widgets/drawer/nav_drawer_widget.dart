@@ -193,6 +193,19 @@ Widget drawerWidget(context) {
             );
           },
         ),
+        ListTile(
+          title: Text(
+            'SERVICE HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.note),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              SERVICE_HOME,
+            );
+          },
+        ),
       ],
     ),
   );
