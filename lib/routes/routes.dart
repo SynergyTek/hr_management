@@ -7,6 +7,7 @@ import 'package:hr_management/ui/screens/home_screen/home_screen.dart';
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
+import 'package:hr_management/ui/screens/service/service_home.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
@@ -142,7 +143,7 @@ class AppRouter {
         );
         break;
 
-      case TASK_FILTER:
+      case NTS_FILTER:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => NTSFilterWidget(
@@ -201,6 +202,13 @@ class AppRouter {
           builder: (_) => NoteHomeScreen(),
         );
         break;
+
+      case SERVICE_HOME:
+        return MaterialPageRoute(
+          builder: (_) => ServiceHomeScreen(),
+        );
+        break;
+
 // 404 route.
       default:
         return MaterialPageRoute(
