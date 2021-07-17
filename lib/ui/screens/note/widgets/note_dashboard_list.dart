@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/task_models/task_list_model.dart';
-import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
-import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
+import 'package:hr_management/data/models/note/note_list_model.dart';
+import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
-class TaskDashboardList extends StatefulWidget {
-  TaskDashboardList({Key key}) : super(key: key);
-
+class NoteDashboardList extends StatefulWidget {
   @override
-  _TaskDashboardListState createState() => _TaskDashboardListState();
+  _NoteDashboardListState createState() => _NoteDashboardListState();
 }
 
-class _TaskDashboardListState extends State<TaskDashboardList> {
-  List<TaskListModel> _taskList = [];
-  List<TaskListModel> _filteredTaskList = [];
+class _NoteDashboardListState extends State<NoteDashboardList> {
+  List<NoteListModel> _noteList = [];
+  List<NoteListModel> _filteredNoteList = [];
 
   @override
   void initState() {
     super.initState();
-    taskBloc..getTaskDashBoardData();
+    noteBloc..getNoteDashBoardData();
   }
 
   @override
@@ -27,8 +24,8 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     return Column(
       children: [
         Expanded(
-          child: StreamBuilder<TaskListResponseModel>(
-            stream: taskBloc.subjectTaskList.stream,
+          child: StreamBuilder(
+            stream: noteBloc.subjectNoteList.stream,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data.error != null &&
@@ -37,17 +34,17 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
                     child: Text(snapshot.data.error),
                   );
                 }
-                _taskList = snapshot.data.data;
+                _noteList = snapshot.data.list;
                 return Listizer(
-                  listItems: _taskList,
-                  filteredSearchList: _filteredTaskList,
+                  listItems: _noteList,
+                  filteredSearchList: _filteredNoteList,
                   itemBuilder: (context, index) {
-                    print("Snapshot data: ${snapshot.data.data[index].taskNo}");
+                    print("Snapshot data: ${snapshot.data}");
                     return Card(
                       elevation: 4,
                       child: ListTile(
                         title: Text(
-                          taskSubject(index),
+                          noteSubject(index),
                           maxLines: 2,
                           style: Theme.of(context).textTheme.headline6,
                         ),
@@ -61,8 +58,8 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                      Text("Task No: "),
-                                      Text(taskNoValue(index)),
+                                      Text("Note No: "),
+                                      Text(noteNoValue(index)),
                                     ],
                                   )
                                 ],
@@ -73,14 +70,9 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
                                   const EdgeInsets.only(top: 6.0, bottom: 6.0),
                               child: Row(
                                 children: <Widget>[
+                                  Text("From: "),
                                   Text(
                                     ownerUserName(index),
-                                    style: TextStyle(
-                                        color: Colors.deepPurple[900]),
-                                  ),
-                                  Text(" to "),
-                                  Text(
-                                    assigneeDisplayName(index),
                                     style: TextStyle(
                                         color: Colors.deepPurple[900]),
                                   ),
@@ -91,31 +83,18 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    taskStatusName(index),
+                                    noteStatusName(index),
                                     style: TextStyle(color: Colors.green[800]),
                                   ),
                                 ),
                                 Text(
-                                  dueDateDisplay(index),
+                                  expiryDate(index),
                                   style: TextStyle(color: Colors.red[700]),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        // leading: TextCircleAvater(
-                        //     text: _filteredTaskList[index].subject,
-                        //     context: context,
-                        //     radius: 20,
-                        //     fontSize: 18,
-                        //     color: Theme.of(context).primaryColorLight),
-                        // title: Text(
-                        //   _filteredTaskList[index].name != null
-                        //       ? _filteredTaskList[index].name
-                        //       : "",
-                        //   maxLines: 2,
-                        //   style: Theme.of(context).textTheme.headline6,
-                        // ),
                         onTap: () {},
                       ),
                     );
@@ -128,32 +107,32 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
               }
             },
           ),
-        )
+        ),
       ],
     );
   }
 
-  String taskSubject(int index) {
-    return _taskList[index].taskSubject ?? "-";
+  String noteSubject(int index) {
+    return _noteList[index].noteSubject ?? "-";
   }
 
-  String taskNoValue(int index) {
-    return _taskList[index].taskNo ?? "-";
+  String noteNoValue(int index) {
+    return _noteList[index].noteNo ?? "-";
   }
 
   String ownerUserName(int index) {
-    return _taskList[index].ownerUserName ?? "-";
+    return _noteList[index].ownerUserName ?? "-";
   }
 
   String assigneeDisplayName(int index) {
-    return _taskList[index].assigneeDisplayName ?? "-";
+    return _noteList[index].assigneeDisplayName ?? "-";
   }
 
-  String taskStatusName(int index) {
-    return _taskList[index].taskStatusName ?? "-";
+  String noteStatusName(int index) {
+    return _noteList[index].noteStatusName ?? "-";
   }
 
-  String dueDateDisplay(int index) {
-    return _taskList[index].dueDateDisplay ?? "-";
+  String expiryDate(int index) {
+    return _noteList[index].expiryDateDisplay ?? "-";
   }
 }

@@ -16,13 +16,26 @@ class ServiceDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarWidget(title: 'Service Dashboard'),
+      appBar: AppbarWidget(title: _ntsTitle()),
       drawer: drawerWidget(context),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: ServiceDashboardBody(ntsType: ntsType,),
+          child: ServiceDashboardBody(
+            ntsType: ntsType,
+          ),
         ),
       ),
     );
+  }
+
+  String _ntsTitle() {
+    String title;
+    if (ntsType == NTSType.service)
+      title = 'Service Dashboard';
+    else if (ntsType == NTSType.task)
+      title = 'Task Dashboard';
+    else if (ntsType == NTSType.note) title = 'Note Dashboard';
+
+    return title;
   }
 }
