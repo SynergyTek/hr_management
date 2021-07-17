@@ -49,19 +49,19 @@ Widget drawerWidget(context) {
           },
         ),
 
-        ListTile(
-          title: Text(
-            'NEW TASK REQUEST',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.today),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              TASK_REQUEST,
-            );
-          },
-        ),
+        // ListTile(
+        //   title: Text(
+        //     'NEW TASK REQUEST',
+        //     style: TextStyle(fontSize: fontSize, color: fontColor),
+        //   ),
+        //   trailing: Icon(Icons.today),
+        //   onTap: () {
+        //     Navigator.pushNamed(
+        //       context,
+        //       TASK_REQUEST,
+        //     );
+        //   },
+        // ),
 
         ListTile(
           title: Text(
@@ -113,6 +113,59 @@ Widget drawerWidget(context) {
         //     );
         //   },
         // ),
+        ListTile(
+          title: Text(
+            'SERVICE HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.note),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              SERVICE_HOME,
+            );
+          },
+        ),
+
+        ListTile(
+          title: Text(
+            'SERVICE HOME DASHBOARAD',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              SERVICE_DASHBOARD,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'NOTE HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.note),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              NOTE_HOME,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'NOTE HOME DASHBOARAD',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              NOTE_DASHBOARD,
+            );
+          },
+        ),
 
         ListTile(
           title: Text(
@@ -141,60 +194,6 @@ Widget drawerWidget(context) {
             );
           },
         ),
-
-        ListTile(
-          title: Text(
-            'SERVICE HOME DASHBOARAD',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.add_to_home_screen),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              SERVICE_DASHBOARD,
-            );
-          },
-        ),
-        ListTile(
-          title: Text(
-            'NOTE HOME DASHBOARAD',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.add_to_home_screen),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              NOTE_DASHBOARD,
-            );
-          },
-        ),
-        ListTile(
-          title: Text(
-            'NOTE HOME',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.note),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              NOTE_HOME,
-            );
-          },
-        ),
-        ListTile(
-          title: Text(
-            'SERVICE HOME',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.note),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              SERVICE_HOME,
-            );
-          },
-        ),
-        
         // ListTile(
         //   title: Text(
         //     'LOGOUT',
