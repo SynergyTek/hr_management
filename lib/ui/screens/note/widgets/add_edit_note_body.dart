@@ -106,8 +106,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                     context.read<CreateServiceFormBloc>();
                 noteModel = snapshot.data.data;
 
-                parseJsonToUDFModel(createServiceFormBloc, noteModel.json,
-                    noteModel.columnList);
+                parseJsonToUDFModel(
+                  createServiceFormBloc,
+                  noteModel.json,
+                );
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -138,8 +140,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     );
   }
 
-  parseJsonToUDFModel(CreateServiceFormBloc createServiceFormBloc,
-      udfJsonString, List<ColumnList> columnList) {
+  parseJsonToUDFModel(
+    CreateServiceFormBloc createServiceFormBloc,
+    udfJsonString,
+  ) {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
@@ -151,11 +155,21 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             columnComponent.add(columnCom);
           }
         }
-        if (component.components != null && component.components.isNotEmpty) {
-          for (ComponentComponent componentComponent in component.components) {
-            componentComList.add(componentComponent);
-          }
+      }
+      if (component.components != null && component.components.isNotEmpty) {
+        for (ComponentComponent componentComponent in component.components) {
+          componentComList.add(componentComponent);
         }
+      }
+    }
+
+    for (UdfJsonComponent component in udfJsonString.components) {
+      if (component.columns == null &&
+          (component.components == null || component.components.length == 0)) {
+        udfJsonComponent.add(component);
+      } else if (component.components == null &&
+          component.columns.length == 0) {
+        udfJsonComponent.add(component);
       }
     }
     if (columnComponent != null && columnComponent.isNotEmpty) {
@@ -167,9 +181,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     if (componentComList != null && componentComList.isNotEmpty) {
       addDynamicComponentComponent(componentComList, createServiceFormBloc);
     }
-    if (udfJsonString.components != null &&
-        udfJsonString.components.isNotEmpty) {
-      udfJsonComponent.addAll(udfJsonString.components);
+    if (udfJsonComponent.length > 0) {
+      // udfJsonComponent.addAll(udfJsonString.components);
       udfJsonCompWidgetList =
           addDynamic(udfJsonComponent, createServiceFormBloc);
     }
@@ -767,7 +780,9 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     //     ?.where((x) => x.groupTemplateFieldId == element.templateFieldId);
     // groupControls?.forEach((group) {
     var tableWidgets = addDynamic(model, createServiceFormBloc);
-    table.add(TableRow(children: tableWidgets));
+    for (var row in tableWidgets) {
+      table.add(TableRow(children: [row]));
+    }
     // });
     // listDynamic.add(Padding(
     //   padding: const EdgeInsets.only(top: 15, bottom: 10),
@@ -819,7 +834,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 visible: noteModel.isCompleteButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Complete',
-                  handleOnPressed: () {},
+                  handleOnPressed: () {
+                    noteViewModelPostRequest(
+                      1,
+                      'NOTE_STATUS_COMPLETE',
+                      createServiceFormBloc,
+                    );
+                  },
                   width: 100,
                 ),
               ),
@@ -850,7 +871,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   handleOnPressed: () {
                     noteViewModelPostRequest(
                       1,
-                      'SERVICE_STATUS_DRAFT',
+                      'NOTE_STATUS_DRAFT',
                       createServiceFormBloc,
                     );
                   },
@@ -901,7 +922,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                     }
                     noteViewModelPostRequest(
                       1,
-                      'SERVICE_STATUS_INPROGRESS',
+                      'NOTE_STATUS_INPROGRESS',
                       createServiceFormBloc,
                     );
                   },

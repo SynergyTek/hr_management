@@ -44,7 +44,8 @@ class UdfJsonComponent {
       this.inputFormat,
       this.validate,
       this.value,
-      this.udfValue});
+      this.udfValue,
+      this.disabled});
 
   String label;
   List<Columns> columns;
@@ -55,6 +56,7 @@ class UdfJsonComponent {
   bool tableView;
   List<ComponentComponent> components;
   String title;
+  bool disabled;
   String idPath;
   String template;
   String inputFormat;
@@ -86,7 +88,8 @@ class UdfJsonComponent {
               ? Validate.fromJson(json['validate'])
               : null,
           value: json['value'],
-          udfValue: json['udfValue']);
+          udfValue: json['udfValue'],
+          disabled: json['disabled']??false);
 
   Map<String, dynamic> toJson() => {
         "label": label,
@@ -108,7 +111,8 @@ class UdfJsonComponent {
         'validate':
             this.validate.toJson() != null ? this.validate.toJson() : null,
         'value': this.value,
-        'udfValue': this.udfValue
+        'udfValue': this.udfValue,
+        'disabled': this.disabled
       };
 }
 
@@ -269,7 +273,7 @@ class ColumnComponent {
     //     // json['widget'] != null ? WidgetClass.fromJson(json['widget']) : null;
     mask = json['mask'];
     spellcheck = json['spellcheck'];
-    disabled = json['disabled'];
+    disabled = json['disabled']??false;
     delimiter = json['delimiter'];
     requireDecimal = json['requireDecimal'];
     inputFormat = json['inputFormat'];
@@ -576,6 +580,7 @@ class ComponentComponent {
   String key;
   String type;
   bool input;
+  bool disabled;
   String columnMetadataId;
   bool autoExpand;
   Validate validate;
@@ -593,6 +598,7 @@ class ComponentComponent {
       this.key,
       this.type,
       this.input,
+      this.disabled,
       this.columnMetadataId,
       this.autoExpand,
       this.validate,
@@ -607,6 +613,7 @@ class ComponentComponent {
     viewableContext = json['viewableContext'].cast<String>();
     viewableBy = json['viewableBy'].cast<String>();
     editableBy = json['editableBy'].cast<String>();
+    disabled = json['disabled']??false;
     key = json['key'];
     type = json['type'];
     input = json['input'];
@@ -627,6 +634,7 @@ class ComponentComponent {
     data['viewableContext'] = this.viewableContext;
     data['viewableBy'] = this.viewableBy;
     data['editableBy'] = this.editableBy;
+    data['disabled'] = this.key;
     data['key'] = this.key;
     data['type'] = this.type;
     data['input'] = this.input;

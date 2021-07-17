@@ -14,8 +14,8 @@ class CommentResponse {
     @required this.data,
   });
 
-  // CommentResponse.fromJson(Map<String, dynamic> response)
-  //     : data = Comment.fromJson(response);
+  CommentResponse.fromJson(Map<String, dynamic> response)
+      : data = Comment.fromJson(response);
 
   CommentResponse.withError(String errorValue)
       : data = null,
@@ -31,8 +31,8 @@ class CommentListResponse {
     @required this.list,
   });
 
-  // CommentListResponse.fromJson(List response)
-  //     : list = (response).map((i) => new Comment.fromJson(i)).toList();
+  CommentListResponse.fromJson(List response)
+      : list = (response).map((i) => new Comment.fromJson(i)).toList();
 
   CommentListResponse.withError(String errorValue)
       : list = null,

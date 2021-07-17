@@ -26,9 +26,18 @@ class NoteBloc {
   }
 
   getNoteList({
-    Map<String, dynamic> queryparams, // String userId,
+    Map<String, dynamic> queryparams,
   }) async {
-    NoteListResponse response = await _noteRepository.getNoteList(queryparams: queryparams);
+    NoteListResponse response =
+        await _noteRepository.getNoteList(queryparams: queryparams);
+    _subjectNoteList.sink.add(response);
+  }
+
+  getNoteDashBoardData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    NoteListResponse response =
+        await _noteRepository.getNoteDashBoardData(queryparams: queryparams);
     _subjectNoteList.sink.add(response);
   }
 

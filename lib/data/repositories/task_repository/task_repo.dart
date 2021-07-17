@@ -48,6 +48,27 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
+  Future<TaskListResponseModel> getTaskDashBoardData(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.READ_TASK_DASHBOARD_DATA;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      return TaskListResponseModel.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return TaskListResponseModel.withError("$err");
+    }
+  }
+
   @override
   Future<TaskResponseModel> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
@@ -71,9 +92,15 @@ class TaskRepository extends AbstractTaskRepository {
       var result = PostResponse.fromJson(
         response.data,
       );
-      result.isSuccess
-          ? result.messages = 'Task saved successfully'
-          : result.messages = 'Unable to submit task';
+
+      if (taskModel.taskStatusCode == 'TASK_STATUS_DRAFT')
+        result.isSuccess
+            ? result.messages = 'Task saved as draft'
+            : result.messages = 'Unable to save task';
+      else if (taskModel.taskStatusCode == 'TASK_STATUS_INPROGRESS')
+        result.isSuccess
+            ? result.messages = 'Task submitted successfully'
+            : result.messages = 'Unable to submit task';
 
       return result;
     } catch (err, stacktrace) {

@@ -2,7 +2,13 @@ import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
 import 'package:hr_management/ui/screens/note/note_home_screen.dart';
 import 'package:hr_management/ui/screens/nts_comments/nts_comments_screen.dart';
+import 'package:hr_management/ui/screens/home_screen/home_screen.dart';
+
+// import 'package:hr_management/ui/screens/login/login_screen.dart';
+
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
+import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
+import 'package:hr_management/ui/screens/service/service_home.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
 import 'package:hr_management/ui/screens/users/user_screen.dart';
@@ -48,6 +54,12 @@ class AppRouter {
 
       case HOME_ROUTE:
         return MaterialPageRoute(
+          builder: (_) => HomeScreen(),
+        );
+        break;
+
+      case COUNTS_ROUTE:
+        return MaterialPageRoute(
           builder: (_) => CountsScreen(),
         );
         break;
@@ -64,20 +76,12 @@ class AppRouter {
         );
         break;
 
-      case LEAVE_REQUEST:
+      case NTS_TEMPLATE_REQUEST:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          // builder: (_) => LeaveTemplate(),
           builder: (_) => NTSTemplateScreen(
-            ntsType: NTSType.service,
-          ),
-        );
-        break;
-
-      case TASK_REQUEST:
-        return MaterialPageRoute(
-          // builder: (_) => LeaveTemplate(),
-          builder: (_) => NTSTemplateScreen(
-            ntsType: NTSType.task,
+            categoryCode: args.arg4,
+            ntsType: args.ntstype,
           ),
         );
         break;
@@ -133,7 +137,7 @@ class AppRouter {
         );
         break;
 
-      case TASK_FILTER:
+      case NTS_FILTER:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => NTSFilterWidget(
@@ -187,6 +191,23 @@ class AppRouter {
         );
         break;
 
+      case SERVICE_DASHBOARD:
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(
+                  ntsType: NTSType.service,
+                ));
+        break;
+
+      case TASK_DASHBOARD:
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(ntsType: NTSType.task));
+        break;
+
+      case NOTE_DASHBOARD:
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(ntsType: NTSType.note));
+        break;
+
       case NOTE_HOME:
         return MaterialPageRoute(
           builder: (_) => NoteHomeScreen(),
@@ -196,6 +217,11 @@ class AppRouter {
       case USERS:
         return MaterialPageRoute(
           builder: (_) => UserScreen(),
+        );
+        break;
+      case SERVICE_HOME:
+        return MaterialPageRoute(
+          builder: (_) => ServiceHomeScreen(),
         );
         break;
 

@@ -50,6 +50,27 @@ class NoteRepository extends AbstractNoteRepository {
     }
   }
 
+
+Future<NoteListResponse> getNoteDashBoardData(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.READ_NOTE_DASHBOARD_DATA;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      print(response.data);
+      return NoteListResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return NoteListResponse.withError("$err");
+    }
+  }
+
   @override
   Future<NoteResponse> deleteNoteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
@@ -75,10 +96,10 @@ class NoteRepository extends AbstractNoteRepository {
       );
 
       if (result.isSuccess) {
-        if (note.noteStatusCode == 'SERVICE_STATUS_DRAFT')
-          result.messages = 'Leave saved as Draft';
-        else if (note.noteStatusCode == 'SERVICE_STATUS_INROGRESS')
-          result.messages = 'Leave Applied Successfully';
+        if (note.noteStatusCode == 'NOTE_STATUS_DRAFT')
+          result.messages = 'Note saved as Draft';
+        else if (note.noteStatusCode == 'NOTE_STATUS_INROGRESS')
+          result.messages = 'Note Applied Successfully';
       }
 
       return result;

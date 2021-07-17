@@ -43,12 +43,13 @@ class BlocTextBoxWidget extends StatelessWidget {
         suffixButton: suffixButton,
         decoration: InputDecoration(
           labelText: labelName,
-          hintText: labelName,
+          hintText:  labelName,
           prefixIcon: prefixIcon,
         ),
-        autofillHints: [
-          AutofillHints.username,
-        ],
+        
+        // autofillHints: [
+        //   AutofillHints.username,
+        // ],
         onChanged: onChanged,
       ),
     );

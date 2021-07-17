@@ -1,7 +1,15 @@
+import 'dart:convert';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/models/service_models/service.dart';
+import 'package:hr_management/data/models/service_models/service_response.dart';
+import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
+import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
+import 'package:hr_management/ui/screens/service/create_service_form_bloc.dart';
+import 'package:hr_management/ui/widgets/webview_widget.dart';
+
 import '../../../widgets/progress_indicator.dart';
 
-import '../../../../data/models/api_models/api_response_model.dart';
-import '../../../../logic/blocs/api_bloc/api_bloc.dart';
 import '../../../../themes/theme_config.dart';
 import 'package:flutter/material.dart';
 
@@ -13,66 +21,47 @@ class HomeScreenBodyWidget extends StatefulWidget {
 }
 
 class _HomeScreenBodyWidgetState extends State<HomeScreenBodyWidget> {
+  Service serviceModel;
+
   @override
   void initState() {
     super.initState();
-
-    // Getting the initial data.
-    apiBloc..getData();
+    serviceBloc
+      ..getServiceDetail(
+        templateCode: 'AnnualLeave' ?? 'RETURN_TO_WORK',
+        serviceId: '',
+        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+      );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: DEFAULT_LARGE_PADDING,
-      child: StreamBuilder<APIResponse>(
-          stream: apiBloc.subject.stream,
-          builder: (context, AsyncSnapshot<APIResponse> snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data.error != null &&
-                  snapshot.data.error.length > 0) {
-                return Center(
-                  child: Text(snapshot.data.error),
-                );
-              }
-              return _listWidget(
-                snapshot.data,
-              );
-            } else if (snapshot.hasError) {
+      padding: DEFAULT_PADDING,
+      child: StreamBuilder<ServiceResponse>(
+        stream: serviceBloc.subject.stream,
+        builder: (context, AsyncSnapshot snapshot) {
+          print("Snapshot data: ${snapshot.data} ");
+
+          if (snapshot.hasData) {
+            if (snapshot.data.error != null && snapshot.data.error.length > 0) {
               return Center(
                 child: Text(snapshot.data.error),
               );
-            } else {
-              return _loadingWidget();
             }
-          }),
+
+            return _webview(snapshot?.data?.data?.json);
+          } else {
+            return CustomProgressIndicator();
+          }
+        },
+      ),
     );
   }
 
-  Widget _loadingWidget() {
-    return Center(
-      child: CustomProgressIndicator(),
-    );
-  }
-
-  Widget _listWidget(APIResponse apiResponse) {
-    return ListView.builder(
-      itemCount: apiResponse?.data?.length ?? 0,
-      itemBuilder: (BuildContext context, int index) {
-        return Card(
-          child: ListTile(
-            title: Text(apiResponse?.data?.elementAt(index)?.title ?? "-"),
-            subtitle:
-                Text(apiResponse?.data?.elementAt(index)?.overview ?? "-"),
-            leading: Image.network(
-              "https://image.tmdb.org/t/p/w200/" +
-                  apiResponse?.data?.elementAt(index)?.poster,
-            ),
-            trailing: Text(
-                apiResponse?.data?.elementAt(index)?.rating.toString() ?? "-"),
-          ),
-        );
-      },
+  Widget _webview(String json) {
+    return WebViewScreen(
+      json: json,
     );
   }
 }

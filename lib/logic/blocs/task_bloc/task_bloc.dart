@@ -54,9 +54,23 @@ class TaskBloc {
       taskModel: taskModel,
     );
 
-    taskBloc..getTaskHomeListData(queryparams: null);
+    // Reload task home if draft/submit is successful
+    if (response.isSuccess) {
+      _subjectTaskList.sink.add(null);
+
+      getTaskHomeListData(queryparams: null);
+    }
 
     return response;
+  }
+
+   getTaskDashBoardData({
+    Map<String, dynamic> queryparams, // String userId,
+  }) async {
+    TaskListResponseModel response = await _taskRepository.getTaskDashBoardData(
+      queryparams: queryparams,
+    );
+    _subjectTaskList.sink.add(response);
   }
 
   /// Used to update an existing entry.

@@ -4,6 +4,7 @@ import 'package:hr_management/data/models/task_models/task_list_model.dart';
 import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import '../../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 
@@ -23,6 +24,12 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
   List<TaskListModel> _filteredTaskList = [];
 
   FilterListTapCallBack filterData;
+  bool dateFilterVisible = false;
+
+  DateTime startDateValue;
+  DateTime dueDateValue;
+
+  TextEditingController subjectController = TextEditingController();
 
   String moduleId;
   String mode;
@@ -54,8 +61,10 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     if (taskAssigneeIds != null)
       queryparams['taskAssigneeIds'] = taskAssigneeIds;
     if (subject != null) queryparams['subject'] = subject;
-    if (startDate != null) queryparams['startDate'] = startDate;
-    if (dueDate != null) queryparams['dueDate'] = dueDate;
+    if (startDate != null)
+      queryparams['startDate'] = startDate.toString().split(' ')[0];
+    if (dueDate != null)
+      queryparams['dueDate'] = dueDate.toString().split(' ')[0];
     if (completionDate != null) queryparams['completionDate'] = completionDate;
     if (templateMasterCode != null)
       queryparams['templateMasterCode'] = templateMasterCode;
@@ -70,44 +79,17 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     return Column(
       children: [
         ExpansionTile(
+          collapsedBackgroundColor: Colors.grey[200],
+          backgroundColor: Colors.grey[200],
+          onExpansionChanged: (value) => _onExpansionChanged(value),
           trailing: Icon(Icons.filter_list),
-          title: Text("Filter"),
-          children: [
-            Container(
-              width: double.infinity,
-              child: Wrap(
-                children: [
-                  customButton(
-                    buttonText: 'Home',
-                    handleOnPressed: () => _homeFilter(),
-                  ),
-                  customButton(
-                    buttonText: 'Pending Till Today',
-                    handleOnPressed: () => _pendingTillTodayFilter(),
-                  ),
-                  customButton(
-                    buttonText: 'Ending in Next 7 Days',
-                    handleOnPressed: () => _endingInWeekFilter(),
-                  ),
-                  customButton(
-                    buttonText: 'More...',
-                    handleOnPressed: () => _moreFilter(),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          title: _searchField(),
+          children: [wrappedButtons()],
         ),
-        // ListTile(
-        //   trailing: Icon(Icons.filter_list),
-        //   title: Text("Filter"),
-        //   onTap: () {
-        //     Navigator.pushNamed(
-        //       context,
-        //       TASK_FILTER,
-        //     );
-        //   },
-        // ),
+        Visibility(
+          visible: dateFilterVisible,
+          child: _dateFilterWidget(),
+        ),
         Expanded(
           child: StreamBuilder<TaskListResponseModel>(
             stream: taskBloc.subjectTaskList.stream,
@@ -225,6 +207,71 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     );
   }
 
+  Widget _searchField() {
+    return Container(
+      height: 48,
+      padding: EdgeInsets.only(left: 16),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(100),
+        // color: Colors.white,
+      ),
+      child: TextField(
+        controller: subjectController,
+        decoration: InputDecoration(
+          hintText: 'Search',
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          suffixIcon: IconButton(
+            icon: Icon(Icons.search,color: Colors.blue,),
+            onPressed: () => _searchSubject(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget wrappedButtons() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      width: double.infinity,
+      child: Wrap(
+        children: [
+          customButton(
+            buttonText: 'Home',
+            handleOnPressed: () => _homeFilter(),
+          ),
+          customButton(
+            buttonText: 'Pending Till Today',
+            handleOnPressed: () => _pendingTillTodayFilter(),
+          ),
+          customButton(
+            buttonText: 'Ending in Next 7 Days',
+            handleOnPressed: () => _endingInWeekFilter(),
+          ),
+          customButton(
+            buttonText: 'Date',
+            handleOnPressed: () => _dateFilter(),
+          ),
+          customButton(
+            buttonText: 'More...',
+            handleOnPressed: () => _moreFilter(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _onExpansionChanged(bool value) {
+    if (!value)
+      setState(() {
+        dateFilterVisible = false;
+      });
+  }
+
   String taskSubject(int index) {
     return _taskList[index].taskSubject ?? "-";
   }
@@ -271,6 +318,14 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     );
   }
 
+  _searchSubject() {
+    if (subjectController.text != null && subjectController.text.isNotEmpty) {
+      _setParamsToNull();
+      subject = subjectController.text;
+      apiCall();
+    }
+  }
+
   _homeFilter() {
     _setParamsToNull();
     apiCall();
@@ -290,6 +345,81 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     apiCall();
   }
 
+  _dateFilter() {
+    setState(() {
+      dateFilterVisible = !dateFilterVisible;
+    });
+  }
+
+  Widget _dateFilterWidget() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: DynamicDateTimeBox(
+            code: startDateValue?.toString() ?? null,
+            name: 'Start Date',
+            key: new Key('Start Date'),
+            selectDate: (DateTime date) {
+              if (date != null) {
+                setState(() async {
+                  startDateValue = date;
+                });
+
+                print(startDateValue);
+              }
+            },
+          ),
+        ),
+        Expanded(
+          child: DynamicDateTimeBox(
+            code: dueDateValue?.toString() ?? null,
+            name: 'End Date',
+            key: new Key('End Date'),
+            selectDate: (DateTime date) {
+              if (date != null) {
+                setState(() async {
+                  dueDateValue = date;
+                });
+              }
+            },
+          ),
+        ),
+        IconButton(
+          color: Theme.of(context).primaryColor,
+          icon: Icon(Icons.save),
+          // onPressed: () {},
+          onPressed: () => _handleFilterOnPressed(),
+        )
+      ],
+    );
+  }
+
+  void _handleFilterOnPressed() {
+    if (startDateValue == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Start date cannot be empty."),
+        ),
+      );
+      return;
+    }
+
+    if (dueDateValue != null && startDateValue.compareTo(dueDateValue) > 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Start date cannot be greater than the End date."),
+        ),
+      );
+      return;
+    }
+
+    _setParamsToNull();
+    startDate = startDateValue;
+    dueDate = dueDateValue;
+    apiCall();
+  }
+
   _moreFilter() {
     filterData(dynamic value) {
       _setParamsToNull();
@@ -300,7 +430,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
 
     Navigator.pushNamed(
       context,
-      TASK_FILTER,
+      NTS_FILTER,
       arguments: ScreenArguments(func: filterData, ntstype: NTSType.task),
     );
   }

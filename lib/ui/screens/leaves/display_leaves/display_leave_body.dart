@@ -47,6 +47,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                 listItems: _serviceList,
                 filteredSearchList: _filteredServiceList,
                 itemBuilder: (context, index) {
+                  print(_serviceList[index].serviceNo);
                   return Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.25,

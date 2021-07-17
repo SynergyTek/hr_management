@@ -9,12 +9,6 @@ class NTSTemplateRepository extends AbstractNTSTemplateRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
-    queryparams = {
-      "categoryCode": "STEP_TASK_CATEGORY",
-      "templateType": "Task",
-      "taskType": "StepTask",
-    };
-
     String endpoint = APIEndpointConstants.GET_ALLOWED_TEMPLATES;
 
     try {

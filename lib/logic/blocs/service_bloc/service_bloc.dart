@@ -21,6 +21,9 @@ class ServiceBloc {
     queryparams["templatecode"] = templateCode ?? '';
     queryparams["serviceId"] = serviceId ?? '';
     queryparams["userid"] = userId ?? '';
+
+    print("Queryparams: ${queryparams.entries}");
+
     ServiceResponse response =
         await _serviceRepository.getServiceDetail(queryparams: queryparams);
     _subject.sink.add(response);
@@ -28,6 +31,15 @@ class ServiceBloc {
 
   getLeavesDetails() async {
     ServiceListResponse response = await _serviceRepository.getLeavesDetails();
+    _subjectServiceList.sink.add(response);
+  }
+
+  getServiceDashBoardData({templateCode, serviceId, userId}) async {
+  
+   
+
+    ServiceListResponse response =
+        await _serviceRepository.getServiceDashBoardData();
     _subjectServiceList.sink.add(response);
   }
 
@@ -41,6 +53,17 @@ class ServiceBloc {
 
     serviceBloc..getLeavesDetails();
     return response;
+  }
+
+  /// Used to fetch new entries.
+  getServiceHomeListData({
+    Map<String, dynamic> queryparams, // String userId,
+  }) async {
+    ServiceListResponse response =
+        await _serviceRepository.getServiceHomeListData(
+      queryparams: queryparams,
+    );
+    _subjectServiceList.sink.add(response);
   }
 
   /// Used to update an existing entry.
