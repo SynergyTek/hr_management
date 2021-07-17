@@ -19,15 +19,15 @@ class NTSTemplateBloc {
     if (ntsType == NTSType.service) {
       _subject.sink.add(null);
       queryparams = {
-        "categoryCode": categoryCode,
+        "categoryCode": " Employee_Service",//categoryCode,
         "templateType": "Service",
       };
     } else if (ntsType == NTSType.task) {
       _subject.sink.add(null);
       queryparams = {
-        "categoryCode": categoryCode,
+        "categoryCode": "ProjectTask",//categoryCode,
         "templateType": "Task",
-        "taskType": "StepTask",
+        // "taskType": "StepTask",
       };
     }
 
