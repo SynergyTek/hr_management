@@ -7,7 +7,7 @@ import 'package:hr_management/ui/screens/home_screen/home_screen.dart';
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
-import 'package:hr_management/ui/screens/service/service_dashboard.dart';
+import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
 import 'package:hr_management/ui/screens/service/service_home.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
@@ -199,7 +199,20 @@ class AppRouter {
         break;
 
       case SERVICE_DASHBOARD:
-        return MaterialPageRoute(builder: (_) => ServiceDashboard());
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(
+                  ntsType: NTSType.service,
+                ));
+        break;
+
+      case TASK_DASHBOARD:
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(ntsType: NTSType.task));
+        break;
+
+      case NOTE_DASHBOARD:
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(ntsType: NTSType.note));
         break;
 
       case NOTE_HOME:

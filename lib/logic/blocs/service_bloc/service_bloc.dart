@@ -35,15 +35,11 @@ class ServiceBloc {
   }
 
   getServiceDashBoardData({templateCode, serviceId, userId}) async {
-    Map<String, dynamic> queryparams = Map();
-    queryparams["templatecode"] = templateCode ?? '';
-    queryparams["serviceId"] = serviceId ?? '';
-    queryparams["userid"] = userId ?? '';
-
-    print("Queryparams: ${queryparams.entries}");
+  
+   
 
     ServiceListResponse response =
-        await _serviceRepository.getServiceDashBoardData(queryparams: queryparams);
+        await _serviceRepository.getServiceDashBoardData();
     _subjectServiceList.sink.add(response);
   }
 

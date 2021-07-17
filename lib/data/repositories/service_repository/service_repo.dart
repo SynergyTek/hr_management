@@ -28,10 +28,9 @@ class ServiceRepository extends AbstractServiceRepository {
 
   Future<ServiceResponse> getServiceDetail({
     Map<String, dynamic> queryparams,
-  }) 
-  async {
+  }) async {
     final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
-   
+
     try {
       Response response = await _dio.get(
         endpoint,
@@ -41,7 +40,6 @@ class ServiceRepository extends AbstractServiceRepository {
       return ServiceResponse.fromJson(
         response.data,
       );
-
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
@@ -51,8 +49,7 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
-  Future<ServiceListResponse> getLeavesDetails()
-  async {
+  Future<ServiceListResponse> getLeavesDetails() async {
     final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
 
     try {
@@ -70,12 +67,11 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
-Future<ServiceListResponse> getServiceDashBoardData({
+  Future<ServiceListResponse> getServiceDashBoardData({
     Map<String, dynamic> queryparams,
-  }) 
-  async {
+  }) async {
     final String endpoint = APIEndpointConstants.READ_SERVICE_DASHBOARD_DATA;
-   
+
     try {
       Response response = await _dio.get(
         endpoint,
@@ -85,7 +81,6 @@ Future<ServiceListResponse> getServiceDashBoardData({
       return ServiceListResponse.fromJson(
         response.data,
       );
-
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
@@ -95,12 +90,10 @@ Future<ServiceListResponse> getServiceDashBoardData({
     }
   }
 
-
   @override
   Future<ServiceResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
-
 
   @override
   Future<PostResponse> postAPIData({

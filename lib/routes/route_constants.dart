@@ -44,3 +44,5 @@ const String COMMENT_ROUTE = "/comments";
 const String NOTE_HOME = "/note_home";
 const String SERVICE_HOME = "/service_home";
 const String SERVICE_DASHBOARD = "/service_dashboard";
+const String TASK_DASHBOARD = "/task_dashboard";
+const String NOTE_DASHBOARD = "/note_dashboard";

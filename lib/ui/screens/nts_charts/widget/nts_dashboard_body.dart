@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/ui/screens/nts_charts/nts_charts_screen.dart';
+import 'package:hr_management/ui/screens/service/widget/service_dashboard_list.dart';
 
 class ServiceDashboardBody extends StatefulWidget {
-  const ServiceDashboardBody({Key key}) : super(key: key);
-
+  const ServiceDashboardBody({Key key, this.ntsType}) : super(key: key);
+  final NTSType ntsType;
   @override
   _ServiceDashboardBodyState createState() => _ServiceDashboardBodyState();
 }
@@ -13,15 +14,28 @@ class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    NTSChart(
-      ntsType: NTSType.service,
-    ),
-    Text(
-      'Index 1: Service Details',
-      style: optionStyle,
-    ),
-  ];
+  List<Widget> _widgetOptions = []; //<Widget>[
+  //   NTSChart(
+  //     ntsType: NTSType.service,
+  //   ),
+  //   Text(
+  //     'Index 1: Service Details',
+  //     style: optionStyle,
+  //   ),
+  // ];
+
+  @override
+  void initState() {
+    _widgetOptions = <Widget>[
+      NTSChart(
+        ntsType: widget.ntsType,
+      ),
+      ServiceDashboardList(
+        // 'Index 1: Service Details',
+        // style: optionStyle,
+      ),
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -51,5 +65,11 @@ class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+   _widgetOptions=null;
+    super.dispose();
   }
 }

@@ -24,7 +24,7 @@ class Charts extends StatelessWidget {
     var chart = charts.PieChart(series,
         animate: true,
         defaultRenderer: new charts.ArcRendererConfig(
-            arcWidth: chartType == 'donut' ? 30 : null,
+            arcWidth: chartType == 'donut' ? 30 : 100,
             arcRendererDecorators: [new charts.ArcLabelDecorator()]));
 
     var chartWidget = Padding(
@@ -45,30 +45,57 @@ class Charts extends StatelessWidget {
     );
   }
 
+  
+
   getChartColors(ChartModel model) {
-    switch (model.type) {
-      case 'Inprogress':
+    print(model.type.toLowerCase());
+    switch (model.type.toLowerCase()) {
+      case 'inprogress':
         return charts.ColorUtil.fromDartColor(Colors.amber.shade500);
         break;
 
-      case 'Complete':
+      case 'complete':
         return charts.ColorUtil.fromDartColor(Colors.green.shade500);
         break;
 
-      case 'Cancel':
+      case 'completed':
+        return charts.ColorUtil.fromDartColor(Colors.green.shade500);
+        break;
+
+      case 'cancel':
         return charts.ColorUtil.fromDartColor(Colors.red.shade500);
         break;
 
-      case 'Draft':
+      case 'draft':
         return charts.ColorUtil.fromDartColor(Colors.grey);
         break;
 
-      case 'Requester':
-        return charts.ColorUtil.fromDartColor(Colors.amber.shade500);
+      case 'requester':
+        return charts.ColorUtil.fromDartColor(Colors.orange);
         break;
 
-      case 'Owner':
+      case 'owner':
         return charts.ColorUtil.fromDartColor(Colors.blue.shade500);
+        break;
+
+      case 'shared':
+        return charts.ColorUtil.fromDartColor(Colors.amber.shade300);
+        break;
+
+      case 'active':
+        return charts.ColorUtil.fromDartColor(Colors.green.shade300);
+        break;
+
+      case 'expire':
+        return charts.ColorUtil.fromDartColor(Colors.red.shade300);
+        break;
+
+      case 'reject':
+        return charts.ColorUtil.fromDartColor(Colors.red.shade700);
+        break;
+
+      case 'overdue':
+        return charts.ColorUtil.fromDartColor(Colors.orange);
         break;
     }
   }
