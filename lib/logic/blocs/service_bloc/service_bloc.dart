@@ -34,6 +34,19 @@ class ServiceBloc {
     _subjectServiceList.sink.add(response);
   }
 
+  getServiceDashBoardData({templateCode, serviceId, userId}) async {
+    Map<String, dynamic> queryparams = Map();
+    queryparams["templatecode"] = templateCode ?? '';
+    queryparams["serviceId"] = serviceId ?? '';
+    queryparams["userid"] = userId ?? '';
+
+    print("Queryparams: ${queryparams.entries}");
+
+    ServiceListResponse response =
+        await _serviceRepository.getServiceDashBoardData(queryparams: queryparams);
+    _subjectServiceList.sink.add(response);
+  }
+
   /// Used to create new entries.
   Future<PostResponse> postData({
     @required Service service,

@@ -7,27 +7,20 @@ class ServiceRepository extends AbstractServiceRepository {
 
   Future<ServiceResponse> getServiceDetail({
     Map<String, dynamic> queryparams,
-  }) //{
-  // Optional Params to be added to the request if required.
-  //Map<String, dynamic> queryparams,templatecode}
+  }) 
   async {
     final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
-    // final String endpoint =
-    //     'https://webapidev.aitalkx.com/nts/query/GetServiceDetails?templateCode=' +
-    //         // templatecode +
-    //         // '&userid=45bba746-3309-49b7-9c03-b5793369d73c';
-
+   
     try {
       Response response = await _dio.get(
         endpoint,
         queryParameters: queryparams ?? {},
       );
 
-      // print("DIO Response: ${response.data.runtimeType}");
-      print(response.data);
       return ServiceResponse.fromJson(
         response.data,
       );
+
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
@@ -38,8 +31,6 @@ class ServiceRepository extends AbstractServiceRepository {
   }
 
   Future<ServiceListResponse> getLeavesDetails()
-  // Optional Params to be added to the request if required.
-  //Map<String, dynamic> queryparams,templatecode}
   async {
     final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
 
@@ -58,10 +49,37 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
+Future<ServiceListResponse> getServiceDashBoardData({
+    Map<String, dynamic> queryparams,
+  }) 
+  async {
+    final String endpoint = APIEndpointConstants.READ_SERVICE_DASHBOARD_DATA;
+   
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return ServiceListResponse.fromJson(
+        response.data,
+      );
+
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceListResponse.withError("$err");
+    }
+  }
+
+
   @override
   Future<ServiceResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
+
 
   @override
   Future<PostResponse> postAPIData({
