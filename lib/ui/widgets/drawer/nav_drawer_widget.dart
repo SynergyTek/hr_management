@@ -159,6 +159,20 @@ Widget drawerWidget(context) {
         ),
         ListTile(
           title: Text(
+            'USERS',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.verified_user),
+          onTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              USERS,
+            );
+          },
+        ),
+
+        ListTile(
+          title: Text(
             'NOTE',
             style: TextStyle(fontSize: fontSize, color: fontColor),
           ),

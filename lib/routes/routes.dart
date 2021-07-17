@@ -5,6 +5,7 @@ import 'package:hr_management/ui/screens/nts_comments/nts_comments_screen.dart';
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
+import 'package:hr_management/ui/screens/users/user_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
 import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
@@ -191,6 +192,13 @@ class AppRouter {
           builder: (_) => NoteHomeScreen(),
         );
         break;
+
+      case USERS:
+        return MaterialPageRoute(
+          builder: (_) => UserScreen(),
+        );
+        break;
+
 // 404 route.
       default:
         return MaterialPageRoute(
