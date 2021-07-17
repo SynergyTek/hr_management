@@ -144,8 +144,11 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     );
   }
 
-  parseJsonToUDFModel(
-      CreateServiceFormBloc createServiceFormBloc, udfJsonString) {
+   parseJsonToUDFModel(
+    CreateServiceFormBloc createServiceFormBloc,
+    udfJsonString,
+    
+  ) {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
@@ -158,12 +161,19 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           }
         }
       }
-        if (component.components != null && component.components.isNotEmpty) {
-          for (ComponentComponent componentComponent in component.components) {
-            componentComList.add(componentComponent);
-          }
+      if (component.components != null && component.components.isNotEmpty) {
+        for (ComponentComponent componentComponent in component.components) {
+          componentComList.add(componentComponent);
         }
-      
+      }
+    }
+
+    for (UdfJsonComponent component in udfJsonString.components) {
+      if (component.columns == null &&(component.components==null || component.components.length == 0)) {
+        udfJsonComponent.add(component);
+      } else if (component.components == null && component.columns.length == 0) {
+        udfJsonComponent.add(component);
+      }
     }
     if (columnComponent != null && columnComponent.isNotEmpty) {
       columnComponentWidgets = addDynamic(
@@ -174,13 +184,13 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     if (componentComList != null && componentComList.isNotEmpty) {
       addDynamicComponentComponent(componentComList, createServiceFormBloc);
     }
-    if (udfJsonString.components != null &&
-        udfJsonString.components.isNotEmpty) {
-      udfJsonComponent.addAll(udfJsonString.components);
+    if (udfJsonComponent.length > 0) {
+      // udfJsonComponent.addAll(udfJsonString.components);
       udfJsonCompWidgetList =
           addDynamic(udfJsonComponent, createServiceFormBloc);
     }
   }
+
 
   Widget setTaskView(
     BuildContext context,

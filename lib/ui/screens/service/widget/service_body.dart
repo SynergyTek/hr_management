@@ -110,7 +110,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 serviceModel = snapshot.data.data;
 
                 parseJsonToUDFModel(createServiceFormBloc, serviceModel.json,
-                    serviceModel.columnList);
+                    );
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -144,7 +144,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   parseJsonToUDFModel(
     CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
-    List<ColumnList> columnList,
+    
   ) {
     columnComponent = [];
     componentComList = [];
