@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/logic/blocs/leave_temp_bloc/leave_temp_api_bloc.dart';
 import 'package:hr_management/logic/blocs/nts_template_bloc/nts_template_bloc.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
@@ -10,9 +9,11 @@ import 'widgets/nts_template_body_widget.dart';
 
 class NTSTemplateScreen extends StatefulWidget {
   final NTSType ntsType;
+  final String categoryCode;
 
   const NTSTemplateScreen({
     @required this.ntsType,
+    @required this.categoryCode,
   });
 
   @override
@@ -24,13 +25,8 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
   void initState() {
     super.initState();
 
-    if (widget.ntsType == NTSType.service)
-      leaveTempBloc.getAllowedTemplateData();
-    else if (widget.ntsType == NTSType.task)
-      ntsTemplateBloc.getData();
-    else {
-      // TODO: for the NTSType.note type
-    }
+    ntsTemplateBloc.getData(
+        ntsType: widget.ntsType, categoryCode: widget.categoryCode);
   }
 
   @override
@@ -38,20 +34,27 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: (widget.ntsType == NTSType.service)
-            ? "Leave Request"
-            : "Task Request",
+        title: titleText(),
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: NTSTemplateBodyWidget(
             ntsType: widget.ntsType,
-            stream: (widget.ntsType == NTSType.service)
-                ? leaveTempBloc.subject.stream
-                : ntsTemplateBloc.subject.stream,
+            stream: ntsTemplateBloc.subject.stream,
           ),
         ),
       ),
     );
+  }
+
+  String titleText() {
+    String title;
+    if (widget.categoryCode == 'Leave')
+      title = 'Leave Request';
+    else if (widget.categoryCode == 'STEP_TASK_CATEGORY')
+      title = 'Task Request';
+    else
+      title = 'Service Request';
+    return title;
   }
 }
