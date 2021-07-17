@@ -756,7 +756,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-           readonly: model[i].disabled,
+            readonly: model[i].disabled,
             textFieldBloc: email$i,
             prefixIcon: Icon(Icons.email),
             maxLines: 1,
@@ -781,7 +781,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-             readonly: model[i].disabled,
+            readonly: model[i].disabled,
             textFieldBloc: textField$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 1,

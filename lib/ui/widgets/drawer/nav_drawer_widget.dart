@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../routes/route_constants.dart';
 
@@ -45,7 +46,11 @@ Widget drawerWidget(context) {
           onTap: () {
             Navigator.pushNamed(
               context,
-              LEAVE_REQUEST,
+              NTS_TEMPLATE_REQUEST,
+              arguments: ScreenArguments(
+                ntstype: NTSType.service,
+                arg4: 'Leave',
+              ),
             );
           },
         ),
@@ -59,7 +64,11 @@ Widget drawerWidget(context) {
           onTap: () {
             Navigator.pushNamed(
               context,
-              TASK_REQUEST,
+              NTS_TEMPLATE_REQUEST,
+              arguments: ScreenArguments(
+                ntstype: NTSType.task,
+                arg4: 'STEP_TASK_CATEGORY',
+              ),
             );
           },
         ),

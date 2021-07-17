@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/service/widget/service_home_body.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
@@ -18,20 +21,23 @@ class ServiceHomeScreen extends StatelessWidget {
         child: ServiceHomeBody(),
       ),
       // ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Theme.of(context).primaryColor,
-      //   child: Icon(
-      //     Icons.add,
-      //     size: 32,
-      //   ),
-      //   onPressed: () {
-      //     // taskBloc.subjectGetTaskDetails.sink.add(null);
-      //     Navigator.pushNamed(
-      //       context,
-      //       LEAVE_REQUEST,
-      //     );
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(
+          Icons.add,
+          size: 32,
+        ),
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            NTS_TEMPLATE_REQUEST,
+            arguments: ScreenArguments(
+              ntstype: NTSType.service,
+              arg4: '',
+            ),
+          );
+        },
+      ),
     );
   }
 }

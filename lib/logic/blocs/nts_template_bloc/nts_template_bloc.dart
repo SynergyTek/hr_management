@@ -1,3 +1,4 @@
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/nts_template_models/nts_template_response.dart';
 import 'package:hr_management/data/repositories/nts_template_repository/nts_template_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -11,8 +12,25 @@ class NTSTemplateBloc {
 
   /// Used to fetch new entries.
   getData({
+    String categoryCode,
+    NTSType ntsType,
     Map<String, dynamic> queryparams,
   }) async {
+    if (ntsType == NTSType.service) {
+      _subject.sink.add(null);
+      queryparams = {
+        "categoryCode": categoryCode,
+        "templateType": "Service",
+      };
+    } else if (ntsType == NTSType.task) {
+      _subject.sink.add(null);
+      queryparams = {
+        "categoryCode": categoryCode,
+        "templateType": "Task",
+        "taskType": "StepTask",
+      };
+    }
+
     NTSTemplateResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,
     );

@@ -74,20 +74,12 @@ class AppRouter {
         );
         break;
 
-      case LEAVE_REQUEST:
+      case NTS_TEMPLATE_REQUEST:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          // builder: (_) => LeaveTemplate(),
           builder: (_) => NTSTemplateScreen(
-            ntsType: NTSType.service,
-          ),
-        );
-        break;
-
-      case TASK_REQUEST:
-        return MaterialPageRoute(
-          // builder: (_) => LeaveTemplate(),
-          builder: (_) => NTSTemplateScreen(
-            ntsType: NTSType.task,
+            categoryCode: args.arg4,
+            ntsType: args.ntstype,
           ),
         );
         break;
