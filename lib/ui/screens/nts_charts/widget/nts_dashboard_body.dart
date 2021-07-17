@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/ui/screens/note/widgets/note_dashboard_list.dart';
 import 'package:hr_management/ui/screens/nts_charts/nts_charts_screen.dart';
 import 'package:hr_management/ui/screens/service/widget/service_dashboard_list.dart';
+import 'package:hr_management/ui/screens/tasks/widget/task_dashboard_list.dart';
 
 class ServiceDashboardBody extends StatefulWidget {
   const ServiceDashboardBody({Key key, this.ntsType}) : super(key: key);
@@ -12,8 +14,9 @@ class ServiceDashboardBody extends StatefulWidget {
 
 class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // static const TextStyle optionStyle =
+  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   List<Widget> _widgetOptions = []; //<Widget>[
   //   NTSChart(
   //     ntsType: NTSType.service,
@@ -26,14 +29,12 @@ class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
 
   @override
   void initState() {
+    super.initState();
     _widgetOptions = <Widget>[
       NTSChart(
         ntsType: widget.ntsType,
       ),
-     ServiceDashboardList(
-        // 'Index 1: Service Details',
-         // style: optionStyle,
-      ),
+      ntsDashboard(),
     ];
   }
 
@@ -53,11 +54,11 @@ class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.data_usage_rounded),
-            label: 'Service Charts',
+            label: 'Charts',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_outlined),
-            label: 'Service Details',
+            label: 'Details',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -67,9 +68,27 @@ class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
     );
   }
 
+  Widget ntsDashboard() {
+    Widget footerWidget;
+    switch (widget.ntsType) {
+      case NTSType.service:
+        footerWidget = ServiceDashboardList();
+        break;
+      case NTSType.task:
+        footerWidget = TaskDashboardList();
+        break;
+      case NTSType.note:
+        footerWidget = NoteDashboardList();
+        break;
+      default:
+        footerWidget = null;
+    }
+    return footerWidget;
+  }
+
   @override
   void dispose() {
-   _widgetOptions=null;
+    _widgetOptions = null;
     super.dispose();
   }
 }

@@ -92,7 +92,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                      Text("Task No: "),
+                                      Text("Note No: "),
                                       Text(noteNoValue(index)),
                                     ],
                                   )
