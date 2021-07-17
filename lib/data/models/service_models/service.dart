@@ -110,6 +110,8 @@ class Service {
   String duration;
   String workingDuration;
   String appliedDate;
+  String dueDateDisplay;
+  String ownerUserUserName;
   // String cancelLeave;
   // String leaveDetails;
   // String handoverService;
@@ -118,7 +120,6 @@ class Service {
   String overrideUdfVisibility;
   String isAdminMode;
   String ownerDisplayName;
-  String ownerUserUserName;
   String ownerMobile;
   String ownerEmail;
   String ownerGrade;
@@ -188,7 +189,6 @@ class Service {
   String moduleCode;
   String templateMasterCode;
   String performanceDocumentStatus;
-  String dueDateDisplay;
   String weightage;
   String successCriteria;
   String stageName;
@@ -232,122 +232,122 @@ class Service {
   String legalEntityId;
   String portalId;
 
-  Service({
-    this.json,
-    this.templateCode,
-    this.templateDisplayName,
-    this.columnList,
-    this.udfTableMetadataId,
-    this.serviceNo,
-    this.startDate,
-    this.dueDate,
-    this.serviceSLA,
-    this.serviceSLAMinutes,
-    this.actualSLA,
-    this.serviceStatusBgCss,
-    this.serviceStatusFontCss,
-    this.serviceStatusId,
-    this.serviceStatusCode,
-    this.serviceStatusName,
-    this.serviceActionId,
-    this.serviceActionCode,
-    this.serviceActionName,
-    this.servicePriorityId,
-    this.servicePriorityCode,
-    this.servicePriorityName,
-    this.requestedByUserId,
-    this.requestedByUserName,
-    this.requestedByUserEmail,
-    this.requestedByUserPhotoId,
-    this.ownerUserId,
-    this.ownerUserName,
-    this.ownerUserEmail,
-    this.ownerUserPhotoId,
-    this.activeUserType,
-    this.isStepTaskAutoCompleteIfSameAssignee,
-    this.includeReadonlyData,
-    this.activeUserId,
-    this.serviceId,
-    this.isDraftButtonVisible,
-    this.isSubmitButtonVisible,
-    this.isInEditMode,
-    this.isVersioningButtonVisible,
-    this.isCancelButtonVisible,
-    this.isReplyButtonVisible,
-    this.isCompleteButtonVisible,
-    this.isRejectButtonVisible,
-    this.isCloseButtonVisible,
-    this.sharedCount,
-    this.attachmentCount,
-    this.notificationCount,
-    this.commentCount,
-    this.isAddCommentEnabled,
-    this.isAddAttachmentEnabled,
-    this.isSharingEnabled,
-    this.includeSharedList,
-    this.sharedListText,
-    this.serviceCount,
-    this.serviceNoTextWithDefault,
-    this.hideStepTaskDetails,
-    this.isVersioning,
-    this.enableIndexPage,
-    this.enableServiceNumberManual,
-    this.enableSaveAsDraft,
-    this.enableCompleteButton,
-    this.enableBackButton,
-    this.enableAttachment,
-    this.enableComment,
-    this.templateId,
-    this.udfTemplateId,
-    this.serviceIndexPageTemplateId,
-    this.createReturnType,
-    this.editReturnType,
-    this.allowSLAChange,
-    this.priorityId,
-    this.iconFileId,
-    this.bannerFileId,
-    this.enableCancelButton,
-    this.isCancelReasonRequired,
-    this.hideHeader,
-    this.hideSubject,
-    this.hideDescription,
-    this.hideStartDate,
-    this.hideExpiryDate,
-    this.hideSLA,
-    this.hidePriority,
-    this.isSubjectMandatory,
-    this.isSubjectUnique,
-    this.isDescriptionMandatory,
-    this.hideToolbar,
-    this.hideBanner,
-    this.hideOwner,
-    this.allowPastStartDate,
-    this.adhocTaskTemplateIds,
-    this.enablePrintButton,
-    this.enableDataPermission,
-    this.id,
-    this.createdDate,
-    this.createdBy,
-    this.lastUpdatedDate,
-    this.lastUpdatedBy,
-    this.isDeleted,
-    this.sequenceOrder,
-    this.companyId,
-    this.dataAction,
-    this.status,
-    this.versionNo,
-    this.formattedStartDate,
-    this.formattedEndDate,
-    this.serviceSubject,
-    this.serviceDescription,
-    this.leaveStatus,
-    this.duration,
-    this.workingDuration,
-    this.appliedDate,
-    // this.cancelLeave,
-    // this.leaveDetails,
-    // this.handoverService,
-    this.pageName,
+  Service(
+      {this.json,
+      this.templateCode,
+      this.templateDisplayName,
+      this.columnList,
+      this.udfTableMetadataId,
+      this.serviceNo,
+      this.startDate,
+      this.dueDate,
+      this.serviceSLA,
+      this.serviceSLAMinutes,
+      this.actualSLA,
+      this.serviceStatusBgCss,
+      this.serviceStatusFontCss,
+      this.serviceStatusId,
+      this.serviceStatusCode,
+      this.serviceStatusName,
+      this.serviceActionId,
+      this.serviceActionCode,
+      this.serviceActionName,
+      this.servicePriorityId,
+      this.servicePriorityCode,
+      this.servicePriorityName,
+      this.requestedByUserId,
+      this.requestedByUserName,
+      this.requestedByUserEmail,
+      this.requestedByUserPhotoId,
+      this.ownerUserId,
+      this.ownerUserName,
+      this.ownerUserEmail,
+      this.ownerUserPhotoId,
+      this.activeUserType,
+      this.isStepTaskAutoCompleteIfSameAssignee,
+      this.includeReadonlyData,
+      this.activeUserId,
+      this.serviceId,
+      this.isDraftButtonVisible,
+      this.isSubmitButtonVisible,
+      this.isInEditMode,
+      this.isVersioningButtonVisible,
+      this.isCancelButtonVisible,
+      this.isReplyButtonVisible,
+      this.isCompleteButtonVisible,
+      this.isRejectButtonVisible,
+      this.isCloseButtonVisible,
+      this.sharedCount,
+      this.attachmentCount,
+      this.notificationCount,
+      this.commentCount,
+      this.isAddCommentEnabled,
+      this.isAddAttachmentEnabled,
+      this.isSharingEnabled,
+      this.includeSharedList,
+      this.sharedListText,
+      this.serviceCount,
+      this.serviceNoTextWithDefault,
+      this.hideStepTaskDetails,
+      this.isVersioning,
+      this.enableIndexPage,
+      this.enableServiceNumberManual,
+      this.enableSaveAsDraft,
+      this.enableCompleteButton,
+      this.enableBackButton,
+      this.enableAttachment,
+      this.enableComment,
+      this.templateId,
+      this.udfTemplateId,
+      this.serviceIndexPageTemplateId,
+      this.createReturnType,
+      this.editReturnType,
+      this.allowSLAChange,
+      this.priorityId,
+      this.iconFileId,
+      this.bannerFileId,
+      this.enableCancelButton,
+      this.isCancelReasonRequired,
+      this.hideHeader,
+      this.hideSubject,
+      this.hideDescription,
+      this.hideStartDate,
+      this.hideExpiryDate,
+      this.hideSLA,
+      this.hidePriority,
+      this.isSubjectMandatory,
+      this.isSubjectUnique,
+      this.isDescriptionMandatory,
+      this.hideToolbar,
+      this.hideBanner,
+      this.hideOwner,
+      this.allowPastStartDate,
+      this.adhocTaskTemplateIds,
+      this.enablePrintButton,
+      this.enableDataPermission,
+      this.id,
+      this.createdDate,
+      this.createdBy,
+      this.lastUpdatedDate,
+      this.lastUpdatedBy,
+      this.isDeleted,
+      this.sequenceOrder,
+      this.companyId,
+      this.dataAction,
+      this.status,
+      this.versionNo,
+      this.formattedStartDate,
+      this.formattedEndDate,
+      this.serviceSubject,
+      this.serviceDescription,
+      this.leaveStatus,
+      this.duration,
+      this.workingDuration,
+      this.appliedDate,
+      // this.cancelLeave,
+      // this.leaveDetails,
+      // this.handoverService,
+      this.pageName,
       this.pageId,
       this.overrideUdfVisibility,
       this.isAdminMode,
@@ -464,8 +464,7 @@ class Service {
       this.parentServiceId,
       this.parentService,
       this.legalEntityId,
-      this.portalId
-  });
+      this.portalId});
 
   Service.fromJson(Map<String, dynamic> jsonResponse) {
     json = jsonResponse['Json'];
@@ -592,6 +591,8 @@ class Service {
     duration = jsonResponse['Duration'];
     workingDuration = jsonResponse['WorkingDuration'];
     appliedDate = jsonResponse['AppliedDate'];
+    dueDateDisplay = jsonResponse['DueDateDisplay'];
+    ownerUserUserName = jsonResponse['OwnerUserUserName'];
     // cancelLeave = jsonResponse['CancelLeave'];
     // leaveDetails = jsonResponse['leaveDetails'];
     // handoverService = jsonResponse['HandoverServiceId'];
@@ -617,11 +618,13 @@ class Service {
     serviceTasks = jsonResponse['ServiceTasks'];
     servicePlusServices = jsonResponse['ServicePlusServices'];
     canAddStepTask = jsonResponse['CanAddStepTask'];
-    stepTaskCreationOptionalLabel = jsonResponse['StepTaskCreationOptionalLabel'];
+    stepTaskCreationOptionalLabel =
+        jsonResponse['StepTaskCreationOptionalLabel'];
     isConfidential = jsonResponse['IsConfidential'];
     temporary = jsonResponse['Temporary'];
     serviceTaskTemplateCount = jsonResponse['ServiceTaskTemplateCount'];
-    servicePlusServiceTemplateCount = jsonResponse['ServicePlusServiceTemplateCount'];
+    servicePlusServiceTemplateCount =
+        jsonResponse['ServicePlusServiceTemplateCount'];
     enableAdhocTask = jsonResponse['EnableAdhocTask'];
     canAddAdhocTask = jsonResponse['CanAddAdhocTask'];
     adhocTaskHeaderMessage = jsonResponse['AdhocTaskHeaderMessage'];
@@ -677,7 +680,7 @@ class Service {
     stageId = jsonResponse['StageId'];
     reminderDate = jsonResponse['ReminderDate'];
     serviceStatus = jsonResponse['ServiceStatus'];
-    
+
     serviceAction = jsonResponse['ServiceAction'];
     servicePriority = jsonResponse['ServicePriority'];
     submittedDate = jsonResponse['SubmittedDate'];
@@ -836,7 +839,7 @@ class Service {
     data['Duration'] = this.duration;
     data['WorkingDuration'] = this.workingDuration;
     data['AppliedDate'] = this.appliedDate;
-data['PageName'] = this.pageName;
+    data['PageName'] = this.pageName;
     data['PageId'] = this.pageId;
     data['OverrideUdfVisibility'] = this.overrideUdfVisibility;
     data['IsAdminMode'] = this.isAdminMode;
@@ -1097,7 +1100,8 @@ class ColumnList {
     isHiddenColumn = jsonResponse['IsHiddenColumn'];
     hideForeignKeyTableColumns = jsonResponse['HideForeignKeyTableColumns'];
     isReferenceColumn = jsonResponse['IsReferenceColumn'];
-    foreignKeyDisplayColumnDataType = jsonResponse['ForeignKeyDisplayColumnDataType'];
+    foreignKeyDisplayColumnDataType =
+        jsonResponse['ForeignKeyDisplayColumnDataType'];
     tableMetadataId = jsonResponse['TableMetadataId'];
     editableBy = jsonResponse['EditableBy'].cast<String>();
     viewableBy = jsonResponse['ViewableBy'].cast<String>();
@@ -1122,7 +1126,8 @@ class ColumnList {
     foreignKeyDisplayColumnName = jsonResponse['ForeignKeyDisplayColumnName'];
     foreignKeyTableAliasName = jsonResponse['ForeignKeyTableAliasName'];
     foreignKeyTableSchemaName = jsonResponse['ForeignKeyTableSchemaName'];
-    foreignKeyDisplayColumnLabelName = jsonResponse['ForeignKeyDisplayColumnLabelName'];
+    foreignKeyDisplayColumnLabelName =
+        jsonResponse['ForeignKeyDisplayColumnLabelName'];
     foreignKeyDisplayColumnAlias = jsonResponse['ForeignKeyDisplayColumnAlias'];
     foreignKeyConstraintName = jsonResponse['ForeignKeyConstraintName'];
   }

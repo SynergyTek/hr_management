@@ -59,6 +59,17 @@ class ServiceBloc {
     return response;
   }
 
+  /// Used to fetch new entries.
+  getServiceHomeListData({
+    Map<String, dynamic> queryparams, // String userId,
+  }) async {
+    ServiceListResponse response =
+        await _serviceRepository.getServiceHomeListData(
+      queryparams: queryparams,
+    );
+    _subjectServiceList.sink.add(response);
+  }
+
   /// Used to update an existing entry.
   putData() async {
     // Update here

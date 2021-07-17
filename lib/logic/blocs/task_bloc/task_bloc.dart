@@ -54,7 +54,12 @@ class TaskBloc {
       taskModel: taskModel,
     );
 
-    taskBloc..getTaskHomeListData(queryparams: null);
+    // Reload task home if draft/submit is successful
+    if (response.isSuccess) {
+      _subjectTaskList.sink.add(null);
+
+      getTaskHomeListData(queryparams: null);
+    }
 
     return response;
   }

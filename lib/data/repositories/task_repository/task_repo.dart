@@ -92,9 +92,15 @@ class TaskRepository extends AbstractTaskRepository {
       var result = PostResponse.fromJson(
         response.data,
       );
-      result.isSuccess
-          ? result.messages = 'Task saved successfully'
-          : result.messages = 'Unable to submit task';
+
+      if (taskModel.taskStatusCode == 'TASK_STATUS_DRAFT')
+        result.isSuccess
+            ? result.messages = 'Task saved as draft'
+            : result.messages = 'Unable to save task';
+      else if (taskModel.taskStatusCode == 'TASK_STATUS_INPROGRESS')
+        result.isSuccess
+            ? result.messages = 'Task submitted successfully'
+            : result.messages = 'Unable to submit task';
 
       return result;
     } catch (err, stacktrace) {

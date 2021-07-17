@@ -5,6 +5,27 @@ part of 'abstract_service_repo.dart';
 class ServiceRepository extends AbstractServiceRepository {
   final Dio _dio = Dio();
 
+  Future<ServiceListResponse> getServiceHomeListData(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.READ_SERVICE_HOME_DATA;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      return ServiceListResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceListResponse.withError("$err");
+    }
+  }
+
   Future<ServiceResponse> getServiceDetail({
     Map<String, dynamic> queryparams,
   }) 
