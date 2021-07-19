@@ -30,9 +30,9 @@ class NtsChartBloc {
     _subjectChartByUserType.sink.add(response);
   }
 
-  getDatewiseSLA({NTSType ntsType}) async {
-    ChartResponse response =
-        await _ntsRepository.getDatewiseSLA(ntsType: ntsType);
+  getDatewiseSLA({NTSType ntsType, Map<String, dynamic> queryparams}) async {
+    ChartResponse response = await _ntsRepository.getDatewiseSLA(
+        queryparams: queryparams, ntsType: ntsType);
 
     _subjectDatewiseSLA.sink.add(response);
   }

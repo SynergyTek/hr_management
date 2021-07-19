@@ -36,6 +36,7 @@ class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 5,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.data_usage_rounded),
