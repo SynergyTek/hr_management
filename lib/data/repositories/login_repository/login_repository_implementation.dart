@@ -18,7 +18,6 @@ class LoginRepository extends AbstractLoginRepository {
         data: jsonEncode(loginResponseModel.toJson()) ?? {},
       );
 
-      print("response: ${response.data}");
 
       // TODO: response parsing
       return LoginResponse.fromJson(

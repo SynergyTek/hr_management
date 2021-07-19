@@ -22,6 +22,10 @@ abstract class AbstractNoteRepository {
 
   Future<NoteListResponse> getNoteList();
 
+  Future<NoteListResponse> getNoteDashBoardData({
+    Map<String, dynamic> queryparams,
+  });
+
   Future<PostResponse> postNoteAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,

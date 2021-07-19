@@ -106,8 +106,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                     context.read<CreateServiceFormBloc>();
                 noteModel = snapshot.data.data;
 
-                parseJsonToUDFModel(createServiceFormBloc, noteModel.json,
-                    noteModel.columnList);
+                parseJsonToUDFModel(
+                  createServiceFormBloc,
+                  noteModel.json,
+                );
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -138,8 +140,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     );
   }
 
-  parseJsonToUDFModel(CreateServiceFormBloc createServiceFormBloc,
-      udfJsonString, List<ColumnList> columnList) {
+  parseJsonToUDFModel(
+    CreateServiceFormBloc createServiceFormBloc,
+    udfJsonString,
+  ) {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
@@ -158,6 +162,16 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
       }
     }
+
+    for (UdfJsonComponent component in udfJsonString.components) {
+      if (component.columns == null &&
+          (component.components == null || component.components.length == 0)) {
+        udfJsonComponent.add(component);
+      } else if (component.components == null &&
+          component.columns.length == 0) {
+        udfJsonComponent.add(component);
+      }
+    }
     if (columnComponent != null && columnComponent.isNotEmpty) {
       columnComponentWidgets = addDynamic(
         columnComponent,
@@ -167,9 +181,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     if (componentComList != null && componentComList.isNotEmpty) {
       addDynamicComponentComponent(componentComList, createServiceFormBloc);
     }
-    if (udfJsonString.components != null &&
-        udfJsonString.components.isNotEmpty) {
-      udfJsonComponent.addAll(udfJsonString.components);
+    if (udfJsonComponent.length > 0) {
+      // udfJsonComponent.addAll(udfJsonString.components);
       udfJsonCompWidgetList =
           addDynamic(udfJsonComponent, createServiceFormBloc);
     }

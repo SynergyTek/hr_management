@@ -44,7 +44,8 @@ class UdfJsonComponent {
       this.inputFormat,
       this.validate,
       this.value,
-      this.udfValue});
+      this.udfValue,
+      this.disabled});
 
   String label;
   List<Columns> columns;
@@ -55,6 +56,7 @@ class UdfJsonComponent {
   bool tableView;
   List<ComponentComponent> components;
   String title;
+  bool disabled;
   String idPath;
   String template;
   String inputFormat;
@@ -86,7 +88,8 @@ class UdfJsonComponent {
               ? Validate.fromJson(json['validate'])
               : null,
           value: json['value'],
-          udfValue: json['udfValue']);
+          udfValue: json['udfValue'],
+          disabled: json['disabled']??false);
 
   Map<String, dynamic> toJson() => {
         "label": label,
@@ -108,7 +111,8 @@ class UdfJsonComponent {
         'validate':
             this.validate.toJson() != null ? this.validate.toJson() : null,
         'value': this.value,
-        'udfValue': this.udfValue
+        'udfValue': this.udfValue,
+        'disabled': this.disabled
       };
 }
 

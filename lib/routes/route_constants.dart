@@ -26,8 +26,7 @@ const String FORGOT_PASSWORD_ROUTE = "/forgot_password";
 // Home Screen route:
 const String HOME_ROUTE = "/home";
 const String MARK_ATTENDANCE_ROUTE = "/mark_attendance";
-const String LEAVE_REQUEST = "/leave_request";
-const String TASK_REQUEST = "/task_request";
+const String NTS_TEMPLATE_REQUEST = "/nts_request";
 const String REGISTRATION_ROUTE = "/registration_form";
 const String CREATE_SERVICE_ROUTE = "/create_service";
 const String CREATE_EDIT_TASK_ROUTE = "/create_task";
@@ -44,3 +43,6 @@ const String COMMENT_ROUTE = "/comments";
 const String NOTE_HOME = "/note_home";
 const String SERVICE_HOME = "/service_home";
 const String SERVICE_DASHBOARD = "/service_dashboard";
+const String TASK_DASHBOARD = "/task_dashboard";
+const String NOTE_DASHBOARD = "/note_dashboard";
+const String WORKLIST_DASHBOARD = "/worklist_dashboard";

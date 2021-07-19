@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 
 import '../../../routes/route_constants.dart';
 import 'widgets/splash_screen_body_widget.dart';
@@ -27,9 +29,14 @@ class SplashScreen extends StatelessWidget {
             const Duration(
               seconds: 2,
             ),
-            () => Navigator.pushReplacementNamed(context, LEAVE_REQUEST
-                // LOGIN_ROUTE,
-                ),
+            () => Navigator.pushReplacementNamed(
+              context, NTS_TEMPLATE_REQUEST,
+              arguments: ScreenArguments(
+                ntstype: NTSType.service,
+                arg4: 'Leave',
+              ),
+              // LOGIN_ROUTE,
+            ),
           ),
           builder: (context, snapshot) {
             return SplashScreenBodyWidget(

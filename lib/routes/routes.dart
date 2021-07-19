@@ -7,10 +7,11 @@ import 'package:hr_management/ui/screens/home_screen/home_screen.dart';
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
-import 'package:hr_management/ui/screens/service/service_dashboard.dart';
+import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
 import 'package:hr_management/ui/screens/service/service_home.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
+import 'package:hr_management/ui/screens/worklist_dashboard/worklist_dashboard_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
 import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
@@ -75,20 +76,12 @@ class AppRouter {
         );
         break;
 
-      case LEAVE_REQUEST:
+      case NTS_TEMPLATE_REQUEST:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          // builder: (_) => LeaveTemplate(),
           builder: (_) => NTSTemplateScreen(
-            ntsType: NTSType.service,
-          ),
-        );
-        break;
-
-      case TASK_REQUEST:
-        return MaterialPageRoute(
-          // builder: (_) => LeaveTemplate(),
-          builder: (_) => NTSTemplateScreen(
-            ntsType: NTSType.task,
+            categoryCode: args.arg4,
+            ntsType: args.ntstype,
           ),
         );
         break;
@@ -199,7 +192,20 @@ class AppRouter {
         break;
 
       case SERVICE_DASHBOARD:
-        return MaterialPageRoute(builder: (_) => ServiceDashboard());
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(
+                  ntsType: NTSType.service,
+                ));
+        break;
+
+      case TASK_DASHBOARD:
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(ntsType: NTSType.task));
+        break;
+
+      case NOTE_DASHBOARD:
+        return MaterialPageRoute(
+            builder: (_) => ServiceDashboard(ntsType: NTSType.note));
         break;
 
       case NOTE_HOME:
@@ -212,6 +218,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ServiceHomeScreen(),
         );
+        break;
+
+      case WORKLIST_DASHBOARD:
+        return MaterialPageRoute(builder: (_) => WorklistDashboard());
         break;
 
 // 404 route.

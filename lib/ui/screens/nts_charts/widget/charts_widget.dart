@@ -106,35 +106,55 @@ class _ChartsState extends State<Charts> {
                   ]);
   }
 
-  getChartColors(ChartModel model) {
-    switch (model.type) {
-      case 'Inprogress':
-        return Colors.yellow.shade800;
-        break;
+  // getChartColors(ChartModel model) {
+  //   switch (model.type) {
+  //     case 'Inprogress':
+  //       return Colors.yellow.shade800;
+  //       break;
 
-      case 'Complete':
-        return Colors.green.shade800;
-        break;
+  //     case 'Complete':
+  //       return Colors.green.shade800;
+  //       break;
 
-      case 'Cancel':
-        return Colors.red.shade800;
-        break;
+  //     case 'Cancel':
+  //       return Colors.red.shade800;
+  //       break;
 
-      case 'Draft':
-        return Colors.grey;
-        break;
+  //     case 'Draft':
+  //       return Colors.grey;
+  //       break;
 
-      case "Close":
-        return Colors.blue.shade800;
-        break;
+  //     case "Close":
+  //       return Colors.blue.shade800;
+  //       break;
 
-      case 'Requester':
-        return Colors.yellow.shade800;
-        break;
+  //     case 'Requester':
+  //       return Colors.yellow.shade800;
+  //       break;
 
-      case 'Owner':
-        return Colors.blue.shade800;
-        break;
-    }
-  }
+  //     case 'Owner':
+  //       return Colors.blue.shade800;
+  //       break;
+
+  //     case 'shared':
+  //       return charts.ColorUtil.fromDartColor(Colors.amber.shade300);
+  //       break;
+
+  //     case 'active':
+  //       return charts.ColorUtil.fromDartColor(Colors.green.shade300);
+  //       break;
+
+  //     case 'expire':
+  //       return charts.ColorUtil.fromDartColor(Colors.red.shade300);
+  //       break;
+
+  //     case 'reject':
+  //       return charts.ColorUtil.fromDartColor(Colors.red.shade700);
+  //       break;
+
+  //     case 'overdue':
+  //       return charts.ColorUtil.fromDartColor(Colors.orange);
+  //       break;
+  //   }
+  // }
 }

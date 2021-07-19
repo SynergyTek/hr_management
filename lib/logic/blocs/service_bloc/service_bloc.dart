@@ -34,6 +34,15 @@ class ServiceBloc {
     _subjectServiceList.sink.add(response);
   }
 
+  getServiceDashBoardData({templateCode, serviceId, userId}) async {
+  
+   
+
+    ServiceListResponse response =
+        await _serviceRepository.getServiceDashBoardData();
+    _subjectServiceList.sink.add(response);
+  }
+
   /// Used to create new entries.
   Future<PostResponse> postData({
     @required Service service,

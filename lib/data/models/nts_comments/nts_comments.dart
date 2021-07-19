@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 class Comment {
   String commentedByUserName;
   String commentedToUserName;
@@ -11,6 +12,8 @@ class Comment {
   String commentedByUserId;
   String commentedByUser;
   String ntsTaskId;
+  String ntsServiceId;
+  String ntsNoteId;
   String ntsTask;
   String parentCommentId;
   String parentComment;
@@ -40,6 +43,8 @@ class Comment {
       this.commentedByUserId,
       this.commentedByUser,
       this.ntsTaskId,
+      this.ntsServiceId,
+      this.ntsNoteId,
       this.ntsTask,
       this.parentCommentId,
       this.parentComment,
@@ -69,6 +74,8 @@ class Comment {
     commentedByUserId = json['CommentedByUserId'];
     commentedByUser = json['CommentedByUser'];
     ntsTaskId = json['NtsTaskId'];
+    ntsServiceId = json['NtsServiceId'];
+    ntsNoteId = json['NtsNoteId'];
     ntsTask = json['NtsTask'];
     parentCommentId = json['ParentCommentId'];
     parentComment = json['ParentComment'];
@@ -100,6 +107,8 @@ class Comment {
     data['CommentedByUserId'] = this.commentedByUserId;
     data['CommentedByUser'] = this.commentedByUser;
     data['NtsTaskId'] = this.ntsTaskId;
+    data['NtsServiceId'] = this.ntsServiceId;
+    data['NtsNoteId'] = this.ntsNoteId;
     data['NtsTask'] = this.ntsTask;
     data['ParentCommentId'] = this.parentCommentId;
     data['ParentComment'] = this.parentComment;
@@ -120,15 +129,18 @@ class Comment {
   }
 }
 
-
 class PostComment {
   String comment;
   String ntsTaskId;
+  String ntsServiceId;
+  String ntsNoteId;
   String commentToUserId;
   String commentedByUserId;
   PostComment({
     this.comment,
     this.ntsTaskId,
+    this.ntsServiceId,
+    this.ntsNoteId,
     this.commentToUserId,
     this.commentedByUserId,
   });
@@ -136,6 +148,8 @@ class PostComment {
   Map<String, dynamic> toJson() => {
         "Comment": comment,
         "NtsTaskId": ntsTaskId,
+        "NtsServiceId": ntsServiceId,
+        "NtsNoteId": ntsNoteId,
         "CommentToUserId": commentToUserId,
         "CommentedByUserId": commentedByUserId,
       };
@@ -144,6 +158,8 @@ class PostComment {
     return PostComment(
       comment: map['comment'],
       ntsTaskId: map['ntsTaskId'],
+      ntsServiceId: map['ntsServiceId'],
+      ntsNoteId: map['ntsNoteId'],
       commentToUserId: map['commentToUserId'],
       commentedByUserId: map['commentedByUserId'],
     );

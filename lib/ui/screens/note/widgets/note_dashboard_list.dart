@@ -1,62 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/note/note_list_model.dart';
 import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
-typedef FilterListTapCallBack = void Function(dynamic key);
-
-class NoteHomeBody extends StatefulWidget {
+class NoteDashboardList extends StatefulWidget {
   @override
-  _NoteHomeBodyState createState() => _NoteHomeBodyState();
+  _NoteDashboardListState createState() => _NoteDashboardListState();
 }
 
-class _NoteHomeBodyState extends State<NoteHomeBody> {
+class _NoteDashboardListState extends State<NoteDashboardList> {
   List<NoteListModel> _noteList = [];
   List<NoteListModel> _filteredNoteList = [];
-
-  FilterListTapCallBack filterData;
-
-  String noteStatus;
-  String text;
-  String userId;
-  String moduleId;
-  String mode;
 
   @override
   void initState() {
     super.initState();
-    apiCall();
-  }
-
-  apiCall() {
-    noteBloc.subjectNoteList.sink.add(null);
-
-    Map<String, dynamic> queryparams = Map();
-
-    if (noteStatus != null) queryparams['noteStatus'] = noteStatus;
-    if (text != null) queryparams['text'] = text;
-    if (userId != null) queryparams['userId'] = userId;
-    if (moduleId != null) queryparams['moduleId'] = moduleId;
-    if (mode != null) queryparams['mode'] = mode;
-
-    noteBloc.getNoteList(queryparams: queryparams);
+    noteBloc..getNoteDashBoardData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ExpansionTile(
-          collapsedBackgroundColor: Colors.grey[200],
-          backgroundColor: Colors.grey[200],
-          trailing: Icon(Icons.filter_list),
-          title: Text("Filter"),
-          children: [wrappedButtons()],
-        ),
         Expanded(
           child: StreamBuilder(
             stream: noteBloc.subjectNoteList.stream,
@@ -129,17 +95,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
                             ),
                           ],
                         ),
-                        onTap: () {
-                          noteBloc.subjectNoteDetails.sink.add(null);
-                          Navigator.pushNamed(
-                            context,
-                            ADD_EDIT_NOTE_ROUTE,
-                            arguments: ScreenArguments(
-                                arg1: '',
-                                arg2: _noteList[index].id,
-                                arg3: _noteList[index].noteSubject),
-                          );
-                        },
+                        onTap: () {},
                       ),
                     );
                   },
@@ -153,33 +109,6 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget wrappedButtons() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      width: double.infinity,
-      child: Wrap(
-        children: [
-          customButton(
-            buttonText: 'Home',
-            handleOnPressed: () => _homeFilter(),
-          ),
-          customButton(
-            buttonText: 'Pending Till Today',
-            handleOnPressed: () => _pendingTillTodayFilter(),
-          ),
-          customButton(
-            buttonText: 'Ending in Next 7 Days',
-            handleOnPressed: () => _endingInWeekFilter(),
-          ),
-          customButton(
-            buttonText: 'More...',
-            handleOnPressed: () => _moreFilter(),
-          ),
-        ],
-      ),
     );
   }
 
@@ -205,69 +134,5 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
   String expiryDate(int index) {
     return _noteList[index].expiryDateDisplay ?? "-";
-  }
-
-  customButton({
-    String buttonText,
-    Function handleOnPressed,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.blue[300]),
-          // MaterialStateProperty.all(Theme.of(context).textHeadingColor),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(32.0),
-            ),
-          ),
-        ),
-        onPressed: () => handleOnPressed(),
-        child: Text(buttonText),
-      ),
-    );
-  }
-
-  _homeFilter() {
-    _setParamsToNull();
-    apiCall();
-  }
-
-  _pendingTillTodayFilter() {
-    _setParamsToNull();
-
-    text = 'Today';
-    apiCall();
-  }
-
-  _endingInWeekFilter() {
-    _setParamsToNull();
-
-    text = 'Week';
-    apiCall();
-  }
-
-  _moreFilter() {
-    filterData(dynamic value) {
-      _setParamsToNull();
-      noteStatus = value;
-      apiCall();
-      print(noteStatus);
-    }
-
-    Navigator.pushNamed(
-      context,
-      NTS_FILTER,
-      arguments: ScreenArguments(func: filterData, ntstype: NTSType.note),
-    );
-  }
-
-  _setParamsToNull() {
-    noteStatus = null;
-    text = null;
-    userId = null;
-    moduleId = null;
-    mode = null;
   }
 }

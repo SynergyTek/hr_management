@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../routes/route_constants.dart';
 
@@ -45,24 +47,28 @@ Widget drawerWidget(context) {
           onTap: () {
             Navigator.pushNamed(
               context,
-              LEAVE_REQUEST,
+              NTS_TEMPLATE_REQUEST,
+              arguments: ScreenArguments(
+                ntstype: NTSType.service,
+                arg4: 'Leave',
+              ),
             );
           },
         ),
 
-        ListTile(
-          title: Text(
-            'NEW TASK REQUEST',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.today),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              TASK_REQUEST,
-            );
-          },
-        ),
+        // ListTile(
+        //   title: Text(
+        //     'NEW TASK REQUEST',
+        //     style: TextStyle(fontSize: fontSize, color: fontColor),
+        //   ),
+        //   trailing: Icon(Icons.today),
+        //   onTap: () {
+        //     Navigator.pushNamed(
+        //       context,
+        //       TASK_REQUEST,
+        //     );
+        //   },
+        // ),
 
         ListTile(
           title: Text(
@@ -77,7 +83,19 @@ Widget drawerWidget(context) {
             );
           },
         ),
-
+        ListTile(
+          title: Text(
+            'WORKLIST DASHBOARD',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.dashboard),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              WORKLIST_DASHBOARD,
+            );
+          },
+        ),
         ListTile(
           title: Text(
             'TASK HOME',
@@ -91,25 +109,82 @@ Widget drawerWidget(context) {
             );
           },
         ),
-
-        // ListTile(
-        //   title: Text('Attendance View'),
-        //   trailing: Icon(Icons.ac_unit),
-        //   onTap: () {
-        //     Navigator.pushNamed(
-        //       context,
-        //       ATTENDANCE_VIEW_ROUTE,
-        //     );
-        //   },
-        // ),
-
         ListTile(
-          title: Text('Home'),
-          trailing: Icon(Icons.home),
+          title: Text(
+            'TASK HOME DASHBOARD',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
           onTap: () {
             Navigator.pushNamed(
               context,
-              HOME_ROUTE,
+              TASK_DASHBOARD,
+            );
+          },
+        ),
+        // ListTile(
+        //   title: Text('Home'),
+        //   trailing: Icon(Icons.home),
+        //   onTap: () {
+        //     Navigator.pushNamed(
+        //       context,
+        //       HOME_ROUTE,
+        //     );
+        //   },
+        // ),
+        ListTile(
+          title: Text(
+            'SERVICE HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.note),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              SERVICE_HOME,
+            );
+          },
+        ),
+
+        ListTile(
+          title: Text(
+            'SERVICE HOME DASHBOARD',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              SERVICE_DASHBOARD,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'NOTE HOME',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.note),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              NOTE_HOME,
+            );
+          },
+        ),
+        ListTile(
+          title: Text(
+            'NOTE HOME DASHBOARD',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.add_to_home_screen),
+          onTap: () {
+            ntsChartBloc.subjectChartByStatus.sink.add(null);
+            ntsChartBloc.subjectChartByUserType.sink.add(null);
+            ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+            Navigator.pushNamed(
+              context,
+              NOTE_DASHBOARD,
             );
           },
         ),
@@ -141,7 +216,6 @@ Widget drawerWidget(context) {
             );
           },
         ),
-
         // ListTile(
         //   title: Text(
         //     'LOGOUT',
@@ -155,61 +229,6 @@ Widget drawerWidget(context) {
         //     );
         //   },
         // ),
-        // ListTile(
-        //   title: Text(
-        //     'COMMENTS',
-        //     style: TextStyle(fontSize: fontSize, color: fontColor),
-        //   ),
-        //   trailing: Icon(Icons.comment),
-        //   onTap: () {
-        //     Navigator.pushReplacementNamed(
-        //       context,
-        //       COMMENT_ROUTE,
-        //     );
-        //   },
-        // ),
-        ListTile(
-          title: Text(
-            'SERVICE HOME DASHBOARAD',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.add_to_home_screen),
-          onTap: () {
-            ntsChartBloc.subjectChartByStatus.sink.add(null);
-            ntsChartBloc.subjectChartByUserType.sink.add(null);
-            ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-            Navigator.pushNamed(
-              context,
-              SERVICE_DASHBOARD,
-            );
-          },
-        ),
-        ListTile(
-          title: Text(
-            'NOTE HOME',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.note),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              NOTE_HOME,
-            );
-          },
-        ),
-        ListTile(
-          title: Text(
-            'SERVICE HOME',
-            style: TextStyle(fontSize: fontSize, color: fontColor),
-          ),
-          trailing: Icon(Icons.note),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              SERVICE_HOME,
-            );
-          },
-        ),
       ],
     ),
   );

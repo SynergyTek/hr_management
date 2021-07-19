@@ -48,6 +48,27 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
+  Future<TaskListResponseModel> getTaskDashBoardData(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.READ_TASK_DASHBOARD_DATA;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      return TaskListResponseModel.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return TaskListResponseModel.withError("$err");
+    }
+  }
+
   @override
   Future<TaskResponseModel> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
@@ -66,8 +87,6 @@ class TaskRepository extends AbstractTaskRepository {
         data: jsonEncode(taskModel.toJson()) ?? {},
       );
 
-      print("response: ${response.data}");
-
       var result = PostResponse.fromJson(
         response.data,
       );
@@ -80,6 +99,14 @@ class TaskRepository extends AbstractTaskRepository {
         result.isSuccess
             ? result.messages = 'Task submitted successfully'
             : result.messages = 'Unable to submit task';
+      else if (taskModel.taskStatusCode == 'TASK_STATUS_COMPLETE')
+        result.isSuccess
+            ? result.messages = 'Task completed successfully'
+            : result.messages = 'Unable to complete task';
+      else if (taskModel.taskStatusCode == 'TASK_STATUS_REJECT')
+        result.isSuccess
+            ? result.messages = 'Task rejected successfully'
+            : result.messages = 'Unable to reject task';
 
       return result;
     } catch (err, stacktrace) {

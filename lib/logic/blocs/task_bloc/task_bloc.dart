@@ -64,6 +64,15 @@ class TaskBloc {
     return response;
   }
 
+   getTaskDashBoardData({
+    Map<String, dynamic> queryparams, // String userId,
+  }) async {
+    TaskListResponseModel response = await _taskRepository.getTaskDashBoardData(
+      queryparams: queryparams,
+    );
+    _subjectTaskList.sink.add(response);
+  }
+
   /// Used to update an existing entry.
   putData() async {
     // Update here
