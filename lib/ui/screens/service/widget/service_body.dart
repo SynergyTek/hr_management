@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
 import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
 import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../data/models/service_models/service_response.dart';
@@ -109,8 +112,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     context.read<CreateServiceFormBloc>();
                 serviceModel = snapshot.data.data;
 
-                parseJsonToUDFModel(createServiceFormBloc, serviceModel.json,
-                    );
+                parseJsonToUDFModel(
+                  createServiceFormBloc,
+                  serviceModel.json,
+                );
 
                 return FormBlocListener<CreateServiceFormBloc, String, String>(
                   onSubmitting: (context, state) {
@@ -144,7 +149,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   parseJsonToUDFModel(
     CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
-    
   ) {
     columnComponent = [];
     componentComList = [];
@@ -166,9 +170,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     }
 
     for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns == null &&(component.components==null || component.components.length == 0)) {
+      if (component.columns == null &&
+          (component.components == null || component.components.length == 0)) {
         udfJsonComponent.add(component);
-      } else if (component.components == null && component.columns.length == 0) {
+      } else if (component.components == null &&
+          component.columns.length == 0) {
         udfJsonComponent.add(component);
       }
     }
@@ -863,118 +869,129 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     CreateServiceFormBloc createServiceFormBloc,
   ) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              Visibility(
-                visible: serviceModel.isCompleteButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Complete',
-                  handleOnPressed: () => serviceViewModelPostRequest(
+      child: Center(
+        child: ListView(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            Visibility(
+              visible: serviceModel.isCompleteButtonVisible,
+              child: PrimaryButton(
+                buttonText: 'Complete',
+                handleOnPressed: () => serviceViewModelPostRequest(
+                  1,
+                  'SERVICE_STATUS_COMPLETE',
+                  createServiceFormBloc,
+                ),
+                width: 100,
+              ),
+            ),
+            Visibility(
+              visible: serviceModel.isAddCommentEnabled,
+              child: PrimaryButton(
+                buttonText: 'Add comment',
+                handleOnPressed: () {
+                  Navigator.pushNamed(context, COMMENT_ROUTE,
+                      arguments: ScreenArguments(
+                        ntstype: NTSType.service,
+                        arg1: serviceModel.id,
+                      ));
+                },
+                width: 100,
+              ),
+            ),
+            Visibility(
+              // visible: true,
+              visible: serviceModel.isCancelButtonVisible,
+              child: PrimaryButton(
+                buttonText: 'Cancel',
+                handleOnPressed: () {
+                  if (serviceModel.isCancelReasonRequired)
+                    enterReasonAlertDialog(context);
+                  serviceViewModelPostRequest(
                     1,
-                    'SERVICE_STATUS_COMPLETE',
+                    'SERVICE_STATUS_CANCEL',
                     createServiceFormBloc,
-                  ),
-                  width: 100,
-                ),
+                  );
+                },
+                width: 100,
               ),
-              Visibility(
-                // visible: true,
-                visible: serviceModel.isCancelButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Cancel',
-                  handleOnPressed: () {
-                    if (serviceModel.isCancelReasonRequired)
-                      enterReasonAlertDialog(context);
-                    serviceViewModelPostRequest(
-                      1,
-                      'SERVICE_STATUS_CANCEL',
-                      createServiceFormBloc,
-                    );
-                  },
-                  width: 100,
-                ),
+            ),
+            Visibility(
+              visible: serviceModel.isCloseButtonVisible,
+              child: PrimaryButton(
+                buttonText: 'Close',
+                handleOnPressed: () {},
+                width: 100,
               ),
-              Visibility(
-                visible: serviceModel.isCloseButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Close',
-                  handleOnPressed: () {},
-                  width: 100,
-                ),
+            ),
+            Visibility(
+              visible: serviceModel.isDraftButtonVisible,
+              child: PrimaryButton(
+                buttonText: 'Draft',
+                handleOnPressed: () {
+                  serviceViewModelPostRequest(
+                    1,
+                    'SERVICE_STATUS_DRAFT',
+                    createServiceFormBloc,
+                  );
+                },
+                width: 100,
               ),
-              Visibility(
-                visible: serviceModel.isDraftButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Draft',
-                  handleOnPressed: () {
-                    serviceViewModelPostRequest(
-                      1,
-                      'SERVICE_STATUS_DRAFT',
-                      createServiceFormBloc,
-                    );
-                  },
-                  width: 100,
-                ),
-              ),
-              Visibility(
-                visible: serviceModel.isSubmitButtonVisible,
-                child: PrimaryButton(
-                  buttonText: 'Submit',
-                  handleOnPressed: () {
-                    bool isValid = false;
-                    for (var i = 0; i < columnComponent.length; i++) {
-                      if (columnComponent[i]?.validate?.required != null &&
-                          columnComponent[i].validate.required == true &&
-                          udfJson.containsKey(columnComponent[i].key) &&
-                          (udfJson[columnComponent[i].key] == null ||
-                              udfJson[columnComponent[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${columnComponent[i].label}',
-                            context: context);
-                        return;
-                      }
+            ),
+            Visibility(
+              visible: serviceModel.isSubmitButtonVisible,
+              child: PrimaryButton(
+                buttonText: 'Submit',
+                handleOnPressed: () {
+                  bool isValid = false;
+                  for (var i = 0; i < columnComponent.length; i++) {
+                    if (columnComponent[i]?.validate?.required != null &&
+                        columnComponent[i].validate.required == true &&
+                        udfJson.containsKey(columnComponent[i].key) &&
+                        (udfJson[columnComponent[i].key] == null ||
+                            udfJson[columnComponent[i].key].isEmpty)) {
+                      displaySnackBar(
+                          text: 'Please enter ${columnComponent[i].label}',
+                          context: context);
+                      return;
                     }
-                    for (var i = 0; i < componentComList.length; i++) {
-                      if (componentComList[i]?.validate?.required != null &&
-                          componentComList[i].validate.required == true &&
-                          udfJson.containsKey(componentComList[i].key) &&
-                          (udfJson[componentComList[i].key] == null ||
-                              udfJson[componentComList[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${componentComList[i].label}',
-                            context: context);
-                        return;
-                      }
+                  }
+                  for (var i = 0; i < componentComList.length; i++) {
+                    if (componentComList[i]?.validate?.required != null &&
+                        componentComList[i].validate.required == true &&
+                        udfJson.containsKey(componentComList[i].key) &&
+                        (udfJson[componentComList[i].key] == null ||
+                            udfJson[componentComList[i].key].isEmpty)) {
+                      displaySnackBar(
+                          text: 'Please enter ${componentComList[i].label}',
+                          context: context);
+                      return;
                     }
-                    for (var i = 0; i < udfJsonComponent.length; i++) {
-                      if (udfJsonComponent[i]?.validate?.required != null &&
-                          udfJsonComponent[i].validate.required == true &&
-                          udfJson.containsKey(udfJsonComponent[i].key) &&
-                          (udfJson[udfJsonComponent[i].key] == null ||
-                              udfJson[udfJsonComponent[i].key].isEmpty)) {
-                        displaySnackBar(
-                            text: 'Please enter ${udfJsonComponent[i].label}',
-                            context: context);
-                        return;
-                      }
+                  }
+                  for (var i = 0; i < udfJsonComponent.length; i++) {
+                    if (udfJsonComponent[i]?.validate?.required != null &&
+                        udfJsonComponent[i].validate.required == true &&
+                        udfJson.containsKey(udfJsonComponent[i].key) &&
+                        (udfJson[udfJsonComponent[i].key] == null ||
+                            udfJson[udfJsonComponent[i].key].isEmpty)) {
+                      displaySnackBar(
+                          text: 'Please enter ${udfJsonComponent[i].label}',
+                          context: context);
+                      return;
                     }
-                    serviceViewModelPostRequest(
-                      1,
-                      'SERVICE_STATUS_INPROGRESS',
-                      createServiceFormBloc,
-                    );
-                  },
-                  width: 100,
-                ),
+                  }
+                  serviceViewModelPostRequest(
+                    1,
+                    'SERVICE_STATUS_INPROGRESS',
+                    createServiceFormBloc,
+                  );
+                },
+                width: 100,
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
