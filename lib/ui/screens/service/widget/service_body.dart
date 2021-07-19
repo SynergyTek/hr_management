@@ -894,7 +894,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   Navigator.pushNamed(context, COMMENT_ROUTE,
                       arguments: ScreenArguments(
                         ntstype: NTSType.service,
-                        arg1: serviceModel.id,
+                        arg1: serviceModel.serviceId,
                       ));
                 },
                 width: 100,
