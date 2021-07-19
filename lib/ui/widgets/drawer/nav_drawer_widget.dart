@@ -82,7 +82,19 @@ Widget drawerWidget(context) {
             );
           },
         ),
-
+        ListTile(
+          title: Text(
+            'WORKLIST DASHBOARD',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.dashboard),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              WORKLIST_DASHBOARD,
+            );
+          },
+        ),
         ListTile(
           title: Text(
             'TASK HOME',
