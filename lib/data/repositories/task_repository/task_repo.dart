@@ -87,8 +87,6 @@ class TaskRepository extends AbstractTaskRepository {
         data: jsonEncode(taskModel.toJson()) ?? {},
       );
 
-      print("response: ${response.data}");
-
       var result = PostResponse.fromJson(
         response.data,
       );

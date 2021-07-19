@@ -13,7 +13,7 @@ class LeaveTempAPIBloc {
   /// Used to fetch new entries.
   getAllowedTemplateData() async {
     LeaveTempResponse response = await _apiRepository.getAllowedTemplateData();
-    print("response: $response");
+   
     _subject.sink.add(response);
   }
 

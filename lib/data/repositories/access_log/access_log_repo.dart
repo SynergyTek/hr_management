@@ -18,7 +18,6 @@ class AccessLogRepository extends AbstractAccessLogRepository {
         queryParameters: queryparams ?? {},
       );
 
-      // print("DIO Response: ${response.data}, ${response.data.runtimeType}");
 
       if (response?.data != null)
         return AccessLogResponse.fromJson(

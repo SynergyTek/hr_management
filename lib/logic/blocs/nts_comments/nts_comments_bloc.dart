@@ -18,7 +18,7 @@ class NtsCommentBloc {
   getCommentsData({String ntsId, NTSType ntsType}) async {
     Map<String, dynamic> queryparams = Map();
     if (ntsType == NTSType.service) {
-      queryparams["serviceIdId"] = ntsId ?? '';
+      queryparams["serviceId"] = ntsId ?? '';
     } else if (ntsType == NTSType.note) {
       queryparams["noteId"] = ntsId ?? '';
     } else if (ntsType == NTSType.task) {

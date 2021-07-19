@@ -108,7 +108,6 @@ class ServiceRepository extends AbstractServiceRepository {
         data: jsonEncode(service.toJson()) ?? {},
       );
 
-      print("response: ${response.data}");
 
       var result = PostResponse.fromJson(
         response.data,
