@@ -71,7 +71,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarWidget(
-        title: "Task Filter",
+        title: "Filter By",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
