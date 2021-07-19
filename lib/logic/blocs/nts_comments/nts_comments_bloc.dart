@@ -18,7 +18,7 @@ class NtsCommentBloc {
   getCommentsData({String ntsId, NTSType ntsType}) async {
     Map<String, dynamic> queryparams = Map();
     if (ntsType == NTSType.service) {
-      queryparams["serviceIdId"] = ntsId ?? '';
+      queryparams["serviceId"] = ntsId ?? '';
     } else if (ntsType == NTSType.note) {
       queryparams["noteId"] = ntsId ?? '';
     } else if (ntsType == NTSType.task) {
@@ -28,12 +28,14 @@ class NtsCommentBloc {
     CommentListResponse response = await _ntsRepository.getCommentsData(
         queryparams: queryparams, ntsType: ntsType);
 
+    print(response);
+
     _subjectGetComments.sink.add(response);
   }
 
   /// Used to create new entries.
   Future<PostResponse> postCommentData(
-      {PostComment comment,String ntsId, NTSType ntsType}) async {
+      {PostComment comment, String ntsId, NTSType ntsType}) async {
     // PostComment comment=new PostComment();
     // comment.comment = comment ?? '';
     // comment.ntsTaskId = ntsId ?? '';
@@ -50,7 +52,7 @@ class NtsCommentBloc {
     // } else if (ntsType == NTSType.task) {
     //   ntsId = response.item["NtsTaskId"] ?? '';
     // }
-    getCommentsData(ntsType: ntsType,ntsId: ntsId);
+    getCommentsData(ntsType: ntsType, ntsId: ntsId);
 
     return response;
   }

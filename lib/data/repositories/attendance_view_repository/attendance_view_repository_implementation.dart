@@ -17,13 +17,12 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
         queryParameters: queryparams ?? {},
       );
 
-      print("DIO Response: ${response.data}, ${response.data.runtimeType}");
 
       return AttendanceViewResponse.fromJson(response.data);
     } catch (err, stacktrace) {
-      print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
-      print("Stacktrace: $stacktrace \nError: $err");
+      // print(
+      //     "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      // print("Stacktrace: $stacktrace \nError: $err");
 
       return AttendanceViewResponse.withError("$err");
     }

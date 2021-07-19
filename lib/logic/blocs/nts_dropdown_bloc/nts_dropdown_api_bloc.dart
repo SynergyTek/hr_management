@@ -22,7 +22,6 @@ class NTSDdAPIBloc {
       idKey: idKey,
       nameKey: nameKey,
     );
-    print("response: $response");
     _subject.sink.add(response);
   }
 

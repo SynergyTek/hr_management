@@ -7,6 +7,7 @@ import 'package:hr_management/data/models/nts_comments/nts_comments_response.dar
 import 'package:hr_management/logic/blocs/nts_comments/nts_comments_bloc.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:listizer/listizer.dart';
 
 class NTSCommentsBody extends StatefulWidget {
@@ -20,6 +21,7 @@ class NTSCommentsBody extends StatefulWidget {
 class _NTSCommentsBodyState extends State<NTSCommentsBody> {
   @override
   void initState() {
+    // ntsCommentBloc.subjectGetComments.sink.add(null);
     ntsCommentBloc.getCommentsData(
         ntsId: widget.ntsId, ntsType: widget.ntsType);
     super.initState();
@@ -83,8 +85,8 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                                 ),
                                 textAlign: TextAlign.right,
                               ),
-                               Text(
-                                "Commented by: "+
+                              Text(
+                                "Commented by: " +
                                     _commentsList[index].commentedByUserName,
                                 style: TextStyle(
                                   fontSize: 13,
@@ -102,8 +104,8 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
             } else {
               // return Visibility(
               //   visible: isVisible,
-                return Center(
-                  child: CustomProgressIndicator(),
+              return Center(
+                child: CustomProgressIndicator(),
                 // ),
               );
             }
@@ -151,31 +153,45 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                 ),
                 FloatingActionButton(
                   onPressed: () async {
-                    comment.comment = _commentController.text;
-                    comment.ntsTaskId = widget.ntsId;
-                    comment.commentToUserId = null;
-                    comment.commentedByUserId =
-                        '45bba746-3309-49b7-9c03-b5793369d73c';
-                    setState(() {
-                      isVisible = true;
-                    });
-                    String resultMsg = '';
-                    PostResponse result = await ntsCommentBloc.postCommentData(
-                        ntsType: widget.ntsType,ntsId: widget.ntsId, comment: comment);
-                    if (result.isSuccess) {
+                    if (_commentController.text != null &&
+                        _commentController.text.isNotEmpty) {
+                      if (widget.ntsType == NTSType.service)
+                        comment.ntsServiceId = widget.ntsId;
+                      else if (widget.ntsType == NTSType.task)
+                        comment.ntsTaskId = widget.ntsId;
+                      else
+                        comment.ntsNoteId = widget.ntsId;
+                        
+                      comment.comment = _commentController.text;
+                      comment.commentToUserId = null;
+                      comment.commentedByUserId =
+                          '45bba746-3309-49b7-9c03-b5793369d73c';
                       setState(() {
-                        isVisible = false;
+                        isVisible = true;
                       });
-                      _commentController.text="";
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                      resultMsg = result.messages;
-                      // Navigator.pop(context);
-                    } else {
-                      setState(() {
-                        isVisible = false;
-                      });
-                      resultMsg = result.messages;
-                    }
+                      String resultMsg = '';
+                      PostResponse result =
+                          await ntsCommentBloc.postCommentData(
+                              ntsType: widget.ntsType,
+                              ntsId: widget.ntsId,
+                              comment: comment);
+                      if (result.isSuccess) {
+                        setState(() {
+                          isVisible = false;
+                        });
+                        _commentController.text = "";
+                        FocusScope.of(context).requestFocus(new FocusNode());
+                        resultMsg = result.messages;
+                        // Navigator.pop(context);
+                      } else {
+                        setState(() {
+                          isVisible = false;
+                        });
+                        resultMsg = result.messages;
+                      }
+                    } else
+                      displaySnackBar(
+                          text: 'Please enter some message.', context: context);
                   },
                   child: Icon(
                     Icons.send,
