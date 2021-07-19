@@ -22,7 +22,7 @@ class NTSFilterWidget extends StatefulWidget {
 }
 
 class _NTSFilterWidgetState extends State<NTSFilterWidget> {
-  bool showFilter = false;
+  bool showFilter = true;
   // bool showSort = false;
   Map<String, String> filterOptions = Map();
   // List<String> sortByOptions = [];
@@ -91,10 +91,10 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                             optionsRow(
                               text: 'Filters',
                               onTap: () {
-                                setState(() {
-                                  showFilter = true;
-                                  // showSort = false;
-                                });
+                                // setState(() {
+                                // showFilter = true;
+                                // showSort = false;
+                                // });
                               },
                             ),
                             // optionsRow(
