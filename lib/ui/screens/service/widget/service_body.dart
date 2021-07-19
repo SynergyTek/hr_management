@@ -921,7 +921,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               visible: serviceModel.isCloseButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Close',
-                handleOnPressed: () {},
+                handleOnPressed: () => Navigator.pop(context),
                 width: 100,
               ),
             ),
