@@ -132,7 +132,6 @@ class APIEndpointConstants {
 
   static const String INSERT_ACCESS_LOG =
       '$BASE_URL/common/query/InsertAccessLog?userid=45bba746-3309-49b7-9c03-b5793369d73c&';
-  // static String GET_REMOTE_ATTENDANCE_DATA = 'https://webapidev.aitalkx.com/common/query/InsertAccessLog?userid=45bba746-3309-49b7-9c03-b5793369d73c&punchingTime=Datetime.Now&punchingTye=0';
 
   static const GET_ACCESS_LOG_LIST_DATA =
       '$BASE_URL/taa/query/accessloglist?userid=45bba746-3309-49b7-9c03-b5793369d73c';
@@ -140,9 +139,28 @@ class APIEndpointConstants {
 
   static const String GET_ATTENDANCE_VIEW_DATA =
       '$BASE_URL/taa/query/attendancelist?searchFromDate=2021-06-01 00:00:00.000&searchToDate=2021-07-30 00:00:00.000';
-  // '$BASE_URL/taa/query/attendancelist?userId=1721be46-402a-412a-b3c9-e176f32e3536&searchFromDate=2021-06-01 00:00:00.000&searchToDate=2021-07-30 00:00:00.000';
 
   //Access Log API Endpoints Block End
+  //************************************************************************//
+
+  //Worklist API Endpoints Block
+
+  static const GET_TASK_TEMPLATE_TREE_LIST =
+      '$BASE_URL/nts/query/GetTaskTemplateTreeList';
+
+  static const GET_SERVICE_TEMPLATE_TREE_LIST =
+      '$BASE_URL/nts/query/GetServiceTemplateTreeList';
+
+  static const GET_NOTE_TEMPLATE_TREE_LIST =
+      '$BASE_URL/nts/query/GetNoteTemplateTreeList';
+
+  static const WORKLIST_DASHBOARD_COUNT =
+      '$BASE_URL/nts/query/WorklistDashboardCount';
+
+  static const WORKLIST_DASHBOARD_NOTE_COUNT =
+      '$BASE_URL/nts/query/WorklistDashboardNoteSCount';
+
+  //Worklist API Endpoints Block End
   //************************************************************************//
 
 }
