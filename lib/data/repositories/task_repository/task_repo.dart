@@ -101,6 +101,14 @@ class TaskRepository extends AbstractTaskRepository {
         result.isSuccess
             ? result.messages = 'Task submitted successfully'
             : result.messages = 'Unable to submit task';
+      else if (taskModel.taskStatusCode == 'TASK_STATUS_COMPLETE')
+        result.isSuccess
+            ? result.messages = 'Task completed successfully'
+            : result.messages = 'Unable to complete task';
+      else if (taskModel.taskStatusCode == 'TASK_STATUS_REJECT')
+        result.isSuccess
+            ? result.messages = 'Task rejected successfully'
+            : result.messages = 'Unable to reject task';
 
       return result;
     } catch (err, stacktrace) {

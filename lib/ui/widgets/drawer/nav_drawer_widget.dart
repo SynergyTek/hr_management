@@ -98,7 +98,7 @@ Widget drawerWidget(context) {
         ),
         ListTile(
           title: Text(
-            'TASK HOME DASHBOARAD',
+            'TASK HOME DASHBOARD',
             style: TextStyle(fontSize: fontSize, color: fontColor),
           ),
           trailing: Icon(Icons.add_to_home_screen),
@@ -135,7 +135,7 @@ Widget drawerWidget(context) {
 
         ListTile(
           title: Text(
-            'SERVICE HOME DASHBOARAD',
+            'SERVICE HOME DASHBOARD',
             style: TextStyle(fontSize: fontSize, color: fontColor),
           ),
           trailing: Icon(Icons.add_to_home_screen),
@@ -161,6 +161,7 @@ Widget drawerWidget(context) {
         ),
         ListTile(
           title: Text(
+
             'USERS',
             style: TextStyle(fontSize: fontSize, color: fontColor),
           ),
@@ -176,6 +177,9 @@ Widget drawerWidget(context) {
         ListTile(
           title: Text(
             'NOTE HOME DASHBOARAD',
+
+            
+
             style: TextStyle(fontSize: fontSize, color: fontColor),
           ),
           trailing: Icon(Icons.add_to_home_screen),
