@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:hr_management/data/models/worklist_dashboard/worklist_dashboard_response.dart';
+import '../../models/worklist_dashboard/worklist_dashboard_response.dart';
 import '../../models/api_models/post_response_model.dart';
 
 import '../../../constants/api_endpoints.dart';
@@ -14,6 +14,9 @@ abstract class AbstractWorklistDashboardRepository {
   AbstractWorklistDashboardRepository();
 
   Future<WorklistDashboardResponse> getWorklistDashboardCount(); 
+
+  
+  Future<NoteWorklistDashboardResponse> getWorklistDashboardNoteCount(); 
 
 
   Future<PostResponse> postAPIData({

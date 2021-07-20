@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/formats.dart';
-import 'package:hr_management/data/models/access_log/access_log_model.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/screens/attendance/show_access_logs/widgets/access_log_bottom_sheet_widget.dart';
+import '../../../../../constants/formats.dart';
+import '../../../../../data/models/access_log/access_log_model.dart';
+import '../../../../../themes/theme_config.dart';
+import 'access_log_bottom_sheet_widget.dart';
 
 class AccessLogListTileWidget extends StatelessWidget {
   final AccessLogModel eachAccessLogModelElement;

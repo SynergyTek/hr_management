@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/note/note_model.dart';
-import 'package:hr_management/data/models/note/note_response.dart';
-import 'package:hr_management/data/repositories/note_repository/abstract_note_repo.dart';
+import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/note/note_model.dart';
+import '../../../data/models/note/note_response.dart';
+import '../../../data/repositories/note_repository/abstract_note_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NoteBloc {

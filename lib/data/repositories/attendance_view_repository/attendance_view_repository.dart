@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:hr_management/data/models/attendance_view_models/attendance_view_response.dart';
+import '../../models/attendance_view_models/attendance_view_response.dart';
 
 import '../../../constants/api_endpoints.dart';
 

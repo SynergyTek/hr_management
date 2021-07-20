@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/maps/maps.dart';
 import 'package:hr_management/data/models/service_models/service.dart';
@@ -8,6 +9,12 @@ import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+=======
+import '../../../../data/models/service_models/service.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../widgets/progress_indicator.dart';
+>>>>>>> d0baf061f65e518a3f6c509af4193b640e32c1cb
 import 'package:listizer/listizer.dart';
 
 class ServiceDashboardList extends StatefulWidget {

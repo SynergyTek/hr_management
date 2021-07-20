@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/tasks/widget/task_body.dart';
+import 'widget/task_body.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 

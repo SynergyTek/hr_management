@@ -1,4 +1,4 @@
-import 'package:hr_management/data/enums/enums.dart';
+import '../data/enums/enums.dart';
 
 class ScreenArguments {
   final String arg1;

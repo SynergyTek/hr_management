@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
-import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/nts_widgets.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/service_models/service.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/nts_widgets.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 typedef FilterListTapCallBack = void Function(dynamic key);
