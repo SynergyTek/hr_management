@@ -38,5 +38,3 @@ class ServiceListResponse {
       : list = null,
         error = errorValue;
 }
-
-
