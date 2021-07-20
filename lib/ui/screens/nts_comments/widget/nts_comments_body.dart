@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/formats.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/nts_comments/nts_comments.dart';
-import 'package:hr_management/data/models/nts_comments/nts_comments_response.dart';
-import 'package:hr_management/logic/blocs/nts_comments/nts_comments_bloc.dart';
-import 'package:hr_management/ui/widgets/empty_list_widget.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../../constants/formats.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/api_models/post_response_model.dart';
+import '../../../../data/models/nts_comments/nts_comments.dart';
+import '../../../../data/models/nts_comments/nts_comments_response.dart';
+import '../../../../logic/blocs/nts_comments/nts_comments_bloc.dart';
+import '../../../widgets/empty_list_widget.dart';
+import '../../../widgets/progress_indicator.dart';
+import '../../../widgets/snack_bar.dart';
 import 'package:listizer/listizer.dart';
 
 class NTSCommentsBody extends StatefulWidget {

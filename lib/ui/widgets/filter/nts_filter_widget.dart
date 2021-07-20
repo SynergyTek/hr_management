@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/maps/maps.dart';
+import '../../../data/enums/enums.dart';
+import '../../../data/maps/maps.dart';
 
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/screens/tasks/widget/task_home_body.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import '../../../themes/theme_config.dart';
+import '../../screens/tasks/widget/task_home_body.dart';
+import '../appbar_widget.dart';
+import '../internet_connectivity_widget.dart';
 
 class NTSFilterWidget extends StatefulWidget {
   final FilterListTapCallBack onListTap;

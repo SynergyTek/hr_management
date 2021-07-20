@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
-import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
-import 'package:hr_management/ui/screens/service/create_service_form_bloc.dart';
-import 'package:hr_management/ui/widgets/webview_widget.dart';
+import '../../../../data/models/service_models/service.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../data/models/udf_json_model/udf_json_model.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../service/create_service_form_bloc.dart';
+import '../../../widgets/webview_widget.dart';
 
 import '../../../widgets/progress_indicator.dart';
 

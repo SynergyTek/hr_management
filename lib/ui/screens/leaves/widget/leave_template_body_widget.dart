@@ -1,6 +1,6 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';

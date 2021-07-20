@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/logic/blocs/nts_template_bloc/nts_template_bloc.dart';
+import '../../../data/enums/enums.dart';
+import '../../../logic/blocs/nts_template_bloc/nts_template_bloc.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';

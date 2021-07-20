@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:hr_management/themes/theme_config.dart';
+import '../../themes/theme_config.dart';
 
 import '../../data/helpers/formio_helper.dart';
 import 'progress_indicator.dart';

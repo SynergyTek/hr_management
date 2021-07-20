@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hr_management/data/models/login_models/login_request_model.dart';
-import 'package:hr_management/data/models/login_models/login_response.dart';
+import '../../../data/models/login_models/login_request_model.dart';
+import '../../../data/models/login_models/login_response.dart';
 
 import '../../../data/repositories/login_repository/login_repository.dart';
 import 'package:rxdart/rxdart.dart';

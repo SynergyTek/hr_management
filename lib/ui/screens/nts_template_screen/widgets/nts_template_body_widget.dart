@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/screens/nts_template_screen/widgets/animated_grid_view_widget.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../themes/theme_config.dart';
+import 'animated_grid_view_widget.dart';
+import '../../../widgets/progress_indicator.dart';
 
 class NTSTemplateBodyWidget extends StatefulWidget {
   /// Stream should be of the type:

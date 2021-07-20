@@ -1,8 +1,8 @@
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/nts_comments/nts_comments.dart';
-import 'package:hr_management/data/models/nts_comments/nts_comments_response.dart';
-import 'package:hr_management/data/repositories/nts_comments/abstract_nts_comments_repo.dart';
+import '../../../data/enums/enums.dart';
+import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/nts_comments/nts_comments.dart';
+import '../../../data/models/nts_comments/nts_comments_response.dart';
+import '../../../data/repositories/nts_comments/abstract_nts_comments_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NtsCommentBloc {

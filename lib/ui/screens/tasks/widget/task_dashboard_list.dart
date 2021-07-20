@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/task_models/task_list_model.dart';
-import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
-import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/models/task_models/task_list_model.dart';
+import '../../../../data/models/task_models/task_list_resp_model.dart';
+import '../../../../logic/blocs/task_bloc/task_bloc.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 class TaskDashboardList extends StatefulWidget {

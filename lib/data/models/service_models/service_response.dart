@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import 'service.dart';
 
 /// APIResponse is a high-level model class which we will consist of a

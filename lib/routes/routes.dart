@@ -1,8 +1,8 @@
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
-import 'package:hr_management/ui/screens/note/note_home_screen.dart';
-import 'package:hr_management/ui/screens/nts_comments/nts_comments_screen.dart';
-import 'package:hr_management/ui/screens/home_screen/home_screen.dart';
+import '../data/enums/enums.dart';
+import '../ui/screens/counts_screen/counts_screen.dart';
+import '../ui/screens/note/note_home_screen.dart';
+import '../ui/screens/nts_comments/nts_comments_screen.dart';
+import '../ui/screens/home_screen/home_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 

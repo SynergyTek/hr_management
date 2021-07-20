@@ -1,7 +1,7 @@
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/models/nts_template_models/nts_template_response.dart';
-
 import 'package:dio/dio.dart';
+
+import '../../../constants/api_endpoints.dart';
+import '../../models/nts_template_models/nts_template_response.dart';
 
 part 'nts_template_repository_implementation.dart';
 

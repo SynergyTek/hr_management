@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/attendance_view_models/attendance_view_models.dart';
-import 'package:hr_management/data/models/attendance_view_models/attendance_view_response.dart';
-import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
+import 'package:listizer/listizer.dart';
 
+import '../../../../../data/models/attendance_view_models/attendance_view_models.dart';
+import '../../../../../data/models/attendance_view_models/attendance_view_response.dart';
+import '../../../../../logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import '../../../../../themes/theme_config.dart';
 import '../../../../widgets/empty_list_widget.dart';
 import '../../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
-
 import 'attendance_view_list_tile_widget.dart';
 
 class AttendanceViewBodyWidget extends StatefulWidget {
