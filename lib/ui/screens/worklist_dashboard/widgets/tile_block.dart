@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../../data/helpers/showup.dart';
 
 Widget buildTile(
@@ -13,19 +14,14 @@ Widget buildTile(
     String tabName,
     int value,
     bool isTile,
-    NTSType ntsType}) {
+    NTSType ntsType,Image image}) {
   return Material(
       elevation: 14.0,
       borderRadius: BorderRadius.circular(12.0),
       shadowColor: Color(0x802196F3),
       child: InkWell(
           child: isTile
-              ? worklistTileWidget(
-                  bgColor: bgColor,
-                  value: value,
-                  title: title,
-                  context: context,
-                  ntsType: ntsType)
+              ? worklistTileWidget(bgColor: bgColor, value: value, title: title,ntsType: ntsType,image:image)
               : worklistHeading(title: title)));
 }
 
@@ -34,7 +30,7 @@ Widget worklistTileWidget(
     int value,
     String title,
     NTSType ntsType,
-    BuildContext context}) {
+    BuildContext context,Image image}) {
   return Padding(
     padding: const EdgeInsets.all(24.0),
     child: Column(
@@ -42,7 +38,25 @@ Widget worklistTileWidget(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           InkWell(
-            child:Image(image: AssetImage('notes-completed.png')),
+            child:Stack(
+              children: [
+                image,
+                ShowUp(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: Text(
+                          
+                          value.toString(),
+                          style: TextStyle(
+                              color: bgColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0),
+                        ),
+                      ),
+                      delay: 100,
+                    )
+              ],
+            ),
             // child: Material(
             //     color: bgColor,
             //     shape: CircleBorder(),
