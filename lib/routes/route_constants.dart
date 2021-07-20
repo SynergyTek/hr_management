@@ -45,3 +45,4 @@ const String SERVICE_HOME = "/service_home";
 const String SERVICE_DASHBOARD = "/service_dashboard";
 const String TASK_DASHBOARD = "/task_dashboard";
 const String NOTE_DASHBOARD = "/note_dashboard";
+const String WORKLIST_DASHBOARD = "/worklist_dashboard";
