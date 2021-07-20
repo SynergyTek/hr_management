@@ -69,7 +69,7 @@ class _NTSChartState extends State<NTSChart> {
                       if (snapshot.hasData) {
                         if (snapshot.data.list == null ||
                             snapshot.data.list.length == 0) {
-                          return Container();
+                          return Center(child: Text('No Data'));
                         }
                         chartByStatus = snapshot.data.list;
                         return Charts(
@@ -105,7 +105,7 @@ class _NTSChartState extends State<NTSChart> {
                       if (snapshot.hasData) {
                         if (snapshot.data.list == null ||
                             snapshot.data.list.length == 0) {
-                          return Container();
+                          return Center(child: Text('No Data'));
                         }
                         chartUserType = snapshot.data.list;
                         return Charts(
@@ -190,7 +190,7 @@ class _NTSChartState extends State<NTSChart> {
                       if (snapshot.hasData) {
                         if (snapshot.data.list == null ||
                             snapshot.data.list.length == 0) {
-                          return Container();
+                          return Center(child: Text('No Data'));
                         }
                         chartUserType = snapshot.data.list;
                         return Container(
