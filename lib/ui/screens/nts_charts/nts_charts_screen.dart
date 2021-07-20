@@ -21,8 +21,9 @@ class _NTSChartState extends State<NTSChart> {
   List<ChartModel> chartUserType = [];
   String chartTitle = '';
   DateTime fromDate = DateTime(
-      DateTime.now().year + 1, DateTime.now().month - 1, DateTime.now().day);
+      DateTime.now().year, DateTime.now().month - 1, DateTime.now().day);
   DateTime toDate = DateTime.now();
+  Map<String, dynamic> queryparams = Map();
 
   @override
   void initState() {
@@ -31,9 +32,14 @@ class _NTSChartState extends State<NTSChart> {
         : widget.ntsType == NTSType.note
             ? 'Note'
             : 'Task';
+
+    queryparams["startDate"] = dateformatterWithSlash.format(fromDate) ?? '';
+    queryparams["dueDate"] = dateformatterWithSlash.format(toDate) ?? '';
+
     ntsChartBloc..getChartByStatus(ntsType: widget.ntsType);
     ntsChartBloc..getChartByUserType(ntsType: widget.ntsType);
-    ntsChartBloc..getDatewiseSLA(ntsType: widget.ntsType);
+    ntsChartBloc
+      ..getDatewiseSLA(ntsType: widget.ntsType, queryparams: queryparams);
 
     super.initState();
   }
@@ -166,7 +172,6 @@ class _NTSChartState extends State<NTSChart> {
                       icon: Icon(Icons.save),
                       onPressed: () {
                         ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-                        Map<String, dynamic> queryparams = Map();
                         queryparams["startDate"] =
                             dateformatterWithSlash.format(fromDate) ?? '';
                         queryparams["dueDate"] =
