@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../routes/route_constants.dart';
 
@@ -38,52 +36,6 @@ Widget drawerWidget(context) {
               ),
             ),
           ),
-
-          ListTile(
-            title: Text(
-              'NEW LEAVE REQUEST',
-              style: TextStyle(fontSize: fontSize, color: fontColor),
-            ),
-            trailing: Icon(Icons.loupe),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                NTS_TEMPLATE_REQUEST,
-                arguments: ScreenArguments(
-                  ntstype: NTSType.service,
-                  arg4: 'Leave',
-                ),
-              );
-            },
-          ),
-
-          // ListTile(
-          //   title: Text(
-          //     'NEW TASK REQUEST',
-          //     style: TextStyle(fontSize: fontSize, color: fontColor),
-          //   ),
-          //   trailing: Icon(Icons.today),
-          //   onTap: () {
-          //     Navigator.pushNamed(
-          //       context,
-          //       TASK_REQUEST,
-          //     );
-          //   },
-          // ),
-
-          ListTile(
-            title: Text(
-              'REQUESTED LEAVES',
-              style: TextStyle(fontSize: fontSize, color: fontColor),
-            ),
-            trailing: Icon(Icons.fact_check),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                DISPLAY_LEAVES,
-              );
-            },
-          ),
           ListTile(
             title: Text(
               'WORKLIST DASHBOARD',
@@ -99,143 +51,156 @@ Widget drawerWidget(context) {
           ),
           ListTile(
             title: Text(
-              'TASK HOME',
+              'REQUESTED LEAVES',
               style: TextStyle(fontSize: fontSize, color: fontColor),
             ),
-            trailing: Icon(Icons.add_to_home_screen),
+            trailing: Icon(Icons.fact_check),
             onTap: () {
               Navigator.pushNamed(
                 context,
-                TASK_HOME,
+                DISPLAY_LEAVES,
               );
             },
           ),
-          ListTile(
+          ExpansionTile(
             title: Text(
-              'TASK HOME DASHBOARD',
+              'TIME & ATTENDANCE',
               style: TextStyle(fontSize: fontSize, color: fontColor),
             ),
-            trailing: Icon(Icons.add_to_home_screen),
-            onTap: () {
-              ntsChartBloc.subjectChartByStatus.sink.add(null);
-              ntsChartBloc.subjectChartByUserType.sink.add(null);
-              ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-              Navigator.pushNamed(
-                context,
-                TASK_DASHBOARD,
-              );
-            },
+            children: [
+              ListTile(
+                title: Text(
+                  'REMOTE SIGNIN/SIGNOUT',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                trailing: Icon(Icons.settings_remote),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    MARK_ATTENDANCE_ROUTE,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'ACCESS LOGS',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                trailing: Icon(Icons.sync_alt),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DISPLAY_ACCESS_LOG,
+                  );
+                },
+              ),
+            ],
           ),
-          // ListTile(
-          //   title: Text('Home'),
-          //   trailing: Icon(Icons.home),
-          //   onTap: () {
-          //     Navigator.pushNamed(
-          //       context,
-          //       HOME_ROUTE,
-          //     );
-          //   },
-          // ),
-          ListTile(
+          ExpansionTile(
             title: Text(
-              'SERVICE HOME',
+              'TASK',
               style: TextStyle(fontSize: fontSize, color: fontColor),
             ),
-            trailing: Icon(Icons.note),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                SERVICE_HOME,
-              );
-            },
+            children: [
+              ListTile(
+                title: Text(
+                  'TASK HOME DASHBOARD',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  ntsChartBloc.subjectChartByStatus.sink.add(null);
+                  ntsChartBloc.subjectChartByUserType.sink.add(null);
+                  ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+                  Navigator.pushNamed(
+                    context,
+                    TASK_DASHBOARD,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'TASK HOME',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    TASK_HOME,
+                  );
+                },
+              ),
+            ],
           ),
-
-          ListTile(
+          ExpansionTile(
             title: Text(
-              'SERVICE HOME DASHBOARD',
+              'SERVICE',
               style: TextStyle(fontSize: fontSize, color: fontColor),
             ),
-            trailing: Icon(Icons.add_to_home_screen),
-            onTap: () {
-              ntsChartBloc.subjectChartByStatus.sink.add(null);
-              ntsChartBloc.subjectChartByUserType.sink.add(null);
-              ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-              Navigator.pushNamed(
-                context,
-                SERVICE_DASHBOARD,
-              );
-            },
+            children: [
+              ListTile(
+                title: Text(
+                  'SERVICE HOME DASHBOARD',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  ntsChartBloc.subjectChartByStatus.sink.add(null);
+                  ntsChartBloc.subjectChartByUserType.sink.add(null);
+                  ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+                  Navigator.pushNamed(
+                    context,
+                    SERVICE_DASHBOARD,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'SERVICE HOME',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    SERVICE_HOME,
+                  );
+                },
+              ),
+            ],
           ),
-          ListTile(
+          ExpansionTile(
             title: Text(
-              'NOTE HOME',
+              'NOTE',
               style: TextStyle(fontSize: fontSize, color: fontColor),
             ),
-            trailing: Icon(Icons.note),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                NOTE_HOME,
-              );
-            },
+            children: [
+              ListTile(
+                title: Text(
+                  'NOTE HOME DASHBOARD',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  ntsChartBloc.subjectChartByStatus.sink.add(null);
+                  ntsChartBloc.subjectChartByUserType.sink.add(null);
+                  ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+                  Navigator.pushNamed(
+                    context,
+                    NOTE_DASHBOARD,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'NOTE HOME',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    NOTE_HOME,
+                  );
+                },
+              ),
+            ],
           ),
-          ListTile(
-            title: Text(
-              'NOTE HOME DASHBOARD',
-              style: TextStyle(fontSize: fontSize, color: fontColor),
-            ),
-            trailing: Icon(Icons.add_to_home_screen),
-            onTap: () {
-              ntsChartBloc.subjectChartByStatus.sink.add(null);
-              ntsChartBloc.subjectChartByUserType.sink.add(null);
-              ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-              Navigator.pushNamed(
-                context,
-                NOTE_DASHBOARD,
-              );
-            },
-          ),
-
-          ListTile(
-            title: Text(
-              'REMOTE SIGNIN/SIGNOUT',
-              style: TextStyle(fontSize: fontSize, color: fontColor),
-            ),
-            trailing: Icon(Icons.settings_remote),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                MARK_ATTENDANCE_ROUTE,
-              );
-            },
-          ),
-
-          ListTile(
-            title: Text(
-              'ACCESS LOGS',
-              style: TextStyle(fontSize: fontSize, color: fontColor),
-            ),
-            trailing: Icon(Icons.sync_alt),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                DISPLAY_ACCESS_LOG,
-              );
-            },
-          ),
-          // ListTile(
-          //   title: Text(
-          //     'LOGOUT',
-          //     style: TextStyle(fontSize: fontSize, color: fontColor),
-          //   ),
-          //   trailing: Icon(Icons.logout),
-          //   onTap: () {
-          //     Navigator.pushReplacementNamed(
-          //       context,
-          //       LOGIN_ROUTE,
-          //     );
-          //   },
-          // ),
         ],
       ),
     ),

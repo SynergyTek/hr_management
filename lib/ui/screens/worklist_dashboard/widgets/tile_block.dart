@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../../data/helpers/showup.dart';
 
 Widget buildTile(
@@ -21,7 +20,12 @@ Widget buildTile(
       shadowColor: Color(0x802196F3),
       child: InkWell(
           child: isTile
-              ? worklistTileWidget(bgColor: bgColor, value: value, title: title,ntsType: ntsType)
+              ? worklistTileWidget(
+                  bgColor: bgColor,
+                  value: value,
+                  title: title,
+                  context: context,
+                  ntsType: ntsType)
               : worklistHeading(title: title)));
 }
 
