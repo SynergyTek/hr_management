@@ -41,7 +41,7 @@ Widget drawerWidget(context) {
               'WORKLIST DASHBOARD',
               style: TextStyle(fontSize: fontSize, color: fontColor),
             ),
-            trailing: Icon(Icons.dashboard),
+            trailing: Icon(Icons.dashboard_customize_outlined),
             onTap: () {
               Navigator.pushNamed(
                 context,
@@ -54,7 +54,7 @@ Widget drawerWidget(context) {
               'REQUESTED LEAVES',
               style: TextStyle(fontSize: fontSize, color: fontColor),
             ),
-            trailing: Icon(Icons.fact_check),
+            trailing: Icon(Icons.request_page_outlined),
             onTap: () {
               Navigator.pushNamed(
                 context,
@@ -73,7 +73,6 @@ Widget drawerWidget(context) {
                   'REMOTE SIGNIN/SIGNOUT',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
-                trailing: Icon(Icons.settings_remote),
                 onTap: () {
                   Navigator.pushNamed(
                     context,
@@ -86,7 +85,6 @@ Widget drawerWidget(context) {
                   'ACCESS LOGS',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
-                trailing: Icon(Icons.sync_alt),
                 onTap: () {
                   Navigator.pushNamed(
                     context,
