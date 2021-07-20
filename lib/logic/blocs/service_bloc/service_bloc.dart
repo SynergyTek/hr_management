@@ -35,9 +35,6 @@ class ServiceBloc {
   }
 
   getServiceDashBoardData({templateCode, serviceId, userId}) async {
-  
-   
-
     ServiceListResponse response =
         await _serviceRepository.getServiceDashBoardData();
     _subjectServiceList.sink.add(response);
@@ -45,13 +42,22 @@ class ServiceBloc {
 
   /// Used to create new entries.
   Future<PostResponse> postData({
+    bool isLeaves,
     @required Service service,
   }) async {
     PostResponse response = await _serviceRepository.postAPIData(
       service: service,
     );
+    if (isLeaves != null && response.isSuccess) {
+      if (isLeaves) {
+        subjectServiceList.sink.add(null);
+        getLeavesDetails();
+      } else {
+        subjectServiceList.sink.add(null);
+        getServiceHomeListData();
+      }
+    }
 
-    serviceBloc..getLeavesDetails();
     return response;
   }
 

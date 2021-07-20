@@ -30,9 +30,11 @@ import 'package:sizer/sizer.dart';
 import '../create_service_form_bloc.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
+  final bool isLeave;
   final String templateCode;
   final String serviceId;
-  const CreateServiceScreenBody({Key key, this.templateCode, this.serviceId});
+  const CreateServiceScreenBody(
+      {Key key, this.templateCode, this.serviceId, this.isLeave});
 
   @override
   _CreateServiceScreenBodyState createState() =>
@@ -442,7 +444,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         }
       } else if (model[i].type == 'textarea') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+            (widget.serviceId != null && widget.serviceId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) &&
@@ -1209,6 +1211,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     });
 
     PostResponse result = await serviceBloc.postData(
+      isLeaves: widget.isLeave,
       service: postServiceModel,
     );
     print(result);

@@ -103,6 +103,7 @@ class AppRouter {
             templateCode: args.arg1,
             serviceId: args.arg2,
             title: args.arg3,
+            isLeave: args.val,
           ),
         );
         break;

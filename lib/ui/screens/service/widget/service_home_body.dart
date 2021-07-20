@@ -168,9 +168,11 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
                             context,
                             CREATE_SERVICE_ROUTE,
                             arguments: ScreenArguments(
-                                arg1: _serviceList[index].templateCode,
-                                arg2: _serviceList[index].id,
-                                arg3: _serviceList[index].serviceSubject),
+                              arg1: _serviceList[index].templateCode,
+                              arg2: _serviceList[index].id,
+                              arg3: _serviceList[index].serviceSubject,
+                              val: false,
+                            ),
                           );
                         },
                       ),
@@ -391,7 +393,10 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           suffixIcon: IconButton(
-            icon: Icon(Icons.search,color: Colors.blue,),
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
             onPressed: () => _searchSubject(),
           ),
         ),
