@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {
@@ -82,7 +83,19 @@ Widget drawerWidget(context) {
             );
           },
         ),
-
+        ListTile(
+          title: Text(
+            'WORKLIST DASHBOARD',
+            style: TextStyle(fontSize: fontSize, color: fontColor),
+          ),
+          trailing: Icon(Icons.dashboard),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              WORKLIST_DASHBOARD,
+            );
+          },
+        ),
         ListTile(
           title: Text(
             'TASK HOME',
@@ -184,6 +197,9 @@ Widget drawerWidget(context) {
           ),
           trailing: Icon(Icons.add_to_home_screen),
           onTap: () {
+            ntsChartBloc.subjectChartByStatus.sink.add(null);
+            ntsChartBloc.subjectChartByUserType.sink.add(null);
+            ntsChartBloc.subjectDatewiseSLA.sink.add(null);
             Navigator.pushNamed(
               context,
               NOTE_DASHBOARD,

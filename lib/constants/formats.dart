@@ -1,8 +1,8 @@
-
 import 'package:intl/intl.dart';
 
 var dayformatter = new DateFormat("dd MMM");
 var dateformatter = new DateFormat("dd MMM yyyy");
+var dateformatterWithSlash = new DateFormat("yyyy/MM/dd");
 var dateTimeformatter = new DateFormat("dd MMM yyyy h:mm a");
 var monthformatter = new DateFormat("MMM");
 var shortDateTimeformatter = new DateFormat("dd MMM h:mm a");
