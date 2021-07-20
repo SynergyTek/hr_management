@@ -36,38 +36,6 @@ Widget drawerWidget(context) {
               ),
             ),
           ),
-
-          // ListTile(
-          //   title: Text(
-          //     'NEW LEAVE REQUEST',
-          //     style: TextStyle(fontSize: fontSize, color: fontColor),
-          //   ),
-          //   trailing: Icon(Icons.loupe),
-          //   onTap: () {
-          //     Navigator.pushNamed(
-          //       context,
-          //       NTS_TEMPLATE_REQUEST,
-          //       arguments: ScreenArguments(
-          //         ntstype: NTSType.service,
-          //         arg4: 'Leave',
-          //       ),
-          //     );
-          //   },
-          // ),
-
-          // ListTile(
-          //   title: Text(
-          //     'NEW TASK REQUEST',
-          //     style: TextStyle(fontSize: fontSize, color: fontColor),
-          //   ),
-          //   trailing: Icon(Icons.today),
-          //   onTap: () {
-          //     Navigator.pushNamed(
-          //       context,
-          //       TASK_REQUEST,
-          //     );
-          //   },
-          // ),
           ListTile(
             title: Text(
               'WORKLIST DASHBOARD',
@@ -163,7 +131,6 @@ Widget drawerWidget(context) {
               ),
             ],
           ),
-
           ExpansionTile(
             title: Text(
               'SERVICE',
@@ -199,7 +166,6 @@ Widget drawerWidget(context) {
               ),
             ],
           ),
-
           ExpansionTile(
             title: Text(
               'NOTE',
@@ -235,31 +201,6 @@ Widget drawerWidget(context) {
               ),
             ],
           ),
-
-          // ListTile(
-          //   title: Text('Home'),
-          //   trailing: Icon(Icons.home),
-          //   onTap: () {
-          //     Navigator.pushNamed(
-          //       context,
-          //       HOME_ROUTE,
-          //     );
-          //   },
-          // ),
-
-          // ListTile(
-          //   title: Text(
-          //     'LOGOUT',
-          //     style: TextStyle(fontSize: fontSize, color: fontColor),
-          //   ),
-          //   trailing: Icon(Icons.logout),
-          //   onTap: () {
-          //     Navigator.pushReplacementNamed(
-          //       context,
-          //       LOGIN_ROUTE,
-          //     );
-          //   },
-          // ),
         ],
       ),
     ),
