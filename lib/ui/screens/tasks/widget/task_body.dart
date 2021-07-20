@@ -847,7 +847,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             ),
           ),
           Visibility(
-            visible: taskModel.isAddCommentEnabled,
+            visible: taskModel.isAddCommentEnabled &&
+                widget.taskId != null &&
+                widget.taskId.isNotEmpty,
             child: PrimaryButton(
               buttonText: 'Add comment',
               handleOnPressed: () {

@@ -5,7 +5,8 @@ class ScreenArguments {
   final String arg2;
   final String arg3;
   final String arg4;
-  final bool val;
+  final bool val1;
+  final bool val2;
   final Function func;
   final NTSType ntstype;
 
@@ -16,6 +17,7 @@ class ScreenArguments {
     this.func,
     this.arg1,
     this.arg2,
-    this.val,
+    this.val1,
+    this.val2,
   });
 }

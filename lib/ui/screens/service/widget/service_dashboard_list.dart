@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/data/maps/maps.dart';
 import 'package:hr_management/data/models/service_models/service.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/ui/widgets/nts_widgets.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
@@ -16,16 +21,44 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
   List<Service> _serviceList = [];
   List<Service> _filteredServiceList = [];
 
+  TextEditingController subjectController = TextEditingController();
+
+  String userId;
+  String text;
+  String serviceStatusIds;
+  String userType;
+
   @override
   void initState() {
     super.initState();
-    serviceBloc.getServiceDashBoardData();
+    apiCall();
+  }
+
+  apiCall() {
+    serviceBloc.subjectServiceList.sink.add(null);
+
+    Map<String, dynamic> queryparams = Map();
+
+    if (userId != null) queryparams['userId'] = userId;
+    if (text != null) queryparams['text'] = text;
+    if (serviceStatusIds != null)
+      queryparams['serviceStatusIds'] = serviceStatusIds;
+    if (userType != null) queryparams['userType'] = userType;
+
+    serviceBloc.getServiceDashBoardData(queryparams: queryparams);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        ExpansionTile(
+          collapsedBackgroundColor: Colors.grey[200],
+          backgroundColor: Colors.grey[200],
+          trailing: Icon(Icons.filter_list),
+          title: _searchField(),
+          children: [wrappedButtons()],
+        ),
         Expanded(
           child: StreamBuilder<ServiceListResponse>(
             stream: serviceBloc.subjectServiceList.stream,
@@ -98,17 +131,6 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
                             ),
                           ],
                         ),
-                        // onTap: () {
-                        //   serviceBloc.subject.sink.add(null);
-                        //   Navigator.pushNamed(
-                        //     context,
-                        //     CREATE_SERVICE_ROUTE,
-                        //     arguments: ScreenArguments(
-                        //         arg1: _serviceList[index].templateCode,
-                        //         arg2: _serviceList[index].id,
-                        //         arg3: _serviceList[index].serviceSubject),
-                        //   );
-                        // },
                       ),
                     );
                   },
@@ -122,6 +144,98 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
           ),
         )
       ],
+    );
+  }
+
+  Widget _searchField() {
+    return Container(
+      height: 48,
+      padding: EdgeInsets.only(left: 16),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(100),
+        // color: Colors.white,
+      ),
+      child: TextField(
+        controller: subjectController,
+        decoration: InputDecoration(
+          hintText: 'Search',
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          suffixIcon: IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
+            onPressed: () => _searchSubject(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _searchSubject() {
+    if (subjectController.text != null && subjectController.text.isNotEmpty) {
+      _setParamsToNull();
+      // subject = subjectController.text;
+      apiCall();
+    }
+  }
+
+  _setParamsToNull() {
+    userId = null;
+    text = null;
+    serviceStatusIds = null;
+    userType = null;
+  }
+
+  Widget wrappedButtons() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      width: double.infinity,
+      child: Wrap(
+        children: [
+          customButton(
+            buttonText: 'Home',
+            handleOnPressed: () => _homeFilter(),
+          ),
+          customButton(
+            buttonText: 'More...',
+            handleOnPressed: () => _moreFilter(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _homeFilter() {
+    _setParamsToNull();
+    apiCall();
+  }
+
+  _moreFilter() {
+    filterData(dynamic value) {
+      _setParamsToNull();
+      // if (filterServiceOptionsMap.toString().contains(value))
+      serviceStatusIds = value;
+      // else
+      //   userType = value;
+      apiCall();
+      print(serviceStatusIds);
+    }
+
+    Navigator.pushNamed(
+      context,
+      NTS_FILTER,
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.service,
+        val1: true,
+        val2: true,
+      ),
     );
   }
 
@@ -143,5 +257,27 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
 
   String expiryDate(int index) {
     return _serviceList[index].dueDateDisplay ?? "-";
+  }
+
+  customButton({
+    String buttonText,
+    Function handleOnPressed,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.blue[300]),
+          // MaterialStateProperty.all(Theme.of(context).textHeadingColor),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+          ),
+        ),
+        onPressed: () => handleOnPressed(),
+        child: Text(buttonText),
+      ),
+    );
   }
 }

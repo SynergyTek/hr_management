@@ -171,7 +171,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
                               arg1: _serviceList[index].templateCode,
                               arg2: _serviceList[index].id,
                               arg3: _serviceList[index].serviceSubject,
-                              val: false,
+                              val1: false,
                             ),
                           );
                         },
@@ -285,7 +285,12 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
     Navigator.pushNamed(
       context,
       NTS_FILTER,
-      arguments: ScreenArguments(func: filterData, ntstype: NTSType.service),
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.service,
+        val1: false,
+        val2: false,
+      ),
     );
   }
 

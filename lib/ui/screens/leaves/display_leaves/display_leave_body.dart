@@ -145,7 +145,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                               arg1: '',
                               arg2: _serviceList[index].serviceId,
                               arg3: _serviceList[index].templateCode,
-                              val: true,
+                              val1: true,
                             ),
                           );
                         },

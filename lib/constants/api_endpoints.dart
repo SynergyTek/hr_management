@@ -163,4 +163,13 @@ class APIEndpointConstants {
   //Worklist API Endpoints Block End
   //************************************************************************//
 
+  //Common API Endpoints Block
+
+  static const GET_LOV_ID_NAME_LIST = '$BASE_URL/cms/query/GetLOVIdNameList';
+
+  static const GET_ENUM_ID_NAME_LIST = '$BASE_URL/cms/query/GetEnumIdNameList';
+
+  //Common API Endpoints Block End
+  //************************************************************************//
+
 }

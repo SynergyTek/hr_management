@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/maps/maps.dart';
+import 'package:hr_management/data/models/common/common_list_model.dart';
+import 'package:hr_management/logic/blocs/common_bloc/common_bloc.dart';
 
-import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/screens/tasks/widget/task_home_body.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 
+import '../primary_button.dart';
+
 class NTSFilterWidget extends StatefulWidget {
   final FilterListTapCallBack onListTap;
   final NTSType filterType;
+  final bool isServiceDashboard;
+  final bool isDashboard;
 
   const NTSFilterWidget({
     Key key,
     this.onListTap,
     this.filterType,
+    this.isServiceDashboard,
+    this.isDashboard,
   }) : super(key: key);
 
   @override
@@ -23,48 +29,63 @@ class NTSFilterWidget extends StatefulWidget {
 
 class _NTSFilterWidgetState extends State<NTSFilterWidget> {
   bool showFilter = true;
-  // bool showSort = false;
+  bool serviceDashboardOptions = false;
   Map<String, String> filterOptions = Map();
-  // List<String> sortByOptions = [];
+  List<String> filterList = [];
+  List<CommonListModel> _lovList = [];
 
-  // List<String> taskSortByOptions = [
-  //   'Sort by Date',
-  //   'Sort by Subject',
-  //   'Sort by Owner',
-  //   'Sort by Assignee',
-  //   'Reset'
-  // ];
+  String lovType;
 
-  // List<String> noteSortByOptions = [
-  //   'Sort by Date',
-  //   'Sort by Subject',
-  //   'Sort by Owner',
-  //   'Reset'
-  // ];
+  List<String> serviceOptions = [
+    'Owner',
+    'Assignee',
+    'Shared',
+    'All',
+    'StepServiceOwner',
+    'ServiceStepAssignee',
+    'Requester',
+    'ManualUser',
+    'Holder',
+    'PermittedUser',
+  ];
 
   @override
   void initState() {
     super.initState();
     print(widget.filterType);
     assignFilterData();
+    apiCall();
+  }
+
+  apiCall() {
+    commonBloc.subjectCommonList.sink.add(null);
+
+    Map<String, dynamic> queryparams = Map();
+
+    if (lovType != null) queryparams['lovType'] = lovType;
+
+    commonBloc.getLOVList(queryparams: queryparams);
   }
 
   assignFilterData() {
     switch (widget.filterType) {
       case NTSType.service:
-        filterOptions = filterServiceOptionsMap;
-        // sortByOptions = [];
+        // filterOptions = filterServiceOptionsMap;
+        lovType = 'LOV_SERVICE_STATUS';
         break;
       case NTSType.task:
-        filterOptions = filterTaskOptionsMap;
-        // sortByOptions = taskSortByOptions;
+        // filterOptions = filterServiceOptionsMap;
+        lovType = 'LOV_TASK_STATUS';
         break;
       case NTSType.note:
-        filterOptions = filterNoteOptionsMap;
-        // sortByOptions = noteSortByOptions;
+        // filterOptions = filterServiceOptionsMap;
+        lovType = 'LOV_NOTE_STATUS';
         break;
       default:
     }
+    filterOptions.values.forEach((element) {
+      filterList.add(element);
+    });
   }
 
   @override
@@ -76,7 +97,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: Container(
-            padding: DEFAULT_LARGE_PADDING,
+            padding: EdgeInsets.only(top: 16),
             child: Column(
               children: [
                 Expanded(
@@ -87,25 +108,28 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            // optionsRow(text: 'Modules'),
                             optionsRow(
-                              text: 'Filters',
+                              text: 'Status',
+                              applied: showFilter,
+                              // text: 'Filters',
                               onTap: () {
-                                // setState(() {
-                                // showFilter = true;
-                                // showSort = false;
-                                // });
+                                setState(() {
+                                  showFilter = true;
+                                  serviceDashboardOptions = false;
+                                });
                               },
                             ),
-                            // optionsRow(
-                            //   text: 'Sort By',
-                            //   onTap: () {
-                            //     setState(() {
-                            //       showSort = true;
-                            //       showFilter = false;
-                            //     });
-                            //   },
-                            // ),
+                            // if (widget.isServiceDashboard)
+                            //   optionsRow(
+                            //     text: 'Service owned/Requested',
+                            //     applied: serviceDashboardOptions,
+                            //     onTap: () {
+                            //       setState(() {
+                            //         serviceDashboardOptions = true;
+                            //         showFilter = false;
+                            //       });
+                            //     },
+                            //   ),
                           ],
                         ),
                       ),
@@ -115,53 +139,98 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                         child: Column(
                           children: [
                             if (showFilter)
+                              StreamBuilder(
+                                  stream: commonBloc.subjectCommonList.stream,
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    if (snapshot.hasData) {
+                                      if (snapshot.data.error != null &&
+                                          snapshot.data.error.length > 0) {
+                                        return Center(
+                                          child: Text(snapshot.data.error),
+                                        );
+                                      }
+                                      _lovList = snapshot.data.list;
+                                      print(_lovList[0].name);
+                                      return ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: _lovList.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return ListTile(
+                                            title: Text(_lovList[index].name),
+                                            onTap: () {
+                                              widget.isDashboard
+                                                  ? widget.onListTap(
+                                                      _lovList[index].id)
+                                                  : widget.onListTap(
+                                                      _lovList[index].code);
+                                              // widget.onListTap(filterOptions
+                                              //     .keys
+                                              //     .elementAt(index));
+                                              Navigator.pop(context);
+                                            },
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  })
+                            // valueslist()
+                            // ListView.builder(
+                            //   shrinkWrap: true,
+                            //   itemCount: filterOptions.keys.length,
+                            //   itemBuilder: (BuildContext context, int index) {
+                            //     return ListTile(
+                            //       title: Text(filterOptions[
+                            //           filterOptions.keys.elementAt(index)]),
+                            //       onTap: () {
+                            //         widget.onListTap(
+                            //             filterOptions.keys.elementAt(index));
+                            //         Navigator.pop(context);
+                            //       },
+                            //     );
+                            //   },
+                            // )
+                            else if (serviceDashboardOptions)
                               ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: filterOptions.keys.length,
+                                itemCount: serviceOptions.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return ListTile(
-                                    title: Text(filterOptions[
-                                        filterOptions.keys.elementAt(index)]),
+                                    title: Text(serviceOptions[index]),
                                     onTap: () {
-                                      widget.onListTap(
-                                          filterOptions.keys.elementAt(index));
+                                      widget.onListTap(serviceOptions[index]);
                                       Navigator.pop(context);
                                     },
                                   );
                                 },
                               )
-                            // else if (showSort)
-                            //   ListView.builder(
-                            //     shrinkWrap: true,
-                            //     itemCount: sortByOptions.length,
-                            //     itemBuilder: (BuildContext context, int index) {
-                            //       return ListTile(
-                            //         title: Text(sortByOptions[index]),
-                            //         onTap: () {},
-                            //       );
-                            //     },
-                            //   )
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     PrimaryButton(
-                //       buttonText: 'Cancel',
-                //       handleOnPressed: Navigator.pop,
-                //       width: 100,
-                //     ),
-                //     PrimaryButton(
-                //       buttonText: 'Apply',
-                //       handleOnPressed: Navigator.pop,
-                //       width: 100,
-                //     )
-                //   ],
-                // ),
+                widget.isServiceDashboard
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          PrimaryButton(
+                            buttonText: 'Cancel',
+                            handleOnPressed: Navigator.pop,
+                            width: 100,
+                          ),
+                          PrimaryButton(
+                            buttonText: 'Apply',
+                            handleOnPressed: Navigator.pop,
+                            width: 100,
+                          )
+                        ],
+                      )
+                    : SizedBox()
               ],
             ),
           ),
@@ -170,20 +239,49 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     );
   }
 
-  optionsRow({String text, Function onTap}) {
+  valueslist() {
+    // return Listizer(
+    //   listItems: filterList,
+    //   itemBuilder: (BuildContext context, int index) {
+    //     return ListTile(
+    //       title: Text(filterOptions[filterOptions.keys.elementAt(index)]),
+    //       onTap: () {
+    //         widget.onListTap(filterOptions.keys.elementAt(index));
+    //         Navigator.pop(context);
+    //       },
+    //     );
+    //   },
+    // );
+    // return ListView.builder(
+    //   shrinkWrap: true,
+    //   itemCount: filterOptions.keys.length,
+    //   itemBuilder: (BuildContext context, int index) {
+    //     return ListTile(
+    //       title: Text(filterOptions[filterOptions.keys.elementAt(index)]),
+    //       onTap: () {
+    //         widget.onListTap(filterOptions.keys.elementAt(index));
+    //         Navigator.pop(context);
+    //       },
+    //     );
+    //   },
+    // );
+  }
+
+  optionsRow({String text, Function onTap, bool applied}) {
     return InkWell(
-      child: Row(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+      child: Container(
+        color: applied ? Colors.blue[300] : null,
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Expanded(
               child: Text(
                 text,
               ),
             ),
-          ),
-          Icon(Icons.arrow_forward_ios),
-        ],
+            Icon(Icons.arrow_forward_ios),
+          ],
+        ),
       ),
       onTap: onTap,
     );
