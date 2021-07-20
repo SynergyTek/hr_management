@@ -58,9 +58,10 @@ class _NoteWorklistState extends State<NoteWorklist> {
         buildTile(
           isTile: true,
           title: 'Draft',
-          bgColor: Colors.deepPurple,
+          bgColor: Colors.lightBlue,
           context: context,
           value: dashboardCount.createdByMeDraft,
+          image: Image(image: AssetImage('assets/images/notes-draft.png')),
           tabName: "userDetails",
         ),
         buildTile(
@@ -69,6 +70,8 @@ class _NoteWorklistState extends State<NoteWorklist> {
             bgColor: Colors.green,
             context: context,
             value: dashboardCount.createdByMeActive,
+            image:
+                Image(image: AssetImage('assets/images/notes-completed.png')),
             tabName: "userDetails"),
         buildTile(
           isTile: true,
@@ -77,6 +80,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
           context: context,
           tabName: "userDetails",
           value: dashboardCount.createdByMeExpired,
+          image: Image(image: AssetImage('assets/images/notes-overdue.png')),
         ),
         buildTile(
           isTile: false,
@@ -90,6 +94,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
           bgColor: Colors.green,
           context: context,
           value: dashboardCount.sharedByMeActive,
+          image: Image(image: AssetImage('assets/images/notes-completed.png')),
           tabName: "NoteSharedBy",
         ),
         buildTile(
@@ -98,6 +103,17 @@ class _NoteWorklistState extends State<NoteWorklist> {
             bgColor: Colors.redAccent,
             context: context,
             value: dashboardCount.sharedByMeExpired,
+            image:
+                Image(image: AssetImage('assets/images/notes-overdue.png')),
+            tabName: "NoteSharedBy"),
+            buildTile(
+            isTile: true,
+            title: 'Draft',
+            bgColor: Colors.lightBlue,
+            context: context,
+            value: dashboardCount.sharedByMeDraft,
+            image:
+                Image(image: AssetImage('assets/images/notes-draft.png')),
             tabName: "NoteSharedBy"),
         buildTile(
             isTile: false,
@@ -110,6 +126,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
           bgColor: Colors.green,
           context: context,
           value: dashboardCount.sharedWithMeActive,
+          image: Image(image: AssetImage('assets/images/notes-completed.png')),
           tabName: "NoteSharedWith",
         ),
         buildTile(
@@ -118,13 +135,17 @@ class _NoteWorklistState extends State<NoteWorklist> {
             bgColor: Colors.redAccent,
             context: context,
             value: dashboardCount.sharedWithMeExpired,
+            image:
+                Image(image: AssetImage('assets/images/notes-overdue.png')),
             tabName: "NoteSharedWith"),
         buildTile(
             isTile: true,
             title: 'Draft',
-            bgColor: Colors.deepPurple,
+            bgColor: Colors.lightBlue,
             context: context,
             value: dashboardCount.sharedWithMeDraft,
+            image:
+                Image(image: AssetImage('assets/images/notes-draft.png')),
             tabName: "NoteSharedWith"),
       ],
       staggeredTiles: [
@@ -135,7 +156,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
         StaggeredTile.extent(3, 110.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
-        // StaggeredTile.extent(1, 130.0),
+        StaggeredTile.extent(1, 130.0),
         // StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(3, 110.0),
         StaggeredTile.extent(1, 130.0),
@@ -163,7 +184,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
   //       buildTile(
   //         isTile: true,
   //         title: 'Draft',
-  //         bgColor: Colors.deepPurple,
+  //         bgColor: Colors.lightBlue,
   //         context: context,
   //         //value: '10',
   //         tabName: "userDetails",
@@ -214,7 +235,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
   //       // buildTile(
   //       //     isTile: true,
   //       //     title: 'Draft',
-  //       //     bgColor: Colors.deepPurple,
+  //       //     bgColor: Colors.lightBlue,
   //       //     context: context,
   //       //     //value: '10',
   //       //     tabName: "NoteSharedBy"),
