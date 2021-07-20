@@ -38,21 +38,22 @@ Widget worklistTileWidget(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           InkWell(
-            child: Material(
-                color: bgColor,
-                shape: CircleBorder(),
-                child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: ShowUp(
-                      child: Text(
-                        value.toString(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.0),
-                      ),
-                      delay: 100,
-                    ))),
+            child:Image(image: AssetImage('notes-completed.png')),
+            // child: Material(
+            //     color: bgColor,
+            //     shape: CircleBorder(),
+            //     child: Padding(
+            //         padding: EdgeInsets.all(16.0),
+            //         child: ShowUp(
+            //           child: Text(
+            //             value.toString(),
+            //             style: TextStyle(
+            //                 color: Colors.white,
+            //                 fontWeight: FontWeight.bold,
+            //                 fontSize: 15.0),
+            //           ),
+            //           delay: 100,
+            //         ))),
             onTap: () {
               if (ntsType == NTSType.task) {
                 Navigator.pushNamed(
