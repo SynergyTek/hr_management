@@ -860,7 +860,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 visible: noteModel.isCloseButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Close',
-                  handleOnPressed: () {},
+                  handleOnPressed: () => Navigator.pop(context),
                   width: 100,
                 ),
               ),
