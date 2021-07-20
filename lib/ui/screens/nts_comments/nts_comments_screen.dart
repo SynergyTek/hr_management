@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/ui/screens/nts_comments/widget/nts_comments_body.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
+
+import '../../../data/enums/enums.dart';
+import '../../widgets/appbar_widget.dart';
+import 'widget/nts_comments_body.dart';
 
 class NTSCommentsScreen extends StatelessWidget {
   const NTSCommentsScreen({Key key, this.ntsType, this.ntsId})

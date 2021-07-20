@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
-import 'package:hr_management/data/models/task_models/task_model.dart';
+import '../../../data/models/task_models/task_list_resp_model.dart';
+import '../../../data/models/task_models/task_model.dart';
 import '../../../data/models/api_models/post_response_model.dart';
 import '../../../data/models/task_models/task_response_model.dart';
 import '../../../data/repositories/task_repository/abstract_task_repo.dart';

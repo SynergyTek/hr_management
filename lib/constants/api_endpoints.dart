@@ -155,10 +155,10 @@ class APIEndpointConstants {
       '$BASE_URL/nts/query/GetNoteTemplateTreeList';
 
   static const WORKLIST_DASHBOARD_COUNT =
-      '$BASE_URL/nts/query/WorklistDashboardCount';
+      '$BASE_URL/nts/query/WorklistDashboardCount?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const WORKLIST_DASHBOARD_NOTE_COUNT =
-      '$BASE_URL/nts/query/WorklistDashboardNoteSCount';
+      '$BASE_URL/nts/query/WorklistDashboardNoteSCount?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   //Worklist API Endpoints Block End
   //************************************************************************//

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
+import '../../widgets/appbar_widget.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
 
 import 'widgets/worklist_dashboard_body.dart';
 
@@ -19,15 +19,18 @@ class WorklistDashboard extends StatelessWidget {
         child: WorklistDashboardBody(),
       ),
       // ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        child: Icon(
-          Icons.add,
-          size: 32,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom:50.0),
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(
+            Icons.add,
+            size: 32,
+          ),
+          onPressed: () {
+           
+          },
         ),
-        onPressed: () {
-         
-        },
       ),
     );
   }

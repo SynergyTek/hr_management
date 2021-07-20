@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:hr_management/data/models/nts_charts/chart_model.dart';
+import '../../../../data/models/nts_charts/chart_model.dart';
 import 'package:sizer/sizer.dart';
 
 class Charts extends StatelessWidget {

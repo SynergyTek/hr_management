@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/attendance_view_models/attendance_view_response.dart';
-import 'package:hr_management/data/repositories/attendance_view_repository/attendance_view_repository.dart';
+import '../../../data/models/attendance_view_models/attendance_view_response.dart';
+import '../../../data/repositories/attendance_view_repository/attendance_view_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AttendanceViewBloc {

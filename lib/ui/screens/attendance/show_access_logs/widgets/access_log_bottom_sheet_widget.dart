@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/access_log/access_log_model.dart';
-import 'package:hr_management/themes/theme_config.dart';
+import '../../../../../data/models/access_log/access_log_model.dart';
+import '../../../../../themes/theme_config.dart';
 
 class AccessLogBottomSheetWidget extends StatelessWidget {
   final AccessLogModel eachAccessLogModelElement;

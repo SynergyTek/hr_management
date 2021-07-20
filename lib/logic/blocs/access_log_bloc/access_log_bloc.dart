@@ -1,8 +1,8 @@
-import '../../../data/models/access_log/access_log_response.dart';
-import '../../../data/repositories/access_log/abstract_access_log_repo.dart';
+import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:meta/meta.dart';
+import '../../../data/models/access_log/access_log_response.dart';
+import '../../../data/repositories/access_log/abstract_access_log_repo.dart';
 
 class AccessLogBloc {
   final AccessLogRepository _accessLogRepository = AccessLogRepository();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/widgets/nts_widgets.dart';
+import '../../../../widgets/nts_widgets.dart';
 import '../../../../../data/models/access_log/access_log_model.dart';
 import '../../../../../data/models/access_log/access_log_response.dart';
 import '../../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';

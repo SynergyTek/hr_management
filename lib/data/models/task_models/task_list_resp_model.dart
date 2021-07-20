@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/task_models/task_list_model.dart';
+import 'task_list_model.dart';
 
 class TaskListResponseModel {
   final List<TaskListModel> data;

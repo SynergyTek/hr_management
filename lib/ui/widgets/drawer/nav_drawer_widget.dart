@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
+import '../../../data/enums/enums.dart';
+import '../../../routes/screen_arguments.dart';
 import '../../../routes/route_constants.dart';
 
 Widget drawerWidget(context) {

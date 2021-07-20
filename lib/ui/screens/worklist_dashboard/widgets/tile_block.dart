@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:hr_management/data/helpers/showup.dart';
+import '../../../../data/helpers/showup.dart';
+
+Widget buildTile(
+    {String title,
+    Color bgColor,
+    BuildContext context,
+    String moduleName,
+    String tabName,
+    int value,
+    bool isTile}) {
+  return Material(
+      elevation: 14.0,
+      borderRadius: BorderRadius.circular(12.0),
+      shadowColor: Color(0x802196F3),
+      child: InkWell(
+          child: isTile
+              ? worklistTileWidget(bgColor: bgColor, value: value, title: title)
+              : worklistHeading(title: title)));
+}
 
 Widget worklistTileWidget({
   Color bgColor,
-  String value,
-  String heading,
+  int value,
+  String title,
 }) {
   return Padding(
     padding: const EdgeInsets.all(24.0),
@@ -21,7 +39,7 @@ Widget worklistTileWidget({
                   padding: EdgeInsets.all(16.0),
                   child: ShowUp(
                     child: Text(
-                      value,
+                      value.toString(),
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -30,7 +48,7 @@ Widget worklistTileWidget({
                     delay: 100,
                   ))),
           Padding(padding: EdgeInsets.only(bottom: 7.0)),
-          Text(heading,
+          Text(title,
               style: TextStyle(
                   color: Colors.black87,
                   fontWeight: FontWeight.w500,
@@ -39,17 +57,45 @@ Widget worklistTileWidget({
   );
 }
 
+Widget worklistHeading({String title}) {
+ 
+  return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: InkWell(
+                  child: Text(title,
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 20
+                          // decoration: TextDecoration.underline
+                          )),
+                  onTap: () {}),
+            ),
+            // ShowUp(
+            //   child: Text('10',
+            //       style: TextStyle(
+            //           color: Colors.black87,
+            //           fontWeight: FontWeight.w700,
+            //           fontSize: 30.0)),
+            //   delay: 100,
+            // ),
+          ],
+        ),
+        // Material(
+        //     color: Colors.blue,
+        //     borderRadius: BorderRadius.circular(24.0),
+        //     child: Center(
+        //         child: Padding(
+        //       padding: const EdgeInsets.all(16.0),
+        //       child: Icon(Icons.person, color: Colors.white, size: 30.0),
+        //     )))
+      ]);
 
-Widget buildTile({
-  Widget child,
-  String heading,
-  BuildContext context,
-  String moduleName,
-  String tabName,}
-) {
-  return Material(
-      elevation: 14.0,
-      borderRadius: BorderRadius.circular(12.0),
-      shadowColor: Color(0x802196F3),
-      child: InkWell(child: child));
 }

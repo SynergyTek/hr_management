@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/logic/blocs/worklist_dashboard_bloc/worklist_dashboard_bloc.dart';
-
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
+import 'note_worklist.dart';
 import 'task_worklist.dart';
 
 class WorklistDashboardBody extends StatefulWidget {
@@ -12,18 +13,15 @@ class WorklistDashboardBody extends StatefulWidget {
 
 class _WorklistDashboardBodyState extends State<WorklistDashboardBody> {
   int _selectedIndex = 0;
-  // static const TextStyle optionStyle =
-  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   List<Widget> _widgetOptions = [];
   @override
   void initState() {
     super.initState();
-    // worklistDashboardBloc..getWorklistDashboardHomeListData();
     _widgetOptions = <Widget>[
-      TaskWorklist(),
-      Text('Screen 2'),
-      Text('Screen 3'),
+      TaskWorklist(ntsType: NTSType.task,),
+      TaskWorklist(ntsType: NTSType.service),
+      NoteWorklist(),
     ];
   }
 
@@ -33,24 +31,29 @@ class _WorklistDashboardBodyState extends State<WorklistDashboardBody> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.task),
-            label: 'Task',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.miscellaneous_services),
-            label: 'Service',
-          ),BottomNavigationBarItem(
-            icon: Icon(Icons.note),
-            label: 'Note',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: StreamBuilder<WorklistDashboardResponse>(
+          stream: null,
+          builder: (context, snapshot) {
+            return BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.task),
+                  label: 'Task',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.miscellaneous_services),
+                  label: 'Service',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.note),
+                  label: 'Note',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Theme.of(context).primaryColor,
+              onTap: _onItemTapped,
+            );
+          }),
     );
   }
 

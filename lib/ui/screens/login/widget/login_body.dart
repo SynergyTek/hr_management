@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/login_models/login_request_model.dart';
-import 'package:hr_management/data/models/login_models/login_response.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/login_models/login_request_model.dart';
+import '../../../../data/models/login_models/login_response.dart';
 
-import 'package:hr_management/logic/blocs/login_bloc/login_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
-import 'package:hr_management/ui/widgets/primary_button.dart';
+import '../../../../logic/blocs/login_bloc/login_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../../themes/theme_config.dart';
+import '../../../widgets/form_widgets/bloc_text_box_widget.dart';
+import '../../../widgets/primary_button.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:animated_widgets/animated_widgets.dart';
 

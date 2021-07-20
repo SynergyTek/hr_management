@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/themes/theme_config.dart';
+import '../../../../../themes/theme_config.dart';
 
 class LeaveDetailsBottomSheetWidget extends StatelessWidget {
   final String duration;
