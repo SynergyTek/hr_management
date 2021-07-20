@@ -32,7 +32,6 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
       appBar: AppbarWidget(
         title: titleText(),
       ),
