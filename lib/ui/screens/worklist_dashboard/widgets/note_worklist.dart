@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import '../../../../data/models/worklist_dashboard/worklist_dashboard_count.dart';
 import '../../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
 import '../../../../logic/blocs/worklist_dashboard_bloc/worklist_dashboard_bloc.dart';
@@ -56,25 +57,6 @@ class _NoteWorklistState extends State<NoteWorklist> {
           context: context,
         ),
         buildTile(
-            isTile: true,
-            status: 'Draft',
-            bgColor: Colors.lightBlue,
-            context: context,
-            value: dashboardCount.createdByMeDraft,
-            image: Image(image: AssetImage('assets/images/notes-draft.png')),
-            tabName: "userDetails",
-            mode: 'REQ_BY'),
-        buildTile(
-            isTile: true,
-            status: 'Active',
-            bgColor: Colors.green,
-            context: context,
-            value: dashboardCount.createdByMeActive,
-            image:
-                Image(image: AssetImage('assets/images/notes-completed.png')),
-            tabName: "userDetails",
-            mode: 'REQ_BY'),
-        buildTile(
           isTile: true,
           status: 'Expired',
           bgColor: Colors.redAccent,
@@ -82,10 +64,32 @@ class _NoteWorklistState extends State<NoteWorklist> {
           tabName: "userDetails",
           mode: 'REQ_BY',
           value: dashboardCount.createdByMeExpired,
+          ntsType: NTSType.note,
           image: Image(
             image: AssetImage('assets/images/notes-overdue.png'),
           ),
         ),
+        buildTile(
+            isTile: true,
+            status: 'Complete',
+            bgColor: Colors.green,
+            context: context,
+            value: dashboardCount.createdByMeActive,
+            image:
+                Image(image: AssetImage('assets/images/notes-completed.png')),
+            tabName: "userDetails",
+            ntsType: NTSType.note,
+            mode: 'REQ_BY'),
+        buildTile(
+            isTile: true,
+            status: 'Draft',
+            bgColor: Colors.lightBlue,
+            context: context,
+            value: dashboardCount.createdByMeDraft,
+            image: Image(image: AssetImage('assets/images/notes-draft.png')),
+            tabName: "userDetails",
+            ntsType: NTSType.note,
+            mode: 'REQ_BY'),
         buildTile(
           isTile: false,
           status: 'Shared by Me',
@@ -94,21 +98,23 @@ class _NoteWorklistState extends State<NoteWorklist> {
         ),
         buildTile(
             isTile: true,
-            status: 'Active',
-            bgColor: Colors.green,
-            context: context,
-            value: dashboardCount.sharedByMeActive,
-            image:
-                Image(image: AssetImage('assets/images/notes-completed.png')),
-            tabName: "NoteSharedBy",
-            mode: 'ASSIGN_BY'),
-        buildTile(
-            isTile: true,
             status: 'Expired',
             bgColor: Colors.redAccent,
             context: context,
             value: dashboardCount.sharedByMeExpired,
             image: Image(image: AssetImage('assets/images/notes-overdue.png')),
+            tabName: "NoteSharedBy",
+            ntsType: NTSType.note,
+            mode: 'ASSIGN_BY'),
+        buildTile(
+            isTile: true,
+            status: 'Complete',
+            bgColor: Colors.green,
+            context: context,
+            value: dashboardCount.sharedByMeActive,
+            ntsType: NTSType.note,
+            image:
+                Image(image: AssetImage('assets/images/notes-completed.png')),
             tabName: "NoteSharedBy",
             mode: 'ASSIGN_BY'),
         buildTile(
@@ -119,6 +125,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             value: dashboardCount.sharedByMeDraft,
             image: Image(image: AssetImage('assets/images/notes-draft.png')),
             tabName: "NoteSharedBy",
+            ntsType: NTSType.note,
             mode: 'ASSIGN_BY'),
         buildTile(
             isTile: false,
@@ -127,21 +134,23 @@ class _NoteWorklistState extends State<NoteWorklist> {
             context: context),
         buildTile(
             isTile: true,
-            status: 'Active',
-            bgColor: Colors.green,
-            context: context,
-            value: dashboardCount.sharedWithMeActive,
-            image:
-                Image(image: AssetImage('assets/images/notes-completed.png')),
-            tabName: "NoteSharedWith",
-            mode: 'SHARE_TO'),
-        buildTile(
-            isTile: true,
             status: 'Expired',
             bgColor: Colors.redAccent,
             context: context,
             value: dashboardCount.sharedWithMeExpired,
             image: Image(image: AssetImage('assets/images/notes-overdue.png')),
+            ntsType: NTSType.note,
+            tabName: "NoteSharedWith",
+            mode: 'SHARE_TO'),
+        buildTile(
+            isTile: true,
+            status: 'Complete',
+            bgColor: Colors.green,
+            context: context,
+            value: dashboardCount.sharedWithMeActive,
+            ntsType: NTSType.note,
+            image:
+                Image(image: AssetImage('assets/images/notes-completed.png')),
             tabName: "NoteSharedWith",
             mode: 'SHARE_TO'),
         buildTile(
@@ -151,6 +160,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             context: context,
             value: dashboardCount.sharedWithMeDraft,
             image: Image(image: AssetImage('assets/images/notes-draft.png')),
+            ntsType: NTSType.note,
             tabName: "NoteSharedWith",
             mode: 'SHARE_TO'),
       ],

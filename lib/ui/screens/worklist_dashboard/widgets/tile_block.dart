@@ -90,19 +90,23 @@ Widget worklistTileWidget(
             onTap: () {
               if (ntsType == NTSType.task) {
                 if (status == "Overdue") {
-                  status = "NOTE_STATUS_OVERDUE";
+                  status = "TASK_STATUS_OVERDUE";
                 } else if (status == "Completed") {
-                  status = "NOTE_STATUS_COMPLETE";
+                  status = "TASK_STATUS_COMPLETE";
                 } else if (status == 'Pending') {
-                  status = 'NOTE_STATUS_INPROGRESS';
+                  status = 'TASK_STATUS_INPROGRESS';
                 } else if (status == 'Draft') {
-                  status = 'NOTE_STATUS_DRAFT';
+                  status = 'TASK_STATUS_DRAFT';
                 }
+
                 Navigator.pushNamed(
                   context,
                   TASK_HOME,
                   arguments: ScreenArguments(
-                      arg1: status, arg2: moduleName, arg3: mode),
+                      arg1: status,
+                      arg2: moduleName,
+                      arg3: mode,
+                      showBack: true),
                 );
               } else if (ntsType == NTSType.service) {
                 if (status == "Overdue") {
@@ -118,27 +122,31 @@ Widget worklistTileWidget(
                   context,
                   SERVICE_HOME,
                   arguments: ScreenArguments(
-                      arg1: status, arg2: moduleName, arg3: mode),
+                      arg1: status,
+                      arg2: moduleName,
+                      arg3: mode,
+                      showBack: true),
                 );
                 // Navigator.pushNamed(
                 //   context,
                 //   SERVICE_HOME,
                 // );
               } else if (ntsType == NTSType.note) {
-                if (status == "Overdue") {
-                  status = "TASK_STATUS_OVERDUE";
-                } else if (status == "Completed") {
-                  status = "TASK_STATUS_COMPLETE";
-                } else if (status == 'Pending') {
-                  status = 'TASK_STATUS_INPROGRESS';
-                } else if (status == 'Draft') {
-                  status = 'TASK_STATUS_DRAFT';
+                if (status == 'Draft') {
+                  status = 'NOTE_STATUS_DRAFT';
+                } else if (status == 'Expire') {
+                  status = 'NOTE_STATUS_EXPIRE';
+                } else if (status == 'Complete') {
+                  status = 'NOTE_STATUS_COMPLETE';
                 }
                 Navigator.pushNamed(
                   context,
                   NOTE_HOME,
                   arguments: ScreenArguments(
-                      arg1: status, arg2: moduleName, arg3: mode),
+                      arg1: status,
+                      arg2: moduleName,
+                      arg3: mode,
+                      showBack: true),
                 );
               }
             },

@@ -10,14 +10,15 @@ class ServiceHomeScreen extends StatelessWidget {
   final String mode;
   final String serviceStatus;
   final String moduleId;
+  final bool showBack;
   const ServiceHomeScreen(
-      {Key key, this.serviceStatus, this.moduleId, this.mode})
+      {Key key, this.serviceStatus, this.moduleId, this.mode, this.showBack})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: showBack ? null : drawerWidget(context),
       appBar: AppbarWidget(
         title: "Service Home",
       ),

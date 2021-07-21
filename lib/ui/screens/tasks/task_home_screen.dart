@@ -11,17 +11,19 @@ class TaskHomeScreen extends StatelessWidget {
   final String mode;
   final String taskStatus;
   final String moduleId;
+  final bool showBack;
   const TaskHomeScreen({
     Key key,
     this.taskStatus,
     this.moduleId,
     this.mode,
+    this.showBack,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: showBack ? null : drawerWidget(context),
       appBar: AppbarWidget(
         title: "Task Home",
       ),

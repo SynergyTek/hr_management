@@ -7,17 +7,19 @@ class NoteHomeScreen extends StatelessWidget {
   final String mode;
   final String noteStatus;
   final String moduleId;
+  final bool showBack;
   const NoteHomeScreen({
     Key key,
     this.noteStatus,
     this.moduleId,
     this.mode,
+    this.showBack,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: showBack ? null : drawerWidget(context),
       appBar: AppbarWidget(
         title: "Note Home",
       ),
