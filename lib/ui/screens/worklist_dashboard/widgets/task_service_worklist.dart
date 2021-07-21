@@ -56,9 +56,9 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
   Widget taskWorklistGrid() {
     return StaggeredGridView.count(
       crossAxisCount: 3,
-      crossAxisSpacing: 12.0,
+      crossAxisSpacing: 10.0,
       mainAxisSpacing: 12.0,
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
       children: <Widget>[
         buildTile(
           isTile: false,
@@ -73,7 +73,10 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             context: context,
             value: dashboardCount.tAssignOverdue,
             tabName: "TaskAssigned",
-            image: Image(image: AssetImage('assets/images/task-overdue.png')),
+            image: Image(
+                image: AssetImage(
+              'assets/images/task-overdue.png',
+            )),
             mode: 'ASSIGN_TO',
             ntsType: NTSType.task),
         buildTile(
@@ -180,16 +183,16 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
       ],
       staggeredTiles: [
-        StaggeredTile.extent(3, 110.0),
+        StaggeredTile.extent(3, 60.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 110.0),
+        StaggeredTile.extent(3, 60.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 110.0),
+        StaggeredTile.extent(3, 60.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
@@ -200,9 +203,9 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
   Widget serviceWorklistGrid() {
     return StaggeredGridView.count(
       crossAxisCount: 3,
-      crossAxisSpacing: 12.0,
+      crossAxisSpacing: 10.0,
       mainAxisSpacing: 12.0,
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
       children: <Widget>[
         buildTile(
           isTile: false,
@@ -296,12 +299,12 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.service),
       ],
       staggeredTiles: [
-        StaggeredTile.extent(3, 110.0),
+        StaggeredTile.extent(3, 60.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 110.0),
+        StaggeredTile.extent(3, 60.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),

@@ -45,9 +45,9 @@ class _NoteWorklistState extends State<NoteWorklist> {
   Widget noteWorklistGrid() {
     return StaggeredGridView.count(
       crossAxisCount: 3,
-      crossAxisSpacing: 12.0,
+      crossAxisSpacing: 10.0,
       mainAxisSpacing: 12.0,
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
       children: <Widget>[
         buildTile(
           isTile: false,
@@ -155,15 +155,15 @@ class _NoteWorklistState extends State<NoteWorklist> {
             mode: 'SHARE_TO'),
       ],
       staggeredTiles: [
-        StaggeredTile.extent(3, 110.0),
+        StaggeredTile.extent(3, 60.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 110.0),
+        StaggeredTile.extent(3, 60.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 110.0),
+        StaggeredTile.extent(3, 60.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
         StaggeredTile.extent(1, 130.0),
