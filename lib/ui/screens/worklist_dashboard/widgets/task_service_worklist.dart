@@ -8,15 +8,15 @@ import '../../../widgets/progress_indicator.dart';
 
 import 'tile_block.dart';
 
-class TaskWorklist extends StatefulWidget {
-  TaskWorklist({Key key, this.ntsType}) : super(key: key);
+class TaskServiceWorklist extends StatefulWidget {
+  TaskServiceWorklist({Key key, this.ntsType}) : super(key: key);
   final NTSType ntsType;
 
   @override
-  _TaskWorklistState createState() => _TaskWorklistState();
+  _TaskServiceWorklistState createState() => _TaskServiceWorklistState();
 }
 
-class _TaskWorklistState extends State<TaskWorklist> {
+class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
   WorklistDashboardCount dashboardCount = new WorklistDashboardCount();
   @override
   void initState() {
@@ -218,7 +218,7 @@ class _TaskWorklistState extends State<TaskWorklist> {
             value: dashboardCount.sRequestPending,
             tabName: "ServiceRequested",
             image:
-                Image(image: AssetImage('assets/images/service-overdue.png')),
+                Image(image: AssetImage('assets/images/service-pending.png')),
             ntsType: NTSType.service),
         buildTile(
             isTile: true,
