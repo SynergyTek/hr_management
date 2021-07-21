@@ -7,7 +7,10 @@ import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 
 class ServiceHomeScreen extends StatelessWidget {
-  const ServiceHomeScreen({Key key}) : super(key: key);
+  final String mode;
+  final String serviceStatus;
+  final String moduleId;
+  const ServiceHomeScreen({Key key, this.serviceStatus, this.moduleId, this.mode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class ServiceHomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         // child: InternetConnectivityWidget(
-        child: ServiceHomeBody(),
+        child: ServiceHomeBody(serviceStatus: serviceStatus,moduleId: moduleId,),
       ),
       // ),
       floatingActionButton: FloatingActionButton(

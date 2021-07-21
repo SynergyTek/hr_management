@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../../data/helpers/showup.dart';
 
 Widget buildTile(
-    {String title,
+    {String status,
     Color bgColor,
     BuildContext context,
     String moduleName,
@@ -23,16 +24,19 @@ Widget buildTile(
               ? worklistTileWidget(
                   bgColor: bgColor,
                   value: value,
-                  title: title,
+                  status: status,
                   ntsType: ntsType,
-                  image: image)
-              : worklistHeading(title: title)));
+                  image: image,
+                  context: context,
+                  moduleName: moduleName)
+              : worklistHeading(status: status)));
 }
 
 Widget worklistTileWidget(
     {Color bgColor,
     int value,
-    String title,
+    String status,
+    String moduleName,
     NTSType ntsType,
     BuildContext context,
     Image image}) {
@@ -81,15 +85,39 @@ Widget worklistTileWidget(
             //         ))),
             onTap: () {
               if (ntsType == NTSType.task) {
+                // Navigator.pushNamed(
+                //   context,
+                //   CREATE_SERVICE_ROUTE,
+                //   arguments: ScreenArguments(
+                //     arg1: status,
+                //     arg2: moduleName,
+                //   ),
+                // );
                 Navigator.pushNamed(
                   context,
                   TASK_HOME,
                 );
               } else if (ntsType == NTSType.service) {
+                if(status=="Overdue")
+                {
+                  status="SERVICE_STATUS_OVERDUE";
+                }
+                else if(status=="Completed")
+                {
+                  status="SERVICE_STATUS_COMPLETE";
+                }
                 Navigator.pushNamed(
                   context,
                   SERVICE_HOME,
+                  arguments: ScreenArguments(
+                    arg1: status,
+                    arg2: moduleName,
+                  ),
                 );
+                // Navigator.pushNamed(
+                //   context,
+                //   SERVICE_HOME,
+                // );
               } else if (ntsType == NTSType.note) {
                 Navigator.pushNamed(
                   context,
@@ -99,7 +127,7 @@ Widget worklistTileWidget(
             },
           ),
           Padding(padding: EdgeInsets.only(bottom: 7.0)),
-          Text(title,
+          Text(status,
               style: TextStyle(
                   color: Colors.black87,
                   fontWeight: FontWeight.w500,
@@ -108,7 +136,7 @@ Widget worklistTileWidget(
   );
 }
 
-Widget worklistHeading({String title}) {
+Widget worklistHeading({String status}) {
   return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,7 +148,7 @@ Widget worklistHeading({String title}) {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
               child: InkWell(
-                  child: Text(title,
+                  child: Text(status,
                       style: TextStyle(color: Colors.black87, fontSize: 20
                           // decoration: TextDecoration.underline
                           )),

@@ -218,8 +218,12 @@ class AppRouter {
         break;
 
       case SERVICE_HOME:
+       final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => ServiceHomeScreen(),
+          builder: (_) => ServiceHomeScreen(
+            serviceStatus: args.arg1,
+            moduleId: args.arg2,
+          ),
         );
         break;
 

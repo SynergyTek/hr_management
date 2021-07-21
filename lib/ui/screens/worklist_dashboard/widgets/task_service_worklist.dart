@@ -62,13 +62,13 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
       children: <Widget>[
         buildTile(
           isTile: false,
-          title: 'Assigned To Me',
+          status: 'Assigned To Me',
           value: dashboardCount.tAssignedToMe,
           context: context,
         ),
         buildTile(
             isTile: true,
-            title: 'Overdue',
+            status: 'Overdue',
             bgColor: Colors.red,
             context: context,
             value: dashboardCount.tAssignOverdue,
@@ -77,7 +77,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Pending',
+            status: 'Pending',
             bgColor: Colors.orange,
             context: context,
             value: dashboardCount.tAssignPending,
@@ -86,7 +86,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Completed',
+            status: 'Completed',
             bgColor: Colors.green,
             context: context,
             tabName: "TaskAssigned",
@@ -95,13 +95,13 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
         buildTile(
             isTile: false,
-            title: 'Requested By Me',
+            status: 'Requested By Me',
             context: context,
             value: dashboardCount.tRequestedByMe,
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Overdue',
+            status: 'Overdue',
             bgColor: Colors.red,
             context: context,
             value: dashboardCount.tRequestOverdue,
@@ -110,7 +110,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Pending',
+            status: 'Pending',
             bgColor: Colors.orange,
             context: context,
             value: dashboardCount.tRequestPending,
@@ -119,7 +119,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Completed',
+            status: 'Completed',
             context: context,
             bgColor: Colors.green,
             value: dashboardCount.tRequestCompleted,
@@ -128,7 +128,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Draft',
+            status: 'Draft',
             bgColor: Colors.lightBlue,
             context: context,
             value: dashboardCount.tRequestDraft,
@@ -138,12 +138,12 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
         buildTile(
             isTile: false,
             value: dashboardCount.tSharedWithMe,
-            title: 'Shared With Me/Team',
+            status: 'Shared With Me/Team',
             context: context,
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Overdue',
+            status: 'Overdue',
             bgColor: Colors.red,
             context: context,
             value: dashboardCount.tShareWithOverdue,
@@ -152,7 +152,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Pending',
+            status: 'Pending',
             bgColor: Colors.orange,
             value: dashboardCount.tShareWithPending,
             image: Image(image: AssetImage('assets/images/task-pending.png')),
@@ -161,7 +161,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
-            title: 'Completed',
+            status: 'Completed',
             bgColor: Colors.green,
             value: dashboardCount.tShareWithCompleted,
             image: Image(image: AssetImage('assets/images/task-completed.png')),
@@ -196,13 +196,13 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
       children: <Widget>[
         buildTile(
           isTile: false,
-          title: 'Requested By Me',
+          status: 'Requested By Me',
           context: context,
           value: dashboardCount.sRequestedByMe,
         ),
         buildTile(
             isTile: true,
-            title: 'Overdue',
+            status: 'Overdue',
             bgColor: Colors.red,
             context: context,
             value: dashboardCount.sRequestOverdue,
@@ -212,7 +212,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.service),
         buildTile(
             isTile: true,
-            title: 'Pending',
+            status: 'Pending',
             bgColor: Colors.orange,
             context: context,
             value: dashboardCount.sRequestPending,
@@ -222,7 +222,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.service),
         buildTile(
             isTile: true,
-            title: 'Completed',
+            status: 'Completed',
             context: context,
             bgColor: Colors.green,
             value: dashboardCount.sRequestCompleted,
@@ -232,7 +232,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.service),
         buildTile(
             isTile: true,
-            title: 'Draft',
+            status: 'Draft',
             bgColor: Colors.lightBlue,
             context: context,
             value: dashboardCount.sRequestDraft,
@@ -242,14 +242,14 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
         buildTile(
             isTile: false,
             value: dashboardCount.sSharedWithMe,
-            title: 'Shared With Me/Team',
+            status: 'Shared With Me/Team',
             context: context,
             image:
                 Image(image: AssetImage('assets/images/notes-completed.png')),
             ntsType: NTSType.service),
         buildTile(
             isTile: true,
-            title: 'Overdue',
+            status: 'Overdue',
             bgColor: Colors.red,
             context: context,
             value: dashboardCount.sShareWithOverdue,
@@ -259,7 +259,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.service),
         buildTile(
             isTile: true,
-            title: 'Pending',
+            status: 'Pending',
             bgColor: Colors.orange,
             value: dashboardCount.sShareWithPending,
             context: context,
@@ -269,7 +269,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             ntsType: NTSType.service),
         buildTile(
             isTile: true,
-            title: 'Completed',
+            status: 'Completed',
             bgColor: Colors.green,
             value: dashboardCount.sShareWithCompleted,
             context: context,
@@ -292,113 +292,4 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
     );
   }
 
-  Widget noteWorklistGrid() {
-    return StaggeredGridView.count(
-      crossAxisCount: 3,
-      crossAxisSpacing: 12.0,
-      mainAxisSpacing: 12.0,
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      children: <Widget>[
-        buildTile(
-          isTile: false,
-          title: 'Created By Me',
-          // value:dashboardCount.,
-          context: context,
-        ),
-        buildTile(
-          isTile: true,
-          title: 'Draft',
-          bgColor: Colors.lightBlue,
-          context: context,
-          // value: '10',
-          tabName: "userDetails",
-        ),
-        buildTile(
-            isTile: true,
-            title: 'Active',
-            bgColor: Colors.green,
-            context: context,
-            // value: '10',
-            tabName: "userDetails"),
-        buildTile(
-          isTile: true,
-          title: 'Expired',
-          bgColor: Colors.redAccent,
-          context: context,
-          tabName: "userDetails",
-          // value: '10',
-        ),
-        buildTile(
-          isTile: false,
-          title: 'Shared By Me',
-          context: context,
-          // value: '10',
-        ),
-        buildTile(
-          isTile: true,
-          title: 'Active',
-          bgColor: Colors.green,
-          context: context,
-          // value: '10',
-          tabName: "NoteSharedBy",
-        ),
-        buildTile(
-            isTile: true,
-            title: 'Expired',
-            bgColor: Colors.redAccent,
-            context: context,
-            // value: '10',
-            tabName: "NoteSharedBy"),
-        // buildTile(
-        //     isTile: true,
-        //     title: 'Completed',
-        //     context: context,
-        //     bgColor: Colors.green,
-        //    // value: '10',
-        //     tabName: "NoteSharedBy"),
-        // buildTile(
-        //     isTile: true,
-        //     title: 'Draft',
-        //     bgColor: Colors.lightBlue,
-        //     context: context,
-        //    // value: '10',
-        //     tabName: "NoteSharedBy"),
-        buildTile(
-            isTile: false,
-            // value: '10',
-            title: 'Shared With Me/Team',
-            context: context),
-        buildTile(
-          isTile: true,
-          title: 'Active',
-          bgColor: Colors.green,
-          context: context,
-          // value: '10',
-          tabName: "NoteSharedBy",
-        ),
-        buildTile(
-            isTile: true,
-            title: 'Expired',
-            bgColor: Colors.redAccent,
-            context: context,
-            // value: '10',
-            tabName: "NoteSharedBy"),
-      ],
-      staggeredTiles: [
-        StaggeredTile.extent(3, 110.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 110.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        // StaggeredTile.extent(1, 130.0),
-        // StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 110.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        // StaggeredTile.extent(1, 130.0),
-      ],
-    );
-  }
 }

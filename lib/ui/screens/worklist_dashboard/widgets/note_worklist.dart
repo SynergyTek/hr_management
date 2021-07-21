@@ -51,13 +51,13 @@ class _NoteWorklistState extends State<NoteWorklist> {
       children: <Widget>[
         buildTile(
           isTile: false,
-          title: 'Created By Me',
+          status: 'Created By Me',
           value: dashboardCount.createdByMe,
           context: context,
         ),
         buildTile(
           isTile: true,
-          title: 'Draft',
+          status: 'Draft',
           bgColor: Colors.lightBlue,
           context: context,
           value: dashboardCount.createdByMeDraft,
@@ -66,7 +66,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
         ),
         buildTile(
             isTile: true,
-            title: 'Active',
+            status: 'Active',
             bgColor: Colors.green,
             context: context,
             value: dashboardCount.createdByMeActive,
@@ -75,7 +75,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             tabName: "userDetails"),
         buildTile(
           isTile: true,
-          title: 'Expired',
+          status: 'Expired',
           bgColor: Colors.redAccent,
           context: context,
           tabName: "userDetails",
@@ -84,13 +84,13 @@ class _NoteWorklistState extends State<NoteWorklist> {
         ),
         buildTile(
           isTile: false,
-          title: 'Shared By Me',
+          status: 'Shared By Me',
           context: context,
           value: dashboardCount.sharedByMe,
         ),
         buildTile(
           isTile: true,
-          title: 'Active',
+          status: 'Active',
           bgColor: Colors.green,
           context: context,
           value: dashboardCount.sharedByMeActive,
@@ -99,7 +99,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
         ),
         buildTile(
             isTile: true,
-            title: 'Expired',
+            status: 'Expired',
             bgColor: Colors.redAccent,
             context: context,
             value: dashboardCount.sharedByMeExpired,
@@ -107,7 +107,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             tabName: "NoteSharedBy"),
         buildTile(
             isTile: true,
-            title: 'Draft',
+            status: 'Draft',
             bgColor: Colors.lightBlue,
             context: context,
             value: dashboardCount.sharedByMeDraft,
@@ -116,11 +116,11 @@ class _NoteWorklistState extends State<NoteWorklist> {
         buildTile(
             isTile: false,
             value: null, // dashboardCount.sharedwi,
-            title: 'Shared With Me/Team',
+            status: 'Shared With Me/Team',
             context: context),
         buildTile(
           isTile: true,
-          title: 'Active',
+          status: 'Active',
           bgColor: Colors.green,
           context: context,
           value: dashboardCount.sharedWithMeActive,
@@ -129,7 +129,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
         ),
         buildTile(
             isTile: true,
-            title: 'Expired',
+            status: 'Expired',
             bgColor: Colors.redAccent,
             context: context,
             value: dashboardCount.sharedWithMeExpired,
@@ -137,7 +137,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             tabName: "NoteSharedWith"),
         buildTile(
             isTile: true,
-            title: 'Draft',
+            status: 'Draft',
             bgColor: Colors.lightBlue,
             context: context,
             value: dashboardCount.sharedWithMeDraft,
