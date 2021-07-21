@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../../../data/models/note/note_list_model.dart';
-import '../../../../logic/blocs/note_bloc/note_bloc.dart';
-import '../../../widgets/progress_indicator.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/data/maps/maps.dart';
+import 'package:hr_management/data/models/note/note_list_model.dart';
+import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 class NoteDashboardList extends StatefulWidget {
@@ -12,10 +16,15 @@ class NoteDashboardList extends StatefulWidget {
 class _NoteDashboardListState extends State<NoteDashboardList> {
   List<NoteListModel> _noteList = [];
   List<NoteListModel> _filteredNoteList = [];
+  TextEditingController subjectController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    apiCall();
+  }
+
+  apiCall() {
     noteBloc..getNoteDashBoardData();
   }
 
@@ -23,6 +32,13 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        ExpansionTile(
+          collapsedBackgroundColor: Colors.grey[200],
+          backgroundColor: Colors.grey[200],
+          trailing: Icon(Icons.filter_list),
+          title: _searchField(),
+          children: [wrappedButtons()],
+        ),
         Expanded(
           child: StreamBuilder(
             stream: noteBloc.subjectNoteList.stream,
@@ -112,6 +128,93 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
     );
   }
 
+  Widget _searchField() {
+    return Container(
+      height: 48,
+      padding: EdgeInsets.only(left: 16),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(100),
+        // color: Colors.white,
+      ),
+      child: TextField(
+        controller: subjectController,
+        decoration: InputDecoration(
+          hintText: 'Search',
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          suffixIcon: IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
+            onPressed: () => _searchSubject(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _searchSubject() {
+    if (subjectController.text != null && subjectController.text.isNotEmpty) {
+      _setParamsToNull();
+      // subject = subjectController.text;
+      apiCall();
+    }
+  }
+
+  _setParamsToNull() {}
+
+  Widget wrappedButtons() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      width: double.infinity,
+      child: Wrap(
+        children: [
+          customButton(
+            buttonText: 'Home',
+            handleOnPressed: () => _homeFilter(),
+          ),
+          customButton(
+            buttonText: 'More...',
+            handleOnPressed: () => _moreFilter(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _homeFilter() {
+    _setParamsToNull();
+    apiCall();
+  }
+
+  _moreFilter() {
+    filterData(dynamic value) {
+      _setParamsToNull();
+      // if (filterServiceOptionsMap.toString().contains(value))
+      // serviceStatusIds = value;
+      // else
+      //   userType = value;
+      apiCall();
+      // print(serviceStatusIds);
+    }
+
+    Navigator.pushNamed(
+      context,
+      NTS_FILTER,
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.note,
+        val1: false,
+        val2: true,
+      ),
+    );
+  }
+
   String noteSubject(int index) {
     return _noteList[index].noteSubject ?? "-";
   }
@@ -134,5 +237,27 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
 
   String expiryDate(int index) {
     return _noteList[index].expiryDateDisplay ?? "-";
+  }
+
+  customButton({
+    String buttonText,
+    Function handleOnPressed,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.blue[300]),
+          // MaterialStateProperty.all(Theme.of(context).textHeadingColor),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+          ),
+        ),
+        onPressed: () => handleOnPressed(),
+        child: Text(buttonText),
+      ),
+    );
   }
 }

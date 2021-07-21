@@ -259,7 +259,12 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
     Navigator.pushNamed(
       context,
       NTS_FILTER,
-      arguments: ScreenArguments(func: filterData, ntstype: NTSType.note),
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.note,
+        val1: false,
+        val2: false,
+      ),
     );
   }
 

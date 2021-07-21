@@ -226,7 +226,10 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           suffixIcon: IconButton(
-            icon: Icon(Icons.search,color: Colors.blue,),
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
             onPressed: () => _searchSubject(),
           ),
         ),
@@ -431,7 +434,12 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     Navigator.pushNamed(
       context,
       NTS_FILTER,
-      arguments: ScreenArguments(func: filterData, ntstype: NTSType.task),
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.task,
+        val1: false,
+        val2: false,
+      ),
     );
   }
 

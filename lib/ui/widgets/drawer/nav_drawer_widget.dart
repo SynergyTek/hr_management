@@ -41,7 +41,7 @@ Widget drawerWidget(context) {
               'WORKLIST DASHBOARD',
               style: TextStyle(fontSize: fontSize, color: fontColor),
             ),
-            trailing: Icon(Icons.dashboard_customize_outlined),
+            // trailing: Icon(Icons.dashboard_customize_outlined),
             onTap: () {
               Navigator.pushNamed(
                 context,

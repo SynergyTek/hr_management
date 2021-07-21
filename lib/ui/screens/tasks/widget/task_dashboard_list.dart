@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../../data/models/task_models/task_list_model.dart';
-import '../../../../data/models/task_models/task_list_resp_model.dart';
-import '../../../../logic/blocs/task_bloc/task_bloc.dart';
-import '../../../widgets/progress_indicator.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/data/maps/maps.dart';
+import 'package:hr_management/data/models/task_models/task_list_model.dart';
+import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
+import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 class TaskDashboardList extends StatefulWidget {
@@ -15,10 +19,15 @@ class TaskDashboardList extends StatefulWidget {
 class _TaskDashboardListState extends State<TaskDashboardList> {
   List<TaskListModel> _taskList = [];
   List<TaskListModel> _filteredTaskList = [];
+  TextEditingController subjectController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    apiCall();
+  }
+
+  apiCall() {
     taskBloc..getTaskDashBoardData();
   }
 
@@ -26,6 +35,13 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        ExpansionTile(
+          collapsedBackgroundColor: Colors.grey[200],
+          backgroundColor: Colors.grey[200],
+          trailing: Icon(Icons.filter_list),
+          title: _searchField(),
+          children: [wrappedButtons()],
+        ),
         Expanded(
           child: StreamBuilder<TaskListResponseModel>(
             stream: taskBloc.subjectTaskList.stream,
@@ -133,6 +149,93 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     );
   }
 
+  Widget _searchField() {
+    return Container(
+      height: 48,
+      padding: EdgeInsets.only(left: 16),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(100),
+        // color: Colors.white,
+      ),
+      child: TextField(
+        controller: subjectController,
+        decoration: InputDecoration(
+          hintText: 'Search',
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          suffixIcon: IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
+            onPressed: () => _searchSubject(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _searchSubject() {
+    if (subjectController.text != null && subjectController.text.isNotEmpty) {
+      _setParamsToNull();
+      // subject = subjectController.text;
+      apiCall();
+    }
+  }
+
+  _setParamsToNull() {}
+
+  Widget wrappedButtons() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      width: double.infinity,
+      child: Wrap(
+        children: [
+          customButton(
+            buttonText: 'Home',
+            handleOnPressed: () => _homeFilter(),
+          ),
+          customButton(
+            buttonText: 'More...',
+            handleOnPressed: () => _moreFilter(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _homeFilter() {
+    _setParamsToNull();
+    apiCall();
+  }
+
+  _moreFilter() {
+    filterData(dynamic value) {
+      _setParamsToNull();
+      // if (filterServiceOptionsMap.toString().contains(value))
+      //   serviceStatusIds = value;
+      // else
+      //   userType = value;
+      apiCall();
+      // print(serviceStatusIds);
+    }
+
+    Navigator.pushNamed(
+      context,
+      NTS_FILTER,
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.task,
+        val1: false,
+        val2: true,
+      ),
+    );
+  }
+
   String taskSubject(int index) {
     return _taskList[index].taskSubject ?? "-";
   }
@@ -155,5 +258,27 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
 
   String dueDateDisplay(int index) {
     return _taskList[index].dueDateDisplay ?? "-";
+  }
+
+  customButton({
+    String buttonText,
+    Function handleOnPressed,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.blue[300]),
+          // MaterialStateProperty.all(Theme.of(context).textHeadingColor),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+          ),
+        ),
+        onPressed: () => handleOnPressed(),
+        child: Text(buttonText),
+      ),
+    );
   }
 }

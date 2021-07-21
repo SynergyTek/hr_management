@@ -144,10 +144,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     );
   }
 
-   parseJsonToUDFModel(
+  parseJsonToUDFModel(
     CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
-    
   ) {
     columnComponent = [];
     componentComList = [];
@@ -169,9 +168,11 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     }
 
     for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns == null &&(component.components==null || component.components.length == 0)) {
+      if (component.columns == null &&
+          (component.components == null || component.components.length == 0)) {
         udfJsonComponent.add(component);
-      } else if (component.components == null && component.columns.length == 0) {
+      } else if (component.components == null &&
+          component.columns.length == 0) {
         udfJsonComponent.add(component);
       }
     }
@@ -190,7 +191,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           addDynamic(udfJsonComponent, createServiceFormBloc);
     }
   }
-
 
   Widget setTaskView(
     BuildContext context,
@@ -847,18 +847,17 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             ),
           ),
           Visibility(
-            visible: taskModel.isAddCommentEnabled,
+            visible: taskModel.isAddCommentEnabled &&
+                widget.taskId != null &&
+                widget.taskId.isNotEmpty,
             child: PrimaryButton(
               buttonText: 'Add comment',
               handleOnPressed: () {
-                  Navigator.pushNamed(
-                  context,
-                  COMMENT_ROUTE,
-                   arguments: ScreenArguments(
-                                ntstype: NTSType.task,
-                                arg1: taskModel.taskId,
-                   )
-                );
+                Navigator.pushNamed(context, COMMENT_ROUTE,
+                    arguments: ScreenArguments(
+                      ntstype: NTSType.task,
+                      arg1: taskModel.taskId,
+                    ));
               },
               width: 100,
             ),
@@ -878,7 +877,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             visible: taskModel.isCloseButtonVisible,
             child: PrimaryButton(
               buttonText: 'Close',
-              handleOnPressed: () {},
+              handleOnPressed: () => Navigator.pop(context),
               width: 100,
             ),
           ),

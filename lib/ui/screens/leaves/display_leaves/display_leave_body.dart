@@ -142,9 +142,11 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                             context,
                             CREATE_SERVICE_ROUTE,
                             arguments: ScreenArguments(
-                                arg1: '',
-                                arg2: _serviceList[index].serviceId,
-                                arg3: _serviceList[index].templateCode),
+                              arg1: '',
+                              arg2: _serviceList[index].serviceId,
+                              arg3: _serviceList[index].templateCode,
+                              val1: true,
+                            ),
                           );
                         },
                       ),

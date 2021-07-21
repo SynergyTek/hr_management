@@ -104,6 +104,7 @@ class AppRouter {
             templateCode: args.arg1,
             serviceId: args.arg2,
             title: args.arg3,
+            isLeave: args.val1,
           ),
         );
         break;
@@ -143,6 +144,8 @@ class AppRouter {
           builder: (_) => NTSFilterWidget(
             filterType: args.ntstype,
             onListTap: args.func,
+            isServiceDashboard: args.val1,
+            isDashboard: args.val2,
           ),
         );
         break;
