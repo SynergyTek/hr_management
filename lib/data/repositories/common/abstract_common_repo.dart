@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:hr_management/data/models/common/common_list_model.dart';
-import 'package:hr_management/data/models/common/common_list_response.dart';
-import 'package:hr_management/data/models/note/note_model.dart';
-import 'package:hr_management/data/models/note/note_response.dart';
+import '../../models/common/common_list_response.dart';
+import '../../models/note/note_model.dart';
+import '../../models/note/note_response.dart';
 import '../../models/api_models/post_response_model.dart';
 
 import '../../../constants/api_endpoints.dart';

@@ -133,8 +133,13 @@ class AppRouter {
           ),
         );
       case TASK_HOME:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => TaskHomeScreen(),
+          builder: (_) => TaskHomeScreen(
+            taskStatus: args.arg1,
+            moduleId: args.arg2,
+            mode: args.arg3,
+          ),
         );
         break;
 
@@ -212,17 +217,23 @@ class AppRouter {
         break;
 
       case NOTE_HOME:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => NoteHomeScreen(),
+          builder: (_) => NoteHomeScreen(
+            noteStatus: args.arg1,
+            moduleId: args.arg2,
+            mode: args.arg3,
+          ),
         );
         break;
 
       case SERVICE_HOME:
-       final args = routeSettings.arguments as ScreenArguments;
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => ServiceHomeScreen(
             serviceStatus: args.arg1,
             moduleId: args.arg2,
+            mode: args.arg3,
           ),
         );
         break;

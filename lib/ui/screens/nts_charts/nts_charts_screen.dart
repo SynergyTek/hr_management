@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/formats.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/nts_charts/chart_model.dart';
-import 'package:hr_management/data/models/nts_charts/nts_charts_response.dart';
-import 'package:hr_management/logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
-import 'package:hr_management/ui/screens/nts_charts/widget/charts_widget.dart';
-import 'package:hr_management/ui/widgets/nts_widgets.dart';
+import '../../../constants/formats.dart';
+import '../../../data/enums/enums.dart';
+import '../../../data/models/nts_charts/chart_model.dart';
+import '../../../data/models/nts_charts/nts_charts_response.dart';
+import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
+import 'widget/charts_widget.dart';
+import '../../widgets/nts_widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class NTSChart extends StatefulWidget {

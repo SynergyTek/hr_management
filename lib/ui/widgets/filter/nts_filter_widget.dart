@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/common/common_list_model.dart';
-import 'package:hr_management/logic/blocs/common_bloc/common_bloc.dart';
+import '../../../data/enums/enums.dart';
+import '../../../data/models/common/common_list_model.dart';
+import '../../../logic/blocs/common_bloc/common_bloc.dart';
 
-import 'package:hr_management/ui/screens/tasks/widget/task_home_body.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import '../../screens/tasks/widget/task_home_body.dart';
+import '../appbar_widget.dart';
+import '../internet_connectivity_widget.dart';
 
 import '../primary_button.dart';
 

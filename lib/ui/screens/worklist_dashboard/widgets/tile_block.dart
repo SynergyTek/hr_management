@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
 import '../../../../data/helpers/showup.dart';
 
 Widget buildTile(
@@ -14,7 +14,8 @@ Widget buildTile(
     int value,
     bool isTile,
     NTSType ntsType,
-    Image image}) {
+    Image image,
+    String mode}) {
   return Material(
       elevation: 14.0,
       borderRadius: BorderRadius.circular(12.0),
@@ -28,6 +29,7 @@ Widget buildTile(
                   ntsType: ntsType,
                   image: image,
                   context: context,
+                  mode: mode,
                   moduleName: moduleName)
               : worklistHeading(status: status)));
 }
@@ -37,6 +39,7 @@ Widget worklistTileWidget(
     int value,
     String status,
     String moduleName,
+    String mode,
     NTSType ntsType,
     BuildContext context,
     Image image}) {
@@ -85,43 +88,56 @@ Widget worklistTileWidget(
             //         ))),
             onTap: () {
               if (ntsType == NTSType.task) {
-                // Navigator.pushNamed(
-                //   context,
-                //   CREATE_SERVICE_ROUTE,
-                //   arguments: ScreenArguments(
-                //     arg1: status,
-                //     arg2: moduleName,
-                //   ),
-                // );
+                if (status == "Overdue") {
+                  status = "NOTE_STATUS_OVERDUE";
+                } else if (status == "Completed") {
+                  status = "NOTE_STATUS_COMPLETE";
+                } else if (status == 'Pending') {
+                  status = 'NOTE_STATUS_INPROGRESS';
+                } else if (status == 'Draft') {
+                  status = 'NOTE_STATUS_DRAFT';
+                }
                 Navigator.pushNamed(
                   context,
                   TASK_HOME,
+                  arguments: ScreenArguments(
+                      arg1: status, arg2: moduleName, arg3: mode),
                 );
               } else if (ntsType == NTSType.service) {
-                if(status=="Overdue")
-                {
-                  status="SERVICE_STATUS_OVERDUE";
-                }
-                else if(status=="Completed")
-                {
-                  status="SERVICE_STATUS_COMPLETE";
+                if (status == "Overdue") {
+                  status = "SERVICE_STATUS_OVERDUE";
+                } else if (status == "Completed") {
+                  status = "SERVICE_STATUS_COMPLETE";
+                } else if (status == 'Pending') {
+                  status = 'SERVICE_STATUS_INPROGRESS';
+                } else if (status == 'Draft') {
+                  status = 'SERVICE_STATUS_DRAFT';
                 }
                 Navigator.pushNamed(
                   context,
                   SERVICE_HOME,
                   arguments: ScreenArguments(
-                    arg1: status,
-                    arg2: moduleName,
-                  ),
+                      arg1: status, arg2: moduleName, arg3: mode),
                 );
                 // Navigator.pushNamed(
                 //   context,
                 //   SERVICE_HOME,
                 // );
               } else if (ntsType == NTSType.note) {
+                if (status == "Overdue") {
+                  status = "TASK_STATUS_OVERDUE";
+                } else if (status == "Completed") {
+                  status = "TASK_STATUS_COMPLETE";
+                } else if (status == 'Pending') {
+                  status = 'TASK_STATUS_INPROGRESS';
+                } else if (status == 'Draft') {
+                  status = 'TASK_STATUS_DRAFT';
+                }
                 Navigator.pushNamed(
                   context,
                   NOTE_HOME,
+                  arguments: ScreenArguments(
+                      arg1: status, arg2: moduleName, arg3: mode),
                 );
               }
             },

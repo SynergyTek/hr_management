@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/worklist_dashboard/worklist_dashboard_response.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
+import '../../../data/enums/enums.dart';
+import '../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
+import '../../../routes/route_constants.dart';
+import '../../../routes/screen_arguments.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 

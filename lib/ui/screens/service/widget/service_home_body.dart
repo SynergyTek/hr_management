@@ -14,8 +14,9 @@ typedef FilterListTapCallBack = void Function(dynamic key);
 class ServiceHomeBody extends StatefulWidget {
   final String serviceStatus;
   final String moduleId;
+  final String mode;
 
-  const ServiceHomeBody({Key key, this.serviceStatus, this.moduleId})
+  const ServiceHomeBody({Key key, this.serviceStatus, this.moduleId, this.mode})
       : super(key: key);
   @override
   _ServiceHomeBodyState createState() => _ServiceHomeBodyState();
@@ -50,7 +51,8 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
   @override
   void initState() {
     serviceStatus = widget.serviceStatus;
-    moduleId=widget.moduleId;
+    moduleId = widget.moduleId;
+    mode = widget.mode;
     super.initState();
     apiCall();
   }

@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/common/common_list_response.dart';
-import 'package:hr_management/data/repositories/common/abstract_common_repo.dart';
+import '../../../data/models/common/common_list_response.dart';
+import '../../../data/repositories/common/abstract_common_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CommonBloc {

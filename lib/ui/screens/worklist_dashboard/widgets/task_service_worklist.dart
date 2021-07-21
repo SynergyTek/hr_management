@@ -74,6 +74,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             value: dashboardCount.tAssignOverdue,
             tabName: "TaskAssigned",
             image: Image(image: AssetImage('assets/images/task-overdue.png')),
+            mode: 'ASSIGN_TO',
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
@@ -82,6 +83,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             context: context,
             value: dashboardCount.tAssignPending,
             tabName: "TaskAssigned",
+            mode: 'ASSIGN_TO',
             image: Image(image: AssetImage('assets/images/task-pending.png')),
             ntsType: NTSType.task),
         buildTile(
@@ -90,6 +92,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             bgColor: Colors.green,
             context: context,
             tabName: "TaskAssigned",
+            mode: 'ASSIGN_TO',
             image: Image(image: AssetImage('assets/images/task-completed.png')),
             value: dashboardCount.tAssignCompleted,
             ntsType: NTSType.task),
@@ -107,6 +110,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             value: dashboardCount.tRequestOverdue,
             image: Image(image: AssetImage('assets/images/task-overdue.png')),
             tabName: "TaskRequested",
+            mode: 'ASSIGN_BY',
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
@@ -116,6 +120,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             value: dashboardCount.tRequestPending,
             image: Image(image: AssetImage('assets/images/task-pending.png')),
             tabName: "TaskRequested",
+            mode: 'ASSIGN_BY',
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
@@ -125,6 +130,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             value: dashboardCount.tRequestCompleted,
             image: Image(image: AssetImage('assets/images/task-completed.png')),
             tabName: "TaskRequested",
+            mode: 'ASSIGN_BY',
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
@@ -134,6 +140,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             value: dashboardCount.tRequestDraft,
             image: Image(image: AssetImage('assets/images/task-draft.png')),
             tabName: "TaskRequested",
+            mode: 'ASSIGN_BY',
             ntsType: NTSType.task),
         buildTile(
             isTile: false,
@@ -149,6 +156,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             value: dashboardCount.tShareWithOverdue,
             image: Image(image: AssetImage('assets/images/task-overdue.png')),
             tabName: "TaskShared",
+            mode: 'SHARE_TO',
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
@@ -158,6 +166,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             image: Image(image: AssetImage('assets/images/task-pending.png')),
             context: context,
             tabName: "TaskShared",
+            mode: 'SHARE_TO',
             ntsType: NTSType.task),
         buildTile(
             isTile: true,
@@ -167,6 +176,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             image: Image(image: AssetImage('assets/images/task-completed.png')),
             context: context,
             tabName: "TaskShared",
+            mode: 'SHARE_TO',
             ntsType: NTSType.task),
       ],
       staggeredTiles: [
@@ -207,6 +217,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             context: context,
             value: dashboardCount.sRequestOverdue,
             tabName: "ServiceRequested",
+            mode: 'REQ_BY',
             image:
                 Image(image: AssetImage('assets/images/service-overdue.png')),
             ntsType: NTSType.service),
@@ -217,6 +228,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             context: context,
             value: dashboardCount.sRequestPending,
             tabName: "ServiceRequested",
+            mode: 'REQ_BY',
             image:
                 Image(image: AssetImage('assets/images/service-pending.png')),
             ntsType: NTSType.service),
@@ -227,6 +239,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             bgColor: Colors.green,
             value: dashboardCount.sRequestCompleted,
             tabName: "ServiceRequested",
+            mode: 'REQ_BY',
             image:
                 Image(image: AssetImage('assets/images/service-completed.png')),
             ntsType: NTSType.service),
@@ -237,6 +250,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             context: context,
             value: dashboardCount.sRequestDraft,
             tabName: "ServiceRequested",
+            mode: 'REQ_BY',
             image: Image(image: AssetImage('assets/images/service-draft.png')),
             ntsType: NTSType.service),
         buildTile(
@@ -254,6 +268,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             context: context,
             value: dashboardCount.sShareWithOverdue,
             tabName: "ServiceShared",
+            mode: 'SHARE_TO',
             image:
                 Image(image: AssetImage('assets/images/service-overdue.png')),
             ntsType: NTSType.service),
@@ -264,6 +279,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             value: dashboardCount.sShareWithPending,
             context: context,
             tabName: "ServiceShared",
+            mode: 'SHARE_TO',
             image:
                 Image(image: AssetImage('assets/images/service-pending.png')),
             ntsType: NTSType.service),
@@ -274,6 +290,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             value: dashboardCount.sShareWithCompleted,
             context: context,
             tabName: "ServiceShared",
+            mode: 'SHARE_TO',
             image:
                 Image(image: AssetImage('assets/images/service-completed.png')),
             ntsType: NTSType.service),
@@ -291,5 +308,4 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
       ],
     );
   }
-
 }

@@ -10,7 +10,9 @@ class ServiceHomeScreen extends StatelessWidget {
   final String mode;
   final String serviceStatus;
   final String moduleId;
-  const ServiceHomeScreen({Key key, this.serviceStatus, this.moduleId, this.mode}) : super(key: key);
+  const ServiceHomeScreen(
+      {Key key, this.serviceStatus, this.moduleId, this.mode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,10 @@ class ServiceHomeScreen extends StatelessWidget {
         title: "Service Home",
       ),
       body: SafeArea(
-        // child: InternetConnectivityWidget(
-        child: ServiceHomeBody(serviceStatus: serviceStatus,moduleId: moduleId,),
+        child: ServiceHomeBody(
+          serviceStatus: serviceStatus,
+          moduleId: moduleId,
+        ),
       ),
       // ),
       floatingActionButton: FloatingActionButton(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/ui/screens/nts_charts/nts_charts_screen.dart';
+import '../../../../data/enums/enums.dart';
+import '../../nts_charts/nts_charts_screen.dart';
 
 class ServiceDashboardBody extends StatefulWidget {
   const ServiceDashboardBody({Key key}) : super(key: key);

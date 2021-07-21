@@ -4,7 +4,15 @@ import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 
 class NoteHomeScreen extends StatelessWidget {
-  const NoteHomeScreen({Key key}) : super(key: key);
+  final String mode;
+  final String noteStatus;
+  final String moduleId;
+  const NoteHomeScreen({
+    Key key,
+    this.noteStatus,
+    this.moduleId,
+    this.mode,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +22,11 @@ class NoteHomeScreen extends StatelessWidget {
         title: "Note Home",
       ),
       body: SafeArea(
-        // child: InternetConnectivityWidget(
-        child: NoteHomeBody(),
+        child: NoteHomeBody(
+          mode: mode,
+          noteStatus: noteStatus,
+          moduleId: moduleId,
+        ),
       ),
       // ),
     );

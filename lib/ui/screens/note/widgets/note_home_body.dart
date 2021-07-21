@@ -10,6 +10,12 @@ import 'package:listizer/listizer.dart';
 typedef FilterListTapCallBack = void Function(dynamic key);
 
 class NoteHomeBody extends StatefulWidget {
+  final String mode;
+  final String noteStatus;
+  final String moduleId;
+
+  const NoteHomeBody({Key key, this.mode, this.noteStatus, this.moduleId})
+      : super(key: key);
   @override
   _NoteHomeBodyState createState() => _NoteHomeBodyState();
 }
@@ -28,6 +34,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
   @override
   void initState() {
+    noteStatus = widget.noteStatus;
+    mode = widget.mode;
+    moduleId = widget.moduleId;
     super.initState();
     apiCall();
   }

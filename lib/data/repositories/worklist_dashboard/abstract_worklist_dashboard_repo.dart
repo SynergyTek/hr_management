@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/widgets.dart';
 import '../../models/worklist_dashboard/worklist_dashboard_response.dart';
 import '../../models/api_models/post_response_model.dart';
 
@@ -13,11 +10,9 @@ part 'worklist_dashboard_repo.dart';
 abstract class AbstractWorklistDashboardRepository {
   AbstractWorklistDashboardRepository();
 
-  Future<WorklistDashboardResponse> getWorklistDashboardCount(); 
+  Future<WorklistDashboardResponse> getWorklistDashboardCount();
 
-  
-  Future<NoteWorklistDashboardResponse> getWorklistDashboardNoteCount(); 
-
+  Future<NoteWorklistDashboardResponse> getWorklistDashboardNoteCount();
 
   Future<PostResponse> postAPIData({
     // Optional Params to be added to the request if required.
