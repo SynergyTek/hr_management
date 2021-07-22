@@ -94,41 +94,41 @@ Widget drawerWidget(context) {
               ),
             ],
           ),
-          ExpansionTile(
-            title: Text(
-              'PAYROLL',
-              style: TextStyle(fontSize: fontSize, color: fontColor),
-            ),
-            children: [
-              ListTile(
-                title: Text(
-                  'MANAGE ACCRUAL',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  ntsChartBloc.subjectChartByStatus.sink.add(null);
-                  ntsChartBloc.subjectChartByUserType.sink.add(null);
-                  ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-                  Navigator.pushNamed(
-                    context,
-                    MANAGE_ACCRUAL,
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'PAYSLIP',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    PAYSLIP,
-                  );
-                },
-              ),
-            ],
-          ),
+          // ExpansionTile(
+          //   title: Text(
+          //     'PAYROLL',
+          //     style: TextStyle(fontSize: fontSize, color: fontColor),
+          //   ),
+          //   children: [
+          //     ListTile(
+          //       title: Text(
+          //         'MANAGE ACCRUAL',
+          //         style: TextStyle(fontSize: fontSize, color: fontColor),
+          //       ),
+          //       onTap: () {
+          //         ntsChartBloc.subjectChartByStatus.sink.add(null);
+          //         ntsChartBloc.subjectChartByUserType.sink.add(null);
+          //         ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+          //         Navigator.pushNamed(
+          //           context,
+          //           MANAGE_ACCRUAL,
+          //         );
+          //       },
+          //     ),
+          //     ListTile(
+          //       title: Text(
+          //         'PAYSLIP',
+          //         style: TextStyle(fontSize: fontSize, color: fontColor),
+          //       ),
+          //       onTap: () {
+          //         Navigator.pushNamed(
+          //           context,
+          //           PAYSLIP,
+          //         );
+          //       },
+          //     ),
+          //   ],
+          // ),
           ExpansionTile(
             title: Text(
               'TASK',
