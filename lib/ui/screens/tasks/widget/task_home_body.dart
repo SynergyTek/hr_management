@@ -10,7 +10,7 @@ import '../../../widgets/progress_indicator.dart';
 
 import 'package:listizer/listizer.dart';
 
-typedef FilterListTapCallBack = void Function(dynamic key);
+typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskHomeBody extends StatefulWidget {
   TaskHomeBody({Key key}) : super(key: key);
@@ -35,6 +35,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
   String mode;
   String taskNo;
   String taskStatus;
+  String taskOwnerIds;
   String taskAssigneeIds;
   String subject;
   DateTime startDate;
@@ -58,6 +59,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     if (mode != null) queryparams['mode'] = mode;
     if (taskNo != null) queryparams['taskNo'] = taskNo;
     if (taskStatus != null) queryparams['taskStatus'] = taskStatus;
+    if (taskOwnerIds != null) queryparams['taskOwnerIds'] = taskOwnerIds;
     if (taskAssigneeIds != null)
       queryparams['taskAssigneeIds'] = taskAssigneeIds;
     if (subject != null) queryparams['subject'] = subject;
@@ -188,7 +190,8 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                             arguments: ScreenArguments(
                                 arg1: '',
                                 arg2: _taskList[index].id,
-                                arg3: _taskList[index].templateMasterCode),
+                                arg3: _taskList[index].taskSubject),
+                            // arg3: _taskList[index].templateMasterCode),
                           );
                         },
                       ),
@@ -423,12 +426,27 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     apiCall();
   }
 
+  assignValues(dynamic value, FilterType filterType) {
+    switch (filterType) {
+      case FilterType.status:
+        taskStatus = value;
+        break;
+      case FilterType.module:
+        moduleId = value;
+        break;
+      case FilterType.role:
+        mode = value;
+        break;
+      default:
+        break;
+    }
+  }
+
   _moreFilter() {
-    filterData(dynamic value) {
-      _setParamsToNull();
-      taskStatus = value;
+    _setParamsToNull();
+    filterData(dynamic value, FilterType filterType) {
+      assignValues(value, filterType);
       apiCall();
-      print(taskStatus);
     }
 
     Navigator.pushNamed(
@@ -437,7 +455,6 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
       arguments: ScreenArguments(
         func: filterData,
         ntstype: NTSType.task,
-        val1: false,
         val2: false,
       ),
     );
@@ -448,6 +465,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     mode = null;
     taskNo = null;
     taskStatus = null;
+    taskOwnerIds = null;
     taskAssigneeIds = null;
     subject = null;
     startDate = null;

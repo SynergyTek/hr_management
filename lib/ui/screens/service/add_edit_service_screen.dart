@@ -17,12 +17,12 @@ class CreateServiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarWidget(
-          title: serviceId == null || serviceId.isEmpty
-              ? "Create " + templateCode
-              // : "Edit " + title == null
-              //     ? '-'
-              //     : title),
-              : "Edit " + title ?? '-'),
+        title: serviceId == null || serviceId.isEmpty
+            ? "Create " + templateCode
+            : title != null
+                ? "Edit $title"
+                : "Edit",
+      ),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: CreateServiceScreenBody(

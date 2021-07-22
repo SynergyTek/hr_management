@@ -169,6 +169,17 @@ class APIEndpointConstants {
 
   static const GET_ENUM_ID_NAME_LIST = '$BASE_URL/cms/query/GetEnumIdNameList';
 
+  static const GET_OWNER_ID_NAME_LIST =
+      '$BASE_URL/cms/query/GetOwnerIdNameList?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const GET_USER_ID_NAME_LIST = '$BASE_URL/cms/query/GetUserIdNameList';
+
+  static const GET_ENUM_AS_TREE_LIST =
+      '$BASE_URL/cms/query/GetEnumAsTreeList?id=Root';
+
+  static const GET_MODULE_TREE_LIST =
+      '$BASE_URL/cms/query/GetModuleTreeList?id=Root';
+
   //Common API Endpoints Block End
   //************************************************************************//
 

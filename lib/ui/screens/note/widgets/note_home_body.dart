@@ -7,7 +7,7 @@ import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
-typedef FilterListTapCallBack = void Function(dynamic key);
+typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class NoteHomeBody extends StatefulWidget {
   @override
@@ -248,12 +248,27 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
     apiCall();
   }
 
+  assignValues(dynamic value, FilterType filterType) {
+    switch (filterType) {
+      case FilterType.status:
+        noteStatus = value;
+        break;
+      case FilterType.module:
+        moduleId = value;
+        break;
+      case FilterType.role:
+        mode = value;
+        break;
+      default:
+        break;
+    }
+  }
+
   _moreFilter() {
-    filterData(dynamic value) {
-      _setParamsToNull();
-      noteStatus = value;
+    _setParamsToNull();
+    filterData(dynamic value, FilterType filterType) {
+      assignValues(value, filterType);
       apiCall();
-      print(noteStatus);
     }
 
     Navigator.pushNamed(
@@ -262,7 +277,6 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
       arguments: ScreenArguments(
         func: filterData,
         ntstype: NTSType.note,
-        val1: false,
         val2: false,
       ),
     );

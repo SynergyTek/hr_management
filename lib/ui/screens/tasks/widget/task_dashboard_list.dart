@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/maps/maps.dart';
 import 'package:hr_management/data/models/task_models/task_list_model.dart';
 import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
 import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
@@ -8,6 +7,8 @@ import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
+
+typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskDashboardList extends StatefulWidget {
   TaskDashboardList({Key key}) : super(key: key);
@@ -20,6 +21,12 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
   List<TaskListModel> _taskList = [];
   List<TaskListModel> _filteredTaskList = [];
   TextEditingController subjectController = TextEditingController();
+  FilterListTapCallBack filterData;
+
+  String userId;
+  String taskStatusIds;
+  String taskAssigneeIds;
+  String taskOwnerIds;
 
   @override
   void initState() {
@@ -28,7 +35,17 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
   }
 
   apiCall() {
-    taskBloc..getTaskDashBoardData();
+    taskBloc.subjectTaskList.sink.add(null);
+
+    Map<String, dynamic> queryparams = Map();
+
+    if (userId != null) queryparams['userId'] = userId;
+    if (taskStatusIds != null) queryparams['TaskStatusIds'] = taskStatusIds;
+    if (taskAssigneeIds != null)
+      queryparams['TaskAssigneeIds'] = taskAssigneeIds;
+    if (taskOwnerIds != null) queryparams['TaskOwnerIds'] = taskOwnerIds;
+
+    taskBloc..getTaskDashBoardData(queryparams: queryparams);
   }
 
   @override
@@ -187,7 +204,12 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     }
   }
 
-  _setParamsToNull() {}
+  _setParamsToNull() {
+    userId = null;
+    taskStatusIds = null;
+    taskAssigneeIds = null;
+    taskOwnerIds = null;
+  }
 
   Widget wrappedButtons() {
     return Container(
@@ -213,15 +235,27 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     apiCall();
   }
 
+  assignValues(dynamic value, FilterType filterType) {
+    switch (filterType) {
+      case FilterType.status:
+        taskStatusIds = value;
+        break;
+      case FilterType.owner:
+        taskOwnerIds = value;
+        break;
+      case FilterType.assignee:
+        taskAssigneeIds = value;
+        break;
+      default:
+        break;
+    }
+  }
+
   _moreFilter() {
-    filterData(dynamic value) {
-      _setParamsToNull();
-      // if (filterServiceOptionsMap.toString().contains(value))
-      //   serviceStatusIds = value;
-      // else
-      //   userType = value;
+    _setParamsToNull();
+    filterData(dynamic value, FilterType filterType) {
+      assignValues(value, filterType);
       apiCall();
-      // print(serviceStatusIds);
     }
 
     Navigator.pushNamed(
@@ -230,7 +264,6 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
       arguments: ScreenArguments(
         func: filterData,
         ntstype: NTSType.task,
-        val1: false,
         val2: true,
       ),
     );

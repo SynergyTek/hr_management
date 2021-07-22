@@ -142,9 +142,8 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => NTSFilterWidget(
-            filterType: args.ntstype,
+            ntsFilter: args.ntstype,
             onListTap: args.func,
-            isServiceDashboard: args.val1,
             isDashboard: args.val2,
           ),
         );

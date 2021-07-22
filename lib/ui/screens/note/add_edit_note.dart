@@ -15,9 +15,12 @@ class AddEditNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarWidget(
-          title: noteId == null || noteId.isEmpty
-              ? "Create " + templateCode
-              : "Edit " + (title ?? '')),
+        title: noteId == null || noteId.isEmpty
+            ? "Create " + templateCode
+            : title != null
+                ? "Edit $title"
+                : "Edit",
+      ),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: AddEditNoteBody(
