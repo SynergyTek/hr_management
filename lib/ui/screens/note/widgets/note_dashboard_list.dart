@@ -193,14 +193,9 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
   }
 
   _moreFilter() {
-    filterData(dynamic value) {
+    filterData(dynamic value, FilterType filterType) {
       _setParamsToNull();
-      // if (filterServiceOptionsMap.toString().contains(value))
-      // serviceStatusIds = value;
-      // else
-      //   userType = value;
       apiCall();
-      // print(serviceStatusIds);
     }
 
     Navigator.pushNamed(
@@ -209,7 +204,6 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
       arguments: ScreenArguments(
         func: filterData,
         ntstype: NTSType.note,
-        val1: false,
         val2: true,
       ),
     );

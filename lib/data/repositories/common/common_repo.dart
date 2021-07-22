@@ -5,32 +5,7 @@ part of 'abstract_common_repo.dart';
 class CommonRepository extends AbstractCommonRepository {
   final Dio _dio = Dio();
 
-  // Future<NoteResponse> getNoteDetail({
-  //   Map<String, dynamic> queryparams,
-  // }) async {
-  //   final String endpoint = APIEndpointConstants.GET_NOTE_DETAILS;
-
-  //   try {
-  //     Response response = await _dio.get(
-  //       endpoint,
-  //       queryParameters: queryparams ?? {},
-  //     );
-
-  //     // print("DIO Response: ${response.data.runtimeType}");
-  //     print(response.data);
-  //     return NoteResponse.fromJson(
-  //       response.data,
-  //     );
-  //   } catch (err, stacktrace) {
-  //     print(
-  //         "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
-  //     print("Stacktrace: $stacktrace \nError: $err");
-
-  //     return NoteResponse.withError("$err");
-  //   }
-  // }
-
-  Future<CommonListResponse> getLOVList(
+  Future<CommonListResponse> getLOVIdNameList(
       {Map<String, dynamic> queryparams}) async {
     final String endpoint = APIEndpointConstants.GET_LOV_ID_NAME_LIST;
 
@@ -50,9 +25,9 @@ class CommonRepository extends AbstractCommonRepository {
     }
   }
 
-  Future<NoteListResponse> getNoteDashBoardData(
+  Future<CommonListResponse> getEnumIdNameList(
       {Map<String, dynamic> queryparams}) async {
-    final String endpoint = APIEndpointConstants.READ_NOTE_DASHBOARD_DATA;
+    final String endpoint = APIEndpointConstants.GET_ENUM_ID_NAME_LIST;
 
     try {
       Response response = await _dio.get(
@@ -60,59 +35,93 @@ class CommonRepository extends AbstractCommonRepository {
         queryParameters: queryparams ?? {},
       );
       print(response.data);
-      return NoteListResponse.fromJson(
+      return CommonListResponse.fromJson(
         response.data,
       );
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return NoteListResponse.withError("$err");
+      return CommonListResponse.withError("$err");
     }
   }
 
-  @override
-  Future<NoteResponse> deleteNoteAPIData({Map<String, dynamic> queryparams}) {
-    throw UnimplementedError();
-  }
+  Future<CommonListResponse> getUserIdNameList(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.GET_USER_ID_NAME_LIST;
 
-  @override
-  Future<PostResponse> postNoteAPIData({
-    Map<String, dynamic> queryparams,
-    @required NoteModel note,
-  }) async {
-    final String endpoint = APIEndpointConstants.MANAGE_NOTE;
     try {
-      Response response = await _dio.post(
+      Response response = await _dio.get(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(note.toJson()) ?? {},
       );
-
-      print("response: ${response.data}");
-
-      var result = PostResponse.fromJson(
+      print(response.data);
+      return CommonListResponse.fromJson(
         response.data,
       );
-
-      if (result.isSuccess) {
-        if (note.noteStatusCode == 'NOTE_STATUS_DRAFT')
-          result.messages = 'Note saved as Draft';
-        else if (note.noteStatusCode == 'NOTE_STATUS_INROGRESS')
-          result.messages = 'Note Applied Successfully';
-      }
-
-      return result;
     } catch (err, stacktrace) {
-      print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return PostResponse.withError("$err");
+      return CommonListResponse.withError("$err");
     }
   }
 
-  @override
-  Future<NoteResponse> putNoteAPIData({Map<String, dynamic> queryparams}) {
-    throw UnimplementedError();
+  Future<OwnerNameListResponse> getOwnerIdNameList(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.GET_OWNER_ID_NAME_LIST;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      print(response.data);
+      return OwnerNameListResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return OwnerNameListResponse.withError("$err");
+    }
+  }
+
+  Future<EnumTreeListResponse> getEnumAsTreeList(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.GET_ENUM_AS_TREE_LIST;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      print(response.data);
+      return EnumTreeListResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return EnumTreeListResponse.withError("$err");
+    }
+  }
+
+  Future<EnumTreeListResponse> getModuleTreeList(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.GET_MODULE_TREE_LIST;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      print(response.data);
+      return EnumTreeListResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return EnumTreeListResponse.withError("$err");
+    }
   }
 }

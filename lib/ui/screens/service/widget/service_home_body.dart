@@ -10,7 +10,7 @@ import '../../../widgets/nts_widgets.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
-typedef FilterListTapCallBack = void Function(dynamic key);
+typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class ServiceHomeBody extends StatefulWidget {
   final String serviceStatus;
@@ -311,10 +311,26 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
     });
   }
 
+  assignValues(dynamic value, FilterType filterType) {
+    switch (filterType) {
+      case FilterType.status:
+        serviceStatus = value;
+        break;
+      case FilterType.module:
+        moduleId = value;
+        break;
+      case FilterType.role:
+        mode = value;
+        break;
+      default:
+        break;
+    }
+  }
+
   _moreFilter() {
-    filterData(dynamic value) {
+    filterData(dynamic value, FilterType filterType) {
       _setParamsToNull();
-      serviceStatus = value;
+      assignValues(value, filterType);
       apiCall();
       print(serviceStatus);
     }
@@ -325,7 +341,6 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
       arguments: ScreenArguments(
         func: filterData,
         ntstype: NTSType.service,
-        val1: false,
         val2: false,
       ),
     );

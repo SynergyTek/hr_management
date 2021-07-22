@@ -17,7 +17,9 @@ class AddEditTaskScreen extends StatelessWidget {
         // actions: [IconButton(icon: Icon(Icons.comment), onPressed: () {})],
         title: (templateCode != null && templateCode.isNotEmpty)
             ? "Add " + templateCode
-            : "Edit " + title,
+            : title != null
+                ? "Edit $title"
+                : "Edit",
         // title: "Edit " + templateCode,
       ),
       body: SafeArea(

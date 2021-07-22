@@ -216,15 +216,24 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
     apiCall();
   }
 
+  assignValues(dynamic value, FilterType filterType) {
+    switch (filterType) {
+      case FilterType.status:
+        serviceStatusIds = value;
+        break;
+      case FilterType.serviceOwnedRequested:
+        userType = value;
+        break;
+      default:
+        break;
+    }
+  }
+
   _moreFilter() {
-    filterData(dynamic value) {
-      _setParamsToNull();
-      // if (filterServiceOptionsMap.toString().contains(value))
-      serviceStatusIds = value;
-      // else
-      //   userType = value;
+    _setParamsToNull();
+    filterData(dynamic value, FilterType filterType) {
+      assignValues(value, filterType);
       apiCall();
-      print(serviceStatusIds);
     }
 
     Navigator.pushNamed(
@@ -233,7 +242,6 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
       arguments: ScreenArguments(
         func: filterData,
         ntstype: NTSType.service,
-        val1: true,
         val2: true,
       ),
     );
