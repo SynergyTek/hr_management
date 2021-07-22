@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
@@ -131,6 +132,11 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
                   return Center(
                     child: Text(snapshot.data.error),
                   );
+                }
+
+                if (snapshot.data.list == null ||
+                    snapshot.data.list.length == 0) {
+                  return EmptyListWidget();
                 }
                 _serviceList = snapshot.data.list;
                 return Listizer(

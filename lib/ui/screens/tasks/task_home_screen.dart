@@ -28,7 +28,6 @@ class TaskHomeScreen extends StatelessWidget {
         title: "Task Home",
       ),
       body: SafeArea(
-        // child: InternetConnectivityWidget(
         child: TaskHomeBody(
           mode: mode,
           moduleId: moduleId,

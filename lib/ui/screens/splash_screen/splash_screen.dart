@@ -32,16 +32,7 @@ class SplashScreen extends StatelessWidget {
               () => Navigator.pushReplacementNamed(
                     context,
                     WORKLIST_DASHBOARD,
-                  )
-              // Navigator.pushReplacementNamed(
-              //   context, NTS_TEMPLATE_REQUEST,
-              //   arguments: ScreenArguments(
-              //     ntstype: NTSType.service,
-              //     arg4: 'Leave',
-              //   ),
-              //   // LOGIN_ROUTE,
-              // ),
-              ),
+                  )),
           builder: (context, snapshot) {
             return SplashScreenBodyWidget(
               titleText: titleText,

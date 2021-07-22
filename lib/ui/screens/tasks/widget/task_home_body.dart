@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_list_model.dart';
 import '../../../../data/models/task_models/task_list_resp_model.dart';
@@ -107,6 +108,10 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                   return Center(
                     child: Text(snapshot.data.error),
                   );
+                }
+                if (snapshot.data.data == null ||
+                    snapshot.data.data.length == 0) {
+                  return EmptyListWidget();
                 }
                 _taskList = snapshot.data.data;
                 return Listizer(
