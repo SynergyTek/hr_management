@@ -1,6 +1,7 @@
-import 'package:hr_management/data/models/payslip/payslip_res_model.dart';
-import 'package:hr_management/data/repositories/payslip/abstract_payslip_repo.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../data/models/payslip/payslip_res_model.dart';
+import '../../../data/repositories/payslip/abstract_payslip_repo.dart';
 
 class PayslipBloc {
   final PayslipRepository _manageAccrualRepository = PayslipRepository();

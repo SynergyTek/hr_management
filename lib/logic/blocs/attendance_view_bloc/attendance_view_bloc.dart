@@ -1,6 +1,7 @@
+import 'package:rxdart/rxdart.dart';
+
 import '../../../data/models/attendance_view_models/attendance_view_response.dart';
 import '../../../data/repositories/attendance_view_repository/attendance_view_repository.dart';
-import 'package:rxdart/rxdart.dart';
 
 class AttendanceViewBloc {
   final AttendanceViewRepository _apiRepository = AttendanceViewRepository();

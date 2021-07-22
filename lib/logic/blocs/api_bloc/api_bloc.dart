@@ -1,6 +1,7 @@
+import 'package:rxdart/rxdart.dart';
+
 import '../../../data/models/api_models/api_response_model.dart';
 import '../../../data/repositories/api_repository.dart';
-import 'package:rxdart/rxdart.dart';
 
 class APIBloc {
   final APIRepository _apiRepository = APIRepository();

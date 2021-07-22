@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:listizer/listizer.dart';
+
 import '../../../../data/enums/enums.dart';
-import '../../../../data/maps/maps.dart';
 import '../../../../data/models/note/note_list_model.dart';
 import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
 
 class NoteDashboardList extends StatefulWidget {
   @override

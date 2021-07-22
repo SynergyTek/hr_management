@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/manage_accural/manage_accrual_res_model.dart';
-import 'package:hr_management/data/repositories/manage_accrual_repo/abstract_manage_accrual_repo.dart';
+import '../../../data/models/manage_accural/manage_accrual_res_model.dart';
+import '../../../data/repositories/manage_accrual_repo/abstract_manage_accrual_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ManageAccrualBloc {

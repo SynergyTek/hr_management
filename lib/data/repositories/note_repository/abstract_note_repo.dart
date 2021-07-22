@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
-import '../../models/note/note_model.dart';
-import '../../models/note/note_response.dart';
-import '../../models/api_models/post_response_model.dart';
 
 import '../../../constants/api_endpoints.dart';
-import 'package:dio/dio.dart';
+import '../../models/api_models/post_response_model.dart';
+import '../../models/note/note_model.dart';
+import '../../models/note/note_response.dart';
 
 part 'note_repo.dart';
 

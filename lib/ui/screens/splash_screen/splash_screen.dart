@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../data/enums/enums.dart';
-import '../../../routes/screen_arguments.dart';
 
 import '../../../routes/route_constants.dart';
 import 'widgets/splash_screen_body_widget.dart';

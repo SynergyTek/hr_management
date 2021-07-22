@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
+
 import '../../../data/models/api_models/post_response_model.dart';
 import '../../../data/models/note/note_model.dart';
 import '../../../data/models/note/note_response.dart';
 import '../../../data/repositories/note_repository/abstract_note_repo.dart';
-import 'package:rxdart/rxdart.dart';
 
 class NoteBloc {
   final NoteRepository _noteRepository = NoteRepository();

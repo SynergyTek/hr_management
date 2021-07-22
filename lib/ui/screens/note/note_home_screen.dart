@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'widgets/note_home_body.dart';
+
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
+import 'widgets/note_home_body.dart';
 
 class NoteHomeScreen extends StatelessWidget {
   final String mode;

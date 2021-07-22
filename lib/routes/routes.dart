@@ -1,5 +1,5 @@
-import 'package:hr_management/ui/screens/payroll/manage_accrual_screen.dart';
-import 'package:hr_management/ui/screens/payroll/payslip_screen.dart';
+import '../ui/screens/payroll/manage_accrual_screen.dart';
+import '../ui/screens/payroll/payslip_screen.dart';
 
 import '../data/enums/enums.dart';
 import '../ui/screens/counts_screen/counts_screen.dart';

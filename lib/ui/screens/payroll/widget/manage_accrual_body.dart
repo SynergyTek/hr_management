@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/manage_accural/manage_accrual_model.dart';
-import 'package:hr_management/data/models/manage_accural/manage_accrual_res_model.dart';
-import 'package:hr_management/logic/blocs/manage_accrual_bloc/manage_accrual_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/models/manage_accural/manage_accrual_model.dart';
+import '../../../../data/models/manage_accural/manage_accrual_res_model.dart';
+import '../../../../logic/blocs/manage_accrual_bloc/manage_accrual_bloc.dart';
+import '../../../../themes/theme_config.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 class ManageAccrualBody extends StatefulWidget {

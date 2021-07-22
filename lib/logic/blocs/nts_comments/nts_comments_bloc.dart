@@ -1,9 +1,10 @@
+import 'package:rxdart/rxdart.dart';
+
 import '../../../data/enums/enums.dart';
 import '../../../data/models/api_models/post_response_model.dart';
 import '../../../data/models/nts_comments/nts_comments.dart';
 import '../../../data/models/nts_comments/nts_comments_response.dart';
 import '../../../data/repositories/nts_comments/abstract_nts_comments_repo.dart';
-import 'package:rxdart/rxdart.dart';
 
 class NtsCommentBloc {
   final NTSCommentsRepository _ntsRepository = NTSCommentsRepository();

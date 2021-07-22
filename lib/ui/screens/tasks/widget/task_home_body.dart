@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/widgets/empty_list_widget.dart';
+import '../../../widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_list_model.dart';
 import '../../../../data/models/task_models/task_list_resp_model.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/payslip/payslip_model.dart';
+import 'payslip_model.dart';
 
 class PayslipResponse {
   bool isSuccess;

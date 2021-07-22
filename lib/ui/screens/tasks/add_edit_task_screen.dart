@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'widget/task_body.dart';
+
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
+import 'widget/task_body.dart';
 
 class AddEditTaskScreen extends StatelessWidget {
   final String templateCode;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/payslip/payslip_model.dart';
-import 'package:hr_management/data/models/payslip/payslip_res_model.dart';
-import 'package:hr_management/logic/blocs/payslip_bloc/payslip_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/models/payslip/payslip_model.dart';
+import '../../../../data/models/payslip/payslip_res_model.dart';
+import '../../../../logic/blocs/payslip_bloc/payslip_bloc.dart';
+import '../../../../themes/theme_config.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 class PayslipBody extends StatefulWidget {

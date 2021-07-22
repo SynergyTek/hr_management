@@ -1,6 +1,7 @@
+import 'package:rxdart/rxdart.dart';
+
 import '../../../data/models/counts_api_models/counts_api_response.dart';
 import '../../../data/repositories/counts_api_repository/counts_api_repository.dart';
-import 'package:rxdart/rxdart.dart';
 
 class CountsAPIBloc {
   final CountsAPIRepository _apiRepository = CountsAPIRepository();

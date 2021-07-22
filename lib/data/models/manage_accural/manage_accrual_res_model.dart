@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/manage_accural/manage_accrual_model.dart';
+import 'manage_accrual_model.dart';
 
 class ManageAccrualResponse {
   bool isSuccess;

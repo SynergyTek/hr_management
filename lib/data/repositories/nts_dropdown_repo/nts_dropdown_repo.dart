@@ -1,7 +1,7 @@
-import '../../models/nts_dropdown/nts_dd_res_model.dart';
+import 'package:dio/dio.dart';
 
 import '../../../constants/api_endpoints.dart';
-import 'package:dio/dio.dart';
+import '../../models/nts_dropdown/nts_dd_res_model.dart';
 
 part 'nts_dropdown_implementation.dart';
 
