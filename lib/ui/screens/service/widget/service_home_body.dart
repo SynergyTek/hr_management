@@ -12,6 +12,12 @@ import 'package:listizer/listizer.dart';
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class ServiceHomeBody extends StatefulWidget {
+  final String serviceStatus;
+  final String moduleId;
+  final String mode;
+
+  const ServiceHomeBody({Key key, this.serviceStatus, this.moduleId, this.mode})
+      : super(key: key);
   @override
   _ServiceHomeBodyState createState() => _ServiceHomeBodyState();
 }
@@ -44,6 +50,9 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
 
   @override
   void initState() {
+    serviceStatus = widget.serviceStatus;
+    moduleId = widget.moduleId;
+    mode = widget.mode;
     super.initState();
     apiCall();
   }
@@ -53,23 +62,45 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
 
     Map<String, dynamic> queryparams = Map();
 
-    if (userId != null) queryparams['userId'] = userId;
-    if (text != null) queryparams['text'] = text;
-    if (templateCategoryCode != null)
+    if (userId != null) {
+      queryparams['userId'] = userId;
+    }
+    if (text != null) {
+      queryparams['text'] = text;
+    }
+    if (templateCategoryCode != null) {
       queryparams['templateCategoryCode'] = templateCategoryCode;
-    if (filterUserId != null) queryparams['filterUserId'] = filterUserId;
-    if (moduleId != null) queryparams['moduleId'] = moduleId;
-    if (mode != null) queryparams['mode'] = mode;
-    if (serviceNo != null) queryparams['serviceNo'] = serviceNo;
-    if (serviceStatus != null) queryparams['serviceStatus'] = serviceStatus;
-    if (subject != null) queryparams['subject'] = subject;
-    if (startDate != null)
+    }
+    if (filterUserId != null) {
+      queryparams['filterUserId'] = filterUserId;
+    }
+    if (moduleId != null) {
+      queryparams['moduleId'] = moduleId;
+    }
+    if (mode != null) {
+      queryparams['mode'] = mode;
+    }
+    if (serviceNo != null) {
+      queryparams['serviceNo'] = serviceNo;
+    }
+    if (serviceStatus != null) {
+      queryparams['serviceStatus'] = serviceStatus;
+    }
+    if (subject != null) {
+      queryparams['subject'] = subject;
+    }
+    if (startDate != null) {
       queryparams['startDate'] = startDate.toString().split(' ')[0];
-    if (dueDate != null)
+    }
+    if (dueDate != null) {
       queryparams['dueDate'] = dueDate.toString().split(' ')[0];
-    if (completionDate != null) queryparams['completionDate'] = completionDate;
-    if (templateMasterCode != null)
+    }
+    if (completionDate != null) {
+      queryparams['completionDate'] = completionDate;
+    }
+    if (templateMasterCode != null) {
       queryparams['templateMasterCode'] = templateMasterCode;
+    }
 
     serviceBloc.getServiceHomeListData(queryparams: queryparams);
   }

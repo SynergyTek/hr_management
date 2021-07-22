@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/worklist_dashboard/worklist_dashboard_response.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
+import '../../../data/enums/enums.dart';
+import '../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
+import '../../../routes/route_constants.dart';
+import '../../../routes/screen_arguments.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 
 import 'widgets/note_worklist.dart';
-import 'widgets/task_worklist.dart';
+import 'widgets/task_service_worklist.dart';
 
 class WorklistDashboard extends StatefulWidget {
   const WorklistDashboard({Key key}) : super(key: key);
@@ -24,10 +24,10 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
   void initState() {
     super.initState();
     _widgetOptions = <Widget>[
-      TaskWorklist(
+      TaskServiceWorklist(
         ntsType: NTSType.task,
       ),
-      TaskWorklist(ntsType: NTSType.service),
+      TaskServiceWorklist(ntsType: NTSType.service),
       NoteWorklist(),
     ];
   }

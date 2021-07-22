@@ -13,7 +13,11 @@ import 'package:listizer/listizer.dart';
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskHomeBody extends StatefulWidget {
-  TaskHomeBody({Key key}) : super(key: key);
+  final String mode;
+  final String taskStatus;
+  final String moduleId;
+  TaskHomeBody({Key key, this.mode, this.taskStatus, this.moduleId})
+      : super(key: key);
 
   @override
   _TaskHomeBodyState createState() => _TaskHomeBodyState();
@@ -46,6 +50,9 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
 
   @override
   void initState() {
+    taskStatus = widget.taskStatus;
+    mode = widget.mode;
+    moduleId = widget.moduleId;
     super.initState();
     apiCall();
   }

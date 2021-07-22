@@ -18,7 +18,6 @@ import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
 import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
-import '../ui/screens/counts_screen/counts_screen.dart';
 import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
 import '../ui/screens/tasks/task_home_screen.dart';
 import '../ui/widgets/custom_controls/default_dropdown_list.dart';
@@ -133,8 +132,14 @@ class AppRouter {
           ),
         );
       case TASK_HOME:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => TaskHomeScreen(),
+          builder: (_) => TaskHomeScreen(
+            taskStatus: args?.arg1,
+            moduleId: args?.arg2,
+            mode: args?.arg3,
+            showBack: args?.showBack ?? false,
+          ),
         );
         break;
 
@@ -211,14 +216,26 @@ class AppRouter {
         break;
 
       case NOTE_HOME:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => NoteHomeScreen(),
+          builder: (_) => NoteHomeScreen(
+            noteStatus: args?.arg1,
+            moduleId: args?.arg2,
+            mode: args?.arg3,
+            showBack: args?.showBack ?? false,
+          ),
         );
         break;
 
       case SERVICE_HOME:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => ServiceHomeScreen(),
+          builder: (_) => ServiceHomeScreen(
+            serviceStatus: args?.arg1,
+            moduleId: args?.arg2,
+            mode: args?.arg3,
+            showBack: args?.showBack ?? false,
+          ),
         );
         break;
 

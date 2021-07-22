@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/logic/blocs/worklist_dashboard_bloc/worklist_dashboard_bloc.dart';
-
-import 'task_worklist.dart';
+import 'package:hr_management/ui/screens/worklist_dashboard/widgets/task_service_worklist.dart';
 
 class WorklistDashboardBody extends StatefulWidget {
   WorklistDashboardBody({Key key}) : super(key: key);
@@ -21,7 +19,7 @@ class _WorklistDashboardBodyState extends State<WorklistDashboardBody> {
     super.initState();
     // worklistDashboardBloc..getWorklistDashboardHomeListData();
     _widgetOptions = <Widget>[
-      TaskWorklist(),
+      TaskServiceWorklist(),
       Text('Screen 2'),
       Text('Screen 3'),
     ];

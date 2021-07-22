@@ -1,4 +1,4 @@
-import 'package:hr_management/data/models/common/common_list_model.dart';
+import 'common_list_model.dart';
 
 class CommonListResponse {
   bool isSuccess;
