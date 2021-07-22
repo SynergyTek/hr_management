@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../routes/route_constants.dart';
 import '../../../routes/screen_arguments.dart';
-import 'widget/task_home_body.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
+import 'widget/task_home_body.dart';
 
 class TaskHomeScreen extends StatelessWidget {
   final String mode;
@@ -28,7 +29,6 @@ class TaskHomeScreen extends StatelessWidget {
         title: "Task Home",
       ),
       body: SafeArea(
-        // child: InternetConnectivityWidget(
         child: TaskHomeBody(
           mode: mode,
           moduleId: moduleId,

@@ -153,6 +153,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
               children: [
                 Expanded(
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         flex: 2,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../data/models/nts_charts/chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../../../../data/models/nts_charts/chart_model.dart';
 
 class Charts extends StatefulWidget {
   final List<ChartModel> chartDataLIst;

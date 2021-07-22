@@ -46,3 +46,5 @@ const String SERVICE_DASHBOARD = "/service_dashboard";
 const String TASK_DASHBOARD = "/task_dashboard";
 const String NOTE_DASHBOARD = "/note_dashboard";
 const String WORKLIST_DASHBOARD = "/worklist_dashboard";
+const String MANAGE_ACCRUAL = "/manage_accrual";
+const String PAYSLIP = "/payslip";

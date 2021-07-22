@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/worklist_dashboard/widgets/task_service_worklist.dart';
+import 'task_service_worklist.dart';
 
 class WorklistDashboardBody extends StatefulWidget {
   WorklistDashboardBody({Key key}) : super(key: key);

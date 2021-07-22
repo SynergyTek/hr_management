@@ -1,3 +1,6 @@
+import '../ui/screens/payroll/manage_accrual_screen.dart';
+import '../ui/screens/payroll/payslip_screen.dart';
+
 import '../data/enums/enums.dart';
 import '../ui/screens/counts_screen/counts_screen.dart';
 import '../ui/screens/note/note_home_screen.dart';
@@ -241,6 +244,14 @@ class AppRouter {
 
       case WORKLIST_DASHBOARD:
         return MaterialPageRoute(builder: (_) => WorklistDashboard());
+        break;
+
+      case MANAGE_ACCRUAL:
+        return MaterialPageRoute(builder: (_) => ManageAccrualScreen());
+        break;
+
+      case PAYSLIP:
+        return MaterialPageRoute(builder: (_) => PayslipScreen());
         break;
 
 // 404 route.

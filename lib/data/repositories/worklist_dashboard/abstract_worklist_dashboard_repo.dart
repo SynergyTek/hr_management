@@ -1,8 +1,8 @@
-import '../../models/worklist_dashboard/worklist_dashboard_response.dart';
-import '../../models/api_models/post_response_model.dart';
+import 'package:dio/dio.dart';
 
 import '../../../constants/api_endpoints.dart';
-import 'package:dio/dio.dart';
+import '../../models/api_models/post_response_model.dart';
+import '../../models/worklist_dashboard/worklist_dashboard_response.dart';
 
 part 'worklist_dashboard_repo.dart';
 
