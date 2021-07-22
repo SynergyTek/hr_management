@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:hr_management/data/models/nts_template_tree_list_models/nts_template_tree_list_model.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/worklist_dashboard/worklist_dashboard_count.dart';
 import '../../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
@@ -9,8 +10,11 @@ import '../../../widgets/progress_indicator.dart';
 import 'tile_block.dart';
 
 class TaskServiceWorklist extends StatefulWidget {
-  TaskServiceWorklist({Key key, this.ntsType}) : super(key: key);
   final NTSType ntsType;
+
+  TaskServiceWorklist({
+    this.ntsType,
+  });
 
   @override
   _TaskServiceWorklistState createState() => _TaskServiceWorklistState();
