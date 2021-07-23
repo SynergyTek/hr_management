@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
+
 import '../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
-
-import 'package:rxdart/rxdart.dart';
 
 class NTSDdAPIBloc {
   final NTSDdRepository _apiRepository = NTSDdRepository();

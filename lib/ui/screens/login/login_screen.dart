@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/login/widget/login_body.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+
+import '../../widgets/internet_connectivity_widget.dart';
+import 'widget/login_body.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/attendance_view_models/attendance_view_models.dart';
-import 'package:hr_management/themes/theme_config.dart';
 
+import '../../../../../data/models/attendance_view_models/attendance_view_models.dart';
+import '../../../../../themes/theme_config.dart';
 import 'attendance_view_bottom_sheet_widget.dart';
 
 class AttendanceViewListTileWidget extends StatelessWidget {

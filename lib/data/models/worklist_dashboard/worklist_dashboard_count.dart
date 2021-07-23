@@ -114,3 +114,64 @@ class WorklistDashboardCount {
     return data;
   }
 }
+
+class NoteWorklistDashboardCount {
+  int createdByMe;
+  int createdByMeExpired;
+  int createdByMeActive;
+  int createdByMeDraft;
+  int sharedByMe;
+  int sharedByMeExpired;
+  int sharedByMeActive;
+  int sharedByMeDraft;
+  int shareWithMe;
+  int sharedWithMeExpired;
+  int sharedWithMeActive;
+  int sharedWithMeDraft;
+
+  NoteWorklistDashboardCount(
+      {this.createdByMe,
+      this.createdByMeExpired,
+      this.createdByMeActive,
+      this.createdByMeDraft,
+      this.sharedByMe,
+      this.sharedByMeExpired,
+      this.sharedByMeActive,
+      this.sharedByMeDraft,
+      this.shareWithMe,
+      this.sharedWithMeExpired,
+      this.sharedWithMeActive,
+      this.sharedWithMeDraft});
+
+  NoteWorklistDashboardCount.fromJson(Map<String, dynamic> json) {
+    createdByMe = json['createdByMe'];
+    createdByMeExpired = json['createdByMeExpired'];
+    createdByMeActive = json['createdByMeActive'];
+    createdByMeDraft = json['createdByMeDraft'];
+    sharedByMe = json['sharedByMe'];
+    sharedByMeExpired = json['sharedByMeExpired'];
+    sharedByMeActive = json['sharedByMeActive'];
+    sharedByMeDraft = json['sharedByMeDraft'];
+    shareWithMe = json['shareWithMe'];
+    sharedWithMeExpired = json['sharedWithMeExpired'];
+    sharedWithMeActive = json['sharedWithMeActive'];
+    sharedWithMeDraft = json['sharedWithMeDraft'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createdByMe'] = this.createdByMe;
+    data['createdByMeExpired'] = this.createdByMeExpired;
+    data['createdByMeActive'] = this.createdByMeActive;
+    data['createdByMeDraft'] = this.createdByMeDraft;
+    data['sharedByMe'] = this.sharedByMe;
+    data['sharedByMeExpired'] = this.sharedByMeExpired;
+    data['sharedByMeActive'] = this.sharedByMeActive;
+    data['sharedByMeDraft'] = this.sharedByMeDraft;
+    data['shareWithMe'] = this.shareWithMe;
+    data['sharedWithMeExpired'] = this.sharedWithMeExpired;
+    data['sharedWithMeActive'] = this.sharedWithMeActive;
+    data['sharedWithMeDraft'] = this.sharedWithMeDraft;
+    return data;
+  }
+}

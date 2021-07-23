@@ -155,12 +155,40 @@ class APIEndpointConstants {
       '$BASE_URL/nts/query/GetNoteTemplateTreeList';
 
   static const WORKLIST_DASHBOARD_COUNT =
-      '$BASE_URL/nts/query/WorklistDashboardCount';
+      '$BASE_URL/nts/query/WorklistDashboardCount?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const WORKLIST_DASHBOARD_NOTE_COUNT =
-      '$BASE_URL/nts/query/WorklistDashboardNoteSCount';
+      '$BASE_URL/nts/query/WorklistDashboardNoteSCount?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const WORKLIST_DASHBOARD_TREE_LIST_DATA =
+      '$BASE_URL/nts/query/GetServiceTemplateTreeList';
 
   //Worklist API Endpoints Block End
   //************************************************************************//
 
+  //Common API Endpoints Block
+
+  static const GET_LOV_ID_NAME_LIST = '$BASE_URL/cms/query/GetLOVIdNameList';
+
+  static const GET_ENUM_ID_NAME_LIST = '$BASE_URL/cms/query/GetEnumIdNameList';
+
+  static const GET_OWNER_ID_NAME_LIST =
+      '$BASE_URL/cms/query/GetOwnerIdNameList?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const GET_USER_ID_NAME_LIST = '$BASE_URL/cms/query/GetUserIdNameList';
+
+  static const GET_ENUM_AS_TREE_LIST =
+      '$BASE_URL/cms/query/GetEnumAsTreeList?id=Root';
+
+  static const GET_MODULE_TREE_LIST =
+      '$BASE_URL/cms/query/GetModuleTreeList?id=Root';
+
+  //Common API Endpoints Block End
+  //************************************************************************//
+
+  //Payroll Endpoints
+
+  static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData';
+  static const READ_PAYSLIP_DATA =
+      '$BASE_URL/CHR/query/ReadPaySlipData?month=7&year=2021&personId=45bba746-3309-49b7-9c03-b5793369d73c';
 }

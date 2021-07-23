@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'widget/task_home_body.dart';
+
+import '../../../data/enums/enums.dart';
+import '../../../logic/blocs/task_bloc/task_bloc.dart';
+import '../../../routes/route_constants.dart';
+import '../../../routes/screen_arguments.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
+import 'widget/task_home_body.dart';
 
 class TaskHomeScreen extends StatelessWidget {
-  const TaskHomeScreen({Key key}) : super(key: key);
+  final String mode;
+  final String taskStatus;
+  final String moduleId;
+  final bool showBack;
+  const TaskHomeScreen({
+    Key key,
+    this.taskStatus,
+    this.moduleId,
+    this.mode,
+    this.showBack,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: showBack ? null : drawerWidget(context),
       appBar: AppbarWidget(
         title: "Task Home",
       ),
       body: SafeArea(
-        // child: InternetConnectivityWidget(
-        child: TaskHomeBody(),
+        child: TaskHomeBody(
+          mode: mode,
+          moduleId: moduleId,
+          taskStatus: taskStatus,
+        ),
       ),
       // ),
       floatingActionButton: FloatingActionButton(

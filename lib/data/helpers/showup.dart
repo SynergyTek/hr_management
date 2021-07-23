@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class ShowUp extends StatefulWidget {
@@ -38,8 +39,8 @@ class _ShowUpState extends State<ShowUp> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _animController.dispose();
+    super.dispose();
   }
 
   @override

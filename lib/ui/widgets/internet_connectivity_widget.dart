@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'progress_indicator.dart';
 
 import '../../constants/image_path_constants.dart';
 import '../../logic/blocs/internet_bloc/internet_bloc.dart';
 import '../../themes/theme_config.dart';
+import 'progress_indicator.dart';
 
 class InternetConnectivityWidget extends StatelessWidget {
   final Widget child;

@@ -17,12 +17,11 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
         queryParameters: queryparams ?? {},
       );
 
-
       return AttendanceViewResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       // print(
       //     "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
-      // print("Stacktrace: $stacktrace \nError: $err");
+      print("Stacktrace: $stacktrace \nError: $err");
 
       return AttendanceViewResponse.withError("$err");
     }

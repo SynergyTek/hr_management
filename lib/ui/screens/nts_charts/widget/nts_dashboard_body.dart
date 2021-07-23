@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/ui/screens/note/widgets/note_dashboard_list.dart';
-import 'package:hr_management/ui/screens/nts_charts/nts_charts_screen.dart';
-import 'package:hr_management/ui/screens/service/widget/service_dashboard_list.dart';
-import 'package:hr_management/ui/screens/tasks/widget/task_dashboard_list.dart';
+
+import '../../../../data/enums/enums.dart';
+import '../../note/widgets/note_dashboard_list.dart';
+import '../../service/widget/service_dashboard_list.dart';
+import '../../tasks/widget/task_dashboard_list.dart';
+import '../nts_charts_screen.dart';
 
 class ServiceDashboardBody extends StatefulWidget {
   const ServiceDashboardBody({Key key, this.ntsType}) : super(key: key);

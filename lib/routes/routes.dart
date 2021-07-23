@@ -1,8 +1,11 @@
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/ui/screens/counts_screen/counts_screen.dart';
-import 'package:hr_management/ui/screens/note/note_home_screen.dart';
-import 'package:hr_management/ui/screens/nts_comments/nts_comments_screen.dart';
-import 'package:hr_management/ui/screens/home_screen/home_screen.dart';
+import '../ui/screens/payroll/manage_accrual_screen.dart';
+import '../ui/screens/payroll/payslip_screen.dart';
+
+import '../data/enums/enums.dart';
+import '../ui/screens/counts_screen/counts_screen.dart';
+import '../ui/screens/note/note_home_screen.dart';
+import '../ui/screens/nts_comments/nts_comments_screen.dart';
+import '../ui/screens/home_screen/home_screen.dart';
 
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
@@ -22,7 +25,6 @@ import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
 import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
-import '../ui/screens/counts_screen/counts_screen.dart';
 import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
 import '../ui/screens/tasks/task_home_screen.dart';
 import '../ui/widgets/custom_controls/default_dropdown_list.dart';
@@ -108,6 +110,7 @@ class AppRouter {
             templateCode: args.arg1,
             serviceId: args.arg2,
             title: args.arg3,
+            isLeave: args.val1,
           ),
         );
         break;
@@ -136,8 +139,14 @@ class AppRouter {
           ),
         );
       case TASK_HOME:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => TaskHomeScreen(),
+          builder: (_) => TaskHomeScreen(
+            taskStatus: args?.arg1,
+            moduleId: args?.arg2,
+            mode: args?.arg3,
+            showBack: args?.showBack ?? false,
+          ),
         );
         break;
 
@@ -145,8 +154,9 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => NTSFilterWidget(
-            filterType: args.ntstype,
+            ntsFilter: args.ntstype,
             onListTap: args.func,
+            isDashboard: args.val2,
           ),
         );
         break;
@@ -213,8 +223,14 @@ class AppRouter {
         break;
 
       case NOTE_HOME:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => NoteHomeScreen(),
+          builder: (_) => NoteHomeScreen(
+            noteStatus: args?.arg1,
+            moduleId: args?.arg2,
+            mode: args?.arg3,
+            showBack: args?.showBack ?? false,
+          ),
         );
         break;
 
@@ -224,13 +240,27 @@ class AppRouter {
         );
         break;
       case SERVICE_HOME:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => ServiceHomeScreen(),
+          builder: (_) => ServiceHomeScreen(
+            serviceStatus: args?.arg1,
+            moduleId: args?.arg2,
+            mode: args?.arg3,
+            showBack: args?.showBack ?? false,
+          ),
         );
         break;
 
       case WORKLIST_DASHBOARD:
         return MaterialPageRoute(builder: (_) => WorklistDashboard());
+        break;
+
+      case MANAGE_ACCRUAL:
+        return MaterialPageRoute(builder: (_) => ManageAccrualScreen());
+        break;
+
+      case PAYSLIP:
+        return MaterialPageRoute(builder: (_) => PayslipScreen());
         break;
 
 // 404 route.

@@ -1,7 +1,8 @@
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/nts_template_models/nts_template_response.dart';
-import 'package:hr_management/data/repositories/nts_template_repository/nts_template_repository.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../data/enums/enums.dart';
+import '../../../data/models/nts_template_models/nts_template_response.dart';
+import '../../../data/repositories/nts_template_repository/nts_template_repository.dart';
 
 class NTSTemplateBloc {
   final NTSTemplateRepository _apiRepository = NTSTemplateRepository();

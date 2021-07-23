@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/task_models/task_model.dart';
-import 'package:hr_management/data/models/task_models/task_response_model.dart';
-import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
-import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/screens/service/create_service_form_bloc.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/task_models/task_model.dart';
+import '../../../../data/models/task_models/task_response_model.dart';
+import '../../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
+import '../../../../logic/blocs/task_bloc/task_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../service/create_service_form_bloc.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../data/models/udf_json_model/udf_json_model.dart';
@@ -144,10 +144,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     );
   }
 
-   parseJsonToUDFModel(
+  parseJsonToUDFModel(
     CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
-    
   ) {
     columnComponent = [];
     componentComList = [];
@@ -169,9 +168,11 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     }
 
     for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns == null &&(component.components==null || component.components.length == 0)) {
+      if (component.columns == null &&
+          (component.components == null || component.components.length == 0)) {
         udfJsonComponent.add(component);
-      } else if (component.components == null && component.columns.length == 0) {
+      } else if (component.components == null &&
+          component.columns.length == 0) {
         udfJsonComponent.add(component);
       }
     }
@@ -190,7 +191,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           addDynamic(udfJsonComponent, createServiceFormBloc);
     }
   }
-
 
   Widget setTaskView(
     BuildContext context,
@@ -847,18 +847,17 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             ),
           ),
           Visibility(
-            visible: taskModel.isAddCommentEnabled,
+            visible: taskModel.isAddCommentEnabled &&
+                widget.taskId != null &&
+                widget.taskId.isNotEmpty,
             child: PrimaryButton(
               buttonText: 'Add comment',
               handleOnPressed: () {
-                  Navigator.pushNamed(
-                  context,
-                  COMMENT_ROUTE,
-                   arguments: ScreenArguments(
-                                ntstype: NTSType.task,
-                                arg1: taskModel.taskId,
-                   )
-                );
+                Navigator.pushNamed(context, COMMENT_ROUTE,
+                    arguments: ScreenArguments(
+                      ntstype: NTSType.task,
+                      arg1: taskModel.taskId,
+                    ));
               },
               width: 100,
             ),
@@ -878,7 +877,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             visible: taskModel.isCloseButtonVisible,
             child: PrimaryButton(
               buttonText: 'Close',
-              handleOnPressed: () {},
+              handleOnPressed: () => Navigator.pop(context),
               width: 100,
             ),
           ),

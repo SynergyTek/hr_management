@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/nts_comments/nts_comments.dart';
-import 'package:hr_management/data/models/nts_comments/nts_comments_response.dart';
+import '../../enums/enums.dart';
+import '../../models/nts_comments/nts_comments.dart';
+import '../../models/nts_comments/nts_comments_response.dart';
 import '../../models/api_models/post_response_model.dart';
 
 import '../../../constants/api_endpoints.dart';

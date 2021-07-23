@@ -3,24 +3,24 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/note/note_model.dart';
-import 'package:hr_management/data/models/note/note_response.dart';
-import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
-import 'package:hr_management/data/models/nts_dropdown/nts_dropdown_model.dart';
-import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
-import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
-import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
-import 'package:hr_management/logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
-import 'package:hr_management/ui/screens/service/create_service_form_bloc.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_number_box_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
-import 'package:hr_management/ui/widgets/form_widgets/bloc_text_box_widget.dart';
-import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
-import 'package:hr_management/ui/widgets/nts_widgets.dart';
-import 'package:hr_management/ui/widgets/primary_button.dart';
-import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../../data/models/api_models/post_response_model.dart';
+import '../../../../data/models/note/note_model.dart';
+import '../../../../data/models/note/note_response.dart';
+import '../../../../data/models/nts_dropdown/nts_dd_res_model.dart';
+import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
+import '../../../../data/models/udf_json_model/udf_json_model.dart';
+import '../../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
+import '../../../../logic/blocs/note_bloc/note_bloc.dart';
+import '../../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
+import '../../service/create_service_form_bloc.dart';
+import '../../../widgets/form_widgets/bloc_date_picker_widget.dart';
+import '../../../widgets/form_widgets/bloc_number_box_widget.dart';
+import '../../../widgets/form_widgets/bloc_radio_button_widget.dart';
+import '../../../widgets/form_widgets/bloc_text_box_widget.dart';
+import '../../../widgets/nts_dropdown_select.dart';
+import '../../../widgets/nts_widgets.dart';
+import '../../../widgets/primary_button.dart';
+import '../../../widgets/snack_bar.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../../themes/theme_config.dart';
 import 'package:sizer/sizer.dart';
@@ -860,7 +860,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 visible: noteModel.isCloseButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Close',
-                  handleOnPressed: () {},
+                  handleOnPressed: () => Navigator.pop(context),
                   width: 100,
                 ),
               ),

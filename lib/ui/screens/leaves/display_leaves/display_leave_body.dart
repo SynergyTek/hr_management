@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:listizer/listizer.dart';
+
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
 import '../../../../themes/theme_config.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
-
 import 'widget/leave_details_bottom_sheet_widget.dart';
 
 class DisplayLeavesBody extends StatefulWidget {
@@ -142,9 +142,11 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                             context,
                             CREATE_SERVICE_ROUTE,
                             arguments: ScreenArguments(
-                                arg1: '',
-                                arg2: _serviceList[index].serviceId,
-                                arg3: _serviceList[index].templateCode),
+                              arg1: '',
+                              arg2: _serviceList[index].serviceId,
+                              arg3: _serviceList[index].templateCode,
+                              val1: true,
+                            ),
                           );
                         },
                       ),

@@ -17,3 +17,19 @@ class WorklistDashboardResponse {
       : data = null,
         error = errorValue;
 }
+
+class NoteWorklistDashboardResponse {
+  final NoteWorklistDashboardCount data;
+  String error;
+
+  NoteWorklistDashboardResponse({
+    @required this.data,
+  });
+
+  NoteWorklistDashboardResponse.fromJson(Map<String, dynamic> response)
+      : data = NoteWorklistDashboardCount.fromJson(response);
+
+  NoteWorklistDashboardResponse.withError(String errorValue)
+      : data = null,
+        error = errorValue;
+}

@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/service_models/service.dart';
-import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/nts_widgets.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../widgets/empty_list_widget.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/service_models/service.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/nts_widgets.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
-typedef FilterListTapCallBack = void Function(dynamic key);
+typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class ServiceHomeBody extends StatefulWidget {
+  final String serviceStatus;
+  final String moduleId;
+  final String mode;
+
+  const ServiceHomeBody({Key key, this.serviceStatus, this.moduleId, this.mode})
+      : super(key: key);
   @override
   _ServiceHomeBodyState createState() => _ServiceHomeBodyState();
 }
@@ -44,6 +51,9 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
 
   @override
   void initState() {
+    serviceStatus = widget.serviceStatus;
+    moduleId = widget.moduleId;
+    mode = widget.mode;
     super.initState();
     apiCall();
   }
@@ -53,23 +63,45 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
 
     Map<String, dynamic> queryparams = Map();
 
-    if (userId != null) queryparams['userId'] = userId;
-    if (text != null) queryparams['text'] = text;
-    if (templateCategoryCode != null)
+    if (userId != null) {
+      queryparams['userId'] = userId;
+    }
+    if (text != null) {
+      queryparams['text'] = text;
+    }
+    if (templateCategoryCode != null) {
       queryparams['templateCategoryCode'] = templateCategoryCode;
-    if (filterUserId != null) queryparams['filterUserId'] = filterUserId;
-    if (moduleId != null) queryparams['moduleId'] = moduleId;
-    if (mode != null) queryparams['mode'] = mode;
-    if (serviceNo != null) queryparams['serviceNo'] = serviceNo;
-    if (serviceStatus != null) queryparams['serviceStatus'] = serviceStatus;
-    if (subject != null) queryparams['subject'] = subject;
-    if (startDate != null)
+    }
+    if (filterUserId != null) {
+      queryparams['filterUserId'] = filterUserId;
+    }
+    if (moduleId != null) {
+      queryparams['moduleId'] = moduleId;
+    }
+    if (mode != null) {
+      queryparams['mode'] = mode;
+    }
+    if (serviceNo != null) {
+      queryparams['serviceNo'] = serviceNo;
+    }
+    if (serviceStatus != null) {
+      queryparams['serviceStatus'] = serviceStatus;
+    }
+    if (subject != null) {
+      queryparams['subject'] = subject;
+    }
+    if (startDate != null) {
       queryparams['startDate'] = startDate.toString().split(' ')[0];
-    if (dueDate != null)
+    }
+    if (dueDate != null) {
       queryparams['dueDate'] = dueDate.toString().split(' ')[0];
-    if (completionDate != null) queryparams['completionDate'] = completionDate;
-    if (templateMasterCode != null)
+    }
+    if (completionDate != null) {
+      queryparams['completionDate'] = completionDate;
+    }
+    if (templateMasterCode != null) {
       queryparams['templateMasterCode'] = templateMasterCode;
+    }
 
     serviceBloc.getServiceHomeListData(queryparams: queryparams);
   }
@@ -100,6 +132,11 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
                   return Center(
                     child: Text(snapshot.data.error),
                   );
+                }
+
+                if (snapshot.data.list == null ||
+                    snapshot.data.list.length == 0) {
+                  return EmptyListWidget();
                 }
                 _serviceList = snapshot.data.list;
                 return Listizer(
@@ -168,9 +205,11 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
                             context,
                             CREATE_SERVICE_ROUTE,
                             arguments: ScreenArguments(
-                                arg1: _serviceList[index].templateCode,
-                                arg2: _serviceList[index].id,
-                                arg3: _serviceList[index].serviceSubject),
+                              arg1: _serviceList[index].templateCode,
+                              arg2: _serviceList[index].id,
+                              arg3: _serviceList[index].serviceSubject,
+                              val1: false,
+                            ),
                           );
                         },
                       ),
@@ -272,10 +311,26 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
     });
   }
 
+  assignValues(dynamic value, FilterType filterType) {
+    switch (filterType) {
+      case FilterType.status:
+        serviceStatus = value;
+        break;
+      case FilterType.module:
+        moduleId = value;
+        break;
+      case FilterType.role:
+        mode = value;
+        break;
+      default:
+        break;
+    }
+  }
+
   _moreFilter() {
-    filterData(dynamic value) {
+    filterData(dynamic value, FilterType filterType) {
       _setParamsToNull();
-      serviceStatus = value;
+      assignValues(value, filterType);
       apiCall();
       print(serviceStatus);
     }
@@ -283,7 +338,11 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
     Navigator.pushNamed(
       context,
       NTS_FILTER,
-      arguments: ScreenArguments(func: filterData, ntstype: NTSType.service),
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.service,
+        val2: false,
+      ),
     );
   }
 
@@ -391,7 +450,10 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           suffixIcon: IconButton(
-            icon: Icon(Icons.search,color: Colors.blue,),
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
             onPressed: () => _searchSubject(),
           ),
         ),

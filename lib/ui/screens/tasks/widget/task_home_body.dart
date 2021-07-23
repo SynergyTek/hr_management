@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/task_models/task_list_model.dart';
-import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/nts_widgets.dart';
+import '../../../widgets/empty_list_widget.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/task_models/task_list_model.dart';
+import '../../../../data/models/task_models/task_list_resp_model.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/nts_widgets.dart';
 import '../../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 
 import 'package:listizer/listizer.dart';
 
-typedef FilterListTapCallBack = void Function(dynamic key);
+typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskHomeBody extends StatefulWidget {
-  TaskHomeBody({Key key}) : super(key: key);
+  final String mode;
+  final String taskStatus;
+  final String moduleId;
+  TaskHomeBody({Key key, this.mode, this.taskStatus, this.moduleId})
+      : super(key: key);
 
   @override
   _TaskHomeBodyState createState() => _TaskHomeBodyState();
@@ -35,6 +40,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
   String mode;
   String taskNo;
   String taskStatus;
+  String taskOwnerIds;
   String taskAssigneeIds;
   String subject;
   DateTime startDate;
@@ -45,6 +51,9 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
 
   @override
   void initState() {
+    taskStatus = widget.taskStatus;
+    mode = widget.mode;
+    moduleId = widget.moduleId;
     super.initState();
     apiCall();
   }
@@ -58,6 +67,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     if (mode != null) queryparams['mode'] = mode;
     if (taskNo != null) queryparams['taskNo'] = taskNo;
     if (taskStatus != null) queryparams['taskStatus'] = taskStatus;
+    if (taskOwnerIds != null) queryparams['taskOwnerIds'] = taskOwnerIds;
     if (taskAssigneeIds != null)
       queryparams['taskAssigneeIds'] = taskAssigneeIds;
     if (subject != null) queryparams['subject'] = subject;
@@ -100,6 +110,10 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                   return Center(
                     child: Text(snapshot.data.error),
                   );
+                }
+                if (snapshot.data.data == null ||
+                    snapshot.data.data.length == 0) {
+                  return EmptyListWidget();
                 }
                 _taskList = snapshot.data.data;
                 return Listizer(
@@ -188,7 +202,8 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                             arguments: ScreenArguments(
                                 arg1: '',
                                 arg2: _taskList[index].id,
-                                arg3: _taskList[index].templateMasterCode),
+                                arg3: _taskList[index].taskSubject),
+                            // arg3: _taskList[index].templateMasterCode),
                           );
                         },
                       ),
@@ -226,7 +241,10 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           suffixIcon: IconButton(
-            icon: Icon(Icons.search,color: Colors.blue,),
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
             onPressed: () => _searchSubject(),
           ),
         ),
@@ -420,18 +438,37 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     apiCall();
   }
 
+  assignValues(dynamic value, FilterType filterType) {
+    switch (filterType) {
+      case FilterType.status:
+        taskStatus = value;
+        break;
+      case FilterType.module:
+        moduleId = value;
+        break;
+      case FilterType.role:
+        mode = value;
+        break;
+      default:
+        break;
+    }
+  }
+
   _moreFilter() {
-    filterData(dynamic value) {
-      _setParamsToNull();
-      taskStatus = value;
+    _setParamsToNull();
+    filterData(dynamic value, FilterType filterType) {
+      assignValues(value, filterType);
       apiCall();
-      print(taskStatus);
     }
 
     Navigator.pushNamed(
       context,
       NTS_FILTER,
-      arguments: ScreenArguments(func: filterData, ntstype: NTSType.task),
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.task,
+        val2: false,
+      ),
     );
   }
 
@@ -440,6 +477,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     mode = null;
     taskNo = null;
     taskStatus = null;
+    taskOwnerIds = null;
     taskAssigneeIds = null;
     subject = null;
     startDate = null;

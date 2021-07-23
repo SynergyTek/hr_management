@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/note/note_list_model.dart';
-import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../widgets/empty_list_widget.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/note/note_list_model.dart';
+import '../../../../logic/blocs/note_bloc/note_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
-typedef FilterListTapCallBack = void Function(dynamic key);
+typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class NoteHomeBody extends StatefulWidget {
+  final String mode;
+  final String noteStatus;
+  final String moduleId;
+
+  const NoteHomeBody({Key key, this.mode, this.noteStatus, this.moduleId})
+      : super(key: key);
   @override
   _NoteHomeBodyState createState() => _NoteHomeBodyState();
 }
@@ -28,6 +35,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
   @override
   void initState() {
+    noteStatus = widget.noteStatus;
+    mode = widget.mode;
+    moduleId = widget.moduleId;
     super.initState();
     apiCall();
   }
@@ -67,6 +77,10 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
                   return Center(
                     child: Text(snapshot.data.error),
                   );
+                }
+                if (snapshot.data.list == null ||
+                    snapshot.data.list.length == 0) {
+                  return EmptyListWidget();
                 }
                 _noteList = snapshot.data.list;
                 return Listizer(
@@ -248,18 +262,37 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
     apiCall();
   }
 
+  assignValues(dynamic value, FilterType filterType) {
+    switch (filterType) {
+      case FilterType.status:
+        noteStatus = value;
+        break;
+      case FilterType.module:
+        moduleId = value;
+        break;
+      case FilterType.role:
+        mode = value;
+        break;
+      default:
+        break;
+    }
+  }
+
   _moreFilter() {
-    filterData(dynamic value) {
-      _setParamsToNull();
-      noteStatus = value;
+    _setParamsToNull();
+    filterData(dynamic value, FilterType filterType) {
+      assignValues(value, filterType);
       apiCall();
-      print(noteStatus);
     }
 
     Navigator.pushNamed(
       context,
       NTS_FILTER,
-      arguments: ScreenArguments(func: filterData, ntstype: NTSType.note),
+      arguments: ScreenArguments(
+        func: filterData,
+        ntstype: NTSType.note,
+        val2: false,
+      ),
     );
   }
 

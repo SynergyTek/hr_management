@@ -10,3 +10,12 @@ enum NTSType {
   task,
   note,
 }
+
+enum FilterType {
+  module,
+  status,
+  role,
+  owner,
+  assignee,
+  serviceOwnedRequested,
+}

@@ -1,7 +1,7 @@
-import '../../models/access_log/access_log_response.dart';
+import 'package:dio/dio.dart';
 
 import '../../../constants/api_endpoints.dart';
-import 'package:dio/dio.dart';
+import '../../models/access_log/access_log_response.dart';
 
 part 'access_log_repo.dart';
 

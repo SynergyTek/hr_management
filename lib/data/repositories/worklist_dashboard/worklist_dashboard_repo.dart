@@ -26,14 +26,37 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
     }
   }
 
+  Future<NoteWorklistDashboardResponse> getWorklistDashboardNoteCount({
+    Map<String, dynamic> queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.WORKLIST_DASHBOARD_NOTE_COUNT;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      return NoteWorklistDashboardResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return NoteWorklistDashboardResponse.withError("$err");
+    }
+  }
 
   @override
-  Future<WorklistDashboardResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
+  Future<WorklistDashboardResponse> deleteAPIData(
+      {Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<WorklistDashboardResponse> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<WorklistDashboardResponse> putAPIData(
+      {Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }
 

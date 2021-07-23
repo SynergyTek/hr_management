@@ -34,24 +34,35 @@ class ServiceBloc {
     _subjectServiceList.sink.add(response);
   }
 
-  getServiceDashBoardData({templateCode, serviceId, userId}) async {
-  
-   
-
-    ServiceListResponse response =
-        await _serviceRepository.getServiceDashBoardData();
+  getServiceDashBoardData({
+    templateCode,
+    serviceId,
+    userId,
+    Map<String, dynamic> queryparams,
+  }) async {
+    ServiceListResponse response = await _serviceRepository
+        .getServiceDashBoardData(queryparams: queryparams);
     _subjectServiceList.sink.add(response);
   }
 
   /// Used to create new entries.
   Future<PostResponse> postData({
+    bool isLeaves,
     @required Service service,
   }) async {
     PostResponse response = await _serviceRepository.postAPIData(
       service: service,
     );
+    if (isLeaves != null && response.isSuccess) {
+      if (isLeaves) {
+        subjectServiceList.sink.add(null);
+        getLeavesDetails();
+      } else {
+        subjectServiceList.sink.add(null);
+        getServiceHomeListData();
+      }
+    }
 
-    serviceBloc..getLeavesDetails();
     return response;
   }
 

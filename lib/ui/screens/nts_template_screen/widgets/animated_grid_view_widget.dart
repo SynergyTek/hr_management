@@ -1,11 +1,12 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/screens/leaves/widget/grid_widget.dart';
+
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../leaves/widget/grid_widget.dart';
 
 class AnimatedGridViewWidget extends StatefulWidget {
   final dynamic model;
