@@ -1,3 +1,5 @@
+import 'package:hr_management/ui/screens/tasks/task_list_screen.dart';
+
 import '../ui/screens/payroll/manage_accrual_screen.dart';
 import '../ui/screens/payroll/payslip_screen.dart';
 
@@ -252,6 +254,10 @@ class AppRouter {
 
       case PAYSLIP:
         return MaterialPageRoute(builder: (_) => PayslipScreen());
+        break;
+
+      case TASKLIST:
+        return MaterialPageRoute(builder: (_) => TaskListScreen());
         break;
 
 // 404 route.

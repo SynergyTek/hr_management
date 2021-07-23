@@ -71,7 +71,7 @@ class _ListizerState extends State<Listizer> {
             onRefresh: _refreshList,
             child: ListView.separated(
               controller: _controller,
-              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
 
               separatorBuilder: (context, index) {
                 return widget.doAddSeperator == null

@@ -50,7 +50,6 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
           child: StreamBuilder<NTSDdResponse>(
               stream: ntsDdBloc.subject.stream,
               builder: (context, AsyncSnapshot<NTSDdResponse> snapshot) {
-                print("Snapshot data: ${snapshot.data}");
                 if (snapshot.hasData) {
                   if (snapshot.data.data == null ||
                       snapshot.data.data.length == 0) {

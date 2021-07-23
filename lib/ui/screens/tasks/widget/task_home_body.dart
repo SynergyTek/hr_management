@@ -11,6 +11,8 @@ import '../../../widgets/progress_indicator.dart';
 
 import 'package:listizer/listizer.dart';
 
+import 'task_list_tile.dart';
+
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskHomeBody extends StatefulWidget {
@@ -120,93 +122,9 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                   listItems: _taskList,
                   filteredSearchList: _filteredTaskList,
                   itemBuilder: (context, index) {
-                    print("Snapshot data: ${snapshot.data.data[index].taskNo}");
-                    return Card(
-                      elevation: 4,
-                      child: ListTile(
-                        title: Text(
-                          taskSubject(index),
-                          maxLines: 2,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        subtitle: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Text("Task No: "),
-                                      Text(taskNoValue(index)),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 6.0, bottom: 6.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(
-                                    ownerUserName(index),
-                                    style: TextStyle(
-                                        color: Colors.deepPurple[900]),
-                                  ),
-                                  Text(" to "),
-                                  Text(
-                                    assigneeDisplayName(index),
-                                    style: TextStyle(
-                                        color: Colors.deepPurple[900]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    taskStatusName(index),
-                                    style: TextStyle(color: Colors.green[800]),
-                                  ),
-                                ),
-                                Text(
-                                  dueDateDisplay(index),
-                                  style: TextStyle(color: Colors.red[700]),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        // leading: TextCircleAvater(
-                        //     text: _filteredTaskList[index].subject,
-                        //     context: context,
-                        //     radius: 20,
-                        //     fontSize: 18,
-                        //     color: Theme.of(context).primaryColorLight),
-                        // title: Text(
-                        //   _filteredTaskList[index].name != null
-                        //       ? _filteredTaskList[index].name
-                        //       : "",
-                        //   maxLines: 2,
-                        //   style: Theme.of(context).textTheme.headline6,
-                        // ),
-                        onTap: () {
-                          taskBloc.subjectGetTaskDetails.sink.add(null);
-                          Navigator.pushNamed(
-                            context,
-                            CREATE_EDIT_TASK_ROUTE,
-                            arguments: ScreenArguments(
-                                arg1: '',
-                                arg2: _taskList[index].id,
-                                arg3: _taskList[index].taskSubject),
-                            // arg3: _taskList[index].templateMasterCode),
-                          );
-                        },
-                      ),
+                    return TaskListCard(
+                      index: index,
+                      taskList: _taskList,
                     );
                   },
                 );
@@ -288,30 +206,6 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
       setState(() {
         dateFilterVisible = false;
       });
-  }
-
-  String taskSubject(int index) {
-    return _taskList[index].taskSubject ?? "-";
-  }
-
-  String taskNoValue(int index) {
-    return _taskList[index].taskNo ?? "-";
-  }
-
-  String ownerUserName(int index) {
-    return _taskList[index].ownerUserName ?? "-";
-  }
-
-  String assigneeDisplayName(int index) {
-    return _taskList[index].assigneeDisplayName ?? "-";
-  }
-
-  String taskStatusName(int index) {
-    return _taskList[index].taskStatusName ?? "-";
-  }
-
-  String dueDateDisplay(int index) {
-    return _taskList[index].dueDateDisplay ?? "-";
   }
 
   customButton({

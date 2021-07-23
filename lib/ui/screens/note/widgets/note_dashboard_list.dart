@@ -7,6 +7,7 @@ import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
+import 'note_list_tile.dart';
 
 class NoteDashboardList extends StatefulWidget {
   @override
@@ -55,64 +56,9 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
                   listItems: _noteList,
                   filteredSearchList: _filteredNoteList,
                   itemBuilder: (context, index) {
-                    print("Snapshot data: ${snapshot.data}");
-                    return Card(
-                      elevation: 4,
-                      child: ListTile(
-                        title: Text(
-                          noteSubject(index),
-                          maxLines: 2,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        subtitle: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Text("Note No: "),
-                                      Text(noteNoValue(index)),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 6.0, bottom: 6.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Text("From: "),
-                                  Text(
-                                    ownerUserName(index),
-                                    style: TextStyle(
-                                        color: Colors.deepPurple[900]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    noteStatusName(index),
-                                    style: TextStyle(color: Colors.green[800]),
-                                  ),
-                                ),
-                                Text(
-                                  expiryDate(index),
-                                  style: TextStyle(color: Colors.red[700]),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        onTap: () {},
-                      ),
+                    return NoteListCard(
+                      index: index,
+                      noteList: _noteList,
                     );
                   },
                 );
@@ -207,30 +153,6 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
         val2: true,
       ),
     );
-  }
-
-  String noteSubject(int index) {
-    return _noteList[index].noteSubject ?? "-";
-  }
-
-  String noteNoValue(int index) {
-    return _noteList[index].noteNo ?? "-";
-  }
-
-  String ownerUserName(int index) {
-    return _noteList[index].ownerUserName ?? "-";
-  }
-
-  String assigneeDisplayName(int index) {
-    return _noteList[index].assigneeDisplayName ?? "-";
-  }
-
-  String noteStatusName(int index) {
-    return _noteList[index].noteStatusName ?? "-";
-  }
-
-  String expiryDate(int index) {
-    return _noteList[index].expiryDateDisplay ?? "-";
   }
 
   customButton({

@@ -152,6 +152,18 @@ Widget drawerWidget(context) {
               ),
               ListTile(
                 title: Text(
+                  'TASK LIST',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    TASKLIST,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
                   'TASK HOME',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),

@@ -67,6 +67,15 @@ class APIEndpointConstants {
   static const READ_TASK_DASHBOARD_DATA =
       '$BASE_URL/nts/query/ReadTaskDashBoardGridData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
 
+  static const READ_TASK_DATA_IN_PROGRESS =
+      '$BASE_URL/nts/query/ReadTaskDataInProgress?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const READ_TASK_DATA_OVERDUE =
+      '$BASE_URL/nts/query/ReadTaskDataOverdue?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const READ_TASK_DATA_COMPLETED =
+      '$BASE_URL/nts/query/ReadTaskDataCompleted?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+
   //Task API Endpoints Block End
 
   //************************************************************************//

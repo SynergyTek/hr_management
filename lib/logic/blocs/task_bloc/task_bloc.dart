@@ -64,12 +64,11 @@ class TaskBloc {
     return response;
   }
 
-   getTaskDashBoardData({
-    Map<String, dynamic> queryparams, // String userId,
-  }) async {
+  getTaskDashBoardData(
+      {Map<String, dynamic> queryparams, String taskListStatus // String userId,
+      }) async {
     TaskListResponseModel response = await _taskRepository.getTaskDashBoardData(
-      queryparams: queryparams,
-    );
+        queryparams: queryparams, taskListStatus: taskListStatus);
     _subjectTaskList.sink.add(response);
   }
 

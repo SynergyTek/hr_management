@@ -6,27 +6,17 @@ import '../../service/widget/service_dashboard_list.dart';
 import '../../tasks/widget/task_dashboard_list.dart';
 import '../nts_charts_screen.dart';
 
-class ServiceDashboardBody extends StatefulWidget {
-  const ServiceDashboardBody({Key key, this.ntsType}) : super(key: key);
+class NTSDashboardBody extends StatefulWidget {
+  const NTSDashboardBody({Key key, this.ntsType}) : super(key: key);
   final NTSType ntsType;
   @override
-  _ServiceDashboardBodyState createState() => _ServiceDashboardBodyState();
+  _NTSDashboardBodyState createState() => _NTSDashboardBodyState();
 }
 
-class _ServiceDashboardBodyState extends State<ServiceDashboardBody> {
+class _NTSDashboardBodyState extends State<NTSDashboardBody> {
   int _selectedIndex = 0;
-  // static const TextStyle optionStyle =
-  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  List<Widget> _widgetOptions = []; //<Widget>[
-  //   NTSChart(
-  //     ntsType: NTSType.service,
-  //   ),
-  //   Text(
-  //     'Index 1: Service Details',
-  //     style: optionStyle,
-  //   ),
-  // ];
+  List<Widget> _widgetOptions = [];
 
   @override
   void initState() {
