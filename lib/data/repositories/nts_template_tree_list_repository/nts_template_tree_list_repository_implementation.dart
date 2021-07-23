@@ -1,15 +1,16 @@
-part of 'attendance_view_repository.dart';
+part of 'nts_template_tree_list_repository.dart';
 
 /// API Repository defines https client object, and our network call methods
 /// which will be used to fetch data from Apis will map the JSON to its model.
-class AttendanceViewRepository extends AbstractAttendanceViewRepository {
+class NTSTemplateTreeListRepository
+    extends AbstractNTSTemplateTreeListRepository {
   final Dio _dio = Dio();
 
-  Future<AttendanceViewResponse> getAPIData({
+  Future<NTSTemplateTreeListResponse> getAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.GET_ATTENDANCE_VIEW_DATA;
+    String endpoint = APIEndpointConstants.WORKLIST_DASHBOARD_TREE_LIST_DATA;
 
     try {
       Response response = await _dio.get(
@@ -17,31 +18,32 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
         queryParameters: queryparams ?? {},
       );
 
-      return AttendanceViewResponse.fromJson(response.data);
+      return NTSTemplateTreeListResponse.fromJson(
+        response.data,
+      );
     } catch (err, stacktrace) {
-      // print(
-      //     "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
-      print("Stacktrace: $stacktrace \nError: $err");
-
-      return AttendanceViewResponse.withError("$err");
+      return NTSTemplateTreeListResponse.withError("$err");
     }
   }
 
   @override
-  Future<AttendanceViewResponse> deleteAPIData(
+  Future<NTSTemplateTreeListResponse> deleteAPIData(
       {Map<String, dynamic> queryparams}) {
+    // TODO: implement deleteAPIData
     throw UnimplementedError();
   }
 
   @override
-  Future<AttendanceViewResponse> postAPIData(
+  Future<NTSTemplateTreeListResponse> postAPIData(
       {Map<String, dynamic> queryparams}) {
+    // TODO: implement postAPIData
     throw UnimplementedError();
   }
 
   @override
-  Future<AttendanceViewResponse> putAPIData(
+  Future<NTSTemplateTreeListResponse> putAPIData(
       {Map<String, dynamic> queryparams}) {
+    // TODO: implement putAPIData
     throw UnimplementedError();
   }
 }

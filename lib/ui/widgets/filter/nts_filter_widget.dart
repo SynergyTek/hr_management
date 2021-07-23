@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../data/enums/enums.dart';
-import '../../../data/models/common/common_list_model.dart';
 import '../../../logic/blocs/common_bloc/common_bloc.dart';
-
 import '../../screens/tasks/widget/task_home_body.dart';
 import '../appbar_widget.dart';
 import '../internet_connectivity_widget.dart';
@@ -401,7 +399,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
 
   manageValues(List<dynamic> dataList, int index) {
     // All module filters
-    if (filterType == FilterType.module)
+    if (filterType == FilterType.module || filterType == FilterType.role)
       widget.onListTap(dataList[index].id, filterType);
     // Service Home
     else if (!widget.isDashboard && widget.ntsFilter == NTSType.service)
