@@ -14,7 +14,11 @@ import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
 import 'package:hr_management/ui/screens/service/service_home.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
+
+import 'package:hr_management/ui/screens/users/user_screen.dart';
+
 import 'package:hr_management/ui/screens/worklist_dashboard/worklist_dashboard_screen.dart';
+
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
 import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
@@ -230,6 +234,11 @@ class AppRouter {
         );
         break;
 
+      case USERS:
+        return MaterialPageRoute(
+          builder: (_) => UserScreen(),
+        );
+        break;
       case SERVICE_HOME:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
