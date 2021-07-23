@@ -4,7 +4,6 @@ import 'package:hr_management/data/models/nts_template_tree_list_models/nts_temp
 import 'package:hr_management/logic/blocs/nts_template_tree_list_bloc/nts_template_tree_list_bloc.dart';
 import 'package:hr_management/logic/blocs/worklist_dashboard_bloc/worklist_dashboard_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../data/enums/enums.dart';
 import '../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
 import '../../../routes/route_constants.dart';
@@ -70,7 +69,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
                         );
                       }
 
-                      return _testWidget(snapshot.data.data);
+                      return _filterWidget(snapshot.data.data);
                     } else {
                       return CircularProgressIndicator();
                     }
@@ -183,7 +182,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
     if (_selectedIndex == 2) return {'id': 'Note'};
   }
 
-  Widget _testWidget(List data) {
+  Widget _filterWidget(List data) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -268,29 +267,44 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
     eachData.treeViewModelChildren.forEach((eachItem) {
       _expansionTileWidgetList
         ..add(
-          ListTile(
-            leading: Icon(Icons.filter_list),
-            title: Text(eachItem.displayName ?? ""),
-            // value: eachItem?.checked ?? false,
-            // onChanged: (bool hasChanged) {
-            onTap: () {
-              setState(() {
-                // Updating the value of the checkbox listtile.
-                eachItem.checked = !eachItem.checked;
+          StatefulBuilder(
+            builder: (BuildContext context, innerSetState) {
+              // return ListTile(
+              // leading: Icon(Icons.filter_list),
+              return CheckboxListTile(
+                title: Text(eachItem.displayName ?? ""),
+                value: eachItem?.checked ?? false,
+                onChanged: (bool hasChanged) {
+                  // onTap: () {
+                  innerSetState(() {
+                    setState(() {
+                      // Updating the value of the checkbox listtile.
+                      eachItem.checked = !eachItem.checked;
 
-                // If key is already present remove the entry from the map.
-                // If the id is not present in the map then add a new entry to the map.
-                if (!_checkedFilterSelectedItemsMap.containsKey(eachItem.id)) {
-                  _checkedFilterSelectedItemsMap[eachItem.id] = eachItem;
-                } else {
-                  _checkedFilterSelectedItemsMap.remove(eachItem.id);
-                }
+                      // If key is already present remove the entry from the map.
+                      // If the id is not present in the map then add a new entry to the map.
+                      if (!_checkedFilterSelectedItemsMap
+                          .containsKey(eachItem.id)) {
+                        _checkedFilterSelectedItemsMap[eachItem.id] = eachItem;
+                      } else {
+                        _checkedFilterSelectedItemsMap.remove(eachItem.id);
+                      }
 
-                worklistDashboardBloc
-                  ..getWorklistDashboardData(
-                    queryparams: _handleWorkListDashboardQueryParams(),
-                  );
-              });
+                      if (_selectedIndex != 2)
+                        worklistDashboardBloc
+                          ..getWorklistDashboardData(
+                            queryparams: _handleWorkListDashboardQueryParams(),
+                          );
+
+                      if (_selectedIndex == 2)
+                        worklistDashboardBloc
+                          ..getWorklistDashboardNoteData(
+                            queryparams: _handleWorkListDashboardQueryParams(),
+                          );
+                    });
+                  });
+                },
+              );
             },
           ),
         );
@@ -307,26 +321,12 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
         ..add(
           Container(
             padding: DEFAULT_HORIZONTAL_PADDING,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  if (_checkedFilterSelectedItemsMap.containsKey(eachChip.id)) {
-                    _checkedFilterSelectedItemsMap.remove(eachChip.id);
-
-                    worklistDashboardBloc
-                      ..getWorklistDashboardData(
-                        queryparams: _handleWorkListDashboardQueryParams(),
-                      );
-                  }
-                });
-              },
-              child: Chip(
-                backgroundColor: Theme.of(context).textHeadingColor,
-                label: Text(
-                  eachChip.displayName ?? "",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
+            child: Chip(
+              backgroundColor: Theme.of(context).textHeadingColor,
+              label: Text(
+                eachChip.displayName ?? "",
+                style: TextStyle(
+                  color: Colors.white,
                 ),
               ),
             ),
