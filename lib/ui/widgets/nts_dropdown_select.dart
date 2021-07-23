@@ -9,6 +9,7 @@ typedef ListTapPressedCallBack = void Function(dynamic key);
 class NTSDropDownSelect extends StatelessWidget {
   final String title;
   final bool isShowArrow;
+  final bool isUserList;
   final String hint;
   final String validationMessage;
   final TextEditingController controller;
@@ -22,6 +23,7 @@ class NTSDropDownSelect extends StatelessWidget {
       {Key key,
       this.title,
       this.isShowArrow,
+      this.isUserList,
       this.hint,
       this.validationMessage,
       this.controller,
@@ -66,16 +68,26 @@ class NTSDropDownSelect extends StatelessWidget {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                NTS_DROPDOWN,
-                arguments: ScreenArguments(
-                    arg1: url,
-                    arg2: idKey,
-                    arg3: nameKey,
-                    arg4: title,
-                    func: onListTap),
-              );
+              if (isUserList != null && isUserList) {
+                Navigator.pushNamed(
+                  context,
+                  NTS_USER_DROPDOWN,
+                  arguments: ScreenArguments(
+                    func: onListTap,
+                  ),
+                );
+              } else {
+                Navigator.pushNamed(
+                  context,
+                  NTS_DROPDOWN,
+                  arguments: ScreenArguments(
+                      arg1: url,
+                      arg2: idKey,
+                      arg3: nameKey,
+                      arg4: title,
+                      func: onListTap),
+                );
+              }
             },
           )
         ],

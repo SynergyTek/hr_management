@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/data/models/user/user.dart';
+import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_model.dart';
 import '../../../../data/models/task_models/task_response_model.dart';
@@ -56,6 +58,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   String subjectValue;
   String descriptionValue;
   String slaValue;
+  String ownerUserId;
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
@@ -236,6 +239,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, TaskModel taskModel) {
     List<Widget> widgets = [];
+    TextEditingController _fromddController = new TextEditingController();
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -358,6 +362,24 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         },
       ));
     }
+
+    widgets.add(
+      NTSDropDownSelect(
+        isUserList: true,
+        title: 'From',
+        controller: _fromddController,
+        hint: 'From',
+        isShowArrow: true,
+        onListTap: (dynamic value) {
+          userBLoc.subjectUserDataList.sink.add(null);
+          User _user = value;
+          _fromddController.text = _user.name;
+          ownerUserId = _user.id;
+          //     selectValue[i] = _selectedIdNameViewModel.name;
+          //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
+        },
+      ),
+    );
 
     if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);

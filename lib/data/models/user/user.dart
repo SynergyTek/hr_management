@@ -139,7 +139,9 @@ class User {
     enableSummaryEmail = json['EnableSummaryEmail'];
     lineManagerId = json['LineManagerId'];
     activationCode = json['ActivationCode'];
-    legalEntityIds = json['LegalEntityIds'].cast<String>();
+    if (json['LegalEntityIds'] != null && json['LegalEntityIds'].length > 0) {
+      legalEntityIds = json['LegalEntityIds'].cast<String>();
+    }
     id = json['Id'];
     createdDate = json['CreatedDate'];
     createdBy = json['CreatedBy'];

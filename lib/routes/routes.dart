@@ -1,3 +1,5 @@
+import 'package:hr_management/ui/widgets/custom_controls/user_dropdown_list.dart';
+
 import '../ui/screens/payroll/manage_accrual_screen.dart';
 import '../ui/screens/payroll/payslip_screen.dart';
 
@@ -134,6 +136,15 @@ class AppRouter {
             onListTap: args.func,
           ),
         );
+
+      case NTS_USER_DROPDOWN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => UserDropDownList(
+            onListTap: args.func,
+          ),
+        );
+
       case TASK_HOME:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(

@@ -189,6 +189,18 @@ class APIEndpointConstants {
   //Payroll Endpoints
 
   static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData';
+
   static const READ_PAYSLIP_DATA =
       '$BASE_URL/CHR/query/ReadPaySlipData?month=7&year=2021&personId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  //Payroll API Endpoints Block End
+  //************************************************************************//
+
+  //User Endpoints
+
+  static const READ_USER_DATA = '$BASE_URL/cms/user/ReadUserData';
+
+  //User API Endpoints Block End
+  //************************************************************************//
+
 }

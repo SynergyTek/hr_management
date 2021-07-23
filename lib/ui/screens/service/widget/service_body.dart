@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/data/models/user/user.dart';
+import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
@@ -63,6 +65,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   String subjectValue;
   String descriptionValue;
   String slaValue;
+  String ownerUserId;
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
@@ -240,6 +243,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, Service serviceModel) {
     List<Widget> widgets = [];
+    TextEditingController _fromddController = new TextEditingController();
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -394,6 +398,24 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ),
       ));
     }
+
+    widgets.add(
+      NTSDropDownSelect(
+        isUserList: true,
+        title: 'From',
+        controller: _fromddController,
+        hint: 'From',
+        isShowArrow: true,
+        onListTap: (dynamic value) {
+          userBLoc.subjectUserDataList.sink.add(null);
+          User _user = value;
+          _fromddController.text = _user.name;
+          ownerUserId = _user.id;
+          //     selectValue[i] = _selectedIdNameViewModel.name;
+          //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
+        },
+      ),
+    );
 
     if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
@@ -626,9 +648,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             }
           }
         }
-        // } else {
-        //   _ddController.text = selectValue[i];
-        // }
         if ((selectValue != null && selectValue.isNotEmpty) &&
             (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
@@ -648,32 +667,31 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               url: model[i].data.url,
               ddController: _ddController);
         }
-        // } else {
-        //   _ddController.text = selectValue[i];
-        // }
 
-        listDynamic.add(NTSDropDownSelect(
-          title: model[i].label,
-          controller: _ddController,
-          hint: model[i].label,
-          validationMessage: "Select " + model[i].label,
-          isShowArrow: true,
-          nameKey: (model[i].template)
-              .toString()
-              .replaceAll('<span>{{', '')
-              .replaceAll('}}</span>', '')
-              .trim()
-              .split('.')[1],
-          idKey: model[i].idPath,
-          url: model[i].data.url,
-          onListTap: (dynamic value) {
-            ntsDdBloc.subject.sink.add(null);
-            NTSDropdownModel _selectedIdNameViewModel = value;
-            _ddController.text = _selectedIdNameViewModel.name;
-            selectValue[i] = _selectedIdNameViewModel.name;
-            udfJson[model[i].key] = _selectedIdNameViewModel.id;
-          },
-        ));
+        listDynamic.add(
+          NTSDropDownSelect(
+            title: model[i].label,
+            controller: _ddController,
+            hint: model[i].label,
+            validationMessage: "Select " + model[i].label,
+            isShowArrow: true,
+            nameKey: (model[i].template)
+                .toString()
+                .replaceAll('<span>{{', '')
+                .replaceAll('}}</span>', '')
+                .trim()
+                .split('.')[1],
+            idKey: model[i].idPath,
+            url: model[i].data.url,
+            onListTap: (dynamic value) {
+              ntsDdBloc.subject.sink.add(null);
+              NTSDropdownModel _selectedIdNameViewModel = value;
+              _ddController.text = _selectedIdNameViewModel.name;
+              selectValue[i] = _selectedIdNameViewModel.name;
+              udfJson[model[i].key] = _selectedIdNameViewModel.id;
+            },
+          ),
+        );
       } else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId == null || widget.serviceId.isEmpty)) {
@@ -1224,7 +1242,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
 
-    postServiceModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postServiceModel.ownerUserId = ownerUserId;
     postServiceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
     postServiceModel.serviceSubject = createServiceFormBloc.subject.value;
     postServiceModel.serviceDescription =
