@@ -36,7 +36,7 @@ class _WorklistDashboardBodyState extends State<WorklistDashboardBody> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            // icon: Icon(Icons.tasks),
+            icon: Icon(Icons.note),
             label: 'Task',
           ),
           BottomNavigationBarItem(
