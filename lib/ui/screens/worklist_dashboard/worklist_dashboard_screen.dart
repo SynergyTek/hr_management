@@ -88,8 +88,8 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
             return BottomNavigationBar(
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  // icon: Icon(Icons.file_copy),
-                  icon: Icon(Icons.task),
+                  icon: Icon(Icons.file_copy),
+                  // icon: Icon(Icons.task),
                   label: 'Task',
                 ),
                 BottomNavigationBarItem(
