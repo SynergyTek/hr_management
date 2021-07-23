@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../../../data/enums/enums.dart';
-import '../../../../data/maps/maps.dart';
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
-import '../../../widgets/nts_widgets.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
+
+import 'service_list_tile.dart';
 
 class ServiceDashboardList extends StatefulWidget {
   ServiceDashboardList({Key key}) : super(key: key);
@@ -75,63 +75,9 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
                   listItems: _serviceList,
                   filteredSearchList: _filteredServiceList,
                   itemBuilder: (context, index) {
-                    print("Snapshot data: ${snapshot.data.list[index]}");
-                    return Card(
-                      elevation: 4,
-                      child: ListTile(
-                        title: Text(
-                          serviceSubject(index),
-                          maxLines: 2,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        subtitle: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Text("Service No: "),
-                                      Text(serviceNoValue(index)),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 6.0, bottom: 6.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Text("From: "),
-                                  Text(
-                                    ownerUserName(index),
-                                    style: TextStyle(
-                                        color: Colors.deepPurple[900]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    noteStatusName(index),
-                                    style: TextStyle(color: Colors.green[800]),
-                                  ),
-                                ),
-                                Text(
-                                  expiryDate(index),
-                                  style: TextStyle(color: Colors.red[700]),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                    return ServiceListCard(
+                      index: index,
+                      serviceList: _serviceList,
                     );
                   },
                 );
@@ -245,26 +191,6 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
         val2: true,
       ),
     );
-  }
-
-  String serviceSubject(int index) {
-    return _serviceList[index].serviceSubject ?? "-";
-  }
-
-  String serviceNoValue(int index) {
-    return _serviceList[index].serviceNo ?? "-";
-  }
-
-  String ownerUserName(int index) {
-    return _serviceList[index].ownerUserUserName ?? "-";
-  }
-
-  String noteStatusName(int index) {
-    return _serviceList[index].serviceStatusName ?? "-";
-  }
-
-  String expiryDate(int index) {
-    return _serviceList[index].dueDateDisplay ?? "-";
   }
 
   customButton({

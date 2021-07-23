@@ -1,5 +1,6 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/nts_template_models/nts_template_model.dart';
 
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/enums/enums.dart';
@@ -9,7 +10,7 @@ import '../../../../routes/screen_arguments.dart';
 import '../../leaves/widget/grid_widget.dart';
 
 class AnimatedGridViewWidget extends StatefulWidget {
-  final dynamic model;
+  final List<NTSTemplateModel> model;
   final NTSType ntsType;
 
   AnimatedGridViewWidget({
@@ -58,7 +59,7 @@ class _AnimatedGridViewWidgetState extends State<AnimatedGridViewWidget> {
 class GridViewFlipWidget extends StatefulWidget {
   final int index;
   final List<GlobalKey<FlipCardState>> cardKeys;
-  final dynamic response;
+  final NTSTemplateModel response;
   final NTSType ntsType;
 
   GridViewFlipWidget({

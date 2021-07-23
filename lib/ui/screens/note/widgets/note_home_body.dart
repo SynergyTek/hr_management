@@ -8,6 +8,8 @@ import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
+import 'note_list_tile.dart';
+
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class NoteHomeBody extends StatefulWidget {
@@ -87,74 +89,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
                   listItems: _noteList,
                   filteredSearchList: _filteredNoteList,
                   itemBuilder: (context, index) {
-                    print("Snapshot data: ${snapshot.data}");
-                    return Card(
-                      elevation: 4,
-                      child: ListTile(
-                        title: Text(
-                          noteSubject(index),
-                          maxLines: 2,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        subtitle: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Text("Note No: "),
-                                      Text(noteNoValue(index)),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 6.0, bottom: 6.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Text("From: "),
-                                  Text(
-                                    ownerUserName(index),
-                                    style: TextStyle(
-                                        color: Colors.deepPurple[900]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    noteStatusName(index),
-                                    style: TextStyle(color: Colors.green[800]),
-                                  ),
-                                ),
-                                Text(
-                                  expiryDate(index),
-                                  style: TextStyle(color: Colors.red[700]),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        onTap: () {
-                          noteBloc.subjectNoteDetails.sink.add(null);
-                          Navigator.pushNamed(
-                            context,
-                            ADD_EDIT_NOTE_ROUTE,
-                            arguments: ScreenArguments(
-                                arg1: '',
-                                arg2: _noteList[index].id,
-                                arg3: _noteList[index].noteSubject),
-                          );
-                        },
-                      ),
+                    return NoteListCard(
+                      index: index,
+                      noteList: _noteList,
                     );
                   },
                 );
@@ -195,30 +132,6 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
         ],
       ),
     );
-  }
-
-  String noteSubject(int index) {
-    return _noteList[index].noteSubject ?? "-";
-  }
-
-  String noteNoValue(int index) {
-    return _noteList[index].noteNo ?? "-";
-  }
-
-  String ownerUserName(int index) {
-    return _noteList[index].ownerUserName ?? "-";
-  }
-
-  String assigneeDisplayName(int index) {
-    return _noteList[index].assigneeDisplayName ?? "-";
-  }
-
-  String noteStatusName(int index) {
-    return _noteList[index].noteStatusName ?? "-";
-  }
-
-  String expiryDate(int index) {
-    return _noteList[index].expiryDateDisplay ?? "-";
   }
 
   customButton({

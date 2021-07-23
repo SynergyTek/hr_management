@@ -49,8 +49,17 @@ class TaskRepository extends AbstractTaskRepository {
   }
 
   Future<TaskListResponseModel> getTaskDashBoardData(
-      {Map<String, dynamic> queryparams}) async {
-    final String endpoint = APIEndpointConstants.READ_TASK_DASHBOARD_DATA;
+      {Map<String, dynamic> queryparams, String taskListStatus}) async {
+    String endpoint = '';
+    if (taskListStatus == 'InProgress') {
+      endpoint = APIEndpointConstants.READ_TASK_DATA_IN_PROGRESS;
+    } else if (taskListStatus == 'Overdue') {
+      endpoint = APIEndpointConstants.READ_TASK_DATA_OVERDUE;
+    } else if (taskListStatus == 'Complete') {
+      endpoint = APIEndpointConstants.READ_TASK_DATA_COMPLETED;
+    } else {
+      endpoint = APIEndpointConstants.READ_TASK_DASHBOARD_DATA;
+    }
 
     try {
       Response response = await _dio.get(

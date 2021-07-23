@@ -20,7 +20,7 @@ class ServiceDashboard extends StatelessWidget {
       drawer: drawerWidget(context),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: ServiceDashboardBody(
+          child: NTSDashboardBody(
             ntsType: ntsType,
           ),
         ),
@@ -31,10 +31,10 @@ class ServiceDashboard extends StatelessWidget {
   String _ntsTitle() {
     String title;
     if (ntsType == NTSType.service)
-      title = 'Service Dashboard';
+      title = 'Service Home Dashboard';
     else if (ntsType == NTSType.task)
-      title = 'Task Dashboard';
-    else if (ntsType == NTSType.note) title = 'Note Dashboard';
+      title = 'Task Home Dashboard';
+    else if (ntsType == NTSType.note) title = 'Note Home Dashboard';
 
     return title;
   }
