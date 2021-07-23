@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/nts_template_models/nts_template_model.dart';
+import 'package:hr_management/data/models/nts_template_tree_list_models/nts_template_tree_list_model.dart';
+import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../themes/theme_config.dart';
 import 'animated_grid_view_widget.dart';
@@ -21,6 +24,11 @@ class NTSTemplateBodyWidget extends StatefulWidget {
 }
 
 class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
+  Map<String, TreeViewModelChildren> _checkedFilterSelectedItemsMap = Map();
+  int _selectedIndex = 0;
+  List<NTSTemplateModel> templateModel = [];
+  List<String> categoryList = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,17 +45,26 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
 
             // if no data is present
             if (snapshot?.data?.data == null || snapshot.data.data == [])
-              return Center(
-                child: Text("No data available."),
-              );
+              return EmptyListWidget();
+            var singleitem =
+                templateModel.map((x) => x.templateCategoryName).toList();
+            categoryList = singleitem.toSet().toList();
 
-            // List model = widget.ntsType == ntsType.service
-            //     ? snapshot.data.data.where((e) => e.templateType == 6).toList()
-            //     : snapshot.data.data;
-
-            return AnimatedGridViewWidget(
-              model: snapshot.data.data,
-              ntsType: widget.ntsType,
+            return Container(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _filterWidget(),
+                    Expanded(
+                      child: AnimatedGridViewWidget(
+                        model: snapshot.data.data,
+                        ntsType: widget.ntsType,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             );
           } else {
             return Center(
@@ -56,6 +73,84 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
           }
         },
       ),
+    );
+  }
+
+  Widget _filterWidget() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        // Expanded(
+        //     // child: _handleFilterChips(),
+        //     ),
+        IconButton(
+          icon: Icon(Icons.filter_list),
+          onPressed: () => _handleFilterOnPressed(),
+        ),
+      ],
+    );
+  }
+
+  _handleFilterChips() {}
+
+  _handleFilterOnPressed() {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      isScrollControlled: false,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(
+                16.0,
+              ),
+              topRight: Radius.circular(
+                16.0,
+              ),
+            ),
+          ),
+          width: double.infinity,
+          padding: DEFAULT_LARGE_PADDING,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.filter_list),
+                title: Text("Filter"),
+                trailing: IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: categoryList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(categoryList[index]),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _eachItemExpansionTile(NTSTemplateModel eachData) {
+    return ExpansionTile(
+      title: Text(eachData.name),
+      // children: _expansionTileChildren(eachData),
     );
   }
 }
