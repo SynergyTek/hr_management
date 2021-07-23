@@ -42,7 +42,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
                 child: Text(snapshot.data.error),
               );
             }
-
+            templateModel = snapshot.data.data;
             // if no data is present
             if (snapshot?.data?.data == null || snapshot.data.data == [])
               return EmptyListWidget();
