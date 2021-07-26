@@ -12,7 +12,7 @@ class UserRepository extends AbstractUserRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      print(response.data);
+      //print(response.data);
       return UserListResponse.fromJson(
         response.data,
       );

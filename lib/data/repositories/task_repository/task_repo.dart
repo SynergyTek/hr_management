@@ -35,7 +35,7 @@ class TaskRepository extends AbstractTaskRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      print(response.data);
+      //print(response.data);
       return TaskResponseModel.fromJson(
         response.data,
       );

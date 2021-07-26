@@ -17,7 +17,7 @@ class NoteRepository extends AbstractNoteRepository {
       );
 
       // print("DIO Response: ${response.data.runtimeType}");
-      print(response.data);
+      //print(response.data);
       return NoteResponse.fromJson(
         response.data,
       );
@@ -39,7 +39,7 @@ class NoteRepository extends AbstractNoteRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      print(response.data);
+      //print(response.data);
       return NoteListResponse.fromJson(
         response.data,
       );
@@ -60,7 +60,7 @@ Future<NoteListResponse> getNoteDashBoardData(
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      print(response.data);
+      //print(response.data);
       return NoteListResponse.fromJson(
         response.data,
       );

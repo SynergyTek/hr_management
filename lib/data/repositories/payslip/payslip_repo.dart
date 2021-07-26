@@ -14,7 +14,7 @@ class PayslipRepository extends AbstractPayslipRepository {
         queryParameters: queryparams ?? {},
       );
 
-      print(response.data);
+      //print(response.data);
       return PayslipResponse.fromJson(
         response.data,
       );
