@@ -42,59 +42,101 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
               filteredSearchList: filterAccrualList,
               itemBuilder: (context, index) {
                 return Card(
-                  elevation: 4,
-                  child: ListTile(
-                    title: Text(
-                      noteSubject(index),
-                      maxLines: 2,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    subtitle: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 6.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Row(
+                    elevation: 4,
+                    child: ListTile(
+                      title: Row(
+                        children: [
+                          Text("Accrual Date: "),
+                          Text(
+                            accrualDate(index),
+                            maxLines: 2,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                        ],
+                      ),
+                      subtitle: Column(children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Row(
                                 children: <Widget>[
-                                  Text("Note No: "),
-                                  Text(noteNoValue(index)),
+                                  Text("EOS Accrual: "),
+                                  Text(
+                                    eosAccrual(index),
+                                    style: TextStyle(
+                                        color: Colors.deepPurple[900]),
+                                  ),
                                 ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 6.0, bottom: 6.0),
-                          child: Row(
-                            children: <Widget>[
-                              Text("From: "),
-                              Text(
-                                ownerUserName(index),
-                                style: TextStyle(color: Colors.deepPurple[900]),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         Row(
                           children: [
                             Expanded(
-                              child: Text(
-                                noteStatusName(index),
-                                style: TextStyle(color: Colors.green[800]),
+                              child: Row(
+                                children: <Widget>[
+                                  Text("Flight Ticket Accrual: "),
+                                  Text(
+                                    flightTicketAccrual(index),
+                                    style: TextStyle(
+                                        color: Colors.deepPurple[900]),
+                                  ),
+                                ],
                               ),
-                            ),
-                            // Text(
-                            //   expiryDate(index),
-                            //   style: TextStyle(color: Colors.red[700]),
-                            // ),
+                            )
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                );
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  Text("Vacation Accrual: "),
+                                  Text(
+                                    vacationAccrual(index),
+                                    style: TextStyle(
+                                        color: Colors.deepPurple[900]),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  Text("Sick Leave Accrual: "),
+                                  Text(
+                                    sickLeaveAccrual(index),
+                                    style: TextStyle(
+                                        color: Colors.deepPurple[900]),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  Text("Loan Accrual: "),
+                                  Text(
+                                    loanAccrual(index),
+                                    style: TextStyle(
+                                        color: Colors.deepPurple[900]),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ]),
+                    ));
               },
             );
           } else {
@@ -107,27 +149,31 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
     );
   }
 
-  String noteSubject(int index) {
-    return manageAccrualList[index].noteSubject ?? "-";
+  String description(int index) {
+    return manageAccrualList[index].description ?? "-";
   }
 
-  String noteNoValue(int index) {
-    return manageAccrualList[index].noteNo ?? "-";
+  String accrualDate(int index) {
+    return manageAccrualList[index].yearMonthText ?? "-";
   }
 
-  String ownerUserName(int index) {
-    return manageAccrualList[index].ownerUserName ?? "-";
+  String eosAccrual(int index) {
+    return manageAccrualList[index].eosAccrualText ?? "-";
   }
 
-  // String assigneeDisplayName(int index) {
-  //   return manageAccrualList[index].assigneeDisplayName ?? "-";
-  // }
-
-  String noteStatusName(int index) {
-    return manageAccrualList[index].noteStatusName ?? "-";
+  String flightTicketAccrual(int index) {
+    return manageAccrualList[index].flightTicketAccrualText ?? "-";
   }
 
-  // String expiryDate(int index) {
-  //   return noteList[index].expiryDateDisplay ?? "-";
-  // }
+  String vacationAccrual(int index) {
+    return manageAccrualList[index].vacationAccrualText ?? "-";
+  }
+
+  String sickLeaveAccrual(int index) {
+    return manageAccrualList[index].sickLeaveAccrualText ?? "-";
+  }
+
+  String loanAccrual(int index) {
+    return manageAccrualList[index].loanAccrualText ?? "-";
+  }
 }
