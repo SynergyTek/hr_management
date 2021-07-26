@@ -3,15 +3,16 @@ import 'manage_accrual_model.dart';
 
 class ManageAccrualResponse {
   bool isSuccess;
-  final ManageAccrualModel data;
+  final List<ManageAccrualModel> data;
   String error;
 
   ManageAccrualResponse({
     @required this.data,
   });
 
-  ManageAccrualResponse.fromJson(Map<String, dynamic> response)
-      : data = ManageAccrualModel.fromJson(response);
+  ManageAccrualResponse.fromJson(List response)
+      : data =
+            (response).map((i) => new ManageAccrualModel.fromJson(i)).toList();
 
   ManageAccrualResponse.withError(String errorValue)
       : data = null,

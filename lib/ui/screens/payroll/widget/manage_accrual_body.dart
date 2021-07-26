@@ -14,13 +14,12 @@ class ManageAccrualBody extends StatefulWidget {
 }
 
 class _ManageAccrualBodyState extends State<ManageAccrualBody> {
-  List<ManageAccrualDatum> manageAccrualList = [];
-  List<ManageAccrualDatum> filterAccrualList = [];
+  List<ManageAccrualModel> manageAccrualList = [];
+  List<ManageAccrualModel> filterAccrualList = [];
 
   @override
   void initState() {
-    manageAccrualBloc.getManageAccrual(
-       );
+    manageAccrualBloc.getManageAccrual();
     super.initState();
   }
 
@@ -37,7 +36,7 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
                 child: Text(snapshot.data.error),
               );
             }
-            manageAccrualList = snapshot.data.data.data;
+            manageAccrualList = snapshot.data.data;
             return Listizer(
               listItems: manageAccrualList,
               filteredSearchList: filterAccrualList,
