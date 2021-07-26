@@ -48,12 +48,13 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
 
   String titleText() {
     String title;
-    if (widget.categoryCode == 'Leave')
-      title = 'Leave Request';
-    else if (widget.categoryCode == 'STEP_TASK_CATEGORY')
-      title = 'Task Request';
-    else
-      title = 'Service Request';
+    if (widget.categoryCode == 'Leave' && widget.ntsType == NTSType.service)
+      title = 'Leave Templates';
+    else if (widget.ntsType == NTSType.service)
+      title = 'Service Templates';
+    else if (widget.ntsType == NTSType.task)
+      title = 'Task Templates';
+    else if (widget.ntsType == NTSType.note) title = 'Note Templates';
     return title;
   }
 }

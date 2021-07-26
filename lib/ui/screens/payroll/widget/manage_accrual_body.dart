@@ -20,7 +20,7 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
   @override
   void initState() {
     manageAccrualBloc.getManageAccrual(
-        legalEntityId: '60d2df036755e8de168d8db7');
+       );
     super.initState();
   }
 

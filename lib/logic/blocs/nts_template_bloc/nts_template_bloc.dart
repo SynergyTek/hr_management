@@ -20,9 +20,9 @@ class NTSTemplateBloc {
     if (ntsType == NTSType.service) {
       _subject.sink.add(null);
       queryparams = {
-        "categoryCode": categoryCode == "Leave"
-            ? "Leave"
-            : "Employee_Service", //categoryCode,
+        // "categoryCode": categoryCode == "Leave"
+        //     ? "Leave"
+        //     : "Employee_Service", //categoryCode,
         "templateType": "Service",
       };
     } else if (ntsType == NTSType.task) {
