@@ -44,7 +44,57 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 4,
-                  child: ListTile(),
+                  child: ListTile(
+                    title: Text(
+                      noteSubject(index),
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text("Note No: "),
+                                  Text(noteNoValue(index)),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6.0, bottom: 6.0),
+                          child: Row(
+                            children: <Widget>[
+                              Text("From: "),
+                              Text(
+                                ownerUserName(index),
+                                style: TextStyle(color: Colors.deepPurple[900]),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                noteStatusName(index),
+                                style: TextStyle(color: Colors.green[800]),
+                              ),
+                            ),
+                            // Text(
+                            //   expiryDate(index),
+                            //   style: TextStyle(color: Colors.red[700]),
+                            // ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               },
             );
@@ -57,4 +107,28 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
       ),
     );
   }
+
+  String noteSubject(int index) {
+    return manageAccrualList[index].noteSubject ?? "-";
+  }
+
+  String noteNoValue(int index) {
+    return manageAccrualList[index].noteNo ?? "-";
+  }
+
+  String ownerUserName(int index) {
+    return manageAccrualList[index].ownerUserName ?? "-";
+  }
+
+  // String assigneeDisplayName(int index) {
+  //   return manageAccrualList[index].assigneeDisplayName ?? "-";
+  // }
+
+  String noteStatusName(int index) {
+    return manageAccrualList[index].noteStatusName ?? "-";
+  }
+
+  // String expiryDate(int index) {
+  //   return noteList[index].expiryDateDisplay ?? "-";
+  // }
 }
