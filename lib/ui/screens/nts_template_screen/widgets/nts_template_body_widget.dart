@@ -26,8 +26,10 @@ class NTSTemplateBodyWidget extends StatefulWidget {
 class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
   Map<String, TreeViewModelChildren> _checkedFilterSelectedItemsMap = Map();
   int _selectedIndex = 0;
-  List<NTSTemplateModel> templateModel = [];
+  List<NTSTemplateModel> templateModels = [];
+  List<NTSTemplateModel> _filteredTemplateModels = [];
   List<String> categoryList = [];
+  String selectedCategory = "All";
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +44,25 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
                 child: Text(snapshot.data.error),
               );
             }
-            templateModel = snapshot.data.data;
+
             // if no data is present
-            if (snapshot?.data?.data == null || snapshot.data.data == [])
+            if (snapshot?.data?.data == null || snapshot.data.data == []) {
               return EmptyListWidget();
+            }
+
+            templateModels = snapshot.data.data;
             var singleitem =
-                templateModel.map((x) => x.templateCategoryName).toList();
+                templateModels.map((x) => x.templateCategoryName).toList();
             categoryList = singleitem.toSet().toList();
+
+            if (selectedCategory != "All") {
+              _filteredTemplateModels = templateModels
+                  .where((element) =>
+                      element.templateCategoryName == selectedCategory)
+                  .toList();
+            } else {
+              _filteredTemplateModels = templateModels;
+            }
 
             return Container(
               child: Center(
@@ -58,7 +72,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
                     _filterWidget(),
                     Expanded(
                       child: AnimatedGridViewWidget(
-                        model: snapshot.data.data,
+                        model: _filteredTemplateModels,
                         ntsType: widget.ntsType,
                       ),
                     ),
@@ -81,9 +95,10 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        // Expanded(
-        //     // child: _handleFilterChips(),
-        //     ),
+        Expanded(
+          child: Text(selectedCategory,
+              style: Theme.of(context).textTheme.headline6),
+        ),
         IconButton(
           icon: Icon(Icons.filter_list),
           onPressed: () => _handleFilterOnPressed(),
@@ -119,14 +134,19 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.filter_list),
-                title: Text("Filter"),
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    color: Theme.of(context).accentColor,
+                title: Text("Select Template Category"),
+                trailing: ElevatedButton(
+                  // style: ButtonStyle(overl),
+                  child: Text(
+                    'Reset',
                   ),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () {
+                    setState(() {
+                      selectedCategory = "All";
+                    });
+
+                    Navigator.of(context).pop();
+                  },
                 ),
               ),
               Expanded(
@@ -135,7 +155,19 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
                   itemCount: categoryList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
+                      trailing: Icon(
+                        Icons.check_box,
+                        color: selectedCategory == categoryList[index]
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey[100],
+                      ),
                       title: Text(categoryList[index]),
+                      onTap: () {
+                        setState(() {
+                          selectedCategory = categoryList[index];
+                        });
+                        Navigator.of(context).pop();
+                      },
                     );
                   },
                 ),

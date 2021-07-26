@@ -190,17 +190,17 @@ class APIEndpointConstants {
       '$BASE_URL/cms/query/GetEnumAsTreeList?id=Root';
 
   static const GET_MODULE_TREE_LIST =
-      '$BASE_URL/cms/query/GetModuleTreeList?id=Root';
+      '$BASE_URL/cms/query/GetModuleTreeList?id=Root&portalName=HR&userId=45bba746-3309-49b7-9c03-b5793369d73c';
 
   //Common API Endpoints Block End
   //************************************************************************//
 
   //Payroll Endpoints
 
-  static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData';
+  static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData?userId=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const READ_PAYSLIP_DATA =
-      '$BASE_URL/CHR/query/ReadPaySlipData?month=7&year=2021&personId=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/CHR/query/ReadPaySlipData?month=7&year=2021&userId=45bba746-3309-49b7-9c03-b5793369d73c';
 
   //Payroll API Endpoints Block End
   //************************************************************************//

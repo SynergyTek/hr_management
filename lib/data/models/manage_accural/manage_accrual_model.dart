@@ -1,43 +1,18 @@
+// To parse this JSON data, do
+//
+//     final manageAccrualModel = manageAccrualModelFromJson(jsonString);
+
 import 'dart:convert';
 
-ManageAccrualModel manageAccrualModelFromJson(String str) =>
-    ManageAccrualModel.fromJson(json.decode(str));
+List<ManageAccrualModel> manageAccrualModelFromJson(String str) =>
+    List<ManageAccrualModel>.from(
+        json.decode(str).map((x) => ManageAccrualModel.fromJson(x)));
 
-String manageAccrualModelToJson(ManageAccrualModel data) =>
-    json.encode(data.toJson());
+String manageAccrualModelToJson(List<ManageAccrualModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ManageAccrualModel {
   ManageAccrualModel({
-    this.data,
-    this.total,
-    this.aggregateResults,
-    this.errors,
-  });
-
-  List<ManageAccrualDatum> data;
-  int total;
-  dynamic aggregateResults;
-  dynamic errors;
-
-  factory ManageAccrualModel.fromJson(Map<String, dynamic> json) =>
-      ManageAccrualModel(
-        data: List<ManageAccrualDatum>.from(
-            json["Data"].map((x) => ManageAccrualDatum.fromJson(x))),
-        total: json["Total"],
-        aggregateResults: json["AggregateResults"],
-        errors: json["Errors"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "Data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "Total": total,
-        "AggregateResults": aggregateResults,
-        "Errors": errors,
-      };
-}
-
-class ManageAccrualDatum {
-  ManageAccrualDatum({
     this.payrollName,
     this.payrollStartDate,
     this.payrollEndDate,
@@ -301,9 +276,9 @@ class ManageAccrualDatum {
   dynamic executionStartDate;
   dynamic executionEndDate;
   String executedBy;
-  int totalEarning;
-  int totalDeduction;
-  int netAmount;
+  double totalEarning;
+  double totalDeduction;
+  double netAmount;
   bool isExecuteAllEmployee;
   int totalProcessed;
   int totalSucceeded;
@@ -313,11 +288,11 @@ class ManageAccrualDatum {
   int payslipError;
   int bankLetterTotal;
   int bankLetterError;
-  dynamic vacationAccrual;
-  dynamic flightTicketAccrual;
+  int vacationAccrual;
+  int flightTicketAccrual;
   int eosAccrual;
-  dynamic loanAccrual;
-  dynamic sickLeaveAccrual;
+  int loanAccrual;
+  int sickLeaveAccrual;
   DateTime attendanceStartDate;
   DateTime attendanceEndDate;
   dynamic payrollInterval;
@@ -535,18 +510,18 @@ class ManageAccrualDatum {
   int versionNo;
   dynamic portalId;
 
-  factory ManageAccrualDatum.fromJson(Map<String, dynamic> json) =>
-      ManageAccrualDatum(
+  factory ManageAccrualModel.fromJson(Map<String, dynamic> json) =>
+      ManageAccrualModel(
         payrollName: json["PayrollName"],
         payrollStartDate: DateTime.parse(json["PayrollStartDate"]),
         payrollEndDate: DateTime.parse(json["PayrollEndDate"]),
         payrollRunDate: DateTime.parse(json["PayrollRunDate"]),
         executionStatus: json["ExecutionStatus"],
-        yearMonth: json["YearMonth"],
+        yearMonth: json["YearMonth"] == null ? null : json["YearMonth"],
         payrollStateStart: json["PayrollStateStart"],
         payrollStateEnd: json["PayrollStateEnd"],
         runType: json["RunType"],
-        name: json["Name"],
+        name: json["Name"] == null ? null : json["Name"],
         payRollNo: json["PayRollNo"],
         executionStartDate: json["ExecutionStartDate"],
         executionEndDate: json["ExecutionEndDate"],
@@ -563,11 +538,15 @@ class ManageAccrualDatum {
         payslipError: json["PayslipError"],
         bankLetterTotal: json["BankLetterTotal"],
         bankLetterError: json["BankLetterError"],
-        vacationAccrual: json["VacationAccrual"],
-        flightTicketAccrual: json["FlightTicketAccrual"],
-        eosAccrual: json["EOSAccrual"] == null ? null : json["EOSAccrual"],
-        loanAccrual: json["LoanAccrual"],
-        sickLeaveAccrual: json["SickLeaveAccrual"],
+        vacationAccrual:
+            json["VacationAccrual"] == null ? null : json["VacationAccrual"],
+        flightTicketAccrual: json["FlightTicketAccrual"] == null
+            ? null
+            : json["FlightTicketAccrual"],
+        eosAccrual: json["EOSAccrual"],
+        loanAccrual: json["LoanAccrual"] == null ? null : json["LoanAccrual"],
+        sickLeaveAccrual:
+            json["SickLeaveAccrual"] == null ? null : json["SickLeaveAccrual"],
         attendanceStartDate: DateTime.parse(json["AttendanceStartDate"]),
         attendanceEndDate: DateTime.parse(json["AttendanceEndDate"]),
         payrollInterval: json["PayrollInterval"],
@@ -794,11 +773,11 @@ class ManageAccrualDatum {
         "PayrollEndDate": payrollEndDate.toIso8601String(),
         "PayrollRunDate": payrollRunDate.toIso8601String(),
         "ExecutionStatus": executionStatus,
-        "YearMonth": yearMonth,
+        "YearMonth": yearMonth == null ? null : yearMonth,
         "PayrollStateStart": payrollStateStart,
         "PayrollStateEnd": payrollStateEnd,
         "RunType": runType,
-        "Name": name,
+        "Name": name == null ? null : name,
         "PayRollNo": payRollNo,
         "ExecutionStartDate": executionStartDate,
         "ExecutionEndDate": executionEndDate,
@@ -815,11 +794,12 @@ class ManageAccrualDatum {
         "PayslipError": payslipError,
         "BankLetterTotal": bankLetterTotal,
         "BankLetterError": bankLetterError,
-        "VacationAccrual": vacationAccrual,
-        "FlightTicketAccrual": flightTicketAccrual,
-        "EOSAccrual": eosAccrual == null ? null : eosAccrual,
-        "LoanAccrual": loanAccrual,
-        "SickLeaveAccrual": sickLeaveAccrual,
+        "VacationAccrual": vacationAccrual == null ? null : vacationAccrual,
+        "FlightTicketAccrual":
+            flightTicketAccrual == null ? null : flightTicketAccrual,
+        "EOSAccrual": eosAccrual,
+        "LoanAccrual": loanAccrual == null ? null : loanAccrual,
+        "SickLeaveAccrual": sickLeaveAccrual == null ? null : sickLeaveAccrual,
         "AttendanceStartDate": attendanceStartDate.toIso8601String(),
         "AttendanceEndDate": attendanceEndDate.toIso8601String(),
         "PayrollInterval": payrollInterval,
