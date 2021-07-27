@@ -24,7 +24,7 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
         queryParameters: queryparams ?? {},
       );
 
-      print(response.data);
+      //print(response.data);
       return CommentListResponse.fromJson(
         response.data,
       );

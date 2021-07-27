@@ -25,7 +25,7 @@ class NTSTemplateBloc {
     } else if (ntsType == NTSType.task) {
       _subject.sink.add(null);
       queryparams = {
-        "categoryCode": "ProjectTask", //categoryCode,
+        "categoryCode": "", //categoryCode,
         "templateType": "Task",
       };
     } else if (ntsType == NTSType.note && categoryCode == 'Document') {
