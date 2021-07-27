@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../routes/route_constants.dart';
 
@@ -244,6 +246,19 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
+              ListTile(
+                  title: Text(
+                    'DOCUMENT TEMPLATE',
+                    style: TextStyle(fontSize: fontSize, color: fontColor),
+                  ),
+                  onTap: () => Navigator.pushNamed(
+                        context,
+                        NTS_TEMPLATE_REQUEST,
+                        arguments: ScreenArguments(
+                          ntstype: NTSType.note,
+                          arg4: 'Document',
+                        ),
+                      ))
             ],
           ),
         ],
