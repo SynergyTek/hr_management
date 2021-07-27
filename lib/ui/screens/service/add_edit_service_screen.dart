@@ -3,7 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
-import 'widget/service_body.dart';
+import 'widget/add_edit_service_body.dart';
 
 class CreateServiceScreen extends StatelessWidget {
   final bool isLeave;
