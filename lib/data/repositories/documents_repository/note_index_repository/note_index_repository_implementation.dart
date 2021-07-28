@@ -9,6 +9,11 @@ class NoteIndexRepository extends AbstractNoteIndexRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.GET_NOTE_INDEX_PAGE_GRID_DATA;
 
     try {

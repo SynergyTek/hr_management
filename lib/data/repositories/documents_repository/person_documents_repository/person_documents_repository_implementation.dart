@@ -9,6 +9,11 @@ class PersonDocumentsRepository extends AbstractPersonDocumentsRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.GET_PERSON_DOCUMENTS_DATA;
 
     try {
