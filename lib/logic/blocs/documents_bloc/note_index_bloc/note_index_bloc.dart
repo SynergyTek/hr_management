@@ -1,20 +1,19 @@
-import '../../../data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
-import '../../../data/repositories/nts_template_tree_list_repository/nts_template_tree_list_repository.dart';
+import '../../../../data/models/documents_models/note_index_models/note_index_response.dart';
+import '../../../../data/repositories/documents_repository/note_index_repository/note_index_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class NTSTemplateTreeListBloc {
-  final NTSTemplateTreeListRepository _apiRepository =
-      NTSTemplateTreeListRepository();
+class NoteIndexBloc {
+  final NoteIndexRepository _apiRepository = NoteIndexRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<NTSTemplateTreeListResponse> _subject =
-      BehaviorSubject<NTSTemplateTreeListResponse>();
+  final BehaviorSubject<NoteIndexResponse> _subject =
+      BehaviorSubject<NoteIndexResponse>();
 
   /// Used to fetch new entries.
   getData({
     Map<String, dynamic> queryparams,
   }) async {
-    NTSTemplateTreeListResponse response = await _apiRepository.getAPIData(
+    NoteIndexResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,
     );
     _subject.sink.add(response);
@@ -45,7 +44,7 @@ class NTSTemplateTreeListBloc {
     _subject.close();
   }
 
-  BehaviorSubject<NTSTemplateTreeListResponse> get subject => _subject;
+  BehaviorSubject<NoteIndexResponse> get subject => _subject;
 }
 
-final ntsTemplateTreeListBloc = NTSTemplateTreeListBloc();
+final noteIndexBloc = NoteIndexBloc();

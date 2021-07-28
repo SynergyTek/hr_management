@@ -57,7 +57,7 @@ class _TaskListBodyState extends State<TaskListBody> {
             label: 'In Progress',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.lock_clock_outlined),
+            icon: Icon(Icons.lock_clock),
             label: 'Overdue',
           ),
           BottomNavigationBarItem(
