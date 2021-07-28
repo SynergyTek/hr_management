@@ -625,7 +625,31 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             udfJson[model[i].key] = _selectedIdNameViewModel.id;
           },
         ));
-      } else if (model[i].type == 'datetime') {
+      }
+      // } else if (model[i].type == 'file') {
+      //         TextEditingController attchmentController = new TextEditingController();
+
+      // attchmentController.text = element.code == null
+      //     ? " Select File to Attach "
+      //     : " (1) File Attached " + element.code;
+      // listDynamic.add(DynamicAttchmentWidget(
+      //     element.labelDisplayName, element.fieldName, attchmentController, () {
+      //   pushToAttachments(
+      //       context, widget.settingInheritedWidget, serviceViewModel, 'Service',
+      //       (dynamic value, dynamic value2, dynamic value3) {
+      //     setState(() {
+      //       element.value = value2;
+      //       element.code = value;
+      //       attchmentController.text = " (1) File Attached " + element.code;
+      //     });
+      //   });
+      // }, () {
+      //   getIconWidget(element.code, element.value);
+      // }, () {
+      //   openfile(element.code, context);
+      // }, element.code, _isView));
+
+      else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId == null || widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';

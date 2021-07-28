@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
+import 'dart:convert';
 
-import '../../../../data/models/service_models/service.dart';
+import 'package:flutter/material.dart';
+
 import '../../../../data/models/service_models/service_response.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../themes/theme_config.dart';
@@ -16,11 +16,17 @@ class HomeScreenBodyWidget extends StatefulWidget {
 }
 
 class _HomeScreenBodyWidgetState extends State<HomeScreenBodyWidget> {
-  Service serviceModel;
-
   @override
   void initState() {
     super.initState();
+
+    // noteBloc
+    //   ..getNoteDetails(
+    //     noteId: '4ae6674b-40a9-4df8-803d-a37f0a1131c6',
+    //     // templateCode: '',
+    //     userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+    //   );
+
     serviceBloc
       ..getServiceDetail(
         templateCode: 'AnnualLeave' ?? 'RETURN_TO_WORK',
@@ -35,9 +41,9 @@ class _HomeScreenBodyWidgetState extends State<HomeScreenBodyWidget> {
       padding: DEFAULT_PADDING,
       child: StreamBuilder<ServiceResponse>(
         stream: serviceBloc.subject.stream,
+        // child: StreamBuilder<NoteResponse>(
+        //   stream: noteBloc.subjectNoteDetails.stream,
         builder: (context, AsyncSnapshot snapshot) {
-          print("Snapshot data: ${snapshot.data} ");
-
           if (snapshot.hasData) {
             if (snapshot.data.error != null && snapshot.data.error.length > 0) {
               return Center(
@@ -45,7 +51,11 @@ class _HomeScreenBodyWidgetState extends State<HomeScreenBodyWidget> {
               );
             }
 
-            return _webview(snapshot?.data?.data?.json);
+            String k = jsonEncode(jsonDecode(snapshot?.data?.data?.json));
+
+//  TODO: ...
+
+            return _webview(k);
           } else {
             return CustomProgressIndicator();
           }

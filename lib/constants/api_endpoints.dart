@@ -194,7 +194,8 @@ class APIEndpointConstants {
 
   //Payroll Endpoints
 
-  static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData';
+  static const READ_PAYROLL_DATA =
+      '$BASE_URL/CHR/query/ReadPayrollData?userId=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const READ_PAYSLIP_DATA =
       '$BASE_URL/CHR/query/ReadPaySlipData?month=7&year=2021';
@@ -215,6 +216,32 @@ class APIEndpointConstants {
 
   //Employee profile API Endpoints Block End
   //************************************************************************//
+
+    // Documents endpoints start here:
+
+  static const GET_PERSON_DOCUMENTS_DATA = BASE_URL +
+      '/CHR/query/ReadPersonDocumentRequestList?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const GET_PERSON_PROFILE_DATA = BASE_URL +
+      '/CHR/query/EmployeeDocument?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const GET_NOTE_INDEX_PAGE_GRID_DATA =
+      BASE_URL + '/CHR/query/LoadNoteIndexPageGrid';
+
+  // Documents endpoints end here:
+
+  //Dependent API Endpoints Block End
+  //************************************************************************//
+
+  static const READ_DEPENDENT_DOCUMENT_REQUEST_LIST =
+      '$BASE_URL/CHR/query/ReadDependantDocumentRequestList?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const READ_DEPENDENT_LIST =
+      '$BASE_URL/CHR/query/ReadDependantDocumentRequestList?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  //Dependent API Endpoints Block End
+  //************************************************************************//
+
 
 }
 

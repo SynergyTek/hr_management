@@ -190,7 +190,9 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
               context,
               widget.ntsType == NTSType.service
                   ? CREATE_SERVICE_ROUTE
-                  : CREATE_EDIT_TASK_ROUTE,
+                  : widget.ntsType == NTSType.task
+                      ? CREATE_EDIT_TASK_ROUTE
+                      : ADD_EDIT_NOTE_ROUTE,
               arguments: ScreenArguments(
                 arg1: templateCode,
                 arg2: '',

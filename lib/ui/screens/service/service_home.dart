@@ -26,6 +26,7 @@ class ServiceHomeScreen extends StatelessWidget {
         child: ServiceHomeBody(
           serviceStatus: serviceStatus,
           moduleId: moduleId,
+          mode: mode,
         ),
       ),
       // ),

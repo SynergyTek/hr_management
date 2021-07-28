@@ -37,6 +37,7 @@ dependencies:
   syncfusion_flutter_charts: ^19.2.47+1
   flutter_speed_dial: ^4.1.0
   shared_preferences: ^2.0.6
+  file_picker: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -47,9 +48,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    # - assets/icons/
-    - assets/formio.min.js
+    # - assets/formio.min.js
     - assets/images/
+    - assets/icons/
 
   fonts:
     - family: Muli

@@ -9,8 +9,13 @@ class AddEditNote extends StatelessWidget {
   final String templateCode;
   final String noteId;
   final String title;
-  const AddEditNote({Key key, this.templateCode, this.noteId, this.title})
-      : super(key: key);
+
+  const AddEditNote({
+    Key key,
+    this.templateCode,
+    this.noteId,
+    this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class AddEditNote extends StatelessWidget {
           ),
         ),
       ),
-   //   floatingActionButton: buildSpeedDial(),
+      //   floatingActionButton: buildSpeedDial(),
     );
   }
 

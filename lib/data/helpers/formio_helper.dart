@@ -31,8 +31,8 @@ class FormIOHelper {
                 Formio.createForm(
                     document.getElementById("formio"),
                     """ +
-      json +
-      """
+                    json +
+                    """
                 );
                   };
           </script>
