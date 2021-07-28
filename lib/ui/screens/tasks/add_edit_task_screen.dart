@@ -3,7 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
-import 'widget/task_body.dart';
+import 'widget/add_edit_task_body.dart';
 
 class AddEditTaskScreen extends StatelessWidget {
   final String templateCode;
@@ -26,9 +26,14 @@ class AddEditTaskScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: AddEditTaskBody(
-            templateCode: templateCode,
-            taskId: taskId,
+          child: StreamBuilder<Object>(
+            stream: null,
+            builder: (context, snapshot) {
+              return AddEditTaskBody(
+                templateCode: templateCode,
+                taskId: taskId,
+              );
+            }
           ),
         ),
       ),

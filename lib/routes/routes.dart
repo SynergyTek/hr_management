@@ -1,3 +1,8 @@
+import 'package:hr_management/ui/screens/my_profile/my_profile_screen.dart';
+
+import 'package:hr_management/ui/screens/person_documents_screen/person_documents_screen.dart';
+import 'package:hr_management/ui/screens/person_profile_screen/person_profile_screen.dart';
+
 import 'package:hr_management/ui/screens/tasks/task_list_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/user_dropdown_list.dart';
 
@@ -17,7 +22,6 @@ import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
 import 'package:hr_management/ui/screens/service/service_home.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
-
 
 import 'package:hr_management/ui/screens/worklist_dashboard/worklist_dashboard_screen.dart';
 
@@ -273,7 +277,26 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => TaskListScreen());
         break;
 
+      case MYPROFILE:
+        return MaterialPageRoute(builder: (_) => MyProfileScreen());
+        break;
+
 // 404 route.
+
+      case PERSON_DOCUMENTS_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => PersonDocumentsScreen(),
+        );
+        break;
+
+      case PERSON_PROFILE_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => PersonProfileScreen(),
+        );
+        break;
+
+      // 404 route.
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

@@ -55,3 +55,9 @@ const String WORKLIST_DASHBOARD = "/worklist_dashboard";
 const String MANAGE_ACCRUAL = "/manage_accrual";
 const String PAYSLIP = "/payslip";
 const String TASKLIST = "/tasklist";
+
+const String MYPROFILE = "/my_profile";
+
+// documents route constants:
+const String PERSON_DOCUMENTS_ROUTE = '/person_documents';
+const String PERSON_PROFILE_ROUTE = '/person_profile';

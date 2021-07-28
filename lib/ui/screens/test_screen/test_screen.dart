@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
+import '../../../data/enums/enums.dart';
 
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
