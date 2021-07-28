@@ -212,4 +212,17 @@ class APIEndpointConstants {
   //User API Endpoints Block End
   //************************************************************************//
 
+  // Documents endpoints start here:
+
+  static const GET_PERSON_DOCUMENTS_DATA = BASE_URL +
+      '/CHR/query/ReadPersonDocumentRequestList?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const GET_PERSON_PROFILE_DATA = BASE_URL +
+      '/CHR/query/EmployeeDocument?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+
+  static const GET_NOTE_INDEX_PAGE_GRID_DATA =
+      BASE_URL + '/CHR/query/LoadNoteIndexPageGrid';
+
+  // Documents endpoints end here:
+
 }

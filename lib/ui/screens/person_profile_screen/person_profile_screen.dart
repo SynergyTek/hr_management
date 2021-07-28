@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
-import '../../../data/enums/enums.dart';
 
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
-import 'widgets/test_screen_body_widget.dart';
+import 'widgets/person_profile_body_widget.dart';
 
-class TestScreen extends StatelessWidget {
-  final NTSType ntsType;
-
-  const TestScreen({
-    @required this.ntsType,
-  });
+class PersonProfileScreen extends StatelessWidget {
+  const PersonProfileScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: "Test Screen",
+        title: "Manage Documents",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: TestScreenBodyWidget(
-            ntsType: ntsType,
-          ),
+          child: PersonProfileBodyWidget(),
         ),
       ),
     );
