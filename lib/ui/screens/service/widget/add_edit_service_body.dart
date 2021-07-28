@@ -33,10 +33,10 @@ import '../create_service_form_bloc.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
   final bool isLeave;
-  final String templateCode;
   final String serviceId;
+  final Service serviceModel;
   const CreateServiceScreenBody(
-      {Key key, this.templateCode, this.serviceId, this.isLeave});
+      {Key key, this.serviceId, this.isLeave, this.serviceModel});
 
   @override
   _CreateServiceScreenBodyState createState() =>
@@ -50,7 +50,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   List<Widget> udfJsonCompWidgetList = [];
 
   final Map<String, String> udfJson = {};
-  Service serviceModel;
   Service postServiceModel = new Service();
   UdfJson udfJsonString;
   List<ColumnComponent> columnComponent = [];
@@ -86,69 +85,24 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    serviceBloc
-      ..getServiceDetail(
-        templateCode: widget.templateCode,
-        serviceId: widget.serviceId,
-        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
-      );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CreateServiceFormBloc(),
-      child: Container(
-        padding: DEFAULT_PADDING,
-        child: StreamBuilder<ServiceResponse>(
-            stream: serviceBloc.subject.stream,
-            builder: (context, AsyncSnapshot snapshot) {
-              print("Snapshot data: ${snapshot.data}");
-              if (snapshot.hasData) {
-                if (snapshot.data.error != null &&
-                    snapshot.data.error.length > 0) {
-                  return Center(
-                    child: Text(snapshot.data.error),
-                  );
-                }
-                final createServiceFormBloc =
-                    context.read<CreateServiceFormBloc>();
-                serviceModel = snapshot.data.data;
+    final createServiceFormBloc = context.read<CreateServiceFormBloc>();
 
-                parseJsonToUDFModel(
-                  createServiceFormBloc,
-                  serviceModel.json,
-                );
-
-                return FormBlocListener<CreateServiceFormBloc, String, String>(
-                  onSubmitting: (context, state) {
-                    // if (createServiceFormBloc.startDate.value != null &&
-                    //     createServiceFormBloc.endDate.value != null) {
-                    //   compareStartEndDate(
-                    //       startDate: createServiceFormBloc.startDate.value,
-                    //       enddate: createServiceFormBloc.endDate.value,
-                    //       context: context,
-                    //       updateDuration: true);
-                    // }
-                  },
-                  onSuccess: (context, state) {},
-                  onFailure: (context, state) {},
-                  child: setServiceView(
-                    context,
-                    createServiceFormBloc,
-                    serviceModel,
-                  ),
-                );
-              } else {
-                return Center(
-                  child: CustomProgressIndicator(),
-                );
-              }
-            }),
-      ),
+    parseJsonToUDFModel(
+      createServiceFormBloc,
+      widget.serviceModel.json,
     );
+    return Container(
+        padding: DEFAULT_PADDING,
+        child: FormBlocListener<CreateServiceFormBloc, String, String>(
+          onSubmitting: (context, state) {},
+          onSuccess: (context, state) {},
+          onFailure: (context, state) {},
+          child: setServiceView(
+            context,
+            createServiceFormBloc,
+          ),
+        ),);
   }
 
   parseJsonToUDFModel(
@@ -202,7 +156,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   Widget setServiceView(
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
-    Service serviceModel,
   ) {
     return Stack(
       children: [
@@ -210,11 +163,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           physics: ClampingScrollPhysics(),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: formFieldsWidgets(
-              context,
-              createServiceFormBloc,
-              serviceModel,
-            ),
+            children: formFieldsWidgets(context, createServiceFormBloc),
           ),
         ),
         Column(
@@ -223,10 +172,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             Container(
               height: 50,
               color: Colors.grey[100],
-              child: displayFooterWidget(
-                serviceModel,
-                createServiceFormBloc,
-              ),
+              child: displayFooterWidget(createServiceFormBloc),
             ),
           ],
         ),
@@ -240,8 +186,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
   }
 
-  List<Widget> formFieldsWidgets(
-      context, createServiceFormBloc, Service serviceModel) {
+  List<Widget> formFieldsWidgets(context, createServiceFormBloc) {
     List<Widget> widgets = [];
     TextEditingController _fromddController = new TextEditingController();
 
@@ -253,15 +198,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          rowChild(serviceModel.serviceNo, 'Service No', 3),
-          rowChild(serviceModel.serviceStatusName, 'Status', 2),
-          rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
+          rowChild(widget.serviceModel.serviceNo, 'Service No', 3),
+          rowChild(widget.serviceModel.serviceStatusName, 'Status', 2),
+          rowChild(widget.serviceModel.versionNo.toString(), 'Version No', 2),
         ],
       ),
     ));
-    if (!serviceModel.hideSubject) {
-      createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? serviceModel.serviceSubject);
+    if (!widget.serviceModel.hideSubject) {
+      createServiceFormBloc.subject.updateInitialValue(
+          subjectValue ?? widget.serviceModel.serviceSubject);
       widgets.add(
         Visibility(
           visible: false,
@@ -280,7 +225,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       );
     }
 
-    if (!serviceModel.hideStartDate)
+    if (!widget.serviceModel.hideStartDate)
       widgets.add(
         Row(
           mainAxisSize: MainAxisSize.max,
@@ -289,15 +234,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               visible: false,
               child: Expanded(
                 child: DynamicDateTimeBox(
-                  code: serviceModel.startDate,
+                  code: widget.serviceModel.startDate,
                   name: 'Start Date',
                   key: new Key('Start Date'),
                   selectDate: (DateTime date) {
                     if (date != null) {
                       setState(() async {
                         startDate = date;
-                        if (dueDate == null && serviceModel.dueDate != null) {
-                          dueDate = DateTime.parse(serviceModel.dueDate);
+                        if (dueDate == null &&
+                            widget.serviceModel.dueDate != null) {
+                          dueDate = DateTime.parse(widget.serviceModel.dueDate);
                         }
                         if (dueDate != null && dueDate.toString().isNotEmpty)
                           compareStartEndDate(
@@ -316,7 +262,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               visible: false,
               child: Expanded(
                 child: DynamicDateTimeBox(
-                  code: serviceModel.dueDate,
+                  code: widget.serviceModel.dueDate,
                   name: 'Due Date',
                   key: new Key('Due Date'),
                   selectDate: (DateTime date) {
@@ -324,8 +270,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                       setState(() async {
                         dueDate = date;
                         if (startDate == null &&
-                            serviceModel.startDate != null) {
-                          startDate = DateTime.parse(serviceModel.startDate);
+                            widget.serviceModel.startDate != null) {
+                          startDate =
+                              DateTime.parse(widget.serviceModel.startDate);
                         }
                         if (startDate != null &&
                             startDate.toString().isNotEmpty)
@@ -345,9 +292,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ),
       );
 
-    if (!serviceModel.hideSLA) {
+    if (!widget.serviceModel.hideSLA) {
       createServiceFormBloc.sla
-          .updateInitialValue(slaValue ?? serviceModel.serviceSLA);
+          .updateInitialValue(slaValue ?? widget.serviceModel.serviceSLA);
       widgets.add(
         Visibility(
           visible: false,
@@ -366,7 +313,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       );
     }
 
-    if (!serviceModel.hideExpiryDate)
+    if (!widget.serviceModel.hideExpiryDate)
       widgets.add(
         Visibility(
           visible: false,
@@ -380,9 +327,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ),
       );
 
-    if (!serviceModel.hideDescription) {
+    if (!widget.serviceModel.hideDescription) {
       createServiceFormBloc.description.updateInitialValue(
-          descriptionValue ?? serviceModel.serviceDescription);
+          descriptionValue ?? widget.serviceModel.serviceDescription);
       widgets.add(Visibility(
         visible: false,
         child: BlocTextBoxWidget(
@@ -911,7 +858,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   displayFooterWidget(
-    Service serviceModel,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
     return Container(
@@ -921,7 +867,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             Visibility(
-              visible: serviceModel.isCompleteButtonVisible,
+              visible: widget.serviceModel.isCompleteButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Complete',
                 handleOnPressed: () => serviceViewModelPostRequest(
@@ -933,7 +879,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: serviceModel.isAddCommentEnabled &&
+              visible: widget.serviceModel.isAddCommentEnabled &&
                   widget.serviceId != null &&
                   widget.serviceId.isNotEmpty,
               child: PrimaryButton(
@@ -942,7 +888,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   Navigator.pushNamed(context, COMMENT_ROUTE,
                       arguments: ScreenArguments(
                         ntstype: NTSType.service,
-                        arg1: serviceModel.serviceId,
+                        arg1: widget.serviceModel.serviceId,
                       ));
                 },
                 width: 100,
@@ -950,11 +896,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             ),
             Visibility(
               // visible: true,
-              visible: serviceModel.isCancelButtonVisible,
+              visible: widget.serviceModel.isCancelButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Cancel',
                 handleOnPressed: () {
-                  if (serviceModel.isCancelReasonRequired)
+                  if (widget.serviceModel.isCancelReasonRequired)
                     enterReasonAlertDialog(context);
                   serviceViewModelPostRequest(
                     1,
@@ -966,7 +912,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: serviceModel.isCloseButtonVisible,
+              visible: widget.serviceModel.isCloseButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Close',
                 handleOnPressed: () => Navigator.pop(context),
@@ -974,7 +920,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: serviceModel.isDraftButtonVisible,
+              visible: widget.serviceModel.isDraftButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Draft',
                 handleOnPressed: () {
@@ -988,7 +934,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: serviceModel.isSubmitButtonVisible,
+              visible: widget.serviceModel.isSubmitButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Submit',
                 handleOnPressed: () {
@@ -1238,7 +1184,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   String resultMsg = '';
   serviceViewModelPostRequest(int postDataAction, String serviceStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
-    String stringModel = jsonEncode(serviceModel);
+    String stringModel = jsonEncode(widget.serviceModel);
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
 
