@@ -246,6 +246,18 @@ Widget drawerWidget(context) {
               ),
             ],
           ),
+          ListTile(
+            title: Text(
+              'MY PROFILE',
+              style: TextStyle(fontSize: fontSize, color: fontColor),
+            ),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                MYPROFILE,
+              );
+            },
+          ),
         ],
       ),
     ),
