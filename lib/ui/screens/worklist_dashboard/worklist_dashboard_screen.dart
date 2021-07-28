@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/nts_template_tree_list_models/nts_template_tree_list_model.dart';
-import 'package:hr_management/data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
-import 'package:hr_management/logic/blocs/nts_template_tree_list_bloc/nts_template_tree_list_bloc.dart';
-import 'package:hr_management/logic/blocs/worklist_dashboard_bloc/worklist_dashboard_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
+import '../../../data/models/nts_template_tree_list_models/nts_template_tree_list_model.dart';
+import '../../../data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
+import '../../../logic/blocs/nts_template_tree_list_bloc/nts_template_tree_list_bloc.dart';
+import '../../../logic/blocs/worklist_dashboard_bloc/worklist_dashboard_bloc.dart';
+import '../../../themes/theme_config.dart';
 import '../../../data/enums/enums.dart';
 import '../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
 import '../../../routes/route_constants.dart';

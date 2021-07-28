@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import '../../../../data/models/payslip/payslip_model.dart';
 import '../../../../data/models/payslip/payslip_res_model.dart';
 import '../../../../logic/blocs/payslip_bloc/payslip_bloc.dart';
@@ -37,6 +38,9 @@ class _PayslipBodyState extends State<PayslipBody> {
               );
             }
             paySlipList = snapshot.data.data;
+            if (paySlipList==null|| paySlipList.length == 0) {
+              return EmptyListWidget();
+            }
             return Listizer(
               listItems: paySlipList,
               filteredSearchList: filterPaySlipList,

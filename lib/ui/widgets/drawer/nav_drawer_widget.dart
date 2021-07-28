@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/constants/image_path_constants.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../routes/route_constants.dart';
 
@@ -36,6 +39,23 @@ Widget drawerWidget(context) {
               ),
             ),
           ),
+
+          // ListTile(
+          //   title: Text(
+          //     'FORMIO WEBVIEW POC',
+          //     style: TextStyle(
+          //       fontSize: fontSize,
+          //       color: fontColor,
+          //     ),
+          //   ),
+          //   onTap: () {
+          //     Navigator.pushNamed(
+          //       context,
+          //       HOME_ROUTE,
+          //     );
+          //   },
+          // ),
+
           ListTile(
             title: Text(
               'WORKLIST DASHBOARD',
@@ -241,6 +261,65 @@ Widget drawerWidget(context) {
                   Navigator.pushNamed(
                     context,
                     NOTE_HOME,
+                  );
+                },
+              ),
+              ListTile(
+                  title: Text(
+                    'DOCUMENT TEMPLATE',
+                    style: TextStyle(fontSize: fontSize, color: fontColor),
+                  ),
+                  onTap: () => Navigator.pushNamed(
+                        context,
+                        NTS_TEMPLATE_REQUEST,
+                        arguments: ScreenArguments(
+                          ntstype: NTSType.note,
+                          arg4: 'Document',
+                        ),
+                      ))
+            ],
+          ),
+
+          ExpansionTile(
+            title: Text("DOCUMENTS"),
+            children: [
+              ListTile(
+                trailing: Image.asset(
+                  DOCUMENTS_REQUESTED_BY_HR_ICON,
+                  width: 24.0,
+                  height: 24.0,
+                ),
+                title: Text(
+                  'REQUESTED BY HR',
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    color: fontColor,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    PERSON_DOCUMENTS_ROUTE,
+                  );
+                },
+              ),
+              ListTile(
+                trailing: Image.asset(
+                  MANAGE_DOCUMENTS_ICON,
+                  width: 24.0,
+                  height: 24.0,
+                ),
+                title: Text(
+                  'MANAGE DOCUMENTS',
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    color: fontColor,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    PERSON_PROFILE_ROUTE,
                   );
                 },
               ),

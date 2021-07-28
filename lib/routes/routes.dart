@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import 'package:hr_management/ui/screens/my_profile/my_profile_screen.dart';
+=======
+import 'package:hr_management/ui/screens/person_documents_screen/person_documents_screen.dart';
+import 'package:hr_management/ui/screens/person_profile_screen/person_profile_screen.dart';
+>>>>>>> e99320115f5347c473e677259562c2fc8aedcf94
 import 'package:hr_management/ui/screens/tasks/task_list_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/user_dropdown_list.dart';
 
@@ -273,11 +278,27 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => TaskListScreen());
         break;
 
+
       case MYPROFILE:
         return MaterialPageRoute(builder: (_) => MyProfileScreen());
         break;
 
 // 404 route.
+
+      case PERSON_DOCUMENTS_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => PersonDocumentsScreen(),
+        );
+        break;
+
+      case PERSON_PROFILE_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => PersonProfileScreen(),
+        );
+        break;
+
+      // 404 route.
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

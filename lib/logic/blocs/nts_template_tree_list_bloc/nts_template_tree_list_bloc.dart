@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
-import 'package:hr_management/data/repositories/nts_template_tree_list_repository/nts_template_tree_list_repository.dart';
+import '../../../data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
+import '../../../data/repositories/nts_template_tree_list_repository/nts_template_tree_list_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NTSTemplateTreeListBloc {

@@ -1,6 +1,6 @@
-import 'package:hr_management/constants/api_endpoints.dart';
+import '../../../constants/api_endpoints.dart';
 import 'package:dio/dio.dart';
-import 'package:hr_management/data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
+import '../../models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
 
 part 'nts_template_tree_list_repository_implementation.dart';
 
