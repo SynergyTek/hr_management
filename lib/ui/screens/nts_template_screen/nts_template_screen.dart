@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/nts_template_bloc/nts_template_bloc.dart';
 import '../../widgets/appbar_widget.dart';
-import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 
 import 'widgets/nts_template_body_widget.dart';
@@ -54,7 +53,10 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
       title = 'Service Templates';
     else if (widget.ntsType == NTSType.task)
       title = 'Task Templates';
-    else if (widget.ntsType == NTSType.note) title = 'Note Templates';
+    else if (widget.ntsType == NTSType.note)
+      title = 'Note Templates';
+    else if (widget.ntsType == NTSType.note &&
+        widget.categoryCode == 'Document') title = 'Document';
     return title;
   }
 }
