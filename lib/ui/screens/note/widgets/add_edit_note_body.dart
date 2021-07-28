@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
+import 'package:hr_management/constants/api_endpoints.dart';
+import 'package:hr_management/data/models/user/user.dart';
+import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/note/note_model.dart';
 import '../../../../data/models/note/note_response.dart';
@@ -56,6 +58,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   String subjectValue;
   String descriptionValue;
   String slaValue;
+  String ownerUserId;
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
@@ -82,7 +85,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       ..getNoteDetails(
         templateCode: widget.templateCode,
         noteId: widget.noteId,
-        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+        // userId: '45bba746-3309-49b7-9c03-b5793369d73c',
       );
   }
 
@@ -233,6 +236,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, NoteModel noteModel) {
     List<Widget> widgets = [];
+    TextEditingController _fromddController = new TextEditingController();
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -336,6 +340,24 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         },
       ));
     }
+
+    widgets.add(
+      NTSDropDownSelect(
+        isUserList: true,
+        title: 'From',
+        controller: _fromddController,
+        hint: 'From',
+        isShowArrow: true,
+        onListTap: (dynamic value) {
+          userBLoc.subjectUserDataList.sink.add(null);
+          User _user = value;
+          _fromddController.text = _user.name;
+          ownerUserId = _user.id;
+          //     selectValue[i] = _selectedIdNameViewModel.name;
+          //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
+        },
+      ),
+    );
 
     if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
@@ -626,7 +648,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       // }, () {
       //   openfile(element.code, context);
       // }, element.code, _isView));
-      // }
+
       else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId == null || widget.noteId.isEmpty)) {
@@ -1155,12 +1177,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   String resultMsg = '';
   noteViewModelPostRequest(int postDataAction, String noteStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
+    String userId = await getUserId();
     String stringModel = jsonEncode(noteModel);
     var jsonModel = jsonDecode(stringModel);
     postNoteModel = NoteModel.fromJson(jsonModel);
 
-    postNoteModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    postNoteModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postNoteModel.ownerUserId = ownerUserId;
+    postNoteModel.requestedByUserId = userId;
     postNoteModel.subject = createServiceFormBloc.subject.value;
     postNoteModel.noteDescription = createServiceFormBloc.description.value;
     postNoteModel.dataAction = postDataAction;

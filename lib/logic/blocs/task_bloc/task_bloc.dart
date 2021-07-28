@@ -39,7 +39,7 @@ class TaskBloc {
 
     // queryparams["taskId"] = taskId;
     // queryparams["templateid"] = templateCode;
-    queryparams["userId"] = userId;
+    // queryparams["userId"] = userId;
     TaskResponseModel response = await _taskRepository.getTaskDetailsData(
       queryparams: queryparams,
     );

@@ -6,21 +6,20 @@ class LoginRepository extends AbstractLoginRepository {
   final Dio _dio = Dio();
 
   @override
-  Future<LoginResponse> postAPIData({
+  Future<LoginAPIResponse> postAPIData({
     Map<String, dynamic> queryparams,
-    @required LoginRequestModel loginResponseModel,
+    LoginRequestModel loginResponseModel,
   }) async {
     final String endpoint = APIEndpointConstants.MANAGE_LOGIN;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(loginResponseModel.toJson()) ?? {},
+        // data: jsonEncode(loginResponseModel.toJson()) ?? {},
       );
 
-
       // TODO: response parsing
-      return LoginResponse.fromJson(
+      return LoginAPIResponse.fromJson(
         response.data,
       );
     } catch (err, stacktrace) {
@@ -28,7 +27,7 @@ class LoginRepository extends AbstractLoginRepository {
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return LoginResponse.withError("$err");
+      return LoginAPIResponse.withError("$err");
     }
   }
 }

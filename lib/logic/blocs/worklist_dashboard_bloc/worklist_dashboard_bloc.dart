@@ -1,3 +1,4 @@
+import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
@@ -20,6 +21,7 @@ class WorklistDashboardBloc {
   getWorklistDashboardData({
     Map<String, dynamic> queryparams, // String userId,
   }) async {
+    
     WorklistDashboardResponse response =
         await _worklistDashboardRepository.getWorklistDashboardCount(
       queryparams: queryparams,
@@ -57,6 +59,7 @@ class WorklistDashboardBloc {
 
   dispose() {
     _subjectWorklistDashboardList.close();
+    _subjectWorklistNoteDashboardList.close();
   }
 
   BehaviorSubject<WorklistDashboardResponse> get subjectWorklistDashboardList =>

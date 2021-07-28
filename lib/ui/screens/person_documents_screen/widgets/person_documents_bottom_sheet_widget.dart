@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/documents_models/person_document_models/person_document_model.dart';
-import '../../../../../themes/theme_config.dart';
+import 'package:hr_management/themes/theme_config.dart';
 
 class PersonDocumentsBottomSheetWidget extends StatelessWidget {
   final PersonDocumentsModel data;

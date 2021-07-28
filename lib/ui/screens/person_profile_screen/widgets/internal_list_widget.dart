@@ -3,6 +3,9 @@ import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/documents_models/note_index_models/note_index_model.dart';
 import 'package:hr_management/data/models/documents_models/note_index_models/note_index_response.dart';
 import 'package:hr_management/logic/blocs/documents_bloc/note_index_bloc/note_index_bloc.dart';
+import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 import '../../../../themes/theme_config.dart';
@@ -112,9 +115,16 @@ class _InternalListWidgetState extends State<InternalListWidget> {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Mock redirection to edit screen."),
+
+                        serviceBloc.subject.sink.add(null);
+                        Navigator.pushNamed(
+                          context,
+                          ADD_EDIT_NOTE_ROUTE,
+                          arguments: ScreenArguments(
+                            arg1: '',
+                            arg2: data.elementAt(index).noteId ?? '',
+                            arg3:
+                                data.elementAt(index).templateDisplayName ?? '',
                           ),
                         );
                       },

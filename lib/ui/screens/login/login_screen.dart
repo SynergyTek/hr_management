@@ -8,6 +8,12 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: InternetConnectivityWidget(child: LoginBody())));
+    return Scaffold(
+      body: SafeArea(
+        child: InternetConnectivityWidget(
+          child: LoginBody(),
+        ),
+      ),
+    );
   }
 }

@@ -4,7 +4,7 @@
 // * PRE-AUTHENTICATION Routes:
 // ---------------------------//
 //Login Screen Route
-// const String LOGIN_ROUTE = "/login";
+const String LOGIN_ROUTE = "/login";
 // Splash Screen Route
 // * Important: The first route should not contain the forward slash (/).
 const String SPLASH_ROUTE = "splash";
@@ -55,6 +55,8 @@ const String WORKLIST_DASHBOARD = "/worklist_dashboard";
 const String MANAGE_ACCRUAL = "/manage_accrual";
 const String PAYSLIP = "/payslip";
 const String TASKLIST = "/tasklist";
+
+const String MYPROFILE = "/my_profile";
 
 // documents route constants:
 const String PERSON_DOCUMENTS_ROUTE = '/person_documents';

@@ -29,9 +29,9 @@ class _HomeScreenBodyWidgetState extends State<HomeScreenBodyWidget> {
 
     serviceBloc
       ..getServiceDetail(
-        // templateCode: 'AnnualLeave',
-        serviceId: 'b340ec84-68ba-4401-bd71-c2d14504ecoh',
-        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+        templateCode: 'AnnualLeave' ?? 'RETURN_TO_WORK',
+        serviceId: '',
+        // userId: '45bba746-3309-49b7-9c03-b5793369d73c',
       );
   }
 

@@ -20,7 +20,7 @@ class ServiceBloc {
     Map<String, dynamic> queryparams = Map();
     queryparams["templatecode"] = templateCode ?? '';
     queryparams["serviceId"] = serviceId ?? '';
-    queryparams["userid"] = userId ?? '';
+    // queryparams["userid"] = userId ?? '';
 
     print("Queryparams: ${queryparams.entries}");
 

@@ -50,6 +50,9 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
     } else if (ntsType == NTSType.task) {
       endpoint = APIEndpointConstants.POST_TASK_COMMENT;
     }
+
+    comment.commentedByUserId = await getUserId();
+
     dynamic model = jsonEncode(comment.toJson());
     try {
       Response response = await _dio.post(endpoint, data: model);

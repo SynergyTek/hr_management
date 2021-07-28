@@ -20,7 +20,7 @@ class NoteBloc {
     Map<String, dynamic> queryparams = Map();
     queryparams["templatecode"] = templateCode ?? '';
     queryparams["noteId"] = noteId ?? '';
-    queryparams["userid"] = userId ?? '';
+    // queryparams["userid"] = userId ?? '';
     NoteResponse response =
         await _noteRepository.getNoteDetail(queryparams: queryparams);
     _subjectNoteDetails.sink.add(response);

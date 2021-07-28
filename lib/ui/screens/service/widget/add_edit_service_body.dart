@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
@@ -85,6 +86,19 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   @override
+<<<<<<< HEAD
+=======
+  void initState() {
+    super.initState();
+    serviceBloc
+      ..getServiceDetail(
+        templateCode: widget.templateCode,
+        serviceId: widget.serviceId,
+      );
+  }
+
+  @override
+>>>>>>> 0f1c2ca9d5141b3d03cc1d7425303b77dbb4982b
   Widget build(BuildContext context) {
     final createServiceFormBloc = context.read<CreateServiceFormBloc>();
 
@@ -1184,12 +1198,17 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   String resultMsg = '';
   serviceViewModelPostRequest(int postDataAction, String serviceStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
+<<<<<<< HEAD
     String stringModel = jsonEncode(widget.serviceModel);
+=======
+    String userId = await getUserId();
+    String stringModel = jsonEncode(serviceModel);
+>>>>>>> 0f1c2ca9d5141b3d03cc1d7425303b77dbb4982b
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
 
     postServiceModel.ownerUserId = ownerUserId;
-    postServiceModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
+    postServiceModel.requestedByUserId = userId;
     postServiceModel.serviceSubject = createServiceFormBloc.subject.value;
     postServiceModel.serviceDescription =
         createServiceFormBloc.description.value;

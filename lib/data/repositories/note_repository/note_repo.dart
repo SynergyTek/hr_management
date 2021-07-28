@@ -8,6 +8,11 @@ class NoteRepository extends AbstractNoteRepository {
   Future<NoteResponse> getNoteDetail({
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.GET_NOTE_DETAILS;
 
     try {
@@ -32,6 +37,11 @@ class NoteRepository extends AbstractNoteRepository {
 
   Future<NoteListResponse> getNoteList(
       {Map<String, dynamic> queryparams}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.READ_NOTE_HOME_DATA;
 
     try {
@@ -50,9 +60,13 @@ class NoteRepository extends AbstractNoteRepository {
     }
   }
 
-
-Future<NoteListResponse> getNoteDashBoardData(
+  Future<NoteListResponse> getNoteDashBoardData(
       {Map<String, dynamic> queryparams}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.READ_NOTE_DASHBOARD_DATA;
 
     try {

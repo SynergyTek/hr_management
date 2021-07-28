@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/constants/api_endpoints.dart';
 import '../../../../constants/formats.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
@@ -161,11 +162,11 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                         comment.ntsTaskId = widget.ntsId;
                       else
                         comment.ntsNoteId = widget.ntsId;
-                        
+
                       comment.comment = _commentController.text;
                       comment.commentToUserId = null;
-                      comment.commentedByUserId =
-                          '45bba746-3309-49b7-9c03-b5793369d73c';
+                      // comment.commentedByUserId =
+                      // '45bba746-3309-49b7-9c03-b5793369d73c';
                       setState(() {
                         isVisible = true;
                       });

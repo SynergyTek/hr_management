@@ -7,6 +7,11 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
 
   Future<WorklistDashboardResponse> getWorklistDashboardCount(
       {Map<String, dynamic> queryparams}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.WORKLIST_DASHBOARD_COUNT;
 
     try {
@@ -29,6 +34,11 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
   Future<NoteWorklistDashboardResponse> getWorklistDashboardNoteCount({
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.WORKLIST_DASHBOARD_NOTE_COUNT;
 
     try {

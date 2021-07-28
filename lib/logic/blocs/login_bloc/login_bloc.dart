@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import '../../../data/models/login_models/login_request_model.dart';
 import '../../../data/models/login_models/login_response.dart';
 
@@ -9,26 +8,28 @@ class LoginBloc {
   final LoginRepository _loginRepository = LoginRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<LoginResponse> _subject =
-      BehaviorSubject<LoginResponse>();
+  final BehaviorSubject<LoginAPIResponse> _subject =
+      BehaviorSubject<LoginAPIResponse>();
 
   /// Used to create new entries.
   postData({
-    @required LoginRequestModel loginResponseModel,
+    Map<String, dynamic> queryparams,
+    LoginRequestModel loginResponseModel,
   }) async {
-    LoginResponse response = await _loginRepository.postAPIData(
+    LoginAPIResponse response = await _loginRepository.postAPIData(
+      queryparams: queryparams,
       loginResponseModel: loginResponseModel,
     );
 
-    print("Hulululu: ${response.token} ${response.error}");
-    return response.token;
+    // print("Hulululu: ${response.token} ${response.error}");
+    return response.data;
   }
 
   dispose() {
     _subject.close();
   }
 
-  BehaviorSubject<LoginResponse> get subject => _subject;
+  BehaviorSubject<LoginAPIResponse> get subject => _subject;
 }
 
 final loginBloc = LoginBloc();

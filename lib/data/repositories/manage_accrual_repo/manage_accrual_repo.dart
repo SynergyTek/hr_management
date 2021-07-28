@@ -6,6 +6,11 @@ class ManageAccrualRepository extends AbstractManageAccrualRepository {
   Future<ManageAccrualResponse> getManageAccrual({
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+    
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.READ_PAYROLL_DATA;
 
     try {

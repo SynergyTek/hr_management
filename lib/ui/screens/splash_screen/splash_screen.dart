@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../routes/route_constants.dart';
 import 'widgets/splash_screen_body_widget.dart';
@@ -24,13 +25,13 @@ class SplashScreen extends StatelessWidget {
       body: SafeArea(
         child: FutureBuilder<Object>(
           future: Future.delayed(
-              const Duration(
-                seconds: 2,
-              ),
-              () => Navigator.pushReplacementNamed(
-                    context,
-                    WORKLIST_DASHBOARD,
-                  )),
+            const Duration(
+              seconds: 2,
+            ),
+            () {
+              return checkLoggedIn(context);
+            },
+          ),
           builder: (context, snapshot) {
             return SplashScreenBodyWidget(
               titleText: titleText,
@@ -41,5 +42,27 @@ class SplashScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  checkLoggedIn(
+    BuildContext context,
+  ) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var username = prefs.getString('username');
+    var id = prefs.getString('id');
+    print(id);
+    if (username == null) {
+      Navigator.pushReplacementNamed(
+        context, LOGIN_ROUTE,
+        // WORKLIST_DASHBOARD,
+      );
+    } else {
+      // user is already logged in, use this function to send device token to the backend.
+      Navigator.pushReplacementNamed(
+        context,
+        WORKLIST_DASHBOARD,
+      );
+    }
   }
 }
