@@ -7,6 +7,11 @@ class ServiceRepository extends AbstractServiceRepository {
 
   Future<ServiceListResponse> getServiceHomeListData(
       {Map<String, dynamic> queryparams}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.READ_SERVICE_HOME_DATA;
 
     try {
@@ -29,6 +34,11 @@ class ServiceRepository extends AbstractServiceRepository {
   Future<ServiceResponse> getServiceDetail({
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
 
     try {
@@ -49,12 +59,19 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
-  Future<ServiceListResponse> getLeavesDetails() async {
+  Future<ServiceListResponse> getLeavesDetails(
+      {Map<String, dynamic> queryparams}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
 
     try {
       Response response = await _dio.get(
         endpoint,
+        queryParameters: queryparams ?? {},
       );
 
       return ServiceListResponse.fromJson(
@@ -70,6 +87,11 @@ class ServiceRepository extends AbstractServiceRepository {
   Future<ServiceListResponse> getServiceDashBoardData({
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.READ_SERVICE_DASHBOARD_DATA;
 
     try {
@@ -107,7 +129,6 @@ class ServiceRepository extends AbstractServiceRepository {
         queryParameters: queryparams ?? {},
         data: jsonEncode(service.toJson()) ?? {},
       );
-
 
       var result = PostResponse.fromJson(
         response.data,

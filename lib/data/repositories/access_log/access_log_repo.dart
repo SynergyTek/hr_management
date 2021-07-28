@@ -10,6 +10,11 @@ class AccessLogRepository extends AbstractAccessLogRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.INSERT_ACCESS_LOG;
 
     try {
@@ -17,7 +22,6 @@ class AccessLogRepository extends AbstractAccessLogRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-
 
       if (response?.data != null)
         return AccessLogResponse.fromJson(
@@ -41,6 +45,11 @@ class AccessLogRepository extends AbstractAccessLogRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     try {
       Response response = await _dio.get(
         APIEndpointConstants.GET_ACCESS_LOG_LIST_DATA,

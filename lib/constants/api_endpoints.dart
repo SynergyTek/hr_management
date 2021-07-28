@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class APIEndpointConstants {
   /// API Key to be used for accessing the API.
   static const String API_KEY = "2872b6179f2419aea44d59a61ef48f41";
@@ -21,27 +23,25 @@ class APIEndpointConstants {
 
   static const MANAGE_NOTE = '$BASE_URL/nts/command/ManageNote';
 
-  static const READ_NOTE_HOME_DATA =
-      '$BASE_URL/nts/query/ReadNoteHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const READ_NOTE_HOME_DATA = '$BASE_URL/nts/query/ReadNoteHomeData';
 
   static const GET_NOTE_CHART_BY_STATUS =
-      '$BASE_URL/nts/query/GetNoteChartByStatus?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/GetNoteChartByStatus';
 
   static const GET_NOTE_CHART_BY_USERTYPE =
-      '$BASE_URL/nts/query/GetNoteChartByUserType?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/GetNoteChartByUserType';
 
   static const READ_DATEWISE_NOTE_SLA =
-      '$BASE_URL/nts/query/ReadDatewiseServiceSLA?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadDatewiseServiceSLA';
 
   static const READ_NOTE_DASHBOARD_DATA =
-      '$BASE_URL/nts/query/ReadNoteDashBoardGridData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadNoteDashBoardGridData';
 
   //************************************************************************//
 
   //Task API Endpoints Block Start
 
-  static const GET_TASK_HOME_DATA =
-      '$BASE_URL/nts/query/ReadTaskHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const GET_TASK_HOME_DATA = '$BASE_URL/nts/query/ReadTaskHomeData';
 
   static const GET_TASK_DETAILS = '$BASE_URL/nts/query/GetTaskDetails';
 
@@ -56,25 +56,25 @@ class APIEndpointConstants {
       '$BASE_URL/nts/query/GetTaskCommentCount';
 
   static const GET_TASK_CHART_BY_STATUS =
-      '$BASE_URL/nts/query/GetTaskChartByStatus?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/GetTaskChartByStatus';
 
   static const GET_TASK_CHART_BY_USERTYPE =
-      '$BASE_URL/nts/query/GetTaskChartByUserType?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/GetTaskChartByUserType';
 
   static const READ_DATEWISE_TASK_SLA =
-      '$BASE_URL/nts/query/ReadDatewiseTaskSLA?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadDatewiseTaskSLA';
 
   static const READ_TASK_DASHBOARD_DATA =
-      '$BASE_URL/nts/query/ReadTaskDashBoardGridData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadTaskDashBoardGridData';
 
   static const READ_TASK_DATA_IN_PROGRESS =
-      '$BASE_URL/nts/query/ReadTaskDataInProgress?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadTaskDataInProgress';
 
   static const READ_TASK_DATA_OVERDUE =
-      '$BASE_URL/nts/query/ReadTaskDataOverdue?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadTaskDataOverdue';
 
   static const READ_TASK_DATA_COMPLETED =
-      '$BASE_URL/nts/query/ReadTaskDataCompleted?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadTaskDataCompleted';
 
   //Task API Endpoints Block End
 
@@ -82,13 +82,11 @@ class APIEndpointConstants {
 
   //Sevice API Endpoints Block Start
 
-  static const MANAGE_LOGIN =
-      'https://webapidev.aitalkx.com/api/Authenticate/login';
+  static const MANAGE_LOGIN = '$BASE_URL/api/Authenticate/AuthenticateLogin';
 
   static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
-  static const LEAVE_DETAILS =
-      '$BASE_URL/taa/query/leavedetail?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const LEAVE_DETAILS = '$BASE_URL/taa/query/leavedetail';
 
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
@@ -105,16 +103,16 @@ class APIEndpointConstants {
       "$BASE_URL/cms/GetServiceAttachmentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
 
   static const GET_SERVICE_CHART_BY_STATUS =
-      '$BASE_URL/nts/query/GetServiceChartByStatus?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/GetServiceChartByStatus';
 
   static const GET_SERVICE_CHART_BY_USERTYPE =
-      '$BASE_URL/nts/query/GetServiceChartByUserType?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/GetServiceChartByUserType';
 
   static const READ_DATEWISE_SERVICE_SLA =
-      '$BASE_URL/nts/query/ReadDatewiseServiceSLA?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadDatewiseServiceSLA';
 
   static const READ_SERVICE_DASHBOARD_DATA =
-      '$BASE_URL/nts/query/ReadServiceDashBoardGridData?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/ReadServiceDashBoardGridData';
 
   static const GET_SERVICE_SHARED_COUNT =
       "http://95.111.235.64:446/cms/GetServiceSharedCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667588";
@@ -126,24 +124,23 @@ class APIEndpointConstants {
       "http://95.111.235.64:446/cms/GetServiceCommentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667589";
 
   static const READ_SERVICE_HOME_DATA =
-      "$BASE_URL/nts/query/ReadServiceHomeData?userid=45bba746-3309-49b7-9c03-b5793369d73c";
+      "$BASE_URL/nts/query/ReadServiceHomeData";
 
   //Service API Endpoints Block End
 
   //************************************************************************//
 
   static const GET_ALLOWED_TEMPLATES =
-      '$BASE_URL/nts/query/GetAllowedTempaltes?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/GetAllowedTempaltes';
   // nts/query/GetAllowedTempaltes?categoryCode=STEP_TASK_CATEGORY&userid=45bba746-3309-49b7-9c03-b5793369d73c&templateType=Task&taskType=StepTask
 
   //************************************************************************//
   //Access Log API Endpoints Block Start
 
   static const String INSERT_ACCESS_LOG =
-      '$BASE_URL/common/query/InsertAccessLog?userid=45bba746-3309-49b7-9c03-b5793369d73c&';
+      '$BASE_URL/common/query/InsertAccessLog';
 
-  static const GET_ACCESS_LOG_LIST_DATA =
-      '$BASE_URL/taa/query/accessloglist?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const GET_ACCESS_LOG_LIST_DATA = '$BASE_URL/taa/query/accessloglist';
   // ?startDate=2021-06-20 00:00:00.000&dueDate=2021-07-06 00:00:00.000&userId=cb9272df-0a2c-401b-aed8-b73488ae03aa';
 
   static const String GET_ATTENDANCE_VIEW_DATA =
@@ -164,10 +161,10 @@ class APIEndpointConstants {
       '$BASE_URL/nts/query/GetNoteTemplateTreeList';
 
   static const WORKLIST_DASHBOARD_COUNT =
-      '$BASE_URL/nts/query/WorklistDashboardCount?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/WorklistDashboardCount';
 
   static const WORKLIST_DASHBOARD_NOTE_COUNT =
-      '$BASE_URL/nts/query/WorklistDashboardNoteSCount?userid=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/nts/query/WorklistDashboardNoteSCount';
 
   static const WORKLIST_DASHBOARD_TREE_LIST_DATA =
       '$BASE_URL/nts/query/GetServiceTemplateTreeList';
@@ -182,7 +179,7 @@ class APIEndpointConstants {
   static const GET_ENUM_ID_NAME_LIST = '$BASE_URL/cms/query/GetEnumIdNameList';
 
   static const GET_OWNER_ID_NAME_LIST =
-      '$BASE_URL/cms/query/GetOwnerIdNameList?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/cms/query/GetOwnerIdNameList';
 
   static const GET_USER_ID_NAME_LIST = '$BASE_URL/cms/query/GetUserIdNameList';
 
@@ -190,17 +187,17 @@ class APIEndpointConstants {
       '$BASE_URL/cms/query/GetEnumAsTreeList?id=Root';
 
   static const GET_MODULE_TREE_LIST =
-      '$BASE_URL/cms/query/GetModuleTreeList?id=Root&portalName=HR&userId=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/cms/query/GetModuleTreeList?id=Root&portalName=HR';
 
   //Common API Endpoints Block End
   //************************************************************************//
 
   //Payroll Endpoints
 
-  static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData';
 
   static const READ_PAYSLIP_DATA =
-      '$BASE_URL/CHR/query/ReadPaySlipData?month=7&year=2021&userId=45bba746-3309-49b7-9c03-b5793369d73c';
+      '$BASE_URL/CHR/query/ReadPaySlipData?month=7&year=2021';
 
   //Payroll API Endpoints Block End
   //************************************************************************//
@@ -212,4 +209,17 @@ class APIEndpointConstants {
   //User API Endpoints Block End
   //************************************************************************//
 
+  //Employee profile Endpoints
+
+  static const EMPLOYEE_PROFILE = '$BASE_URL/CHR/query/EmployeeProfile';
+
+  //Employee profile API Endpoints Block End
+  //************************************************************************//
+
+}
+
+Future<String> getUserId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String userId = prefs.getString('id');
+  return userId;
 }

@@ -13,7 +13,7 @@ part 'login_repository_implementation.dart';
 abstract class AbstractLoginRepository {
   AbstractLoginRepository();
 
-  Future<LoginResponse> postAPIData({
+  Future<LoginAPIResponse> postAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });

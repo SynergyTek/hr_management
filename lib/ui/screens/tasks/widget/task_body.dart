@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
@@ -87,7 +88,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ..getTaskDetails(
         templateCode: widget.templateCode,
         taskId: widget.taskId,
-        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+        // userId: '45bba746-3309-49b7-9c03-b5793369d73c',
       );
   }
 
@@ -1207,14 +1208,16 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   String resultMsg = '';
   taskViewModelPostRequest(int postDataAction, String taskStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
+    String userId = await getUserId();
     String stringModel = jsonEncode(taskModel);
     var jsonModel = jsonDecode(stringModel);
     postTaskModel = TaskModel.fromJson(jsonModel);
 
-    postTaskModel.ownerUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    postTaskModel.requestedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    postTaskModel.assignedToUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
-    postTaskModel.taskSubject = createServiceFormBloc.subject.value;
+    postTaskModel.ownerUserId = ownerUserId;
+    postTaskModel.requestedByUserId = userId;
+    postTaskModel.assignedToUserId =
+        userId; //TODO: set appropriate "assignedToUserId"
+    // postTaskModel.taskSubject = createServiceFormBloc.subject.value;
     postTaskModel.taskDescription = createServiceFormBloc.description.value;
     postTaskModel.dataAction = postDataAction;
     postTaskModel.taskStatusCode = taskStatusCode;

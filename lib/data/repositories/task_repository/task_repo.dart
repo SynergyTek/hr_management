@@ -7,6 +7,11 @@ class TaskRepository extends AbstractTaskRepository {
 
   Future<TaskListResponseModel> getTaskHomeListData(
       {Map<String, dynamic> queryparams}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.GET_TASK_HOME_DATA;
 
     try {
@@ -28,6 +33,11 @@ class TaskRepository extends AbstractTaskRepository {
 
   Future<TaskResponseModel> getTaskDetailsData(
       {Map<String, dynamic> queryparams}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.GET_TASK_DETAILS;
 
     try {
@@ -50,6 +60,11 @@ class TaskRepository extends AbstractTaskRepository {
 
   Future<TaskListResponseModel> getTaskDashBoardData(
       {Map<String, dynamic> queryparams, String taskListStatus}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     String endpoint = '';
     if (taskListStatus == 'InProgress') {
       endpoint = APIEndpointConstants.READ_TASK_DATA_IN_PROGRESS;
