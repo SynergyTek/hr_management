@@ -6,6 +6,11 @@ class DependentRepository extends AbstractDependentRepository {
   Future<ReadDependnetResponse> getReadDependantList({
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     final String endpoint = APIEndpointConstants.READ_DEPENDENT_LIST;
 
     try {
@@ -27,6 +32,11 @@ class DependentRepository extends AbstractDependentRepository {
   Future<DependnetDocReqResponse> getReadDependantDocumentRequestList({
     Map<String, dynamic> queryparams,
   }) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
     try {
       Response response = await _dio.get(
         APIEndpointConstants.READ_DEPENDENT_DOCUMENT_REQUEST_LIST,

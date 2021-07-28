@@ -41,7 +41,7 @@ class _InternalListWidgetState extends State<InternalListWidget> {
     return {
       'indexPageTemplateId': widget?.templateId ?? '',
       'ownerType': 'owner',
-      'userId': '45bba746-3309-49b7-9c03-b5793369d73c',
+      // 'userId': '45bba746-3309-49b7-9c03-b5793369d73c',
     };
   }
 
