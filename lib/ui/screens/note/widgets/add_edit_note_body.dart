@@ -626,7 +626,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       // }, () {
       //   openfile(element.code, context);
       // }, element.code, _isView));
-      // }
+
       else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId == null || widget.noteId.isEmpty)) {
