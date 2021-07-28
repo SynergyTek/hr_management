@@ -2,17 +2,15 @@ import 'package:hr_management/data/models/employee_profile_models/employee_profi
 
 class EmployeeProfileResponse {
   bool isSuccess;
-  List<EmployeeProfileModel> list;
+  EmployeeProfileModel data;
   String error;
 
-  EmployeeProfileResponse({this.list});
+  EmployeeProfileResponse({this.data});
 
-  EmployeeProfileResponse.fromJson(List response)
-      : list = (response)
-            .map((i) => new EmployeeProfileModel.fromJson(i))
-            .toList();
+  EmployeeProfileResponse.fromJson(Map<String, dynamic> response)
+      : data = EmployeeProfileModel.fromJson(response);
 
   EmployeeProfileResponse.withError(String errorValue)
-      : list = null,
+      : data = null,
         error = errorValue;
 }
