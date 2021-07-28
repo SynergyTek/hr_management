@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/employee_profile_models/employee_profile_model.dart';
 import 'package:hr_management/data/models/employee_profile_models/employee_profile_response.dart';
-import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
 import 'package:hr_management/logic/blocs/employee_profile_bloc/employee_profile_bloc.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
@@ -12,6 +12,8 @@ class MyProfileBody extends StatefulWidget {
 }
 
 class _MyProfileBodyState extends State<MyProfileBody> {
+
+  EmployeeProfileModel employeeProfile;
   @override
   void initState() {
     super.initState();
@@ -29,6 +31,7 @@ class _MyProfileBodyState extends State<MyProfileBody> {
                 child: Text(snapshot.data.error),
               );
             }
+            employeeProfile=snapshot.data.data;
             return SingleChildScrollView(
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +49,7 @@ class _MyProfileBodyState extends State<MyProfileBody> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text("Jack Dorsey",
+                  Text(employeeProfile.personFullName,
                       style: TextStyle(fontSize: 25, color: Colors.grey[900])),
                   SizedBox(
                     height: 10,
