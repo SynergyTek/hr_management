@@ -14,7 +14,6 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
-import '../../../../data/models/service_models/service_response.dart';
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/udf_json_model/udf_json_model.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
@@ -86,19 +85,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   @override
-<<<<<<< HEAD
-=======
-  void initState() {
-    super.initState();
-    serviceBloc
-      ..getServiceDetail(
-        templateCode: widget.templateCode,
-        serviceId: widget.serviceId,
-      );
-  }
-
-  @override
->>>>>>> 0f1c2ca9d5141b3d03cc1d7425303b77dbb4982b
   Widget build(BuildContext context) {
     final createServiceFormBloc = context.read<CreateServiceFormBloc>();
 
@@ -1198,12 +1184,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   String resultMsg = '';
   serviceViewModelPostRequest(int postDataAction, String serviceStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
-<<<<<<< HEAD
-    String stringModel = jsonEncode(widget.serviceModel);
-=======
     String userId = await getUserId();
-    String stringModel = jsonEncode(serviceModel);
->>>>>>> 0f1c2ca9d5141b3d03cc1d7425303b77dbb4982b
+    String stringModel = jsonEncode(widget.serviceModel);
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
 
