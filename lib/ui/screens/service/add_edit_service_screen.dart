@@ -43,45 +43,48 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppbarWidget(
-        title: widget.serviceId == null || widget.serviceId.isEmpty
-            ? "Create " + widget.templateCode
-            : widget.title != null
-                ? "Edit ${widget.title}"
-                : "Edit",
-      ),
-      body: SafeArea(
-        child: InternetConnectivityWidget(
-          child: StreamBuilder<ServiceResponse>(
-              stream: serviceBloc.subject.stream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data.error != null &&
-                      snapshot.data.error.length > 0) {
-                    return Center(
-                      child: Text(snapshot.data.error),
-                    );
-                  }
-                  serviceModel = snapshot.data.data;
-                  return BlocProvider.value(
-                    value: serviceFormBloc,
-                    child: CreateServiceScreenBody(
-                      isLeave: widget.isLeave,
-                      serviceId: widget.serviceId,
-                      serviceModel: serviceModel,
-                    ),
-                  );
-                } else {
+    return Material(
+      child: InternetConnectivityWidget(
+        child: StreamBuilder<ServiceResponse>(
+            stream: serviceBloc.subject.stream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data.error != null &&
+                    snapshot.data.error.length > 0) {
                   return Center(
-                    child: CustomProgressIndicator(),
+                    child: Text(snapshot.data.error),
                   );
                 }
-              }),
-        ),
+                serviceModel = snapshot.data.data;
+                return Scaffold(
+                  appBar: AppbarWidget(
+                    title: widget.serviceId == null || widget.serviceId.isEmpty
+                        ? "Create " + widget.templateCode
+                        : widget.title != null
+                            ? "Edit ${widget.title}"
+                            : "Edit",
+                  ),
+                  floatingActionButton: buildSpeedDial(),
+                  body: SafeArea(
+                    child: BlocProvider.value(
+                      value: serviceFormBloc,
+                      child: CreateServiceScreenBody(
+                        isLeave: widget.isLeave,
+                        serviceId: widget.serviceId,
+                        serviceModel: serviceModel,
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return Center(
+                  child: CustomProgressIndicator(),
+                );
+              }
+            }),
       ),
-      floatingActionButton: buildSpeedDial(),
     );
+    // floatingActionButton: buildSpeedDial(),
   }
 
   SpeedDial buildSpeedDial() {
