@@ -7,6 +7,9 @@ class APIEndpointConstants {
   /// Base URL.
   static const BASE_URL = 'https://webapidev.aitalkx.com';
 
+  static const PROFILE_PICTURE_ENDPOINT =
+      BASE_URL + '/common/query/GetFile?fileId=';
+
   //************************************************************************//
 
   //Note API Endpoints Block Start
