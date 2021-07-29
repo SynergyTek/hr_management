@@ -18,4 +18,10 @@ class EmployeeProfileBloc {
   dispose() {
     _subjectEmployeeProfile.close();
   }
+
+  BehaviorSubject<EmployeeProfileResponse> get subjectEmployeeProfile =>
+      _subjectEmployeeProfile;
 }
+
+
+final employeeProfileBloc = EmployeeProfileBloc();

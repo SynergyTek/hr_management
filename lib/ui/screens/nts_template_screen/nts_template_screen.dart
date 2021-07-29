@@ -39,6 +39,7 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
           child: NTSTemplateBodyWidget(
             ntsType: widget.ntsType,
             stream: ntsTemplateBloc.subject.stream,
+            categoryCode: widget.categoryCode ,
           ),
         ),
       ),

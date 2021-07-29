@@ -13,10 +13,11 @@ class NTSTemplateBodyWidget extends StatefulWidget {
   /// Example: leaveTempBloc.subject.stream
   final Stream<dynamic> stream;
   final NTSType ntsType;
+  final String categoryCode;
 
   NTSTemplateBodyWidget({
     @required this.stream,
-    @required this.ntsType,
+    @required this.ntsType, this.categoryCode,
   });
 
   @override
@@ -30,6 +31,15 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
   List<NTSTemplateModel> _filteredTemplateModels = [];
   List<String> categoryList = [];
   String selectedCategory = "All";
+
+  @override
+  void initState() {
+    if(widget.categoryCode!=null ||widget.categoryCode.isNotEmpty)
+    {
+      selectedCategory=widget.categoryCode;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
