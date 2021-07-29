@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/my_profile/widget/my_profile_body.dart';
+import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
+import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+
+import 'widget/my_profile_body_widget.dart';
 
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({Key key}) : super(key: key);
@@ -16,11 +19,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: "My Profile",
+        backgroundColor: Theme.of(context).textHeadingColor,
+        foregroundColor: Colors.white,
+        title: "",
       ),
       body: SafeArea(
-        child: MyProfileBody()),
-      // ),
+        child: InternetConnectivityWidget(
+          child: MyProfileBodyWidget(),
+        ),
+      ),
     );
   }
 }
