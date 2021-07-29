@@ -1,4 +1,5 @@
 import 'package:hr_management/ui/screens/login/login_screen.dart';
+import 'package:hr_management/ui/screens/manage_dependent/manage_dependent_screen.dart';
 import 'package:hr_management/ui/screens/my_profile/my_profile_screen.dart';
 
 import 'package:hr_management/ui/screens/person_documents_screen/person_documents_screen.dart';
@@ -282,6 +283,10 @@ class AppRouter {
 
       case MYPROFILE:
         return MaterialPageRoute(builder: (_) => MyProfileScreen());
+        break;
+
+      case MANAGE_DEPENDENTS:
+        return MaterialPageRoute(builder: (_) => ManageDependentScreen());
         break;
 
 // 404 route.

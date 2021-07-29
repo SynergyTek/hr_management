@@ -235,8 +235,7 @@ class APIEndpointConstants {
   static const READ_DEPENDENT_DOCUMENT_REQUEST_LIST =
       '$BASE_URL/CHR/query/ReadDependantDocumentRequestList';
 
-  static const READ_DEPENDENT_LIST =
-      '$BASE_URL/CHR/query/ReadDependantDocumentRequestList';
+  static const READ_DEPENDENT_LIST = '$BASE_URL/CHR/query/ReadDependantList';
 
   //Dependent API Endpoints Block End
   //************************************************************************//

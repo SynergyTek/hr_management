@@ -22,6 +22,7 @@ class NTSTemplateScreen extends StatefulWidget {
 class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
   @override
   void initState() {
+    ntsTemplateBloc.subject.sink.add(null);
     super.initState();
 
     ntsTemplateBloc.getData(
@@ -39,7 +40,7 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
           child: NTSTemplateBodyWidget(
             ntsType: widget.ntsType,
             stream: ntsTemplateBloc.subject.stream,
-            categoryCode: widget.categoryCode ,
+            categoryCode: widget.categoryCode,
           ),
         ),
       ),

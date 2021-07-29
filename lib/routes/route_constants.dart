@@ -61,3 +61,5 @@ const String MYPROFILE = "/my_profile";
 // documents route constants:
 const String PERSON_DOCUMENTS_ROUTE = '/person_documents';
 const String PERSON_PROFILE_ROUTE = '/person_profile';
+
+const String MANAGE_DEPENDENTS = "/manage_dependents";

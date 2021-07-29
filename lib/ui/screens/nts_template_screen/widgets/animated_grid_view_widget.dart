@@ -26,15 +26,6 @@ class _AnimatedGridViewWidgetState extends State<AnimatedGridViewWidget> {
   List<GlobalKey<FlipCardState>> cardKeys = [];
 
   @override
-  void initState() {
-    super.initState();
-
-    List.generate(widget.model.length, (index) {
-      cardKeys.add(GlobalKey<FlipCardState>());
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -45,6 +36,10 @@ class _AnimatedGridViewWidgetState extends State<AnimatedGridViewWidget> {
       ),
       itemCount: widget.model.length ?? 0,
       itemBuilder: (context, index) {
+        List.generate(widget.model.length, (index) {
+          cardKeys.add(GlobalKey<FlipCardState>());
+        });
+
         return GridViewFlipWidget(
           index: index,
           cardKeys: cardKeys,

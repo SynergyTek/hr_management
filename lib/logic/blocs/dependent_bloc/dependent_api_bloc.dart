@@ -14,17 +14,21 @@ class DependentAPIBloc {
       BehaviorSubject<DependnetDocReqResponse>();
 
   /// Used to fetch new entries.
-  getReadDependantList() async {
+  getReadDependantList({
+    Map<String, dynamic> queryparams,
+  }) async {
     ReadDependnetResponse response =
-        await _apiRepository.getReadDependantList();
+        await _apiRepository.getReadDependantList(queryparams: queryparams);
 
     _subjectReadDependnetResponse.sink.add(response);
   }
 
   /// Used to fetch new entries.
-  getReadDependnetDocReqResponse() async {
-    DependnetDocReqResponse response =
-        await _apiRepository.getReadDependantDocumentRequestList();
+  getReadDependnetDocReqResponse({
+    Map<String, dynamic> queryparams,
+  }) async {
+    DependnetDocReqResponse response = await _apiRepository
+        .getReadDependantDocumentRequestList(queryparams: queryparams);
 
     _subjectDependnetDocReqResponse.sink.add(response);
   }

@@ -252,65 +252,75 @@ Widget drawerWidget(context) {
                   ),
                 ],
               ),
-              
-          ExpansionTile(
-            title: Text("DOCUMENTS"),
-            children: [
-              ListTile(
-                trailing: Image.asset(
-                  DOCUMENTS_REQUESTED_BY_HR_ICON,
-                  width: 24.0,
-                  height: 24.0,
-                ),
-                title: Text(
-                  'REQUESTED BY HR',
-                  style: TextStyle(
-                    fontSize: fontSize,
-                    color: fontColor,
+              ExpansionTile(
+                title: Text("DOCUMENTS"),
+                children: [
+                  ListTile(
+                    trailing: Image.asset(
+                      DOCUMENTS_REQUESTED_BY_HR_ICON,
+                      width: 24.0,
+                      height: 24.0,
+                    ),
+                    title: Text(
+                      'REQUESTED BY HR',
+                      style: TextStyle(
+                        fontSize: fontSize,
+                        color: fontColor,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        PERSON_DOCUMENTS_ROUTE,
+                      );
+                    },
                   ),
+                  ListTile(
+                    trailing: Image.asset(
+                      MANAGE_DOCUMENTS_ICON,
+                      width: 24.0,
+                      height: 24.0,
+                    ),
+                    title: Text(
+                      'MANAGE DOCUMENTS',
+                      style: TextStyle(
+                        fontSize: fontSize,
+                        color: fontColor,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        PERSON_PROFILE_ROUTE,
+                      );
+                    },
+                  ),
+                ],
+              ),
+              ListTile(
+                title: Text(
+                  'MY PROFILE',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
                 onTap: () {
                   Navigator.pushNamed(
                     context,
-                    PERSON_DOCUMENTS_ROUTE,
+                    MYPROFILE,
                   );
                 },
               ),
               ListTile(
-                trailing: Image.asset(
-                  MANAGE_DOCUMENTS_ICON,
-                  width: 24.0,
-                  height: 24.0,
-                ),
                 title: Text(
-                  'MANAGE DOCUMENTS',
-                  style: TextStyle(
-                    fontSize: fontSize,
-                    color: fontColor,
-                  ),
+                  'MANAGE DEPENDENTS',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
                 onTap: () {
                   Navigator.pushNamed(
                     context,
-                    PERSON_PROFILE_ROUTE,
+                    MANAGE_DEPENDENTS,
                   );
                 },
               ),
-            ],
-          ),
-          ListTile(
-            title: Text(
-              'MY PROFILE',
-              style: TextStyle(fontSize: fontSize, color: fontColor),
-            ),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                MYPROFILE,
-              );
-            },
-          ),
-        
             ],
           ),
         ),

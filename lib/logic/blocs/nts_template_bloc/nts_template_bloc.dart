@@ -28,10 +28,12 @@ class NTSTemplateBloc {
         "categoryCode": "", //categoryCode,
         "templateType": "Task",
       };
-    } else if (ntsType == NTSType.note && categoryCode == 'Document') {
+    } else if (ntsType == NTSType.note) {
+      // } else if (ntsType == NTSType.note && categoryCode == 'Document') {
       _subject.sink.add(null);
       queryparams = {
-        "categoryCode": "PersonDocuments", //categoryCode,
+        "templateType": "Note",
+        "categoryCode": "", //categoryCode,
       };
     }
 

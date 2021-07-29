@@ -110,13 +110,14 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
               ),
             );
           } else if (ntsType == NTSType.note) {
-            // Navigator.pushNamed(
-            //   context,
-            //   ADD_EDIT_NOTE_ROUTE,
-            //   arguments: ScreenArguments(
-            //     arg1: '',
-            //   ),
-            // );
+            Navigator.pushNamed(
+              context,
+              NTS_TEMPLATE_REQUEST,
+              arguments: ScreenArguments(
+                ntstype: NTSType.note,
+                arg4: '',
+              ),
+            );
           }
         },
       ),

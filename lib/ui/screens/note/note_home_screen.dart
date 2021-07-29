@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
@@ -31,7 +34,18 @@ class NoteHomeScreen extends StatelessWidget {
           moduleId: moduleId,
         ),
       ),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(Icons.add),
+        onPressed: () => Navigator.pushNamed(
+          context,
+          NTS_TEMPLATE_REQUEST,
+          arguments: ScreenArguments(
+            ntstype: NTSType.note,
+            arg4: '',
+          ),
+        ),
+      ),
     );
   }
 }
