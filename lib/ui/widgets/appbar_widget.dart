@@ -8,11 +8,15 @@ class AppbarWidget extends StatefulWidget with PreferredSizeWidget {
   final String title;
   final List<Widget> actions;
   final PreferredSizeWidget bottom;
+  final Color backgroundColor;
+  final Color foregroundColor;
 
   const AppbarWidget({
     @required this.title,
     this.actions,
     this.bottom,
+    this.backgroundColor,
+    this.foregroundColor,
   });
 
   @override
@@ -27,6 +31,11 @@ class _AppbarWidgetState extends State<AppbarWidget> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      iconTheme: IconThemeData(
+        color: widget.foregroundColor,
+      ),
+      foregroundColor: widget.foregroundColor,
+      backgroundColor: widget.backgroundColor,
       elevation: 0,
       bottom: widget.bottom,
       actions: []

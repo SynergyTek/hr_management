@@ -9,9 +9,13 @@ class EmployeeProfileBloc {
   final BehaviorSubject<EmployeeProfileResponse> _subjectEmployeeProfile =
       BehaviorSubject<EmployeeProfileResponse>();
 
-  getEmployeeProfileData() async {
+  getEmployeeProfileData({
+    Map<String, dynamic> queryparams,
+  }) async {
     EmployeeProfileResponse response =
-        await _employeeProfileRepository.getEmployeeProfileData();
+        await _employeeProfileRepository.getEmployeeProfileData(
+      queryparams: queryparams,
+    );
     _subjectEmployeeProfile.sink.add(response);
   }
 
@@ -22,6 +26,5 @@ class EmployeeProfileBloc {
   BehaviorSubject<EmployeeProfileResponse> get subjectEmployeeProfile =>
       _subjectEmployeeProfile;
 }
-
 
 final employeeProfileBloc = EmployeeProfileBloc();
