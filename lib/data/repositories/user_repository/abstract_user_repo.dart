@@ -9,4 +9,6 @@ abstract class AbstractUserRepository {
   AbstractUserRepository();
 
   Future<UserListResponse> readUserData();
+
+  Future<ReadTeamDataResponse> readTeamData();
 }

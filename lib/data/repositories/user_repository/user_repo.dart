@@ -22,4 +22,23 @@ class UserRepository extends AbstractUserRepository {
       return UserListResponse.withError("$err");
     }
   }
+
+  @override
+  Future<ReadTeamDataResponse> readTeamData(
+      {Map<String, dynamic> queryparams}) async {
+    final String endpoint = APIEndpointConstants.READ_USER_DATA;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      return ReadTeamDataResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+      return ReadTeamDataResponse.withError("$err");
+    }
+  }
 }
