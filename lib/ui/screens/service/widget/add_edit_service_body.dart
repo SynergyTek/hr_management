@@ -1351,15 +1351,19 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //   labelBackgroundColor: Colors.black,
           // ),
-          // SpeedDialChild(
-          //   child: Icon(Icons.share, color: Colors.white),
-          //   backgroundColor: Colors.blue,
-          //   onTap: () => print('Pressed Code'),
-          //   label: 'Share',
-          //   labelStyle:
-          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-          //   labelBackgroundColor: Colors.black,
-          // ),
+          SpeedDialChild(
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => Navigator.pushNamed(context, NTS_SHARE,
+                arguments: ScreenArguments(
+                  ntstype: NTSType.service,
+                  arg1: serviceModel.serviceId,
+                )),
+            label: 'Share',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
           // SpeedDialChild(
           //   child: Icon(Icons.border_all, color: Colors.white),
           //   backgroundColor: Colors.blue,

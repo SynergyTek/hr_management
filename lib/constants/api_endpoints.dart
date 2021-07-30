@@ -232,15 +232,41 @@ class APIEndpointConstants {
 
   // Documents endpoints end here:
 
-  //Dependent API Endpoints Block End
   //************************************************************************//
+
+  // Dependent endpoints start here:
 
   static const READ_DEPENDENT_DOCUMENT_REQUEST_LIST =
       '$BASE_URL/CHR/query/ReadDependantDocumentRequestList';
 
   static const READ_DEPENDENT_LIST = '$BASE_URL/CHR/query/ReadDependantList';
 
-  //Dependent API Endpoints Block End
+  // Dependent API Endpoints Block End
+  //************************************************************************//
+
+  // Share endpoints start here:
+
+  static const GET_SERVICE_SHARED_DATA =
+      '$BASE_URL/cms/query/ReadServiceSharedData';
+
+  static const GET_TASK_SHARED_DATA = '$BASE_URL/cms/query/ReadTaskSharedData';
+
+  static const GET_NOTE_SHARED_DATA = '$BASE_URL/cms/query/ReadNoteSharedData';
+
+  static const DELETE_SERVICE_SHARED =
+      '$BASE_URL/cms/query/DeleteServiceShared';
+
+  static const DELETE_TASK_SHARED = '$BASE_URL/cms/query/DeleteNoteShared';
+
+  static const DELETE_NOTE_SHARED = '$BASE_URL/cms/query/DeleteTaskShared';
+
+  static const POST_SHARE_SERVICE = '$BASE_URL/cms/query/ShareService';
+
+  static const POST_SHARE_TASK = '$BASE_URL/cms/query/ShareTask';
+
+  static const POST_SHARE_NOTE = '$BASE_URL/cms/query/ShareNote';
+
+  // Share API Endpoints Block End
   //************************************************************************//
 
 }

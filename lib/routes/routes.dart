@@ -4,6 +4,7 @@ import 'package:hr_management/ui/screens/my_profile/my_profile_screen.dart';
 
 import 'package:hr_management/ui/screens/person_documents_screen/person_documents_screen.dart';
 import 'package:hr_management/ui/screens/person_profile_screen/person_profile_screen.dart';
+import 'package:hr_management/ui/screens/share/share_screen.dart';
 
 import 'package:hr_management/ui/screens/tasks/task_list_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/user_dropdown_list.dart';
@@ -261,6 +262,16 @@ class AppRouter {
             moduleId: args?.arg2,
             mode: args?.arg3,
             showBack: args?.showBack ?? false,
+          ),
+        );
+        break;
+
+      case NTS_SHARE:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => ShareScreen(
+            ntsType: args.ntstype,
+            ntsId: args.arg1,
           ),
         );
         break;
