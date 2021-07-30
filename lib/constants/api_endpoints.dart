@@ -260,6 +260,21 @@ class APIEndpointConstants {
   //Attachment API Endpoints
   //************************************************************************//
 
+  //************************************************************************//
+  // Delete Comments
+
+  static const String DELETE_NOTE_COMMENT_DATA =
+      BASE_URL + '/cms/query/DeleteNoteComment';
+
+  static const String DELETE_TASK_COMMENT_DATA =
+      BASE_URL + '/cms/query/DeleteTaskComment';
+
+  static const String DELETE_SERVICE_COMMENT_DATA =
+      BASE_URL + '/cms/query/DeleteServiceComment';
+
+  // Delete Comments
+  //************************************************************************//
+
 }
 
 Future<String> getUserId() async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/attachment_nts_screen/attachment_nts_screen.dart';
-import 'package:hr_management/ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
-import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
+import '../ui/screens/attachment_nts_screen/attachment_nts_screen.dart';
+import '../ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
+import '../ui/screens/nts_charts/nts_dashboard.dart';
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
@@ -285,10 +285,12 @@ class AppRouter {
         break;
 
       case ATTACHMENT_NTS_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+
         return MaterialPageRoute(
           builder: (_) => AttachmentNTSScreen(
-            ntsId: 'af9a75da-ae2e-4d8a-86a0-d55c08a2a2b8',
-            ntsType: NTSType.service,
+            ntsType: args?.ntstype ?? NTSType.service,
+            ntsId: args?.arg1 ?? 'af9a75da-ae2e-4d8a-86a0-d55c08a2a2b8',
           ),
         );
         break;

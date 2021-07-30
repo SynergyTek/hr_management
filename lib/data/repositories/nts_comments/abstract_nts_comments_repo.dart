@@ -28,8 +28,9 @@ abstract class AbstractNTSCommentsRepository {
     Map<String, dynamic> queryparams,
   });
 
-  Future<CommentResponse> deleteAPIData({
+  Future<bool> deleteAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
+    NTSType ntsType,
   });
 }
