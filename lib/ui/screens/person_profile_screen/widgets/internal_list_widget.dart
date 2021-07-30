@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/documents_models/note_index_models/note_index_model.dart';
-import 'package:hr_management/data/models/documents_models/note_index_models/note_index_response.dart';
-import 'package:hr_management/logic/blocs/documents_bloc/note_index_bloc/note_index_bloc.dart';
-import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/documents_models/note_index_models/note_index_model.dart';
+import '../../../../data/models/documents_models/note_index_models/note_index_response.dart';
+import '../../../../logic/blocs/documents_bloc/note_index_bloc/note_index_bloc.dart';
+import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/progress_indicator.dart';
 
 import '../../../../themes/theme_config.dart';
 

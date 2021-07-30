@@ -1,6 +1,7 @@
-import 'package:hr_management/data/models/employee_profile_models/employee_profile_response.dart';
-import 'package:hr_management/data/repositories/employee_profile_repo.dart/abstract_employee_profile_repo.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../data/models/employee_profile_models/employee_profile_response.dart';
+import '../../../data/repositories/employee_profile_repo.dart/abstract_employee_profile_repo.dart';
 
 class EmployeeProfileBloc {
   final EmployeeProfileRepository _employeeProfileRepository =

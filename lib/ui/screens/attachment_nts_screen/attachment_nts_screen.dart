@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-
 import '../../../data/enums/enums.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
-import 'widgets/test_screen_body_widget.dart';
 
-class TestScreen extends StatelessWidget {
+import 'widgets/attachment_nts_body_widget.dart';
+
+class AttachmentNTSScreen extends StatelessWidget {
   final NTSType ntsType;
+  final String ntsId;
 
-  const TestScreen({
+  const AttachmentNTSScreen({
     @required this.ntsType,
+    @required this.ntsId,
   });
 
   @override
@@ -18,12 +20,13 @@ class TestScreen extends StatelessWidget {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: "Test Screen",
+        title: "Attachments",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: TestScreenBodyWidget(
+          child: AttachmentNTSBodyWidget(
             ntsType: ntsType,
+            ntsId: ntsId,
           ),
         ),
       ),

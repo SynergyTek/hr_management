@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/user/user_response.dart';
-import 'package:hr_management/data/repositories/user_repository/abstract_user_repo.dart';
+import '../../../data/models/user/user_response.dart';
+import '../../../data/repositories/user_repository/abstract_user_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserBloc {

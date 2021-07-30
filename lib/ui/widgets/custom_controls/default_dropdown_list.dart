@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:listizer/listizer.dart';
+
 import '../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import '../../../themes/theme_config.dart';
-import 'package:listizer/listizer.dart';
 import '../appbar_widget.dart';
 import '../circle_avatar.dart';
 import '../empty_list_widget.dart';

@@ -1,46 +1,41 @@
-import 'package:hr_management/ui/screens/login/login_screen.dart';
-import 'package:hr_management/ui/screens/manage_dependent/manage_dependent_screen.dart';
-import 'package:hr_management/ui/screens/my_profile/my_profile_screen.dart';
-
-import 'package:hr_management/ui/screens/person_documents_screen/person_documents_screen.dart';
-import 'package:hr_management/ui/screens/person_profile_screen/person_profile_screen.dart';
-
-import 'package:hr_management/ui/screens/tasks/task_list_screen.dart';
-import 'package:hr_management/ui/widgets/custom_controls/user_dropdown_list.dart';
-
-import '../ui/screens/payroll/manage_accrual_screen.dart';
-import '../ui/screens/payroll/payslip_screen.dart';
-
-import '../data/enums/enums.dart';
-import '../ui/screens/counts_screen/counts_screen.dart';
-import '../ui/screens/note/note_home_screen.dart';
-import '../ui/screens/nts_comments/nts_comments_screen.dart';
-import '../ui/screens/home_screen/home_screen.dart';
-
+import 'package:flutter/material.dart';
+import 'package:hr_management/ui/screens/attachment_nts_screen/attachment_nts_screen.dart';
+import 'package:hr_management/ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
+import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
-import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
+import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/screens/service/service_home.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
-
 import 'package:hr_management/ui/screens/worklist_dashboard/worklist_dashboard_screen.dart';
-
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
-import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
-import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
-import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
-import '../ui/screens/tasks/task_home_screen.dart';
-import '../ui/widgets/custom_controls/default_dropdown_list.dart';
+
+import '../data/enums/enums.dart';
 import '../ui/screens/attendance/mark_attendance.dart';
+import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
+import '../ui/screens/counts_screen/counts_screen.dart';
+import '../ui/screens/home_screen/home_screen.dart';
+import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
+import '../ui/screens/login/login_screen.dart';
+import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
+import '../ui/screens/my_profile/my_profile_screen.dart';
 import '../ui/screens/note/add_edit_note.dart';
-import '../ui/screens/registration/registration_screen.dart';
+import '../ui/screens/note/note_home_screen.dart';
+import '../ui/screens/nts_comments/nts_comments_screen.dart';
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
+import '../ui/screens/payroll/manage_accrual_screen.dart';
+import '../ui/screens/payroll/payslip_screen.dart';
+import '../ui/screens/person_documents_screen/person_documents_screen.dart';
+import '../ui/screens/person_profile_screen/person_profile_screen.dart';
+import '../ui/screens/registration/registration_screen.dart';
 import '../ui/screens/splash_screen/splash_screen.dart';
+import '../ui/screens/tasks/task_home_screen.dart';
+import '../ui/screens/tasks/task_list_screen.dart';
+import '../ui/widgets/custom_controls/default_dropdown_list.dart';
+import '../ui/widgets/custom_controls/user_dropdown_list.dart';
 import 'route_constants.dart';
 import 'screen_arguments.dart';
 
@@ -289,7 +284,14 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ManageDependentScreen());
         break;
 
-// 404 route.
+      case ATTACHMENT_NTS_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => AttachmentNTSScreen(
+            ntsId: 'af9a75da-ae2e-4d8a-86a0-d55c08a2a2b8',
+            ntsType: NTSType.service,
+          ),
+        );
+        break;
 
       case PERSON_DOCUMENTS_ROUTE:
         return MaterialPageRoute(
@@ -304,7 +306,6 @@ class AppRouter {
         break;
 
       // 404 route.
-
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

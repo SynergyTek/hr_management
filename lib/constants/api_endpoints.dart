@@ -243,6 +243,23 @@ class APIEndpointConstants {
   //Dependent API Endpoints Block End
   //************************************************************************//
 
+  //************************************************************************//
+  //Attachment API Endpoints
+
+  static const GET_SERVICE_ATTACHMENT =
+      BASE_URL + '/cms/query/GetServiceAttachmentList';
+
+  static const GET_TASK_ATTACHMENT =
+      BASE_URL + '/cms/query/GetTaskAttachmentList';
+
+  static const GET_NOTE_ATTACHMENT =
+      BASE_URL + '/cms/query/GetNoteAttachmentList';
+
+  static const DELETE_NTS_ATTACHMENT = BASE_URL + '/cms/query/DeleteAttachment';
+
+  //Attachment API Endpoints
+  //************************************************************************//
+
 }
 
 Future<String> getUserId() async {

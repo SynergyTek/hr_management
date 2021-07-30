@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/models/employee_profile_models/employee_profile_model.dart';
-import 'package:hr_management/data/models/employee_profile_models/employee_profile_response.dart';
-import 'package:hr_management/logic/blocs/employee_profile_bloc/employee_profile_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/employee_profile_models/employee_profile_model.dart';
+import '../../../../data/models/employee_profile_models/employee_profile_response.dart';
+import '../../../../logic/blocs/employee_profile_bloc/employee_profile_bloc.dart';
+import '../../../../themes/theme_config.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:intl/intl.dart';
 
 part './my_profile_helper_widgets.dart';

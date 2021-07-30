@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 import '../../../../data/enums/enums.dart';
+import '../../../../data/helpers/showup.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
-import '../../../../data/helpers/showup.dart';
-import 'package:sizer/sizer.dart';
 
 Widget buildTile(
     {String status,
