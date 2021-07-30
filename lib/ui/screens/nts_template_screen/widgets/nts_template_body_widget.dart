@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/nts_template_models/nts_template_model.dart';
-import 'package:hr_management/data/models/nts_template_tree_list_models/nts_template_tree_list_model.dart';
-import 'package:hr_management/ui/widgets/empty_list_widget.dart';
+import '../../../../data/models/nts_template_models/nts_template_model.dart';
+import '../../../../data/models/nts_template_tree_list_models/nts_template_tree_list_model.dart';
+import '../../../widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../themes/theme_config.dart';
 import 'animated_grid_view_widget.dart';

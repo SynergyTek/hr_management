@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
+import '../../../../constants/api_endpoints.dart';
 import '../../../../constants/formats.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/api_models/post_response_model.dart';

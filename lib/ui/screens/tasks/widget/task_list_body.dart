@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
-import 'package:hr_management/ui/screens/tasks/widget/task_dashboard_list.dart';
+import '../../../../logic/blocs/task_bloc/task_bloc.dart';
+import 'task_dashboard_list.dart';
 
 class TaskListBody extends StatefulWidget {
   const TaskListBody({Key key}) : super(key: key);

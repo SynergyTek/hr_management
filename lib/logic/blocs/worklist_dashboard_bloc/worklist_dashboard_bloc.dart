@@ -1,4 +1,4 @@
-import 'package:hr_management/constants/api_endpoints.dart';
+import '../../../constants/api_endpoints.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';

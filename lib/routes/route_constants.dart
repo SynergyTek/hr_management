@@ -63,3 +63,6 @@ const String PERSON_DOCUMENTS_ROUTE = '/person_documents';
 const String PERSON_PROFILE_ROUTE = '/person_profile';
 
 const String MANAGE_DEPENDENTS = "/manage_dependents";
+
+// Attachment route:
+const String ATTACHMENT_NTS_ROUTE = '/attachment_nts';

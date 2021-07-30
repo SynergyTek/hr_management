@@ -3,9 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
+import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/note/note_model.dart';
 import '../../../../data/models/note/note_response.dart';
@@ -31,7 +36,9 @@ import 'package:sizer/sizer.dart';
 class AddEditNoteBody extends StatefulWidget {
   final String templateCode;
   final String noteId;
-  AddEditNoteBody({this.templateCode, this.noteId});
+  final String title;
+
+  AddEditNoteBody({this.templateCode, this.noteId, this.title});
 
   @override
   _AddEditNoteBodyState createState() => _AddEditNoteBodyState();
@@ -115,24 +122,34 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   noteModel.json,
                 );
 
-                return FormBlocListener<CreateServiceFormBloc, String, String>(
-                  onSubmitting: (context, state) {
-                    // if (createServiceFormBloc.startDate.value != null &&
-                    //     createServiceFormBloc.endDate.value != null) {
-                    //   compareStartEndDate(
-                    //       startDate: createServiceFormBloc.startDate.value,
-                    //       enddate: createServiceFormBloc.endDate.value,
-                    //       context: context,
-                    //       updateDuration: true);
-                    // }
-                  },
-                  onSuccess: (context, state) {},
-                  onFailure: (context, state) {},
-                  child: setServiceView(
-                    context,
-                    createServiceFormBloc,
-                    noteModel,
+                return Scaffold(
+                  appBar: AppbarWidget(
+                    title: widget.noteId == null || widget.noteId.isEmpty
+                        ? "Create " + widget.templateCode
+                        : widget.title != null
+                            ? "Edit $widget.title"
+                            : "Edit",
                   ),
+                  body: FormBlocListener<CreateServiceFormBloc, String, String>(
+                    onSubmitting: (context, state) {
+                      // if (createServiceFormBloc.startDate.value != null &&
+                      //     createServiceFormBloc.endDate.value != null) {
+                      //   compareStartEndDate(
+                      //       startDate: createServiceFormBloc.startDate.value,
+                      //       enddate: createServiceFormBloc.endDate.value,
+                      //       context: context,
+                      //       updateDuration: true);
+                      // }
+                    },
+                    onSuccess: (context, state) {},
+                    onFailure: (context, state) {},
+                    child: setServiceView(
+                      context,
+                      createServiceFormBloc,
+                      noteModel,
+                    ),
+                  ),
+                  floatingActionButton: buildSpeedDial(),
                 );
               } else {
                 return Center(
@@ -1231,6 +1248,72 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
     ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
     // return ntsDdResponse?.data?.elementAt(0)?.name;
+  }
+
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 28.0),
+        backgroundColor: Colors.blue[900],
+        visible: true,
+        curve: Curves.bounceInOut,
+        children: [
+          SpeedDialChild(
+            child:
+                Icon(Icons.notifications_active_outlined, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => print('Pressed Read Later'),
+            label: 'Notification',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.comment, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => print('Pressed Write'),
+            label: 'Comment',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => print('Pressed Code'),
+            label: 'Share',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.email, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => print('Pressed Code'),
+            label: 'Email',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.attachment, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => print('Pressed Code'),
+            label: 'Attachment',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.tag, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => print('Pressed Code'),
+            label: 'Tags',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+        ]);
   }
 
   @override

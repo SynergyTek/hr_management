@@ -3,9 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/constants/api_endpoints.dart';
+import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
+import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
@@ -34,9 +40,10 @@ import '../create_service_form_bloc.dart';
 class CreateServiceScreenBody extends StatefulWidget {
   final bool isLeave;
   final String serviceId;
-  final Service serviceModel;
+  final String templateCode;
+  final String title;
   const CreateServiceScreenBody(
-      {Key key, this.serviceId, this.isLeave, this.serviceModel});
+      {Key key, this.serviceId, this.isLeave, this.templateCode, this.title});
 
   @override
   _CreateServiceScreenBodyState createState() =>
@@ -65,7 +72,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   String descriptionValue;
   String slaValue;
   String ownerUserId;
-
+  Service serviceModel;
   DateTime leaveStartDate;
   DateTime leaveEnddate;
   TextEditingController leaveDurationControllerCalendarDays =
@@ -85,24 +92,74 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final createServiceFormBloc = context.read<CreateServiceFormBloc>();
+  void initState() {
+    super.initState();
+    serviceBloc
+      ..getServiceDetail(
+        templateCode: widget.templateCode,
+        serviceId: widget.serviceId,
+        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+      );
+  }
 
-    parseJsonToUDFModel(
-      createServiceFormBloc,
-      widget.serviceModel.json,
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: BlocProvider(
+        create: (context) => CreateServiceFormBloc(),
+        child: Container(
+          padding: DEFAULT_PADDING,
+          child: StreamBuilder<ServiceResponse>(
+              stream: serviceBloc.subject.stream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data.error != null &&
+                      snapshot.data.error.length > 0) {
+                    return Center(
+                      child: Text(snapshot.data.error),
+                    );
+                  }
+                  serviceModel = snapshot.data.data;
+
+                  final createServiceFormBloc =
+                      context.read<CreateServiceFormBloc>();
+
+                  parseJsonToUDFModel(
+                    createServiceFormBloc,
+                    serviceModel.json,
+                  );
+                  return Scaffold(
+                    appBar: AppbarWidget(
+                      title:
+                          widget.serviceId == null || widget.serviceId.isEmpty
+                              ? "Create " + widget.templateCode
+                              : widget.title != null
+                                  ? "Edit ${widget.title}"
+                                  : "Edit",
+                    ),
+                    body:
+                        FormBlocListener<CreateServiceFormBloc, String, String>(
+                      onSubmitting: (context, state) {},
+                      onSuccess: (context, state) {},
+                      onFailure: (context, state) {},
+                      child: setServiceView(
+                        context,
+                        createServiceFormBloc,
+                      ),
+                    ),
+                    floatingActionButton: buildSpeedDial(),
+                  );
+                } else {
+                  return Center(
+                    child: CustomProgressIndicator(),
+                  );
+                }
+              }),
+        ),
+      ),
+
+      // floatingActionButton: buildSpeedDial(),
     );
-    return Container(
-        padding: DEFAULT_PADDING,
-        child: FormBlocListener<CreateServiceFormBloc, String, String>(
-          onSubmitting: (context, state) {},
-          onSuccess: (context, state) {},
-          onFailure: (context, state) {},
-          child: setServiceView(
-            context,
-            createServiceFormBloc,
-          ),
-        ),);
   }
 
   parseJsonToUDFModel(
@@ -198,15 +255,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          rowChild(widget.serviceModel.serviceNo, 'Service No', 3),
-          rowChild(widget.serviceModel.serviceStatusName, 'Status', 2),
-          rowChild(widget.serviceModel.versionNo.toString(), 'Version No', 2),
+          rowChild(serviceModel.serviceNo, 'Service No', 3),
+          rowChild(serviceModel.serviceStatusName, 'Status', 2),
+          rowChild(serviceModel.versionNo.toString(), 'Version No', 2),
         ],
       ),
     ));
-    if (!widget.serviceModel.hideSubject) {
-      createServiceFormBloc.subject.updateInitialValue(
-          subjectValue ?? widget.serviceModel.serviceSubject);
+    if (!serviceModel.hideSubject) {
+      createServiceFormBloc.subject
+          .updateInitialValue(subjectValue ?? serviceModel.serviceSubject);
       widgets.add(
         Visibility(
           visible: false,
@@ -225,7 +282,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       );
     }
 
-    if (!widget.serviceModel.hideStartDate)
+    if (!serviceModel.hideStartDate)
       widgets.add(
         Row(
           mainAxisSize: MainAxisSize.max,
@@ -234,16 +291,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               visible: false,
               child: Expanded(
                 child: DynamicDateTimeBox(
-                  code: widget.serviceModel.startDate,
+                  code: serviceModel.startDate,
                   name: 'Start Date',
                   key: new Key('Start Date'),
                   selectDate: (DateTime date) {
                     if (date != null) {
                       setState(() async {
                         startDate = date;
-                        if (dueDate == null &&
-                            widget.serviceModel.dueDate != null) {
-                          dueDate = DateTime.parse(widget.serviceModel.dueDate);
+                        if (dueDate == null && serviceModel.dueDate != null) {
+                          dueDate = DateTime.parse(serviceModel.dueDate);
                         }
                         if (dueDate != null && dueDate.toString().isNotEmpty)
                           compareStartEndDate(
@@ -262,7 +318,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               visible: false,
               child: Expanded(
                 child: DynamicDateTimeBox(
-                  code: widget.serviceModel.dueDate,
+                  code: serviceModel.dueDate,
                   name: 'Due Date',
                   key: new Key('Due Date'),
                   selectDate: (DateTime date) {
@@ -270,9 +326,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                       setState(() async {
                         dueDate = date;
                         if (startDate == null &&
-                            widget.serviceModel.startDate != null) {
-                          startDate =
-                              DateTime.parse(widget.serviceModel.startDate);
+                            serviceModel.startDate != null) {
+                          startDate = DateTime.parse(serviceModel.startDate);
                         }
                         if (startDate != null &&
                             startDate.toString().isNotEmpty)
@@ -292,9 +347,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ),
       );
 
-    if (!widget.serviceModel.hideSLA) {
+    if (!serviceModel.hideSLA) {
       createServiceFormBloc.sla
-          .updateInitialValue(slaValue ?? widget.serviceModel.serviceSLA);
+          .updateInitialValue(slaValue ?? serviceModel.serviceSLA);
       widgets.add(
         Visibility(
           visible: false,
@@ -313,7 +368,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       );
     }
 
-    if (!widget.serviceModel.hideExpiryDate)
+    if (!serviceModel.hideExpiryDate)
       widgets.add(
         Visibility(
           visible: false,
@@ -327,9 +382,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ),
       );
 
-    if (!widget.serviceModel.hideDescription) {
+    if (!serviceModel.hideDescription) {
       createServiceFormBloc.description.updateInitialValue(
-          descriptionValue ?? widget.serviceModel.serviceDescription);
+          descriptionValue ?? serviceModel.serviceDescription);
       widgets.add(Visibility(
         visible: false,
         child: BlocTextBoxWidget(
@@ -867,7 +922,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             Visibility(
-              visible: widget.serviceModel.isCompleteButtonVisible,
+              visible: serviceModel.isCompleteButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Complete',
                 handleOnPressed: () => serviceViewModelPostRequest(
@@ -879,7 +934,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: widget.serviceModel.isAddCommentEnabled &&
+              visible: serviceModel.isAddCommentEnabled &&
                   widget.serviceId != null &&
                   widget.serviceId.isNotEmpty,
               child: PrimaryButton(
@@ -888,7 +943,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   Navigator.pushNamed(context, COMMENT_ROUTE,
                       arguments: ScreenArguments(
                         ntstype: NTSType.service,
-                        arg1: widget.serviceModel.serviceId,
+                        arg1: serviceModel.serviceId,
                       ));
                 },
                 width: 100,
@@ -896,11 +951,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             ),
             Visibility(
               // visible: true,
-              visible: widget.serviceModel.isCancelButtonVisible,
+              visible: serviceModel.isCancelButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Cancel',
                 handleOnPressed: () {
-                  if (widget.serviceModel.isCancelReasonRequired)
+                  if (serviceModel.isCancelReasonRequired)
                     enterReasonAlertDialog(context);
                   serviceViewModelPostRequest(
                     1,
@@ -912,7 +967,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: widget.serviceModel.isCloseButtonVisible,
+              visible: serviceModel.isCloseButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Close',
                 handleOnPressed: () => Navigator.pop(context),
@@ -920,7 +975,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: widget.serviceModel.isDraftButtonVisible,
+              visible: serviceModel.isDraftButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Draft',
                 handleOnPressed: () {
@@ -934,7 +989,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: widget.serviceModel.isSubmitButtonVisible,
+              visible: serviceModel.isSubmitButtonVisible,
               child: PrimaryButton(
                 buttonText: 'Submit',
                 handleOnPressed: () {
@@ -1185,7 +1240,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   serviceViewModelPostRequest(int postDataAction, String serviceStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
     String userId = await getUserId();
-    String stringModel = jsonEncode(widget.serviceModel);
+    String stringModel = jsonEncode(serviceModel);
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
 
@@ -1240,6 +1295,111 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
     ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
     // return ntsDdResponse?.data?.elementAt(0)?.name;
+  }
+
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 28.0),
+        backgroundColor: Colors.blue[900],
+        visible: true,
+        curve: Curves.bounceInOut,
+        children: [
+          // SpeedDialChild(
+          //   child:
+          //       Icon(Icons.notifications_active_outlined, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Read Later'),
+          //   label: 'Notification',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          //  Visibility(
+          //     visible: serviceModel.isAddCommentEnabled &&
+          //         widget.serviceId != null &&
+          //         widget.serviceId.isNotEmpty,
+          //     child: PrimaryButton(
+          //       buttonText: 'Add comment',
+          //       handleOnPressed: () {
+
+          //       },
+          //       width: 100,
+          //     ),
+          //   ),
+          SpeedDialChild(
+            visible: serviceModel.isAddCommentEnabled &&
+                widget.serviceId != null &&
+                widget.serviceId.isNotEmpty,
+            child: Icon(Icons.comment, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              Navigator.pushNamed(context, COMMENT_ROUTE,
+                  arguments: ScreenArguments(
+                    ntstype: NTSType.service,
+                    arg1: serviceModel.serviceId,
+                  ));
+            },
+            label: 'Comment',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.account_tree, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Process Design Result',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.share, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Share',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.border_all, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Adhoc Task',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.attachment, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Attachment',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.tag, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Tags',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.email, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Email',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+        ]);
   }
 
   @override

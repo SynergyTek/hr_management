@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import '../../data/models/udf_json_model/udf_json_model.dart';
 
 import '../../data/helpers/formio_helper.dart';
+import '../../data/models/udf_json_model/udf_json_model.dart';
 import '../../themes/theme_config.dart';
 import 'primary_button.dart';
 import 'progress_indicator.dart';

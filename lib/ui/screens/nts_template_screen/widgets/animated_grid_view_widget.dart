@@ -1,6 +1,6 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/nts_template_models/nts_template_model.dart';
+import '../../../../data/models/nts_template_models/nts_template_model.dart';
 
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/enums/enums.dart';

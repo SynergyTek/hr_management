@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/note/note_list_model.dart';
-import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
+import '../../../../data/models/note/note_list_model.dart';
+import '../../../../logic/blocs/note_bloc/note_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
 
 class NoteListCard extends StatelessWidget {
   final List<NoteListModel> noteList;

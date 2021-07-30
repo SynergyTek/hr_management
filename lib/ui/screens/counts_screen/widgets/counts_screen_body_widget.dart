@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
+
 import '../../../../data/models/counts_api_models/counts_api_response.dart';
 import '../../../../logic/blocs/counts_api_bloc/counts_api_bloc.dart';
-import '../../../widgets/progress_indicator.dart';
-
 import '../../../../themes/theme_config.dart';
-import 'package:flutter/material.dart';
+import '../../../widgets/progress_indicator.dart';
 
 class CountsScreenBodyWidget extends StatefulWidget {
   CountsScreenBodyWidget();

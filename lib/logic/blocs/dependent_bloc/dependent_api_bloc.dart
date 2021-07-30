@@ -1,6 +1,7 @@
-import 'package:hr_management/data/models/dependent/dependent_res_model.dart';
-import 'package:hr_management/data/repositories/dependent/abstract_dependent_repo.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../data/models/dependent/dependent_res_model.dart';
+import '../../../data/repositories/dependent/abstract_dependent_repo.dart';
 
 class DependentAPIBloc {
   final DependentRepository _apiRepository = DependentRepository();
