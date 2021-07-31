@@ -80,13 +80,14 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
     @required AttachmentNTSModel data,
   }) {
     return ListTile(
+      onTap: () => _handleViewOnPressed(data: data),
       leading: Icon(Icons.attachment_outlined),
-      // leading: CircleAvatar(
-      //   child: Icon(Icons.attachment_outlined),
-      //   backgroundColor: Theme.of(context).textHeadingColor,
-      //   foregroundColor: Colors.white,
-      // ),
-      title: Text(data?.fileName ?? '-'),
+      title: Text(
+        data?.fileName ?? '-',
+        style: TextStyle(
+          color: Theme.of(context).textHeadingColor,
+        ),
+      ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -99,26 +100,53 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            onPressed: () => null,
+            onPressed: () => _handleDownloadOnPressed(data: data),
             icon: Icon(
-              Icons.download_outlined,
-              // Icons.download,
+              Icons.download_sharp,
+              color: Colors.blue,
             ),
           ),
           IconButton(
-            onPressed: () => attachmentNTSBloc
-              ..deleteData(
-                queryparams: {
-                  'Id': data.id,
-                },
-                ntsId: widget?.ntsId ?? '',
-                ntsType: widget?.ntsType ?? NTSType.service,
-              ),
+            onPressed: () => _handleDeleteOnPressed(data: data),
             icon: Icon(
-              Icons.delete,
+              Icons.delete_forever_sharp,
+              color: Colors.red,
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _handleDeleteOnPressed({
+    @required AttachmentNTSModel data,
+  }) {
+    attachmentNTSBloc
+      ..deleteData(
+        queryparams: {
+          'Id': data.id,
+        },
+        ntsId: widget?.ntsId ?? '',
+        ntsType: widget?.ntsType ?? NTSType.service,
+      );
+  }
+
+  void _handleDownloadOnPressed({
+    @required AttachmentNTSModel data,
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Feature under development."),
+      ),
+    );
+  }
+
+  void _handleViewOnPressed({
+    @required AttachmentNTSModel data,
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Feature under development."),
       ),
     );
   }

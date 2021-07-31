@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
 import '../../../../logic/blocs/nts_template_tree_list_bloc/nts_template_tree_list_bloc.dart';
-import '../../../widgets/progress_indicator.dart';
-
 import '../../../../themes/theme_config.dart';
-import 'package:flutter/material.dart';
+import '../../../widgets/progress_indicator.dart';
 
 class TestScreenBodyWidget extends StatefulWidget {
   final NTSType ntsType;

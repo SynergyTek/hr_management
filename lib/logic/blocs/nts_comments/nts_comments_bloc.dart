@@ -1,4 +1,5 @@
 import 'package:rxdart/rxdart.dart';
+import 'package:meta/meta.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../../data/models/api_models/post_response_model.dart';
@@ -16,7 +17,10 @@ class NtsCommentBloc {
   final BehaviorSubject<CommentListResponse> _subjectGetComments =
       BehaviorSubject<CommentListResponse>();
 
-  getCommentsData({String ntsId, NTSType ntsType}) async {
+  getCommentsData({
+    String ntsId,
+    NTSType ntsType,
+  }) async {
     Map<String, dynamic> queryparams = Map();
     if (ntsType == NTSType.service) {
       queryparams["serviceId"] = ntsId ?? '';
@@ -35,8 +39,11 @@ class NtsCommentBloc {
   }
 
   /// Used to create new entries.
-  Future<PostResponse> postCommentData(
-      {PostComment comment, String ntsId, NTSType ntsType}) async {
+  Future<PostResponse> postCommentData({
+    PostComment comment,
+    String ntsId,
+    NTSType ntsType,
+  }) async {
     // PostComment comment=new PostComment();
     // comment.comment = comment ?? '';
     // comment.ntsTaskId = ntsId ?? '';
@@ -68,16 +75,27 @@ class NtsCommentBloc {
   }
 
   /// Used to delete a particular entry.
-  deleteData() async {
+  deleteData({
+    @required Map<String, dynamic> queryparams,
+    @required String ntsId,
+    @required NTSType ntsType,
+  }) async {
     // Delete here
-    // ...
+    await _ntsRepository.deleteAPIData(
+      queryparams: queryparams,
+      ntsType: ntsType,
+    );
 
     // Update the list (in UI) with the getComment call.
-    // getData();
+    getCommentsData(
+      ntsId: ntsId,
+      ntsType: ntsType,
+    );
   }
 
   dispose() {
     _subject.close();
+    _subjectGetComments.close();
   }
 
   BehaviorSubject<PostResponse> get subject => _subject;

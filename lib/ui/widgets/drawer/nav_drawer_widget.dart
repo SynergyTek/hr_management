@@ -298,18 +298,6 @@ Widget drawerWidget(context) {
               ),
               ListTile(
                 title: Text(
-                  'ATTACHMENTS',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    ATTACHMENT_NTS_ROUTE,
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(
                   'MY PROFILE',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),

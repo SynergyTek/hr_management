@@ -12,8 +12,12 @@ import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import '../../../../constants/api_endpoints.dart';
+import '../../../../data/enums/enums.dart';
 import '../../../../data/models/user/user.dart';
 import '../../../../logic/blocs/user_bloc/user_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/appbar_widget.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/note/note_model.dart';
 import '../../../../data/models/note/note_response.dart';
@@ -1262,22 +1266,17 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         curve: Curves.bounceInOut,
         children: [
           SpeedDialChild(
-            child:
-                Icon(Icons.notifications_active_outlined, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Read Later'),
-            label: 'Notification',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.comment, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Write'),
-            label: 'Comment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            child: Icon(
+              Icons.attachment_outlined,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleAttachmentOnPressed(),
+            label: 'Attachment',
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
             labelBackgroundColor: Colors.black,
           ),
           if (widget?.noteId != null && widget.noteId.isNotEmpty)
@@ -1295,33 +1294,52 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
               labelBackgroundColor: Colors.black,
             ),
-          SpeedDialChild(
-            child: Icon(Icons.email, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Email',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.attachment, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Attachment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.tag, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Tags',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
+          // SpeedDialChild(
+          //   child:
+          //       Icon(Icons.notifications_active_outlined, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Read Later'),
+          //   label: 'Notification',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.comment, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Write'),
+          //   label: 'Comment',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.email, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Email',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.attachment, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Attachment',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.tag, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Tags',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
         ]);
   }
 
@@ -1334,5 +1352,16 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     columnComponent = [];
     componentComList = [];
     super.dispose();
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.pushNamed(
+      context,
+      ATTACHMENT_NTS_ROUTE,
+      arguments: ScreenArguments(
+        ntstype: NTSType.service,
+        arg1: noteModel.id,
+      ),
+    );
   }
 }

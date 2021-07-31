@@ -1,9 +1,9 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import '../../../../data/models/nts_template_models/nts_template_model.dart';
 
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/enums/enums.dart';
+import '../../../../data/models/nts_template_models/nts_template_model.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
