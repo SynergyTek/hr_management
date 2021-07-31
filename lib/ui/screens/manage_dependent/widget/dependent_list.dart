@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/dependent/dependent_list_model.dart';
-import 'package:hr_management/logic/blocs/dependent_bloc/dependent_api_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/empty_list_widget.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/models/dependent/dependent_list_model.dart';
+import '../../../../logic/blocs/dependent_bloc/dependent_api_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/empty_list_widget.dart';
+import '../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 class DependentList extends StatefulWidget {

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/image_path_constants.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/documents_models/person_profile_models/person_profile_model.dart';
-import 'package:hr_management/data/models/documents_models/person_profile_models/person_profile_response.dart';
-import 'package:hr_management/logic/blocs/documents_bloc/person_profile_bloc/person_profile_bloc.dart';
-import 'package:hr_management/ui/screens/person_profile_screen/widgets/internal_list_widget.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../constants/image_path_constants.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/documents_models/person_profile_models/person_profile_model.dart';
+import '../../../../data/models/documents_models/person_profile_models/person_profile_response.dart';
+import '../../../../logic/blocs/documents_bloc/person_profile_bloc/person_profile_bloc.dart';
+import 'internal_list_widget.dart';
+import '../../../widgets/appbar_widget.dart';
+import '../../../widgets/internet_connectivity_widget.dart';
+import '../../../widgets/progress_indicator.dart';
 
 import '../../../../themes/theme_config.dart';
 

@@ -5,9 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/constants/api_endpoints.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/note/note_model.dart';
 import '../../../../data/models/note/note_response.dart';
@@ -1274,15 +1280,21 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
-          SpeedDialChild(
-            child: Icon(Icons.share, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Share',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
+          if (widget?.noteId != null && widget.noteId.isNotEmpty)
+            SpeedDialChild(
+              child: Icon(Icons.share, color: Colors.white),
+              backgroundColor: Colors.blue,
+              // onTap: () => print('Pressed Code for NOte'),
+              onTap: () => Navigator.pushNamed(context, NTS_SHARE,
+                  arguments: ScreenArguments(
+                    ntstype: NTSType.note,
+                    arg1: noteModel.id,
+                  )),
+              label: 'Share',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
           SpeedDialChild(
             child: Icon(Icons.email, color: Colors.white),
             backgroundColor: Colors.blue,

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:hr_management/data/models/dependent/dependent_res_model.dart';
+import '../../models/dependent/dependent_res_model.dart';
 
 import '../../../constants/api_endpoints.dart';
 

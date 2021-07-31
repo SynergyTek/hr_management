@@ -212,6 +212,13 @@ class APIEndpointConstants {
   //User API Endpoints Block End
   //************************************************************************//
 
+  //User Endpoints
+
+  static const READ_TEAM_DATA = '$BASE_URL/cms/query/ReadTeamData';
+
+  //User API Endpoints Block End
+  //************************************************************************//
+
   //Employee profile Endpoints
 
   static const EMPLOYEE_PROFILE = '$BASE_URL/CHR/query/EmployeeProfile';
@@ -266,7 +273,34 @@ class APIEndpointConstants {
 
   static const POST_SHARE_NOTE = '$BASE_URL/cms/query/ShareNote';
 
+  static const LOAD_SERVICE_ADHOC_TASK_DATA =
+      '$BASE_URL/cms/query/LoadServiceAdhocTaskData';
+
   // Share API Endpoints Block End
+  //************************************************************************//
+
+  //************************************************************************//
+  //Attachment API Endpoints
+
+  static const GET_SERVICE_ATTACHMENT =
+      BASE_URL + '/cms/query/GetServiceAttachmentList';
+
+  static const GET_TASK_ATTACHMENT =
+      BASE_URL + '/cms/query/GetTaskAttachmentList';
+
+  static const GET_NOTE_ATTACHMENT =
+      BASE_URL + '/cms/query/GetNoteAttachmentList';
+
+  static const DELETE_NTS_ATTACHMENT = BASE_URL + '/cms/query/DeleteAttachment';
+
+  //Attachment API Endpoints
+  //************************************************************************//
+
+  //Tag API Endpoints
+
+  static const READ_NTS_TAG_DATA = BASE_URL + '/cms/query/ReadNtsTagData';
+
+  //Attachment API Endpoints
   //************************************************************************//
 
 }

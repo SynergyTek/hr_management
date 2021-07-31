@@ -17,7 +17,10 @@ class ShareScreen extends StatelessWidget {
         title: "Share Data",
       ),
       body: SafeArea(
-        child: ShareScreenBody(),
+        child: ShareScreenBody(
+          ntsType: ntsType,
+          ntsId: ntsId,
+        ),
       ),
     );
   }

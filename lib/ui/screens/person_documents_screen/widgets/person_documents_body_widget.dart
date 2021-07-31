@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/documents_models/person_document_models/person_document_model.dart';
-import 'package:hr_management/data/models/documents_models/person_document_models/person_document_response.dart';
-import 'package:hr_management/logic/blocs/documents_bloc/person_documents_bloc/person_documents_bloc.dart';
-import 'package:hr_management/ui/screens/person_documents_screen/widgets/person_documents_bottom_sheet_widget.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../data/models/documents_models/person_document_models/person_document_model.dart';
+import '../../../../data/models/documents_models/person_document_models/person_document_response.dart';
+import '../../../../logic/blocs/documents_bloc/person_documents_bloc/person_documents_bloc.dart';
+import 'person_documents_bottom_sheet_widget.dart';
+import '../../../widgets/progress_indicator.dart';
 
 import '../../../../themes/theme_config.dart';
 

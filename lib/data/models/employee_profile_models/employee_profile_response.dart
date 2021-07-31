@@ -1,4 +1,4 @@
-import 'package:hr_management/data/models/employee_profile_models/employee_profile_model.dart';
+import 'employee_profile_model.dart';
 
 class EmployeeProfileResponse {
   bool isSuccess;

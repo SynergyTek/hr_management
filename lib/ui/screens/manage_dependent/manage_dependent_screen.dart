@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/screens/manage_dependent/widget/dependent_document_list.dart';
-import 'package:hr_management/ui/screens/manage_dependent/widget/dependent_list.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import '../../../data/enums/enums.dart';
+import '../../../routes/route_constants.dart';
+import '../../../routes/screen_arguments.dart';
+import 'widget/dependent_document_list.dart';
+import 'widget/dependent_list.dart';
+import '../../widgets/appbar_widget.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
+import '../../widgets/internet_connectivity_widget.dart';
 
 class ManageDependentScreen extends StatefulWidget {
   @override

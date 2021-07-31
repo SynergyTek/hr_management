@@ -9,6 +9,9 @@ import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
@@ -1364,6 +1367,24 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
+          if (widget?.serviceId != null && widget.serviceId.isNotEmpty)
+            SpeedDialChild(
+              child: Icon(Icons.share, color: Colors.white),
+              backgroundColor: Colors.blue,
+              onTap: () => Navigator.pushNamed(
+                context,
+                ADD_ADHOC_TASK,
+                // arguments: ScreenArguments(
+                //   ntstype: NTSType.task,
+                //   arg4: 'ProjectTask',
+                // ),
+              ),
+              label: 'Adhoc Task',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
+
           // SpeedDialChild(
           //   child: Icon(Icons.border_all, color: Colors.white),
           //   backgroundColor: Colors.blue,

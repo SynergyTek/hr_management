@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import '../../enums/enums.dart';
-import '../../models/nts_comments/nts_comments.dart';
-import '../../models/nts_comments/nts_comments_response.dart';
-import '../../models/api_models/post_response_model.dart';
+import 'package:dio/dio.dart';
 
 import '../../../constants/api_endpoints.dart';
-import 'package:dio/dio.dart';
+import '../../enums/enums.dart';
+import '../../models/api_models/post_response_model.dart';
+import '../../models/nts_comments/nts_comments.dart';
+import '../../models/nts_comments/nts_comments_response.dart';
 
 part 'nts_comments_repo.dart';
 

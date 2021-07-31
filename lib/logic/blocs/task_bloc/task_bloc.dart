@@ -72,6 +72,14 @@ class TaskBloc {
     _subjectTaskList.sink.add(response);
   }
 
+  loadServiceAdhocTaskData(
+      {Map<String, dynamic> queryparams, String taskListStatus // String userId,
+      }) async {
+    TaskListResponseModel response = await _taskRepository
+        .loadServiceAdhocTaskData(queryparams: queryparams);
+    _subjectTaskList.sink.add(response);
+  }
+
   /// Used to update an existing entry.
   putData() async {
     // Update here

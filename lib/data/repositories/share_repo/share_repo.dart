@@ -87,21 +87,81 @@ class ShareRepository extends AbstractShareRepository {
     final String endpoint = APIEndpointConstants.DELETE_NOTE_SHARED;
   }
 
-  Future postShareService({
+  Future<PostResponse> postShareService({
     Map<String, dynamic> queryparams,
+    ServiceSharePostModel data,
   }) async {
     final String endpoint = APIEndpointConstants.POST_SHARE_SERVICE;
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        data: jsonEncode(data.toJson()) ?? {},
+      );
+
+      var result = PostResponse.fromJson(
+        response.data,
+      );
+
+      return result;
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return PostResponse.withError("$err");
+    }
   }
 
-  Future postShareTask({
+  Future<PostResponse> postShareTask({
     Map<String, dynamic> queryparams,
+    TaskSharePostModel data,
   }) async {
     final String endpoint = APIEndpointConstants.POST_SHARE_TASK;
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        data: jsonEncode(data.toJson()) ?? {},
+      );
+
+      var result = PostResponse.fromJson(
+        response.data,
+      );
+
+      return result;
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return PostResponse.withError("$err");
+    }
   }
 
-  Future postShareNote({
+  Future<PostResponse> postShareNote({
     Map<String, dynamic> queryparams,
+    NoteSharePostModel data,
   }) async {
     final String endpoint = APIEndpointConstants.POST_SHARE_NOTE;
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        data: jsonEncode(data.toJson()) ?? {},
+      );
+
+      var result = PostResponse.fromJson(
+        response.data,
+      );
+
+      return result;
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return PostResponse.withError("$err");
+    }
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../../../widgets/nts_widgets.dart';
+import 'package:listizer/listizer.dart';
+
 import '../../../../../data/models/access_log/access_log_model.dart';
 import '../../../../../data/models/access_log/access_log_response.dart';
 import '../../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../../../themes/theme_config.dart';
 import '../../../../widgets/empty_list_widget.dart';
+import '../../../../widgets/nts_widgets.dart';
 import '../../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
-
 import 'access_log_list_tile_widget.dart';
 
 class DisplayAccessLogBody extends StatefulWidget {
