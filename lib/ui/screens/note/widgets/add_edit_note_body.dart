@@ -5,9 +5,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/constants/api_endpoints.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/appbar_widget.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/note/note_model.dart';
 import '../../../../data/models/note/note_response.dart';
@@ -269,49 +279,54 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     if (!noteModel.hideSubject) {
       createServiceFormBloc.subject
           .updateInitialValue(subjectValue ?? noteModel.noteSubject);
-      widgets.add(BlocTextBoxWidget(
-        fieldName: 'Subject',
-        readonly: false,
-        maxLines: 1,
-        labelName: 'Subject',
-        textFieldBloc: createServiceFormBloc.subject,
-        prefixIcon: Icon(Icons.note),
-        onChanged: (value) {
-          subjectValue = value.toString();
-        },
-      ));
+      widgets.add(
+        BlocTextBoxWidget(
+          fieldName: 'Subject',
+          readonly: false,
+          maxLines: 1,
+          labelName: 'Subject',
+          textFieldBloc: createServiceFormBloc.subject,
+          prefixIcon: Icon(Icons.note),
+          onChanged: (value) {
+            subjectValue = value.toString();
+          },
+        ),
+      );
     }
 
     if (!noteModel.hideStartDate)
       widgets.add(
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: DynamicDateTimeBox(
-                code: noteModel.startDate,
-                name: 'Start Date',
-                key: new Key('Start Date'),
-                selectDate: (DateTime date) {
-                  // if (date != null) {
-                  //   setState(() async {
-                  //     startDate = date;
-                  //     if (dueDate == null && noteModel.due != null) {
-                  //       dueDate = DateTime.parse(noteModel.dueDate);
-                  //     }
-                  //     if (dueDate != null && dueDate.toString().isNotEmpty)
-                  //       compareStartEndDate(
-                  //           startDate: startDate,
-                  //           enddate: dueDate,
-                  //           context: context,
-                  //           updateDuration: false);
-                  //   });
-                  // udfJson[model[i].key] = date.toString();
-                  // }
-                },
+        Visibility(
+          visible: false,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: noteModel.startDate,
+                  name: 'Start Date',
+                  key: new Key('Start Date'),
+                  selectDate: (DateTime date) {
+                    // if (date != null) {
+                    //   setState(() async {
+                    //     startDate = date;
+                    //     if (dueDate == null && noteModel.due != null) {
+                    //       dueDate = DateTime.parse(noteModel.dueDate);
+                    //     }
+                    //     if (dueDate != null && dueDate.toString().isNotEmpty)
+                    //       compareStartEndDate(
+                    //           startDate: startDate,
+                    //           enddate: dueDate,
+                    //           context: context,
+                    //           updateDuration: false);
+                    //   });
+                    // udfJson[model[i].key] = date.toString();
+                    // }
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 
@@ -331,28 +346,38 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     // }
 
     if (!noteModel.hideExpiryDate)
-      widgets.add(BlocDatePickerWidget(
-        labelName: 'Reminder Date',
-        canSelectTime: false,
-        inputFieldBloc: createServiceFormBloc.expiryDate,
-        height: 75.0,
-        width: MediaQuery.of(context).size.width,
-      ));
+      widgets.add(
+        Visibility(
+          visible: false,
+          child: BlocDatePickerWidget(
+            labelName: 'Reminder Date',
+            canSelectTime: false,
+            inputFieldBloc: createServiceFormBloc.expiryDate,
+            height: 75.0,
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+      );
 
     if (!noteModel.hideDescription) {
       createServiceFormBloc.description
           .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
-      widgets.add(BlocTextBoxWidget(
-        fieldName: 'Description',
-        readonly: false,
-        maxLines: 3,
-        labelName: 'Description',
-        textFieldBloc: createServiceFormBloc.description,
-        prefixIcon: Icon(Icons.note),
-        onChanged: (value) {
-          descriptionValue = value.toString();
-        },
-      ));
+      widgets.add(
+        Visibility(
+          visible: false,
+          child: BlocTextBoxWidget(
+            fieldName: 'Description',
+            readonly: false,
+            maxLines: 3,
+            labelName: 'Description',
+            textFieldBloc: createServiceFormBloc.description,
+            prefixIcon: Icon(Icons.note),
+            onChanged: (value) {
+              descriptionValue = value.toString();
+            },
+          ),
+        ),
+      );
     }
 
     widgets.add(
@@ -1256,60 +1281,80 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         curve: Curves.bounceInOut,
         children: [
           SpeedDialChild(
-            child:
-                Icon(Icons.notifications_active_outlined, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Read Later'),
-            label: 'Notification',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.comment, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Write'),
-            label: 'Comment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.share, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Share',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.email, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Email',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.attachment, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
+            child: Icon(
+              Icons.attachment_outlined,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleAttachmentOnPressed(),
             label: 'Attachment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
             labelBackgroundColor: Colors.black,
           ),
-          SpeedDialChild(
-            child: Icon(Icons.tag, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Tags',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
+          if (widget?.noteId != null && widget.noteId.isNotEmpty)
+            SpeedDialChild(
+              child: Icon(Icons.share, color: Colors.white),
+              backgroundColor: Colors.blue,
+              // onTap: () => print('Pressed Code for NOte'),
+              onTap: () => Navigator.pushNamed(context, NTS_SHARE,
+                  arguments: ScreenArguments(
+                    ntstype: NTSType.note,
+                    arg1: noteModel.id,
+                  )),
+              label: 'Share',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
+          // SpeedDialChild(
+          //   child:
+          //       Icon(Icons.notifications_active_outlined, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Read Later'),
+          //   label: 'Notification',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.comment, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Write'),
+          //   label: 'Comment',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.email, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Email',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.attachment, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Attachment',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.tag, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Tags',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
         ]);
   }
 
@@ -1322,5 +1367,16 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     columnComponent = [];
     componentComList = [];
     super.dispose();
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.pushNamed(
+      context,
+      ATTACHMENT_NTS_ROUTE,
+      arguments: ScreenArguments(
+        ntstype: NTSType.service,
+        arg1: noteModel.id,
+      ),
+    );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/task_models/task_list_model.dart';
-import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
+import '../../../../data/models/task_models/task_list_model.dart';
+import '../../../../logic/blocs/task_bloc/task_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
 
 class TaskListCard extends StatelessWidget {
   final int index;

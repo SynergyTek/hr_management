@@ -212,6 +212,13 @@ class APIEndpointConstants {
   //User API Endpoints Block End
   //************************************************************************//
 
+  //User Endpoints
+
+  static const READ_TEAM_DATA = '$BASE_URL/cms/query/ReadTeamData';
+
+  //User API Endpoints Block End
+  //************************************************************************//
+
   //Employee profile Endpoints
 
   static const EMPLOYEE_PROFILE = '$BASE_URL/CHR/query/EmployeeProfile';
@@ -232,15 +239,83 @@ class APIEndpointConstants {
 
   // Documents endpoints end here:
 
-  //Dependent API Endpoints Block End
   //************************************************************************//
+
+  // Dependent endpoints start here:
 
   static const READ_DEPENDENT_DOCUMENT_REQUEST_LIST =
       '$BASE_URL/CHR/query/ReadDependantDocumentRequestList';
 
   static const READ_DEPENDENT_LIST = '$BASE_URL/CHR/query/ReadDependantList';
 
-  //Dependent API Endpoints Block End
+  // Dependent API Endpoints Block End
+  //************************************************************************//
+
+  // Share endpoints start here:
+
+  static const GET_SERVICE_SHARED_DATA =
+      '$BASE_URL/cms/query/ReadServiceSharedData';
+
+  static const GET_TASK_SHARED_DATA = '$BASE_URL/cms/query/ReadTaskSharedData';
+
+  static const GET_NOTE_SHARED_DATA = '$BASE_URL/cms/query/ReadNoteSharedData';
+
+  static const DELETE_SERVICE_SHARED =
+      '$BASE_URL/cms/query/DeleteServiceShared';
+
+  static const DELETE_TASK_SHARED = '$BASE_URL/cms/query/DeleteNoteShared';
+
+  static const DELETE_NOTE_SHARED = '$BASE_URL/cms/query/DeleteTaskShared';
+
+  static const POST_SHARE_SERVICE = '$BASE_URL/cms/query/ShareService';
+
+  static const POST_SHARE_TASK = '$BASE_URL/cms/query/ShareTask';
+
+  static const POST_SHARE_NOTE = '$BASE_URL/cms/query/ShareNote';
+
+  static const LOAD_SERVICE_ADHOC_TASK_DATA =
+      '$BASE_URL/cms/query/LoadServiceAdhocTaskData';
+
+  // Share API Endpoints Block End
+  //************************************************************************//
+
+  //************************************************************************//
+  //Attachment API Endpoints
+
+  static const GET_SERVICE_ATTACHMENT =
+      BASE_URL + '/cms/query/GetServiceAttachmentList';
+
+  static const GET_TASK_ATTACHMENT =
+      BASE_URL + '/cms/query/GetTaskAttachmentList';
+
+  static const GET_NOTE_ATTACHMENT =
+      BASE_URL + '/cms/query/GetNoteAttachmentList';
+
+  static const DELETE_NTS_ATTACHMENT = BASE_URL + '/cms/query/DeleteAttachment';
+
+  //Attachment API Endpoints
+  //************************************************************************//
+
+  //************************************************************************//
+  // Delete Comments
+
+  static const String DELETE_NOTE_COMMENT_DATA =
+      BASE_URL + '/cms/query/DeleteNoteComment';
+
+  static const String DELETE_TASK_COMMENT_DATA =
+      BASE_URL + '/cms/query/DeleteTaskComment';
+
+  static const String DELETE_SERVICE_COMMENT_DATA =
+      BASE_URL + '/cms/query/DeleteServiceComment';
+
+  // Delete Comments
+  //************************************************************************//
+
+  //Tag API Endpoints
+
+  static const READ_NTS_TAG_DATA = BASE_URL + '/cms/query/ReadNtsTagData';
+
+  //Tag API Endpoints
   //************************************************************************//
 
 }

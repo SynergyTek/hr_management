@@ -10,6 +10,7 @@ class NTSDropDownSelect extends StatelessWidget {
   final String title;
   final bool isShowArrow;
   final bool isUserList;
+  final bool isTeamList;
   final String hint;
   final String validationMessage;
   final TextEditingController controller;
@@ -24,6 +25,7 @@ class NTSDropDownSelect extends StatelessWidget {
       this.title,
       this.isShowArrow,
       this.isUserList,
+      this.isTeamList,
       this.hint,
       this.validationMessage,
       this.controller,
@@ -72,6 +74,14 @@ class NTSDropDownSelect extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   NTS_USER_DROPDOWN,
+                  arguments: ScreenArguments(
+                    func: onListTap,
+                  ),
+                );
+              } else if (isTeamList != null && isTeamList) {
+                Navigator.pushNamed(
+                  context,
+                  NTS_TEAM_DROPDOWN,
                   arguments: ScreenArguments(
                     func: onListTap,
                   ),

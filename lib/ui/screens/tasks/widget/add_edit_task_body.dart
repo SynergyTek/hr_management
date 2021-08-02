@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/models/user/user.dart';
-import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
+import '../../../widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_model.dart';
 import '../../../../data/models/task_models/task_response_model.dart';
@@ -124,7 +127,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 return Scaffold(
                   appBar: AppbarWidget(
                     // actions: [IconButton(icon: Icon(Icons.comment), onPressed: () {})],
-                    title: (widget.templateCode != null && widget.templateCode.isNotEmpty)
+                    title: (widget.templateCode != null &&
+                            widget.templateCode.isNotEmpty)
                         ? "Add " + widget.templateCode
                         : widget.title != null
                             ? "Edit $widget.title"
@@ -141,8 +145,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                           )
                         : SizedBox(),
                   ),
-                  
-      //   floatingActionButton: buildSpeedDial(),
+                  floatingActionButton: buildSpeedDial(),
                 );
               } else {
                 return Center(
@@ -1208,69 +1211,83 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         curve: Curves.bounceInOut,
         children: [
           SpeedDialChild(
-            child:
-                Icon(Icons.notifications_active_outlined, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Read Later'),
-            label: 'Notification',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.comment, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Write'),
-            label: 'Comment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.share, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Share',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.timeline_outlined, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Time Entries',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.email, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Email',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.attachment, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
+            child: Icon(
+              Icons.attachment_outlined,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleAttachmentOnPressed(),
             label: 'Attachment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
             labelBackgroundColor: Colors.black,
           ),
-          SpeedDialChild(
-            child: Icon(Icons.tag, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Tags',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
+          //   SpeedDialChild(
+          //     child:
+          //         Icon(Icons.notifications_active_outlined, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Read Later'),
+          //     label: 'Notification',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.comment, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Write'),
+          //     label: 'Comment',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.share, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Share',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.timeline_outlined, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Time Entries',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.email, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Email',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.attachment, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Attachment',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.tag, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Tags',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
         ]);
   }
 
@@ -1283,5 +1300,16 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     columnComponent = [];
     componentComList = [];
     super.dispose();
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.pushNamed(
+      context,
+      ATTACHMENT_NTS_ROUTE,
+      arguments: ScreenArguments(
+        ntstype: NTSType.task,
+        arg1: taskModel.id,
+      ),
+    );
   }
 }

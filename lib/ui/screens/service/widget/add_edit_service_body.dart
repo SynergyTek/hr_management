@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/data/models/user/user.dart';
-import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
+import '../../../widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
@@ -1331,17 +1334,36 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             child: Icon(Icons.comment, color: Colors.white),
             backgroundColor: Colors.blue,
             onTap: () {
-              Navigator.pushNamed(context, COMMENT_ROUTE,
-                  arguments: ScreenArguments(
-                    ntstype: NTSType.service,
-                    arg1: serviceModel.serviceId,
-                  ));
+              Navigator.pushNamed(
+                context,
+                COMMENT_ROUTE,
+                arguments: ScreenArguments(
+                  ntstype: NTSType.service,
+                  arg1: serviceModel.serviceId,
+                ),
+              );
             },
             label: 'Comment',
             labelStyle:
                 TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
+
+          SpeedDialChild(
+            child: Icon(
+              Icons.attachment_outlined,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleAttachmentOnPressed(),
+            label: 'Attachment',
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+            labelBackgroundColor: Colors.black,
+          ),
+
           // SpeedDialChild(
           //   child: Icon(Icons.account_tree, color: Colors.white),
           //   backgroundColor: Colors.blue,
@@ -1351,15 +1373,37 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //   labelBackgroundColor: Colors.black,
           // ),
-          // SpeedDialChild(
-          //   child: Icon(Icons.share, color: Colors.white),
-          //   backgroundColor: Colors.blue,
-          //   onTap: () => print('Pressed Code'),
-          //   label: 'Share',
-          //   labelStyle:
-          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-          //   labelBackgroundColor: Colors.black,
-          // ),
+          SpeedDialChild(
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => Navigator.pushNamed(context, NTS_SHARE,
+                arguments: ScreenArguments(
+                  ntstype: NTSType.service,
+                  arg1: serviceModel.serviceId,
+                )),
+            label: 'Share',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          if (widget?.serviceId != null && widget.serviceId.isNotEmpty)
+            SpeedDialChild(
+              child: Icon(Icons.share, color: Colors.white),
+              backgroundColor: Colors.blue,
+              onTap: () => Navigator.pushNamed(
+                context,
+                ADD_ADHOC_TASK,
+                // arguments: ScreenArguments(
+                //   ntstype: NTSType.task,
+                //   arg4: 'ProjectTask',
+                // ),
+              ),
+              label: 'Adhoc Task',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
+
           // SpeedDialChild(
           //   child: Icon(Icons.border_all, color: Colors.white),
           //   backgroundColor: Colors.blue,
@@ -1408,5 +1452,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     columnComponent = [];
     componentComList = [];
     super.dispose();
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.pushNamed(
+      context,
+      ATTACHMENT_NTS_ROUTE,
+      arguments: ScreenArguments(
+        ntstype: NTSType.service,
+        arg1: serviceModel.id,
+      ),
+    );
   }
 }

@@ -93,6 +93,33 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
+  Future<TaskListResponseModel> loadServiceAdhocTaskData(//TODO: enter response
+      {Map<String, dynamic> queryparams}) async {
+    if (queryparams == null) queryparams = Map();
+
+    String userId = await getUserId();
+    if (userId != null) queryparams['userid'] = userId;
+
+    final String endpoint = APIEndpointConstants.LOAD_SERVICE_ADHOC_TASK_DATA;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      //print(response.data);
+      return TaskListResponseModel.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return TaskListResponseModel.withError("$err");
+    }
+  }
+
   @override
   Future<TaskResponseModel> deleteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();

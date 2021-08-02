@@ -4,8 +4,11 @@ import 'package:hr_management/ui/screens/my_profile/my_profile_screen.dart';
 
 import 'package:hr_management/ui/screens/person_documents_screen/person_documents_screen.dart';
 import 'package:hr_management/ui/screens/person_profile_screen/person_profile_screen.dart';
+import 'package:hr_management/ui/screens/share/share_screen.dart';
+import 'package:hr_management/ui/screens/tasks/adhoc_task/adhoc_task_list_screen.dart';
 
 import 'package:hr_management/ui/screens/tasks/task_list_screen.dart';
+import 'package:hr_management/ui/widgets/custom_controls/team_dropdown_list.dart';
 import 'package:hr_management/ui/widgets/custom_controls/user_dropdown_list.dart';
 
 import '../ui/screens/payroll/manage_accrual_screen.dart';
@@ -17,30 +20,37 @@ import '../ui/screens/note/note_home_screen.dart';
 import '../ui/screens/nts_comments/nts_comments_screen.dart';
 import '../ui/screens/home_screen/home_screen.dart';
 
+import 'package:flutter/material.dart';
+import '../ui/screens/attachment_nts_screen/attachment_nts_screen.dart';
+import '../ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
+import '../ui/screens/nts_charts/nts_dashboard.dart';
 // import 'package:hr_management/ui/screens/login/login_screen.dart';
 
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
-import 'package:hr_management/ui/screens/nts_charts/nts_dashboard.dart';
+import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/screens/service/service_home.dart';
 import 'package:hr_management/ui/screens/tasks/add_edit_task_screen.dart';
 import 'package:hr_management/ui/screens/tasks/task_home_screen.dart';
-
 import 'package:hr_management/ui/screens/worklist_dashboard/worklist_dashboard_screen.dart';
-
 import 'package:hr_management/ui/widgets/custom_controls/default_dropdown_list.dart';
-import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
+
+import '../ui/screens/attendance/mark_attendance.dart';
 import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
 import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
-import '../ui/screens/tasks/task_home_screen.dart';
-import '../ui/widgets/custom_controls/default_dropdown_list.dart';
-import '../ui/screens/attendance/mark_attendance.dart';
+import '../ui/screens/login/login_screen.dart';
+import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
+import '../ui/screens/my_profile/my_profile_screen.dart';
 import '../ui/screens/note/add_edit_note.dart';
-import '../ui/screens/registration/registration_screen.dart';
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
+import '../ui/screens/person_documents_screen/person_documents_screen.dart';
+import '../ui/screens/person_profile_screen/person_profile_screen.dart';
+import '../ui/screens/registration/registration_screen.dart';
 import '../ui/screens/splash_screen/splash_screen.dart';
+import '../ui/screens/tasks/task_home_screen.dart';
+import '../ui/screens/tasks/task_list_screen.dart';
+import '../ui/widgets/custom_controls/default_dropdown_list.dart';
+import '../ui/widgets/custom_controls/user_dropdown_list.dart';
 import 'route_constants.dart';
 import 'screen_arguments.dart';
 
@@ -157,6 +167,14 @@ class AppRouter {
           ),
         );
 
+      case NTS_TEAM_DROPDOWN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => TeamDropdownList(
+            onListTap: args.func,
+          ),
+        );
+
       case TASK_HOME:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
@@ -265,6 +283,16 @@ class AppRouter {
         );
         break;
 
+      case NTS_SHARE:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => ShareScreen(
+            ntsType: args.ntstype,
+            ntsId: args.arg1,
+          ),
+        );
+        break;
+
       case WORKLIST_DASHBOARD:
         return MaterialPageRoute(builder: (_) => WorklistDashboard());
         break;
@@ -289,7 +317,16 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ManageDependentScreen());
         break;
 
-// 404 route.
+      case ATTACHMENT_NTS_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+
+        return MaterialPageRoute(
+          builder: (_) => AttachmentNTSScreen(
+            ntsType: args?.ntstype ?? NTSType.service,
+            ntsId: args?.arg1 ?? 'af9a75da-ae2e-4d8a-86a0-d55c08a2a2b8',
+          ),
+        );
+        break;
 
       case PERSON_DOCUMENTS_ROUTE:
         return MaterialPageRoute(
@@ -303,8 +340,11 @@ class AppRouter {
         );
         break;
 
-      // 404 route.
+      case ADD_ADHOC_TASK:
+        return MaterialPageRoute(builder: (_) => AdhocTaskListScreen());
+        break;
 
+      // 404 route.
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

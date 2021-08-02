@@ -1,9 +1,9 @@
-import '../../../data/models/enum_tree/enum_tree_list_response.dart';
-import '../../../data/models/owner_name_models.dart/owner_name_list_response.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../data/models/common/common_list_response.dart';
+import '../../../data/models/enum_tree/enum_tree_list_response.dart';
+import '../../../data/models/owner_name_models.dart/owner_name_list_response.dart';
 import '../../../data/repositories/common/abstract_common_repo.dart';
-import 'package:rxdart/rxdart.dart';
 
 class CommonBloc {
   final CommonRepository _commonRepository = CommonRepository();

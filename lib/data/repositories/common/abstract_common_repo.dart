@@ -1,8 +1,9 @@
+import 'package:dio/dio.dart';
+
+import '../../../constants/api_endpoints.dart';
+import '../../models/common/common_list_response.dart';
 import '../../models/enum_tree/enum_tree_list_response.dart';
 import '../../models/owner_name_models.dart/owner_name_list_response.dart';
-import '../../models/common/common_list_response.dart';
-import '../../../constants/api_endpoints.dart';
-import 'package:dio/dio.dart';
 
 part 'common_repo.dart';
 

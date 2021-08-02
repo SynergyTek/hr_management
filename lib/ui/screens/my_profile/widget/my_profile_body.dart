@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/models/employee_profile_models/employee_profile_model.dart';
-import 'package:hr_management/data/models/employee_profile_models/employee_profile_response.dart';
-import 'package:hr_management/logic/blocs/employee_profile_bloc/employee_profile_bloc.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/employee_profile_models/employee_profile_model.dart';
+import '../../../../data/models/employee_profile_models/employee_profile_response.dart';
+import '../../../../logic/blocs/employee_profile_bloc/employee_profile_bloc.dart';
+import '../../../widgets/progress_indicator.dart';
 
 class MyProfileBody extends StatefulWidget {
   const MyProfileBody({Key key}) : super(key: key);

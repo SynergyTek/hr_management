@@ -51,6 +51,9 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
     String title;
     if (widget.categoryCode == 'Leave' && widget.ntsType == NTSType.service)
       title = 'Leave Templates';
+    else if (widget.categoryCode == 'Adhoc Task' &&
+        widget.ntsType == NTSType.task)
+      title = 'Adhoc Task Templates';
     else if (widget.ntsType == NTSType.service)
       title = 'Service Templates';
     else if (widget.ntsType == NTSType.task)

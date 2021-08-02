@@ -35,6 +35,7 @@ const String SERVICE_ROUTE = "/service";
 const String COUNTS_ROUTE = "/counts";
 const String NTS_DROPDOWN = "/nts_dropdown";
 const String NTS_USER_DROPDOWN = "/nts_user_dropdown";
+const String NTS_TEAM_DROPDOWN = "/nts_team_dropdown";
 const String TASK_HOME = "/task_home";
 const String NTS_FILTER = "/nts_filter";
 const String DISPLAY_LEAVES = "/display_leaves";
@@ -63,3 +64,8 @@ const String PERSON_DOCUMENTS_ROUTE = '/person_documents';
 const String PERSON_PROFILE_ROUTE = '/person_profile';
 
 const String MANAGE_DEPENDENTS = "/manage_dependents";
+const String NTS_SHARE = "/nts_share";
+
+// Attachment route:
+const String ATTACHMENT_NTS_ROUTE = '/attachment_nts';
+const String ADD_ADHOC_TASK = "/add_adhoc_task";

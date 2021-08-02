@@ -1,6 +1,7 @@
+import 'package:dio/dio.dart';
+
 import '../../constants/api_endpoints.dart';
 import '../models/api_models/api_response_model.dart';
-import 'package:dio/dio.dart';
 
 part 'api_repository_implementation.dart';
 

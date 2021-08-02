@@ -1,7 +1,7 @@
-import '../../models/payslip/payslip_res_model.dart';
+import 'package:dio/dio.dart';
 
 import '../../../constants/api_endpoints.dart';
-import 'package:dio/dio.dart';
+import '../../models/payslip/payslip_res_model.dart';
 
 part 'payslip_repo.dart';
 
