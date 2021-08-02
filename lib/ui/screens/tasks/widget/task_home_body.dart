@@ -379,5 +379,6 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     completionDate = null;
     templateMasterCode = null;
     text = null;
+    subjectController.text = '';
   }
 }

@@ -42,7 +42,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     taskBloc.subjectTaskList.sink.add(null);
 
     Map<String, dynamic> queryparams = Map();
-    if (widget.taskListStatus != null ) {
+    if (widget.taskListStatus != null) {
       if (userId != null) queryparams['userId'] = userId;
       if (taskStatusIds != null) queryparams['TaskStatusIds'] = taskStatusIds;
       if (taskAssigneeIds != null)
@@ -159,6 +159,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     taskStatusIds = null;
     taskAssigneeIds = null;
     taskOwnerIds = null;
+    subjectController.text = '';
   }
 
   Widget wrappedButtons() {
