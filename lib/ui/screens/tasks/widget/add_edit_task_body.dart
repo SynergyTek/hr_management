@@ -1157,60 +1157,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     );
   }
 
-  Future<void> _showPostAlertMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Something went wrong'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _showPostAlertMyDialog2() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text(''),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   String resultMsg = '';
   taskViewModelPostRequest(int postDataAction, String taskStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
@@ -1223,7 +1169,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     postTaskModel.requestedByUserId = userId;
     postTaskModel.assignedToUserId =
         userId; //TODO: set appropriate "assignedToUserId"
-    // postTaskModel.taskSubject = createServiceFormBloc.subject.value;
+    postTaskModel.taskSubject = createServiceFormBloc.subject.value;
     postTaskModel.taskDescription = createServiceFormBloc.description.value;
     postTaskModel.dataAction = postDataAction;
     postTaskModel.taskStatusCode = taskStatusCode;
