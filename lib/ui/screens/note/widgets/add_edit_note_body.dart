@@ -279,49 +279,54 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     if (!noteModel.hideSubject) {
       createServiceFormBloc.subject
           .updateInitialValue(subjectValue ?? noteModel.noteSubject);
-      widgets.add(BlocTextBoxWidget(
-        fieldName: 'Subject',
-        readonly: false,
-        maxLines: 1,
-        labelName: 'Subject',
-        textFieldBloc: createServiceFormBloc.subject,
-        prefixIcon: Icon(Icons.note),
-        onChanged: (value) {
-          subjectValue = value.toString();
-        },
-      ));
+      widgets.add(
+        BlocTextBoxWidget(
+          fieldName: 'Subject',
+          readonly: false,
+          maxLines: 1,
+          labelName: 'Subject',
+          textFieldBloc: createServiceFormBloc.subject,
+          prefixIcon: Icon(Icons.note),
+          onChanged: (value) {
+            subjectValue = value.toString();
+          },
+        ),
+      );
     }
 
     if (!noteModel.hideStartDate)
       widgets.add(
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: DynamicDateTimeBox(
-                code: noteModel.startDate,
-                name: 'Start Date',
-                key: new Key('Start Date'),
-                selectDate: (DateTime date) {
-                  // if (date != null) {
-                  //   setState(() async {
-                  //     startDate = date;
-                  //     if (dueDate == null && noteModel.due != null) {
-                  //       dueDate = DateTime.parse(noteModel.dueDate);
-                  //     }
-                  //     if (dueDate != null && dueDate.toString().isNotEmpty)
-                  //       compareStartEndDate(
-                  //           startDate: startDate,
-                  //           enddate: dueDate,
-                  //           context: context,
-                  //           updateDuration: false);
-                  //   });
-                  // udfJson[model[i].key] = date.toString();
-                  // }
-                },
+        Visibility(
+          visible: false,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: noteModel.startDate,
+                  name: 'Start Date',
+                  key: new Key('Start Date'),
+                  selectDate: (DateTime date) {
+                    // if (date != null) {
+                    //   setState(() async {
+                    //     startDate = date;
+                    //     if (dueDate == null && noteModel.due != null) {
+                    //       dueDate = DateTime.parse(noteModel.dueDate);
+                    //     }
+                    //     if (dueDate != null && dueDate.toString().isNotEmpty)
+                    //       compareStartEndDate(
+                    //           startDate: startDate,
+                    //           enddate: dueDate,
+                    //           context: context,
+                    //           updateDuration: false);
+                    //   });
+                    // udfJson[model[i].key] = date.toString();
+                    // }
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 
@@ -341,28 +346,38 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     // }
 
     if (!noteModel.hideExpiryDate)
-      widgets.add(BlocDatePickerWidget(
-        labelName: 'Reminder Date',
-        canSelectTime: false,
-        inputFieldBloc: createServiceFormBloc.expiryDate,
-        height: 75.0,
-        width: MediaQuery.of(context).size.width,
-      ));
+      widgets.add(
+        Visibility(
+          visible: false,
+          child: BlocDatePickerWidget(
+            labelName: 'Reminder Date',
+            canSelectTime: false,
+            inputFieldBloc: createServiceFormBloc.expiryDate,
+            height: 75.0,
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+      );
 
     if (!noteModel.hideDescription) {
       createServiceFormBloc.description
           .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
-      widgets.add(BlocTextBoxWidget(
-        fieldName: 'Description',
-        readonly: false,
-        maxLines: 3,
-        labelName: 'Description',
-        textFieldBloc: createServiceFormBloc.description,
-        prefixIcon: Icon(Icons.note),
-        onChanged: (value) {
-          descriptionValue = value.toString();
-        },
-      ));
+      widgets.add(
+        Visibility(
+          visible: false,
+          child: BlocTextBoxWidget(
+            fieldName: 'Description',
+            readonly: false,
+            maxLines: 3,
+            labelName: 'Description',
+            textFieldBloc: createServiceFormBloc.description,
+            prefixIcon: Icon(Icons.note),
+            onChanged: (value) {
+              descriptionValue = value.toString();
+            },
+          ),
+        ),
+      );
     }
 
     widgets.add(
