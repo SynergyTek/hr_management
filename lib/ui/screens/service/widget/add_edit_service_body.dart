@@ -286,69 +286,67 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     }
 
     // if (!serviceModel.hideStartDate)
-      widgets.add(
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Visibility(
-              visible: true,
-              child: Expanded(
-                child: DynamicDateTimeBox(
-                  code: serviceModel.startDate,
-                  name: 'Start Date',
-                  key: new Key('Start Date'),
-                  selectDate: (DateTime date) {
-                    if (date != null) {
-                      setState(() async {
-                        startDate = date;
-                        if (dueDate == null && serviceModel.dueDate != null) {
-                          dueDate = DateTime.parse(serviceModel.dueDate);
-                        }
-                        if (dueDate != null && dueDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate,
-                              enddate: dueDate,
-                              context: context,
-                              updateDuration: false);
-                      });
-                      // udfJson[model[i].key] = date.toString();
-                    }
-                  },
-                ),
+    widgets.add(
+      Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Visibility(
+            visible: true,
+            child: Expanded(
+              child: DynamicDateTimeBox(
+                code: serviceModel.startDate,
+                name: 'Start Date',
+                key: new Key('Start Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {
+                      startDate = date;
+                      if (dueDate == null && serviceModel.dueDate != null) {
+                        dueDate = DateTime.parse(serviceModel.dueDate);
+                      }
+                      if (dueDate != null && dueDate.toString().isNotEmpty)
+                        compareStartEndDate(
+                            startDate: startDate,
+                            enddate: dueDate,
+                            context: context,
+                            updateDuration: false);
+                    });
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
               ),
             ),
-            Visibility(
-              visible: true,
-              child: Expanded(
-                child: DynamicDateTimeBox(
-                  code: serviceModel.dueDate,
-                  name: 'Due Date',
-                  key: new Key('Due Date'),
-                  selectDate: (DateTime date) {
-                    if (date != null) {
-                      setState(() async {
-                        dueDate = date;
-                        if (startDate == null &&
-                            serviceModel.startDate != null) {
-                          startDate = DateTime.parse(serviceModel.startDate);
-                        }
-                        if (startDate != null &&
-                            startDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate,
-                              enddate: dueDate,
-                              context: context,
-                              updateDuration: false);
-                      });
-                      // udfJson[model[i].key] = date.toString();
-                    }
-                  },
-                ),
+          ),
+          Visibility(
+            visible: true,
+            child: Expanded(
+              child: DynamicDateTimeBox(
+                code: serviceModel.dueDate,
+                name: 'Due Date',
+                key: new Key('Due Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {
+                      dueDate = date;
+                      if (startDate == null && serviceModel.startDate != null) {
+                        startDate = DateTime.parse(serviceModel.startDate);
+                      }
+                      if (startDate != null && startDate.toString().isNotEmpty)
+                        compareStartEndDate(
+                            startDate: startDate,
+                            enddate: dueDate,
+                            context: context,
+                            updateDuration: false);
+                    });
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
               ),
-            )
-          ],
-        ),
-      );
+            ),
+          )
+        ],
+      ),
+    );
 
     if (!serviceModel.hideSLA) {
       createServiceFormBloc.sla

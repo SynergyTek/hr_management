@@ -89,7 +89,7 @@ class UdfJsonComponent {
               : null,
           value: json['value'],
           udfValue: json['udfValue'],
-          disabled: json['disabled']??false);
+          disabled: json['disabled'] ?? false);
 
   Map<String, dynamic> toJson() => {
         "label": label,
@@ -250,10 +250,24 @@ class ColumnComponent {
     label = json['label'];
     tableView = json['tableView'];
     ntsType = json['ntsType'];
-    editableContext = json['editableContext'].cast<String>();
-    viewableContext = json['viewableContext'].cast<String>();
-    viewableBy = json['viewableBy'].cast<String>();
-    editableBy = json['editableBy'].cast<String>();
+    if (json.containsKey('editableContext'))
+      editableContext = (json['editableContext'] != null &&
+              json['editableContext'].isNotEmpty)
+          ? json['editableContext'].cast<String>()
+          : '';
+    if (json.containsKey('viewableContext'))
+      viewableContext = (json['viewableContext'] != null &&
+              json['viewableContext'].isNotEmpty)
+          ? json['viewableContext'].cast<String>()
+          : '';
+    if (json.containsKey('viewableBy'))
+      viewableBy = (json['viewableBy'] != null && json['viewableBy'].isNotEmpty)
+          ? json['viewableBy'].cast<String>()
+          : '';
+    if (json.containsKey('editableBy'))
+      editableBy = (json['editableBy'] != null && json['editableBy'].isNotEmpty)
+          ? json['editableBy'].cast<String>()
+          : '';
     key = json['key'];
     type = json['type'];
     input = json['input'];
@@ -273,7 +287,7 @@ class ColumnComponent {
     //     // json['widget'] != null ? WidgetClass.fromJson(json['widget']) : null;
     mask = json['mask'];
     spellcheck = json['spellcheck'];
-    disabled = json['disabled']??false;
+    disabled = json['disabled'] ?? false;
     delimiter = json['delimiter'];
     requireDecimal = json['requireDecimal'];
     inputFormat = json['inputFormat'];
@@ -586,34 +600,53 @@ class ComponentComponent {
   Validate validate;
   String value;
   String udfValue;
+  String template;
+  String idPath;
 
-  ComponentComponent(
-      {this.label,
-      this.tableView,
-      this.ntsType,
-      this.editableContext,
-      this.viewableContext,
-      this.viewableBy,
-      this.editableBy,
-      this.key,
-      this.type,
-      this.input,
-      this.disabled,
-      this.columnMetadataId,
-      this.autoExpand,
-      this.validate,
-      this.value,
-      this.udfValue});
+  ComponentComponent({
+    this.label,
+    this.tableView,
+    this.ntsType,
+    this.editableContext,
+    this.viewableContext,
+    this.viewableBy,
+    this.editableBy,
+    this.key,
+    this.type,
+    this.input,
+    this.disabled,
+    this.columnMetadataId,
+    this.autoExpand,
+    this.validate,
+    this.value,
+    this.udfValue,
+    this.template,
+    this.idPath,
+  });
 
   ComponentComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
     tableView = json['tableView'];
     ntsType = json['ntsType'];
-    editableContext = json['editableContext'].cast<String>();
-    viewableContext = json['viewableContext'].cast<String>();
-    viewableBy = json['viewableBy'].cast<String>();
-    editableBy = json['editableBy'].cast<String>();
-    disabled = json['disabled']??false;
+    if (json.containsKey('editableContext'))
+      editableContext = (json['editableContext'] != null &&
+              json['editableContext'].isNotEmpty)
+          ? json['editableContext'].cast<String>()
+          : '';
+    if (json.containsKey('viewableContext'))
+      viewableContext = (json['viewableContext'] != null &&
+              json['viewableContext'].isNotEmpty)
+          ? json['viewableContext'].cast<String>()
+          : '';
+    if (json.containsKey('viewableBy'))
+      viewableBy = (json['viewableBy'] != null && json['viewableBy'].isNotEmpty)
+          ? json['viewableBy'].cast<String>()
+          : '';
+    if (json.containsKey('editableBy'))
+      editableBy = (json['editableBy'] != null && json['editableBy'].isNotEmpty)
+          ? json['editableBy'].cast<String>()
+          : '';
+    disabled = json['disabled'] ?? false;
     key = json['key'];
     type = json['type'];
     input = json['input'];
@@ -623,6 +656,8 @@ class ComponentComponent {
         json['validate'] != null ? Validate.fromJson(json['validate']) : null;
     value = json['value'];
     udfValue = json['udfValue'];
+    template = json['template'];
+    idPath = json['idPath'];
   }
 
   Map<String, dynamic> toJson() {
@@ -645,6 +680,8 @@ class ComponentComponent {
     }
     data['value'] = this.value;
     data['udfValue'] = this.udfValue;
+    data['template'] = this.template;
+    data['idPath'] = this.idPath;
     return data;
   }
 }
