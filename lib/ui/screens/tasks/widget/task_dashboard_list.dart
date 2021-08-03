@@ -159,7 +159,6 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     taskStatusIds = null;
     taskAssigneeIds = null;
     taskOwnerIds = null;
-    subjectController.text = '';
   }
 
   Widget wrappedButtons() {
@@ -182,6 +181,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
   }
 
   _homeFilter() {
+    subjectController.text = '';
     _setParamsToNull();
     apiCall();
   }
