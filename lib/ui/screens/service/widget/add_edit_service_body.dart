@@ -269,7 +269,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           .updateInitialValue(subjectValue ?? serviceModel.serviceSubject);
       widgets.add(
         Visibility(
-          visible: false,
+          visible: true,
           child: BlocTextBoxWidget(
             fieldName: 'Subject',
             readonly: false,
@@ -285,13 +285,13 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       );
     }
 
-    if (!serviceModel.hideStartDate)
+    // if (!serviceModel.hideStartDate)
       widgets.add(
         Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Visibility(
-              visible: false,
+              visible: true,
               child: Expanded(
                 child: DynamicDateTimeBox(
                   code: serviceModel.startDate,
@@ -318,7 +318,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ),
             ),
             Visibility(
-              visible: false,
+              visible: true,
               child: Expanded(
                 child: DynamicDateTimeBox(
                   code: serviceModel.dueDate,
@@ -355,7 +355,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           .updateInitialValue(slaValue ?? serviceModel.serviceSLA);
       widgets.add(
         Visibility(
-          visible: false,
+          visible: true,
           child: BlocTextBoxWidget(
             fieldName: 'SLA',
             readonly: false,
@@ -389,7 +389,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       createServiceFormBloc.description.updateInitialValue(
           descriptionValue ?? serviceModel.serviceDescription);
       widgets.add(Visibility(
-        visible: false,
+        visible: true,
         child: BlocTextBoxWidget(
           fieldName: 'Description',
           readonly: false,
