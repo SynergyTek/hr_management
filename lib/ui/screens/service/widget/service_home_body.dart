@@ -275,6 +275,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
     dueDate = null;
     completionDate = null;
     templateMasterCode = null;
+    subjectController.text = '';
   }
 
   Widget _dateFilterWidget() {

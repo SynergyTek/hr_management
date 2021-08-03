@@ -440,6 +440,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
       print(model[i].type);
+      print(model[i].udfValue);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {

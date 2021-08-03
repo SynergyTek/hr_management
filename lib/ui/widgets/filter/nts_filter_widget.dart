@@ -282,23 +282,23 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                     ],
                   ),
                 ),
-                widget.ntsFilter == NTSType.service && widget.isDashboard
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          PrimaryButton(
-                            buttonText: 'Cancel',
-                            handleOnPressed: Navigator.pop,
-                            width: 100,
-                          ),
-                          PrimaryButton(
-                            buttonText: 'Apply',
-                            handleOnPressed: Navigator.pop,
-                            width: 100,
-                          )
-                        ],
-                      )
-                    : SizedBox()
+                // widget.ntsFilter == NTSType.service && widget.isDashboard
+                //     ? Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           PrimaryButton(
+                //             buttonText: 'Cancel',
+                //             handleOnPressed: Navigator.pop,
+                //             width: 100,
+                //           ),
+                //           PrimaryButton(
+                //             buttonText: 'Apply',
+                //             handleOnPressed: Navigator.pop,
+                //             width: 100,
+                //           )
+                //         ],
+                //       )
+                //     : SizedBox()
               ],
             ),
           ),
