@@ -602,6 +602,7 @@ class ComponentComponent {
   String udfValue;
   String template;
   String idPath;
+  Data data;
 
   ComponentComponent({
     this.label,
@@ -622,6 +623,7 @@ class ComponentComponent {
     this.udfValue,
     this.template,
     this.idPath,
+    this.data
   });
 
   ComponentComponent.fromJson(Map<String, dynamic> json) {
@@ -646,6 +648,7 @@ class ComponentComponent {
       editableBy = (json['editableBy'] != null && json['editableBy'].isNotEmpty)
           ? json['editableBy'].cast<String>()
           : '';
+           data= json['data'] != null ? Data.fromJson(json['data']) : null;
     disabled = json['disabled'] ?? false;
     key = json['key'];
     type = json['type'];
@@ -677,6 +680,9 @@ class ComponentComponent {
     data['autoExpand'] = this.autoExpand;
     if (this.validate != null) {
       data['validate'] = this.validate.toJson();
+    }
+     if (this.data != null) {
+      data['data'] = this.data.toJson();
     }
     data['value'] = this.value;
     data['udfValue'] = this.udfValue;

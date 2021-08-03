@@ -663,7 +663,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               .trim()
               .split('.')[1],
           idKey: model[i].idPath,
-          url: model[i].data.url,
+          url: model[i].data?.url,
           onListTap: (dynamic value) {
             ntsDdBloc.subject.sink.add(null);
             NTSDropdownModel _selectedIdNameViewModel = value;
