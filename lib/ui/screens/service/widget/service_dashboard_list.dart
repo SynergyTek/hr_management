@@ -136,7 +136,6 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
     text = null;
     serviceStatusIds = null;
     userType = null;
-    subjectController.text = '';
   }
 
   Widget wrappedButtons() {
@@ -159,6 +158,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
   }
 
   _homeFilter() {
+    subjectController.text = '';
     _setParamsToNull();
     apiCall();
   }

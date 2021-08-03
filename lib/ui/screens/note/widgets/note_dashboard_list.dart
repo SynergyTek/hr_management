@@ -112,9 +112,7 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
     }
   }
 
-  _setParamsToNull() {
-    subjectController.text = '';
-  }
+  _setParamsToNull() {}
 
   Widget wrappedButtons() {
     return Container(
@@ -136,6 +134,7 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
   }
 
   _homeFilter() {
+    subjectController.text = '';
     _setParamsToNull();
     apiCall();
   }

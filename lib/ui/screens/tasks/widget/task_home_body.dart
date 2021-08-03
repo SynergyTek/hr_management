@@ -239,6 +239,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
   }
 
   _homeFilter() {
+    subjectController.text = '';
     _setParamsToNull();
     apiCall();
   }
@@ -379,6 +380,5 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     completionDate = null;
     templateMasterCode = null;
     text = null;
-    subjectController.text = '';
   }
 }
