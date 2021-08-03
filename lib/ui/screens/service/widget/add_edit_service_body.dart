@@ -79,6 +79,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
       new TextEditingController();
+       TextEditingController _fromddController = new TextEditingController();
 
   void updateLeaveDuration() {
     if (leaveStartDate != null && leaveEnddate != null) {
@@ -217,6 +218,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
+    _fromddController.text=serviceModel.ownerUserName;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -248,7 +250,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   List<Widget> formFieldsWidgets(context, createServiceFormBloc) {
     List<Widget> widgets = [];
-    TextEditingController _fromddController = new TextEditingController();
+   
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -653,6 +655,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             }
           }
         }
+       
         if ((selectValue != null && selectValue.isNotEmpty) &&
             (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];

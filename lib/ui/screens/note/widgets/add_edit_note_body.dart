@@ -80,6 +80,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
       new TextEditingController();
+      TextEditingController _fromddController = new TextEditingController();
 
   void updateLeaveDuration() {
     if (leaveStartDate != null && leaveEnddate != null) {
@@ -154,7 +155,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                     child: setServiceView(
                       context,
                       createServiceFormBloc,
-                      noteModel,
                     ),
                   ),
                   floatingActionButton: buildSpeedDial(),
@@ -223,8 +223,9 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   Widget setServiceView(
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
-    NoteModel noteModel,
   ) {
+
+    _fromddController.text=noteModel.ownerUserName;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -264,7 +265,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, NoteModel noteModel) {
     List<Widget> widgets = [];
-    TextEditingController _fromddController = new TextEditingController();
+    
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -625,7 +626,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             }
           }
         }
-        // } else {
+        if ((selectValue != null && selectValue.isNotEmpty) &&
+            (selectValue[i] != null && selectValue[i].isNotEmpty)) {
+          _ddController.text = selectValue[i];
+        }
+        // } 
+        //else {
         //   _ddController.text = selectValue[i];
         // }
         if (!udfJson.containsKey(model[i].key) &&
@@ -643,9 +649,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               url: model[i].data.url,
               ddController: _ddController);
         }
-        // } else {
-        //   _ddController.text = selectValue[i];
-        // }
 
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,

@@ -97,7 +97,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
               NTS_TEMPLATE_REQUEST,
               arguments: ScreenArguments(
                 ntstype: NTSType.task,
-                arg4: 'STEP_TASK_CATEGORY',
+                arg4: '',//'STEP_TASK_CATEGORY',
               ),
             );
           } else if (ntsType == NTSType.service) {

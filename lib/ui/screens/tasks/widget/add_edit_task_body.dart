@@ -73,6 +73,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
       new TextEditingController();
+ TextEditingController _fromddController = new TextEditingController();
 
   void updateLeaveDuration() {
     if (leaveStartDate != null && leaveEnddate != null) {
@@ -141,7 +142,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                         ? setTaskView(
                             context,
                             createServiceFormBloc,
-                            taskModel,
+                         
                           )
                         : SizedBox(),
                   ),
@@ -211,8 +212,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   Widget setTaskView(
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
-    TaskModel taskModel,
   ) {
+    _fromddController.text=taskModel.ownerUserName;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -252,7 +253,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, TaskModel taskModel) {
     List<Widget> widgets = [];
-    TextEditingController _fromddController = new TextEditingController();
+   
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -432,8 +433,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   List<Widget> addDynamic(model, createServiceFormBloc) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      print(model[i].type);
-      print(model[i].udfValue);
+      // print(model[i].type);
+      // print(model[i].udfValue);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
@@ -612,11 +613,11 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select') {
         TextEditingController _ddController = new TextEditingController();
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-          _ddController.text = udfJson[model[i].key];
-        }
+        // if (!udfJson.containsKey(model[i].key) &&
+        //     (widget.taskId != null || widget.taskId.isNotEmpty)) {
+        //   udfJson[model[i].key] = model[i].udfValue ?? '';
+        //   _ddController.text = udfJson[model[i].key];
+        // }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
@@ -625,7 +626,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               selectValue.add(null);
             }
           }
-        } else if (selectValue != null && selectValue.isNotEmpty) {
+         } if ((selectValue != null && selectValue.isNotEmpty) &&
+            (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
         }
         listDynamic.add(NTSDropDownSelect(

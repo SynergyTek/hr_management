@@ -50,6 +50,13 @@ class NoteBloc {
       note: noteModel,
     );
 
+    if ( response.isSuccess) {
+     
+        subjectNoteList.sink.add(null);
+        getNoteDetails();
+      
+    }
+
     return response;
   }
 
