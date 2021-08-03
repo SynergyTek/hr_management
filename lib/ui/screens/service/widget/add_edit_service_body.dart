@@ -132,10 +132,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     appBar: AppbarWidget(
                       title:
                           widget.serviceId == null || widget.serviceId.isEmpty
-                              ? "Create Service"// + widget.templateCode
+                              ? "Create Service" // + widget.templateCode
                               // : widget.title != null
                               //     ? "Edit ${widget.title}"
-                                  : "Edit Service",
+                              : "Edit Service",
                     ),
                     body:
                         FormBlocListener<CreateServiceFormBloc, String, String>(
@@ -169,47 +169,47 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
-    if(udfJsonString!=null)
-    {
-    udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
-    for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns != null && component.columns.isNotEmpty) {
-        for (Columns column in component.columns) {
-          for (ColumnComponent columnCom in column.components) {
-            columnComponent.add(columnCom);
+    if (udfJsonString != null) {
+      udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
+      for (UdfJsonComponent component in udfJsonString.components) {
+        if (component.columns != null && component.columns.isNotEmpty) {
+          for (Columns column in component.columns) {
+            for (ColumnComponent columnCom in column.components) {
+              columnComponent.add(columnCom);
+            }
+          }
+        }
+        if (component.components != null && component.components.isNotEmpty) {
+          for (ComponentComponent componentComponent in component.components) {
+            componentComList.add(componentComponent);
           }
         }
       }
-      if (component.components != null && component.components.isNotEmpty) {
-        for (ComponentComponent componentComponent in component.components) {
-          componentComList.add(componentComponent);
+
+      for (UdfJsonComponent component in udfJsonString.components) {
+        if (component.columns == null &&
+            (component.components == null ||
+                component.components.length == 0)) {
+          udfJsonComponent.add(component);
+        } else if (component.components == null &&
+            component.columns.length == 0) {
+          udfJsonComponent.add(component);
         }
       }
-    }
-
-    for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns == null &&
-          (component.components == null || component.components.length == 0)) {
-        udfJsonComponent.add(component);
-      } else if (component.components == null &&
-          component.columns.length == 0) {
-        udfJsonComponent.add(component);
+      if (columnComponent != null && columnComponent.isNotEmpty) {
+        columnComponentWidgets = addDynamic(
+          columnComponent,
+          createServiceFormBloc,
+        );
       }
-    }
-    if (columnComponent != null && columnComponent.isNotEmpty) {
-      columnComponentWidgets = addDynamic(
-        columnComponent,
-        createServiceFormBloc,
-      );
-    }
-    if (componentComList != null && componentComList.isNotEmpty) {
-      addDynamicComponentComponent(componentComList, createServiceFormBloc);
-    }
-    if (udfJsonComponent.length > 0) {
-      // udfJsonComponent.addAll(udfJsonString.components);
-      udfJsonCompWidgetList =
-          addDynamic(udfJsonComponent, createServiceFormBloc);
-    }
+      if (componentComList != null && componentComList.isNotEmpty) {
+        addDynamicComponentComponent(componentComList, createServiceFormBloc);
+      }
+      if (udfJsonComponent.length > 0) {
+        // udfJsonComponent.addAll(udfJsonString.components);
+        udfJsonCompWidgetList =
+            addDynamic(udfJsonComponent, createServiceFormBloc);
+      }
     }
   }
 
@@ -709,7 +709,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         }
         listDynamic.add(new DynamicDateTimeBox(
           code: udfJson[model[i].key].isNotEmpty
-              ? DateFormat("yyyy-MM-dd").parse(udfJson[model[i].key]).toString()
+              ? model[i]
+                      .udfValue
+                      .toString()
+                      .split(' ')[0]
+                      .contains(new RegExp(r'[a-z]'))
+                  ? null
+                  : DateFormat("yyyy-MM-dd")
+                      .parse(udfJson[model[i].key])
+                      .toString()
               : null,
           name: model[i].label,
           key: new Key(model[i].label),
