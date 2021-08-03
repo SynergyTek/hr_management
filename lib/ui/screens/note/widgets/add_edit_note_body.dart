@@ -95,6 +95,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   @override
   void initState() {
     super.initState();
+    noteBloc.subjectNoteDetails.sink.add(null);
     noteBloc
       ..getNoteDetails(
         templateCode: widget.templateCode,
@@ -132,10 +133,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 return Scaffold(
                   appBar: AppbarWidget(
                     title: widget.noteId == null || widget.noteId.isEmpty
-                        ? "Create Note"// + widget.templateCode
+                        ? "Create Note" // + widget.templateCode
                         // : widget.title != null
                         //     ? "Edit $widget.title"
-                            : "Edit Note",
+                        : "Edit Note",
                   ),
                   body: FormBlocListener<CreateServiceFormBloc, String, String>(
                     onSubmitting: (context, state) {
@@ -175,47 +176,47 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
-    if(udfJsonString!=null)
-    {
-    udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
-    for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns != null && component.columns.isNotEmpty) {
-        for (Columns column in component.columns) {
-          for (ColumnComponent columnCom in column.components) {
-            columnComponent.add(columnCom);
+    if (udfJsonString != null) {
+      udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
+      for (UdfJsonComponent component in udfJsonString.components) {
+        if (component.columns != null && component.columns.isNotEmpty) {
+          for (Columns column in component.columns) {
+            for (ColumnComponent columnCom in column.components) {
+              columnComponent.add(columnCom);
+            }
+          }
+        }
+        if (component.components != null && component.components.isNotEmpty) {
+          for (ComponentComponent componentComponent in component.components) {
+            componentComList.add(componentComponent);
           }
         }
       }
-      if (component.components != null && component.components.isNotEmpty) {
-        for (ComponentComponent componentComponent in component.components) {
-          componentComList.add(componentComponent);
+
+      for (UdfJsonComponent component in udfJsonString.components) {
+        if (component.columns == null &&
+            (component.components == null ||
+                component.components.length == 0)) {
+          udfJsonComponent.add(component);
+        } else if (component.components == null &&
+            component.columns.length == 0) {
+          udfJsonComponent.add(component);
         }
       }
-    }
-
-    for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns == null &&
-          (component.components == null || component.components.length == 0)) {
-        udfJsonComponent.add(component);
-      } else if (component.components == null &&
-          component.columns.length == 0) {
-        udfJsonComponent.add(component);
+      if (columnComponent != null && columnComponent.isNotEmpty) {
+        columnComponentWidgets = addDynamic(
+          columnComponent,
+          createServiceFormBloc,
+        );
       }
-    }
-    if (columnComponent != null && columnComponent.isNotEmpty) {
-      columnComponentWidgets = addDynamic(
-        columnComponent,
-        createServiceFormBloc,
-      );
-    }
-    if (componentComList != null && componentComList.isNotEmpty) {
-      addDynamicComponentComponent(componentComList, createServiceFormBloc);
-    }
-    if (udfJsonComponent.length > 0) {
-      // udfJsonComponent.addAll(udfJsonString.components);
-      udfJsonCompWidgetList =
-          addDynamic(udfJsonComponent, createServiceFormBloc);
-    }
+      if (componentComList != null && componentComList.isNotEmpty) {
+        addDynamicComponentComponent(componentComList, createServiceFormBloc);
+      }
+      if (udfJsonComponent.length > 0) {
+        // udfJsonComponent.addAll(udfJsonString.components);
+        udfJsonCompWidgetList =
+            addDynamic(udfJsonComponent, createServiceFormBloc);
+      }
     }
   }
 
@@ -704,7 +705,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
         listDynamic.add(new DynamicDateTimeBox(
           code: udfJson[model[i].key].isNotEmpty
-              ? DateFormat("yyyy-MM-dd").parse(udfJson[model[i].key]).toString()
+              ? udfJson[model[i].key].contains('/')
+                  ? DateFormat("dd/MM/yyyy")
+                      .parse(model[i].udfValue.split(' ')[0])
+                      .toString()
+                  : DateFormat("yyyy-MM-dd")
+                      .parse(udfJson[model[i].key])
+                      .toString()
               : null,
           name: model[i].label,
           key: new Key(model[i].label),
@@ -967,7 +974,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   },
                   width: 100,
                 ),
-              ), Visibility(
+              ),
+              Visibility(
                 visible: noteModel.isExpireButtonVisible,
                 child: PrimaryButton(
                   buttonText: 'Expiry',
@@ -1244,22 +1252,24 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         visible: true,
         curve: Curves.bounceInOut,
         children: [
-           SpeedDialChild(
-              visible: noteModel.isAddCommentEnabled &&
+          SpeedDialChild(
+            visible: noteModel.isAddCommentEnabled &&
                 widget.noteId != null &&
                 widget.noteId.isNotEmpty,
-              child: Icon(Icons.comment, color: Colors.white),
-              backgroundColor: Colors.blue,
-              onTap: (){ Navigator.pushNamed(context, COMMENT_ROUTE,
-                    arguments: ScreenArguments(
-                      ntstype: NTSType.note,
-                      arg1: noteModel.noteId,
-                    ));},
-              label: 'Comment',
-              labelStyle:
-                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-              labelBackgroundColor: Colors.black,
-            ),
+            child: Icon(Icons.comment, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              Navigator.pushNamed(context, COMMENT_ROUTE,
+                  arguments: ScreenArguments(
+                    ntstype: NTSType.note,
+                    arg1: noteModel.noteId,
+                  ));
+            },
+            label: 'Comment',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
           SpeedDialChild(
             child: Icon(
               Icons.attachment_outlined,
@@ -1274,22 +1284,22 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             ),
             labelBackgroundColor: Colors.black,
           ),
-         
-            SpeedDialChild(
-              visible:widget?.noteId != null && widget.noteId.isNotEmpty ,
-              child: Icon(Icons.share, color: Colors.white),
-              backgroundColor: Colors.blue,
-              // onTap: () => print('Pressed Code for NOte'),
-              onTap: () => Navigator.pushNamed(context, NTS_SHARE,
-                  arguments: ScreenArguments(
-                    ntstype: NTSType.note,
-                    arg1: noteModel.id,
-                  )),
-              label: 'Share',
-              labelStyle:
-                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-              labelBackgroundColor: Colors.black,
-            ),
+
+          SpeedDialChild(
+            visible: widget?.noteId != null && widget.noteId.isNotEmpty,
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            // onTap: () => print('Pressed Code for NOte'),
+            onTap: () => Navigator.pushNamed(context, NTS_SHARE,
+                arguments: ScreenArguments(
+                  ntstype: NTSType.note,
+                  arg1: noteModel.id,
+                )),
+            label: 'Share',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
           // SpeedDialChild(
           //   child:
           //       Icon(Icons.notifications_active_outlined, color: Colors.white),
