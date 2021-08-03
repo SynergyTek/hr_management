@@ -297,10 +297,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       );
     }
 
-    if (!noteModel.hideStartDate)
+    // if (!noteModel.hideStartDate)
       widgets.add(
         Visibility(
-          visible: false,
+          visible: true,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
@@ -367,7 +367,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
       widgets.add(
         Visibility(
-          visible: false,
+          visible: true,
           child: BlocTextBoxWidget(
             fieldName: 'Description',
             readonly: false,
@@ -1176,59 +1176,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     );
   }
 
-  Future<void> _showPostAlertMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Something went wrong'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _showPostAlertMyDialog2() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text(''),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   String resultMsg = '';
   noteViewModelPostRequest(int postDataAction, String noteStatusCode,

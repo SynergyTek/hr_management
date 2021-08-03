@@ -284,7 +284,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ));
     }
 
-    if (!taskModel.hideStartDate)
+    // if (!taskModel.hideStartDate)
       widgets.add(
         Row(
           mainAxisSize: MainAxisSize.max,
