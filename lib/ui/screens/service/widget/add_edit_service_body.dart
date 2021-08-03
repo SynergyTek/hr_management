@@ -113,13 +113,13 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               stream: serviceBloc.subject.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data.error != null &&
+                  if (snapshot?.data?.error != null &&
                       snapshot.data.error.length > 0) {
                     return Center(
                       child: Text(snapshot.data.error),
                     );
                   }
-                  serviceModel = snapshot.data.data;
+                  serviceModel = snapshot?.data?.data;
 
                   final createServiceFormBloc =
                       context.read<CreateServiceFormBloc>();
@@ -132,10 +132,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     appBar: AppbarWidget(
                       title:
                           widget.serviceId == null || widget.serviceId.isEmpty
-                              ? "Create " + widget.templateCode
-                              : widget.title != null
-                                  ? "Edit ${widget.title}"
-                                  : "Edit",
+                              ? "Create Service"// + widget.templateCode
+                              // : widget.title != null
+                              //     ? "Edit ${widget.title}"
+                                  : "Edit Service",
                     ),
                     body:
                         FormBlocListener<CreateServiceFormBloc, String, String>(
@@ -169,6 +169,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
+    if(udfJsonString!=null)
+    {
     udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
     for (UdfJsonComponent component in udfJsonString.components) {
       if (component.columns != null && component.columns.isNotEmpty) {
@@ -207,6 +209,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       // udfJsonComponent.addAll(udfJsonString.components);
       udfJsonCompWidgetList =
           addDynamic(udfJsonComponent, createServiceFormBloc);
+    }
     }
   }
 
@@ -933,22 +936,22 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 width: 100,
               ),
             ),
-            Visibility(
-              visible: serviceModel.isAddCommentEnabled &&
-                  widget.serviceId != null &&
-                  widget.serviceId.isNotEmpty,
-              child: PrimaryButton(
-                buttonText: 'Add comment',
-                handleOnPressed: () {
-                  Navigator.pushNamed(context, COMMENT_ROUTE,
-                      arguments: ScreenArguments(
-                        ntstype: NTSType.service,
-                        arg1: serviceModel.serviceId,
-                      ));
-                },
-                width: 100,
-              ),
-            ),
+            // Visibility(
+            //   visible: serviceModel.isAddCommentEnabled &&
+            //       widget.serviceId != null &&
+            //       widget.serviceId.isNotEmpty,
+            //   child: PrimaryButton(
+            //     buttonText: 'Add comment',
+            //     handleOnPressed: () {
+            //       Navigator.pushNamed(context, COMMENT_ROUTE,
+            //           arguments: ScreenArguments(
+            //             ntstype: NTSType.service,
+            //             arg1: serviceModel.serviceId,
+            //           ));
+            //     },
+            //     width: 100,
+            //   ),
+            // ),
             Visibility(
               // visible: true,
               visible: serviceModel.isCancelButtonVisible,
@@ -1315,18 +1318,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //   labelBackgroundColor: Colors.black,
           // ),
-          //  Visibility(
-          //     visible: serviceModel.isAddCommentEnabled &&
-          //         widget.serviceId != null &&
-          //         widget.serviceId.isNotEmpty,
-          //     child: PrimaryButton(
-          //       buttonText: 'Add comment',
-          //       handleOnPressed: () {
-
-          //       },
-          //       width: 100,
-          //     ),
-          //   ),
           SpeedDialChild(
             visible: serviceModel.isAddCommentEnabled &&
                 widget.serviceId != null &&

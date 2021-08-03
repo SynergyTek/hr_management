@@ -107,7 +107,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             builder: (context, AsyncSnapshot snapshot) {
               print("Snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
-                if (snapshot.data.error != null &&
+                if (snapshot?.data?.error != null &&
                     snapshot.data.error.length > 0) {
                   return Center(
                     child: Text(snapshot.data.error),
@@ -115,7 +115,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 }
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
-                taskModel = snapshot.data.data;
+                taskModel = snapshot?.data?.data;
 
                 if (taskModel.json != null) {
                   parseJsonToUDFModel(
@@ -129,10 +129,10 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                     // actions: [IconButton(icon: Icon(Icons.comment), onPressed: () {})],
                     title: (widget.templateCode != null &&
                             widget.templateCode.isNotEmpty)
-                        ? "Add " + widget.templateCode
-                        : widget.title != null
-                            ? "Edit $widget.title"
-                            : "Edit",
+                        ? "Create Task"// + widget.templateCode
+                        // : widget.title != null
+                        //     ? "Edit $widget.title"
+                            : "Edit Task",
                   ),
                   body: FormBlocListener<CreateServiceFormBloc, String, String>(
                     onSuccess: (context, state) {},
@@ -164,6 +164,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
+    if(udfJsonString!=null)
+    {
     udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
     for (UdfJsonComponent component in udfJsonString.components) {
       if (component.columns != null && component.columns.isNotEmpty) {
@@ -202,6 +204,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       // udfJsonComponent.addAll(udfJsonString.components);
       udfJsonCompWidgetList =
           addDynamic(udfJsonComponent, createServiceFormBloc);
+    }
     }
   }
 
@@ -878,22 +881,22 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               width: 100,
             ),
           ),
-          Visibility(
-            visible: taskModel.isAddCommentEnabled &&
-                widget.taskId != null &&
-                widget.taskId.isNotEmpty,
-            child: PrimaryButton(
-              buttonText: 'Add comment',
-              handleOnPressed: () {
-                Navigator.pushNamed(context, COMMENT_ROUTE,
-                    arguments: ScreenArguments(
-                      ntstype: NTSType.task,
-                      arg1: taskModel.taskId,
-                    ));
-              },
-              width: 100,
-            ),
-          ),
+          // Visibility(
+          //   visible: taskModel.isAddCommentEnabled &&
+          //       widget.taskId != null &&
+          //       widget.taskId.isNotEmpty,
+          //   child: PrimaryButton(
+          //     buttonText: 'Add comment',
+          //     handleOnPressed: () {
+          //       Navigator.pushNamed(context, COMMENT_ROUTE,
+          //           arguments: ScreenArguments(
+          //             ntstype: NTSType.task,
+          //             arg1: taskModel.taskId,
+          //           ));
+          //     },
+          //     width: 100,
+          //   ),
+          // ),
           // Visibility(
           //   visible: taskModel.enableCancelButton,
           //   child: PrimaryButton(
@@ -1211,6 +1214,22 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         curve: Curves.bounceInOut,
         children: [
           SpeedDialChild(
+              visible: taskModel.isAddCommentEnabled &&
+                widget.taskId != null &&
+                widget.taskId.isNotEmpty,
+              child: Icon(Icons.comment, color: Colors.white),
+              backgroundColor: Colors.blue,
+              onTap: (){ Navigator.pushNamed(context, COMMENT_ROUTE,
+                    arguments: ScreenArguments(
+                      ntstype: NTSType.task,
+                      arg1: taskModel.taskId,
+                    ));},
+              label: 'Comment',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
+          SpeedDialChild(
             child: Icon(
               Icons.attachment_outlined,
               color: Colors.white,
@@ -1234,15 +1253,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //     labelBackgroundColor: Colors.black,
           //   ),
-          //   SpeedDialChild(
-          //     child: Icon(Icons.comment, color: Colors.white),
-          //     backgroundColor: Colors.blue,
-          //     onTap: () => print('Pressed Write'),
-          //     label: 'Comment',
-          //     labelStyle:
-          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-          //     labelBackgroundColor: Colors.black,
-          //   ),
+            
           //   SpeedDialChild(
           //     child: Icon(Icons.share, color: Colors.white),
           //     backgroundColor: Colors.blue,
@@ -1266,15 +1277,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           //     backgroundColor: Colors.blue,
           //     onTap: () => print('Pressed Code'),
           //     label: 'Email',
-          //     labelStyle:
-          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-          //     labelBackgroundColor: Colors.black,
-          //   ),
-          //   SpeedDialChild(
-          //     child: Icon(Icons.attachment, color: Colors.white),
-          //     backgroundColor: Colors.blue,
-          //     onTap: () => print('Pressed Code'),
-          //     label: 'Attachment',
           //     labelStyle:
           //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //     labelBackgroundColor: Colors.black,

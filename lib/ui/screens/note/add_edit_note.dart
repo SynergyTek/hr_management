@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import '../../widgets/appbar_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 
 import 'widgets/add_edit_note_body.dart';
@@ -30,7 +28,7 @@ class AddEditNote extends StatelessWidget {
           ),
         ),
       ),
-      //   floatingActionButton: buildSpeedDial(),
+   
     );
   }
 

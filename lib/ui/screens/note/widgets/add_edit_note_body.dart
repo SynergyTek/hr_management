@@ -114,7 +114,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             builder: (context, AsyncSnapshot snapshot) {
               print("Snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
-                if (snapshot.data.error != null &&
+                if (snapshot?.data?.error != null &&
                     snapshot.data.error.length > 0) {
                   return Center(
                     child: Text(snapshot.data.error),
@@ -122,7 +122,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 }
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
-                noteModel = snapshot.data.data;
+                noteModel = snapshot?.data?.data;
 
                 parseJsonToUDFModel(
                   createServiceFormBloc,
@@ -132,10 +132,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 return Scaffold(
                   appBar: AppbarWidget(
                     title: widget.noteId == null || widget.noteId.isEmpty
-                        ? "Create " + widget.templateCode
-                        : widget.title != null
-                            ? "Edit $widget.title"
-                            : "Edit",
+                        ? "Create Note"// + widget.templateCode
+                        // : widget.title != null
+                        //     ? "Edit $widget.title"
+                            : "Edit Note",
                   ),
                   body: FormBlocListener<CreateServiceFormBloc, String, String>(
                     onSubmitting: (context, state) {
@@ -175,6 +175,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
+    if(udfJsonString!=null)
+    {
     udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
     for (UdfJsonComponent component in udfJsonString.components) {
       if (component.columns != null && component.columns.isNotEmpty) {
@@ -213,6 +215,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       // udfJsonComponent.addAll(udfJsonString.components);
       udfJsonCompWidgetList =
           addDynamic(udfJsonComponent, createServiceFormBloc);
+    }
     }
   }
 
@@ -963,6 +966,19 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   },
                   width: 100,
                 ),
+              ), Visibility(
+                visible: noteModel.isExpireButtonVisible,
+                child: PrimaryButton(
+                  buttonText: 'Expiry',
+                  handleOnPressed: () {
+                    noteViewModelPostRequest(
+                      1,
+                      'NOTE_STATUS_DRAFT',
+                      createServiceFormBloc,
+                    );
+                  },
+                  width: 100,
+                ),
               ),
               Visibility(
                 visible: noteModel.isSubmitButtonVisible,
@@ -1280,6 +1296,22 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         visible: true,
         curve: Curves.bounceInOut,
         children: [
+           SpeedDialChild(
+              visible: noteModel.isAddCommentEnabled &&
+                widget.noteId != null &&
+                widget.noteId.isNotEmpty,
+              child: Icon(Icons.comment, color: Colors.white),
+              backgroundColor: Colors.blue,
+              onTap: (){ Navigator.pushNamed(context, COMMENT_ROUTE,
+                    arguments: ScreenArguments(
+                      ntstype: NTSType.note,
+                      arg1: noteModel.noteId,
+                    ));},
+              label: 'Comment',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
           SpeedDialChild(
             child: Icon(
               Icons.attachment_outlined,
@@ -1294,8 +1326,9 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             ),
             labelBackgroundColor: Colors.black,
           ),
-          if (widget?.noteId != null && widget.noteId.isNotEmpty)
+         
             SpeedDialChild(
+              visible:widget?.noteId != null && widget.noteId.isNotEmpty ,
               child: Icon(Icons.share, color: Colors.white),
               backgroundColor: Colors.blue,
               // onTap: () => print('Pressed Code for NOte'),
@@ -1320,28 +1353,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           //   labelBackgroundColor: Colors.black,
           // ),
           // SpeedDialChild(
-          //   child: Icon(Icons.comment, color: Colors.white),
-          //   backgroundColor: Colors.blue,
-          //   onTap: () => print('Pressed Write'),
-          //   label: 'Comment',
-          //   labelStyle:
-          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-          //   labelBackgroundColor: Colors.black,
-          // ),
-          // SpeedDialChild(
           //   child: Icon(Icons.email, color: Colors.white),
           //   backgroundColor: Colors.blue,
           //   onTap: () => print('Pressed Code'),
           //   label: 'Email',
-          //   labelStyle:
-          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-          //   labelBackgroundColor: Colors.black,
-          // ),
-          // SpeedDialChild(
-          //   child: Icon(Icons.attachment, color: Colors.white),
-          //   backgroundColor: Colors.blue,
-          //   onTap: () => print('Pressed Code'),
-          //   label: 'Attachment',
           //   labelStyle:
           //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //   labelBackgroundColor: Colors.black,
