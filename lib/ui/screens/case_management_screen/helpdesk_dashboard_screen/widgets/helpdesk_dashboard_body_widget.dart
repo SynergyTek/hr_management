@@ -88,15 +88,24 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
     );
   }
 
-  void _slaViolationByCategoryOnTap() => Navigator.pushReplacement(
+  _pushReplacement({
+    @required String title,
+    @required Widget child,
+  }) =>
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => Scaffold(
             appBar: AppbarWidget(
-              title: "SLA Violation by Category",
+              title: title ?? "",
             ),
-            body: SLAViolationByCategoryBodyWidget(),
+            body: child,
           ),
         ),
+      );
+
+  void _slaViolationByCategoryOnTap() => _pushReplacement(
+        title: "SLA Violation By Category",
+        child: SLAViolationByCategoryBodyWidget(),
       );
 }
