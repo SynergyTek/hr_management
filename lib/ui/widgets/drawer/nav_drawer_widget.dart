@@ -296,7 +296,6 @@ Widget drawerWidget(context) {
                   ),
                 ],
               ),
-              
               ListTile(
                 title: Text(
                   'ATTACHMENTS',
