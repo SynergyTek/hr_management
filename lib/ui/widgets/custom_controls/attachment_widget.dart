@@ -11,14 +11,14 @@ class DynamicAttchmentWidget extends StatelessWidget {
   final bool readOnly;
 
   const DynamicAttchmentWidget(
-      this.labelName,
+      {this.labelName,
       this.fieldName,
       this.controller,
       this.callBack,
       this.callBack1,
       this.callBack2,
       this.fileId,
-      this.readOnly);
+      this.readOnly});
   @override
   Widget build(BuildContext context) {
     return Padding(

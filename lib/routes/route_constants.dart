@@ -34,6 +34,7 @@ const String ADD_EDIT_NOTE_ROUTE = "/note";
 const String SERVICE_ROUTE = "/service";
 const String COUNTS_ROUTE = "/counts";
 const String NTS_DROPDOWN = "/nts_dropdown";
+const String NTS_ATTACHMENT = "/nts_dropdown";
 const String NTS_USER_DROPDOWN = "/nts_user_dropdown";
 const String NTS_TEAM_DROPDOWN = "/nts_team_dropdown";
 const String TASK_HOME = "/task_home";

@@ -8,6 +8,7 @@ import 'package:hr_management/ui/screens/share/share_screen.dart';
 import 'package:hr_management/ui/screens/tasks/adhoc_task/adhoc_task_list_screen.dart';
 
 import 'package:hr_management/ui/screens/tasks/task_list_screen.dart';
+import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 import 'package:hr_management/ui/widgets/custom_controls/team_dropdown_list.dart';
 import 'package:hr_management/ui/widgets/custom_controls/user_dropdown_list.dart';
 
@@ -157,6 +158,12 @@ class AppRouter {
             ddName: args.arg4,
             onListTap: args.func,
           ),
+        );
+
+      case NTS_ATTACHMENT:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => SelectAttachment(),
         );
 
       case NTS_USER_DROPDOWN:
