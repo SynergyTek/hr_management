@@ -101,8 +101,11 @@ class _CaseManagementBodyWidgetState extends State<CaseManagementBodyWidget> {
         WORKLIST_DASHBOARD,
       );
 
-    if (listTileDataKey == 'Dashboard') return;
-    // Navigator.pushReplacementNamed(context, ,);
+    if (listTileDataKey == 'Dashboard')
+      Navigator.pushReplacementNamed(
+        context,
+        CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE,
+      );
 
     if (listTileDataKey == 'Task List')
       Navigator.pushReplacementNamed(
@@ -116,11 +119,7 @@ class _CaseManagementBodyWidgetState extends State<CaseManagementBodyWidget> {
         SERVICE_HOME,
       );
 
-    if (listTileDataKey == 'Service Report')
-      Navigator.pushReplacementNamed(
-        context,
-        CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE,
-      );
+    if (listTileDataKey == 'Service Report') return;
 
     return;
   }

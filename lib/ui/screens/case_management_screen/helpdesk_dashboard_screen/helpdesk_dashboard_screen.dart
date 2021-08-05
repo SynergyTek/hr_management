@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import '../../../widgets/appbar_widget.dart';
 import '../../../widgets/internet_connectivity_widget.dart';
 
-import 'widgets/service_reports_body_widget.dart';
+import 'widgets/helpdesk_dashboard_body_widget.dart';
 
-class CaseManagementServiceReportsScreen extends StatelessWidget {
-  const CaseManagementServiceReportsScreen();
+class CaseManagementHelpdeskDashboardScreen extends StatelessWidget {
+  const CaseManagementHelpdeskDashboardScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarWidget(
-        title: "Service Reports",
+        title: "Helpdesk Dashboard",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: CaseManagementServiceReportsBodyWidget(),
+          child: CaseManagementHelpdeskDashboardBodyWidget(),
         ),
       ),
     );
