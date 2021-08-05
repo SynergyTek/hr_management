@@ -66,6 +66,7 @@ class _PersonProfileBodyWidgetState extends State<PersonProfileBodyWidget> {
   }
 
   Widget _listviewWidget(PersonProfileModel data) {
+    // List
     return ListView.builder(
       shrinkWrap: true,
       itemCount: data.noteTableRows.length,
