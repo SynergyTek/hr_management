@@ -158,6 +158,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
   }
 
   _homeFilter() {
+    subjectController.text = '';
     _setParamsToNull();
     apiCall();
   }

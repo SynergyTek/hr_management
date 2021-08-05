@@ -17,7 +17,8 @@ class NTSTemplateBodyWidget extends StatefulWidget {
 
   NTSTemplateBodyWidget({
     @required this.stream,
-    @required this.ntsType, this.categoryCode,
+    @required this.ntsType,
+    this.categoryCode,
   });
 
   @override
@@ -34,9 +35,8 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
 
   @override
   void initState() {
-    if(widget.categoryCode!=null ||widget.categoryCode.isNotEmpty)
-    {
-      selectedCategory=widget.categoryCode;
+    if (widget.categoryCode != null && widget.categoryCode.isNotEmpty) {
+      selectedCategory = widget.categoryCode;
     }
     super.initState();
   }

@@ -239,6 +239,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
   }
 
   _homeFilter() {
+    subjectController.text = '';
     _setParamsToNull();
     apiCall();
   }

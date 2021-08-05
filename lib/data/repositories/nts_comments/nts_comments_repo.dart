@@ -5,10 +5,10 @@ part of 'abstract_nts_comments_repo.dart';
 class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   final Dio _dio = Dio();
 
-  Future<CommentListResponse> getCommentsData(
-      {Map<String, dynamic> queryparams, NTSType ntsType})
-  // Optional Params to be added to the request if required
-  async {
+  Future<CommentListResponse> getCommentsData({
+    Map<String, dynamic> queryparams,
+    NTSType ntsType,
+  }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.GET_SERVICE_COMMENT_DATA;
@@ -79,7 +79,34 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   }
 
   @override
-  Future<CommentResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
-    throw UnimplementedError();
+  Future<bool> deleteAPIData({
+    Map<String, dynamic> queryparams,
+    NTSType ntsType,
+  }) async {
+    String endpoint = '';
+    if (ntsType == NTSType.service) {
+      endpoint = APIEndpointConstants.DELETE_SERVICE_COMMENT_DATA;
+    } else if (ntsType == NTSType.note) {
+      endpoint = APIEndpointConstants.DELETE_NOTE_COMMENT_DATA;
+    } else if (ntsType == NTSType.task) {
+      endpoint = APIEndpointConstants.DELETE_TASK_COMMENT_DATA;
+    }
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      // print("[DIO]: \nDelete API data: ${response.data}");
+
+      return response.data as bool;
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return false;
+    }
   }
 }

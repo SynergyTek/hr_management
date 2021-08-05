@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/models/user/user.dart';
-import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
+import '../../../widgets/appbar_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/user/user.dart';
 import '../../../../logic/blocs/user_bloc/user_bloc.dart';
@@ -73,6 +73,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
       new TextEditingController();
+ TextEditingController _fromddController = new TextEditingController();
 
   void updateLeaveDuration() {
     if (leaveStartDate != null && leaveEnddate != null) {
@@ -107,7 +108,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             builder: (context, AsyncSnapshot snapshot) {
               print("Snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
-                if (snapshot.data.error != null &&
+                if (snapshot?.data?.error != null &&
                     snapshot.data.error.length > 0) {
                   return Center(
                     child: Text(snapshot.data.error),
@@ -115,7 +116,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 }
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
-                taskModel = snapshot.data.data;
+                taskModel = snapshot?.data?.data;
 
                 if (taskModel.json != null) {
                   parseJsonToUDFModel(
@@ -127,11 +128,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 return Scaffold(
                   appBar: AppbarWidget(
                     // actions: [IconButton(icon: Icon(Icons.comment), onPressed: () {})],
-                    title: (widget.templateCode != null && widget.templateCode.isNotEmpty)
-                        ? "Add " + widget.templateCode
-                        : widget.title != null
-                            ? "Edit $widget.title"
-                            : "Edit",
+                    title: (widget.templateCode != null &&
+                            widget.templateCode.isNotEmpty)
+                        ? "Create Task"// + widget.templateCode
+                        // : widget.title != null
+                        //     ? "Edit $widget.title"
+                            : "Edit Task",
                   ),
                   body: FormBlocListener<CreateServiceFormBloc, String, String>(
                     onSuccess: (context, state) {},
@@ -140,12 +142,11 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                         ? setTaskView(
                             context,
                             createServiceFormBloc,
-                            taskModel,
+                         
                           )
                         : SizedBox(),
                   ),
-                  
-      //   floatingActionButton: buildSpeedDial(),
+                  floatingActionButton: buildSpeedDial(),
                 );
               } else {
                 return Center(
@@ -164,6 +165,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
+    if(udfJsonString!=null)
+    {
     udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
     for (UdfJsonComponent component in udfJsonString.components) {
       if (component.columns != null && component.columns.isNotEmpty) {
@@ -203,13 +206,14 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       udfJsonCompWidgetList =
           addDynamic(udfJsonComponent, createServiceFormBloc);
     }
+    }
   }
 
   Widget setTaskView(
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
-    TaskModel taskModel,
   ) {
+    _fromddController.text=taskModel.ownerUserName;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -249,7 +253,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, TaskModel taskModel) {
     List<Widget> widgets = [];
-    TextEditingController _fromddController = new TextEditingController();
+   
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -281,7 +285,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ));
     }
 
-    if (!taskModel.hideStartDate)
+    // if (!taskModel.hideStartDate)
       widgets.add(
         Row(
           mainAxisSize: MainAxisSize.max,
@@ -429,8 +433,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   List<Widget> addDynamic(model, createServiceFormBloc) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      print(model[i].type);
-      print(model[i].udfValue);
+      // print(model[i].type);
+      // print(model[i].udfValue);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
@@ -609,11 +613,11 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select') {
         TextEditingController _ddController = new TextEditingController();
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-          _ddController.text = udfJson[model[i].key];
-        }
+        // if (!udfJson.containsKey(model[i].key) &&
+        //     (widget.taskId != null || widget.taskId.isNotEmpty)) {
+        //   udfJson[model[i].key] = model[i].udfValue ?? '';
+        //   _ddController.text = udfJson[model[i].key];
+        // }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
@@ -622,7 +626,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               selectValue.add(null);
             }
           }
-        } else if (selectValue != null && selectValue.isNotEmpty) {
+         } if ((selectValue != null && selectValue.isNotEmpty) &&
+            (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
         }
         listDynamic.add(NTSDropDownSelect(
@@ -878,22 +883,22 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               width: 100,
             ),
           ),
-          Visibility(
-            visible: taskModel.isAddCommentEnabled &&
-                widget.taskId != null &&
-                widget.taskId.isNotEmpty,
-            child: PrimaryButton(
-              buttonText: 'Add comment',
-              handleOnPressed: () {
-                Navigator.pushNamed(context, COMMENT_ROUTE,
-                    arguments: ScreenArguments(
-                      ntstype: NTSType.task,
-                      arg1: taskModel.taskId,
-                    ));
-              },
-              width: 100,
-            ),
-          ),
+          // Visibility(
+          //   visible: taskModel.isAddCommentEnabled &&
+          //       widget.taskId != null &&
+          //       widget.taskId.isNotEmpty,
+          //   child: PrimaryButton(
+          //     buttonText: 'Add comment',
+          //     handleOnPressed: () {
+          //       Navigator.pushNamed(context, COMMENT_ROUTE,
+          //           arguments: ScreenArguments(
+          //             ntstype: NTSType.task,
+          //             arg1: taskModel.taskId,
+          //           ));
+          //     },
+          //     width: 100,
+          //   ),
+          // ),
           // Visibility(
           //   visible: taskModel.enableCancelButton,
           //   child: PrimaryButton(
@@ -1160,60 +1165,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     );
   }
 
-  Future<void> _showPostAlertMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Something went wrong'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _showPostAlertMyDialog2() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text(''),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   String resultMsg = '';
   taskViewModelPostRequest(int postDataAction, String taskStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
@@ -1226,7 +1177,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     postTaskModel.requestedByUserId = userId;
     postTaskModel.assignedToUserId =
         userId; //TODO: set appropriate "assignedToUserId"
-    // postTaskModel.taskSubject = createServiceFormBloc.subject.value;
+    postTaskModel.taskSubject = createServiceFormBloc.subject.value;
     postTaskModel.taskDescription = createServiceFormBloc.description.value;
     postTaskModel.dataAction = postDataAction;
     postTaskModel.taskStatusCode = taskStatusCode;
@@ -1265,69 +1216,82 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         curve: Curves.bounceInOut,
         children: [
           SpeedDialChild(
-            child:
-                Icon(Icons.notifications_active_outlined, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Read Later'),
-            label: 'Notification',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
+              visible: taskModel.isAddCommentEnabled &&
+                widget.taskId != null &&
+                widget.taskId.isNotEmpty,
+              child: Icon(Icons.comment, color: Colors.white),
+              backgroundColor: Colors.blue,
+              onTap: (){ Navigator.pushNamed(context, COMMENT_ROUTE,
+                    arguments: ScreenArguments(
+                      ntstype: NTSType.task,
+                      arg1: taskModel.taskId,
+                    ));},
+              label: 'Comment',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
           SpeedDialChild(
-            child: Icon(Icons.comment, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Write'),
-            label: 'Comment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.share, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Share',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.timeline_outlined, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Time Entries',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.email, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Email',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.attachment, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
+            child: Icon(
+              Icons.attachment_outlined,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleAttachmentOnPressed(),
             label: 'Attachment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
             labelBackgroundColor: Colors.black,
           ),
-          SpeedDialChild(
-            child: Icon(Icons.tag, color: Colors.white),
-            backgroundColor: Colors.blue,
-            onTap: () => print('Pressed Code'),
-            label: 'Tags',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-            labelBackgroundColor: Colors.black,
-          ),
+          //   SpeedDialChild(
+          //     child:
+          //         Icon(Icons.notifications_active_outlined, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Read Later'),
+          //     label: 'Notification',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+            
+          //   SpeedDialChild(
+          //     child: Icon(Icons.share, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Share',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.timeline_outlined, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Time Entries',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.email, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Email',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
+          //   SpeedDialChild(
+          //     child: Icon(Icons.tag, color: Colors.white),
+          //     backgroundColor: Colors.blue,
+          //     onTap: () => print('Pressed Code'),
+          //     label: 'Tags',
+          //     labelStyle:
+          //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     labelBackgroundColor: Colors.black,
+          //   ),
         ]);
   }
 
@@ -1340,5 +1304,16 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     columnComponent = [];
     componentComList = [];
     super.dispose();
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.pushNamed(
+      context,
+      ATTACHMENT_NTS_ROUTE,
+      arguments: ScreenArguments(
+        ntstype: NTSType.task,
+        arg1: taskModel.id,
+      ),
+    );
   }
 }

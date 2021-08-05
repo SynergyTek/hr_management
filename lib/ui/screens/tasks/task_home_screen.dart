@@ -49,7 +49,7 @@ class TaskHomeScreen extends StatelessWidget {
             NTS_TEMPLATE_REQUEST,
             arguments: ScreenArguments(
               ntstype: NTSType.task,
-              arg4: 'STEP_TASK_CATEGORY',
+              arg4: '',//'STEP_TASK_CATEGORY',
             ),
           );
           // Navigator.pushNamed(

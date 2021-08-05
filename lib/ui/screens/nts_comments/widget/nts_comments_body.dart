@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../constants/api_endpoints.dart';
 import '../../../../constants/formats.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
@@ -24,7 +23,9 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
   void initState() {
     // ntsCommentBloc.subjectGetComments.sink.add(null);
     ntsCommentBloc.getCommentsData(
-        ntsId: widget.ntsId, ntsType: widget.ntsType);
+      ntsId: widget.ntsId,
+      ntsType: widget.ntsType,
+    );
     super.initState();
   }
 
@@ -55,49 +56,69 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                   filteredSearchList: _filteredCommentsList,
                   itemBuilder: (context, index) {
                     // print("Snapshot data: ${snapshot.data.data[index].taskNo}");
-                    return Container(
-                      padding: EdgeInsets.only(
-                          left: 14, right: 14, top: 10, bottom: 10),
-                      child: Align(
-                        alignment: //(messages[index].messageType == "receiver"
-                            // ? Alignment.topLeft:
-                            Alignment.topRight, //),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: // (messages[index].messageType == "receiver"
-                                //? Colors.grey.shade200:
-                                Colors.blue[200], //),
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                            top: 10,
+                            bottom: 10,
                           ),
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                            children: [
-                              Text(
-                                _commentsList[index].comment,
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black87),
-                                textAlign: TextAlign.left,
+                          child: Align(
+                            alignment: //(messages[index].messageType == "receiver"
+                                // ? Alignment.topLeft:
+                                Alignment.topRight, //),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: // (messages[index].messageType == "receiver"
+                                    //? Colors.grey.shade200:
+                                    Colors.blue[200], //),
                               ),
-                              Text(
-                                dateformatter.format(DateTime.parse(
-                                    _commentsList[index].commentedDate)),
-                                style: TextStyle(
-                                  fontSize: 13,
-                                ),
-                                textAlign: TextAlign.right,
+                              padding: EdgeInsets.all(16),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    _commentsList[index].comment,
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black87),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  Text(
+                                    dateformatter.format(DateTime.parse(
+                                        _commentsList[index].commentedDate)),
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  Text(
+                                    "Commented by: " +
+                                        _commentsList[index]
+                                            .commentedByUserName,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                "Commented by: " +
-                                    _commentsList[index].commentedByUserName,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                ),
-                                textAlign: TextAlign.right,
-                              ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+                        IconButton(
+                          onPressed: () => _handleDeleteOnPressed(
+                            data: _commentsList.elementAt(index),
+                          ),
+                          icon: Icon(
+                            Icons.delete_forever_sharp,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
                     );
                   },
                 ),
@@ -208,5 +229,18 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
         ),
       ],
     );
+  }
+
+  _handleDeleteOnPressed({
+    @required Comment data,
+  }) {
+    ntsCommentBloc
+      ..deleteData(
+        queryparams: {
+          'Id': data.id,
+        },
+        ntsId: widget?.ntsId ?? '',
+        ntsType: widget?.ntsType ?? NTSType.service,
+      );
   }
 }

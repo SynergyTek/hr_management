@@ -26,7 +26,7 @@ class UserRepository extends AbstractUserRepository {
   @override
   Future<ReadTeamDataResponse> readTeamData(
       {Map<String, dynamic> queryparams}) async {
-    final String endpoint = APIEndpointConstants.READ_USER_DATA;
+    final String endpoint = APIEndpointConstants.READ_TEAM_DATA;
 
     try {
       Response response = await _dio.get(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../data/models/dependent/dependent_list_model.dart';
 import '../../../../logic/blocs/dependent_bloc/dependent_api_bloc.dart';
 import '../../../../routes/route_constants.dart';
@@ -111,6 +112,7 @@ class _DependentListState extends State<DependentList> {
           ],
         ),
         onTap: () {
+          noteBloc.subjectNoteDetails.sink.add(null);
           Navigator.pushNamed(
             context,
             ADD_EDIT_NOTE_ROUTE,

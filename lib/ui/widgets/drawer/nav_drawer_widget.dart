@@ -298,18 +298,6 @@ Widget drawerWidget(context) {
               ),
               ListTile(
                 title: Text(
-                  'ATTACHMENTS',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    ATTACHMENT_NTS_ROUTE,
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(
                   'MY PROFILE',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
@@ -332,6 +320,23 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
+              // ListTile(
+              //   title: Text(
+              //     'ADD ADHOC TASK',
+              //     style: TextStyle(fontSize: fontSize, color: fontColor),
+              //   ),
+              //   onTap: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       NTS_TEMPLATE_REQUEST,
+              //       arguments: ScreenArguments(
+              //         ntstype: NTSType.task,
+              //         arg4: 'ProjectTask',
+              //       ),
+              //     );
+              //   },
+              // ),
+              ListTile(), //Added to avoid the last option to be hidden under "LOG OUT"
             ],
           ),
         ),

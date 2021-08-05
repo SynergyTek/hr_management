@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/models/service_models/service_response.dart';
-import 'package:hr_management/data/models/user/user.dart';
-import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/service_models/service_response.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
+import '../../../widgets/appbar_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/user/user.dart';
 import '../../../../logic/blocs/user_bloc/user_bloc.dart';
@@ -79,6 +79,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
       new TextEditingController();
+       TextEditingController _fromddController = new TextEditingController();
 
   void updateLeaveDuration() {
     if (leaveStartDate != null && leaveEnddate != null) {
@@ -113,13 +114,13 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               stream: serviceBloc.subject.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data.error != null &&
+                  if (snapshot?.data?.error != null &&
                       snapshot.data.error.length > 0) {
                     return Center(
                       child: Text(snapshot.data.error),
                     );
                   }
-                  serviceModel = snapshot.data.data;
+                  serviceModel = snapshot?.data?.data;
 
                   final createServiceFormBloc =
                       context.read<CreateServiceFormBloc>();
@@ -132,10 +133,10 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     appBar: AppbarWidget(
                       title:
                           widget.serviceId == null || widget.serviceId.isEmpty
-                              ? "Create " + widget.templateCode
-                              : widget.title != null
-                                  ? "Edit ${widget.title}"
-                                  : "Edit",
+                              ? "Create Service" // + widget.templateCode
+                              // : widget.title != null
+                              //     ? "Edit ${widget.title}"
+                              : "Edit Service",
                     ),
                     body:
                         FormBlocListener<CreateServiceFormBloc, String, String>(
@@ -169,44 +170,47 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
-    udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
-    for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns != null && component.columns.isNotEmpty) {
-        for (Columns column in component.columns) {
-          for (ColumnComponent columnCom in column.components) {
-            columnComponent.add(columnCom);
+    if (udfJsonString != null) {
+      udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
+      for (UdfJsonComponent component in udfJsonString.components) {
+        if (component.columns != null && component.columns.isNotEmpty) {
+          for (Columns column in component.columns) {
+            for (ColumnComponent columnCom in column.components) {
+              columnComponent.add(columnCom);
+            }
+          }
+        }
+        if (component.components != null && component.components.isNotEmpty) {
+          for (ComponentComponent componentComponent in component.components) {
+            componentComList.add(componentComponent);
           }
         }
       }
-      if (component.components != null && component.components.isNotEmpty) {
-        for (ComponentComponent componentComponent in component.components) {
-          componentComList.add(componentComponent);
+
+      for (UdfJsonComponent component in udfJsonString.components) {
+        if (component.columns == null &&
+            (component.components == null ||
+                component.components.length == 0)) {
+          udfJsonComponent.add(component);
+        } else if (component.components == null &&
+            component.columns.length == 0) {
+          udfJsonComponent.add(component);
         }
       }
-    }
-
-    for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns == null &&
-          (component.components == null || component.components.length == 0)) {
-        udfJsonComponent.add(component);
-      } else if (component.components == null &&
-          component.columns.length == 0) {
-        udfJsonComponent.add(component);
+      if (columnComponent != null && columnComponent.isNotEmpty) {
+        columnComponentWidgets = addDynamic(
+          columnComponent,
+          createServiceFormBloc,
+        );
       }
-    }
-    if (columnComponent != null && columnComponent.isNotEmpty) {
-      columnComponentWidgets = addDynamic(
-        columnComponent,
-        createServiceFormBloc,
-      );
-    }
-    if (componentComList != null && componentComList.isNotEmpty) {
-      addDynamicComponentComponent(componentComList, createServiceFormBloc);
-    }
-    if (udfJsonComponent.length > 0) {
-      // udfJsonComponent.addAll(udfJsonString.components);
-      udfJsonCompWidgetList =
-          addDynamic(udfJsonComponent, createServiceFormBloc);
+      if (componentComList != null && componentComList.isNotEmpty) {
+        addDynamicComponentComponent(componentComList, createServiceFormBloc);
+      }
+      if (udfJsonComponent.length > 0) {
+        // udfJsonComponent.addAll(udfJsonString.components);
+        udfJsonCompWidgetList =
+            addDynamic(udfJsonComponent, createServiceFormBloc);
+      }
     }
   }
 
@@ -214,6 +218,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
+    _fromddController.text=serviceModel.ownerUserName;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -245,7 +250,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   List<Widget> formFieldsWidgets(context, createServiceFormBloc) {
     List<Widget> widgets = [];
-    TextEditingController _fromddController = new TextEditingController();
+   
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -266,7 +271,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           .updateInitialValue(subjectValue ?? serviceModel.serviceSubject);
       widgets.add(
         Visibility(
-          visible: false,
+          visible: true,
           child: BlocTextBoxWidget(
             fieldName: 'Subject',
             readonly: false,
@@ -282,77 +287,75 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       );
     }
 
-    if (!serviceModel.hideStartDate)
-      widgets.add(
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Visibility(
-              visible: false,
-              child: Expanded(
-                child: DynamicDateTimeBox(
-                  code: serviceModel.startDate,
-                  name: 'Start Date',
-                  key: new Key('Start Date'),
-                  selectDate: (DateTime date) {
-                    if (date != null) {
-                      setState(() async {
-                        startDate = date;
-                        if (dueDate == null && serviceModel.dueDate != null) {
-                          dueDate = DateTime.parse(serviceModel.dueDate);
-                        }
-                        if (dueDate != null && dueDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate,
-                              enddate: dueDate,
-                              context: context,
-                              updateDuration: false);
-                      });
-                      // udfJson[model[i].key] = date.toString();
-                    }
-                  },
-                ),
+    // if (!serviceModel.hideStartDate)
+    widgets.add(
+      Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Visibility(
+            visible: true,
+            child: Expanded(
+              child: DynamicDateTimeBox(
+                code: serviceModel.startDate,
+                name: 'Start Date',
+                key: new Key('Start Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {
+                      startDate = date;
+                      if (dueDate == null && serviceModel.dueDate != null) {
+                        dueDate = DateTime.parse(serviceModel.dueDate);
+                      }
+                      if (dueDate != null && dueDate.toString().isNotEmpty)
+                        compareStartEndDate(
+                            startDate: startDate,
+                            enddate: dueDate,
+                            context: context,
+                            updateDuration: false);
+                    });
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
               ),
             ),
-            Visibility(
-              visible: false,
-              child: Expanded(
-                child: DynamicDateTimeBox(
-                  code: serviceModel.dueDate,
-                  name: 'Due Date',
-                  key: new Key('Due Date'),
-                  selectDate: (DateTime date) {
-                    if (date != null) {
-                      setState(() async {
-                        dueDate = date;
-                        if (startDate == null &&
-                            serviceModel.startDate != null) {
-                          startDate = DateTime.parse(serviceModel.startDate);
-                        }
-                        if (startDate != null &&
-                            startDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate,
-                              enddate: dueDate,
-                              context: context,
-                              updateDuration: false);
-                      });
-                      // udfJson[model[i].key] = date.toString();
-                    }
-                  },
-                ),
+          ),
+          Visibility(
+            visible: true,
+            child: Expanded(
+              child: DynamicDateTimeBox(
+                code: serviceModel.dueDate,
+                name: 'Due Date',
+                key: new Key('Due Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {
+                      dueDate = date;
+                      if (startDate == null && serviceModel.startDate != null) {
+                        startDate = DateTime.parse(serviceModel.startDate);
+                      }
+                      if (startDate != null && startDate.toString().isNotEmpty)
+                        compareStartEndDate(
+                            startDate: startDate,
+                            enddate: dueDate,
+                            context: context,
+                            updateDuration: false);
+                    });
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
               ),
-            )
-          ],
-        ),
-      );
+            ),
+          )
+        ],
+      ),
+    );
 
     if (!serviceModel.hideSLA) {
       createServiceFormBloc.sla
           .updateInitialValue(slaValue ?? serviceModel.serviceSLA);
       widgets.add(
         Visibility(
-          visible: false,
+          visible: true,
           child: BlocTextBoxWidget(
             fieldName: 'SLA',
             readonly: false,
@@ -386,7 +389,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       createServiceFormBloc.description.updateInitialValue(
           descriptionValue ?? serviceModel.serviceDescription);
       widgets.add(Visibility(
-        visible: false,
+        visible: true,
         child: BlocTextBoxWidget(
           fieldName: 'Description',
           readonly: false,
@@ -650,6 +653,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             }
           }
         }
+       
         if ((selectValue != null && selectValue.isNotEmpty) &&
             (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
@@ -706,7 +710,15 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         }
         listDynamic.add(new DynamicDateTimeBox(
           code: udfJson[model[i].key].isNotEmpty
-              ? DateFormat("yyyy-MM-dd").parse(udfJson[model[i].key]).toString()
+              ? model[i]
+                      .udfValue
+                      .toString()
+                      .split(' ')[0]
+                      .contains(new RegExp(r'[a-z]'))
+                  ? null
+                  : DateFormat("yyyy-MM-dd")
+                      .parse(udfJson[model[i].key])
+                      .toString()
               : null,
           name: model[i].label,
           key: new Key(model[i].label),
@@ -933,22 +945,22 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 width: 100,
               ),
             ),
-            Visibility(
-              visible: serviceModel.isAddCommentEnabled &&
-                  widget.serviceId != null &&
-                  widget.serviceId.isNotEmpty,
-              child: PrimaryButton(
-                buttonText: 'Add comment',
-                handleOnPressed: () {
-                  Navigator.pushNamed(context, COMMENT_ROUTE,
-                      arguments: ScreenArguments(
-                        ntstype: NTSType.service,
-                        arg1: serviceModel.serviceId,
-                      ));
-                },
-                width: 100,
-              ),
-            ),
+            // Visibility(
+            //   visible: serviceModel.isAddCommentEnabled &&
+            //       widget.serviceId != null &&
+            //       widget.serviceId.isNotEmpty,
+            //   child: PrimaryButton(
+            //     buttonText: 'Add comment',
+            //     handleOnPressed: () {
+            //       Navigator.pushNamed(context, COMMENT_ROUTE,
+            //           arguments: ScreenArguments(
+            //             ntstype: NTSType.service,
+            //             arg1: serviceModel.serviceId,
+            //           ));
+            //     },
+            //     width: 100,
+            //   ),
+            // ),
             Visibility(
               // visible: true,
               visible: serviceModel.isCancelButtonVisible,
@@ -1315,18 +1327,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //   labelBackgroundColor: Colors.black,
           // ),
-          //  Visibility(
-          //     visible: serviceModel.isAddCommentEnabled &&
-          //         widget.serviceId != null &&
-          //         widget.serviceId.isNotEmpty,
-          //     child: PrimaryButton(
-          //       buttonText: 'Add comment',
-          //       handleOnPressed: () {
-
-          //       },
-          //       width: 100,
-          //     ),
-          //   ),
           SpeedDialChild(
             visible: serviceModel.isAddCommentEnabled &&
                 widget.serviceId != null &&
@@ -1334,17 +1334,36 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             child: Icon(Icons.comment, color: Colors.white),
             backgroundColor: Colors.blue,
             onTap: () {
-              Navigator.pushNamed(context, COMMENT_ROUTE,
-                  arguments: ScreenArguments(
-                    ntstype: NTSType.service,
-                    arg1: serviceModel.serviceId,
-                  ));
+              Navigator.pushNamed(
+                context,
+                COMMENT_ROUTE,
+                arguments: ScreenArguments(
+                  ntstype: NTSType.service,
+                  arg1: serviceModel.serviceId,
+                ),
+              );
             },
             label: 'Comment',
             labelStyle:
                 TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
+
+          SpeedDialChild(
+            child: Icon(
+              Icons.attachment_outlined,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleAttachmentOnPressed(),
+            label: 'Attachment',
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+            labelBackgroundColor: Colors.black,
+          ),
+
           // SpeedDialChild(
           //   child: Icon(Icons.account_tree, color: Colors.white),
           //   backgroundColor: Colors.blue,
@@ -1354,15 +1373,37 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //   labelBackgroundColor: Colors.black,
           // ),
-          // SpeedDialChild(
-          //   child: Icon(Icons.share, color: Colors.white),
-          //   backgroundColor: Colors.blue,
-          //   onTap: () => print('Pressed Code'),
-          //   label: 'Share',
-          //   labelStyle:
-          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-          //   labelBackgroundColor: Colors.black,
-          // ),
+          SpeedDialChild(
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => Navigator.pushNamed(context, NTS_SHARE,
+                arguments: ScreenArguments(
+                  ntstype: NTSType.service,
+                  arg1: serviceModel.serviceId,
+                )),
+            label: 'Share',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          if (widget?.serviceId != null && widget.serviceId.isNotEmpty)
+            SpeedDialChild(
+              child: Icon(Icons.share, color: Colors.white),
+              backgroundColor: Colors.blue,
+              onTap: () => Navigator.pushNamed(
+                context,
+                ADD_ADHOC_TASK,
+                // arguments: ScreenArguments(
+                //   ntstype: NTSType.task,
+                //   arg4: 'ProjectTask',
+                // ),
+              ),
+              label: 'Adhoc Task',
+              labelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              labelBackgroundColor: Colors.black,
+            ),
+
           // SpeedDialChild(
           //   child: Icon(Icons.border_all, color: Colors.white),
           //   backgroundColor: Colors.blue,
@@ -1411,5 +1452,16 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     columnComponent = [];
     componentComList = [];
     super.dispose();
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.pushNamed(
+      context,
+      ATTACHMENT_NTS_ROUTE,
+      arguments: ScreenArguments(
+        ntstype: NTSType.service,
+        arg1: serviceModel.id,
+      ),
+    );
   }
 }

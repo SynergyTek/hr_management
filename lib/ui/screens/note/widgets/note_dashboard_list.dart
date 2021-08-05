@@ -134,6 +134,7 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
   }
 
   _homeFilter() {
+    subjectController.text = '';
     _setParamsToNull();
     apiCall();
   }

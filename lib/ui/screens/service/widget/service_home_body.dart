@@ -202,6 +202,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
   }
 
   _homeFilter() {
+    subjectController.text = '';
     _setParamsToNull();
     apiCall();
   }

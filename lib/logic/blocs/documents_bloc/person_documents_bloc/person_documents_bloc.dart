@@ -1,6 +1,7 @@
+import 'package:rxdart/rxdart.dart';
+
 import '../../../../data/models/documents_models/person_document_models/person_document_response.dart';
 import '../../../../data/repositories/documents_repository/person_documents_repository/person_documents_repository.dart';
-import 'package:rxdart/rxdart.dart';
 
 class PersonDocumentsBloc {
   final PersonDocumentsRepository _apiRepository = PersonDocumentsRepository();
