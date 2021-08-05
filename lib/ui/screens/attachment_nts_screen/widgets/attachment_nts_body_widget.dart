@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/attachment_nts_models/attachment_nts_model.dart';
 import '../../../../data/models/attachment_nts_models/attachment_nts_response.dart';
@@ -27,8 +28,8 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
 
     attachmentNTSBloc
       ..getData(
-        ntsId: widget?.ntsId ?? '',
-        ntsType: widget?.ntsType ?? NTSType.service,
+        ntsId: widget?.ntsId,
+        ntsType: widget?.ntsType,
       );
   }
 
@@ -46,16 +47,6 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
               );
             }
 
-            if (snapshot?.data?.data == null || snapshot.data.data.length == 0)
-              return Center(
-                child: Text(
-                  "No data found.",
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: Theme.of(context).textHeadingColor,
-                      ),
-                ),
-              );
-
             return _attachmentListWidget(snapshot.data.data);
           } else {
             return CustomProgressIndicator();
@@ -66,6 +57,16 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   }
 
   Widget _attachmentListWidget(List<AttachmentNTSModel> data) {
+    if (data == null || data.isEmpty)
+      return Center(
+        child: Text(
+          "No data found.",
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                color: Theme.of(context).textHeadingColor,
+              ),
+        ),
+      );
+
     return ListView.builder(
       itemCount: data?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {

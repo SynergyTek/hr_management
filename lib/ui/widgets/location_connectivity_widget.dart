@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'primary_button.dart';
 
 import '../../constants/image_path_constants.dart';
 import '../../logic/blocs/location_bloc/location_bloc.dart';
 import '../../themes/theme_config.dart';
+import 'primary_button.dart';
 
 class LocationConnectivityWidget extends StatelessWidget {
   final Widget child;

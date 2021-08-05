@@ -1,6 +1,7 @@
-import 'package:hr_management/data/models/read_component_data_model/read_component_resp.dart';
-import 'package:hr_management/data/repositories/read_component_repo/abstract_read_component_repo.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../data/models/read_component_data_model/read_component_resp.dart';
+import '../../../data/repositories/read_component_repo/abstract_read_component_repo.dart';
 
 class ReadComponentBloc {
   final ReadComponentRepository _userRepository = ReadComponentRepository();

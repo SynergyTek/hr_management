@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constants/image_path_constants.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../routes/route_constants.dart';
+import 'widgets/drawer_list_tile.dart';
 
 Widget drawerWidget(context) {
   var fontSize = 15.0;
@@ -41,56 +42,71 @@ Widget drawerWidget(context) {
                   ),
                 ),
               ),
-              ListTile(
-                title: Text(
-                  'WORKLIST DASHBOARD',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                // trailing: Icon(Icons.dashboard_customize_outlined),
-                onTap: () {
+              // ListTile(
+              //   title: Text(
+              //     'Test',
+              //     style: TextStyle(fontSize: fontSize, color: fontColor),
+              //   ),
+              //   onTap: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       HOME_ROUTE,
+              //     );
+              //   },
+              // ),
+
+              DrawerListTileWidget(
+                title: 'CASE MANAGEMENT',
+                trailing: Icon(Icons.manage_accounts),
+                listTileOnTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    CASE_MANAGEMENT_ROUTE,
+                  );
+                },
+              ),
+
+              DrawerListTileWidget(
+                title: 'WORKLIST DASHBOARD',
+                listTileOnTap: () {
                   Navigator.pushNamed(
                     context,
                     WORKLIST_DASHBOARD,
                   );
                 },
               ),
-              ListTile(
-                title: Text(
-                  'REQUESTED LEAVES',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
+
+              DrawerListTileWidget(
+                title: 'REQUESTED LEAVES',
                 trailing: Icon(Icons.request_page_outlined),
-                onTap: () {
+                listTileOnTap: () {
                   Navigator.pushNamed(
                     context,
                     DISPLAY_LEAVES,
                   );
                 },
               ),
+
               ExpansionTile(
                 title: Text(
                   'TIME & ATTENDANCE',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
                 children: [
-                  ListTile(
-                    title: Text(
-                      'REMOTE SIGNIN/SIGNOUT',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
+                  DrawerListTileWidget(
+                    title: 'REMOTE SIGNIN/SIGNOUT',
+                    trailing: Icon(Icons.login),
+                    listTileOnTap: () {
                       Navigator.pushNamed(
                         context,
                         MARK_ATTENDANCE_ROUTE,
                       );
                     },
                   ),
-                  ListTile(
-                    title: Text(
-                      'ACCESS LOGS',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
+                  DrawerListTileWidget(
+                    title: 'ACCESS LOGS',
+                    trailing: Icon(Icons.list_alt),
+                    listTileOnTap: () {
                       Navigator.pushNamed(
                         context,
                         DISPLAY_ACCESS_LOG,
@@ -105,12 +121,10 @@ Widget drawerWidget(context) {
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
                 children: [
-                  ListTile(
-                    title: Text(
-                      'MANAGE ACCRUAL',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
+                  DrawerListTileWidget(
+                    title: 'MANAGE ACCRUAL',
+                    // trailing: Icon(Icons.payment),
+                    listTileOnTap: () {
                       ntsChartBloc.subjectChartByStatus.sink.add(null);
                       ntsChartBloc.subjectChartByUserType.sink.add(null);
                       ntsChartBloc.subjectDatewiseSLA.sink.add(null);
@@ -120,12 +134,10 @@ Widget drawerWidget(context) {
                       );
                     },
                   ),
-                  ListTile(
-                    title: Text(
-                      'PAYSLIP',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
+                  DrawerListTileWidget(
+                    title: 'PAYSLIP',
+                    // trailing: Icon(Icons.payment),
+                    listTileOnTap: () {
                       Navigator.pushNamed(
                         context,
                         PAYSLIP,
@@ -140,12 +152,10 @@ Widget drawerWidget(context) {
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
                 children: [
-                  ListTile(
-                    title: Text(
-                      'TASK HOME DASHBOARD',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
+                  DrawerListTileWidget(
+                    title: 'TASK HOME DASHBOARD',
+                    // trailing: Icon(Icons.payment),
+                    listTileOnTap: () {
                       ntsChartBloc.subjectChartByStatus.sink.add(null);
                       ntsChartBloc.subjectChartByUserType.sink.add(null);
                       ntsChartBloc.subjectDatewiseSLA.sink.add(null);
@@ -155,24 +165,20 @@ Widget drawerWidget(context) {
                       );
                     },
                   ),
-                  ListTile(
-                    title: Text(
-                      'TASK LIST',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
+                  DrawerListTileWidget(
+                    title: 'TASK LIST',
+                    // trailing: Icon(Icons.payment),
+                    listTileOnTap: () {
                       Navigator.pushNamed(
                         context,
                         TASKLIST,
                       );
                     },
                   ),
-                  ListTile(
-                    title: Text(
-                      'TASK HOME',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
+                  DrawerListTileWidget(
+                    title: 'TASK HOME',
+                    // trailing: Icon(Icons.payment),
+                    listTileOnTap: () {
                       Navigator.pushNamed(
                         context,
                         TASK_HOME,
@@ -211,6 +217,18 @@ Widget drawerWidget(context) {
                       Navigator.pushNamed(
                         context,
                         SERVICE_HOME,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Component Result',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        SERVICE_COMPONENT_RESULT_ROUTE,
                       );
                     },
                   ),

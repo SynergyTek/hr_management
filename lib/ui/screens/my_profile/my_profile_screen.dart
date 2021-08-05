@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../../../themes/theme_config.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
-
 import 'widget/my_profile_body_widget.dart';
 
 class MyProfileScreen extends StatefulWidget {

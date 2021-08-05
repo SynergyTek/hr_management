@@ -1,4 +1,4 @@
-import 'package:hr_management/data/models/share_models/note_shared_models/note_shared_data_model.dart';
+import 'note_shared_data_model.dart';
 
 class NoteSharedDataResponse {
   bool isSuccess;

@@ -49,6 +49,7 @@ const String USERS = "/users";
 
 const String SERVICE_HOME = "/service_home";
 const String SERVICE_DASHBOARD = "/service_dashboard";
+const String SERVICE_COMPONENT_RESULT_ROUTE = "/service_component_result_route";
 const String TASK_DASHBOARD = "/task_dashboard";
 const String NOTE_DASHBOARD = "/note_dashboard";
 
@@ -70,3 +71,6 @@ const String NTS_SHARE = "/nts_share";
 // Attachment route:
 const String ATTACHMENT_NTS_ROUTE = '/attachment_nts';
 const String ADD_ADHOC_TASK = "/add_adhoc_task";
+
+const String CASE_MANAGEMENT_ROUTE = '/case_management';
+const String CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE = '/case_management_service_reports';

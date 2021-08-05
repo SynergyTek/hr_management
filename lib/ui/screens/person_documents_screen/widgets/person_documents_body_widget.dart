@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../../../../data/models/documents_models/person_document_models/person_document_model.dart';
 import '../../../../data/models/documents_models/person_document_models/person_document_response.dart';
 import '../../../../logic/blocs/documents_bloc/person_documents_bloc/person_documents_bloc.dart';
-import 'person_documents_bottom_sheet_widget.dart';
-import '../../../widgets/progress_indicator.dart';
-
 import '../../../../themes/theme_config.dart';
+import '../../../widgets/progress_indicator.dart';
+import 'person_documents_bottom_sheet_widget.dart';
 
 class PersonDocumentsBodyWidget extends StatefulWidget {
   PersonDocumentsBodyWidget();

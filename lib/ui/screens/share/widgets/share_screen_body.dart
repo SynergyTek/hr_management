@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/share_post_model/note_share_post_model/note_share_post_model.dart';
-import 'package:hr_management/data/models/share_post_model/service_share_post_model/service_share_post_model.dart';
-import 'package:hr_management/data/models/share_post_model/task_share_post_model/task_share_post_model.dart';
-import 'package:hr_management/data/models/user/team_model.dart';
-import 'package:hr_management/data/models/user/user.dart';
-import 'package:hr_management/logic/blocs/share_bloc/share_bloc.dart';
-import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../../data/enums/enums.dart';
+import '../../../../data/models/api_models/post_response_model.dart';
+import '../../../../data/models/share_post_model/note_share_post_model/note_share_post_model.dart';
+import '../../../../data/models/share_post_model/service_share_post_model/service_share_post_model.dart';
+import '../../../../data/models/share_post_model/task_share_post_model/task_share_post_model.dart';
+import '../../../../data/models/user/team_model.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../logic/blocs/share_bloc/share_bloc.dart';
+import '../../../widgets/nts_dropdown_select.dart';
+import '../../../widgets/progress_indicator.dart';
+import '../../../widgets/snack_bar.dart';
 
 class ShareScreenBody extends StatefulWidget {
   final NTSType ntsType;

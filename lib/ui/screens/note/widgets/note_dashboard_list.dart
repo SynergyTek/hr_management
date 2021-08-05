@@ -38,7 +38,9 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
           backgroundColor: Colors.grey[200],
           trailing: Icon(Icons.filter_list),
           title: _searchField(),
-          children: [wrappedButtons()],
+          children: [
+            wrappedButtons(),
+          ],
         ),
         Expanded(
           child: StreamBuilder(

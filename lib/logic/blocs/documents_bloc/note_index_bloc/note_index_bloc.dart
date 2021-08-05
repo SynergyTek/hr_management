@@ -1,6 +1,7 @@
+import 'package:rxdart/rxdart.dart';
+
 import '../../../../data/models/documents_models/note_index_models/note_index_response.dart';
 import '../../../../data/repositories/documents_repository/note_index_repository/note_index_repository.dart';
-import 'package:rxdart/rxdart.dart';
 
 class NoteIndexBloc {
   final NoteIndexRepository _apiRepository = NoteIndexRepository();

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../../data/enums/enums.dart';
-import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/appbar_widget.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 import 'widget/nts_dashboard_body.dart';
 

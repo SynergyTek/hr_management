@@ -4,26 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:sizer/sizer.dart';
+
 import '../../../../constants/api_endpoints.dart';
-import '../../../../data/models/service_models/service_response.dart';
-import '../../../../data/models/user/user.dart';
-import '../../../../logic/blocs/user_bloc/user_bloc.dart';
-import '../../../widgets/appbar_widget.dart';
-import '../../../../constants/api_endpoints.dart';
-import '../../../../data/models/user/user.dart';
-import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
-import '../../../../data/models/nts_dropdown/nts_dd_res_model.dart';
-import '../../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
-import '../../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
-import '../../../../routes/route_constants.dart';
-import '../../../../routes/screen_arguments.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
+import '../../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../data/models/service_models/service.dart';
+import '../../../../data/models/service_models/service_response.dart';
 import '../../../../data/models/udf_json_model/udf_json_model.dart';
+import '../../../../data/models/user/user.dart';
+import '../../../../data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
+import '../../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../logic/blocs/user_bloc/user_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
 import '../../../../themes/theme_config.dart';
+import '../../../widgets/appbar_widget.dart';
 import '../../../widgets/form_widgets/bloc_date_picker_widget.dart';
 import '../../../widgets/form_widgets/bloc_number_box_widget.dart';
 import '../../../widgets/form_widgets/bloc_radio_button_widget.dart';
@@ -33,8 +32,6 @@ import '../../../widgets/nts_widgets.dart';
 import '../../../widgets/primary_button.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
-import 'package:sizer/sizer.dart';
-
 import '../create_service_form_bloc.dart';
 
 class CreateServiceScreenBody extends StatefulWidget {
@@ -1460,7 +1457,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       ATTACHMENT_NTS_ROUTE,
       arguments: ScreenArguments(
         ntstype: NTSType.service,
-        arg1: serviceModel.id,
+        arg1: serviceModel.serviceId,
       ),
     );
   }

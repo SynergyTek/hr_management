@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/share_models/note_shared_models/note_shared_data_model.dart';
-import 'package:hr_management/data/models/share_models/task_shared_models/task_shared_data_model.dart';
+import '../note_shared_models/note_shared_data_model.dart';
+import 'task_shared_data_model.dart';
 
 class TaskSharedDataResponse {
   bool isSuccess;
