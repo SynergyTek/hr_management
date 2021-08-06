@@ -30,7 +30,7 @@ class DynamicAttchmentWidget extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   new TextFormField(
-                      readOnly: readOnly,
+                      readOnly: readOnly??true,
                       style: TextStyle(fontSize: 15),
                       key: new Key(fieldName),
                       controller: controller,

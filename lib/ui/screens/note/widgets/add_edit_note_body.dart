@@ -669,7 +669,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         TextEditingController attchmentController = new TextEditingController();
 
         attchmentController.text =
-            udfJson[model[i].key] == null && udfJson[model[i].key].isNotEmpty
+            udfJson[model[i].key] == null //&& udfJson[model[i].key].isNotEmpty
                 ? " Select File to Attach "
                 : " (1) File Attached " + udfJson[model[i].key];
         listDynamic.add(DynamicAttchmentWidget(
