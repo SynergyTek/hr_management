@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/documents_models/doc_req_by_hr/doc_req_by_hr_model.dart';
+import 'package:hr_management/data/models/documents_models/doc_req_by_hr/doc_req_by_hr_response.dart';
+import 'package:hr_management/logic/blocs/documents_bloc/doc_req_by_hr_bloc/doc_req_by_hr_bloc.dart';
 
-import '../../../../data/models/documents_models/person_document_models/person_document_model.dart';
-import '../../../../data/models/documents_models/person_document_models/person_document_response.dart';
-import '../../../../logic/blocs/documents_bloc/person_documents_bloc/person_documents_bloc.dart';
-import '../../../../themes/theme_config.dart';
-import '../../../widgets/progress_indicator.dart';
-import 'person_documents_bottom_sheet_widget.dart';
+import '../../../../../themes/theme_config.dart';
+import '../../../../widgets/progress_indicator.dart';
+import 'doc_req_by_hr_bottom_sheet_widget.dart';
 
-class PersonDocumentsBodyWidget extends StatefulWidget {
-  PersonDocumentsBodyWidget();
+class DocReqByHrBodyWidget extends StatefulWidget {
+  DocReqByHrBodyWidget();
 
   @override
-  _PersonDocumentsBodyWidgetState createState() =>
-      _PersonDocumentsBodyWidgetState();
+  _DocReqByHrBodyWidgetState createState() =>
+      _DocReqByHrBodyWidgetState();
 }
 
-class _PersonDocumentsBodyWidgetState extends State<PersonDocumentsBodyWidget> {
+class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
   @override
   void initState() {
     super.initState();
 
-    personDocumentsBloc
+    docReqByHrBloc
       ..getData(
         queryparams: _handleQueryParams(),
       );
@@ -35,8 +35,8 @@ class _PersonDocumentsBodyWidgetState extends State<PersonDocumentsBodyWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
-      child: StreamBuilder<PersonDocumentsResponse>(
-        stream: personDocumentsBloc.subject.stream,
+      child: StreamBuilder<DocReqByHrResponse>(
+        stream: docReqByHrBloc.subject.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.error != null && snapshot.data.error.length > 0) {
@@ -61,7 +61,7 @@ class _PersonDocumentsBodyWidgetState extends State<PersonDocumentsBodyWidget> {
     );
   }
 
-  Widget _listviewWidget(List<PersonDocumentsModel> data) {
+  Widget _listviewWidget(List<DocReqByHrModel> data) {
     return ListView.builder(
       itemCount: data?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
@@ -83,13 +83,13 @@ class _PersonDocumentsBodyWidgetState extends State<PersonDocumentsBodyWidget> {
     );
   }
 
-  _handleListTileOnTap(PersonDocumentsModel data) {
+  _handleListTileOnTap(DocReqByHrModel data) {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (BuildContext context) => PersonDocumentsBottomSheetWidget(
+      builder: (BuildContext context) => DocReqByHrBottomSheetWidget(
         data: data,
       ),
     );
@@ -98,7 +98,7 @@ class _PersonDocumentsBodyWidgetState extends State<PersonDocumentsBodyWidget> {
   /// Helper function to handle color of the status.
   Color _handleListTileColor(
     BuildContext context,
-    PersonDocumentsModel data,
+    DocReqByHrModel data,
   ) {
     // Guard clause
     if (data?.status == null || data.status.isEmpty) return Colors.white54;

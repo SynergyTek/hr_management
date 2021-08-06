@@ -1,4 +1,4 @@
-class PersonProfileModel {
+class DocumentModel {
   String personId;
   String userId;
   String userRole;
@@ -78,7 +78,7 @@ class PersonProfileModel {
   int status;
   int versionNo;
 
-  PersonProfileModel({
+  DocumentModel({
     this.personId,
     this.userId,
     this.userRole,
@@ -159,7 +159,7 @@ class PersonProfileModel {
     this.versionNo,
   });
 
-  PersonProfileModel.fromJson(Map<String, dynamic> json) {
+  DocumentModel.fromJson(Map<String, dynamic> json) {
     personId = json['PersonId'];
     userId = json['UserId'];
     userRole = json['UserRole'];

@@ -1,11 +1,11 @@
-part of 'person_documents_repository.dart';
+part of 'doc_req_by_hr_repository.dart';
 
 /// API Repository defines https client object, and our network call methods
 /// which will be used to fetch data from Apis will map the JSON to its model.
-class PersonDocumentsRepository extends AbstractPersonDocumentsRepository {
+class DocReqByHrRepository extends AbstractDocReqByHrRepository {
   final Dio _dio = Dio();
 
-  Future<PersonDocumentsResponse> getAPIData({
+  Future<DocReqByHrResponse> getAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
@@ -22,30 +22,30 @@ class PersonDocumentsRepository extends AbstractPersonDocumentsRepository {
         queryParameters: queryparams ?? {},
       );
 
-      return PersonDocumentsResponse.fromJson(response.data);
+      return DocReqByHrResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return PersonDocumentsResponse.withError("$err");
+      return DocReqByHrResponse.withError("$err");
     }
   }
 
   @override
-  Future<PersonDocumentsResponse> deleteAPIData({
+  Future<DocReqByHrResponse> deleteAPIData({
     Map<String, dynamic> queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
-  Future<PersonDocumentsResponse> postAPIData({
+  Future<DocReqByHrResponse> postAPIData({
     Map<String, dynamic> queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
-  Future<PersonDocumentsResponse> putAPIData({
+  Future<DocReqByHrResponse> putAPIData({
     Map<String, dynamic> queryparams,
   }) {
     throw UnimplementedError();

@@ -1,20 +1,20 @@
+import 'package:hr_management/data/models/documents_models/doc_req_by_hr/doc_req_by_hr_response.dart';
+import 'package:hr_management/data/repositories/documents_repository/doc_req_by_hr/doc_req_by_hr_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../data/models/documents_models/person_profile_models/person_profile_response.dart';
-import '../../../../data/repositories/documents_repository/person_profile_repository/person_profile_repository.dart';
 
-class PersonProfileBloc {
-  final PersonProfileRepository _apiRepository = PersonProfileRepository();
+class DocReqByHrBloc {
+  final DocReqByHrRepository _apiRepository = DocReqByHrRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<PersonProfileResponse> _subject =
-      BehaviorSubject<PersonProfileResponse>();
+  final BehaviorSubject<DocReqByHrResponse> _subject =
+      BehaviorSubject<DocReqByHrResponse>();
 
   /// Used to fetch new entries.
   getData({
     Map<String, dynamic> queryparams,
   }) async {
-    PersonProfileResponse response = await _apiRepository.getAPIData();
+    DocReqByHrResponse response = await _apiRepository.getAPIData();
     _subject.sink.add(response);
   }
 
@@ -43,7 +43,7 @@ class PersonProfileBloc {
     _subject.close();
   }
 
-  BehaviorSubject<PersonProfileResponse> get subject => _subject;
+  BehaviorSubject<DocReqByHrResponse> get subject => _subject;
 }
 
-final personProfileBloc = PersonProfileBloc();
+final docReqByHrBloc = DocReqByHrBloc();

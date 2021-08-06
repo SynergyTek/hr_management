@@ -1,30 +1,30 @@
 import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/documents_models/document_models/document_response.dart';
 
 import '../../../../constants/api_endpoints.dart';
-import '../../../models/documents_models/person_profile_models/person_profile_response.dart';
 
-part './person_profile_repository_implementation.dart';
+part 'document_repository_implementation.dart';
 
 // Overview of the repository class.
-abstract class AbstractPersonProfileRepository {
-  AbstractPersonProfileRepository();
+abstract class AbstractDocumentRepository {
+  AbstractDocumentRepository();
 
-  Future<PersonProfileResponse> getAPIData({
+  Future<DocumentResponse> getAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<PersonProfileResponse> postAPIData({
+  Future<DocumentResponse> postAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<PersonProfileResponse> putAPIData({
+  Future<DocumentResponse> putAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
 
-  Future<PersonProfileResponse> deleteAPIData({
+  Future<DocumentResponse> deleteAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
