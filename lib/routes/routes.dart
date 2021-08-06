@@ -1,15 +1,21 @@
-import 'package:hr_management/ui/screens/login/login_screen.dart';
-import 'package:hr_management/ui/screens/manage_dependent/manage_dependent_screen.dart';
-import 'package:hr_management/ui/screens/my_profile/my_profile_screen.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/helpdesk_dashboard_body_widget.dart';
 
-import 'package:hr_management/ui/screens/person_documents_screen/person_documents_screen.dart';
-import 'package:hr_management/ui/screens/person_profile_screen/person_profile_screen.dart';
-import 'package:hr_management/ui/screens/share/share_screen.dart';
-import 'package:hr_management/ui/screens/tasks/adhoc_task/adhoc_task_list_screen.dart';
+import '../ui/screens/case_management_screen/case_management_screen.dart';
+import '../ui/screens/login/login_screen.dart';
+import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
+import '../ui/screens/my_profile/my_profile_screen.dart';
 
-import 'package:hr_management/ui/screens/tasks/task_list_screen.dart';
-import 'package:hr_management/ui/widgets/custom_controls/team_dropdown_list.dart';
-import 'package:hr_management/ui/widgets/custom_controls/user_dropdown_list.dart';
+import '../ui/screens/person_documents_screen/person_documents_screen.dart';
+import '../ui/screens/person_profile_screen/person_profile_screen.dart';
+import '../ui/screens/share/share_screen.dart';
+import '../ui/screens/tasks/adhoc_task/adhoc_task_list_screen.dart';
+
+import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
+
+import '../ui/screens/tasks/task_list_screen.dart';
+import '../ui/widgets/custom_controls/team_dropdown_list.dart';
+import '../ui/widgets/custom_controls/user_dropdown_list.dart';
 
 import '../ui/screens/payroll/manage_accrual_screen.dart';
 import '../ui/screens/payroll/payslip_screen.dart';
@@ -21,6 +27,7 @@ import '../ui/screens/nts_comments/nts_comments_screen.dart';
 import '../ui/screens/home_screen/home_screen.dart';
 
 import 'package:flutter/material.dart';
+import '../ui/screens/component_result_screen/component_result_screen.dart';
 import '../ui/screens/attachment_nts_screen/attachment_nts_screen.dart';
 import '../ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
 import '../ui/screens/nts_charts/nts_dashboard.dart';
@@ -157,6 +164,12 @@ class AppRouter {
             ddName: args.arg4,
             onListTap: args.func,
           ),
+        );
+
+      case NTS_ATTACHMENT:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => SelectAttachment(),
         );
 
       case NTS_USER_DROPDOWN:
@@ -328,6 +341,16 @@ class AppRouter {
         );
         break;
 
+      case SERVICE_COMPONENT_RESULT_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+
+        return MaterialPageRoute(
+          builder: (_) => ComponentResultScreen(
+            serviceId: args?.arg1,
+          ),
+        );
+        break;
+
       case PERSON_DOCUMENTS_ROUTE:
         return MaterialPageRoute(
           builder: (_) => PersonDocumentsScreen(),
@@ -341,7 +364,27 @@ class AppRouter {
         break;
 
       case ADD_ADHOC_TASK:
-        return MaterialPageRoute(builder: (_) => AdhocTaskListScreen());
+        return MaterialPageRoute(
+          builder: (_) => AdhocTaskListScreen(),
+        );
+        break;
+
+      case CASE_MANAGEMENT_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => CaseManagementScreen(),
+        );
+        break;
+
+      // case CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE:
+      //   return MaterialPageRoute(
+      //     builder: (_) => CaseManagementServiceReportsScreen(),
+      //   );
+      //   break;
+
+      case CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => CaseManagementHelpdeskDashboardScreen(),
+        );
         break;
 
       // 404 route.

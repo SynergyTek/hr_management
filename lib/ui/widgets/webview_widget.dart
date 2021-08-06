@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
+// import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../data/helpers/formio_helper.dart';
 import '../../data/models/udf_json_model/udf_json_model.dart';
@@ -19,6 +22,74 @@ class WebViewScreen extends StatefulWidget {
   @override
   WebViewScreenState createState() => WebViewScreenState();
 }
+
+// class WebViewScreenState extends State<WebViewScreen> {
+//   WebViewController _controller;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     if (Platform.isAndroid) {
+//       WebView.platform = SurfaceAndroidWebView();
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Builder(builder: (BuildContext context) {
+//       return Container(
+//         padding: DEFAULT_LARGE_PADDING,
+//         child: WebView(
+//           javascriptMode: JavascriptMode.unrestricted,
+//           onWebViewCreated: (WebViewController webViewController) {
+//             _controller = webViewController;
+//             _loadHtmlFromAssets();
+//           },
+//           onProgress: (int progress) {
+//             print("WebView is loading (progress : $progress%)");
+//           },
+//           javascriptChannels: <JavascriptChannel>{
+//             // _toasterJavascriptChannel(context),
+//           },
+//           onPageStarted: (String url) {
+//             print('Page started loading: $url');
+//           },
+//           onPageFinished: (String url) {
+//             print('Page finished loading: $url');
+//           },
+//           gestureNavigationEnabled: true,
+//         ),
+//       );
+//     });
+//   }
+
+//   _loadHtmlFromAssets() async {
+//     String jsText = await rootBundle.loadString(
+//       'assets/formio.full.js',
+//     );
+
+//     String cssText = await rootBundle.loadString(
+//       'assets/formio.full.css',
+//     );
+
+//     String a = await FormIOHelper().fn(
+//       cssText: cssText,
+//       jsText: jsText,
+//       json: widget?.json ?? "",
+//     );
+
+//     // _controller.evaluateJavascript("window.location.href = $a");
+//     _controller.evaluateJavascript("alert('Hulululu')");
+
+//     // _controller.loadUrl(
+//     //   Uri.dataFromString(
+//     //     a,
+//     //     mimeType: 'text/html',
+//     //     encoding: Encoding.getByName('utf-8'),
+//     //   ).toString(),
+//     // );
+//   }
+// }
 
 class WebViewScreenState extends State<WebViewScreen> {
   InAppWebViewController _webViewController;

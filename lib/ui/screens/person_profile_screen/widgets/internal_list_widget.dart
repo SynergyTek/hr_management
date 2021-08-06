@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/documents_models/note_index_models/note_index_model.dart';
 import '../../../../data/models/documents_models/note_index_models/note_index_response.dart';
@@ -6,9 +7,8 @@ import '../../../../logic/blocs/documents_bloc/note_index_bloc/note_index_bloc.d
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
-import '../../../widgets/progress_indicator.dart';
-
 import '../../../../themes/theme_config.dart';
+import '../../../widgets/progress_indicator.dart';
 
 class InternalListWidget extends StatefulWidget {
   final String templateId;

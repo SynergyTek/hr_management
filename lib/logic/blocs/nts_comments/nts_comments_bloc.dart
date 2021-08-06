@@ -1,5 +1,5 @@
-import 'package:rxdart/rxdart.dart';
 import 'package:meta/meta.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../../data/models/api_models/post_response_model.dart';

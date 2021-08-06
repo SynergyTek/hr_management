@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/nts_template_bloc/nts_template_bloc.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
-
 import 'widgets/nts_template_body_widget.dart';
 
 class NTSTemplateScreen extends StatefulWidget {

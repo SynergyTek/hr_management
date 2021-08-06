@@ -318,6 +318,33 @@ class APIEndpointConstants {
   //Tag API Endpoints
   //************************************************************************//
 
+  // Component Result API
+  static const String GET_COMPONENT_RESULT_DATA =
+      BASE_URL + '/cms/query/ReadComponentResultData';
+
+  //************************************************************************//
+  // Case management API:
+  static const String GET_HELPDESK_REQUEST_RECEIVED =
+      BASE_URL + '/tms/query/ReadHelpDeskRequestRecieved';
+
+  static const String GET_HELPDESK_SLA_VIOLATION =
+      BASE_URL + '/tms/query/ReadHelpeskSLAViolation?type=Category';
+
+  static const String GET_REQUEST_CHART_STATUS =
+      BASE_URL + '/tms/query/GetRequestChartStatus?type=Category';
+
+  static const String GET_PENDING_TASK_COUNTS =
+      BASE_URL + '/tms/query/ReadPendingTaskCounts';
+
+  static const String GET_HELPDESK_BOX_1 =
+      BASE_URL + '/tms/query/ReadHelpDeskBox1?type=Category';
+
+  static const String GET_HELPDESK_BOX_2 =
+      BASE_URL + '/tms/query/ReadHelpDeskBox2?type=thisweek';
+
+  //************************************************************************//
+  // Case management API:
+
   // Help Desk API Endpoints
 
   static const HELPDESK_DASHBOARD = BASE_URL + '/tms/query/HelpdeskDashboard';

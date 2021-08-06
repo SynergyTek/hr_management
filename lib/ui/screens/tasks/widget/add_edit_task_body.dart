@@ -1312,7 +1312,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ATTACHMENT_NTS_ROUTE,
       arguments: ScreenArguments(
         ntstype: NTSType.task,
-        arg1: taskModel.id,
+        arg1: taskModel.taskId,
       ),
     );
   }

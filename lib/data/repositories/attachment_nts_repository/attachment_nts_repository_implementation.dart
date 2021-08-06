@@ -11,26 +11,25 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
   }) async {
     //
     String endpoint = "";
-    Map<String, dynamic> queryparams = Map();
 
     if (ntsType == NTSType.note) {
-      endpoint = APIEndpointConstants.GET_NOTE_ATTACHMENT;
-      queryparams = {'noteId': ntsId};
+      endpoint = APIEndpointConstants.GET_NOTE_ATTACHMENT + '?noteId=' + ntsId;
     }
     if (ntsType == NTSType.task) {
-      endpoint = APIEndpointConstants.GET_TASK_ATTACHMENT;
-      queryparams = {'taskId': ntsId};
+      endpoint = APIEndpointConstants.GET_TASK_ATTACHMENT + '?taskId=' + ntsId;
     }
     if (ntsType == NTSType.service) {
-      endpoint = APIEndpointConstants.GET_SERVICE_ATTACHMENT;
-      queryparams = {'serviceId': ntsId};
+      endpoint =
+          APIEndpointConstants.GET_SERVICE_ATTACHMENT + '?serviceId=' + ntsId;
     }
 
     try {
       Response response = await _dio.get(
         endpoint,
-        queryParameters: queryparams,
       );
+
+      print(
+          "Attachment response: ${response.data}, $ntsId, $ntsType, $endpoint");
 
       return AttachmentNTSResponse.fromJson(response.data);
     } catch (err, stacktrace) {

@@ -39,7 +39,12 @@ dependencies:
   sizer: ^2.0.13
   sqflite: ^2.0.0+3
   syncfusion_flutter_charts: ^19.2.47+1
+  syncfusion_flutter_gauges: ^19.2.51
   webview_flutter: ^2.0.10
+  mime_type: ^1.0.0
+  image_picker: ^0.8.2
+  video_player: ^2.1.12
+  flutter_sound: ^8.3.4
 
 dev_dependencies:
   flutter_test:
@@ -50,7 +55,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    # - assets/formio.min.js
+    - assets/formio.html
+    - assets/formio.full.css
+    - assets/formio.full.js
     - assets/images/
     - assets/icons/
 
@@ -62,3 +69,6 @@ flutter:
           weight: 700
         - asset: assets/fonts/muli/Muli-Light.ttf
           weight: 300
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/CustomIcons.ttf

@@ -1,14 +1,14 @@
 import 'dart:convert';
+
+import 'package:dio/dio.dart';
 // import 'dart:html';
 
 import 'package:flutter/widgets.dart';
-import '../../models/api_models/post_response_model.dart';
-import '../../models/service_models/service.dart';
-
-import '../../models/service_models/service_response.dart';
 
 import '../../../constants/api_endpoints.dart';
-import 'package:dio/dio.dart';
+import '../../models/api_models/post_response_model.dart';
+import '../../models/service_models/service.dart';
+import '../../models/service_models/service_response.dart';
 
 part 'service_repo.dart';
 

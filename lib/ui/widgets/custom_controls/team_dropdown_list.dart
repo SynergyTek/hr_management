@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/user/team_model.dart';
-import 'package:hr_management/data/models/user/user_response.dart';
-import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
-import 'package:hr_management/themes/theme_config.dart';
+import '../../../data/models/user/team_model.dart';
+import '../../../data/models/user/user_response.dart';
+import '../../../logic/blocs/user_bloc/user_bloc.dart';
+import '../../../themes/theme_config.dart';
 import 'package:listizer/listizer.dart';
 
 import '../appbar_widget.dart';

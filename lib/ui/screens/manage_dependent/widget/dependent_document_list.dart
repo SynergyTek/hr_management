@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:listizer/listizer.dart';
+
 import '../../../../data/models/dependent/dependent_doc_req_model.dart';
 import '../../../../logic/blocs/dependent_bloc/dependent_api_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
 
 class DependentDocumentList extends StatefulWidget {
   @override

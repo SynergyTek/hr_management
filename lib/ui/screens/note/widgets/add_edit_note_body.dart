@@ -4,13 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/user/user.dart';
-import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/user/user.dart';
@@ -18,6 +11,8 @@ import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/appbar_widget.dart';
+import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
+
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/note/note_model.dart';
 import '../../../../data/models/note/note_response.dart';
@@ -80,7 +75,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
       new TextEditingController();
-      TextEditingController _fromddController = new TextEditingController();
+  TextEditingController _fromddController = new TextEditingController();
 
   void updateLeaveDuration() {
     if (leaveStartDate != null && leaveEnddate != null) {
@@ -224,8 +219,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-
-    _fromddController.text=noteModel.ownerUserName;
+    _fromddController.text = noteModel.ownerUserName;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -265,7 +259,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, NoteModel noteModel) {
     List<Widget> widgets = [];
-    
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -300,40 +293,40 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     }
 
     // if (!noteModel.hideStartDate)
-      widgets.add(
-        Visibility(
-          visible: true,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: DynamicDateTimeBox(
-                  code: noteModel.startDate,
-                  name: 'Start Date',
-                  key: new Key('Start Date'),
-                  selectDate: (DateTime date) {
-                    // if (date != null) {
-                    //   setState(() async {
-                    //     startDate = date;
-                    //     if (dueDate == null && noteModel.due != null) {
-                    //       dueDate = DateTime.parse(noteModel.dueDate);
-                    //     }
-                    //     if (dueDate != null && dueDate.toString().isNotEmpty)
-                    //       compareStartEndDate(
-                    //           startDate: startDate,
-                    //           enddate: dueDate,
-                    //           context: context,
-                    //           updateDuration: false);
-                    //   });
-                    // udfJson[model[i].key] = date.toString();
-                    // }
-                  },
-                ),
+    widgets.add(
+      Visibility(
+        visible: true,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: DynamicDateTimeBox(
+                code: noteModel.startDate,
+                name: 'Start Date',
+                key: new Key('Start Date'),
+                selectDate: (DateTime date) {
+                  // if (date != null) {
+                  //   setState(() async {
+                  //     startDate = date;
+                  //     if (dueDate == null && noteModel.due != null) {
+                  //       dueDate = DateTime.parse(noteModel.dueDate);
+                  //     }
+                  //     if (dueDate != null && dueDate.toString().isNotEmpty)
+                  //       compareStartEndDate(
+                  //           startDate: startDate,
+                  //           enddate: dueDate,
+                  //           context: context,
+                  //           updateDuration: false);
+                  //   });
+                  // udfJson[model[i].key] = date.toString();
+                  // }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
 
     // if (!noteModel.hideSLA) {
     //   createServiceFormBloc.sla.updateInitialValue(slaValue ?? noteModel.sla);
@@ -630,7 +623,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
         }
-        // } 
+        // }
         //else {
         //   _ddController.text = selectValue[i];
         // }
@@ -672,31 +665,25 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             udfJson[model[i].key] = _selectedIdNameViewModel.id;
           },
         ));
-      }
-      // } else if (model[i].type == 'file') {
-      //         TextEditingController attchmentController = new TextEditingController();
+      } else if (model[i].type == 'file') {
+        TextEditingController attchmentController = new TextEditingController();
 
-      // attchmentController.text = element.code == null
-      //     ? " Select File to Attach "
-      //     : " (1) File Attached " + element.code;
-      // listDynamic.add(DynamicAttchmentWidget(
-      //     element.labelDisplayName, element.fieldName, attchmentController, () {
-      //   pushToAttachments(
-      //       context, widget.settingInheritedWidget, serviceViewModel, 'Service',
-      //       (dynamic value, dynamic value2, dynamic value3) {
-      //     setState(() {
-      //       element.value = value2;
-      //       element.code = value;
-      //       attchmentController.text = " (1) File Attached " + element.code;
-      //     });
-      //   });
-      // }, () {
-      //   getIconWidget(element.code, element.value);
-      // }, () {
-      //   openfile(element.code, context);
-      // }, element.code, _isView));
-
-      else if (model[i].type == 'datetime') {
+        attchmentController.text =
+            udfJson[model[i].key] == null && udfJson[model[i].key].isNotEmpty
+                ? " Select File to Attach "
+                : " (1) File Attached " + udfJson[model[i].key];
+        listDynamic.add(DynamicAttchmentWidget(
+          labelName: model[i].label,
+          controller: attchmentController,
+          callBack1: () {
+            Navigator.pushNamed(
+              context,
+              NTS_ATTACHMENT,
+              arguments: ScreenArguments(),
+            );
+          },
+        ));
+      } else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId == null || widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
@@ -1187,7 +1174,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     );
   }
 
-
   String resultMsg = '';
   noteViewModelPostRequest(int postDataAction, String noteStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
@@ -1351,7 +1337,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       ATTACHMENT_NTS_ROUTE,
       arguments: ScreenArguments(
         ntstype: NTSType.service,
-        arg1: noteModel.id,
+        arg1: noteModel.noteId,
       ),
     );
   }

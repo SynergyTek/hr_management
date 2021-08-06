@@ -17,8 +17,12 @@ class NoteHomeBody extends StatefulWidget {
   final String noteStatus;
   final String moduleId;
 
-  const NoteHomeBody({Key key, this.mode, this.noteStatus, this.moduleId})
-      : super(key: key);
+  const NoteHomeBody({
+    Key key,
+    this.mode,
+    this.noteStatus,
+    this.moduleId,
+  }) : super(key: key);
   @override
   _NoteHomeBodyState createState() => _NoteHomeBodyState();
 }

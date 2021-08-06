@@ -1,11 +1,10 @@
-import 'package:sizer/sizer.dart';
-
-import '../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../logic/blocs/internet_bloc/internet_bloc.dart';
+import '../../../logic/blocs/location_bloc/location_bloc.dart';
 import '../../../logic/blocs/profile_settings_bloc/profile_settings_bloc.dart';
 import '../../../routes/route_constants.dart';
 import '../../../routes/routes.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/task_models/task_list_model.dart';
-import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
-import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
-import 'package:hr_management/ui/screens/tasks/widget/task_list_tile.dart';
-import 'package:hr_management/ui/widgets/empty_list_widget.dart';
-import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../../data/models/task_models/task_list_model.dart';
+import '../../../../../data/models/task_models/task_list_resp_model.dart';
+import '../../../../../logic/blocs/task_bloc/task_bloc.dart';
+import '../../widget/task_list_tile.dart';
+import '../../../../widgets/empty_list_widget.dart';
+import '../../../../widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
 
 class AdhocTaskListBody extends StatefulWidget {
