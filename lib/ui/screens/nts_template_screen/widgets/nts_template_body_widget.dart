@@ -101,20 +101,25 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
   }
 
   Widget _filterWidget() {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Expanded(
-          child: Text(selectedCategory,
-              style: Theme.of(context).textTheme.headline6),
-        ),
-        IconButton(
-          icon: Icon(Icons.filter_list),
-          onPressed: () => _handleFilterOnPressed(),
-        ),
+    if(widget.categoryCode!='Leave'&& widget.categoryCode != 'Adhoc Task')
+    {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Expanded(
+            child: Text(selectedCategory,
+                style: Theme.of(context).textTheme.headline6),
+          ),
+          IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () => _handleFilterOnPressed(),
+          ),
       ],
     );
+  }
+  else{return SizedBox();}
+    
   }
 
   _handleFilterChips() {}

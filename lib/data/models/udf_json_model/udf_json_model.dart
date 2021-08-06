@@ -631,21 +631,19 @@ class ComponentComponent {
     tableView = json['tableView'];
     ntsType = json['ntsType'];
     if (json.containsKey('editableContext'))
-      editableContext = (json['editableContext'] != null &&
-              json['editableContext'].isNotEmpty)
+      editableContext = (json['editableContext'] != null )
           ? json['editableContext'].cast<String>()
           : '';
     if (json.containsKey('viewableContext'))
-      viewableContext = (json['viewableContext'] != null &&
-              json['viewableContext'].isNotEmpty)
+      viewableContext = (json['viewableContext'] != null )
           ? json['viewableContext'].cast<String>()
           : '';
     if (json.containsKey('viewableBy'))
-      viewableBy = (json['viewableBy'] != null && json['viewableBy'].isNotEmpty)
+      viewableBy = (json['viewableBy'] != null )
           ? json['viewableBy'].cast<String>()
           : '';
     if (json.containsKey('editableBy'))
-      editableBy = (json['editableBy'] != null && json['editableBy'].isNotEmpty)
+      editableBy = (json['editableBy'] != null )
           ? json['editableBy'].cast<String>()
           : '';
            data= json['data'] != null ? Data.fromJson(json['data']) : null;
