@@ -9,7 +9,7 @@ import '../../../../widgets/appbar_widget.dart';
 import '../../../../widgets/internet_connectivity_widget.dart';
 import '../../../../widgets/progress_indicator.dart';
 
-import '../../../../../themes/theme_config.dart';
+import '../../../../../themes/theme_config.dart'; 
 
 class DocumentBodyWidget extends StatefulWidget {
   DocumentBodyWidget();
