@@ -1,46 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/case_management_model/case_management_model.dart';
 import 'package:hr_management/data/models/case_management_model/case_management_response.dart';
-import 'package:hr_management/logic/blocs/case_management_bloc/helpdesk_sla_violation_bloc/helpdesk_sla_violation.dart';
+import 'package:hr_management/logic/blocs/case_management_bloc/helpdesk_box_1_bloc/helpdesk_box_1_bloc.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 import '../../../../../themes/theme_config.dart';
 import '../../../../widgets/progress_indicator.dart';
 
-class SLAViolationByCategoryBodyWidget extends StatefulWidget {
-  final String category;
-
-  SLAViolationByCategoryBodyWidget({
-    this.category,
-  });
+class RequestByCategoryWidget extends StatefulWidget {
+  RequestByCategoryWidget();
 
   @override
-  _SLAViolationByCategoryBodyWidgetState createState() =>
-      _SLAViolationByCategoryBodyWidgetState();
+  _RequestByCategoryWidgetState createState() =>
+      _RequestByCategoryWidgetState();
 }
 
-class _SLAViolationByCategoryBodyWidgetState
-    extends State<SLAViolationByCategoryBodyWidget> {
+class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
   @override
   void initState() {
     super.initState();
 
-    helpdeskSLAViolationBloc
+    helpdeskBox1Bloc
       ..getData(
         queryparams: _handleQueryparams(),
       );
   }
 
-  _handleQueryparams() => {
-        'category': widget?.category ?? '',
-      };
+  _handleQueryparams() => null;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
       child: StreamBuilder<CaseManagementResponse>(
-        stream: helpdeskSLAViolationBloc.subject.stream,
+        stream: helpdeskBox1Bloc.subject.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.error != null && snapshot.data.error.length > 0) {
