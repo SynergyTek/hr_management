@@ -73,4 +73,7 @@ const String ATTACHMENT_NTS_ROUTE = '/attachment_nts';
 const String ADD_ADHOC_TASK = "/add_adhoc_task";
 
 const String CASE_MANAGEMENT_ROUTE = '/case_management';
-const String CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE = '/case_management_service_reports';
+const String CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE =
+    '/case_management_service_reports';
+const String CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE =
+    '/case_management_helpdesk_dashboard';

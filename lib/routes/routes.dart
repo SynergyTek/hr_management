@@ -2,9 +2,10 @@
 
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/helpdesk_dashboard_body_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
-import '../ui/screens/case_management_screen/service_reports_screen/service_reports_screen.dart';
 import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
 import '../ui/screens/my_profile/my_profile_screen.dart';
@@ -374,9 +375,15 @@ class AppRouter {
         );
         break;
 
-      case CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE:
+      // case CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE:
+      //   return MaterialPageRoute(
+      //     builder: (_) => CaseManagementServiceReportsScreen(),
+      //   );
+      //   break;
+
+      case CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE:
         return MaterialPageRoute(
-          builder: (_) => CaseManagementServiceReportsScreen(),
+          builder: (_) => CaseManagementHelpdeskDashboardScreen(),
         );
         break;
 

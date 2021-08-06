@@ -1,18 +1,18 @@
 class CaseManagementModel {
   String id;
   String name;
-  int inProgress;
-  int draft;
-  int overDue;
-  int completed;
+  double inProgress;
+  double draft;
+  double overDue;
+  double completed;
   String templateCode;
   String templateName;
   String priority;
   String categoryCode;
-  int count;
+  double count;
   String day;
-  int violated;
-  int nonViolated;
+  double violated;
+  double nonViolated;
   String dueDate;
 
   CaseManagementModel({
