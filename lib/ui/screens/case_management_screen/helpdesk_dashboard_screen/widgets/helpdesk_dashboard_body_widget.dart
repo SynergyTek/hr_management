@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/sla_violation_by_category.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/open_requests_widget.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/sla_violation_by_category_widget.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 
 import '../../../../../themes/theme_config.dart';
+import 'requests_by_category_widget.dart';
+import 'task_summary_widget.dart';
 
 class CaseManagementHelpdeskDashboardBodyWidget extends StatefulWidget {
   CaseManagementHelpdeskDashboardBodyWidget();
@@ -33,27 +36,27 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
       children: [
         _eachListTile(
           title: "Requests Summary",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _requestsSummary(),
         ),
         _eachListTile(
           title: "Requests By Category",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _requestsByCategoryOnTap(),
         ),
         _eachListTile(
           title: "Requests Received In Last 20 Days",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _requestsReceivedInLast20Days(),
         ),
         _eachListTile(
           title: "Requests Closed In Last 20 Days",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _requestsClosedInLast20Days(),
         ),
         _eachListTile(
           title: "Open Requests",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _openRequests(),
         ),
         _eachListTile(
           title: "Open Requests by Category",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _openRequestsByCategory(),
         ),
         _eachListTile(
           title: "SLA Violation by Category",
@@ -61,15 +64,15 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
         ),
         _eachListTile(
           title: "Requests Approching SLA Violations",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _requestsApprochingSLAViolations(),
         ),
         _eachListTile(
           title: "SLA Violated Requests",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _slaViolationedRequested(),
         ),
         _eachListTile(
           title: "Task Summary",
-          listTileOnTap: () => null,
+          listTileOnTap: () => _taskSummaryOnTap(),
         ),
       ],
     );
@@ -104,8 +107,53 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
         ),
       );
 
+  void _requestsSummary() => _pushReplacement(
+        title: "Requests Summary",
+        child: Container(),
+      );
+
+  void _requestsByCategoryOnTap() => _pushReplacement(
+        title: "Requests By Category",
+        child: RequestByCategoryWidget(),
+      );
+
+  void _requestsReceivedInLast20Days() => _pushReplacement(
+        title: "Requests Received In Last 20 Days",
+        child: Container(),
+      );
+
+  void _requestsClosedInLast20Days() => _pushReplacement(
+        title: "Requests Closed In Last 20 Days",
+        child: Container(),
+      );
+
+  void _openRequests() => _pushReplacement(
+        title: "Open Requests",
+        child: OpenRequestsWidget(),
+      );
+
+  void _openRequestsByCategory() => _pushReplacement(
+        title: "Open Requests By Category",
+        child: Container(),
+      );
+
+  void _requestsApprochingSLAViolations() => _pushReplacement(
+        title: "Requests Approching SLA Violations",
+        child: Container(),
+      );
+
+  void _slaViolationedRequested() => _pushReplacement(
+        title: "SLA Violated Requests",
+        child: Container(),
+      );
+
   void _slaViolationByCategoryOnTap() => _pushReplacement(
         title: "SLA Violation By Category",
-        child: SLAViolationByCategoryBodyWidget(),
+        child: SLAViolationByCategoryWidget(),
+      );
+
+  void _taskSummaryOnTap() => _pushReplacement(
+        title: "Task Summary",
+        child: TaskSummaryWidget(),
       );
 }
