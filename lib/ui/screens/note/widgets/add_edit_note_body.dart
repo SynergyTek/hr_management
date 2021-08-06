@@ -219,7 +219,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    _fromddController.text = noteModel.ownerUserName;
+    _fromddController.text =noteModel.ownerUserName!=null? noteModel.ownerUserName:"";
     return Stack(
       children: [
         SingleChildScrollView(
@@ -268,15 +268,15 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          rowChild(noteModel.noteNo, 'Service No', 3),
-          rowChild(noteModel.noteStatusName, 'Status', 2),
-          rowChild(noteModel.versionNo.toString(), 'Version No', 2),
+          rowChild(noteModel.noteNo??"", 'Note No', 3),
+          rowChild(noteModel.noteStatusName??"", 'Status', 2),
+          rowChild(noteModel.versionNo.toString()??"", 'Version No', 2),
         ],
       ),
     ));
     if (!noteModel.hideSubject) {
       createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? noteModel.noteSubject);
+          .updateInitialValue(subjectValue ?? noteModel.noteSubject??"");
       widgets.add(
         BlocTextBoxWidget(
           fieldName: 'Subject',

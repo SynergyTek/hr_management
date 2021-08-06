@@ -1,3 +1,7 @@
+
+
+import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
+import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/helpdesk_dashboard_body_widget.dart';
 
@@ -6,8 +10,6 @@ import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
 import '../ui/screens/my_profile/my_profile_screen.dart';
 
-import '../ui/screens/person_documents_screen/person_documents_screen.dart';
-import '../ui/screens/person_profile_screen/person_profile_screen.dart';
 import '../ui/screens/share/share_screen.dart';
 import '../ui/screens/tasks/adhoc_task/adhoc_task_list_screen.dart';
 
@@ -50,8 +52,6 @@ import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
 import '../ui/screens/my_profile/my_profile_screen.dart';
 import '../ui/screens/note/add_edit_note.dart';
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
-import '../ui/screens/person_documents_screen/person_documents_screen.dart';
-import '../ui/screens/person_profile_screen/person_profile_screen.dart';
 import '../ui/screens/registration/registration_screen.dart';
 import '../ui/screens/splash_screen/splash_screen.dart';
 import '../ui/screens/tasks/task_home_screen.dart';
@@ -353,13 +353,13 @@ class AppRouter {
 
       case PERSON_DOCUMENTS_ROUTE:
         return MaterialPageRoute(
-          builder: (_) => PersonDocumentsScreen(),
+          builder: (_) => DocReqByHrScreen(),
         );
         break;
 
       case PERSON_PROFILE_ROUTE:
         return MaterialPageRoute(
-          builder: (_) => PersonProfileScreen(),
+          builder: (_) => DocumentScreen(),
         );
         break;
 

@@ -1,4 +1,4 @@
-class PersonDocumentsModel {
+class DocReqByHrModel {
   String documentType;
   String ownerName;
   String expiryDate;
@@ -16,7 +16,7 @@ class PersonDocumentsModel {
   String attachVersionNo;
   String createdDate;
 
-  PersonDocumentsModel({
+  DocReqByHrModel({
     this.documentType,
     this.ownerName,
     this.expiryDate,
@@ -35,7 +35,7 @@ class PersonDocumentsModel {
     this.createdDate,
   });
 
-  PersonDocumentsModel.fromJson(Map<String, dynamic> json) {
+  DocReqByHrModel.fromJson(Map<String, dynamic> json) {
     documentType = json['DocumentType'];
     ownerName = json['OwnerName'];
     expiryDate = json['ExpiryDate'];

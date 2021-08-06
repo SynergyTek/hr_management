@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
 
-import '../../../../data/enums/enums.dart';
-import '../../../../data/models/documents_models/note_index_models/note_index_model.dart';
-import '../../../../data/models/documents_models/note_index_models/note_index_response.dart';
-import '../../../../logic/blocs/documents_bloc/note_index_bloc/note_index_bloc.dart';
-import '../../../../logic/blocs/service_bloc/service_bloc.dart';
-import '../../../../routes/route_constants.dart';
-import '../../../../routes/screen_arguments.dart';
-import '../../../../themes/theme_config.dart';
-import '../../../widgets/progress_indicator.dart';
+import '../../../../../data/enums/enums.dart';
+import '../../../../../data/models/documents_models/note_index_models/note_index_model.dart';
+import '../../../../../data/models/documents_models/note_index_models/note_index_response.dart';
+import '../../../../../logic/blocs/documents_bloc/note_index_bloc/note_index_bloc.dart';
+import '../../../../../logic/blocs/service_bloc/service_bloc.dart';
+import '../../../../../routes/route_constants.dart';
+import '../../../../../routes/screen_arguments.dart';
+import '../../../../../themes/theme_config.dart';
+import '../../../../widgets/progress_indicator.dart';
 
-class InternalListWidget extends StatefulWidget {
+class DocumentListWidget extends StatefulWidget {
   final String templateId;
   final String templateName;
 
-  InternalListWidget({
+  DocumentListWidget({
     @required this.templateId,
     @required this.templateName,
   });
 
   @override
-  _InternalListWidgetState createState() => _InternalListWidgetState();
+  _DocumentListWidgetState createState() => _DocumentListWidgetState();
 }
 
-class _InternalListWidgetState extends State<InternalListWidget> {
+class _DocumentListWidgetState extends State<DocumentListWidget> {
   @override
   void initState() {
     super.initState();
@@ -199,7 +200,19 @@ class _InternalListWidgetState extends State<InternalListWidget> {
               ),
             ],
           ),
+           onTap: () {
+          noteBloc.subjectNoteDetails.sink.add(null);
+          Navigator.pushNamed(
+            context,
+            ADD_EDIT_NOTE_ROUTE,
+            arguments: ScreenArguments(
+                arg1: '',
+                arg2: data.id,
+                arg3: data.noteSubject),
+          );
+        },
         ),
+        
       );
 
     if (widget.templateName ==
@@ -224,6 +237,17 @@ class _InternalListWidgetState extends State<InternalListWidget> {
               ),
             ],
           ),
+           onTap: () {
+          noteBloc.subjectNoteDetails.sink.add(null);
+          Navigator.pushNamed(
+            context,
+            ADD_EDIT_NOTE_ROUTE,
+            arguments: ScreenArguments(
+                arg1: '',
+                arg2: data.id,
+                arg3: data.noteSubject),
+          );
+        },
         ),
       );
 
@@ -260,6 +284,17 @@ class _InternalListWidgetState extends State<InternalListWidget> {
               ),
             ],
           ),
+           onTap: () {
+          noteBloc.subjectNoteDetails.sink.add(null);
+          Navigator.pushNamed(
+            context,
+            ADD_EDIT_NOTE_ROUTE,
+            arguments: ScreenArguments(
+                arg1: '',
+                arg2: data.id,
+                arg3: data.noteSubject),
+          );
+        },
         ),
       );
 
@@ -293,6 +328,17 @@ class _InternalListWidgetState extends State<InternalListWidget> {
               ),
             ],
           ),
+           onTap: () {
+          noteBloc.subjectNoteDetails.sink.add(null);
+          Navigator.pushNamed(
+            context,
+            ADD_EDIT_NOTE_ROUTE,
+            arguments: ScreenArguments(
+                arg1: '',
+                arg2: data.id,
+                arg3: data.noteSubject),
+          );
+        },
         ),
       );
 
@@ -342,6 +388,17 @@ class _InternalListWidgetState extends State<InternalListWidget> {
               ),
             ],
           ),
+           onTap: () {
+          noteBloc.subjectNoteDetails.sink.add(null);
+          Navigator.pushNamed(
+            context,
+            ADD_EDIT_NOTE_ROUTE,
+            arguments: ScreenArguments(
+                arg1: '',
+                arg2: data.id,
+                arg3: data.noteSubject),
+          );
+        },
         ),
       );
 
@@ -395,6 +452,17 @@ class _InternalListWidgetState extends State<InternalListWidget> {
               ),
             ],
           ),
+           onTap: () {
+          noteBloc.subjectNoteDetails.sink.add(null);
+          Navigator.pushNamed(
+            context,
+            ADD_EDIT_NOTE_ROUTE,
+            arguments: ScreenArguments(
+                arg1: '',
+                arg2: data.id,
+                arg3: data.noteSubject),
+          );
+        },
         ),
       );
 
@@ -432,6 +500,17 @@ class _InternalListWidgetState extends State<InternalListWidget> {
               ),
             ],
           ),
+           onTap: () {
+          noteBloc.subjectNoteDetails.sink.add(null);
+          Navigator.pushNamed(
+            context,
+            ADD_EDIT_NOTE_ROUTE,
+            arguments: ScreenArguments(
+                arg1: '',
+                arg2: data.id,
+                arg3: data.noteSubject),
+          );
+        },
         ),
       );
 

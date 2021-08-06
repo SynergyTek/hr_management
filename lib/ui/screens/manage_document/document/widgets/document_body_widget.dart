@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import '../../../../constants/image_path_constants.dart';
-import '../../../../data/enums/enums.dart';
-import '../../../../data/models/documents_models/person_profile_models/person_profile_model.dart';
-import '../../../../data/models/documents_models/person_profile_models/person_profile_response.dart';
-import '../../../../logic/blocs/documents_bloc/person_profile_bloc/person_profile_bloc.dart';
-import 'internal_list_widget.dart';
-import '../../../widgets/appbar_widget.dart';
-import '../../../widgets/internet_connectivity_widget.dart';
-import '../../../widgets/progress_indicator.dart';
+import 'package:hr_management/data/models/documents_models/document_models/document_model.dart';
+import 'package:hr_management/data/models/documents_models/document_models/document_response.dart';
+import 'package:hr_management/logic/blocs/documents_bloc/document_bloc/document_bloc.dart';
+import '../../../../../../constants/image_path_constants.dart';
+import '../../../../../data/enums/enums.dart';
+import 'document_list_widget.dart';
+import '../../../../widgets/appbar_widget.dart';
+import '../../../../widgets/internet_connectivity_widget.dart';
+import '../../../../widgets/progress_indicator.dart';
 
-import '../../../../themes/theme_config.dart';
+import '../../../../../themes/theme_config.dart';
 
-class PersonProfileBodyWidget extends StatefulWidget {
-  PersonProfileBodyWidget();
+class DocumentBodyWidget extends StatefulWidget {
+  DocumentBodyWidget();
 
   @override
-  _PersonProfileBodyWidgetState createState() =>
-      _PersonProfileBodyWidgetState();
+  _DocumentBodyWidgetState createState() =>
+      _DocumentBodyWidgetState();
 }
 
-class _PersonProfileBodyWidgetState extends State<PersonProfileBodyWidget> {
+class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
   @override
   void initState() {
     super.initState();
 
-    personProfileBloc
+    documentBloc
       ..getData(
         queryparams: _handleQueryParams(),
       );
@@ -39,8 +39,8 @@ class _PersonProfileBodyWidgetState extends State<PersonProfileBodyWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
-      child: StreamBuilder<PersonProfileResponse>(
-        stream: personProfileBloc.subject.stream,
+      child: StreamBuilder<DocumentResponse>(
+        stream: documentBloc.subject.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.error != null && snapshot.data.error.length > 0) {
@@ -65,8 +65,12 @@ class _PersonProfileBodyWidgetState extends State<PersonProfileBodyWidget> {
     );
   }
 
+<<<<<<< HEAD:lib/ui/screens/person_profile_screen/widgets/person_profile_body_widget.dart
   Widget _listviewWidget(PersonProfileModel data) {
     // List
+=======
+  Widget _listviewWidget(DocumentModel data) {
+>>>>>>> 416576c2a42e55c670eab52b9c8c08d539ff6257:lib/ui/screens/manage_document/document/widgets/document_body_widget.dart
     return ListView.builder(
       shrinkWrap: true,
       itemCount: data.noteTableRows.length,
@@ -107,7 +111,7 @@ class _PersonProfileBodyWidgetState extends State<PersonProfileBodyWidget> {
           ),
           body: SafeArea(
             child: InternetConnectivityWidget(
-              child: InternalListWidget(
+              child: DocumentListWidget(
                 templateId: listTileData.id,
                 templateName: listTileData.templateName,
               ),

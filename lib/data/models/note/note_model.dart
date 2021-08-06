@@ -370,8 +370,8 @@ class NoteModel {
         noteTemplateVm: json["NoteTemplateVM"],
         templateViewModel: json["TemplateViewModel"],
         noteTable: json["NoteTable"],
-        columnList: List<ColumnList>.from(
-            json["ColumnList"].map((x) => ColumnList.fromJson(x))),
+        columnList: json["ColumnList"]!=null?List<ColumnList>.from(
+            json["ColumnList"].map((x) => ColumnList.fromJson(x))):null,
         parentTemplateId: json["ParentTemplateId"],
         activeUserId: json["ActiveUserId"],
         noteNo: json["NoteNo"],
