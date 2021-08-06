@@ -65,7 +65,12 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
     );
   }
 
+<<<<<<< HEAD:lib/ui/screens/person_profile_screen/widgets/person_profile_body_widget.dart
+  Widget _listviewWidget(PersonProfileModel data) {
+    // List
+=======
   Widget _listviewWidget(DocumentModel data) {
+>>>>>>> 416576c2a42e55c670eab52b9c8c08d539ff6257:lib/ui/screens/manage_document/document/widgets/document_body_widget.dart
     return ListView.builder(
       shrinkWrap: true,
       itemCount: data.noteTableRows.length,

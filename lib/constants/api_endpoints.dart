@@ -345,6 +345,16 @@ class APIEndpointConstants {
   //************************************************************************//
   // Case management API:
 
+  // Help Desk API Endpoints
+
+  static const HELPDESK_DASHBOARD = BASE_URL + '/tms/query/HelpdeskDashboard';
+
+  static const READ_HELP_DESK_REQUEST_CLOSED =
+      BASE_URL + '/tms/query/ReadHelpDeskRequestClosed';
+
+  //Help Desk API Endpoints
+  //************************************************************************//
+
 }
 
 Future<String> getUserId() async {
