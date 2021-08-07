@@ -3,7 +3,7 @@ part of 'request_chart_status_repository.dart';
 class RequestChartStatusRepository extends AbstractRequestChartStatusRepository {
   final Dio _dio = Dio();
 
-  Future<CaseManagementResponse> getAPIData({
+  Future<OpenRequestsByCategoryResponse> getAPIData({
     Map<String, dynamic> queryparams,
   }) async {
     //
@@ -15,12 +15,11 @@ class RequestChartStatusRepository extends AbstractRequestChartStatusRepository 
         queryParameters: queryparams ?? {},
       );
 
-      print("Helpdesk box 1 response: ${response.data}, $queryparams");
 
-      return CaseManagementResponse.fromJson(response.data);
+      return OpenRequestsByCategoryResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
-      return CaseManagementResponse.withError("$err");
+      return OpenRequestsByCategoryResponse.withError("$err");
     }
   }
 
@@ -32,14 +31,14 @@ class RequestChartStatusRepository extends AbstractRequestChartStatusRepository 
   }
 
   @override
-  Future<CaseManagementResponse> postAPIData({
+  Future<OpenRequestsByCategoryResponse> postAPIData({
     Map<String, dynamic> queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
-  Future<CaseManagementResponse> putAPIData({
+  Future<OpenRequestsByCategoryResponse> putAPIData({
     Map<String, dynamic> queryparams,
   }) {
     throw UnimplementedError();

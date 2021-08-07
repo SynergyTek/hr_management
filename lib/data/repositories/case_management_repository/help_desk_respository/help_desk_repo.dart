@@ -3,12 +3,9 @@ part of 'abstract_help_desk_repo.dart';
 class HelpDeskRepository extends AbstractHelpDeskRepository {
   final Dio _dio = Dio();
 
-  Future<HelpDeskDashboardResponse> getHelpdeskDashboardData(
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
+  Future<HelpDeskDashboardResponse> getHelpdeskDashboardData({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.HELPDESK_DASHBOARD;
 
     try {
@@ -16,7 +13,7 @@ class HelpDeskRepository extends AbstractHelpDeskRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
+
       return HelpDeskDashboardResponse.fromJson(
         response.data,
       );
@@ -27,12 +24,9 @@ class HelpDeskRepository extends AbstractHelpDeskRepository {
     }
   }
 
-  Future<ReadHelpDeskRequestClosedResponse> getHelpDeskRequestClosedData(
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
+  Future<ReadHelpDeskRequestClosedResponse> getHelpDeskRequestClosedData({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.READ_HELP_DESK_REQUEST_CLOSED;
 
     try {
@@ -40,7 +34,8 @@ class HelpDeskRepository extends AbstractHelpDeskRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
+      print(response.data);
+
       return ReadHelpDeskRequestClosedResponse.fromJson(
         response.data,
       );

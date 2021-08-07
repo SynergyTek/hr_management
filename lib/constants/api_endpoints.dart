@@ -328,32 +328,27 @@ class APIEndpointConstants {
       BASE_URL + '/tms/query/ReadHelpDeskRequestRecieved';
 
   static const String GET_HELPDESK_SLA_VIOLATION =
-      BASE_URL + '/tms/query/ReadHelpeskSLAViolation?type=Category';
+      BASE_URL + '/tms/query/ReadHelpeskSLAViolation';
 
   static const String GET_REQUEST_CHART_STATUS =
-      BASE_URL + '/tms/query/GetRequestChartStatus?type=Category';
+      BASE_URL + '/tms/query/GetRequestChartStatus';
 
   static const String GET_PENDING_TASK_COUNTS =
       BASE_URL + '/tms/query/ReadPendingTaskCounts';
 
   static const String GET_HELPDESK_BOX_1 =
-      BASE_URL + '/tms/query/ReadHelpDeskBox1?type=Category';
+      BASE_URL + '/tms/query/ReadHelpDeskBox1';
 
   static const String GET_HELPDESK_BOX_2 =
-      BASE_URL + '/tms/query/ReadHelpDeskBox2?type=thisweek';
-
-  //************************************************************************//
-  // Case management API:
-
-  // Help Desk API Endpoints
+      BASE_URL + '/tms/query/ReadHelpDeskBox2';
 
   static const HELPDESK_DASHBOARD = BASE_URL + '/tms/query/HelpdeskDashboard';
 
   static const READ_HELP_DESK_REQUEST_CLOSED =
       BASE_URL + '/tms/query/ReadHelpDeskRequestClosed';
 
-  //Help Desk API Endpoints
   //************************************************************************//
+  // Case management API:
 
 }
 

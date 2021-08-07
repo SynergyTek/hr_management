@@ -1,4 +1,5 @@
-import '../../../../data/models/case_management_model/case_management_response.dart';
+import 'package:hr_management/data/models/help_desk_models/open_requests_by_category_response.dart';
+
 import '../../../../data/repositories/case_management_repository/request_chart_status_repository/helpdesk_box_1_repository/request_chart_status_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -7,14 +8,14 @@ class RequestChartStatusBloc {
       RequestChartStatusRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<CaseManagementResponse> _subject =
-      BehaviorSubject<CaseManagementResponse>();
+  final BehaviorSubject<OpenRequestsByCategoryResponse> _subject =
+      BehaviorSubject<OpenRequestsByCategoryResponse>();
 
   /// Used to fetch new/existing entries.
   getData({
     Map<String, dynamic> queryparams,
   }) async {
-    CaseManagementResponse response = await _apiRepository.getAPIData(
+    OpenRequestsByCategoryResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,
     );
     _subject.sink.add(response);
@@ -33,7 +34,7 @@ class RequestChartStatusBloc {
     _subject.close();
   }
 
-  BehaviorSubject<CaseManagementResponse> get subject => _subject;
+  BehaviorSubject<OpenRequestsByCategoryResponse> get subject => _subject;
 }
 
 final requestChartStatusBloc = RequestChartStatusBloc();

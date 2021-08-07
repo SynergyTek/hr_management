@@ -1,7 +1,6 @@
 import 'help_desk_dashboard_model.dart';
 
 class HelpDeskDashboardResponse {
-  bool isSuccess;
   HelpDeskDashboardModel data;
   String error;
 
