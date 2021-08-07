@@ -6,6 +6,7 @@ import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 import '../../../../../themes/theme_config.dart';
 import '../../../../widgets/progress_indicator.dart';
+import 'case_management_filter_bottom_modal_sheet_widget.dart';
 
 class SLAViolationByCategoryWidget extends StatefulWidget {
   final String category;
@@ -21,6 +22,29 @@ class SLAViolationByCategoryWidget extends StatefulWidget {
 
 class _SLAViolationByCategoryWidgetState
     extends State<SLAViolationByCategoryWidget> {
+  List<FilterListModel> data = [
+    FilterListModel(
+      filterDisplayTitle: 'Category',
+      filterValue: 'Category',
+      isChecked: true,
+    ),
+    FilterListModel(
+      filterDisplayTitle: 'Owner',
+      filterValue: 'Owner',
+      isChecked: false,
+    ),
+    FilterListModel(
+      filterDisplayTitle: 'Priority',
+      filterValue: 'Priority',
+      isChecked: false,
+    ),
+    FilterListModel(
+      filterDisplayTitle: 'Service',
+      filterValue: 'Service',
+      isChecked: false,
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -31,9 +55,16 @@ class _SLAViolationByCategoryWidgetState
       );
   }
 
-  _handleQueryparams() => {
-        'category': widget?.category ?? '',
+  _handleQueryparams({FilterListModel model}) {
+    if (model == null)
+      return {
+        'type': 'Category',
       };
+
+    return {
+      'type': model.filterValue,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +100,21 @@ class _SLAViolationByCategoryWidgetState
         ),
       );
 
-    return ListView.builder(
-      itemCount: data?.length ?? 0,
-      itemBuilder: (BuildContext context, int index) {
-        return _eachListTile(
-          data: data.elementAt(index),
-        );
-      },
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _filterWidget(),
+        Expanded(
+          child: ListView.builder(
+            itemCount: data?.length ?? 0,
+            itemBuilder: (BuildContext context, int index) {
+              return _eachListTile(
+                data: data.elementAt(index),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -186,5 +225,44 @@ class _SLAViolationByCategoryWidgetState
         ),
       ),
     );
+  }
+
+  Widget _filterWidget() {
+    return ListTile(
+      title: Text("Filter"),
+      trailing: Icon(
+        Icons.filter_list,
+      ),
+      onTap: () => _handleFilterWidgetOnTap(),
+    );
+  }
+
+  void _handleFilterWidgetOnTap() async {
+    showModalBottomSheet<List<FilterListModel>>(
+      context: context,
+      enableDrag: false,
+      isScrollControlled: false,
+      isDismissible: false,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) =>
+          CaseManagementFilterBottomModalSheetWidget(
+        data: data,
+      ),
+    ).then((List<FilterListModel> value) {
+      if (value != null) {
+        data = value;
+      }
+
+      value.forEach((element) {
+        if (element.isChecked == true) {
+          helpdeskSLAViolationBloc
+            ..getData(
+              queryparams: _handleQueryparams(
+                model: element,
+              ),
+            );
+        }
+      });
+    });
   }
 }

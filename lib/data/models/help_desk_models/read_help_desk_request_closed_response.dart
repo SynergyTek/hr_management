@@ -1,14 +1,16 @@
 import 'read_help_desk_request_closed_model.dart';
 
 class ReadHelpDeskRequestClosedResponse {
-  bool isSuccess;
-  ReadHelpDeskRequestClosedModel data;
+  List<ReadHelpDeskRequestClosedModel> data;
   String error;
 
   ReadHelpDeskRequestClosedResponse({this.data});
 
-  ReadHelpDeskRequestClosedResponse.fromJson(Map<String, dynamic> response)
-      : data = ReadHelpDeskRequestClosedModel.fromJson(response);
+  ReadHelpDeskRequestClosedResponse.fromJson(List response)
+      : data = response
+            .map((i) => new ReadHelpDeskRequestClosedModel.fromJson(i))
+            .toList(),
+        error = "";
 
   ReadHelpDeskRequestClosedResponse.withError(String errorValue)
       : data = null,

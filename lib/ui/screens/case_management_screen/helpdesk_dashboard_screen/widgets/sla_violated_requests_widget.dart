@@ -8,14 +8,15 @@ import '../../../../../themes/theme_config.dart';
 import '../../../../widgets/progress_indicator.dart';
 import 'chart_widgets/gauge_chart_widget.dart';
 
-class OpenRequestsWidget extends StatefulWidget {
-  OpenRequestsWidget();
+class SLAViolatedRequestsWidget extends StatefulWidget {
+  SLAViolatedRequestsWidget();
 
   @override
-  _OpenRequestsWidgetState createState() => _OpenRequestsWidgetState();
+  _SLAViolatedRequestsWidgetState createState() =>
+      _SLAViolatedRequestsWidgetState();
 }
 
-class _OpenRequestsWidgetState extends State<OpenRequestsWidget> {
+class _SLAViolatedRequestsWidgetState extends State<SLAViolatedRequestsWidget> {
   @override
   void initState() {
     super.initState();
@@ -52,6 +53,8 @@ class _OpenRequestsWidgetState extends State<OpenRequestsWidget> {
   }
 
   Widget _bodyWidget(HelpDeskDashboardModel data) {
+    print(data);
+
     if (data == null)
       return Center(
         child: Text(
@@ -64,7 +67,8 @@ class _OpenRequestsWidgetState extends State<OpenRequestsWidget> {
 
     return GaugeChartWidget(
       gaugeValueList: [
-        data.openRequestCount.toDouble(),
+        data.slaViolated.toDouble(),
+        // data.openRequestCount.toDouble(),
       ],
       child: _childWidget(data),
     );
@@ -73,18 +77,39 @@ class _OpenRequestsWidgetState extends State<OpenRequestsWidget> {
   Widget _childWidget(HelpDeskDashboardModel data) {
     return Container(
       padding: DEFAULT_LARGE_PADDING,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
-            "${data.openRequestCount ?? "-"}",
-            style: Theme.of(context).textTheme.headline5.copyWith(
-                color: Theme.of(context).textHeadingColor,
-                fontWeight: FontWeight.w600),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "${data?.slaViolated ?? "-"}",
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                    color: Theme.of(context).textHeadingColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(
+                "SLA Violated",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
           ),
-          Text(
-            "Open Requests",
-            style: Theme.of(context).textTheme.headline6,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "${data?.openRequestCount ?? "-"}",
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                    color: Theme.of(context).textHeadingColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(
+                "Open",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
           ),
         ],
       ),

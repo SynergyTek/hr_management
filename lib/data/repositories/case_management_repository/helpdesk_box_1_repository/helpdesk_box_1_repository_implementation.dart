@@ -15,8 +15,6 @@ class HelpdeskBox1Repository extends AbstractHelpdeskBox1Repository {
         queryParameters: queryparams ?? {},
       );
 
-      print("Helpdesk box 1 response: ${response.data}, $queryparams");
-
       return CaseManagementResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");

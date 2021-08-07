@@ -1,7 +1,6 @@
 part of 'pending_task_count_repository.dart';
 
-class PendingTaskCountRepository
-    extends AbstractPendingTaskCountRepository {
+class PendingTaskCountRepository extends AbstractPendingTaskCountRepository {
   final Dio _dio = Dio();
 
   Future<CaseManagementResponse> getAPIData({
@@ -15,8 +14,6 @@ class PendingTaskCountRepository
         endpoint,
         queryParameters: queryparams ?? {},
       );
-
-      print("Helpdesk box 1 response: ${response.data}, $queryparams");
 
       return CaseManagementResponse.fromJson(response.data);
     } catch (err, stacktrace) {

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import 'dart:math' as math;
+
 class GaugeChartWidget extends StatelessWidget {
-  final double gaugeValue;
+  final List<double> gaugeValueList;
 
   final Widget child;
 
   const GaugeChartWidget({
-    @required this.gaugeValue,
+    @required this.gaugeValueList,
     this.child,
   });
 
@@ -34,16 +35,12 @@ class GaugeChartWidget extends StatelessWidget {
                       color: Theme.of(context).textHeadingColor,
                     ),
                   ],
-                  pointers: <GaugePointer>[
-                    NeedlePointer(
-                      value: gaugeValue ?? 0.0,
-                    ),
-                  ],
+                  pointers: _pointerListWidget(),
                   annotations: <GaugeAnnotation>[
                     GaugeAnnotation(
                       widget: Container(
                         child: Text(
-                          "${gaugeValue ?? '0.0'}",
+                          "${gaugeValueList ?? '0'}",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -63,32 +60,24 @@ class GaugeChartWidget extends StatelessWidget {
       ),
     );
   }
-}
 
-class BarChartWidget extends StatefulWidget {
-  final double axisCrossesAt;
-  final Function xValueMapper;
-  final Function yValueMapper;
-  final int dataCount;
+  List<GaugePointer> _pointerListWidget() {
+    List<GaugePointer> _pointers = [];
 
-  const BarChartWidget({
-    @required this.axisCrossesAt,
-    @required this.xValueMapper,
-    @required this.yValueMapper,
-    @required this.dataCount,
-  });
-  @override
-  _BarChartWidgetState createState() => _BarChartWidgetState();
-}
+    gaugeValueList.forEach((element) {
+      _pointers
+        ..add(
+          NeedlePointer(
+            enableAnimation: true,
+            needleColor: Color(
+              (math.Random().nextDouble() * 0xFFFFFF).toInt(),
+            ).withOpacity(1.0),
+            value: element ?? 0,
+          ),
+        );
+    });
 
-class _BarChartWidgetState extends State<BarChartWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return SfSparkBarChart.custom(
-      axisCrossesAt: widget.axisCrossesAt,
-      xValueMapper: widget.xValueMapper,
-      yValueMapper: widget.yValueMapper,
-      dataCount: widget.dataCount,
-    );
+    return _pointers;
   }
 }
+

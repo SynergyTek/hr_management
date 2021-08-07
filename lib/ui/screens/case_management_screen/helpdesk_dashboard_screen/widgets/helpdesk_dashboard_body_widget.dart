@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/open_requests_by_category_widget.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/open_requests_widget.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/requests_received_in_last_20_days_widget.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/requests_summary_widget.dart';
+import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/sla_violated_requests_widget.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/sla_violation_by_category_widget.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 
 import '../../../../../themes/theme_config.dart';
+import 'requests_approaching_sla_violations_widget.dart';
 import 'requests_by_category_widget.dart';
+import 'requests_closed_in_last_20_days_widget.dart';
 import 'task_summary_widget.dart';
 
 class CaseManagementHelpdeskDashboardBodyWidget extends StatefulWidget {
@@ -109,7 +115,7 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
 
   void _requestsSummary() => _pushReplacement(
         title: "Requests Summary",
-        child: Container(),
+        child: RequestsSummaryWidget(),
       );
 
   void _requestsByCategoryOnTap() => _pushReplacement(
@@ -119,12 +125,12 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
 
   void _requestsReceivedInLast20Days() => _pushReplacement(
         title: "Requests Received In Last 20 Days",
-        child: Container(),
+        child: RequestsReceivedInLast20DaysWidget(),
       );
 
   void _requestsClosedInLast20Days() => _pushReplacement(
         title: "Requests Closed In Last 20 Days",
-        child: Container(),
+        child: RequestsClosedInLast20DaysWidget(),
       );
 
   void _openRequests() => _pushReplacement(
@@ -134,17 +140,17 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
 
   void _openRequestsByCategory() => _pushReplacement(
         title: "Open Requests By Category",
-        child: Container(),
+        child: OpenRequestsByCategoryWidget(),
       );
 
   void _requestsApprochingSLAViolations() => _pushReplacement(
         title: "Requests Approching SLA Violations",
-        child: Container(),
+        child: RequestsApproachingSLAViolationsWidget(),
       );
 
   void _slaViolationedRequested() => _pushReplacement(
         title: "SLA Violated Requests",
-        child: Container(),
+        child: SLAViolatedRequestsWidget(),
       );
 
   void _slaViolationByCategoryOnTap() => _pushReplacement(
