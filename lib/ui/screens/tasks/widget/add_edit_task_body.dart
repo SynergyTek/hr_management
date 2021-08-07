@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/user/user.dart';
 import '../../../../logic/blocs/user_bloc/user_bloc.dart';
@@ -69,11 +70,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
+  bool isTileVisible = false;
   TextEditingController leaveDurationControllerCalendarDays =
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
       new TextEditingController();
- TextEditingController _fromddController = new TextEditingController();
+  TextEditingController _fromddController = new TextEditingController();
 
   void updateLeaveDuration() {
     if (leaveStartDate != null && leaveEnddate != null) {
@@ -130,10 +132,10 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                     // actions: [IconButton(icon: Icon(Icons.comment), onPressed: () {})],
                     title: (widget.templateCode != null &&
                             widget.templateCode.isNotEmpty)
-                        ? "Create Task"// + widget.templateCode
+                        ? "Create Task" // + widget.templateCode
                         // : widget.title != null
                         //     ? "Edit $widget.title"
-                            : "Edit Task",
+                        : "Edit Task",
                   ),
                   body: FormBlocListener<CreateServiceFormBloc, String, String>(
                     onSuccess: (context, state) {},
@@ -142,7 +144,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                         ? setTaskView(
                             context,
                             createServiceFormBloc,
-                         
                           )
                         : SizedBox(),
                   ),
@@ -165,47 +166,47 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     columnComponent = [];
     componentComList = [];
     udfJsonComponent = [];
-    if(udfJsonString!=null)
-    {
-    udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
-    for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns != null && component.columns.isNotEmpty) {
-        for (Columns column in component.columns) {
-          for (ColumnComponent columnCom in column.components) {
-            columnComponent.add(columnCom);
+    if (udfJsonString != null) {
+      udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
+      for (UdfJsonComponent component in udfJsonString.components) {
+        if (component.columns != null && component.columns.isNotEmpty) {
+          for (Columns column in component.columns) {
+            for (ColumnComponent columnCom in column.components) {
+              columnComponent.add(columnCom);
+            }
+          }
+        }
+        if (component.components != null && component.components.isNotEmpty) {
+          for (ComponentComponent componentComponent in component.components) {
+            componentComList.add(componentComponent);
           }
         }
       }
-      if (component.components != null && component.components.isNotEmpty) {
-        for (ComponentComponent componentComponent in component.components) {
-          componentComList.add(componentComponent);
+
+      for (UdfJsonComponent component in udfJsonString.components) {
+        if (component.columns == null &&
+            (component.components == null ||
+                component.components.length == 0)) {
+          udfJsonComponent.add(component);
+        } else if (component.components == null &&
+            component.columns.length == 0) {
+          udfJsonComponent.add(component);
         }
       }
-    }
-
-    for (UdfJsonComponent component in udfJsonString.components) {
-      if (component.columns == null &&
-          (component.components == null || component.components.length == 0)) {
-        udfJsonComponent.add(component);
-      } else if (component.components == null &&
-          component.columns.length == 0) {
-        udfJsonComponent.add(component);
+      if (columnComponent != null && columnComponent.isNotEmpty) {
+        columnComponentWidgets = addDynamic(
+          columnComponent,
+          createServiceFormBloc,
+        );
       }
-    }
-    if (columnComponent != null && columnComponent.isNotEmpty) {
-      columnComponentWidgets = addDynamic(
-        columnComponent,
-        createServiceFormBloc,
-      );
-    }
-    if (componentComList != null && componentComList.isNotEmpty) {
-      addDynamicComponentComponent(componentComList, createServiceFormBloc);
-    }
-    if (udfJsonComponent.length > 0) {
-      // udfJsonComponent.addAll(udfJsonString.components);
-      udfJsonCompWidgetList =
-          addDynamic(udfJsonComponent, createServiceFormBloc);
-    }
+      if (componentComList != null && componentComList.isNotEmpty) {
+        addDynamicComponentComponent(componentComList, createServiceFormBloc);
+      }
+      if (udfJsonComponent.length > 0) {
+        // udfJsonComponent.addAll(udfJsonString.components);
+        udfJsonCompWidgetList =
+            addDynamic(udfJsonComponent, createServiceFormBloc);
+      }
     }
   }
 
@@ -213,7 +214,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    _fromddController.text=taskModel.ownerUserName;
+    _fromddController.text = taskModel.ownerUserName;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -253,7 +254,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   List<Widget> formFieldsWidgets(
       context, createServiceFormBloc, TaskModel taskModel) {
     List<Widget> widgets = [];
-   
 
     widgets.add(Container(
       padding: EdgeInsets.all(8.0),
@@ -285,72 +285,127 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ));
     }
 
-    // if (!taskModel.hideStartDate)
-      widgets.add(
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: DynamicDateTimeBox(
-                code: taskModel.startDate,
-                name: 'Start Date',
-                key: new Key('Start Date'),
-                selectDate: (DateTime date) {
-                  if (date != null) {
-                    setState(() async {
-                      startDate = date;
-                      if (dueDate != null && dueDate.toString().isNotEmpty)
-                        compareStartEndDate(
-                            startDate: startDate,
-                            enddate: dueDate,
-                            context: context,
-                            updateDuration: false);
-                    });
-                    // udfJson[model[i].key] = date.toString();
-                  }
-                },
+// if (widget.taskId != null && widget.taskId.isNotEmpty) {
+    createServiceFormBloc.sla.updateInitialValue(slaValue ?? taskModel.taskSla);
+    widgets.add(ExpandableField(
+      isTileExpanded: isTileVisible,
+      valueChanged: (dynamic value) {
+        bool isExpand = value;
+        if (isExpand) {
+          isTileVisible = false;
+        } else {
+          isTileVisible = true;
+        }
+      },
+      children: [
+        Visibility(
+          visible: !taskModel.hideStartDate,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: taskModel.startDate,
+                  name: 'Start Date',
+                  key: new Key('Start Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {
+                        startDate = date;
+                        if (dueDate != null && dueDate.toString().isNotEmpty)
+                          compareStartEndDate(
+                              startDate: startDate,
+                              enddate: dueDate,
+                              context: context,
+                              updateDuration: false);
+                      });
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
               ),
-            ),
-            Expanded(
-              child: DynamicDateTimeBox(
-                code: taskModel.dueDate,
-                name: 'Due Date',
-                key: new Key('Due Date'),
-                selectDate: (DateTime date) {
-                  if (date != null) {
-                    setState(() async {
-                      dueDate = date;
-                      if (startDate != null && startDate.toString().isNotEmpty)
-                        compareStartEndDate(
-                            startDate: startDate,
-                            enddate: dueDate,
-                            context: context,
-                            updateDuration: false);
-                    });
-                    // udfJson[model[i].key] = date.toString();
-                  }
-                },
-              ),
-            )
-          ],
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: taskModel.dueDate,
+                  name: 'Due Date',
+                  key: new Key('Due Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {
+                        dueDate = date;
+                        if (startDate != null &&
+                            startDate.toString().isNotEmpty)
+                          compareStartEndDate(
+                              startDate: startDate,
+                              enddate: dueDate,
+                              context: context,
+                              updateDuration: false);
+                      });
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              )
+            ],
+          ),
         ),
-      );
+        Visibility(
+          visible: !taskModel.hideSla,
+          child: BlocTextBoxWidget(
+            fieldName: 'SLA',
+            readonly: false,
+            maxLines: 1,
+            labelName: 'SLA',
+            textFieldBloc: createServiceFormBloc.sla,
+            prefixIcon: Icon(Icons.note),
+            onChanged: (value) {
+              slaValue = value.toString();
+            },
+          ),
+        ),
+      ],
+    ));
+    // }
 
-    if (!taskModel.hideSla) {
-      createServiceFormBloc.sla
-          .updateInitialValue(slaValue ?? taskModel.taskSla);
-      widgets.add(BlocTextBoxWidget(
-        fieldName: 'SLA',
-        readonly: false,
-        maxLines: 1,
-        labelName: 'SLA',
-        textFieldBloc: createServiceFormBloc.sla,
-        prefixIcon: Icon(Icons.note),
-        onChanged: (value) {
-          slaValue = value.toString();
-        },
-      ));
-    }
+//  Visibility(
+//             visible: !taskModel.hideda,
+//             child:
+   widgets.add( DynamicDateTimeBox(
+      code: taskModel.reminderDate,
+      name: 'Reminder Date',
+      key: new Key('Reminder Date'),
+      selectDate: (DateTime date) {
+        if (date != null) {
+          setState(() async {});
+          // udfJson[model[i].key] = date.toString();
+        }
+      },
+    ));
+    // ),
+    // child: BlocDatePickerWidget(
+    //   labelName: 'Reminder Date',
+    //   canSelectTime: false,
+    //   inputFieldBloc: createServiceFormBloc.expiryDate,
+    //   height: 75.0,
+    //   width: MediaQuery.of(context).size.width,
+    // ),
+    // ),
+
+    // if (!taskModel.hideSla) {
+    //   createServiceFormBloc.sla
+    //       .updateInitialValue(slaValue ?? taskModel.taskSla);
+    //   widgets.add(BlocTextBoxWidget(
+    //     fieldName: 'SLA',
+    //     readonly: false,
+    //     maxLines: 1,
+    //     labelName: 'SLA',
+    //     textFieldBloc: createServiceFormBloc.sla,
+    //     prefixIcon: Icon(Icons.note),
+    //     onChanged: (value) {
+    //       slaValue = value.toString();
+    //     },
+    //   ));
+    // }
 
     // if (!taskModel.hideRe)
     //   widgets.add(BlocDatePickerWidget(
@@ -626,7 +681,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               selectValue.add(null);
             }
           }
-         } if ((selectValue != null && selectValue.isNotEmpty) &&
+        }
+        if ((selectValue != null && selectValue.isNotEmpty) &&
             (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
         }
@@ -1216,21 +1272,23 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         curve: Curves.bounceInOut,
         children: [
           SpeedDialChild(
-              visible: taskModel.isAddCommentEnabled &&
+            visible: taskModel.isAddCommentEnabled &&
                 widget.taskId != null &&
                 widget.taskId.isNotEmpty,
-              child: Icon(Icons.comment, color: Colors.white),
-              backgroundColor: Colors.blue,
-              onTap: (){ Navigator.pushNamed(context, COMMENT_ROUTE,
-                    arguments: ScreenArguments(
-                      ntstype: NTSType.task,
-                      arg1: taskModel.taskId,
-                    ));},
-              label: 'Comment',
-              labelStyle:
-                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-              labelBackgroundColor: Colors.black,
-            ),
+            child: Icon(Icons.comment, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              Navigator.pushNamed(context, COMMENT_ROUTE,
+                  arguments: ScreenArguments(
+                    ntstype: NTSType.task,
+                    arg1: taskModel.taskId,
+                  ));
+            },
+            label: 'Comment',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
           SpeedDialChild(
             child: Icon(
               Icons.attachment_outlined,
@@ -1255,7 +1313,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           //         TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //     labelBackgroundColor: Colors.black,
           //   ),
-            
+
           //   SpeedDialChild(
           //     child: Icon(Icons.share, color: Colors.white),
           //     backgroundColor: Colors.blue,
