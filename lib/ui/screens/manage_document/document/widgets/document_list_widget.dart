@@ -291,7 +291,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             ADD_EDIT_NOTE_ROUTE,
             arguments: ScreenArguments(
                 arg1: '',
-                arg2: data.id,
+                arg2: data.noteId,
                 arg3: data.noteSubject),
           );
         },

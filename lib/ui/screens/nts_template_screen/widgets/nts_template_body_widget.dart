@@ -73,6 +73,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
             } else {
               _filteredTemplateModels = templateModels;
             }
+            _filteredTemplateModels.sort((a, b) => a.displayName.compareTo(b.displayName));
 
             return Container(
               child: Center(
