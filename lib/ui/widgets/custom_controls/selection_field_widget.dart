@@ -199,7 +199,7 @@ final List<Widget> children;
         padding: EdgeInsets.only(bottom: 1.0),
         child: ExpansionTile(
           initiallyExpanded: true,
-          leading: Icon(Icons.description),
+          // leading: Icon(Icons.calendar_today_sharp),
           trailing: isTileExpanded
               ? Icon(Icons.keyboard_arrow_down)
               : Icon(Icons.keyboard_arrow_up),
@@ -207,7 +207,7 @@ final List<Widget> children;
             valueChanged(isexpand);
           },
           title: Text(
-            "Dates Detail",
+            "Dates Detail",style: TextStyle(color: Theme.of(context).primaryColor),
           ),
           children: children
         ),

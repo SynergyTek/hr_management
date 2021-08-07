@@ -286,6 +286,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       );
     }
     if (widget.serviceId != null && widget.serviceId.isNotEmpty) {
+       createServiceFormBloc.sla.updateInitialValue(slaValue ?? serviceModel.serviceSLA);
       widgets.add(ExpandableField(
         isTileExpanded: isTileVisible,
         valueChanged: (dynamic value) {
@@ -379,32 +380,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ],
       ));
     }
-    // if (!serviceModel.hideStartDate)
-    // widgets.add(
-    //   );
-
-    // if () {
-    //   createServiceFormBloc.sla
-    //       .updateInitialValue(slaValue ?? serviceModel.serviceSLA);
-    //   widgets.add(
-
-    //   );
-    // }
-
-    // if (!serviceModel.hideExpiryDate)
-    //   widgets.add(
-    //     Visibility(
-    //       visible: false,
-    //       child: BlocDatePickerWidget(
-    //         labelName: 'Reminder Date',
-    //         canSelectTime: false,
-    //         inputFieldBloc: createServiceFormBloc.expiryDate,
-    //         height: 75.0,
-    //         width: MediaQuery.of(context).size.width,
-    //       ),
-    //     ),
-    //   );
-
     if (!serviceModel.hideDescription) {
       createServiceFormBloc.description.updateInitialValue(
           descriptionValue ?? serviceModel.serviceDescription);

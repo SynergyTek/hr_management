@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/user/user.dart';
@@ -71,6 +72,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
+  bool isTileVisible = false;
   TextEditingController leaveDurationControllerCalendarDays =
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
@@ -292,70 +294,104 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       );
     }
 
-    // if (!noteModel.hideStartDate)
-    widgets.add(
-      Visibility(
-        visible: true,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: DynamicDateTimeBox(
-                code: noteModel.startDate,
-                name: 'Start Date',
-                key: new Key('Start Date'),
-                selectDate: (DateTime date) {
-                  // if (date != null) {
-                  //   setState(() async {
-                  //     startDate = date;
-                  //     if (dueDate == null && noteModel.due != null) {
-                  //       dueDate = DateTime.parse(noteModel.dueDate);
-                  //     }
-                  //     if (dueDate != null && dueDate.toString().isNotEmpty)
-                  //       compareStartEndDate(
-                  //           startDate: startDate,
-                  //           enddate: dueDate,
-                  //           context: context,
-                  //           updateDuration: false);
-                  //   });
-                  // udfJson[model[i].key] = date.toString();
-                  // }
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
-    // if (!noteModel.hideSLA) {
-    //   createServiceFormBloc.sla.updateInitialValue(slaValue ?? noteModel.sla);
-    //   widgets.add(BlocTextBoxWidget(
-    //     fieldName: 'SLA',
-    //     readonly: false,
-    //     maxLines: 1,
-    //     labelName: 'SLA',
-    //     textFieldBloc: createServiceFormBloc.sla,
-    //     prefixIcon: Icon(Icons.note),
-    //     onChanged: (value) {
-    //       slaValue = value.toString();
-    //     },
-    //   ));
-    // }
-
-    if (!noteModel.hideExpiryDate)
-      widgets.add(
+    widgets.add(ExpandableField(
+      isTileExpanded: isTileVisible,
+      valueChanged: (dynamic value) {
+        bool isExpand = value;
+        if (isExpand) {
+          isTileVisible = false;
+        } else {
+          isTileVisible = true;
+        }
+      },
+      children: [
         Visibility(
-          visible: false,
-          child: BlocDatePickerWidget(
-            labelName: 'Reminder Date',
-            canSelectTime: false,
-            inputFieldBloc: createServiceFormBloc.expiryDate,
-            height: 75.0,
-            width: MediaQuery.of(context).size.width,
+          visible: !noteModel.hideStartDate,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: noteModel.startDate,
+                  name: 'Start Date',
+                  key: new Key('Start Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {
+                        startDate = date;
+                        if (dueDate != null && dueDate.toString().isNotEmpty)
+                          compareStartEndDate(
+                              startDate: startDate,
+                              enddate: dueDate,
+                              context: context,
+                              updateDuration: false);
+                      });
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              ),
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: noteModel.expiryDate,
+                  name: 'Expiry Date',
+                  key: new Key('Expiry Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {
+                        dueDate = date;
+                        if (startDate != null &&
+                            startDate.toString().isNotEmpty)
+                          compareStartEndDate(
+                              startDate: startDate,
+                              enddate: dueDate,
+                              context: context,
+                              updateDuration: false);
+                      });
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              )
+            ],
           ),
         ),
-      );
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            // Expanded(
+            //   child: Visibility(
+            //     visible: !taskModel.hideSla,
+            //     child: BlocTextBoxWidget(
+            //       fieldName: 'SLA',
+            //       readonly: false,
+            //       maxLines: 1,
+            //       labelName: 'SLA',
+            //       textFieldBloc: createServiceFormBloc.sla,
+            //       prefixIcon: Icon(Icons.note),
+            //       onChanged: (value) {
+            //         slaValue = value.toString();
+            //       },
+            //     ),
+            //   ),
+            // ),
+            Expanded(
+              child: DynamicDateTimeBox(
+                code: noteModel.reminderDate,
+                name: 'Reminder Date',
+                key: new Key('Reminder Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {});
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
+              ),
+            )
+          ],
+        ),
+      ],
+    ));
 
     if (!noteModel.hideDescription) {
       createServiceFormBloc.description
@@ -435,7 +471,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
       print(model[i].type);
-      print(model[i].udfValue);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
@@ -447,23 +482,41 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
         final textField$i =
             new TextFieldBloc(initialValue: udfJson[model[i].key]);
-        listDynamic.add(
-          BlocTextBoxWidget(
-            labelName: model[i].label,
-            fieldName: model[i].label,
-            readonly: false,
-            textFieldBloc: textField$i,
-            prefixIcon: Icon(Icons.note),
-            maxLines: 1,
-            onChanged: (value) {
-              udfJson[model[i].key] = value.toString();
-            },
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        if (!model[i].disabled) {
+          listDynamic.add(
+            BlocTextBoxWidget(
+              labelName: model[i].label,
+              fieldName: model[i].label,
+              readonly: model[i].disabled,
+              textFieldBloc: textField$i,
+              prefixIcon: Icon(Icons.note),
+              maxLines: 1,
+              onChanged: (value) {
+                udfJson[model[i].key] = value.toString();
+              },
+            ),
+          );
+          createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        } else {
+          listDynamic.add(StaticField(
+            // initialValue: difference.toString(),
+            width: MediaQuery.of(context).size.width,
+            hint: model[i].label,
+            icon: Icon(Icons.circle_outlined),
+            style: TextStyle(color: Colors.grey),
+            // controller: _slaController,
+            // isShowArrow: true,
+          ));
+          // listDynamic.add(new DynamicTextBoxWidget(
+          //     model[i].label,
+          //     model[i].label,
+          //     new TextEditingController(),
+          //     true,
+          //     (String val) {}));
+        }
       } else if (model[i].type == 'textarea') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null && widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) &&
@@ -477,7 +530,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textArea$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 3,
@@ -535,7 +588,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: password$i,
             prefixIcon: Icon(Icons.visibility_off_rounded),
             obscureText: true,
@@ -619,14 +672,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             }
           }
         }
+
         if ((selectValue != null && selectValue.isNotEmpty) &&
             (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
         }
-        // }
-        //else {
-        //   _ddController.text = selectValue[i];
-        // }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
@@ -643,46 +693,30 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               ddController: _ddController);
         }
 
-        listDynamic.add(NTSDropDownSelect(
-          title: model[i].label,
-          controller: _ddController,
-          hint: model[i].label,
-          validationMessage: "Select " + model[i].label,
-          isShowArrow: true,
-          nameKey: (model[i].template)
-              .toString()
-              .replaceAll('<span>{{', '')
-              .replaceAll('}}</span>', '')
-              .trim()
-              .split('.')[1],
-          idKey: model[i].idPath,
-          url: model[i].data?.url,
-          onListTap: (dynamic value) {
-            ntsDdBloc.subject.sink.add(null);
-            NTSDropdownModel _selectedIdNameViewModel = value;
-            _ddController.text = _selectedIdNameViewModel.name;
-            selectValue[i] = _selectedIdNameViewModel.name;
-            udfJson[model[i].key] = _selectedIdNameViewModel.id;
-          },
-        ));
-      } else if (model[i].type == 'file') {
-        TextEditingController attchmentController = new TextEditingController();
-
-        attchmentController.text =
-            udfJson[model[i].key] == null //&& udfJson[model[i].key].isNotEmpty
-                ? " Select File to Attach "
-                : " (1) File Attached " + udfJson[model[i].key];
-        listDynamic.add(DynamicAttchmentWidget(
-          labelName: model[i].label,
-          controller: attchmentController,
-          callBack1: () {
-            Navigator.pushNamed(
-              context,
-              NTS_ATTACHMENT,
-              arguments: ScreenArguments(),
-            );
-          },
-        ));
+        listDynamic.add(
+          NTSDropDownSelect(
+            title: model[i].label,
+            controller: _ddController,
+            hint: model[i].label,
+            validationMessage: "Select " + model[i].label,
+            isShowArrow: true,
+            nameKey: (model[i].template)
+                .toString()
+                .replaceAll('<span>{{', '')
+                .replaceAll('}}</span>', '')
+                .trim()
+                .split('.')[1],
+            idKey: model[i].idPath,
+            url: model[i].data.url,
+            onListTap: (dynamic value) {
+              ntsDdBloc.subject.sink.add(null);
+              NTSDropdownModel _selectedIdNameViewModel = value;
+              _ddController.text = _selectedIdNameViewModel.name;
+              selectValue[i] = _selectedIdNameViewModel.name;
+              udfJson[model[i].key] = _selectedIdNameViewModel.id;
+            },
+          ),
+        );
       } else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId == null || widget.noteId.isEmpty)) {
@@ -695,10 +729,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
         listDynamic.add(new DynamicDateTimeBox(
           code: udfJson[model[i].key].isNotEmpty
-              ? udfJson[model[i].key].contains('/')
-                  ? DateFormat("dd/MM/yyyy")
-                      .parse(model[i].udfValue.split(' ')[0])
+              ? model[i]
+                      .udfValue
                       .toString()
+                      .split(' ')[0]
+                      .contains(new RegExp(r'[a-z]'))
+                  ? null
                   : DateFormat("yyyy-MM-dd")
                       .parse(udfJson[model[i].key])
                       .toString()
@@ -821,7 +857,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: email$i,
             prefixIcon: Icon(Icons.email),
             maxLines: 1,
@@ -846,7 +882,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textField$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 1,
@@ -870,6 +906,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     for (var row in tableWidgets) {
       table.add(TableRow(children: [row]));
     }
+    // table.add(TableRow(children: tableWidgets));
     // });
     // listDynamic.add(Padding(
     //   padding: const EdgeInsets.only(top: 15, bottom: 10),
@@ -879,6 +916,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     //   ),
     // ));
     componentComListWidgets.add(Table(
+      defaultVerticalAlignment: TableCellVerticalAlignment.top,
       border: TableBorder(
         top: BorderSide(
           color: Colors.grey,

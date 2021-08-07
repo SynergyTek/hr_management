@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
+import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/user/user.dart';
@@ -349,72 +351,42 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             ],
           ),
         ),
-        Visibility(
-          visible: !taskModel.hideSla,
-          child: BlocTextBoxWidget(
-            fieldName: 'SLA',
-            readonly: false,
-            maxLines: 1,
-            labelName: 'SLA',
-            textFieldBloc: createServiceFormBloc.sla,
-            prefixIcon: Icon(Icons.note),
-            onChanged: (value) {
-              slaValue = value.toString();
-            },
-          ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: Visibility(
+                visible: !taskModel.hideSla,
+                child: BlocTextBoxWidget(
+                  fieldName: 'SLA',
+                  readonly: false,
+                  maxLines: 1,
+                  labelName: 'SLA',
+                  textFieldBloc: createServiceFormBloc.sla,
+                  prefixIcon: Icon(Icons.note),
+                  onChanged: (value) {
+                    slaValue = value.toString();
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: DynamicDateTimeBox(
+                code: taskModel.reminderDate,
+                name: 'Reminder Date',
+                key: new Key('Reminder Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {});
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
+              ),
+            )
+          ],
         ),
       ],
     ));
-    // }
-
-//  Visibility(
-//             visible: !taskModel.hideda,
-//             child:
-   widgets.add( DynamicDateTimeBox(
-      code: taskModel.reminderDate,
-      name: 'Reminder Date',
-      key: new Key('Reminder Date'),
-      selectDate: (DateTime date) {
-        if (date != null) {
-          setState(() async {});
-          // udfJson[model[i].key] = date.toString();
-        }
-      },
-    ));
-    // ),
-    // child: BlocDatePickerWidget(
-    //   labelName: 'Reminder Date',
-    //   canSelectTime: false,
-    //   inputFieldBloc: createServiceFormBloc.expiryDate,
-    //   height: 75.0,
-    //   width: MediaQuery.of(context).size.width,
-    // ),
-    // ),
-
-    // if (!taskModel.hideSla) {
-    //   createServiceFormBloc.sla
-    //       .updateInitialValue(slaValue ?? taskModel.taskSla);
-    //   widgets.add(BlocTextBoxWidget(
-    //     fieldName: 'SLA',
-    //     readonly: false,
-    //     maxLines: 1,
-    //     labelName: 'SLA',
-    //     textFieldBloc: createServiceFormBloc.sla,
-    //     prefixIcon: Icon(Icons.note),
-    //     onChanged: (value) {
-    //       slaValue = value.toString();
-    //     },
-    //   ));
-    // }
-
-    // if (!taskModel.hideRe)
-    //   widgets.add(BlocDatePickerWidget(
-    //     labelName: 'Reminder Date',
-    //     canSelectTime: false,
-    //     inputFieldBloc: createServiceFormBloc.expiryDate,
-    //     height: 75.0,
-    //     width: MediaQuery.of(context).size.width,
-    //   ));
 
     if (!taskModel.hideDescription) {
       createServiceFormBloc.description
@@ -488,8 +460,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   List<Widget> addDynamic(model, createServiceFormBloc) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      // print(model[i].type);
-      // print(model[i].udfValue);
+      print(model[i].type);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
@@ -501,23 +472,41 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         }
         final textField$i =
             new TextFieldBloc(initialValue: udfJson[model[i].key]);
-        listDynamic.add(
-          BlocTextBoxWidget(
-            labelName: model[i].label,
-            fieldName: model[i].label,
-            readonly: false,
-            textFieldBloc: textField$i,
-            prefixIcon: Icon(Icons.note),
-            maxLines: 1,
-            onChanged: (value) {
-              udfJson[model[i].key] = value.toString();
-            },
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        if (!model[i].disabled) {
+          listDynamic.add(
+            BlocTextBoxWidget(
+              labelName: model[i].label,
+              fieldName: model[i].label,
+              readonly: model[i].disabled,
+              textFieldBloc: textField$i,
+              prefixIcon: Icon(Icons.note),
+              maxLines: 1,
+              onChanged: (value) {
+                udfJson[model[i].key] = value.toString();
+              },
+            ),
+          );
+          createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        } else {
+          listDynamic.add(StaticField(
+            // initialValue: difference.toString(),
+            width: MediaQuery.of(context).size.width,
+            hint: model[i].label,
+            icon: Icon(Icons.circle_outlined),
+            style: TextStyle(color: Colors.grey),
+            // controller: _slaController,
+            // isShowArrow: true,
+          ));
+          // listDynamic.add(new DynamicTextBoxWidget(
+          //     model[i].label,
+          //     model[i].label,
+          //     new TextEditingController(),
+          //     true,
+          //     (String val) {}));
+        }
       } else if (model[i].type == 'textarea') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+            (widget.taskId != null && widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) &&
@@ -531,7 +520,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textArea$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 3,
@@ -543,12 +532,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
       } else if (model[i].type == 'number') {
         String initialValue;
-        // if (model[i].key == 'LeaveDurationCalendarDays' &&
-        //     (leaveDurationControllerCalendarDays.text != null &&
-        //         leaveDurationControllerCalendarDays.text.isNotEmpty)) {
-        //   initialValue = leaveDurationControllerCalendarDays.text;
-        // udfJson[model[i].key] = initialValue;
-        // }
         // final number$i = new TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
@@ -557,15 +540,16 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
+          leaveDurationControllerCalendarDays.text = model[i].udfValue;
+          initialValue = leaveDurationControllerCalendarDays.text;
         }
-        if (model[i].key == 'LeaveDurationCalendarDays' &&
-            (leaveDurationControllerCalendarDays.text != null &&
-                leaveDurationControllerCalendarDays.text.isNotEmpty)) {
+        if (model[i].key == 'LeaveDurationCalendarDays') {
           initialValue = leaveDurationControllerCalendarDays.text;
           udfJson[model[i].key] = initialValue;
+        } else {
           initialValue = udfJson[model[i].key];
         }
-        final number$i = new TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final number$i = new TextFieldBloc(initialValue: initialValue);
         listDynamic.add(
           BlocNumberBoxWidget(
             labelName: model[i].label,
@@ -581,12 +565,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
+        }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final password$i =
             new TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -594,7 +578,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: password$i,
             prefixIcon: Icon(Icons.visibility_off_rounded),
             obscureText: true,
@@ -606,15 +590,15 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
+        }
         listDynamic.add(new DynamicCheckBoxValue(
-          code: model[i].label,
+          code: udfJson[model[i].key],
           name: model[i].label,
           key: new Key(model[i].type),
           checkUpdate: (bool check) {
@@ -625,12 +609,13 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       } else if (model[i].type == 'selectboxes') {
         TextEditingController _ddController = new TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
+        }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
+          _ddController.text = udfJson[model[i].key];
         }
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,
@@ -650,12 +635,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         ));
       } else if (model[i].type == 'radio') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
+        }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final radio$i =
             new SelectFieldBloc(initialValue: udfJson[model[i].key]);
@@ -668,11 +653,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select') {
         TextEditingController _ddController = new TextEditingController();
-        // if (!udfJson.containsKey(model[i].key) &&
-        //     (widget.taskId != null || widget.taskId.isNotEmpty)) {
-        //   udfJson[model[i].key] = model[i].udfValue ?? '';
-        //   _ddController.text = udfJson[model[i].key];
-        // }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
@@ -682,32 +662,51 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             }
           }
         }
+
         if ((selectValue != null && selectValue.isNotEmpty) &&
             (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
         }
-        listDynamic.add(NTSDropDownSelect(
-          title: model[i].label,
-          controller: _ddController,
-          hint: model[i].label,
-          validationMessage: "Select " + model[i].label,
-          isShowArrow: true,
-          nameKey: (model[i].template)
-              .toString()
-              .replaceAll('<span>{{', '')
-              .replaceAll('}}</span>', '')
-              .trim()
-              .split('.')[1],
-          idKey: model[i].idPath,
-          url: model[i].data.url,
-          onListTap: (dynamic value) {
-            ntsDdBloc.subject.sink.add(null);
-            NTSDropdownModel _selectedIdNameViewModel = value;
-            _ddController.text = _selectedIdNameViewModel.name;
-            selectValue[i] = _selectedIdNameViewModel.name;
-            udfJson[model[i].key] = _selectedIdNameViewModel.id;
-          },
-        ));
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
+          editTaskDDValue(
+              code: udfJson[model[i].key],
+              idKey: model[i].idPath,
+              nameKey: (model[i].template)
+                  .toString()
+                  .replaceAll('<span>{{', '')
+                  .replaceAll('}}</span>', '')
+                  .trim()
+                  .split('.')[1],
+              url: model[i].data.url,
+              ddController: _ddController);
+        }
+
+        listDynamic.add(
+          NTSDropDownSelect(
+            title: model[i].label,
+            controller: _ddController,
+            hint: model[i].label,
+            validationMessage: "Select " + model[i].label,
+            isShowArrow: true,
+            nameKey: (model[i].template)
+                .toString()
+                .replaceAll('<span>{{', '')
+                .replaceAll('}}</span>', '')
+                .trim()
+                .split('.')[1],
+            idKey: model[i].idPath,
+            url: model[i].data.url,
+            onListTap: (dynamic value) {
+              ntsDdBloc.subject.sink.add(null);
+              NTSDropdownModel _selectedIdNameViewModel = value;
+              _ddController.text = _selectedIdNameViewModel.name;
+              selectValue[i] = _selectedIdNameViewModel.name;
+              udfJson[model[i].key] = _selectedIdNameViewModel.id;
+            },
+          ),
+        );
       } else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
@@ -716,15 +715,20 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
+          print(model[i].udfValue);
         }
         listDynamic.add(new DynamicDateTimeBox(
           code: udfJson[model[i].key].isNotEmpty
-              ? DateFormat("yyyy-MM-dd").parse(udfJson[model[i].key]).toString()
+              ? model[i]
+                      .udfValue
+                      .toString()
+                      .split(' ')[0]
+                      .contains(new RegExp(r'[a-z]'))
+                  ? null
+                  : DateFormat("yyyy-MM-dd")
+                      .parse(udfJson[model[i].key])
+                      .toString()
               : null,
-
-          // code: model[i].inputFormat != null || model[i].inputFormat != ''
-          //     ? model[i].inputFormat
-          //     : null,
           name: model[i].label,
           key: new Key(model[i].label),
           selectDate: (DateTime date) {
@@ -752,15 +756,20 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         ));
       } else if (model[i].type == 'time') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
+        }
         listDynamic.add(
           new DynamicTimeBox(
+            code: udfJson[model[i].key].isNotEmpty
+                ? DateFormat("yyyy-MM-dd HH:mm:ss aa")
+                    .parse(udfJson[model[i].key])
+                    .toString()
+                : null,
             name: model[i].label,
             key: new Key(model[i].label),
             selectTime: (TimeOfDay time) {
@@ -773,12 +782,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       } else if (model[i].type == 'hidden') {
         //Hidden Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
+        }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final hidden$i = new TextFieldBloc(initialValue: udfJson[model[i].key]);
         listDynamic.add(
@@ -799,12 +808,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       } else if (model[i].type == 'phoneNumber') {
         //Phone Number Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
+        }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final phoneNumber$i =
             new TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -824,12 +833,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       } else if (model[i].type == 'email') {
         //Email Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
+        }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final email$i = new TextFieldBloc(
             validators: [FieldBlocValidators.email],
@@ -838,7 +847,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: email$i,
             prefixIcon: Icon(Icons.email),
             maxLines: 1,
@@ -850,12 +859,12 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId.isNotEmpty)) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
+        }
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
+          udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final textField$i =
             new TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -863,7 +872,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textField$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 1,
@@ -887,6 +896,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     for (var row in tableWidgets) {
       table.add(TableRow(children: [row]));
     }
+    // table.add(TableRow(children: tableWidgets));
     // });
     // listDynamic.add(Padding(
     //   padding: const EdgeInsets.only(top: 15, bottom: 10),
@@ -896,6 +906,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     //   ),
     // ));
     componentComListWidgets.add(Table(
+      defaultVerticalAlignment: TableCellVerticalAlignment.top,
       border: TableBorder(
         top: BorderSide(
           color: Colors.grey,
@@ -920,6 +931,25 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ),
       children: table,
     ));
+  }
+
+  editTaskDDValue(
+      {String idKey,
+      String nameKey,
+      String url,
+      String code,
+      TextEditingController ddController}) async {
+    NTSDdRepository ntsDdRepository = NTSDdRepository();
+    String completeUrl = url + "&filterKey=$idKey&filterValue=$code";
+    NTSDdResponse ntsDdResponse = await ntsDdRepository.getFilteredDDData(
+      idKey: idKey,
+      nameKey: nameKey,
+      url: completeUrl,
+    );
+
+    print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
+    ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
+    // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
 
   displayFooterWidget(
