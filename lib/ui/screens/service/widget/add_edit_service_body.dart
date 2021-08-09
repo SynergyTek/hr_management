@@ -95,6 +95,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   @override
   void initState() {
     super.initState();
+    
     serviceBloc
       ..getServiceDetail(
         templateCode: widget.templateCode,
@@ -406,7 +407,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         controller: _fromddController,
         hint: 'From',
         isShowArrow: true,
-        onListTap: (dynamic value) {
+        onListTap: ( value) {
           userBLoc.subjectUserDataList.sink.add(null);
           User _user = value;
           _fromddController.text = _user.name;

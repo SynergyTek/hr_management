@@ -421,7 +421,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         controller: _fromddController,
         hint: 'From',
         isShowArrow: true,
-        onListTap: (dynamic value) {
+        onListTap: ( value) {
           userBLoc.subjectUserDataList.sink.add(null);
           User _user = value;
           _fromddController.text = _user.name;

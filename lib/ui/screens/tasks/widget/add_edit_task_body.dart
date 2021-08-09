@@ -217,6 +217,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     CreateServiceFormBloc createServiceFormBloc,
   ) {
     _fromddController.text = taskModel.ownerUserName;
+    ownerUserId = taskModel.ownerUserId;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -411,7 +412,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         controller: _fromddController,
         hint: 'From',
         isShowArrow: true,
-        onListTap: (dynamic value) {
+        onListTap: (value) {
           userBLoc.subjectUserDataList.sink.add(null);
           User _user = value;
           _fromddController.text = _user.name;
