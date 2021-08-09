@@ -41,9 +41,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
   @override
   void initState() {
-    noteStatus = widget.noteStatus;
-    mode = widget.mode;
-    moduleId = widget.moduleId;
+    // noteStatus = widget.noteStatus;
+    // mode = widget.mode;
+    // moduleId = widget.moduleId;
     super.initState();
     apiCall();
   }
@@ -51,6 +51,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
   apiCall() {
     noteBloc.subjectNoteList.sink.add(null);
 
+    noteStatus = widget.noteStatus;
+    mode = widget.mode;
+    moduleId = widget.moduleId;
     Map<String, dynamic> queryparams = Map();
 
     if (noteStatus != null) queryparams['noteStatus'] = noteStatus;

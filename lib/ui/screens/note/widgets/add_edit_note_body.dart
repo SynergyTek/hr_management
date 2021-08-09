@@ -1221,7 +1221,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     postNoteModel.requestedByUserId = userId;
     postNoteModel.subject = createServiceFormBloc.subject.value;
     postNoteModel.noteDescription = createServiceFormBloc.description.value;
-    postNoteModel.dataAction = widget.noteId == null ? 1 : 2;
+    postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
    // postDataAction;
     postNoteModel.noteStatusCode = noteStatusCode;
     postNoteModel.json = jsonEncode(udfJson);

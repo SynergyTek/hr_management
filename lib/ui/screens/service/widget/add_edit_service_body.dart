@@ -95,7 +95,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   @override
   void initState() {
     super.initState();
-    
+
     serviceBloc
       ..getServiceDetail(
         templateCode: widget.templateCode,
@@ -287,7 +287,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       );
     }
     if (widget.serviceId != null && widget.serviceId.isNotEmpty) {
-       createServiceFormBloc.sla.updateInitialValue(slaValue ?? serviceModel.serviceSLA);
+      createServiceFormBloc.sla
+          .updateInitialValue(slaValue ?? serviceModel.serviceSLA);
       widgets.add(ExpandableField(
         isTileExpanded: isTileVisible,
         valueChanged: (dynamic value) {
@@ -407,7 +408,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         controller: _fromddController,
         hint: 'From',
         isShowArrow: true,
-        onListTap: ( value) {
+        onListTap: (value) {
           userBLoc.subjectUserDataList.sink.add(null);
           User _user = value;
           _fromddController.text = _user.name;
@@ -1266,7 +1267,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     postServiceModel.serviceSubject = createServiceFormBloc.subject.value;
     postServiceModel.serviceDescription =
         createServiceFormBloc.description.value;
-    postServiceModel.dataAction = postDataAction;
+    postServiceModel.dataAction = widget.serviceId.isEmpty ? 1 : 2;
+   // postDataAction;
     postServiceModel.serviceStatusCode = serviceStatusCode;
     postServiceModel.json = jsonEncode(udfJson);
     print(udfJson);
