@@ -236,7 +236,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             Expanded(child: Container()),
             Container(
               height: 50,
-              color: Colors.grey[100],
+              // color: Colors.grey[100],
+              color: Colors.transparent,
               child: displayFooterWidget(
                 taskModel,
                 createServiceFormBloc,
@@ -1008,6 +1009,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           Visibility(
             visible: taskModel.isCompleteButtonVisible,
             child: PrimaryButton(
+              backgroundColor: Colors.green,
               buttonText: 'Complete',
               handleOnPressed: () {
                 taskViewModelPostRequest(
@@ -1026,6 +1028,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           Visibility(
             visible: taskModel.isDraftButtonVisible,
             child: PrimaryButton(
+              backgroundColor: Colors.greenAccent,
               buttonText: 'Draft',
               handleOnPressed: () {
                 taskViewModelPostRequest(
@@ -1040,6 +1043,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           Visibility(
             visible: taskModel.isRejectButtonVisible,
             child: PrimaryButton(
+              backgroundColor: Colors.red,
               buttonText: 'Reject',
               handleOnPressed: () {
                 if (taskModel.isRejectReasonRequired)

@@ -942,6 +942,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             Visibility(
               visible: serviceModel.isCompleteButtonVisible,
               child: PrimaryButton(
+                backgroundColor: Colors.green,
                 buttonText: 'Complete',
                 handleOnPressed: () => serviceViewModelPostRequest(
                   2,
@@ -971,6 +972,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               // visible: true,
               visible: serviceModel.isCancelButtonVisible,
               child: PrimaryButton(
+                backgroundColor: Colors.red,
                 buttonText: 'Cancel',
                 handleOnPressed: () {
                   if (serviceModel.isCancelReasonRequired)
@@ -995,6 +997,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             Visibility(
               visible: serviceModel.isDraftButtonVisible,
               child: PrimaryButton(
+                backgroundColor: Colors.greenAccent,
                 buttonText: 'Draft',
                 handleOnPressed: () {
                   serviceViewModelPostRequest(

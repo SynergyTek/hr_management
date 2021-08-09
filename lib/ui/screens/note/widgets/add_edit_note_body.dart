@@ -957,6 +957,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               Visibility(
                 visible: noteModel.isCompleteButtonVisible,
                 child: PrimaryButton(
+                  backgroundColor: Colors.green,
                   buttonText: 'Complete',
                   handleOnPressed: () {
                     noteViewModelPostRequest(
@@ -991,6 +992,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               Visibility(
                 visible: noteModel.isDraftButtonVisible,
                 child: PrimaryButton(
+                  backgroundColor: Colors.greenAccent,
                   buttonText: 'Draft',
                   handleOnPressed: () {
                     noteViewModelPostRequest(
@@ -1005,6 +1007,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               Visibility(
                 visible: noteModel.isExpireButtonVisible,
                 child: PrimaryButton(
+                  backgroundColor: Colors.red,
                   buttonText: 'Expiry',
                   handleOnPressed: () {
                     noteViewModelPostRequest(
