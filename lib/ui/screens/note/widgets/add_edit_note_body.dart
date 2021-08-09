@@ -221,18 +221,16 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    _fromddController.text =noteModel.ownerUserName!=null? noteModel.ownerUserName:"";
+    _fromddController.text =
+        noteModel.ownerUserName != null ? noteModel.ownerUserName : "";
     return Stack(
       children: [
-        SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: formFieldsWidgets(
-              context,
-              createServiceFormBloc,
-              noteModel,
-            ),
+        ListView(
+          shrinkWrap: true,
+          children: formFieldsWidgets(
+            context,
+            createServiceFormBloc,
+            noteModel,
           ),
         ),
         Column(
@@ -270,15 +268,15 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          rowChild(noteModel.noteNo??"", 'Note No', 3),
-          rowChild(noteModel.noteStatusName??"", 'Status', 2),
-          rowChild(noteModel.versionNo.toString()??"", 'Version No', 2),
+          rowChild(noteModel.noteNo ?? "", 'Note No', 3),
+          rowChild(noteModel.noteStatusName ?? "", 'Status', 2),
+          rowChild(noteModel.versionNo.toString() ?? "", 'Version No', 2),
         ],
       ),
     ));
     if (!noteModel.hideSubject) {
       createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? noteModel.noteSubject??"");
+          .updateInitialValue(subjectValue ?? noteModel.noteSubject ?? "");
       widgets.add(
         BlocTextBoxWidget(
           fieldName: 'Subject',
@@ -470,7 +468,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   List<Widget> addDynamic(model, createServiceFormBloc) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      print(model[i].type);
+      // print(model[i].type);
+      // print(model[i].key);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
@@ -1192,12 +1191,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('End Date Should be greater than Start Date.'),
-              ],
-            ),
+          content: ListBody(
+            children: const <Widget>[
+              Text('End Date Should be greater than Start Date.'),
+            ],
           ),
           actions: <Widget>[
             TextButton(
@@ -1266,7 +1263,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       url: completeUrl,
     );
 
-    print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
     ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
     // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
