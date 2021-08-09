@@ -188,10 +188,10 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
             buttonText: 'Ending in Next 7 Days',
             handleOnPressed: () => _endingInWeekFilter(),
           ),
-          customButton(
-            buttonText: 'Date',
-            handleOnPressed: () => _dateFilter(),
-          ),
+          // customButton(
+          //   buttonText: 'Date',
+          //   handleOnPressed: () => _dateFilter(),
+          // ),
           customButton(
             buttonText: 'More...',
             handleOnPressed: () => _moreFilter(),
