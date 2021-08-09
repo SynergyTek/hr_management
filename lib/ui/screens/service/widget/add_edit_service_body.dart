@@ -943,7 +943,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               child: PrimaryButton(
                 buttonText: 'Complete',
                 handleOnPressed: () => serviceViewModelPostRequest(
-                  1,
+                  2,
                   'SERVICE_STATUS_COMPLETE',
                   createServiceFormBloc,
                 ),
@@ -975,7 +975,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   if (serviceModel.isCancelReasonRequired)
                     enterReasonAlertDialog(context);
                   serviceViewModelPostRequest(
-                    1,
+                    2,
                     'SERVICE_STATUS_CANCEL',
                     createServiceFormBloc,
                   );
@@ -1261,7 +1261,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
 
-    postServiceModel.ownerUserId = ownerUserId;
+    postServiceModel.ownerUserId = userId;
     postServiceModel.requestedByUserId = userId;
     postServiceModel.serviceSubject = createServiceFormBloc.subject.value;
     postServiceModel.serviceDescription =

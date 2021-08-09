@@ -1011,7 +1011,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               buttonText: 'Complete',
               handleOnPressed: () {
                 taskViewModelPostRequest(
-                  1,
+                  2,
                   'TASK_STATUS_COMPLETE',
                   createServiceFormBloc,
                 );
@@ -1046,7 +1046,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                   enterReasonAlertDialog(
                       context, 'Enter Reason', 'Please enter reason');
                 taskViewModelPostRequest(
-                  1,
+                  2,
                   'TASK_STATUS_REJECT',
                   createServiceFormBloc,
                 );
@@ -1260,10 +1260,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     var jsonModel = jsonDecode(stringModel);
     postTaskModel = TaskModel.fromJson(jsonModel);
 
-    postTaskModel.ownerUserId = ownerUserId;
+    postTaskModel.ownerUserId = userId;
     postTaskModel.requestedByUserId = userId;
-    postTaskModel.assignedToUserId =
-        userId; //TODO: set appropriate "assignedToUserId"
+    postTaskModel.assignedToUserId =userId; //TODO: set appropriate "assignedToUserId"
     postTaskModel.taskSubject = createServiceFormBloc.subject.value;
     postTaskModel.taskDescription = createServiceFormBloc.description.value;
     postTaskModel.dataAction = postDataAction;

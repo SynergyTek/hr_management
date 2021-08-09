@@ -221,7 +221,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    _fromddController.text =noteModel.ownerUserName!=null? noteModel.ownerUserName:"";
+    _fromddController.text =
+        noteModel.ownerUserName != null ? noteModel.ownerUserName : "";
     return Stack(
       children: [
         SingleChildScrollView(
@@ -270,15 +271,15 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          rowChild(noteModel.noteNo??"", 'Note No', 3),
-          rowChild(noteModel.noteStatusName??"", 'Status', 2),
-          rowChild(noteModel.versionNo.toString()??"", 'Version No', 2),
+          rowChild(noteModel.noteNo ?? "", 'Note No', 3),
+          rowChild(noteModel.noteStatusName ?? "", 'Status', 2),
+          rowChild(noteModel.versionNo.toString() ?? "", 'Version No', 2),
         ],
       ),
     ));
     if (!noteModel.hideSubject) {
       createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? noteModel.noteSubject??"");
+          .updateInitialValue(subjectValue ?? noteModel.noteSubject ?? "");
       widgets.add(
         BlocTextBoxWidget(
           fieldName: 'Subject',
@@ -421,7 +422,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         controller: _fromddController,
         hint: 'From',
         isShowArrow: true,
-        onListTap: ( value) {
+        onListTap: (value) {
           userBLoc.subjectUserDataList.sink.add(null);
           User _user = value;
           _fromddController.text = _user.name;
@@ -961,7 +962,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   buttonText: 'Complete',
                   handleOnPressed: () {
                     noteViewModelPostRequest(
-                      1,
+                      2,
                       'NOTE_STATUS_COMPLETE',
                       createServiceFormBloc,
                     );
@@ -1009,8 +1010,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   buttonText: 'Expiry',
                   handleOnPressed: () {
                     noteViewModelPostRequest(
-                      1,
-                      'NOTE_STATUS_DRAFT',
+                      2,
+                      'NOTE_STATUS_EXPIRE',
                       createServiceFormBloc,
                     );
                   },
@@ -1220,11 +1221,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     var jsonModel = jsonDecode(stringModel);
     postNoteModel = NoteModel.fromJson(jsonModel);
 
-    postNoteModel.ownerUserId = ownerUserId;
+    postNoteModel.ownerUserId = userId;
     postNoteModel.requestedByUserId = userId;
     postNoteModel.subject = createServiceFormBloc.subject.value;
     postNoteModel.noteDescription = createServiceFormBloc.description.value;
-    postNoteModel.dataAction = postDataAction;
+    postNoteModel.dataAction = widget.noteId == null ? 1 : 2;
+   // postDataAction;
     postNoteModel.noteStatusCode = noteStatusCode;
     postNoteModel.json = jsonEncode(udfJson);
     print(udfJson);
