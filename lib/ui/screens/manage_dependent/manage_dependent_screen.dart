@@ -75,6 +75,7 @@ class _ManageDependentScreenState extends State<ManageDependentScreen> {
           arguments: ScreenArguments(
             arg1: 'HRDependant',
             arg2: '',
+            val1: true,
           ),
         ),
       ),

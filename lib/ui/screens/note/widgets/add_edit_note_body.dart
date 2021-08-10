@@ -40,8 +40,10 @@ class AddEditNoteBody extends StatefulWidget {
   final String templateCode;
   final String noteId;
   final String title;
+  final bool isDependent;
 
-  AddEditNoteBody({this.templateCode, this.noteId, this.title});
+  AddEditNoteBody(
+      {this.templateCode, this.noteId, this.title, this.isDependent});
 
   @override
   _AddEditNoteBodyState createState() => _AddEditNoteBodyState();
@@ -72,7 +74,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
-  bool isTileVisible = false;
+  bool isTileVisible = true;
   TextEditingController leaveDurationControllerCalendarDays =
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
@@ -130,7 +132,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
                 return Scaffold(
                   appBar: AppbarWidget(
-                    title: widget.noteId == null || widget.noteId.isEmpty
+                    title: widget.isDependent?"Manage Dependent": widget.noteId == null || widget.noteId.isEmpty
                         ? "Create Note" // + widget.templateCode
                         // : widget.title != null
                         //     ? "Edit $widget.title"
@@ -274,78 +276,114 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         ],
       ),
     ));
-    if (!noteModel.hideSubject) {
-      createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? noteModel.noteSubject ?? "");
-      widgets.add(
-        BlocTextBoxWidget(
-          fieldName: 'Subject',
-          readonly: false,
-          maxLines: 1,
-          labelName: 'Subject',
-          textFieldBloc: createServiceFormBloc.subject,
-          prefixIcon: Icon(Icons.note),
-          onChanged: (value) {
-            subjectValue = value.toString();
-          },
-        ),
-      );
-    }
+    if (!widget.isDependent) {
+      if (!noteModel.hideSubject) {
+        createServiceFormBloc.subject
+            .updateInitialValue(subjectValue ?? noteModel.noteSubject ?? "");
+        widgets.add(
+          BlocTextBoxWidget(
+            fieldName: 'Subject',
+            readonly: false,
+            maxLines: 1,
+            labelName: 'Subject',
+            textFieldBloc: createServiceFormBloc.subject,
+            prefixIcon: Icon(Icons.note),
+            onChanged: (value) {
+              subjectValue = value.toString();
+            },
+          ),
+        );
+      }
 
-    widgets.add(ExpandableField(
-      isTileExpanded: isTileVisible,
-      valueChanged: (dynamic value) {
-        bool isExpand = value;
-        if (isExpand) {
-          isTileVisible = false;
-        } else {
-          isTileVisible = true;
-        }
-      },
-      children: [
-        Visibility(
-          visible: !noteModel.hideStartDate,
-          child: Row(
+      widgets.add(ExpandableField(
+        isTileExpanded: isTileVisible,
+        valueChanged: (dynamic value) {
+          bool isExpand = value;
+          if (isExpand) {
+            isTileVisible = false;
+          } else {
+            isTileVisible = true;
+          }
+        },
+        children: [
+          Visibility(
+            visible: !noteModel.hideStartDate,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: DynamicDateTimeBox(
+                    code: noteModel.startDate,
+                    name: 'Start Date',
+                    key: new Key('Start Date'),
+                    selectDate: (DateTime date) {
+                      if (date != null) {
+                        setState(() async {
+                          startDate = date;
+                          if (dueDate != null && dueDate.toString().isNotEmpty)
+                            compareStartEndDate(
+                                startDate: startDate,
+                                enddate: dueDate,
+                                context: context,
+                                updateDuration: false);
+                        });
+                        // udfJson[model[i].key] = date.toString();
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: DynamicDateTimeBox(
+                    code: noteModel.expiryDate,
+                    name: 'Expiry Date',
+                    key: new Key('Expiry Date'),
+                    selectDate: (DateTime date) {
+                      if (date != null) {
+                        setState(() async {
+                          dueDate = date;
+                          if (startDate != null &&
+                              startDate.toString().isNotEmpty)
+                            compareStartEndDate(
+                                startDate: startDate,
+                                enddate: dueDate,
+                                context: context,
+                                updateDuration: false);
+                        });
+                        // udfJson[model[i].key] = date.toString();
+                      }
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
+              // Expanded(
+              //   child: Visibility(
+              //     visible: !taskModel.hideSla,
+              //     child: BlocTextBoxWidget(
+              //       fieldName: 'SLA',
+              //       readonly: false,
+              //       maxLines: 1,
+              //       labelName: 'SLA',
+              //       textFieldBloc: createServiceFormBloc.sla,
+              //       prefixIcon: Icon(Icons.note),
+              //       onChanged: (value) {
+              //         slaValue = value.toString();
+              //       },
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: DynamicDateTimeBox(
-                  code: noteModel.startDate,
-                  name: 'Start Date',
-                  key: new Key('Start Date'),
+                  code: noteModel.reminderDate,
+                  name: 'Reminder Date',
+                  key: new Key('Reminder Date'),
                   selectDate: (DateTime date) {
                     if (date != null) {
-                      setState(() async {
-                        startDate = date;
-                        if (dueDate != null && dueDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate,
-                              enddate: dueDate,
-                              context: context,
-                              updateDuration: false);
-                      });
-                      // udfJson[model[i].key] = date.toString();
-                    }
-                  },
-                ),
-              ),
-              Expanded(
-                child: DynamicDateTimeBox(
-                  code: noteModel.expiryDate,
-                  name: 'Expiry Date',
-                  key: new Key('Expiry Date'),
-                  selectDate: (DateTime date) {
-                    if (date != null) {
-                      setState(() async {
-                        dueDate = date;
-                        if (startDate != null &&
-                            startDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate,
-                              enddate: dueDate,
-                              context: context,
-                              updateDuration: false);
-                      });
+                      setState(() async {});
                       // udfJson[model[i].key] = date.toString();
                     }
                   },
@@ -353,82 +391,48 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               )
             ],
           ),
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            // Expanded(
-            //   child: Visibility(
-            //     visible: !taskModel.hideSla,
-            //     child: BlocTextBoxWidget(
-            //       fieldName: 'SLA',
-            //       readonly: false,
-            //       maxLines: 1,
-            //       labelName: 'SLA',
-            //       textFieldBloc: createServiceFormBloc.sla,
-            //       prefixIcon: Icon(Icons.note),
-            //       onChanged: (value) {
-            //         slaValue = value.toString();
-            //       },
-            //     ),
-            //   ),
-            // ),
-            Expanded(
-              child: DynamicDateTimeBox(
-                code: noteModel.reminderDate,
-                name: 'Reminder Date',
-                key: new Key('Reminder Date'),
-                selectDate: (DateTime date) {
-                  if (date != null) {
-                    setState(() async {});
-                    // udfJson[model[i].key] = date.toString();
-                  }
-                },
-              ),
-            )
-          ],
-        ),
-      ],
-    ));
+        ],
+      ));
 
-    if (!noteModel.hideDescription) {
-      createServiceFormBloc.description
-          .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
-      widgets.add(
-        Visibility(
-          visible: true,
-          child: BlocTextBoxWidget(
-            fieldName: 'Description',
-            readonly: false,
-            maxLines: 3,
-            labelName: 'Description',
-            textFieldBloc: createServiceFormBloc.description,
-            prefixIcon: Icon(Icons.note),
-            onChanged: (value) {
-              descriptionValue = value.toString();
-            },
+      if (!noteModel.hideDescription) {
+        createServiceFormBloc.description
+            .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
+        widgets.add(
+          Visibility(
+            visible: true,
+            child: BlocTextBoxWidget(
+              fieldName: 'Description',
+              readonly: false,
+              maxLines: 3,
+              labelName: 'Description',
+              textFieldBloc: createServiceFormBloc.description,
+              prefixIcon: Icon(Icons.note),
+              onChanged: (value) {
+                descriptionValue = value.toString();
+              },
+            ),
           ),
+        );
+      }
+
+      widgets.add(
+        NTSDropDownSelect(
+          isUserList: true,
+          title: 'From',
+          controller: _fromddController,
+          hint: 'From',
+          isShowArrow: true,
+          onListTap: (value) {
+            userBLoc.subjectUserDataList.sink.add(null);
+            User _user = value;
+            _fromddController.text = _user.name;
+            ownerUserId = _user.id;
+            //     selectValue[i] = _selectedIdNameViewModel.name;
+            //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
+          },
         ),
       );
     }
-
-    widgets.add(
-      NTSDropDownSelect(
-        isUserList: true,
-        title: 'From',
-        controller: _fromddController,
-        hint: 'From',
-        isShowArrow: true,
-        onListTap: (value) {
-          userBLoc.subjectUserDataList.sink.add(null);
-          User _user = value;
-          _fromddController.text = _user.name;
-          ownerUserId = _user.id;
-          //     selectValue[i] = _selectedIdNameViewModel.name;
-          //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
-        },
-      ),
-    );
 
     if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
@@ -1225,7 +1229,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     postNoteModel.subject = createServiceFormBloc.subject.value;
     postNoteModel.noteDescription = createServiceFormBloc.description.value;
     postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
-   // postDataAction;
+    // postDataAction;
     postNoteModel.noteStatusCode = noteStatusCode;
     postNoteModel.json = jsonEncode(udfJson);
     print(udfJson);

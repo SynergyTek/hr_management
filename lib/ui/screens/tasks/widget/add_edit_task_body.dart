@@ -72,7 +72,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
-  bool isTileVisible = false;
+  bool isTileVisible = true;
   TextEditingController leaveDurationControllerCalendarDays =
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =

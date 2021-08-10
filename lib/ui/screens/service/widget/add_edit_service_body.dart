@@ -74,7 +74,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   DateTime leaveStartDate;
   DateTime leaveEnddate;
 
-  bool isTileVisible = false;
+  bool isTileVisible = true;
   TextEditingController leaveDurationControllerCalendarDays =
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
