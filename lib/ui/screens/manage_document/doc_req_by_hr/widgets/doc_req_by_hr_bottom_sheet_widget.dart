@@ -37,14 +37,14 @@ class DocReqByHrBottomSheetWidget extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              data?.serviceNo ?? 'NA',
+              data?.serviceNo ?? '-',
             ),
             trailing: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    data?.status ?? 'NA',
+                    data?.status ?? '-',
                     style: TextStyle(
                       fontSize: Theme.of(context).textTheme.headline6.fontSize,
                       color: _handleListTileColor(context),
@@ -57,12 +57,8 @@ class DocReqByHrBottomSheetWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(data?.issueDate ?? "NA"),
+            title: Text(data?.issueDate ?? "-"),
             subtitle: Text("Issue Date"),
-          ),
-          ListTile(
-            title: Text(data?.expiryDate ?? "NA"),
-            subtitle: Text("Expiry Date"),
           ),
         ],
       ),

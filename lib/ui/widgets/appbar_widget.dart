@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/models/login_models/login_request_model.dart';
+import 'package:hr_management/data/models/login_models/login_response_model.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'profile_settings_icon_button.dart';
 
@@ -40,7 +46,28 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       bottom: widget.bottom,
       actions: []
         ..addAll(widget?.actions ?? [])
-        ..add(ProfileSettingsIconButton()),
+        ..add(ProfileSettingsIconButton())
+        ..add(
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.clear();
+
+              BlocProvider.of<UserModelBloc>(context).add(
+                UserModelChangeEvent(
+                  userModel: null,
+                ),
+              );
+
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LOGIN_ROUTE,
+                ModalRoute.withName('/login'),
+              );
+            },
+          ),
+        ),
       // actions: [
       //   ProfileSettingsIconButton(),
       // ]..addAll(widget?.actions ?? []),

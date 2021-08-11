@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 class ProfileSettingsModel {
   final bool isDarkModeEnabled;
 
   const ProfileSettingsModel({
-    @required this.isDarkModeEnabled,
+    this.isDarkModeEnabled,
   });
 
   ProfileSettingsModel copyWith({

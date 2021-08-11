@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
+import 'package:hr_management/ui/widgets/synergy_divider_widget.dart';
 
 import '../../../../../data/enums/enums.dart';
 import '../../../../../data/models/documents_models/note_index_models/note_index_model.dart';
@@ -10,6 +11,7 @@ import '../../../../../routes/route_constants.dart';
 import '../../../../../routes/screen_arguments.dart';
 import '../../../../../themes/theme_config.dart';
 import '../../../../widgets/progress_indicator.dart';
+import 'document_bottom_sheet_widget.dart';
 
 class DocumentListWidget extends StatefulWidget {
   final String templateId;
@@ -145,372 +147,810 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
     if (widget.templateName ==
         noteIndexTableMap[NoteIndexTableType.employeeVisa])
       return Card(
-        child: ListTile(
-          title: Column(
+        child: GestureDetector(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _formatText(
-                key: 'Duration of Stay',
-                value: data.durationOfStay,
-              ),
-              _formatText(
-                key: 'Entry Type',
-                value: data.entryTypeIdName,
-              ),
-              _formatText(
-                key: 'Expire Date',
-                value: data.expireDate,
-              ),
-              _formatText(
-                key: 'Visa Job Title',
-                value: data.jobTitle,
-              ),
-              _formatText(
-                key: 'Document No',
-                value: data.noteNo,
-              ),
-              _formatText(
-                key: 'Place of Issue',
-                value: data.placeOfIssue,
-              ),
-              _formatText(
-                key: 'Purpose',
-                value: data.purpose,
-              ),
-              _formatText(
-                key: 'Sponsor Name',
-                value: data.sponsorName,
-              ),
-              _formatText(
-                key: 'UID Number',
-                value: data.uidNo,
-              ),
-              _formatText(
-                key: 'Visa Attachment',
-                value: data.visaAttachmentId,
-              ),
-              _formatText(
-                key: 'Visa Number',
-                value: data.visaNumber,
-              ),
-              _formatText(
-                key: 'Visa Type',
-                value: data.visaTypeIdName,
+              ListTile(
+                title: Text(
+                  data.noteNo,
+                  style: TextStyle(
+                    color: Theme.of(context).textHeadingColor,
+                  ),
+                ),
+                subtitle: Text(
+                  "Visa Number: ${data?.visaNumber ?? '-'}",
+                ),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      data.expireDate?.split(' ')?.elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: Colors.black87,
+                          ),
+                    ),
+                    Text('Expire Date'),
+                  ],
+                ),
               ),
             ],
           ),
-           onTap: () {
-          noteBloc.subjectNoteDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            ADD_EDIT_NOTE_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: data.id,
-                arg3: data.noteSubject),
-          );
-        },
+          onTap: () {
+            // open bottom sheet
+
+            showDocumentBottomSheet(
+              bottomSheetDataList: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.noteNo,
+                        subtitle: 'Document ID',
+                        isHeading: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.jobTitle,
+                        subtitle: 'Visa Job Title',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.visaNumber,
+                        subtitle: 'Visa Number',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.entryTypeIdName,
+                        subtitle: 'Entry Type',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.visaTypeIdName,
+                        subtitle: 'Visa Type',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.durationOfStay,
+                        subtitle: 'Duration of Stay',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title:
+                            data.expireDate?.split(' ')?.elementAt(0) ?? null,
+                        subtitle: 'Expire Date',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.sponsorName,
+                        subtitle: 'Sponsor Name',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.uidNo,
+                        subtitle: 'UID Number',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.purpose,
+                        subtitle: 'Purpose',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.visaAttachmentId,
+                        subtitle: 'Visa Attachment',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.placeOfIssue,
+                        subtitle: 'Place of Issue',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
-        
       );
 
     if (widget.templateName ==
         noteIndexTableMap[NoteIndexTableType.otherDocument])
       return Card(
-        child: ListTile(
-          title: Column(
+        child: GestureDetector(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _formatText(
-                key: 'Document Name',
-                value: data.documentName,
-              ),
-              _formatText(
-                key: 'Document Description',
-                value: data.documentDescription,
-              ),
-              _formatText(
-                key: 'Attachment',
-                value: data.attachment,
+              ListTile(
+                title: Text(
+                  data?.documentName ?? '-',
+                  style: TextStyle(
+                    color: Theme.of(context).textHeadingColor,
+                  ),
+                ),
+                subtitle: Text(
+                  "${data?.noteNo ?? '-'}",
+                ),
+                trailing: Icon(
+                  Icons.chevron_right,
+                ),
               ),
             ],
           ),
-           onTap: () {
-          noteBloc.subjectNoteDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            ADD_EDIT_NOTE_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: data.id,
-                arg3: data.noteSubject),
-          );
-        },
+          onTap: () {
+            // open bottom sheet
+            showDocumentBottomSheet(
+              bottomSheetDataList: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.noteNo,
+                        subtitle: 'Document ID',
+                        isHeading: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.documentName,
+                        subtitle: 'Document Name',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.documentDescription,
+                        subtitle: 'Document Description',
+                      ),
+                    ),
+                    // Expanded(
+                    //   child: _statisticWidget(
+                    //     context: context,
+                    //     title: data.attachment,
+                    //     subtitle: 'Attachment',
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       );
 
     if (widget.templateName == noteIndexTableMap[NoteIndexTableType.employeeId])
       return Card(
-        child: ListTile(
-          title: Column(
+        child: GestureDetector(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _formatText(
-                key: 'Expiry Date',
-                value: data.documentExpiryDate,
-              ),
-              _formatText(
-                key: 'Issue Date',
-                value: data.issueDate,
-              ),
-              _formatText(
-                key: 'ID Card Job Title',
-                value: data.idCardJobTitle,
-              ),
-              _formatText(
-                key: 'ID Number',
-                value: data.idCardNumber,
-              ),
-              _formatText(
-                key: 'Document No',
-                value: data.noteNo,
-              ),
-              _formatText(
-                key: 'Place of Issue',
-                value: data.placeOfIssue,
+              ListTile(
+                title: Text(
+                  data.noteNo,
+                  style: TextStyle(
+                    color: Theme.of(context).textHeadingColor,
+                  ),
+                ),
+                subtitle: Text(
+                  "Employee ID: ${data?.idCardNumber ?? '-'}",
+                ),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      data.documentExpiryDate?.split(' ')?.elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: Colors.black87,
+                          ),
+                    ),
+                    Text('Expiry Date'),
+                  ],
+                ),
               ),
             ],
           ),
-           onTap: () {
-          noteBloc.subjectNoteDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            ADD_EDIT_NOTE_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: data.noteId,
-                arg3: data.noteSubject),
-          );
-        },
+          onTap: () {
+            showDocumentBottomSheet(
+              bottomSheetDataList: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.noteNo,
+                        subtitle: 'Document ID',
+                        isHeading: true,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.idCardNumber,
+                        subtitle: 'ID Number',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.idCardJobTitle,
+                        subtitle: 'ID Card Job Title',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.placeOfIssue,
+                        subtitle: 'Place of Issue',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data?.issueDate?.split(' ')?.elementAt(0) ?? '-',
+                        subtitle: 'Issue Date',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data?.documentExpiryDate
+                                ?.split(' ')
+                                ?.elementAt(0) ??
+                            '-',
+                        subtitle: 'Expiry Date',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       );
 
     if (widget.templateName ==
         noteIndexTableMap[NoteIndexTableType.employeeTrainingCourses])
       return Card(
-        child: ListTile(
-          title: Column(
+        child: GestureDetector(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _formatText(
-                key: 'Training Completion Date',
-                value: data.endDate,
-              ),
-              _formatText(
-                key: 'Institute/University Name',
-                value: data.instituteUniversityName,
-              ),
-              _formatText(
-                key: 'Location',
-                value: data.location,
-              ),
-              _formatText(
-                key: 'Document No',
-                value: data.noteNo,
-              ),
-              _formatText(
-                key: 'Training Name',
-                value: data.trainingSubject,
+              ListTile(
+                title: Text(
+                  data.noteNo,
+                  style: TextStyle(
+                    color: Theme.of(context).textHeadingColor,
+                  ),
+                ),
+                subtitle: Text(
+                  "Training: ${data?.trainingSubject ?? '-'}",
+                ),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      data?.endDate?.split(' ')?.elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: Colors.black87,
+                          ),
+                    ),
+                    Text('Completion Date'),
+                  ],
+                ),
               ),
             ],
           ),
-           onTap: () {
-          noteBloc.subjectNoteDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            ADD_EDIT_NOTE_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: data.id,
-                arg3: data.noteSubject),
-          );
-        },
+          onTap: () {
+            showDocumentBottomSheet(
+              bottomSheetDataList: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.noteNo,
+                        subtitle: 'Document ID',
+                        isHeading: true,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.trainingSubject,
+                        subtitle: 'Training Name',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.instituteUniversityName,
+                        subtitle: 'Institute/University Name',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.location,
+                        subtitle: 'Location',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data?.endDate?.split(' ')?.elementAt(0) ?? null,
+                        subtitle: 'Training Completion Date',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       );
 
     if (widget.templateName ==
         noteIndexTableMap[NoteIndexTableType.employeeWorkExperience])
       return Card(
-        child: ListTile(
-          title: Column(
+        child: GestureDetector(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _formatText(
-                key: 'Employee Job Title',
-                value: data.jobTitle,
-              ),
-              _formatText(
-                key: 'Last Manager Name',
-                value: data.lastManagerName,
-              ),
-              _formatText(
-                key: 'Document No',
-                value: data.noteNo,
-              ),
-              _formatText(
-                key: 'Reason For Leaving',
-                value: data.reasonForLeaving,
-              ),
-              _formatText(
-                key: 'Start Date',
-                value: data.startDate,
-              ),
-              _formatText(
-                key: 'Employee Person Full Name',
-                value: data.employeeIdPersonFullName,
-              ),
-              _formatText(
-                key: 'Current Employer',
-                value: data.currentEmployee,
-              ),
-              _formatText(
-                key: 'Employee Address',
-                value: data.employeeAddress,
-              ),
-              _formatText(
-                key: 'End Date',
-                value: data.endDate,
+              ListTile(
+                title: Text(
+                  data.noteNo,
+                  style: TextStyle(
+                    color: Theme.of(context).textHeadingColor,
+                  ),
+                ),
+                subtitle: Text(
+                  "${data?.employeeIdPersonFullName ?? '-'}",
+                ),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      data?.endDate?.split(' ')?.elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: Colors.black87,
+                          ),
+                    ),
+                    Text('End Date'),
+                  ],
+                ),
               ),
             ],
           ),
-           onTap: () {
-          noteBloc.subjectNoteDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            ADD_EDIT_NOTE_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: data.id,
-                arg3: data.noteSubject),
-          );
-        },
+          onTap: () {
+            showDocumentBottomSheet(
+              bottomSheetDataList: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.noteNo,
+                        subtitle: 'Document ID',
+                        isHeading: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.currentEmployee,
+                        subtitle: 'Current Employer',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.employeeIdPersonFullName,
+                        subtitle: 'Employee Person Full Name',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.jobTitle,
+                        subtitle: 'Employee Job Title',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.lastManagerName,
+                        subtitle: 'Last Manager Name',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.reasonForLeaving,
+                        subtitle: 'Reason For Leaving',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title:
+                            data?.startDate?.split(' ')?.elementAt(0) ?? null,
+                        subtitle: 'Start Date',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.endDate?.split(' ')?.elementAt(0) ?? null,
+                        subtitle: 'End Date',
+                      ),
+                    ),
+                  ],
+                ),
+                _statisticWidget(
+                  context: context,
+                  title: data.employeeAddress,
+                  subtitle: 'Employee Address',
+                ),
+              ],
+            );
+          },
         ),
       );
 
     if (widget.templateName ==
         noteIndexTableMap[NoteIndexTableType.employeePassport])
       return Card(
-        child: ListTile(
-          title: Column(
+        child: GestureDetector(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _formatText(
-                key: 'Nationality Name',
-                value: data.nationalityIdNationalityName,
-              ),
-              _formatText(
-                key: 'Document No',
-                value: data.noteNo,
-              ),
-              _formatText(
-                key: 'Date of Birth',
-                value: data.dateOfBirth,
-              ),
-              _formatText(
-                key: 'Issue Date',
-                value: data.dateOfIssue,
-              ),
-              _formatText(
-                key: 'Expire Date',
-                value: data.expireDate,
-              ),
-              _formatText(
-                key: 'Birth Country',
-                value: data.countryOfBirthIdCountryName,
-              ),
-              _formatText(
-                key: 'Passport Attachment ID',
-                value: data.passportAttachmentId,
-              ),
-              _formatText(
-                key: 'Passport Number',
-                value: data.passportNumber,
-              ),
-              _formatText(
-                key: 'Place of Birth',
-                value: data.placeOfBirth,
-              ),
-              _formatText(
-                key: 'Place of Issue',
-                value: data.placeOfIssue,
+              ListTile(
+                title: Text(
+                  data.noteNo,
+                  style: TextStyle(
+                    color: Theme.of(context).textHeadingColor,
+                  ),
+                ),
+                subtitle: Text(
+                  "Passport: ${data?.passportNumber ?? '-'}",
+                ),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      data?.expireDate?.split(' ')?.elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: Colors.black87,
+                          ),
+                    ),
+                    Text('Expire Date'),
+                  ],
+                ),
               ),
             ],
           ),
-           onTap: () {
-          noteBloc.subjectNoteDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            ADD_EDIT_NOTE_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: data.id,
-                arg3: data.noteSubject),
-          );
-        },
+          onTap: () {
+            showDocumentBottomSheet(
+              bottomSheetDataList: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.noteNo,
+                        subtitle: 'Document No',
+                        isHeading: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.nationalityIdNationalityName,
+                        subtitle: 'Nationality Name',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.passportNumber,
+                        subtitle: 'Passport Number',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.passportAttachmentId,
+                        subtitle: 'Passport Attachment ID',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title:
+                            data?.dateOfIssue?.split(' ')?.elementAt(0) ?? null,
+                        subtitle: 'Issue Date',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title:
+                            data?.expireDate?.split(' ')?.elementAt(0) ?? null,
+                        subtitle: 'Expire Date',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title:
+                            data?.dateOfBirth?.split(' ')?.elementAt(0) ?? null,
+                        subtitle: 'Date of Birth',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.countryOfBirthIdCountryName,
+                        subtitle: 'Birth Country',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.placeOfBirth,
+                        subtitle: 'Place of Birth',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.placeOfIssue,
+                        subtitle: 'Place of Issue',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       );
 
     if (widget.templateName ==
         noteIndexTableMap[NoteIndexTableType.employeeEducationalQualification])
       return Card(
-        child: ListTile(
-          title: Column(
+        child: GestureDetector(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _formatText(
-                key: 'Attachment',
-                value: data.attachment,
-              ),
-              _formatText(
-                key: 'Attested',
-                value: data.attested,
-              ),
-              _formatText(
-                key: 'Completed Date',
-                value: data.completedDate,
-              ),
-              _formatText(
-                key: 'Document No',
-                value: data.noteNo,
-              ),
-              _formatText(
-                key: 'Qualification Name',
-                value: data.qualificationName,
-              ),
-              _formatText(
-                key: 'Start Date',
-                value: data.startDate,
+              ListTile(
+                title: Text(
+                  data.noteNo,
+                  style: TextStyle(
+                    color: Theme.of(context).textHeadingColor,
+                  ),
+                ),
+                subtitle: Text(
+                  "Qualification: ${data?.qualificationName ?? '-'}",
+                ),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      data?.completedDate?.split(' ')?.elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: Colors.black87,
+                          ),
+                    ),
+                    Text('Completed Date'),
+                  ],
+                ),
               ),
             ],
           ),
-           onTap: () {
-          noteBloc.subjectNoteDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            ADD_EDIT_NOTE_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: data.id,
-                arg3: data.noteSubject),
-          );
-        },
+          onTap: () {
+            showDocumentBottomSheet(
+              bottomSheetDataList: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.noteNo,
+                        subtitle: 'Document No',
+                        isHeading: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.qualificationName,
+                        subtitle: 'Qualification Name',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.attachment,
+                        subtitle: 'Attachment',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.attested,
+                        subtitle: 'Attested',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data.startDate?.split(' ')?.elementAt(0) ?? null,
+                        subtitle: 'Start Date',
+                      ),
+                    ),
+                    Expanded(
+                      child: _statisticWidget(
+                        context: context,
+                        title: data?.completedDate?.split(' ')?.elementAt(0) ??
+                            null,
+                        subtitle: 'Completed Date',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       );
 
@@ -576,6 +1016,38 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
         ),
         alignment: Alignment.centerLeft,
       ),
+    );
+  }
+
+  showDocumentBottomSheet({@required List<Widget> bottomSheetDataList}) {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return DocumentBottomSheetWidget(
+          bottomSheetDataList: bottomSheetDataList ?? [],
+        );
+      },
+    );
+  }
+
+  Widget _statisticWidget({
+    @required BuildContext context,
+    String title,
+    String subtitle,
+    bool isHeading = false,
+  }) {
+    return ListTile(
+      title: Text(
+        title ?? '-',
+        style: TextStyle(
+          color:
+              isHeading ? Theme.of(context).textHeadingColor : Colors.black87,
+        ),
+      ),
+      subtitle: Text(subtitle ?? '-'),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../data/models/profile_settings_model.dart';
 import '../../../logic/blocs/profile_settings_bloc/profile_settings_bloc.dart';
@@ -49,6 +50,37 @@ class ProfileSettingsScreen extends StatelessWidget {
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
+        BlocBuilder<UserModelBloc, UserModelState>(
+          builder: (context, state) {
+            print(state.userModel.toString());
+
+            return Container(
+              padding: DEFAULT_LARGE_VERTICAL_PADDING,
+              child: Card(
+                child: ListTile(
+                  tileColor: Theme.of(context).textHeadingColor,
+                  title: Text(
+                    state?.userModel?.jobTitle ?? '-',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    state?.userModel?.email ?? '-',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 24,
+                    child: Icon(
+                      Icons.person,
+                      color: Theme.of(context).textHeadingColor,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+
         // For the Dark Mode List Tile.
         BlocBuilder<ProfileSettingsBloc, ProfileSettingsState>(
           builder: (context, state) {

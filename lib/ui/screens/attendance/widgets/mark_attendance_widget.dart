@@ -447,12 +447,16 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       setState(() {
         isVisible = true;
       });
-      await accessLogBloc.getInsertAccessLog(isSignIn: true);
+
+      await accessLogBloc.getInsertAccessLog(
+        isSignIn: true,
+      );
+
       setState(() {
         isVisible = false;
       });
 
-      print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
+      print("Sign In isSignIn?: ${accessLogBloc?.subject?.value?.isSignIn}");
       print(
           "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
 
@@ -462,7 +466,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
             accessLogBloc.subject.value.isSignIn == 0 &&
                     accessLogBloc.subject.value.error == null
                 ? "Sign in successful!"
-                : "Error occured please try again later.",
+                : "An error occured please try again later.",
           ),
         ),
       );

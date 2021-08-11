@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/models/login_models/login_response_model.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/image_path_constants.dart';
@@ -370,6 +373,13 @@ Widget drawerWidget(context) {
             onTap: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.clear();
+
+              BlocProvider.of<UserModelBloc>(context).add(
+                UserModelChangeEvent(
+                  userModel: null,
+                ),
+              );
+
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 LOGIN_ROUTE,

@@ -36,16 +36,6 @@ class ProfileSettingsBloc
         ),
       );
     }
-    // TODO: Need to implement Reset Profile Settings event.
-    // Reset Settings to default event.
-    // else {
-    //   yield ProfileSettingsUserDefinedState(
-    //     profileSettingsModel: state.profileSettingsModel.copyWith(
-    //       emailNotifications: false,
-    //       pushNotifications: false,
-    //     ),
-    //   );
-    // }
   }
 
   @override
