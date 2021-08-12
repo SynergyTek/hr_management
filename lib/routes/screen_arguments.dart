@@ -1,3 +1,5 @@
+import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
+
 import '../data/enums/enums.dart';
 
 class ScreenArguments {
@@ -10,16 +12,17 @@ class ScreenArguments {
   final bool showBack;
   final Function func;
   final NTSType ntstype;
+  OnTapPressedCallBack callBack;
 
-  ScreenArguments({
-    this.ntstype,
-    this.arg3,
-    this.arg4,
-    this.func,
-    this.arg1,
-    this.arg2,
-    this.val1,
-    this.val2,
-    this.showBack,
-  });
+  ScreenArguments(
+      {this.ntstype,
+      this.arg3,
+      this.arg4,
+      this.func,
+      this.arg1,
+      this.arg2,
+      this.val1,
+      this.val2,
+      this.showBack,
+      this.callBack});
 }

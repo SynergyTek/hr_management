@@ -10,7 +10,7 @@ class PostResponse {
     item = jsonResponse['Item'];
     // templateCode = jsonResponse['TemplateCode'];
 
-    if (jsonResponse['Messages']!=null) {
+    if (jsonResponse['Messages'] != null) {
       Map data = jsonResponse['Messages'];
       String key = data.keys.elementAt(0);
 

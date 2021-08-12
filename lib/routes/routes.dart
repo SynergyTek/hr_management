@@ -159,12 +159,17 @@ class AppRouter {
             onListTap: args.func,
           ),
         );
+        break;
 
       case NTS_ATTACHMENT:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => SelectAttachment(),
+          builder: (_) => SelectAttachment(
+            ntstype: args.arg1,
+            onListTap: args.callBack,
+          ),
         );
+        break;
 
       case NTS_USER_DROPDOWN:
         final args = routeSettings.arguments as ScreenArguments;
@@ -173,6 +178,7 @@ class AppRouter {
             onListTap: args.func,
           ),
         );
+        break;
 
       case NTS_TEAM_DROPDOWN:
         final args = routeSettings.arguments as ScreenArguments;
@@ -181,6 +187,7 @@ class AppRouter {
             onListTap: args.func,
           ),
         );
+        break;
 
       case TASK_HOME:
         final args = routeSettings.arguments as ScreenArguments;

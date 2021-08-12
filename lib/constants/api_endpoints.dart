@@ -40,6 +40,8 @@ class APIEndpointConstants {
   static const READ_NOTE_DASHBOARD_DATA =
       '$BASE_URL/nts/query/ReadNoteDashBoardGridData';
 
+  static const FILE_UPLOAD_ATTACHMENT = '$BASE_URL/CHR/query/UploadAttachment';
+
   //************************************************************************//
 
   //Task API Endpoints Block Start

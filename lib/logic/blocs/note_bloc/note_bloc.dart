@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../data/models/api_models/post_response_model.dart';
@@ -50,11 +51,25 @@ class NoteBloc {
       note: noteModel,
     );
 
-    if ( response.isSuccess) {
-     
-        subjectNoteList.sink.add(null);
-        getNoteDetails();
-      
+    if (response.isSuccess) {
+      subjectNoteList.sink.add(null);
+      getNoteDetails();
+    }
+
+    return response;
+  }
+
+  /// Used to create new entries.
+  Future<PostResponse> postNoteAttachmentDocumentData({
+    @required Attachment attachmentData,
+  }) async {
+    PostResponse response = await _noteRepository.postNoteAttachmentData(
+      attachmentData: attachmentData,
+    );
+
+    if (response.isSuccess) {
+      subjectNoteList.sink.add(null);
+      getNoteDetails();
     }
 
     return response;

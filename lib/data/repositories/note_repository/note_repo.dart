@@ -127,6 +127,39 @@ class NoteRepository extends AbstractNoteRepository {
   }
 
   @override
+  Future<PostResponse> postNoteAttachmentData({
+    Map<String, dynamic> queryparams,
+    @required Attachment attachmentData,
+  }) async {
+    final String endpoint = APIEndpointConstants.FILE_UPLOAD_ATTACHMENT;
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        data: jsonEncode(attachmentData.toJson()) ?? {},
+      );
+
+      print("response: ${response.data}");
+
+      var result = PostResponse.fromJson(
+        response.data,
+      );
+
+      if (result.isSuccess) {
+        result.messages = 'Document Uploaded';
+      }
+
+      return result;
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return PostResponse.withError("$err");
+    }
+  }
+
+  @override
   Future<NoteResponse> putNoteAPIData({Map<String, dynamic> queryparams}) {
     throw UnimplementedError();
   }

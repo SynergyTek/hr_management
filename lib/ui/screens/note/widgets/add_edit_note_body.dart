@@ -674,20 +674,29 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       } else if (model[i].type == 'file') {
         TextEditingController attchmentController = new TextEditingController();
 
-        attchmentController.text =
-            udfJson[model[i].key] == null && udfJson[model[i].key].isNotEmpty
-                ? " Select File to Attach "
-                : " (1) File Attached " + udfJson[model[i].key];
+        attchmentController.text = udfJson[model[i].key] == null
+            ? " Select File to Attach "
+            : " (1) File Attached " + udfJson[model[i].key];
         listDynamic.add(DynamicAttchmentWidget(
           labelName: model[i].label,
           controller: attchmentController,
-          callBack1: () {
+          callBack: () {
             Navigator.pushNamed(
               context,
               NTS_ATTACHMENT,
-              arguments: ScreenArguments(),
+              arguments: ScreenArguments(
+                  arg1: 'Note',
+                  callBack: (dynamic value, dynamic value2, dynamic value3) {
+                    setState(() {
+                      model[i].label = value2;
+                      udfJson[model[i].key] = value;
+                      attchmentController.text =
+                          " (1) File Attached " + udfJson[model[i].key];
+                    });
+                  }),
             );
           },
+          readOnly: false,
         ));
       } else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&

@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/api_models/post_response_model.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/attacment/video_file.dart';
+import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:typed_data';
@@ -9,6 +12,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:mime_type/mime_type.dart';
 import 'package:video_player/video_player.dart';
+import 'package:sizer/sizer.dart';
 
 import '../custom_icons.dart';
 import '../snack_bar.dart';
@@ -98,7 +102,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
             allowedExtensions: (_extension?.isNotEmpty ?? false)
                 ? _extension?.replaceAll(' ', '')?.split(',')
                 : null);
-        _path = filePickerResult.files.single.path;
+        _path = filePickerResult?.files?.single?.path;
       }
     } on Exception catch (e) {
       print("Unsupported operation" + e.toString());
@@ -127,6 +131,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
     return bytes;
   }
 
+  String resultMsg = '';
   void uploadAttachment() async {
     try {
       setState(() {
@@ -137,7 +142,8 @@ class _SelectAttachmentState extends State<SelectAttachment> {
         mediaFileByte = bytesData;
       });
 
-      var post = new Attachment();
+      var post = Attachment();
+      post.userId = 'cb9272df-0a2c-401b-aed8-b73488ae03aa';
       if (_pickingType == MediaFileType.IMAGE ||
           _pickingType == MediaFileType.CAPTURE_IMAGE) {
         _documentType = "image";
@@ -160,21 +166,27 @@ class _SelectAttachmentState extends State<SelectAttachment> {
         createPostModel(post, mediaFileByte);
       }
 
-      // _networkHelper.initConnectivity().then((value) async {
-      //   if (value) {
-      //     /// for others
-      //     var result = await imageUploadRequest(post, context);
-      //     if (result != null) {
-      //       widget.onListTap(result, _fileName, _pickingType);
-      //     }
-      //   } else {
-      //     widget.onListTap(_path, _fileName, _documentType);
-
-      //     // submitDigitalDocumentLocal(noteViewModel, context);
-      //   }
-      // }, onError: (error) {
-      //   // print(error);
-      // });
+      PostResponse result = await noteBloc.postNoteAttachmentDocumentData(
+        attachmentData: post,
+      );
+      print(result);
+      if (result.isSuccess) {
+        setState(() {
+          _isBusy = false;
+        });
+        resultMsg = result.messages;
+        Navigator.pop(context);
+      } else {
+        setState(() {
+          _isBusy = false;
+        });
+        resultMsg = result.messages;
+      }
+      displaySnackBar(text: resultMsg, context: context);
+      // var result = await imageUploadRequest(post, context);
+      if (result != null) {
+        widget.onListTap(result, _fileName, _pickingType);
+      }
 
       Navigator.of(context).pop();
     } catch (e) {
@@ -361,7 +373,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
                   // ),
                   Visibility(
                       visible: _isBusy,
-                      child: Center(child: CircularProgressIndicator())),
+                      child: Center(child: CustomProgressIndicator())),
                 ],
               ),
             ),
@@ -372,7 +384,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
   Widget attachmentWidget() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-      height: MediaQuery.of(context).size.height / 2.5,
+      height: 30.h,
       width: double.infinity,
       decoration: new BoxDecoration(
         color: Colors.grey[200],
@@ -402,10 +414,10 @@ class _SelectAttachmentState extends State<SelectAttachment> {
               MediaFileType.VIDEO),
           fabIconText(CustomIcons.camera, "CAPTURE IMAGE", Colors.amber, '4',
               MediaFileType.CAPTURE_IMAGE),
-          fabIconText(CustomIcons.file_audio, "RECORD AUDIO", Colors.indigo,
-              '5', MediaFileType.RECORD_AUDIO),
-          fabIconText(CustomIcons.video_plus, "RECORD VIDEO", Colors.cyan, '6',
-              MediaFileType.RECORD_VIDEO),
+          // fabIconText(CustomIcons.file_audio, "RECORD AUDIO", Colors.indigo,
+          //     '5', MediaFileType.RECORD_AUDIO),
+          // fabIconText(CustomIcons.video_plus, "RECORD VIDEO", Colors.cyan, '6',
+          //     MediaFileType.RECORD_VIDEO),
           fabIconText(CustomIcons.file_pdf, "PDF", Colors.redAccent, '7',
               MediaFileType.CUSTOM),
           fabIconText(CustomIcons.file_plus, "DOCUMENT", Colors.green, '8',

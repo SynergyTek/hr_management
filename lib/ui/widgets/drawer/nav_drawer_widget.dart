@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/image_path_constants.dart';
@@ -320,22 +321,22 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
-              // ListTile(
-              //   title: Text(
-              //     'ADD ADHOC TASK',
-              //     style: TextStyle(fontSize: fontSize, color: fontColor),
-              //   ),
-              //   onTap: () {
-              //     Navigator.pushNamed(
-              //       context,
-              //       NTS_TEMPLATE_REQUEST,
-              //       arguments: ScreenArguments(
-              //         ntstype: NTSType.task,
-              //         arg4: 'ProjectTask',
-              //       ),
-              //     );
-              //   },
-              // ),
+              ListTile(
+                title: Text(
+                  'DOCUMENT',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    ADD_EDIT_NOTE_ROUTE,
+                    arguments: ScreenArguments(
+                        arg1: '',
+                        arg2: '74ea17c3-03a9-4b59-a435-d30a43b5cc7e',
+                        arg3: 'Document'),
+                  );
+                },
+              ),
               ListTile(), //Added to avoid the last option to be hidden under "LOG OUT"
             ],
           ),
