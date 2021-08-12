@@ -729,10 +729,20 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         );
       } else if (model[i].type == 'file') {
         TextEditingController attchmentController = new TextEditingController();
-
-        attchmentController.text = udfJson[model[i].key] == null
-            ? " Select File to Attach "
-            : " (1) File Attached " + udfJson[model[i].key];
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.noteId == null || widget.noteId.isEmpty)) {
+          udfJson[model[i].key] = '';
+          if (selectValue.length < model.length) {
+            for (var j = selectValue.length; j < model.length; j++) {
+              selectValue.add(null);
+            }
+          }
+        }
+        
+          attchmentController.text = udfJson[model[i].key] == null
+              ? (widget.noteId == null || widget.noteId.isEmpty)?" Select File to Attach ":model[i].udfValue
+              : " (1) File Attached " + udfJson[model[i].key];
+        
         listDynamic.add(DynamicAttchmentWidget(
           labelName: model[i].label,
           controller: attchmentController,

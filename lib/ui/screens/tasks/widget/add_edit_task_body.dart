@@ -6,6 +6,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
 import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
+import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/user/user.dart';
@@ -859,6 +860,45 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
+      }else if (model[i].type == 'file') {
+        TextEditingController attchmentController = new TextEditingController();
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.taskId == null || widget.taskId.isEmpty)) {
+          udfJson[model[i].key] = '';
+          if (selectValue.length < model.length) {
+            for (var j = selectValue.length; j < model.length; j++) {
+              selectValue.add(null);
+            }
+          }
+        }
+
+        attchmentController.text = udfJson[model[i].key] == null
+            ? (widget.taskId == null || widget.taskId.isEmpty)
+                ? " Select File to Attach "
+                : model[i].udfValue
+            : " (1) File Attached " + udfJson[model[i].key];
+
+        listDynamic.add(DynamicAttchmentWidget(
+          labelName: model[i].label,
+          controller: attchmentController,
+          callBack: () {
+            Navigator.pushNamed(
+              context,
+              NTS_ATTACHMENT,
+              arguments: ScreenArguments(
+                  arg1: 'Note',
+                  callBack: (dynamic value, dynamic value2, dynamic value3) {
+                    setState(() {
+                      model[i].label = value2;
+                      udfJson[model[i].key] = value;
+                      attchmentController.text =
+                          " (1) File Attached " + udfJson[model[i].key];
+                    });
+                  }),
+            );
+          },
+          readOnly: false,
+        ));
       } else {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {

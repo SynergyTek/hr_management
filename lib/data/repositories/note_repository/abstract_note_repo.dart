@@ -32,7 +32,7 @@ abstract class AbstractNoteRepository {
     Map<String, dynamic> queryparams,
   });
 
-  Future<PostResponse> postNoteAttachmentData({
+  Future<Response<dynamic>> postNoteAttachmentData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -854,6 +855,45 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
+      } else if (model[i].type == 'file') {
+        TextEditingController attchmentController = new TextEditingController();
+        if (!udfJson.containsKey(model[i].key) &&
+            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+          udfJson[model[i].key] = '';
+          if (selectValue.length < model.length) {
+            for (var j = selectValue.length; j < model.length; j++) {
+              selectValue.add(null);
+            }
+          }
+        }
+
+        attchmentController.text = udfJson[model[i].key] == null
+            ? (widget.serviceId == null || widget.serviceId.isEmpty)
+                ? " Select File to Attach "
+                : model[i].udfValue
+            : " (1) File Attached " + udfJson[model[i].key];
+
+        listDynamic.add(DynamicAttchmentWidget(
+          labelName: model[i].label,
+          controller: attchmentController,
+          callBack: () {
+            Navigator.pushNamed(
+              context,
+              NTS_ATTACHMENT,
+              arguments: ScreenArguments(
+                  arg1: 'Note',
+                  callBack: (dynamic value, dynamic value2, dynamic value3) {
+                    setState(() {
+                      model[i].label = value2;
+                      udfJson[model[i].key] = value;
+                      attchmentController.text =
+                          " (1) File Attached " + udfJson[model[i].key];
+                    });
+                  }),
+            );
+          },
+          readOnly: false,
+        ));
       } else {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId == null || widget.serviceId.isEmpty)) {
@@ -1271,7 +1311,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     postServiceModel.serviceDescription =
         createServiceFormBloc.description.value;
     postServiceModel.dataAction = widget.serviceId.isEmpty ? 1 : 2;
-   // postDataAction;
+    // postDataAction;
     postServiceModel.serviceStatusCode = serviceStatusCode;
     postServiceModel.json = jsonEncode(udfJson);
     print(udfJson);

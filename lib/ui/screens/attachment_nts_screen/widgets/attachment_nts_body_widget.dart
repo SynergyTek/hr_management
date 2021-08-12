@@ -7,7 +7,8 @@ import '../../../../logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
 
-class AttachmentNTSBodyWidget extends StatefulWidget {
+class 
+AttachmentNTSBodyWidget extends StatefulWidget {
   final NTSType ntsType;
   final String ntsId;
 

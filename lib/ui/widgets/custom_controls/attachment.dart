@@ -143,7 +143,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
       });
 
       var post = Attachment();
-      post.userId = 'cb9272df-0a2c-401b-aed8-b73488ae03aa';
+      post.userId = '45bba746-3309-49b7-9c03-b5793369d73c';
       if (_pickingType == MediaFileType.IMAGE ||
           _pickingType == MediaFileType.CAPTURE_IMAGE) {
         _documentType = "image";
@@ -166,21 +166,21 @@ class _SelectAttachmentState extends State<SelectAttachment> {
         createPostModel(post, mediaFileByte);
       }
 
-      PostResponse result = await noteBloc.postNoteAttachmentDocumentData(
+      String result = await noteBloc.postNoteAttachmentDocumentData(
         attachmentData: post,
       );
       print(result);
-      if (result.isSuccess) {
+      if (result.isNotEmpty) {
         setState(() {
           _isBusy = false;
         });
-        resultMsg = result.messages;
-        Navigator.pop(context);
+        resultMsg = "File Uploded";
+       
       } else {
         setState(() {
           _isBusy = false;
         });
-        resultMsg = result.messages;
+        resultMsg = "File Not Uploaded";
       }
       displaySnackBar(text: resultMsg, context: context);
       // var result = await imageUploadRequest(post, context);

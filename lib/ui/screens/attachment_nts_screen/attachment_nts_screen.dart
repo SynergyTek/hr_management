@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../data/enums/enums.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
@@ -18,17 +20,35 @@ class AttachmentNTSScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      // drawer: drawerWidget(context),
       appBar: AppbarWidget(
         title: "Attachments",
       ),
-      body: SafeArea(
+      body: SafeArea( 
         child: InternetConnectivityWidget(
           child: AttachmentNTSBodyWidget(
             ntsType: ntsType,
             ntsId: ntsId,
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+         backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(
+          Icons.attach_file,
+          size: 32,
+        ),
+        onPressed: () {
+            Navigator.pushNamed(
+              context,
+              NTS_ATTACHMENT,
+              arguments: ScreenArguments(
+                  arg1: 'Note',
+                  callBack: (dynamic value, dynamic value2, dynamic value3) {
+                    
+                  }),
+            );
+        },
       ),
     );
   }

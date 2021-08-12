@@ -2,12 +2,14 @@ class PostResponse {
   bool isSuccess;
   dynamic item;
   String messages;
+  dynamic data;
 
   PostResponse();
 
   PostResponse.fromJson(Map<String, dynamic> jsonResponse) {
     isSuccess = jsonResponse['IsSuccess'];
     item = jsonResponse['Item'];
+     data = jsonResponse['Data'];
     // templateCode = jsonResponse['TemplateCode'];
 
     if (jsonResponse['Messages'] != null) {
