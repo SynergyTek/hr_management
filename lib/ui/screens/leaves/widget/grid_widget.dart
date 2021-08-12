@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/helpers/hex_colot_convert.dart';
 
 class FlipCardWidget extends StatelessWidget {
   final String colorCode;
@@ -19,8 +20,4 @@ class FlipCardWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-Color hexToColor(String code) {
-  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }

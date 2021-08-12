@@ -39,14 +39,14 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              eachAccessLogModelElement?.personId ?? 'NA',
+              eachAccessLogModelElement?.personId ?? '-',
             ),
             trailing: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    eachAccessLogModelElement?.devicePunchingTypeText ?? 'NA',
+                    eachAccessLogModelElement?.devicePunchingTypeText ?? '-',
                     style: TextStyle(
                       fontSize: Theme.of(context).textTheme.headline6.fontSize,
                       color: _handleListTileColor(context),
@@ -66,7 +66,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAccessLogModelElement?.punchingTime ?? 'NA',
+              eachAccessLogModelElement?.punchingTime ?? '-',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -78,7 +78,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAccessLogModelElement?.sponsorshipNo ?? 'NA',
+              eachAccessLogModelElement?.sponsorshipNo ?? '-',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -95,8 +95,8 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
                   ),
                   subtitle: Text(
                     eachAccessLogModelElement?.deviceName ??
-                        'NA' +
-                            '(${eachAccessLogModelElement?.deviceIpAddress ?? 'NA'})',
+                        '-' +
+                            '(${eachAccessLogModelElement?.deviceIpAddress ?? '-'})',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -108,7 +108,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
                     // style: Theme.of(context).textTheme.bodyText1,
                   ),
                   subtitle: Text(
-                    eachAccessLogModelElement?.biometricId ?? 'NA',
+                    eachAccessLogModelElement?.biometricId ?? '-',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -123,7 +123,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAccessLogModelElement?.signInLocation ?? 'NA',
+              eachAccessLogModelElement?.signInLocation ?? '-',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),

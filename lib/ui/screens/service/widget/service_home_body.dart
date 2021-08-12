@@ -53,16 +53,18 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
 
   @override
   void initState() {
-    serviceStatus = widget.serviceStatus;
-    moduleId = widget.moduleId;
-    mode = widget.mode;
+    // serviceStatus = widget.serviceStatus;
+    // moduleId = widget.moduleId;
+    // mode = widget.mode;
     super.initState();
     apiCall();
   }
 
   apiCall() {
     serviceBloc.subjectServiceList.sink.add(null);
-
+    serviceStatus = widget.serviceStatus;
+    moduleId = widget.moduleId;
+    mode = widget.mode;
     Map<String, dynamic> queryparams = Map();
 
     if (userId != null) {
@@ -188,10 +190,10 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
             buttonText: 'Ending in Next 7 Days',
             handleOnPressed: () => _endingInWeekFilter(),
           ),
-          customButton(
-            buttonText: 'Date',
-            handleOnPressed: () => _dateFilter(),
-          ),
+          // customButton(
+          //   buttonText: 'Date',
+          //   handleOnPressed: () => _dateFilter(),
+          // ),
           customButton(
             buttonText: 'More...',
             handleOnPressed: () => _moreFilter(),

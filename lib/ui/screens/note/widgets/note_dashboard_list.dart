@@ -33,13 +33,15 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ExpansionTile(
-          collapsedBackgroundColor: Colors.grey[200],
-          backgroundColor: Colors.grey[200],
-          trailing: Icon(Icons.filter_list),
-          title: _searchField(),
-          children: [wrappedButtons()],
-        ),
+        // ExpansionTile(
+        //   collapsedBackgroundColor: Colors.grey[200],
+        //   backgroundColor: Colors.grey[200],
+        //   trailing: Icon(Icons.filter_list),
+        //   title: _searchField(),
+        //   children: [
+        //     wrappedButtons(),
+        //   ],
+        // ),
         Expanded(
           child: StreamBuilder(
             stream: noteBloc.subjectNoteList.stream,

@@ -4,14 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/user/user.dart';
-import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
-import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
+import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/user/user.dart';
@@ -19,6 +12,8 @@ import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/appbar_widget.dart';
+import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
+
 import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/note/note_model.dart';
 import '../../../../data/models/note/note_response.dart';
@@ -45,8 +40,10 @@ class AddEditNoteBody extends StatefulWidget {
   final String templateCode;
   final String noteId;
   final String title;
+  final bool isDependent;
 
-  AddEditNoteBody({this.templateCode, this.noteId, this.title});
+  AddEditNoteBody(
+      {this.templateCode, this.noteId, this.title, this.isDependent});
 
   @override
   _AddEditNoteBodyState createState() => _AddEditNoteBodyState();
@@ -77,6 +74,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
   DateTime leaveStartDate;
   DateTime leaveEnddate;
+  bool isTileVisible = true;
   TextEditingController leaveDurationControllerCalendarDays =
       new TextEditingController();
   TextEditingController leaveDurationControllerWorkingDays =
@@ -134,11 +132,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
                 return Scaffold(
                   appBar: AppbarWidget(
-                    title: widget.noteId == null || widget.noteId.isEmpty
-                        ? "Create Note" // + widget.templateCode
-                        // : widget.title != null
-                        //     ? "Edit $widget.title"
-                        : "Edit Note",
+                    title: widget.isDependent
+                        ? "Manage Dependent"
+                        : widget.noteId == null || widget.noteId.isEmpty
+                            ? "Create Note" // + widget.templateCode
+                            // : widget.title != null
+                            //     ? "Edit $widget.title"
+                            : "Edit Note",
                   ),
                   body: FormBlocListener<CreateServiceFormBloc, String, String>(
                     onSubmitting: (context, state) {
@@ -225,18 +225,16 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    _fromddController.text = noteModel.ownerUserName;
+    _fromddController.text =
+        noteModel.ownerUserName != null ? noteModel.ownerUserName : "";
     return Stack(
       children: [
-        SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: formFieldsWidgets(
-              context,
-              createServiceFormBloc,
-              noteModel,
-            ),
+        ListView(
+          shrinkWrap: true,
+          children: formFieldsWidgets(
+            context,
+            createServiceFormBloc,
+            noteModel,
           ),
         ),
         Column(
@@ -274,133 +272,169 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          rowChild(noteModel.noteNo, 'Service No', 3),
-          rowChild(noteModel.noteStatusName, 'Status', 2),
-          rowChild(noteModel.versionNo.toString(), 'Version No', 2),
+          rowChild(noteModel.noteNo ?? "", 'Note No', 3),
+          rowChild(noteModel.noteStatusName ?? "", 'Status', 2),
+          rowChild(noteModel.versionNo.toString() ?? "", 'Version No', 2),
         ],
       ),
     ));
-    if (!noteModel.hideSubject) {
-      createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? noteModel.noteSubject);
+    if (!widget.isDependent) {
+      if (!noteModel.hideSubject) {
+        createServiceFormBloc.subject
+            .updateInitialValue(subjectValue ?? noteModel.noteSubject ?? "");
+        widgets.add(
+          BlocTextBoxWidget(
+            fieldName: 'Subject',
+            readonly: false,
+            maxLines: 1,
+            labelName: 'Subject',
+            textFieldBloc: createServiceFormBloc.subject,
+            prefixIcon: Icon(Icons.note),
+            onChanged: (value) {
+              subjectValue = value.toString();
+            },
+          ),
+        );
+      }
+
+      widgets.add(ExpandableField(
+        isTileExpanded: isTileVisible,
+        valueChanged: (dynamic value) {
+          bool isExpand = value;
+          if (isExpand) {
+            isTileVisible = false;
+          } else {
+            isTileVisible = true;
+          }
+        },
+        children: [
+          Visibility(
+            visible: !noteModel.hideStartDate,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: DynamicDateTimeBox(
+                    code: noteModel.startDate,
+                    name: 'Start Date',
+                    key: new Key('Start Date'),
+                    selectDate: (DateTime date) {
+                      if (date != null) {
+                        setState(() async {
+                          startDate = date;
+                          if (dueDate != null && dueDate.toString().isNotEmpty)
+                            compareStartEndDate(
+                                startDate: startDate,
+                                enddate: dueDate,
+                                context: context,
+                                updateDuration: false);
+                        });
+                        // udfJson[model[i].key] = date.toString();
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: DynamicDateTimeBox(
+                    code: noteModel.expiryDate,
+                    name: 'Expiry Date',
+                    key: new Key('Expiry Date'),
+                    selectDate: (DateTime date) {
+                      if (date != null) {
+                        setState(() async {
+                          dueDate = date;
+                          if (startDate != null &&
+                              startDate.toString().isNotEmpty)
+                            compareStartEndDate(
+                                startDate: startDate,
+                                enddate: dueDate,
+                                context: context,
+                                updateDuration: false);
+                        });
+                        // udfJson[model[i].key] = date.toString();
+                      }
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              // Expanded(
+              //   child: Visibility(
+              //     visible: !taskModel.hideSla,
+              //     child: BlocTextBoxWidget(
+              //       fieldName: 'SLA',
+              //       readonly: false,
+              //       maxLines: 1,
+              //       labelName: 'SLA',
+              //       textFieldBloc: createServiceFormBloc.sla,
+              //       prefixIcon: Icon(Icons.note),
+              //       onChanged: (value) {
+              //         slaValue = value.toString();
+              //       },
+              //     ),
+              //   ),
+              // ),
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: noteModel.reminderDate,
+                  name: 'Reminder Date',
+                  key: new Key('Reminder Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {});
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              )
+            ],
+          ),
+        ],
+      ));
+
+      if (!noteModel.hideDescription) {
+        createServiceFormBloc.description
+            .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
+        widgets.add(
+          Visibility(
+            visible: true,
+            child: BlocTextBoxWidget(
+              fieldName: 'Description',
+              readonly: false,
+              maxLines: 3,
+              labelName: 'Description',
+              textFieldBloc: createServiceFormBloc.description,
+              prefixIcon: Icon(Icons.note),
+              onChanged: (value) {
+                descriptionValue = value.toString();
+              },
+            ),
+          ),
+        );
+      }
+
       widgets.add(
-        BlocTextBoxWidget(
-          fieldName: 'Subject',
-          readonly: false,
-          maxLines: 1,
-          labelName: 'Subject',
-          textFieldBloc: createServiceFormBloc.subject,
-          prefixIcon: Icon(Icons.note),
-          onChanged: (value) {
-            subjectValue = value.toString();
+        NTSDropDownSelect(
+          isUserList: true,
+          title: 'From',
+          controller: _fromddController,
+          hint: 'From',
+          isShowArrow: true,
+          onListTap: (value) {
+            userBLoc.subjectUserDataList.sink.add(null);
+            User _user = value;
+            _fromddController.text = _user.name;
+            ownerUserId = _user.id;
+            //     selectValue[i] = _selectedIdNameViewModel.name;
+            //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
           },
         ),
       );
     }
-
-    // if (!noteModel.hideStartDate)
-    widgets.add(
-      Visibility(
-        visible: true,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: DynamicDateTimeBox(
-                code: noteModel.startDate,
-                name: 'Start Date',
-                key: new Key('Start Date'),
-                selectDate: (DateTime date) {
-                  // if (date != null) {
-                  //   setState(() async {
-                  //     startDate = date;
-                  //     if (dueDate == null && noteModel.due != null) {
-                  //       dueDate = DateTime.parse(noteModel.dueDate);
-                  //     }
-                  //     if (dueDate != null && dueDate.toString().isNotEmpty)
-                  //       compareStartEndDate(
-                  //           startDate: startDate,
-                  //           enddate: dueDate,
-                  //           context: context,
-                  //           updateDuration: false);
-                  //   });
-                  // udfJson[model[i].key] = date.toString();
-                  // }
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
-    // if (!noteModel.hideSLA) {
-    //   createServiceFormBloc.sla.updateInitialValue(slaValue ?? noteModel.sla);
-    //   widgets.add(BlocTextBoxWidget(
-    //     fieldName: 'SLA',
-    //     readonly: false,
-    //     maxLines: 1,
-    //     labelName: 'SLA',
-    //     textFieldBloc: createServiceFormBloc.sla,
-    //     prefixIcon: Icon(Icons.note),
-    //     onChanged: (value) {
-    //       slaValue = value.toString();
-    //     },
-    //   ));
-    // }
-
-    if (!noteModel.hideExpiryDate)
-      widgets.add(
-        Visibility(
-          visible: false,
-          child: BlocDatePickerWidget(
-            labelName: 'Reminder Date',
-            canSelectTime: false,
-            inputFieldBloc: createServiceFormBloc.expiryDate,
-            height: 75.0,
-            width: MediaQuery.of(context).size.width,
-          ),
-        ),
-      );
-
-    if (!noteModel.hideDescription) {
-      createServiceFormBloc.description
-          .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
-      widgets.add(
-        Visibility(
-          visible: true,
-          child: BlocTextBoxWidget(
-            fieldName: 'Description',
-            readonly: false,
-            maxLines: 3,
-            labelName: 'Description',
-            textFieldBloc: createServiceFormBloc.description,
-            prefixIcon: Icon(Icons.note),
-            onChanged: (value) {
-              descriptionValue = value.toString();
-            },
-          ),
-        ),
-      );
-    }
-
-    widgets.add(
-      NTSDropDownSelect(
-        isUserList: true,
-        title: 'From',
-        controller: _fromddController,
-        hint: 'From',
-        isShowArrow: true,
-        onListTap: (dynamic value) {
-          userBLoc.subjectUserDataList.sink.add(null);
-          User _user = value;
-          _fromddController.text = _user.name;
-          ownerUserId = _user.id;
-          //     selectValue[i] = _selectedIdNameViewModel.name;
-          //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
-        },
-      ),
-    );
 
     if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
@@ -440,8 +474,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   List<Widget> addDynamic(model, createServiceFormBloc) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      print(model[i].type);
-      print(model[i].udfValue);
+      // print(model[i].type);
+      // print(model[i].key);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
@@ -453,23 +487,41 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
         final textField$i =
             new TextFieldBloc(initialValue: udfJson[model[i].key]);
-        listDynamic.add(
-          BlocTextBoxWidget(
-            labelName: model[i].label,
-            fieldName: model[i].label,
-            readonly: false,
-            textFieldBloc: textField$i,
-            prefixIcon: Icon(Icons.note),
-            maxLines: 1,
-            onChanged: (value) {
-              udfJson[model[i].key] = value.toString();
-            },
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        if (!model[i].disabled) {
+          listDynamic.add(
+            BlocTextBoxWidget(
+              labelName: model[i].label,
+              fieldName: model[i].label,
+              readonly: model[i].disabled,
+              textFieldBloc: textField$i,
+              prefixIcon: Icon(Icons.note),
+              maxLines: 1,
+              onChanged: (value) {
+                udfJson[model[i].key] = value.toString();
+              },
+            ),
+          );
+          createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        } else {
+          listDynamic.add(StaticField(
+            // initialValue: difference.toString(),
+            width: MediaQuery.of(context).size.width,
+            hint: model[i].label,
+            icon: Icon(Icons.circle_outlined),
+            style: TextStyle(color: Colors.grey),
+            // controller: _slaController,
+            // isShowArrow: true,
+          ));
+          // listDynamic.add(new DynamicTextBoxWidget(
+          //     model[i].label,
+          //     model[i].label,
+          //     new TextEditingController(),
+          //     true,
+          //     (String val) {}));
+        }
       } else if (model[i].type == 'textarea') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null && widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) &&
@@ -483,7 +535,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textArea$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 3,
@@ -541,7 +593,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: password$i,
             prefixIcon: Icon(Icons.visibility_off_rounded),
             obscureText: true,
@@ -625,14 +677,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             }
           }
         }
+
         if ((selectValue != null && selectValue.isNotEmpty) &&
             (selectValue[i] != null && selectValue[i].isNotEmpty)) {
           _ddController.text = selectValue[i];
         }
-        // }
-        //else {
-        //   _ddController.text = selectValue[i];
-        // }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
@@ -649,28 +698,30 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               ddController: _ddController);
         }
 
-        listDynamic.add(NTSDropDownSelect(
-          title: model[i].label,
-          controller: _ddController,
-          hint: model[i].label,
-          validationMessage: "Select " + model[i].label,
-          isShowArrow: true,
-          nameKey: (model[i].template)
-              .toString()
-              .replaceAll('<span>{{', '')
-              .replaceAll('}}</span>', '')
-              .trim()
-              .split('.')[1],
-          idKey: model[i].idPath,
-          url: model[i].data?.url,
-          onListTap: (dynamic value) {
-            ntsDdBloc.subject.sink.add(null);
-            NTSDropdownModel _selectedIdNameViewModel = value;
-            _ddController.text = _selectedIdNameViewModel.name;
-            selectValue[i] = _selectedIdNameViewModel.name;
-            udfJson[model[i].key] = _selectedIdNameViewModel.id;
-          },
-        ));
+        listDynamic.add(
+          NTSDropDownSelect(
+            title: model[i].label,
+            controller: _ddController,
+            hint: model[i].label,
+            validationMessage: "Select " + model[i].label,
+            isShowArrow: true,
+            nameKey: (model[i].template)
+                .toString()
+                .replaceAll('<span>{{', '')
+                .replaceAll('}}</span>', '')
+                .trim()
+                .split('.')[1],
+            idKey: model[i].idPath,
+            url: model[i].data.url,
+            onListTap: (dynamic value) {
+              ntsDdBloc.subject.sink.add(null);
+              NTSDropdownModel _selectedIdNameViewModel = value;
+              _ddController.text = _selectedIdNameViewModel.name;
+              selectValue[i] = _selectedIdNameViewModel.name;
+              udfJson[model[i].key] = _selectedIdNameViewModel.id;
+            },
+          ),
+        );
       } else if (model[i].type == 'file') {
         TextEditingController attchmentController = new TextEditingController();
 
@@ -710,10 +761,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
         listDynamic.add(new DynamicDateTimeBox(
           code: udfJson[model[i].key].isNotEmpty
-              ? udfJson[model[i].key].contains('/')
-                  ? DateFormat("dd/MM/yyyy")
-                      .parse(model[i].udfValue.split(' ')[0])
+              ? model[i]
+                      .udfValue
                       .toString()
+                      .split(' ')[0]
+                      .contains(new RegExp(r'[a-z]'))
+                  ? null
                   : DateFormat("yyyy-MM-dd")
                       .parse(udfJson[model[i].key])
                       .toString()
@@ -836,7 +889,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: email$i,
             prefixIcon: Icon(Icons.email),
             maxLines: 1,
@@ -861,7 +914,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           BlocTextBoxWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
-            readonly: false,
+            readonly: model[i].disabled,
             textFieldBloc: textField$i,
             prefixIcon: Icon(Icons.note),
             maxLines: 1,
@@ -885,6 +938,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     for (var row in tableWidgets) {
       table.add(TableRow(children: [row]));
     }
+    // table.add(TableRow(children: tableWidgets));
     // });
     // listDynamic.add(Padding(
     //   padding: const EdgeInsets.only(top: 15, bottom: 10),
@@ -894,6 +948,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     //   ),
     // ));
     componentComListWidgets.add(Table(
+      defaultVerticalAlignment: TableCellVerticalAlignment.top,
       border: TableBorder(
         top: BorderSide(
           color: Colors.grey,
@@ -935,10 +990,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               Visibility(
                 visible: noteModel.isCompleteButtonVisible,
                 child: PrimaryButton(
+                  backgroundColor: Colors.green,
                   buttonText: 'Complete',
                   handleOnPressed: () {
                     noteViewModelPostRequest(
-                      1,
+                      2,
                       'NOTE_STATUS_COMPLETE',
                       createServiceFormBloc,
                     );
@@ -969,6 +1025,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               Visibility(
                 visible: noteModel.isDraftButtonVisible,
                 child: PrimaryButton(
+                  backgroundColor: Colors.greenAccent,
                   buttonText: 'Draft',
                   handleOnPressed: () {
                     noteViewModelPostRequest(
@@ -983,11 +1040,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               Visibility(
                 visible: noteModel.isExpireButtonVisible,
                 child: PrimaryButton(
+                  backgroundColor: Colors.red,
                   buttonText: 'Expiry',
                   handleOnPressed: () {
                     noteViewModelPostRequest(
-                      1,
-                      'NOTE_STATUS_DRAFT',
+                      2,
+                      'NOTE_STATUS_EXPIRE',
                       createServiceFormBloc,
                     );
                   },
@@ -1169,12 +1227,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('End Date Should be greater than Start Date.'),
-              ],
-            ),
+          content: ListBody(
+            children: const <Widget>[
+              Text('End Date Should be greater than Start Date.'),
+            ],
           ),
           actions: <Widget>[
             TextButton(
@@ -1197,11 +1253,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     var jsonModel = jsonDecode(stringModel);
     postNoteModel = NoteModel.fromJson(jsonModel);
 
-    postNoteModel.ownerUserId = ownerUserId;
+    postNoteModel.ownerUserId = userId;
     postNoteModel.requestedByUserId = userId;
     postNoteModel.subject = createServiceFormBloc.subject.value;
     postNoteModel.noteDescription = createServiceFormBloc.description.value;
-    postNoteModel.dataAction = postDataAction;
+    postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
+    // postDataAction;
     postNoteModel.noteStatusCode = noteStatusCode;
     postNoteModel.json = jsonEncode(udfJson);
     print(udfJson);
@@ -1243,7 +1300,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       url: completeUrl,
     );
 
-    print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
     ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
     // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
@@ -1352,7 +1408,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       ATTACHMENT_NTS_ROUTE,
       arguments: ScreenArguments(
         ntstype: NTSType.service,
-        arg1: noteModel.id,
+        arg1: noteModel.noteId,
       ),
     );
   }

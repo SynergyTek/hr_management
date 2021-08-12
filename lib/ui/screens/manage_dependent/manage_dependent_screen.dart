@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../data/enums/enums.dart';
+
 import '../../../routes/route_constants.dart';
 import '../../../routes/screen_arguments.dart';
-import 'widget/dependent_document_list.dart';
-import 'widget/dependent_list.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
+import 'widget/dependent_document_list.dart';
+import 'widget/dependent_list.dart';
 
 class ManageDependentScreen extends StatefulWidget {
   @override
@@ -75,6 +75,7 @@ class _ManageDependentScreenState extends State<ManageDependentScreen> {
           arguments: ScreenArguments(
             arg1: 'HRDependant',
             arg2: '',
+            val1: true,
           ),
         ),
       ),

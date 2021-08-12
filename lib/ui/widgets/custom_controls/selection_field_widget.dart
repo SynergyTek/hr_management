@@ -130,6 +130,8 @@ class StaticField extends StatelessWidget {
   final FormFieldValidator<String> validator;
   final double width;
   final TextEditingController controller;
+  final Icon icon;
+  final TextStyle style;
 
   const StaticField(
       {this.callBack,
@@ -140,12 +142,12 @@ class StaticField extends StatelessWidget {
       this.prefixIcon,
       this.validator,
       this.controller,
-      this.width});
+      this.width, this.icon, this.style});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 65.0,
+      // height: 65.0,
       width: width,
       child: Column(
         children: <Widget>[
@@ -156,9 +158,9 @@ class StaticField extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: hint,
                 labelText: hint,
-                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                labelStyle: style??TextStyle(color: Theme.of(context).primaryColor),
                 // filled: true,
-                prefixIcon: Icon(Icons.timer),
+                prefixIcon: icon??Icon(Icons.timer),
               )),
           Container(
             color: Colors.grey,
@@ -169,3 +171,48 @@ class StaticField extends StatelessWidget {
     );
   }
 }
+
+
+
+class ExpandableField extends StatelessWidget {
+  final TextEditingController controller;
+  final String title;
+final List<Widget> children;
+  // final String hint;
+  final Key key;
+  final bool isTileExpanded;
+  final ValueChanged valueChanged;
+
+  const ExpandableField(
+      {this.controller,
+      this.title,
+      // this.hint,
+      this.key,
+      this.valueChanged,
+      this.isTileExpanded, this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 1.0),
+        child: ExpansionTile(
+          initiallyExpanded: true,
+          // leading: Icon(Icons.calendar_today_sharp),
+          trailing: isTileExpanded
+              ? Icon(Icons.keyboard_arrow_down)
+              : Icon(Icons.keyboard_arrow_up),
+          onExpansionChanged: (bool isexpand) {
+            valueChanged(isexpand);
+          },
+          title: Text(
+            "Dates Detail",style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+          children: children
+        ),
+      ),
+    );
+  }
+}
+

@@ -9,12 +9,17 @@ class PrimaryButton extends StatelessWidget {
   final double height;
   final double borderRadius;
 
+  final Color backgroundColor;
+  final Color foregroundColor;
+
   const PrimaryButton({
     @required this.buttonText,
     @required this.handleOnPressed,
     this.width,
     this.height,
     this.borderRadius,
+    this.backgroundColor,
+    this.foregroundColor,
   });
 
   @override
@@ -26,7 +31,7 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
           elevation: MaterialStateProperty.all(0),
-          backgroundColor:
+          backgroundColor: MaterialStateProperty.all(backgroundColor) ??
               MaterialStateProperty.all(Theme.of(context).textHeadingColor),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
@@ -39,7 +44,12 @@ class PrimaryButton extends StatelessWidget {
           width: width ?? double.infinity,
           height: height ?? 24,
           child: Center(
-            child: Text(buttonText ?? ""),
+            child: Text(
+              buttonText ?? "",
+              style: TextStyle(
+                color: foregroundColor ?? Colors.white,
+              ),
+            ),
           ),
         ),
       ),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/data/models/profile_settings_model.dart';
+import 'package:hr_management/logic/blocs/profile_settings_bloc/profile_settings_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../data/models/login_models/login_response_model.dart';
 import '../../../widgets/snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -170,11 +173,18 @@ class _LoginBodyState extends State<LoginBody> {
     );
   }
 
-  loginViewModelPostRequest(String email, String password) async {
+  loginViewModelPostRequest(
+    String email,
+    String password,
+  ) async {
     Map<String, dynamic> queryparams = Map();
 
     if (email != null) queryparams['username'] = email;
     if (password != null) queryparams['password'] = password;
+
+    print("Login Params: ");
+    print(email);
+    print(password);
 
     try {
       LoginResponseModel data = await loginBloc.postData(
@@ -185,9 +195,16 @@ class _LoginBodyState extends State<LoginBody> {
         prefs.setString('username', data.userName);
         prefs.setString('id', data.id);
 
+        BlocProvider.of<UserModelBloc>(context).add(
+          UserModelChangeEvent(
+            userModel: data,
+          ),
+        );
+
         setState(() {
           showCPI = false;
         });
+
         displaySnackBar(text: 'Login successful!', context: context);
         Navigator.pushReplacementNamed(
           context,
@@ -203,8 +220,8 @@ class _LoginBodyState extends State<LoginBody> {
           ),
         );
       }
-    } catch (Exception) {
-      throw null;
+    } catch (e) {
+      throw e.toString();
     }
   }
 }

@@ -23,7 +23,7 @@ class WorklistDashboard extends StatefulWidget {
 
 class _WorklistDashboardState extends State<WorklistDashboard> {
   Map<String, TreeViewModelChildren> _checkedFilterSelectedItemsMap = Map();
-
+  String title = 'Task';
   int _selectedIndex = 0;
   NTSType ntsType = NTSType.task;
   List<Widget> _widgetOptions = [];
@@ -48,7 +48,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: "Worklist Dashboard",
+        title: "Worklist Dashboard (" + title + ")",
       ),
       body: SafeArea(
         // child: InternetConnectivityWidget(
@@ -97,7 +97,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
               NTS_TEMPLATE_REQUEST,
               arguments: ScreenArguments(
                 ntstype: NTSType.task,
-                arg4: '',//'STEP_TASK_CATEGORY',
+                arg4: '', //'STEP_TASK_CATEGORY',
               ),
             );
           } else if (ntsType == NTSType.service) {
@@ -128,16 +128,19 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.file_copy),
+                  tooltip: 'TASK',
                   // icon: Icon(Icons.task),
-                  label: 'Task',
+                  label: 'TASK',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.miscellaneous_services),
-                  label: 'Service',
+                  label: 'SERVICE',
+                  tooltip: 'SERVICE',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.note),
-                  label: 'Note',
+                  label: 'NOTE',
+                  tooltip: 'NOTE',
                 ),
               ],
               currentIndex: _selectedIndex,
@@ -153,10 +156,13 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
       _selectedIndex = index;
       if (_selectedIndex == 0) {
         ntsType = NTSType.task;
+        title = 'Task';
       } else if (_selectedIndex == 1) {
         ntsType = NTSType.service;
+        title = 'Service';
       } else if (_selectedIndex == 2) {
         ntsType = NTSType.note;
+        title = 'Note';
       }
 
       // Clearing old filter values.

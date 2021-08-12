@@ -30,7 +30,7 @@ class AccessLogListTileWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    eachAccessLogModelElement?.devicePunchingTypeText ?? 'NA',
+                    eachAccessLogModelElement?.devicePunchingTypeText ?? '-',
                     style: TextStyle(
                       fontSize: Theme.of(context).textTheme.bodyText1.fontSize,
                       color: _handleListTileColor(context),

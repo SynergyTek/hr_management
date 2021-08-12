@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:listizer/listizer.dart';
+
 import '../../../../data/models/manage_accural/manage_accrual_model.dart';
 import '../../../../data/models/manage_accural/manage_accrual_res_model.dart';
 import '../../../../logic/blocs/manage_accrual_bloc/manage_accrual_bloc.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
 
 class ManageAccrualBody extends StatefulWidget {
   const ManageAccrualBody({Key key}) : super(key: key);

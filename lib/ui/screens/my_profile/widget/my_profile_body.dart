@@ -39,12 +39,13 @@ class _MyProfileBodyState extends State<MyProfileBody> {
                 children: [
                   Center(
                     child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(
-                          APIEndpointConstants.BASE_URL +
-                              '/common/query/GetFile?fileId=' +
-                              employeeProfile.photoName,
-                        )),
+                      radius: 50,
+                      backgroundImage: NetworkImage(
+                        APIEndpointConstants.BASE_URL +
+                            '/common/query/GetFile?fileId=' +
+                            employeeProfile.photoName,
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 5,

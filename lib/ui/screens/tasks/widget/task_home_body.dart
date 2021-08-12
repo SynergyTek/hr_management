@@ -53,16 +53,18 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
 
   @override
   void initState() {
-    taskStatus = widget.taskStatus;
-    mode = widget.mode;
-    moduleId = widget.moduleId;
+    // taskStatus = widget.taskStatus;
+    // mode = widget.mode;
+    // moduleId = widget.moduleId;
     super.initState();
     apiCall();
   }
 
   apiCall() {
     taskBloc.subjectTaskList.sink.add(null);
-
+    taskStatus = widget.taskStatus;
+    mode = widget.mode;
+    moduleId = widget.moduleId;
     Map<String, dynamic> queryparams = Map();
 
     if (moduleId != null) queryparams['moduleId'] = moduleId;
@@ -188,10 +190,10 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
             buttonText: 'Ending in Next 7 Days',
             handleOnPressed: () => _endingInWeekFilter(),
           ),
-          customButton(
-            buttonText: 'Date',
-            handleOnPressed: () => _dateFilter(),
-          ),
+          // customButton(
+          //   buttonText: 'Date',
+          //   handleOnPressed: () => _dateFilter(),
+          // ),
           customButton(
             buttonText: 'More...',
             handleOnPressed: () => _moreFilter(),

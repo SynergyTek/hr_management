@@ -17,8 +17,12 @@ class NoteHomeBody extends StatefulWidget {
   final String noteStatus;
   final String moduleId;
 
-  const NoteHomeBody({Key key, this.mode, this.noteStatus, this.moduleId})
-      : super(key: key);
+  const NoteHomeBody({
+    Key key,
+    this.mode,
+    this.noteStatus,
+    this.moduleId,
+  }) : super(key: key);
   @override
   _NoteHomeBodyState createState() => _NoteHomeBodyState();
 }
@@ -37,9 +41,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
   @override
   void initState() {
-    noteStatus = widget.noteStatus;
-    mode = widget.mode;
-    moduleId = widget.moduleId;
+    // noteStatus = widget.noteStatus;
+    // mode = widget.mode;
+    // moduleId = widget.moduleId;
     super.initState();
     apiCall();
   }
@@ -47,6 +51,9 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
   apiCall() {
     noteBloc.subjectNoteList.sink.add(null);
 
+    noteStatus = widget.noteStatus;
+    mode = widget.mode;
+    moduleId = widget.moduleId;
     Map<String, dynamic> queryparams = Map();
 
     if (noteStatus != null) queryparams['noteStatus'] = noteStatus;

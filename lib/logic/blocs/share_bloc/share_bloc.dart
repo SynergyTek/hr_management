@@ -1,12 +1,12 @@
-import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
-import 'package:hr_management/data/models/share_models/note_shared_models/note_shared_data_response.dart';
-import 'package:hr_management/data/models/share_models/sevice_shared_models/service_shared_data_response.dart';
-import 'package:hr_management/data/models/share_models/task_shared_models/task_shared_data_response.dart';
-import 'package:hr_management/data/models/share_post_model/note_share_post_model/note_share_post_model.dart';
-import 'package:hr_management/data/models/share_post_model/service_share_post_model/service_share_post_model.dart';
-import 'package:hr_management/data/models/share_post_model/task_share_post_model/task_share_post_model.dart';
-import 'package:hr_management/data/repositories/share_repo/abstract_share_repo.dart';
+import '../../../data/enums/enums.dart';
+import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/share_models/note_shared_models/note_shared_data_response.dart';
+import '../../../data/models/share_models/sevice_shared_models/service_shared_data_response.dart';
+import '../../../data/models/share_models/task_shared_models/task_shared_data_response.dart';
+import '../../../data/models/share_post_model/note_share_post_model/note_share_post_model.dart';
+import '../../../data/models/share_post_model/service_share_post_model/service_share_post_model.dart';
+import '../../../data/models/share_post_model/task_share_post_model/task_share_post_model.dart';
+import '../../../data/repositories/share_repo/abstract_share_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ShareBloc {

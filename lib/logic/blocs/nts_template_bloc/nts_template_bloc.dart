@@ -27,6 +27,7 @@ class NTSTemplateBloc {
       queryparams = {
         "categoryCode": "", //categoryCode,
         "templateType": "Task",
+        "taskType":"StandardTask"
       };
     } else if (ntsType == NTSType.note) {
       // } else if (ntsType == NTSType.note && categoryCode == 'Document') {

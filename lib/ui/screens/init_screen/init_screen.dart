@@ -1,11 +1,11 @@
-import 'package:sizer/sizer.dart';
-
-import '../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../logic/blocs/internet_bloc/internet_bloc.dart';
+import '../../../logic/blocs/location_bloc/location_bloc.dart';
 import '../../../logic/blocs/profile_settings_bloc/profile_settings_bloc.dart';
 import '../../../routes/route_constants.dart';
 import '../../../routes/routes.dart';
@@ -27,7 +27,14 @@ class InitScreen extends StatelessWidget {
           ),
 
           BlocProvider<LocationBloc>(
-            create: (context) => LocationBloc()..add(LocationStartedEvent()),
+            create: (context) => LocationBloc()
+              ..add(
+                LocationStartedEvent(),
+              ),
+          ),
+
+          BlocProvider<UserModelBloc>(
+            create: (context) => UserModelBloc(),
           ),
 
           BlocProvider<ProfileSettingsBloc>(

@@ -1,7 +1,7 @@
-import '../../../data/enums/enums.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:meta/meta.dart';
+import 'package:rxdart/rxdart.dart';
 
+import '../../../data/enums/enums.dart';
 import '../../../data/models/attachment_nts_models/attachment_nts_response.dart';
 import '../../../data/repositories/attachment_nts_repository/attachment_nts_repository.dart';
 

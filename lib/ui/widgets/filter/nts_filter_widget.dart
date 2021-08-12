@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/common_bloc/common_bloc.dart';
 import '../../screens/tasks/widget/task_home_body.dart';
 import '../appbar_widget.dart';
 import '../internet_connectivity_widget.dart';
-
-import '../primary_button.dart';
 
 class NTSFilterWidget extends StatefulWidget {
   final FilterListTapCallBack onListTap;
