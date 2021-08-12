@@ -42,8 +42,12 @@ class AddEditNoteBody extends StatefulWidget {
   final String title;
   final bool isDependent;
 
-  AddEditNoteBody(
-      {this.templateCode, this.noteId, this.title, this.isDependent});
+  AddEditNoteBody({
+    this.templateCode,
+    this.noteId,
+    this.title,
+    this.isDependent,
+  });
 
   @override
   _AddEditNoteBodyState createState() => _AddEditNoteBodyState();
@@ -95,6 +99,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   @override
   void initState() {
     super.initState();
+
     noteBloc.subjectNoteDetails.sink.add(null);
     noteBloc
       ..getNoteDetails(

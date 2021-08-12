@@ -11,8 +11,7 @@ class DocReqByHrBodyWidget extends StatefulWidget {
   DocReqByHrBodyWidget();
 
   @override
-  _DocReqByHrBodyWidgetState createState() =>
-      _DocReqByHrBodyWidgetState();
+  _DocReqByHrBodyWidgetState createState() => _DocReqByHrBodyWidgetState();
 }
 
 class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {

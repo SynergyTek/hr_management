@@ -13,12 +13,14 @@ class AddEditNote extends StatelessWidget {
     Key key,
     this.templateCode,
     this.noteId,
-    this.title, this.isDependent,
+    this.title,
+    this.isDependent,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.white,
       child: SafeArea(
         child: InternetConnectivityWidget(
           child: AddEditNoteBody(

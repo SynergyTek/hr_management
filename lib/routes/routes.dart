@@ -1,5 +1,3 @@
-
-
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
@@ -150,7 +148,7 @@ class AppRouter {
             templateCode: args.arg1,
             noteId: args.arg2,
             title: args.arg3,
-            isDependent: args.val1,
+            isDependent: args?.val1 ?? false,
           ),
         );
         break;

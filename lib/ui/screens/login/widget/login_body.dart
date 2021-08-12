@@ -192,6 +192,9 @@ class _LoginBodyState extends State<LoginBody> {
       );
       if (data != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        prefs.clear();
+
         prefs.setString('username', data.userName);
         prefs.setString('id', data.id);
 
