@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/api_models/post_response_model.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/attacment/video_file.dart';
 import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
@@ -24,14 +27,16 @@ typedef OnTapPressedCallBack = void Function(
 
 class SelectAttachment extends StatefulWidget {
   final dynamic selectedModel;
-  final String ntstype;
+  final NTSType ntstype;
   final OnTapPressedCallBack onListTap;
+  final String ntsId;
 
   SelectAttachment({
     Key key,
     this.selectedModel,
     this.ntstype,
     this.onListTap,
+    this.ntsId,
   }) : super(key: key);
 
   _SelectAttachmentState createState() => _SelectAttachmentState();
@@ -52,205 +57,18 @@ class _SelectAttachmentState extends State<SelectAttachment> {
   MediaFileType _pickingType;
   FileType _fileType;
   String _documentType = "";
-
-  String _ntstype;
   TextEditingController _controller = new TextEditingController();
   RecordingFormat _recordingFormat = new RecordingFormat();
   AnimationController animationController;
   Animation<double> animation;
-
   bool _isBusy = false;
   XFile _imageFile;
 
   @override
   void initState() {
     _controller.addListener(() => _extension);
-    _ntstype = widget.ntstype;
 
     super.initState();
-  }
-
-  void _openFileExplorer() async {
-    if (_pickingType == MediaFileType.VIDEO) {
-      _fileType = FileType.video;
-    } else if (_pickingType == MediaFileType.AUDIO) {
-      _fileType = FileType.audio;
-    } else if (_pickingType == MediaFileType.IMAGE) {
-      _fileType = FileType.image;
-    } else if (_pickingType == MediaFileType.CAPTURE_IMAGE) {
-      _fileType = FileType.image;
-    } else if (_pickingType == MediaFileType.CUSTOM) {
-      _fileType = FileType.custom;
-    } else if (_pickingType == MediaFileType.ANY) {
-      _fileType = FileType.any;
-    }
-    setState(() => _loadingPath = true);
-    try {
-      if (_multiPick) {
-        _path = null;
-        filePickerResult = await FilePicker.platform.pickFiles(
-            allowMultiple: true,
-            type: _fileType,
-            allowedExtensions: (_extension?.isNotEmpty ?? false)
-                ? _extension?.replaceAll(' ', '')?.split(',')
-                : null);
-        _paths = filePickerResult.paths;
-      } else {
-        _paths = null;
-        filePickerResult = await FilePicker.platform.pickFiles(
-            type: _fileType,
-            allowedExtensions: (_extension?.isNotEmpty ?? false)
-                ? _extension?.replaceAll(' ', '')?.split(',')
-                : null);
-        _path = filePickerResult?.files?.single?.path;
-      }
-    } on Exception catch (e) {
-      print("Unsupported operation" + e.toString());
-    }
-    if (!mounted) return;
-    setState(() {
-      _loadingPath = false;
-      _fileName = _path != null
-          ? _path.split('/').last
-          : _paths != null
-              ? _paths.toString()
-              : '...';
-    });
-  }
-
-  Future<Uint8List> _readFileByte(String filePath) async {
-    Uri myUri = Uri.parse(filePath);
-    File mediaFile = new File.fromUri(myUri);
-    Uint8List bytes;
-    await mediaFile.readAsBytes().then((value) {
-      bytes = Uint8List.fromList(value);
-    }).catchError((onError) {
-      print('Exception Error while reading audio from path:' +
-          onError.toString());
-    });
-    return bytes;
-  }
-
-  String resultMsg = '';
-  void uploadAttachment() async {
-    try {
-      setState(() {
-        _isBusy = true;
-      });
-      Uint8List mediaFileByte;
-      await _readFileByte(_path).then((bytesData) {
-        mediaFileByte = bytesData;
-      });
-
-      var post = Attachment();
-      post.userId = '45bba746-3309-49b7-9c03-b5793369d73c';
-      if (_pickingType == MediaFileType.IMAGE ||
-          _pickingType == MediaFileType.CAPTURE_IMAGE) {
-        _documentType = "image";
-        post.name = 'Image';
-        createPostModel(post, mediaFileByte);
-      } else if (_pickingType == MediaFileType.AUDIO ||
-          _recordingFormat.type == "Audio") {
-        _documentType = "audio";
-        post.name = 'Audio';
-        createPostModel(post, mediaFileByte);
-      } else if (_pickingType == MediaFileType.VIDEO ||
-          _recordingFormat.type == "Video") {
-        _documentType = "video";
-        post.name = 'Video';
-        createPostModel(post, mediaFileByte);
-        post.fileType = "mp4";
-      } else if (_pickingType == MediaFileType.CUSTOM ||
-          _pickingType == MediaFileType.ANY) {
-        post.name = _fileName;
-        createPostModel(post, mediaFileByte);
-      }
-
-      String result = await noteBloc.postNoteAttachmentDocumentData(
-        attachmentData: post,
-      );
-      print(result);
-      if (result.isNotEmpty) {
-        setState(() {
-          _isBusy = false;
-        });
-        resultMsg = "File Uploded";
-       
-      } else {
-        setState(() {
-          _isBusy = false;
-        });
-        resultMsg = "File Not Uploaded";
-      }
-      displaySnackBar(text: resultMsg, context: context);
-      // var result = await imageUploadRequest(post, context);
-      if (result != null) {
-        widget.onListTap(result, _fileName, _pickingType);
-      }
-
-      Navigator.of(context).pop();
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void createPostModel(Attachment post, Uint8List mediaFileByte) {
-    post.fileType = ("." + (_path).split(".")[(_path).split(".").length - 1])
-        .replaceAll(".", "");
-    post.isNtsComments = false;
-    // post.ntsId = _ntsId; // only for comments we need to send
-    post.ntsType = _ntstype;
-    post.comment = _descriptionController.text;
-    var mediaFile = new VideoFile();
-    mediaFile.fileName = _path.split('/').last;
-    mediaFile.imageData = "";
-    mediaFile.mimeType = mime(_path);
-    mediaFile.stringData = base64Encode(mediaFileByte);
-    post.images = [];
-    post.images.add(mediaFile);
-  }
-
-  void getRecordedAVPath(dynamic value, dynamic value2) {
-    _recordingFormat = value;
-    _path = _recordingFormat.path;
-    setState(() => _loadingPath = true);
-    // print(_path);
-    if (!mounted) return;
-    setState(() {
-      _loadingPath = false;
-      _fileName = _path != null
-          ? _path.split('/').last
-          : _paths != null
-              ? _paths.toString()
-              : '...';
-    });
-  }
-
-  VideoPlayerController _vcontroller;
-  bool isVideo = false;
-  void _onImageButtonPressed(ImageSource source) async {
-    if (_vcontroller != null) {
-      await _vcontroller.setVolume(0.0);
-    }
-    try {
-      _imageFile = await ImagePicker().pickImage(
-          source: source, maxWidth: 300, maxHeight: 300, imageQuality: 50);
-      _path = _imageFile.path;
-      setState(() => _loadingPath = true);
-      // print(_path);
-      if (!mounted) return;
-      setState(() {
-        _loadingPath = false;
-        _fileName = _path != null
-            ? _path.split('/').last
-            : _paths != null
-                ? _paths.toString()
-                : '...';
-      });
-    } catch (e) {
-      // _pickImageError = e;
-    }
-    // }
   }
 
   @override
@@ -379,6 +197,195 @@ class _SelectAttachmentState extends State<SelectAttachment> {
             ),
           )),
     );
+  }
+
+  void _openFileExplorer() async {
+    if (_pickingType == MediaFileType.VIDEO) {
+      _fileType = FileType.video;
+    } else if (_pickingType == MediaFileType.AUDIO) {
+      _fileType = FileType.audio;
+    } else if (_pickingType == MediaFileType.IMAGE) {
+      _fileType = FileType.image;
+    } else if (_pickingType == MediaFileType.CAPTURE_IMAGE) {
+      _fileType = FileType.image;
+    } else if (_pickingType == MediaFileType.CUSTOM) {
+      _fileType = FileType.custom;
+    } else if (_pickingType == MediaFileType.ANY) {
+      _fileType = FileType.any;
+    }
+    setState(() => _loadingPath = true);
+    try {
+      if (_multiPick) {
+        _path = null;
+        filePickerResult = await FilePicker.platform.pickFiles(
+            allowMultiple: true,
+            type: _fileType,
+            allowedExtensions: (_extension?.isNotEmpty ?? false)
+                ? _extension?.replaceAll(' ', '')?.split(',')
+                : null);
+        _paths = filePickerResult.paths;
+      } else {
+        _paths = null;
+        filePickerResult = await FilePicker.platform.pickFiles(
+            type: _fileType,
+            allowedExtensions: (_extension?.isNotEmpty ?? false)
+                ? _extension?.replaceAll(' ', '')?.split(',')
+                : null);
+        _path = filePickerResult?.files?.single?.path;
+      }
+    } on Exception catch (e) {
+      print("Unsupported operation" + e.toString());
+    }
+    if (!mounted) return;
+    setState(() {
+      _loadingPath = false;
+      _fileName = _path != null
+          ? _path.split('/').last
+          : _paths != null
+              ? _paths.toString()
+              : '...';
+    });
+  }
+
+  Future<Uint8List> _readFileByte(String filePath) async {
+    Uri myUri = Uri.parse(filePath);
+    File mediaFile = new File.fromUri(myUri);
+    Uint8List bytes;
+    await mediaFile.readAsBytes().then((value) {
+      bytes = Uint8List.fromList(value);
+    }).catchError((onError) {
+      print('Exception Error while reading audio from path:' +
+          onError.toString());
+    });
+    return bytes;
+  }
+
+  String resultMsg = '';
+  void uploadAttachment() async {
+    try {
+      setState(() {
+        _isBusy = true;
+      });
+      Uint8List mediaFileByte;
+      await _readFileByte(_path).then((bytesData) {
+        mediaFileByte = bytesData;
+      });
+
+      var post = Attachment();
+
+      if (_pickingType == MediaFileType.IMAGE ||
+          _pickingType == MediaFileType.CAPTURE_IMAGE) {
+        _documentType = "image";
+        post.name = 'Image';
+        createPostModel(post, mediaFileByte);
+      } else if (_pickingType == MediaFileType.AUDIO ||
+          _recordingFormat.type == "Audio") {
+        _documentType = "audio";
+        post.name = 'Audio';
+        createPostModel(post, mediaFileByte);
+      } else if (_pickingType == MediaFileType.VIDEO ||
+          _recordingFormat.type == "Video") {
+        _documentType = "video";
+        post.name = 'Video';
+        createPostModel(post, mediaFileByte);
+        post.fileType = "mp4";
+      } else if (_pickingType == MediaFileType.CUSTOM ||
+          _pickingType == MediaFileType.ANY) {
+        post.name = _fileName;
+        createPostModel(post, mediaFileByte);
+      }
+
+      String result = await noteBloc.postNoteAttachmentDocumentData(
+        attachmentData: post,
+      );
+      print(result);
+      if (result.isNotEmpty) {
+        setState(() {
+          _isBusy = false;
+        });
+        resultMsg = "File Uploded";
+      } else {
+        setState(() {
+          _isBusy = false;
+        });
+        resultMsg = "File Not Uploaded";
+      }
+      displaySnackBar(text: resultMsg, context: context);
+      // var result = await imageUploadRequest(post, context);
+      if (result != null) {
+        widget.onListTap(result, _fileName, _pickingType);
+      }
+
+      Navigator.of(context).pop();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void createPostModel(Attachment post, Uint8List mediaFileByte) {
+    post.ntsId = widget.ntsId;
+    post.userId = context.read<UserModelBloc>().state?.userModel?.id ?? '';
+    //'45bba746-3309-49b7-9c03-b5793369d73c';
+    post.fileType = ("." + (_path).split(".")[(_path).split(".").length - 1])
+        .replaceAll(".", "");
+    post.isNtsComments = false;
+    // post.ntsId = _ntsId; // only for comments we need to send
+    post.ntsType = widget.ntstype == NTSType.service
+        ? 'NTSService'
+        : widget.ntstype == NTSType.task
+            ? 'NTSTask'
+            : 'NTSNote';
+    post.comment = _descriptionController.text;
+    var mediaFile = new VideoFile();
+    mediaFile.fileName = _path.split('/').last;
+    mediaFile.imageData = "";
+    mediaFile.mimeType = mime(_path);
+    mediaFile.stringData = base64Encode(mediaFileByte);
+    post.images = [];
+    post.images.add(mediaFile);
+  }
+
+  void getRecordedAVPath(dynamic value, dynamic value2) {
+    _recordingFormat = value;
+    _path = _recordingFormat.path;
+    setState(() => _loadingPath = true);
+    // print(_path);
+    if (!mounted) return;
+    setState(() {
+      _loadingPath = false;
+      _fileName = _path != null
+          ? _path.split('/').last
+          : _paths != null
+              ? _paths.toString()
+              : '...';
+    });
+  }
+
+  VideoPlayerController _vcontroller;
+  bool isVideo = false;
+  void _onImageButtonPressed(ImageSource source) async {
+    if (_vcontroller != null) {
+      await _vcontroller.setVolume(0.0);
+    }
+    try {
+      _imageFile = await ImagePicker().pickImage(
+          source: source, maxWidth: 300, maxHeight: 300, imageQuality: 50);
+      _path = _imageFile.path;
+      setState(() => _loadingPath = true);
+      // print(_path);
+      if (!mounted) return;
+      setState(() {
+        _loadingPath = false;
+        _fileName = _path != null
+            ? _path.split('/').last
+            : _paths != null
+                ? _paths.toString()
+                : '...';
+      });
+    } catch (e) {
+      // _pickImageError = e;
+    }
+    // }
   }
 
   Widget attachmentWidget() {

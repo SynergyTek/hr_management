@@ -170,7 +170,8 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => SelectAttachment(
-            ntstype: args.arg1,
+            ntsId:args.arg1,
+            ntstype: args.ntstype,
             onListTap: args.callBack,
           ),
         );
@@ -341,8 +342,8 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => AttachmentNTSScreen(
-            ntsType: args?.ntstype ?? NTSType.service,
-            ntsId: args?.arg1 ?? 'af9a75da-ae2e-4d8a-86a0-d55c08a2a2b8',
+            ntsType: args.ntstype ,
+            ntsId: args.arg1 ,
           ),
         );
         break;

@@ -43,7 +43,8 @@ class AttachmentNTSScreen extends StatelessWidget {
               context,
               NTS_ATTACHMENT,
               arguments: ScreenArguments(
-                  arg1: 'Note',
+                  arg1: ntsId,
+                  ntstype: ntsType,
                   callBack: (dynamic value, dynamic value2, dynamic value3) {
                     
                   }),

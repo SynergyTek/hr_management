@@ -1422,7 +1422,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       context,
       ATTACHMENT_NTS_ROUTE,
       arguments: ScreenArguments(
-        ntstype: NTSType.service,
+        ntstype: NTSType.note,
         arg1: noteModel.noteId,
       ),
     );

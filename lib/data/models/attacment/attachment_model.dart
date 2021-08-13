@@ -6,7 +6,7 @@ import 'video_file.dart';
 //@JsonSerializable(explicitToJson: true)
 class Attachment {
   String userId;
-  int ntsId;
+  String ntsId;
   String name;
   String fileType;
   String ntsType;
@@ -24,7 +24,7 @@ class Attachment {
 Attachment _$AttachmentPostFromJson(Map<String, dynamic> json) {
   return Attachment()
     ..userId = json['UserId'] as String
-    ..ntsId = json['NtsId'] as int
+    ..ntsId = json['NtsId'] as String
     ..name = json['Name'] as String
     ..fileType = json['FileType'] as String
     ..ntsType = json['NtsType'] as String
