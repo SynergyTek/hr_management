@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -25,7 +27,26 @@ class AttachmentNTSBloc {
   }
 
   /// Used to create new entries.
-  postData() async {}
+  Future<String> postAttachmentDocumentData({
+    @required Attachment attachmentData,
+  }) async {
+    Response<dynamic> response = await _apiRepository.postAttachmentData(
+      attachmentData: attachmentData,
+    );
+
+    if (response.statusCode == 200) {
+      getData(
+          ntsId: attachmentData.ntsId,
+          ntsType: attachmentData.ntsType == 'NTS_Service'
+              ? NTSType.service
+              : attachmentData.ntsType == 'NTS_Task'
+                  ? NTSType.task
+                  : NTSType.note);
+      return response.data;
+    } else {
+      return "";
+    }
+  }
 
   /// Used to update an existing entry.
   putData() async {

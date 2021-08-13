@@ -60,21 +60,7 @@ class NoteBloc {
     return response;
   }
 
-  /// Used to create new entries.
-  Future<String> postNoteAttachmentDocumentData({
-    @required Attachment attachmentData,
-  }) async {
-    Response<dynamic> response = await _noteRepository.postNoteAttachmentData(
-      attachmentData: attachmentData,
-    );
-
-    if (response.statusCode == 200) {
-      
-      return response.data;
-    } else {
-      return "";
-    }
-  }
+  
 
   /// Used to update an existing entry.
   putData() async {

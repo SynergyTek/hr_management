@@ -5,6 +5,7 @@ import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/api_models/post_response_model.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/attacment/video_file.dart';
+import 'package:hr_management/logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
 import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
@@ -295,7 +296,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
         createPostModel(post, mediaFileByte);
       }
 
-      String result = await noteBloc.postNoteAttachmentDocumentData(
+      String result = await attachmentNTSBloc.postAttachmentDocumentData(
         attachmentData: post,
       );
       print(result);
@@ -331,10 +332,10 @@ class _SelectAttachmentState extends State<SelectAttachment> {
     post.isNtsComments = false;
     // post.ntsId = _ntsId; // only for comments we need to send
     post.ntsType = widget.ntstype == NTSType.service
-        ? 'NTSService'
+        ? 'NTS_Service'
         : widget.ntstype == NTSType.task
-            ? 'NTSTask'
-            : 'NTSNote';
+            ? 'NTS_Task'
+            : 'NTS_Note';
     post.comment = _descriptionController.text;
     var mediaFile = new VideoFile();
     mediaFile.fileName = _path.split('/').last;

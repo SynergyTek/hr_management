@@ -59,12 +59,37 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
     }
   }
 
+  
   @override
-  Future<AttachmentNTSResponse> postAPIData({
+  Future<Response<dynamic>> postAttachmentData({
     Map<String, dynamic> queryparams,
-  }) {
-    throw UnimplementedError();
+    @required Attachment attachmentData,
+  }) async {
+    final String endpoint = APIEndpointConstants.FILE_UPLOAD_ATTACHMENT;
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        data: jsonEncode(attachmentData.toJson()) ?? {},
+      );
+
+      print("response: ${response.data}");
+
+      return response;
+
+      // if (response.statusCode==200) {
+      //   return response.data;
+      // }
+
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return err;
+    }
   }
+
 
   @override
   Future<AttachmentNTSResponse> putAPIData({

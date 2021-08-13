@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:meta/meta.dart';
 
 import '../../../constants/api_endpoints.dart';
@@ -16,7 +19,8 @@ abstract class AbstractAttachmentNTSRepository {
     @required String ntsId,
   });
 
-  Future<AttachmentNTSResponse> postAPIData({
+
+  Future<Response<dynamic>> postAttachmentData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
