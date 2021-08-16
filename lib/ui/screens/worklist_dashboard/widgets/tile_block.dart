@@ -139,6 +139,8 @@ Widget worklistTileWidget(
                   status = 'NOTE_STATUS_EXPIRE';
                 } else if (status == 'Complete') {
                   status = 'NOTE_STATUS_COMPLETE';
+                } else if (status == 'Expired') {
+                  status = 'NOTE_STATUS_EXPIRE';
                 }
                 Navigator.pushNamed(
                   context,

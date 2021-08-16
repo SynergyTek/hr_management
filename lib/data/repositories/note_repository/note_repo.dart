@@ -114,6 +114,8 @@ class NoteRepository extends AbstractNoteRepository {
           result.messages = 'Note saved as Draft';
         else if (note.noteStatusCode == 'NOTE_STATUS_INPROGRESS')
           result.messages = 'Note Saved Successfully';
+        else if (note.noteStatusCode == 'NOTE_STATUS_COMPLETE')
+          result.messages = 'Note Completed successfully';
       }
 
       return result;

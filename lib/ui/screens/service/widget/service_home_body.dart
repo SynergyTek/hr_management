@@ -62,9 +62,11 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
 
   apiCall() {
     serviceBloc.subjectServiceList.sink.add(null);
-    serviceStatus = widget.serviceStatus;
-    moduleId = widget.moduleId;
-    mode = widget.mode;
+    if (widget.serviceStatus != null && widget.serviceStatus.isNotEmpty)
+      serviceStatus = widget.serviceStatus;
+    if (widget.moduleId != null && widget.moduleId.isNotEmpty)
+      moduleId = widget.moduleId;
+    if (widget.mode != null && widget.mode.isNotEmpty) mode = widget.mode;
     Map<String, dynamic> queryparams = Map();
 
     if (userId != null) {
@@ -248,7 +250,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
   _moreFilter() {
     filterData(dynamic value, FilterType filterType) {
       _setParamsToNull();
-      assignValues(value, filterType);
+      if (value != 'SERVICE_STATUS_ALL') assignValues(value, filterType);
       apiCall();
       print(serviceStatus);
     }
