@@ -205,7 +205,8 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
   _moreFilter() {
     _setParamsToNull();
     filterData(dynamic value, FilterType filterType) {
-      assignValues(value, filterType);
+      if (value != 'a8fc557a-9bb6-49ca-9ead-76ce0188563c')
+        assignValues(value, filterType);
       apiCall();
     }
 
