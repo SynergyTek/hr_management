@@ -62,9 +62,12 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
 
   apiCall() {
     taskBloc.subjectTaskList.sink.add(null);
-    taskStatus = widget.taskStatus;
-    mode = widget.mode;
-    moduleId = widget.moduleId;
+    if (widget.taskStatus != null && widget.taskStatus.isNotEmpty)
+      taskStatus = widget.taskStatus;
+    if (widget.mode != null && widget.mode.isNotEmpty) mode = widget.mode;
+    if (widget.moduleId != null && widget.moduleId.isNotEmpty)
+      moduleId = widget.moduleId;
+
     Map<String, dynamic> queryparams = Map();
 
     if (moduleId != null) queryparams['moduleId'] = moduleId;
@@ -354,7 +357,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
   _moreFilter() {
     _setParamsToNull();
     filterData(dynamic value, FilterType filterType) {
-      assignValues(value, filterType);
+      if (value != 'TASK_STATUS_ALL') assignValues(value, filterType);
       apiCall();
     }
 

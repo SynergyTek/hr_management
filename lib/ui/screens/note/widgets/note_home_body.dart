@@ -51,9 +51,11 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
   apiCall() {
     noteBloc.subjectNoteList.sink.add(null);
 
-    noteStatus = widget.noteStatus;
-    mode = widget.mode;
-    moduleId = widget.moduleId;
+    if (widget.noteStatus != null && widget.noteStatus.isNotEmpty)
+      noteStatus = widget.noteStatus;
+    if (widget.mode != null && widget.mode.isNotEmpty) mode = widget.mode;
+    if (widget.moduleId != null && widget.moduleId.isNotEmpty)
+      moduleId = widget.moduleId;
     Map<String, dynamic> queryparams = Map();
 
     if (noteStatus != null) queryparams['noteStatus'] = noteStatus;
@@ -201,7 +203,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
   _moreFilter() {
     _setParamsToNull();
     filterData(dynamic value, FilterType filterType) {
-      assignValues(value, filterType);
+      if (value != 'NOTE_STATUS_ALL') assignValues(value, filterType);
       apiCall();
     }
 

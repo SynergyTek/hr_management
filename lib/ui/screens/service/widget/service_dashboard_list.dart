@@ -179,7 +179,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
   _moreFilter() {
     _setParamsToNull();
     filterData(dynamic value, FilterType filterType) {
-      if (value != '7e920184-c8f7-4b5b-ad2c-7a6f40f51823')
+      if (value != '7e920184-c8f7-4b5b-ad2c-7a6f40f51823' && value != 'All')
         assignValues(value, filterType);
       apiCall();
     }
