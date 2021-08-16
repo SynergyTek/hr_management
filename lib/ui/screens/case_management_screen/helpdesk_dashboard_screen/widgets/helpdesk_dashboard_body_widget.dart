@@ -97,11 +97,11 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
     );
   }
 
-  _pushReplacement({
+  _push({
     @required String title,
     @required Widget child,
   }) =>
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => Scaffold(
@@ -113,52 +113,52 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
         ),
       );
 
-  void _requestsSummary() => _pushReplacement(
+  void _requestsSummary() => _push(
         title: "Requests Summary",
         child: RequestsSummaryWidget(),
       );
 
-  void _requestsByCategoryOnTap() => _pushReplacement(
+  void _requestsByCategoryOnTap() => _push(
         title: "Requests By Category",
         child: RequestByCategoryWidget(),
       );
 
-  void _requestsReceivedInLast20Days() => _pushReplacement(
+  void _requestsReceivedInLast20Days() => _push(
         title: "Requests Received In Last 20 Days",
         child: RequestsReceivedInLast20DaysWidget(),
       );
 
-  void _requestsClosedInLast20Days() => _pushReplacement(
+  void _requestsClosedInLast20Days() => _push(
         title: "Requests Closed In Last 20 Days",
         child: RequestsClosedInLast20DaysWidget(),
       );
 
-  void _openRequests() => _pushReplacement(
+  void _openRequests() => _push(
         title: "Open Requests",
         child: OpenRequestsWidget(),
       );
 
-  void _openRequestsByCategory() => _pushReplacement(
+  void _openRequestsByCategory() => _push(
         title: "Open Requests By Category",
         child: OpenRequestsByCategoryWidget(),
       );
 
-  void _requestsApprochingSLAViolations() => _pushReplacement(
+  void _requestsApprochingSLAViolations() => _push(
         title: "Requests Approching SLA Violations",
         child: RequestsApproachingSLAViolationsWidget(),
       );
 
-  void _slaViolationedRequested() => _pushReplacement(
+  void _slaViolationedRequested() => _push(
         title: "SLA Violated Requests",
         child: SLAViolatedRequestsWidget(),
       );
 
-  void _slaViolationByCategoryOnTap() => _pushReplacement(
+  void _slaViolationByCategoryOnTap() => _push(
         title: "SLA Violation By Category",
         child: SLAViolationByCategoryWidget(),
       );
 
-  void _taskSummaryOnTap() => _pushReplacement(
+  void _taskSummaryOnTap() => _push(
         title: "Task Summary",
         child: TaskSummaryWidget(),
       );

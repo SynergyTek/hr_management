@@ -738,11 +738,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             }
           }
         }
-        
-          attchmentController.text = udfJson[model[i].key] == null
-              ? (widget.noteId == null || widget.noteId.isEmpty)?" Select File to Attach ":model[i].udfValue
-              : " (1) File Attached " + udfJson[model[i].key];
-        
+
+        attchmentController.text = udfJson[model[i].key] == null
+            ? (widget.noteId == null || widget.noteId.isEmpty)
+                ? " Select File to Attach "
+                : model[i].udfValue
+            : " (1) File Attached " + udfJson[model[i].key];
+
         listDynamic.add(DynamicAttchmentWidget(
           labelName: model[i].label,
           controller: attchmentController,
