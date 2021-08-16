@@ -1,4 +1,3 @@
-import '../note_shared_models/note_shared_data_model.dart';
 import 'task_shared_data_model.dart';
 
 class TaskSharedDataResponse {

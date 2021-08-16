@@ -492,7 +492,7 @@ class NoteTableRows {
   NoteTableRows.fromJson(Map<String, dynamic> json) {
     rowData = json['RowData'];
     if (json['SelectedTableRows'] != null) {
-      selectedTableRows = new List<SelectedTableRows>();
+      selectedTableRows = [];
       json['SelectedTableRows'].forEach((v) {
         selectedTableRows.add(new SelectedTableRows.fromJson(v));
       });
