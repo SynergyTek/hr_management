@@ -208,6 +208,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
       if (value != 'a8fc557a-9bb6-49ca-9ead-76ce0188563c')
         assignValues(value, filterType);
       apiCall();
+      
     }
 
     Navigator.pushNamed(
