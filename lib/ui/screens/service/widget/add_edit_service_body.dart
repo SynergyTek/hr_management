@@ -693,6 +693,11 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   .split('.')[1],
               url: model[i].data.url,
               ddController: _ddController);
+          if (selectValue.length < model.length) {
+            for (var j = selectValue.length; j < model.length; j++) {
+              selectValue.add(null);
+            }
+          }
         }
 
         listDynamic.add(
@@ -714,7 +719,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               ntsDdBloc.subject.sink.add(null);
               NTSDropdownModel _selectedIdNameViewModel = value;
               _ddController.text = _selectedIdNameViewModel.name;
-              selectValue[i] = _selectedIdNameViewModel.name;
+              // selectValue[i] = _selectedIdNameViewModel.name;
               udfJson[model[i].key] = _selectedIdNameViewModel.id;
             },
           ),
