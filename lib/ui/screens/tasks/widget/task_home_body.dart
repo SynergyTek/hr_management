@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_list_model.dart';
@@ -87,8 +89,16 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
       queryparams['templateMasterCode'] = templateMasterCode;
     if (text != null) queryparams['text'] = text;
 
+    queryparams['userid'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+    queryparams['userId'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+
     // call bloc with updated query params.
-    taskBloc..getTaskHomeListData(queryparams: queryparams);
+    taskBloc
+      ..getTaskHomeListData(
+        queryparams: queryparams,
+      );
   }
 
   @override
@@ -130,6 +140,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                     return TaskListCard(
                       index: index,
                       taskList: _taskList,
+                      onTap: true,
                     );
                   },
                 );

@@ -10,11 +10,13 @@ class ManageAccrualBloc {
   final BehaviorSubject<ManageAccrualResponse> _subjectManageAccrual =
       BehaviorSubject<ManageAccrualResponse>();
 
-  getManageAccrual() async {
-    Map<String, dynamic> queryparams = Map();
-   
-    ManageAccrualResponse response = await _manageAccrualRepository
-        .getManageAccrual();
+  getManageAccrual({
+    Map<String, dynamic> queryparams,
+  }) async {
+    ManageAccrualResponse response =
+        await _manageAccrualRepository.getManageAccrual(
+      queryparams: queryparams,
+    );
     _subjectManageAccrual.sink.add(response);
   }
 

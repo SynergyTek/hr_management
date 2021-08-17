@@ -9,11 +9,6 @@ class NTSChartRepository extends AbstractNTSChartRepository {
       {Map<String, dynamic> queryparams, NTSType ntsType})
   // Optional Params to be added to the request if required
   async {
-    if (queryparams == null) queryparams = Map();
-    
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.GET_SERVICE_CHART_BY_STATUS;
@@ -43,13 +38,10 @@ class NTSChartRepository extends AbstractNTSChartRepository {
   }
 
   @override
-  Future<ChartResponse> getChartByUserType(
-      {Map<String, dynamic> queryparams, NTSType ntsType}) async {
-    if (queryparams == null) queryparams = Map();
-    
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<ChartResponse> getChartByUserType({
+    Map<String, dynamic> queryparams,
+    NTSType ntsType,
+  }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.GET_SERVICE_CHART_BY_USERTYPE;
@@ -79,13 +71,10 @@ class NTSChartRepository extends AbstractNTSChartRepository {
   }
 
   @override
-  Future<ChartResponse> getDatewiseSLA(
-      {Map<String, dynamic> queryparams, NTSType ntsType}) async {
-    if (queryparams == null) queryparams = Map();
-    
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<ChartResponse> getDatewiseSLA({
+    Map<String, dynamic> queryparams,
+    NTSType ntsType,
+  }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
       endpoint = APIEndpointConstants.READ_DATEWISE_SERVICE_SLA;

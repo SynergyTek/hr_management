@@ -1,4 +1,6 @@
 import 'package:geocoder/geocoder.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/themes/theme_config.dart';
 
 import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
@@ -20,6 +22,10 @@ class MarkAttendanceWidget extends StatefulWidget {
 class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isInternetConnection = false;
   bool isPermissonGranted = false;
+
+  bool _isLocationServiceEnabled = false;
+  bool _isLocationPermissionEnabled = false;
+
   dynamic isInLocation;
   String _location = "Test Location...";
 
@@ -30,6 +36,16 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   Location _locationService = new Location();
 
   bool isVisible = false;
+
+  _checkLocationService() async {
+    setState(
+      () {
+        LocationBloc().isLocationServiceEnabled().then(
+              (value) => _isLocationServiceEnabled = value,
+            );
+      },
+    );
+  }
 
   calculateDistance(double latitude, double longitude) async {
     bool result = false;
@@ -69,10 +85,15 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    _checkLocationService();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<LocationBloc, LocationState>(builder: (context, state) {
-      // print(calculateDistance(
-      //     state.locationData.latitude, state.locationData.latitude));
       getUserAddressFromCoord(locationData: state.locationData);
       return Stack(
         children: <Widget>[
@@ -88,40 +109,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     });
   }
 
-  // getCurrentLocation() async {
-  //   isPermissonGranted = await _geoLocationHelper.checkLocationPermission();
-  //   bool futureLocation = false;
-  //   if (isPermissonGranted) {
-  //     _locationSubscription = _locationService.onLocationChanged
-  //         .listen((LocationData result) async {
-  //       print("latt:" +
-  //           result.latitude.toString() +
-  //           ",long:" +
-  //           result.longitude.toString());
-
-  //       futureLocation = await _geoLocationHelper.calculateDistance();
-  //       //(result, settingInheritedWidget.userDetails.enableGeoLacation);
-  //       //   futureLocation.then((value) {
-  //       //     print(value);
-  //       //     // if (mounted) {
-  //       setState(() {
-  //         isInLocation = true;
-  //       });
-  //       //     // } else
-  //       //     //   return;
-  //       //   }, onError: (e) {
-  //       //     print(e);
-  //       //   });
-  //     });
-  //   }
-
-  //   return futureLocation;
-  // }
-
   attendanceTab() {
-    return //isInternetConnection?
-
-        AbsorbPointer(
+    return AbsorbPointer(
       absorbing: false,
       child: Column(
         children: <Widget>[
@@ -168,97 +157,38 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
               //     ),
               //   ),
               // ),
+
               Container(
                   child: Column(
                 children: <Widget>[
-                  Card(
-                    margin: EdgeInsets.all(10),
-                    // color: Colors.grey[200],
-                    elevation: 10,
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                      height: 120,
-                      child: Row(
-                        children: <Widget>[
-                          CircleAvatar(
-                            radius: 35,
-                            backgroundColor: Colors.grey[200],
-                            child: CircleAvatar(
-                              radius: 38,
+                  BlocBuilder<UserModelBloc, UserModelState>(
+                    builder: (context, state) {
+                      return Container(
+                        padding: DEFAULT_LARGE_VERTICAL_PADDING,
+                        child: Card(
+                          elevation: 16.0,
+                          child: ListTile(
+                            tileColor: Theme.of(context).textHeadingColor,
+                            title: Text(
+                              state?.userModel?.jobTitle ?? '-',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            subtitle: Text(
+                              state?.userModel?.email ?? '-',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            leading: CircleAvatar(
                               backgroundColor: Colors.white,
-                              // backgroundImage: settingInheritedWidget
-                              //             .userDetails.imageContent !=
-                              //         null
-                              //     ? MemoryImage(base64Decode(
-                              //         settingInheritedWidget
-                              //             .userDetails.imageContent))
-                              //     : null,
-                              // child: settingInheritedWidget
-                              //                 .userDetails.imageContent ==
-                              //             null ||
-                              //         settingInheritedWidget
-                              //                 .userDetails.imageContent ==
-                              //             ""?
+                              radius: 24,
                               child: Icon(
                                 Icons.person,
-                                color: Colors.black26,
-                                size: 45,
+                                color: Theme.of(context).textHeadingColor,
                               ),
-                              // : null,
                             ),
                           ),
-                          SizedBox(
-                            width: 15.0,
-                          ),
-                          Expanded(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(
-                                height: 28,
-                              ),
-                              Text("Administrator Administrator"),
-                              Text("admin@synergy.com"),
-                              Text("Admin"),
-                              // Text(
-                              //   settingInheritedWidget
-                              //                   .userDetails.username !=
-                              //               null ||
-                              //           settingInheritedWidget
-                              //                   .userDetails.username !=
-                              //               ""
-                              //       ? settingInheritedWidget
-                              //           .userDetails.username
-                              //       : "-",
-                              //   style: Theme.of(context).textTheme.title,
-                              // ),
-                              // Text(
-                              //   settingInheritedWidget.userDetails
-                              //                   .profileDetails.jobName !=
-                              //               null ||
-                              //           settingInheritedWidget.userDetails
-                              //                   .profileDetails.jobName !=
-                              //               ""
-                              //       ? settingInheritedWidget.userDetails
-                              //           .profileDetails.jobName
-                              //       : "-",
-                              // ),
-                              // Text(
-                              //   settingInheritedWidget
-                              //                   .userDetails.email !=
-                              //               null ||
-                              //           settingInheritedWidget
-                              //                   .userDetails.email !=
-                              //               ""
-                              //       ? settingInheritedWidget
-                              //           .userDetails.email
-                              //       : "-",
-                              // ),
-                            ],
-                          ))
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 15.0,
@@ -358,7 +288,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
             ],
           )),
           Visibility(
-            visible: !isPermissonGranted,
+            visible: !_isLocationServiceEnabled,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
               child: Column(
@@ -443,6 +373,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   void _handleSignInOnClick() async {
+    // Check first whether the user has provided the required permissions and also
+    // Whether the location services are on.
+    await _checkLocationService();
+
     if (isSignedOut == true) {
       setState(() {
         isVisible = true;
@@ -450,6 +384,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
       await accessLogBloc.getInsertAccessLog(
         isSignIn: true,
+        userId:
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
       );
 
       setState(() {
@@ -483,11 +419,19 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   void _handleSignOutOnClick() async {
+    // Check first whether the user has provided the required permissions and also
+    // Whether the location services are on.
+    await _checkLocationService();
+
     if (isSignedIn == true) {
       setState(() {
         isVisible = true;
       });
-      await accessLogBloc.getInsertAccessLog(isSignIn: false);
+      await accessLogBloc.getInsertAccessLog(
+        isSignIn: false,
+        userId:
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+      );
       setState(() {
         isVisible = false;
       });

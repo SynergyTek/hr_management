@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../../data/models/task_models/task_list_model.dart';
 import '../../../../../data/models/task_models/task_list_resp_model.dart';
 import '../../../../../logic/blocs/task_bloc/task_bloc.dart';
@@ -19,8 +21,18 @@ class _AdhocTaskListBodyState extends State<AdhocTaskListBody> {
   @override
   void initState() {
     super.initState();
-    Map<String, dynamic> queryparams = Map();
-    taskBloc..loadServiceAdhocTaskData(queryparams: queryparams);
+
+    taskBloc
+      ..loadServiceAdhocTaskData(
+        queryparams: {
+          'userid':
+              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+                  '',
+          'userId':
+              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+                  '',
+        },
+      );
   }
 
   @override
@@ -50,6 +62,7 @@ class _AdhocTaskListBodyState extends State<AdhocTaskListBody> {
                     return TaskListCard(
                       index: index,
                       taskList: _taskList,
+                      onTap: true,
                     );
                   },
                 );

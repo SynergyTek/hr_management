@@ -63,11 +63,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     // then start a new location subscription.
     locationStreamSubscription?.cancel();
     location.changeSettings(interval: 5 * 1000);
-    // Test if location services are enabled.
-    // Location services are not enabled don't continue
-    // accessing the position and request users of the
-    // App to enable the location services.
-    await isLocationServiceEnabled();
 
     // Permissions are denied, next time you could try
     // requesting permissions again (this is also where
@@ -75,6 +70,12 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     // returned true. According to Android guidelines
     // your App should show an explanatory UI now.
     await checkForLocationPermission();
+
+    // Test if location services are enabled.
+    // Location services are not enabled don't continue
+    // accessing the position and request users of the
+    // App to enable the location services.
+    await isLocationServiceEnabled();
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.

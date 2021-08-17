@@ -43,6 +43,7 @@ class NtsCommentBloc {
     PostComment comment,
     String ntsId,
     NTSType ntsType,
+    String userid,
   }) async {
     // PostComment comment=new PostComment();
     // comment.comment = comment ?? '';
@@ -51,7 +52,11 @@ class NtsCommentBloc {
     // comment.commentedByUserId = '45bba746-3309-49b7-9c03-b5793369d73c';
 
     PostResponse response = await _ntsRepository.postCommentData(
-        comment: comment, ntsType: ntsType);
+      comment: comment,
+      ntsType: ntsType,
+      userid: userid,
+    );
+
     // String ntsId = '';
     // if (ntsType == NTSType.service) {
     //   ntsId = response.item["NtsServiceId"] ?? '';

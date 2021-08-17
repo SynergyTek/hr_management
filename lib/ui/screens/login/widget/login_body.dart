@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/models/profile_settings_model.dart';
+import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
 import 'package:hr_management/logic/blocs/profile_settings_bloc/profile_settings_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../data/models/login_models/login_response_model.dart';
@@ -35,6 +36,13 @@ class _LoginBodyState extends State<LoginBody> {
   TextEditingController passwordController = TextEditingController();
   final int delayedAmount = 500;
   bool showCPI = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    LocationBloc().checkForLocationPermission();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,12 +199,12 @@ class _LoginBodyState extends State<LoginBody> {
         queryparams: queryparams,
       );
       if (data != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
+        // SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        prefs.clear();
+        // prefs.clear();
 
-        prefs.setString('username', data.userName);
-        prefs.setString('id', data.id);
+        // prefs.setString('username', data.userName);
+        // prefs.setString('id', data.id);
 
         BlocProvider.of<UserModelBloc>(context).add(
           UserModelChangeEvent(

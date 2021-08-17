@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../constants/formats.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
@@ -194,9 +196,15 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                       String resultMsg = '';
                       PostResponse result =
                           await ntsCommentBloc.postCommentData(
-                              ntsType: widget.ntsType,
-                              ntsId: widget.ntsId,
-                              comment: comment);
+                        ntsType: widget.ntsType,
+                        ntsId: widget.ntsId,
+                        comment: comment,
+                        userid: BlocProvider.of<UserModelBloc>(context)
+                                .state
+                                ?.userModel
+                                ?.id ??
+                            '',
+                      );
                       if (result.isSuccess) {
                         setState(() {
                           isVisible = false;

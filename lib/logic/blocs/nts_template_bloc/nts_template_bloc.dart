@@ -13,10 +13,12 @@ class NTSTemplateBloc {
 
   /// Used to fetch new entries.
   getData({
+    String userid,
     String categoryCode,
     NTSType ntsType,
-    Map<String, dynamic> queryparams,
   }) async {
+    Map<String, dynamic> queryparams = Map();
+
     if (ntsType == NTSType.service) {
       _subject.sink.add(null);
       queryparams = {
@@ -27,7 +29,7 @@ class NTSTemplateBloc {
       queryparams = {
         "categoryCode": "", //categoryCode,
         "templateType": "Task",
-        "taskType":"StandardTask"
+        "taskType": "StandardTask"
       };
     } else if (ntsType == NTSType.note) {
       // } else if (ntsType == NTSType.note && categoryCode == 'Document') {
@@ -37,6 +39,8 @@ class NTSTemplateBloc {
         "categoryCode": "", //categoryCode,
       };
     }
+
+    queryparams['userid'] = userid;
 
     NTSTemplateResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,

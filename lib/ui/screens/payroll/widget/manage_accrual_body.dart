@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:listizer/listizer.dart';
 
 import '../../../../data/models/manage_accural/manage_accrual_model.dart';
@@ -20,8 +22,19 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
 
   @override
   void initState() {
-    manageAccrualBloc.getManageAccrual();
     super.initState();
+
+    manageAccrualBloc.getManageAccrual(
+      queryparams: _handleQueryparams(),
+    );
+  }
+
+  /// Helper function to handle queryparams of the API call.
+  _handleQueryparams() {
+    return {
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+    };
   }
 
   @override

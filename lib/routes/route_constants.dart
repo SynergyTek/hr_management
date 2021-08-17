@@ -77,3 +77,5 @@ const String CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE =
     '/case_management_service_reports';
 const String CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE =
     '/case_management_helpdesk_dashboard';
+
+const String DOWNLOAD_SCREEN_ROUTE = '/download_screen';

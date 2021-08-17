@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../../data/models/service_models/service_response.dart';
 import '../../../../logic/blocs/service_bloc/service_bloc.dart';
@@ -20,19 +22,21 @@ class _HomeScreenBodyWidgetState extends State<HomeScreenBodyWidget> {
   void initState() {
     super.initState();
 
-    // noteBloc
-    //   ..getNoteDetails(
-    //     noteId: '4ae6674b-40a9-4df8-803d-a37f0a1131c6',
-    //     // templateCode: '',
-    //     userId: '45bba746-3309-49b7-9c03-b5793369d73c',
-    //   );
-
     serviceBloc
       ..getServiceDetail(
-        templateCode: 'AnnualLeave' ?? 'RETURN_TO_WORK',
-        serviceId: '',
-        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+        queryparams: _handleQueryParams(),
       );
+  }
+
+  _handleQueryParams() {
+    return {
+      'templatecode': 'AnnualLeave' ?? 'RETURN_TO_WORK',
+      'serviceId': '',
+      'userId':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+    };
   }
 
   @override
@@ -41,8 +45,6 @@ class _HomeScreenBodyWidgetState extends State<HomeScreenBodyWidget> {
       padding: DEFAULT_PADDING,
       child: StreamBuilder<ServiceResponse>(
         stream: serviceBloc.subject.stream,
-        // child: StreamBuilder<NoteResponse>(
-        //   stream: noteBloc.subjectNoteDetails.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.error != null && snapshot.data.error.length > 0) {

@@ -17,23 +17,38 @@ class NtsChartBloc {
   final BehaviorSubject<ChartResponse> _subjectDatewiseSLA =
       BehaviorSubject<ChartResponse>();
 
-  getChartByStatus({NTSType ntsType}) async {
-    ChartResponse response =
-        await _ntsRepository.getChartByStatus(ntsType: ntsType);
+  getChartByStatus({
+    Map<String, dynamic> queryparams,
+    NTSType ntsType,
+  }) async {
+    ChartResponse response = await _ntsRepository.getChartByStatus(
+      queryparams: queryparams,
+      ntsType: ntsType,
+    );
 
     _subjectChartByStatus.sink.add(response);
   }
 
-  getChartByUserType({NTSType ntsType}) async {
-    ChartResponse response =
-        await _ntsRepository.getChartByUserType(ntsType: ntsType);
+  getChartByUserType({
+    Map<String, dynamic> queryparams,
+    NTSType ntsType,
+  }) async {
+    ChartResponse response = await _ntsRepository.getChartByUserType(
+      queryparams: queryparams,
+      ntsType: ntsType,
+    );
 
     _subjectChartByUserType.sink.add(response);
   }
 
-  getDatewiseSLA({NTSType ntsType, Map<String, dynamic> queryparams}) async {
+  getDatewiseSLA({
+    Map<String, dynamic> queryparams,
+    NTSType ntsType,
+  }) async {
     ChartResponse response = await _ntsRepository.getDatewiseSLA(
-        queryparams: queryparams, ntsType: ntsType);
+      queryparams: queryparams,
+      ntsType: ntsType,
+    );
 
     _subjectDatewiseSLA.sink.add(response);
   }

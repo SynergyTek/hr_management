@@ -24,7 +24,10 @@ import 'body_layout_widget.dart';
 import 'label.dart';
 
 typedef OnTapPressedCallBack = void Function(
-    dynamic key, dynamic key2, dynamic key3);
+  dynamic key,
+  dynamic key2,
+  dynamic key3,
+);
 
 class SelectAttachment extends StatefulWidget {
   final dynamic selectedModel;
@@ -200,6 +203,18 @@ class _SelectAttachmentState extends State<SelectAttachment> {
     );
   }
 
+  _handleNoteDetailsQueryparams({
+    String templatecode,
+    String noteId,
+    String userid,
+  }) {
+    return {
+      'templatecode': templatecode,
+      'noteId': noteId,
+      'userid': userid,
+    };
+  }
+
   void _openFileExplorer() async {
     if (_pickingType == MediaFileType.VIDEO) {
       _fileType = FileType.video;
@@ -274,6 +289,9 @@ class _SelectAttachmentState extends State<SelectAttachment> {
 
       var post = Attachment();
 
+      post.userId =
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+
       if (_pickingType == MediaFileType.IMAGE ||
           _pickingType == MediaFileType.CAPTURE_IMAGE) {
         _documentType = "image";
@@ -295,11 +313,11 @@ class _SelectAttachmentState extends State<SelectAttachment> {
         post.name = _fileName;
         createPostModel(post, mediaFileByte);
       }
-      
 
       String result = await attachmentNTSBloc.postAttachmentDocumentData(
         attachmentData: post,
       );
+
       print(result);
       if (result.isNotEmpty) {
         setState(() {

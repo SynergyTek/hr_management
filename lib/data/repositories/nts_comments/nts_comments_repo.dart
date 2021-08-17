@@ -41,6 +41,7 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   Future<PostResponse> postCommentData({
     PostComment comment,
     NTSType ntsType,
+    String userid,
   }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
@@ -51,11 +52,14 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       endpoint = APIEndpointConstants.POST_TASK_COMMENT;
     }
 
-    comment.commentedByUserId = await getUserId();
+    comment.commentedByUserId = userid;
 
     dynamic model = jsonEncode(comment.toJson());
     try {
-      Response response = await _dio.post(endpoint, data: model);
+      Response response = await _dio.post(
+        endpoint,
+        data: model,
+      );
 
       print("response: ${response.data}");
 

@@ -1,4 +1,9 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
 
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/attachment_nts_models/attachment_nts_model.dart';
@@ -7,8 +12,7 @@ import '../../../../logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
 
-class 
-AttachmentNTSBodyWidget extends StatefulWidget {
+class AttachmentNTSBodyWidget extends StatefulWidget {
   final NTSType ntsType;
   final String ntsId;
 
@@ -32,6 +36,16 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
         ntsId: widget?.ntsId,
         ntsType: widget?.ntsType,
       );
+
+    _bindBackgroundIsolate();
+
+    FlutterDownloader.registerCallback(downloadCallback);
+
+    _isLoading = true;
+    _permissionReady = false;
+
+    // TODO: Need to check for preparing Save Directory.
+    // _prepare();
   }
 
   @override
@@ -133,7 +147,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
       );
   }
 
-  void _handleDownloadOnPressed({
+  void _handleViewOnPressed({
     @required AttachmentNTSModel data,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -143,13 +157,78 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
     );
   }
 
-  void _handleViewOnPressed({
+  // -------------------------------------------------- //
+  //            Download code goes here.                //
+  // -------------------------------------------------- //
+
+  List _tasks;
+  List _items;
+  bool _isLoading;
+  bool _permissionReady;
+  ReceivePort _port = ReceivePort();
+
+  void _bindBackgroundIsolate() {
+    bool isSuccess = IsolateNameServer.registerPortWithName(
+      _port.sendPort,
+      'downloader_send_port',
+    );
+
+    if (!isSuccess) {
+      _unbindBackgroundIsolate();
+      _bindBackgroundIsolate();
+      return;
+    }
+
+    _port.listen((dynamic data) {
+      print("data: $data");
+
+      String id = data[0];
+      DownloadTaskStatus status = data[1];
+      int progress = data[2];
+
+      if (_tasks != null && _tasks.isNotEmpty) {
+        final task = _tasks.firstWhere((task) => task.taskId == id);
+        setState(() {
+          task.status = status;
+          task.progress = progress;
+        });
+      }
+    });
+  }
+
+  void _unbindBackgroundIsolate() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+  }
+
+  static void downloadCallback(
+    String id,
+    DownloadTaskStatus status,
+    int progress,
+  ) {
+    final SendPort send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send.send([id, status, progress]);
+  }
+
+  _handleDownloadOnPressed({
     @required AttachmentNTSModel data,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Feature under development."),
+        content: Text("Download queued."),
       ),
     );
+
+    DownloadHelper().requestDownload(
+      fileName: data?.fileName ?? '-',
+      downloadURL:
+          'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.id ?? ''}',
+    );
+  }
+
+  @override
+  void dispose() {
+    _unbindBackgroundIsolate();
+    super.dispose();
   }
 }

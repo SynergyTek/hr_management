@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/service_models/service.dart';
@@ -69,9 +71,12 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
     if (widget.mode != null && widget.mode.isNotEmpty) mode = widget.mode;
     Map<String, dynamic> queryparams = Map();
 
-    if (userId != null) {
-      queryparams['userId'] = userId;
-    }
+    queryparams['userId'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+
+    queryparams['userid'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+
     if (text != null) {
       queryparams['text'] = text;
     }
@@ -152,6 +157,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
                     return ServiceListCard(
                       index: index,
                       serviceList: _serviceList,
+                      onTap: true,
                     );
                   },
                 );

@@ -5,10 +5,11 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 
 class ServiceListCard extends StatelessWidget {
+  final bool onTap;
   final List<Service> serviceList;
   final int index;
   const ServiceListCard(
-      {Key key, @required this.serviceList, @required this.index})
+      {Key key, @required this.serviceList, @required this.index, this.onTap})
       : super(key: key);
 
   @override
@@ -65,19 +66,21 @@ class ServiceListCard extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () {
-          serviceBloc.subject.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            CREATE_SERVICE_ROUTE,
-            arguments: ScreenArguments(
-              arg1: serviceList[index].templateCode,
-              arg2: serviceList[index].id,
-              arg3: serviceList[index].serviceSubject,
-              val1: false,
-            ),
-          );
-        },
+        onTap: onTap
+            ? () {
+                serviceBloc.subject.sink.add(null);
+                Navigator.pushNamed(
+                  context,
+                  CREATE_SERVICE_ROUTE,
+                  arguments: ScreenArguments(
+                    arg1: serviceList[index].templateCode,
+                    arg2: serviceList[index].id,
+                    arg3: serviceList[index].serviceSubject,
+                    val1: false,
+                  ),
+                );
+              }
+            : () {},
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:listizer/listizer.dart';
 
 import '../../../../../data/models/access_log/access_log_model.dart';
@@ -26,8 +28,32 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
 
   @override
   void initState() {
-    accessLogBloc..getAccessLogsListData();
+    accessLogBloc
+      ..getAccessLogsListData(
+        queryparams: _handleQueryparams(),
+      );
     super.initState();
+  }
+
+  _handleQueryparams({
+    DateTime startDate,
+    DateTime dueDate,
+  }) {
+    if (startDate == null)
+      return {
+        'startdate': DateTime.now(),
+        'startDate': DateTime.now(),
+        'userId':
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+      };
+
+    return {
+      'startdate': startDate,
+      'startDate': startDate,
+      'dueDate': dueDate,
+      'userId':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+    };
   }
 
   @override
@@ -140,14 +166,14 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
       return;
     }
 
-    Map<String, dynamic> queryparams = Map();
-    queryparams['startDate'] = startDate;
-
-    if (endDate != null) queryparams['dueDate'] = endDate;
-    // queryparams['userId'] = 'cb9272df-0a2c-401b-aed8-b73488ae03aa';
-
     // call bloc with updated query params.
-    accessLogBloc..getAccessLogsListData(queryparams: queryparams);
+    accessLogBloc
+      ..getAccessLogsListData(
+        queryparams: _handleQueryparams(
+          startDate: startDate,
+          dueDate: endDate ?? null,
+        ),
+      );
   }
 
   @override

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/common_bloc/common_bloc.dart';
@@ -50,7 +52,17 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     commonBloc.subjectOwnerNameList.sink.add(null);
     commonBloc.subjectEnumTreeList.sink.add(null);
 
-    commonBloc.getModuleTreeList();
+    Map<String, dynamic> queryparams = Map();
+
+    queryparams['userId'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+
+    queryparams['userid'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+
+    commonBloc.getModuleTreeList(
+      queryparams: queryparams,
+    );
   }
 
   apiCallLOVId() {
@@ -99,6 +111,12 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     commonBloc.subjectEnumTreeList.sink.add(null);
 
     Map<String, dynamic> queryparams = Map();
+
+    queryparams['userId'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+
+    queryparams['userid'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
 
     if (enumType != null) queryparams['enumType'] = enumType;
 

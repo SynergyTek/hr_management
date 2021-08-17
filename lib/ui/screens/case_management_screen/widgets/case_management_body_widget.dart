@@ -96,25 +96,25 @@ class _CaseManagementBodyWidgetState extends State<CaseManagementBodyWidget> {
     if (listTileDataKey == null || listTileDataKey.isEmpty) return;
 
     if (listTileDataKey == 'Home')
-      Navigator.pushReplacementNamed(
+      Navigator.pushNamed(
         context,
         WORKLIST_DASHBOARD,
       );
 
     if (listTileDataKey == 'Dashboard')
-      Navigator.pushReplacementNamed(
+      Navigator.pushNamed(
         context,
         CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE,
       );
 
     if (listTileDataKey == 'Task List')
-      Navigator.pushReplacementNamed(
+      Navigator.pushNamed(
         context,
         TASK_HOME,
       );
 
     if (listTileDataKey == 'Service List')
-      Navigator.pushReplacementNamed(
+      Navigator.pushNamed(
         context,
         SERVICE_HOME,
       );

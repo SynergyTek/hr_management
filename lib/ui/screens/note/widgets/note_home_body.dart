@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/note/note_list_model.dart';
@@ -60,9 +62,11 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
 
     if (noteStatus != null) queryparams['noteStatus'] = noteStatus;
     if (text != null) queryparams['text'] = text;
-    if (userId != null) queryparams['userId'] = userId;
     if (moduleId != null) queryparams['moduleId'] = moduleId;
     if (mode != null) queryparams['mode'] = mode;
+
+    queryparams['userId'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
 
     noteBloc.getNoteList(queryparams: queryparams);
   }
@@ -101,6 +105,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
                     return NoteListCard(
                       index: index,
                       noteList: _noteList,
+                      onTap: true,
                     );
                   },
                 );

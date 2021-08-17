@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -21,6 +22,10 @@ void main() async {
       statusBarBrightness: Brightness.dark,
     ),
   );
+
+  await FlutterDownloader.initialize(
+      debug: true // optional: set false to disable printing logs to console
+      );
 
   runApp(InitScreen());
 }

@@ -201,8 +201,7 @@ class APIEndpointConstants {
 
   static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData';
 
-  static const READ_PAYSLIP_DATA =
-      '$BASE_URL/CHR/query/ReadPaySlipData?month=7&year=2021';
+  static const READ_PAYSLIP_DATA = '$BASE_URL/CHR/query/ReadPaySlipData';
 
   //Payroll API Endpoints Block End
   //************************************************************************//
@@ -352,10 +351,4 @@ class APIEndpointConstants {
   //************************************************************************//
   // Case management API:
 
-}
-
-Future<String> getUserId() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String userId = prefs.getString('id');
-  return userId;
 }

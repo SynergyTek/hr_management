@@ -18,21 +18,21 @@ class NoteBloc {
       BehaviorSubject<NoteListResponse>();
 
   /// Used to fetch new entries.
-  getNoteDetails({templateCode, noteId, userId}) async {
-    Map<String, dynamic> queryparams = Map();
-    queryparams["templatecode"] = templateCode ?? '';
-    queryparams["noteId"] = noteId ?? '';
-    // queryparams["userid"] = userId ?? '';
-    NoteResponse response =
-        await _noteRepository.getNoteDetail(queryparams: queryparams);
+  getNoteDetails({
+    Map<String, dynamic> queryparams,
+  }) async {
+    NoteResponse response = await _noteRepository.getNoteDetail(
+      queryparams: queryparams,
+    );
     _subjectNoteDetails.sink.add(response);
   }
 
   getNoteList({
     Map<String, dynamic> queryparams,
   }) async {
-    NoteListResponse response =
-        await _noteRepository.getNoteList(queryparams: queryparams);
+    NoteListResponse response = await _noteRepository.getNoteList(
+      queryparams: queryparams,
+    );
     _subjectNoteList.sink.add(response);
   }
 
@@ -47,6 +47,7 @@ class NoteBloc {
   /// Used to create new entries.
   Future<PostResponse> postNoteData({
     @required NoteModel noteModel,
+    Map<String, dynamic> queryparams,
   }) async {
     PostResponse response = await _noteRepository.postNoteAPIData(
       note: noteModel,
@@ -54,13 +55,11 @@ class NoteBloc {
 
     if (response.isSuccess) {
       subjectNoteList.sink.add(null);
-      getNoteDetails();
+      getNoteList();
     }
 
     return response;
   }
-
-  
 
   /// Used to update an existing entry.
   putData() async {
@@ -68,7 +67,7 @@ class NoteBloc {
     // ...
 
     // Update the list (in UI) with the getAPI call.
-    getNoteDetails()();
+    // getNoteDetails();
   }
 
   /// Used to delete a particular entry.
@@ -77,7 +76,7 @@ class NoteBloc {
     // ...
 
     // Update the list (in UI) with the getAPI call.
-    getNoteDetails()();
+    // getNoteDetails();
   }
 
   dispose() {

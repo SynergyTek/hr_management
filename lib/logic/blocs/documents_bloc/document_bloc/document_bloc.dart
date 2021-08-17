@@ -13,7 +13,9 @@ class DocumentBloc {
   getData({
     Map<String, dynamic> queryparams,
   }) async {
-    DocumentResponse response = await _apiRepository.getAPIData();
+    DocumentResponse response = await _apiRepository.getAPIData(
+      queryparams: queryparams,
+    );
     _subject.sink.add(response);
   }
 

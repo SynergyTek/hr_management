@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../../data/models/payslip/payslip_model.dart';
 import '../../../../data/models/payslip/payslip_res_model.dart';
@@ -20,8 +22,20 @@ class _PayslipBodyState extends State<PayslipBody> {
 
   @override
   void initState() {
-    payslipBloc.getManageAccrual(legalEntityId: '60d2df036755e8de168d8db7');
+    payslipBloc.getManageAccrual(
+      queryparams: _handleQueryparams(),
+    );
     super.initState();
+  }
+
+  _handleQueryparams() {
+    return {
+      'legalEntityId': '60d2df036755e8de168d8db7',
+      'month': '7',
+      'year': '2021',
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+    };
   }
 
   @override
@@ -38,7 +52,7 @@ class _PayslipBodyState extends State<PayslipBody> {
               );
             }
             paySlipList = snapshot.data.data;
-            if (paySlipList==null|| paySlipList.length == 0) {
+            if (paySlipList == null || paySlipList.length == 0) {
               return EmptyListWidget();
             }
             return Listizer(

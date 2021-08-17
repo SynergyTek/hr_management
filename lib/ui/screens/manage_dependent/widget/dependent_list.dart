@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../data/models/dependent/dependent_list_model.dart';
 import '../../../../logic/blocs/dependent_bloc/dependent_api_bloc.dart';
@@ -22,6 +24,12 @@ class _DependentListState extends State<DependentList> {
     super.initState();
     Map<String, dynamic> queryparams = Map();
     queryparams['ntsstatus'] = 'NOTE_STATUS_INPROGRESS';
+
+    queryparams['userId'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+
+    queryparams['userid'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
 
     dependentBloc..getReadDependantList(queryparams: queryparams);
   }

@@ -16,38 +16,39 @@ class ServiceBloc {
   final BehaviorSubject<ServiceListResponse> _subjectServiceList =
       BehaviorSubject<ServiceListResponse>();
 
-  getServiceDetail({templateCode, serviceId, userId}) async {
-    Map<String, dynamic> queryparams = Map();
-    queryparams["templatecode"] = templateCode ?? '';
-    queryparams["serviceId"] = serviceId ?? '';
-    // queryparams["userid"] = userId ?? '';
-
-    print("Queryparams: ${queryparams.entries}");
-
-    ServiceResponse response =
-        await _serviceRepository.getServiceDetail(queryparams: queryparams);
+  getServiceDetail({
+    Map<String, dynamic> queryparams,
+  }) async {
+    ServiceResponse response = await _serviceRepository.getServiceDetail(
+      queryparams: queryparams,
+    );
     _subject.sink.add(response);
   }
 
-  getLeavesDetails() async {
-    ServiceListResponse response = await _serviceRepository.getLeavesDetails();
+  getLeavesDetails({
+    Map<String, dynamic> queryparams,
+  }) async {
+    ServiceListResponse response = await _serviceRepository.getLeavesDetails(
+      queryparams: queryparams,
+    );
+
     _subjectServiceList.sink.add(response);
   }
 
   getServiceDashBoardData({
-    templateCode,
-    serviceId,
-    userId,
     Map<String, dynamic> queryparams,
   }) async {
-    ServiceListResponse response = await _serviceRepository
-        .getServiceDashBoardData(queryparams: queryparams);
+    ServiceListResponse response =
+        await _serviceRepository.getServiceDashBoardData(
+      queryparams: queryparams,
+    );
     _subjectServiceList.sink.add(response);
   }
 
   /// Used to create new entries.
   Future<PostResponse> postData({
     bool isLeaves,
+    String userId,
     @required Service service,
   }) async {
     PostResponse response = await _serviceRepository.postAPIData(
@@ -68,7 +69,7 @@ class ServiceBloc {
 
   /// Used to fetch new entries.
   getServiceHomeListData({
-    Map<String, dynamic> queryparams, // String userId,
+    Map<String, dynamic> queryparams,
   }) async {
     ServiceListResponse response =
         await _serviceRepository.getServiceHomeListData(

@@ -10,12 +10,10 @@ class AccessLogRepository extends AbstractAccessLogRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   }) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
     final String endpoint = APIEndpointConstants.INSERT_ACCESS_LOG;
+
+    print("Endpoint: $endpoint");
+    print("QP: $queryparams");
 
     try {
       Response response = await _dio.get(
@@ -28,14 +26,8 @@ class AccessLogRepository extends AbstractAccessLogRepository {
           queryparams["punchingType"],
         );
 
-      // i.e. Something went wrong!?
-      // Some corner case.
       return AccessLogResponse.withError("-1");
-    } catch (err, stacktrace) {
-      // print(
-      //     "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
-      // print("Stacktrace: $stacktrace \nError: $err");
-
+    } catch (err, _) {
       return AccessLogResponse.withError("$err");
     }
   }
@@ -46,9 +38,6 @@ class AccessLogRepository extends AbstractAccessLogRepository {
     Map<String, dynamic> queryparams,
   }) async {
     if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
 
     try {
       Response response = await _dio.get(

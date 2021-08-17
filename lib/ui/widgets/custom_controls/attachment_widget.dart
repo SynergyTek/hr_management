@@ -30,7 +30,7 @@ class DynamicAttchmentWidget extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   new TextFormField(
-                      readOnly: readOnly??true,
+                      readOnly: readOnly ?? true,
                       style: TextStyle(fontSize: 15),
                       key: new Key(fieldName),
                       controller: controller,
@@ -41,6 +41,30 @@ class DynamicAttchmentWidget extends StatelessWidget {
                           errorStyle: TextStyle(fontSize: 12.0)),
                       maxLines: 1),
                 ],
+              ),
+            ),
+            Visibility(
+              visible: fileId == null ? false : true,
+              child: IconButton(
+                icon: Icon(
+                  Icons.remove_red_eye,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  callBack2();
+                },
+              ),
+            ),
+            Visibility(
+              visible: fileId == null ? false : true,
+              child: IconButton(
+                icon: Icon(
+                  Icons.download,
+                  color: Colors.green,
+                ),
+                onPressed: () {
+                  callBack1();
+                },
               ),
             ),
             Visibility(
@@ -55,30 +79,6 @@ class DynamicAttchmentWidget extends StatelessWidget {
                 },
               ),
             ),
-            Visibility(
-              visible: fileId == null ? false : true,
-              child: IconButton(
-                icon: Icon(
-                  Icons.arrow_downward,
-                  color: Colors.green,
-                ),
-                onPressed: () {
-                  callBack1();
-                },
-              ),
-            ),
-            Visibility(
-              visible: fileId == null ? false : true,
-              child: IconButton(
-                icon: Icon(
-                  Icons.remove_red_eye,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  callBack2();
-                },
-              ),
-            )
           ],
         ),
       ),
