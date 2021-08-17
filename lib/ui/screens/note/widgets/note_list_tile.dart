@@ -5,9 +5,11 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 
 class NoteListCard extends StatelessWidget {
+  final bool onTap;
   final List<NoteListModel> noteList;
   final int index;
-  const NoteListCard({Key key, @required this.index, @required this.noteList})
+  const NoteListCard(
+      {Key key, @required this.index, @required this.noteList, this.onTap})
       : super(key: key);
 
   @override
@@ -64,17 +66,19 @@ class NoteListCard extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () {
-          noteBloc.subjectNoteDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            ADD_EDIT_NOTE_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: noteList[index].id,
-                arg3: noteList[index].noteSubject),
-          );
-        },
+        onTap: onTap
+            ? () {
+                noteBloc.subjectNoteDetails.sink.add(null);
+                Navigator.pushNamed(
+                  context,
+                  ADD_EDIT_NOTE_ROUTE,
+                  arguments: ScreenArguments(
+                      arg1: '',
+                      arg2: noteList[index].id,
+                      arg3: noteList[index].noteSubject),
+                );
+              }
+            : () {},
       ),
     );
   }

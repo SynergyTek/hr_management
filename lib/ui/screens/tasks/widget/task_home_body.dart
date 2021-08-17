@@ -130,6 +130,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
                     return TaskListCard(
                       index: index,
                       taskList: _taskList,
+                      onTap: true,
                     );
                   },
                 );

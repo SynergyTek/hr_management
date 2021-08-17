@@ -152,6 +152,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
                     return ServiceListCard(
                       index: index,
                       serviceList: _serviceList,
+                      onTap: true,
                     );
                   },
                 );

@@ -78,6 +78,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
                     return ServiceListCard(
                       index: index,
                       serviceList: _serviceList,
+                      onTap: false,
                     );
                   },
                 );

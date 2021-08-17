@@ -5,9 +5,11 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 
 class TaskListCard extends StatelessWidget {
+  final bool onTap;
   final int index;
   final List<TaskListModel> taskList;
-  const TaskListCard({Key key, @required this.index, @required this.taskList})
+  const TaskListCard(
+      {Key key, @required this.index, @required this.taskList, this.onTap})
       : super(key: key);
 
   @override
@@ -68,18 +70,20 @@ class TaskListCard extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () {
-          taskBloc.subjectGetTaskDetails.sink.add(null);
-          Navigator.pushNamed(
-            context,
-            CREATE_EDIT_TASK_ROUTE,
-            arguments: ScreenArguments(
-                arg1: '',
-                arg2: taskList[index].id,
-                arg3: taskList[index].taskSubject),
-            // arg3: _taskList[index].templateMasterCode),
-          );
-        },
+        onTap: onTap
+            ? () {
+                taskBloc.subjectGetTaskDetails.sink.add(null);
+                Navigator.pushNamed(
+                  context,
+                  CREATE_EDIT_TASK_ROUTE,
+                  arguments: ScreenArguments(
+                      arg1: '',
+                      arg2: taskList[index].id,
+                      arg3: taskList[index].taskSubject),
+                  // arg3: _taskList[index].templateMasterCode),
+                );
+              }
+            : () {},
       ),
     );
   }

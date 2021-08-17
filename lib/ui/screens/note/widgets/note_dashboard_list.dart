@@ -61,6 +61,7 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
                     return NoteListCard(
                       index: index,
                       noteList: _noteList,
+                      onTap: false,
                     );
                   },
                 );

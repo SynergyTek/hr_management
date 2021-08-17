@@ -101,6 +101,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
                     return NoteListCard(
                       index: index,
                       noteList: _noteList,
+                      onTap: true,
                     );
                   },
                 );

@@ -50,6 +50,7 @@ class _AdhocTaskListBodyState extends State<AdhocTaskListBody> {
                     return TaskListCard(
                       index: index,
                       taskList: _taskList,
+                      onTap: true,
                     );
                   },
                 );

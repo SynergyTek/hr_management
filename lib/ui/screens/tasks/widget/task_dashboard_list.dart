@@ -104,6 +104,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
                     return TaskListCard(
                       index: index,
                       taskList: _taskList,
+                      onTap: false,
                     );
                   },
                 );
