@@ -38,9 +38,8 @@ class TaskBloc {
     if (templateCode != null && templateCode.isNotEmpty)
       queryparams["templateCode"] = templateCode;
 
-    // queryparams["taskId"] = taskId;
-    // queryparams["templateid"] = templateCode;
-    // queryparams["userId"] = userId;
+    queryparams["userId"] = userId;
+
     TaskResponseModel response = await _taskRepository.getTaskDetailsData(
       queryparams: queryparams,
     );
@@ -65,19 +64,23 @@ class TaskBloc {
     return response;
   }
 
-  getTaskDashBoardData(
-      {Map<String, dynamic> queryparams, String taskListStatus // String userId,
-      }) async {
+  getTaskDashBoardData({
+    Map<String, dynamic> queryparams,
+    String taskListStatus, // String userId,
+  }) async {
     TaskListResponseModel response = await _taskRepository.getTaskDashBoardData(
         queryparams: queryparams, taskListStatus: taskListStatus);
     _subjectTaskList.sink.add(response);
   }
 
-  loadServiceAdhocTaskData(
-      {Map<String, dynamic> queryparams, String taskListStatus // String userId,
-      }) async {
-    TaskListResponseModel response = await _taskRepository
-        .loadServiceAdhocTaskData(queryparams: queryparams);
+  loadServiceAdhocTaskData({
+    Map<String, dynamic> queryparams,
+    String taskListStatus,
+  }) async {
+    TaskListResponseModel response =
+        await _taskRepository.loadServiceAdhocTaskData(
+      queryparams: queryparams,
+    );
     _subjectTaskList.sink.add(response);
   }
 

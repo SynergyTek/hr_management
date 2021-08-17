@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
@@ -39,13 +41,17 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
 
     Map<String, dynamic> queryparams = Map();
 
-    if (userId != null) queryparams['userId'] = userId;
-    if (text != null) queryparams['searchText'] = text;
+    if (text != null) queryparams['text'] = text;
     if (serviceStatusIds != null)
       queryparams['serviceStatusIds'] = serviceStatusIds;
     if (userType != null) queryparams['userType'] = userType;
 
-    serviceBloc.getServiceDashBoardData(queryparams: queryparams);
+    queryparams['userId'] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+
+    serviceBloc.getServiceDashBoardData(
+      queryparams: queryparams,
+    );
   }
 
   @override

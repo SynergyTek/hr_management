@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/constants/image_path_constants.dart';
 import 'package:hr_management/data/models/documents_models/document_models/document_model.dart';
 import 'package:hr_management/data/models/documents_models/document_models/document_response.dart';
 import 'package:hr_management/logic/blocs/documents_bloc/document_bloc/document_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../../../data/enums/enums.dart';
 import 'document_list_widget.dart';
@@ -32,7 +34,10 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
 
   /// Helper function to handle query params for the API
   _handleQueryParams() {
-    return null;
+    return {
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+    };
   }
 
   @override

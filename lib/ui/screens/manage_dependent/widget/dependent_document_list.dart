@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:listizer/listizer.dart';
 
 import '../../../../data/models/dependent/dependent_doc_req_model.dart';
@@ -20,7 +22,14 @@ class _DependentDocumentListState extends State<DependentDocumentList> {
   @override
   void initState() {
     super.initState();
-    dependentBloc..getReadDependnetDocReqResponse();
+
+    dependentBloc
+      ..getReadDependnetDocReqResponse(queryparams: {
+        'userId':
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+        'userid':
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+      });
   }
 
   @override

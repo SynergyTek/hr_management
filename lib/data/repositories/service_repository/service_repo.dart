@@ -5,13 +5,9 @@ part of 'abstract_service_repo.dart';
 class ServiceRepository extends AbstractServiceRepository {
   final Dio _dio = Dio();
 
-  Future<ServiceListResponse> getServiceHomeListData(
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<ServiceListResponse> getServiceHomeListData({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.READ_SERVICE_HOME_DATA;
 
     try {
@@ -34,10 +30,7 @@ class ServiceRepository extends AbstractServiceRepository {
   Future<ServiceResponse> getServiceDetail({
     Map<String, dynamic> queryparams,
   }) async {
-    if (queryparams == null) queryparams = Map();
 
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
 
     final String endpoint = APIEndpointConstants.GET_SERVICE_DETAILS;
 
@@ -59,13 +52,9 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
-  Future<ServiceListResponse> getLeavesDetails(
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<ServiceListResponse> getLeavesDetails({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
 
     try {
@@ -87,11 +76,6 @@ class ServiceRepository extends AbstractServiceRepository {
   Future<ServiceListResponse> getServiceDashBoardData({
     Map<String, dynamic> queryparams,
   }) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
     final String endpoint = APIEndpointConstants.READ_SERVICE_DASHBOARD_DATA;
 
     try {
@@ -143,7 +127,7 @@ class ServiceRepository extends AbstractServiceRepository {
         //   else
         //     result.messages = 'Leave Applied Successfully';
         // } else
-          result.messages = 'Item Saved Successfully';
+        result.messages = 'Item Saved Successfully';
       }
 
       return result;

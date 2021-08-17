@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/worklist_dashboard/worklist_dashboard_count.dart';
@@ -24,7 +26,17 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
   @override
   void initState() {
     super.initState();
-    worklistDashboardBloc..getWorklistDashboardData();
+    worklistDashboardBloc
+      ..getWorklistDashboardData(
+        queryparams: _handleQueryparams(),
+      );
+  }
+
+  _handleQueryparams() {
+    return {
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
+    };
   }
 
   @override

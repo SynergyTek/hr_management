@@ -67,11 +67,6 @@ class CommonRepository extends AbstractCommonRepository {
 
   Future<OwnerNameListResponse> getOwnerIdNameList(
       {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
     final String endpoint = APIEndpointConstants.GET_OWNER_ID_NAME_LIST;
 
     try {
@@ -110,13 +105,9 @@ class CommonRepository extends AbstractCommonRepository {
     }
   }
 
-  Future<EnumTreeListResponse> getModuleTreeList(
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-    
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<EnumTreeListResponse> getModuleTreeList({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.GET_MODULE_TREE_LIST;
 
     try {

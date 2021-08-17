@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/synergy_divider_widget.dart';
 
 import '../../../../../data/enums/enums.dart';
@@ -44,7 +46,8 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
     return {
       'indexPageTemplateId': widget?.templateId ?? '',
       'ownerType': 'owner',
-      // 'userId': '45bba746-3309-49b7-9c03-b5793369d73c',
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
     };
   }
 

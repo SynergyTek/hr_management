@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../constants/formats.dart';
 import '../../../data/enums/enums.dart';
 import '../../../data/models/nts_charts/chart_model.dart';
@@ -35,11 +37,34 @@ class _NTSChartState extends State<NTSChart> {
 
     queryparams["startDate"] = dateformatterWithSlash.format(fromDate) ?? '';
     queryparams["dueDate"] = dateformatterWithSlash.format(toDate) ?? '';
+    queryparams["userid"] =
+        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
 
-    ntsChartBloc..getChartByStatus(ntsType: widget.ntsType);
-    ntsChartBloc..getChartByUserType(ntsType: widget.ntsType);
     ntsChartBloc
-      ..getDatewiseSLA(ntsType: widget.ntsType, queryparams: queryparams);
+      ..getChartByStatus(
+        queryparams: {
+          'userid':
+              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+                  '',
+        },
+        ntsType: widget.ntsType,
+      );
+
+    ntsChartBloc
+      ..getChartByUserType(
+        queryparams: {
+          'userid':
+              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+                  '',
+        },
+        ntsType: widget.ntsType,
+      );
+
+    ntsChartBloc
+      ..getDatewiseSLA(
+        queryparams: queryparams,
+        ntsType: widget.ntsType,
+      );
 
     super.initState();
   }
@@ -184,10 +209,17 @@ class _NTSChartState extends State<NTSChart> {
                             dateformatterWithSlash.format(fromDate) ?? '';
                         queryparams["dueDate"] =
                             dateformatterWithSlash.format(toDate) ?? '';
+                        queryparams["userid"] =
+                            BlocProvider.of<UserModelBloc>(context)
+                                    .state
+                                    ?.userModel
+                                    ?.id ??
+                                '';
                         ntsChartBloc
                           ..getDatewiseSLA(
-                              ntsType: widget.ntsType,
-                              queryparams: queryparams);
+                            queryparams: queryparams,
+                            ntsType: widget.ntsType,
+                          );
                       },
                     )
                   ],

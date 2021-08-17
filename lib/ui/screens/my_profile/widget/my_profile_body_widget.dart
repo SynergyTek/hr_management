@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/employee_profile_models/employee_profile_model.dart';
 import '../../../../data/models/employee_profile_models/employee_profile_response.dart';
@@ -31,7 +33,10 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
 
   /// Helper function to handle queryparams of the API call.
   _handleQueryparams() {
-    return null;
+    return {
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+    };
   }
 
   Widget build(BuildContext context) {

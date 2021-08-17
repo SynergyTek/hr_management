@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:listizer/listizer.dart';
 
 import '../../../../data/enums/enums.dart';
@@ -26,7 +28,17 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
   }
 
   apiCall() {
-    noteBloc..getNoteDashBoardData();
+    noteBloc
+      ..getNoteDashBoardData(
+        queryparams: _handleQueryparams(),
+      );
+  }
+
+  _handleQueryparams() {
+    return {
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+    };
   }
 
   @override

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../routes/route_constants.dart';
@@ -48,10 +50,16 @@ class SplashScreen extends StatelessWidget {
     BuildContext context,
   ) async {
     WidgetsFlutterBinding.ensureInitialized();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var username = prefs.getString('username');
-    var id = prefs.getString('id');
-    print(id);
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // var username = prefs.getString('username');
+    // var id = prefs.getString('id');
+    // print(id);
+
+    String username =
+        BlocProvider.of<UserModelBloc>(context)?.state?.userModel?.email;
+
+    print("Username: $username");
+
     if (username == null) {
       Navigator.pushReplacementNamed(
         context, LOGIN_ROUTE,

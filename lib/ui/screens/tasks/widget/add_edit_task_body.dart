@@ -1,12 +1,17 @@
 import 'dart:convert';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
 import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/user/user.dart';
@@ -98,7 +103,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ..getTaskDetails(
         templateCode: widget.templateCode,
         taskId: widget.taskId,
-        // userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+        userId:
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
       );
   }
 
@@ -860,7 +866,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
-      }else if (model[i].type == 'file') {
+      } else if (model[i].type == 'file') {
         TextEditingController attchmentController = new TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
@@ -875,26 +881,43 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         attchmentController.text = udfJson[model[i].key] == null
             ? (widget.taskId == null || widget.taskId.isEmpty)
                 ? " Select File to Attach "
-                : model[i].udfValue
+                : model[i].label
+            // : model[i].udfValue
             : " (1) File Attached " + udfJson[model[i].key];
 
         listDynamic.add(DynamicAttchmentWidget(
           labelName: model[i].label,
           controller: attchmentController,
+          fileId: model[i].udfValue,
+          // Callback for Download
+          callBack1: () => _handleDownloadOnPressed(
+            data: model[i],
+          ),
+
+          // Callback for View
+          callBack2: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Feature under development."),
+              ),
+            );
+          },
+
           callBack: () {
             Navigator.pushNamed(
               context,
               NTS_ATTACHMENT,
               arguments: ScreenArguments(
-                  arg1: 'Note',
-                  callBack: (dynamic value, dynamic value2, dynamic value3) {
-                    setState(() {
-                      model[i].label = value2;
-                      udfJson[model[i].key] = value;
-                      attchmentController.text =
-                          " (1) File Attached " + udfJson[model[i].key];
-                    });
-                  }),
+                arg1: 'Note',
+                callBack: (dynamic value, dynamic value2, dynamic value3) {
+                  setState(() {
+                    model[i].label = value2;
+                    udfJson[model[i].key] = value;
+                    attchmentController.text =
+                        " (1) File Attached " + udfJson[model[i].key];
+                  });
+                },
+              ),
             );
           },
           readOnly: false,
@@ -1299,14 +1322,16 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
   String resultMsg = '';
   taskViewModelPostRequest(int postDataAction, String taskStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
-    String userId = await getUserId();
+    String userId = BlocProvider.of<UserModelBloc>(context).state.userModel.id;
+
     String stringModel = jsonEncode(taskModel);
     var jsonModel = jsonDecode(stringModel);
     postTaskModel = TaskModel.fromJson(jsonModel);
 
     postTaskModel.ownerUserId = userId;
     postTaskModel.requestedByUserId = userId;
-    postTaskModel.assignedToUserId =userId; //TODO: set appropriate "assignedToUserId"
+    postTaskModel.assignedToUserId =
+        userId; //TODO: set appropriate "assignedToUserId"
     postTaskModel.taskSubject = createServiceFormBloc.subject.value;
     postTaskModel.taskDescription = createServiceFormBloc.description.value;
     postTaskModel.dataAction = postDataAction;
@@ -1446,6 +1471,82 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         ntstype: NTSType.task,
         arg1: taskModel.taskId,
       ),
+    );
+  }
+
+  // -------------------------------------------------- //
+  //            Download code goes here.                //
+  // -------------------------------------------------- //
+
+  List _tasks;
+  List _items;
+  bool _isLoading;
+  bool _permissionReady;
+  ReceivePort _port = ReceivePort();
+
+  void _bindBackgroundIsolate() {
+    bool isSuccess = IsolateNameServer.registerPortWithName(
+      _port.sendPort,
+      'downloader_send_port',
+    );
+
+    if (!isSuccess) {
+      _unbindBackgroundIsolate();
+      _bindBackgroundIsolate();
+      return;
+    }
+
+    _port.listen((dynamic data) {
+      print("data: $data");
+
+      String id = data[0];
+      DownloadTaskStatus status = data[1];
+      int progress = data[2];
+
+      if (_tasks != null && _tasks.isNotEmpty) {
+        final task = _tasks.firstWhere((task) => task.taskId == id);
+        setState(() {
+          task.status = status;
+          task.progress = progress;
+        });
+      }
+    });
+  }
+
+  void _unbindBackgroundIsolate() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+  }
+
+  static void downloadCallback(
+    String id,
+    DownloadTaskStatus status,
+    int progress,
+  ) {
+    final SendPort send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send.send([id, status, progress]);
+  }
+
+  _handleDownloadOnPressed({
+    @required data,
+  }) {
+    if (data == null)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Data is unavailable. Pl try again later."),
+        ),
+      );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Download queued."),
+      ),
+    );
+
+    DownloadHelper().requestDownload(
+      fileName: data?.label ?? '-',
+      downloadURL:
+          'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.udfValue ?? ''}',
     );
   }
 }

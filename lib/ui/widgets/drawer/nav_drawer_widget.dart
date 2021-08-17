@@ -371,8 +371,8 @@ Widget drawerWidget(context) {
             ),
             trailing: Icon(Icons.logout),
             onTap: () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.clear();
+              // SharedPreferences prefs = await SharedPreferences.getInstance();
+              // prefs.clear();
 
               BlocProvider.of<UserModelBloc>(context).add(
                 UserModelChangeEvent(

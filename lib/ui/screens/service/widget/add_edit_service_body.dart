@@ -1,10 +1,15 @@
 import 'dart:convert';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -99,10 +104,19 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
     serviceBloc
       ..getServiceDetail(
-        templateCode: widget.templateCode,
-        serviceId: widget.serviceId,
-        userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+        queryparams: _handleQueryParams(),
       );
+  }
+
+  _handleQueryParams() {
+    return {
+      'templatecode': widget.templateCode ?? '',
+      'serviceId': widget.serviceId ?? '',
+      'userId':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+    };
   }
 
   @override
@@ -870,12 +884,30 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         attchmentController.text = udfJson[model[i].key] == null
             ? (widget.serviceId == null || widget.serviceId.isEmpty)
                 ? " Select File to Attach "
-                : model[i].udfValue
+                : model[i].label
+            // : model[i].udfValue
             : " (1) File Attached " + udfJson[model[i].key];
 
         listDynamic.add(DynamicAttchmentWidget(
           labelName: model[i].label,
           controller: attchmentController,
+
+          fileId: model[i].udfValue,
+
+          // Callback for Download
+          callBack1: () => _handleDownloadOnPressed(
+            data: model[i],
+          ),
+
+          // Callback for View
+          callBack2: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Feature under development."),
+              ),
+            );
+          },
+
           callBack: () {
             Navigator.pushNamed(
               context,
@@ -1300,7 +1332,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   String resultMsg = '';
   serviceViewModelPostRequest(int postDataAction, String serviceStatusCode,
       CreateServiceFormBloc createServiceFormBloc) async {
-    String userId = await getUserId();
+    String userId = BlocProvider.of<UserModelBloc>(context).state.userModel.id;
     String stringModel = jsonEncode(serviceModel);
     var jsonModel = jsonDecode(stringModel);
     postServiceModel = Service.fromJson(jsonModel);
@@ -1321,6 +1353,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     });
 
     PostResponse result = await serviceBloc.postData(
+      userId:
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
       isLeaves: widget.isLeave,
       service: postServiceModel,
     );
@@ -1512,6 +1546,82 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         ntstype: NTSType.service,
         arg1: serviceModel.serviceId,
       ),
+    );
+  }
+
+  // -------------------------------------------------- //
+  //            Download code goes here.                //
+  // -------------------------------------------------- //
+
+  List _tasks;
+  List _items;
+  bool _isLoading;
+  bool _permissionReady;
+  ReceivePort _port = ReceivePort();
+
+  void _bindBackgroundIsolate() {
+    bool isSuccess = IsolateNameServer.registerPortWithName(
+      _port.sendPort,
+      'downloader_send_port',
+    );
+
+    if (!isSuccess) {
+      _unbindBackgroundIsolate();
+      _bindBackgroundIsolate();
+      return;
+    }
+
+    _port.listen((dynamic data) {
+      print("data: $data");
+
+      String id = data[0];
+      DownloadTaskStatus status = data[1];
+      int progress = data[2];
+
+      if (_tasks != null && _tasks.isNotEmpty) {
+        final task = _tasks.firstWhere((task) => task.taskId == id);
+        setState(() {
+          task.status = status;
+          task.progress = progress;
+        });
+      }
+    });
+  }
+
+  void _unbindBackgroundIsolate() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+  }
+
+  static void downloadCallback(
+    String id,
+    DownloadTaskStatus status,
+    int progress,
+  ) {
+    final SendPort send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send.send([id, status, progress]);
+  }
+
+  _handleDownloadOnPressed({
+    @required data,
+  }) {
+    if (data == null)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Data is unavailable. Pl try again later."),
+        ),
+      );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Download queued."),
+      ),
+    );
+
+    DownloadHelper().requestDownload(
+      fileName: data?.label ?? '-',
+      downloadURL:
+          'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.udfValue ?? ''}',
     );
   }
 }

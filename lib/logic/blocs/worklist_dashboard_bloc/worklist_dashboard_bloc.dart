@@ -19,9 +19,8 @@ class WorklistDashboardBloc {
 
   /// Used to fetch new entries.
   getWorklistDashboardData({
-    Map<String, dynamic> queryparams, // String userId,
+    Map<String, dynamic> queryparams,
   }) async {
-    
     WorklistDashboardResponse response =
         await _worklistDashboardRepository.getWorklistDashboardCount(
       queryparams: queryparams,
@@ -30,7 +29,7 @@ class WorklistDashboardBloc {
   }
 
   getWorklistDashboardNoteData({
-    Map<String, dynamic> queryparams, // String userId,
+    Map<String, dynamic> queryparams,
   }) async {
     NoteWorklistDashboardResponse response =
         await _worklistDashboardRepository.getWorklistDashboardNoteCount(

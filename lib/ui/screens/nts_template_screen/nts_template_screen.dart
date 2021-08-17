@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/nts_template_bloc/nts_template_bloc.dart';
@@ -25,8 +27,13 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
     ntsTemplateBloc.subject.sink.add(null);
     super.initState();
 
-    ntsTemplateBloc.getData(
-        ntsType: widget.ntsType, categoryCode: widget.categoryCode);
+    ntsTemplateBloc
+      ..getData(
+        categoryCode: widget.categoryCode,
+        ntsType: widget.ntsType,
+        userid:
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+      );
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
@@ -391,6 +392,12 @@ class AppRouter {
       case CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE:
         return MaterialPageRoute(
           builder: (_) => CaseManagementHelpdeskDashboardScreen(),
+        );
+        break;
+
+      case DOWNLOAD_SCREEN_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => DownloadScreen(),
         );
         break;
 

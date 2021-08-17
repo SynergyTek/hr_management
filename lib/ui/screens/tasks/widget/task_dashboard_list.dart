@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_list_model.dart';
@@ -44,7 +46,11 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
 
     Map<String, dynamic> queryparams = Map();
     if (widget.taskListStatus != null) {
-      if (userId != null) queryparams['userId'] = userId;
+      queryparams['userid'] =
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+      queryparams['userId'] =
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+
       if (taskStatusIds != null) queryparams['TaskStatusIds'] = taskStatusIds;
       if (taskAssigneeIds != null)
         queryparams['TaskAssigneeIds'] = taskAssigneeIds;
@@ -52,16 +58,25 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
       if (text != null) queryparams['searchText'] = text;
       taskBloc
         ..getTaskDashBoardData(
-            queryparams: queryparams, taskListStatus: widget.taskListStatus);
+          queryparams: queryparams,
+          taskListStatus: widget.taskListStatus,
+        );
     } else {
-      if (userId != null) queryparams['userId'] = userId;
+      queryparams['userid'] =
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+      queryparams['userId'] =
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+
       if (taskStatusIds != null) queryparams['TaskStatusIds'] = taskStatusIds;
       if (taskAssigneeIds != null)
         queryparams['TaskAssigneeIds'] = taskAssigneeIds;
       if (taskOwnerIds != null) queryparams['TaskOwnerIds'] = taskOwnerIds;
       if (text != null) queryparams['searchText'] = text;
 
-      taskBloc..getTaskDashBoardData(queryparams: queryparams);
+      taskBloc
+        ..getTaskDashBoardData(
+          queryparams: queryparams,
+        );
     }
   }
 

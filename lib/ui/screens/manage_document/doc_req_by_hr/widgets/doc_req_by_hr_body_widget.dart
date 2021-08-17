@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/documents_models/doc_req_by_hr/doc_req_by_hr_model.dart';
 import 'package:hr_management/data/models/documents_models/doc_req_by_hr/doc_req_by_hr_response.dart';
 import 'package:hr_management/logic/blocs/documents_bloc/doc_req_by_hr_bloc/doc_req_by_hr_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../../../themes/theme_config.dart';
 import '../../../../widgets/progress_indicator.dart';
@@ -27,7 +29,10 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
 
   /// Helper function to handle query params for the API
   _handleQueryParams() {
-    return null;
+    return {
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+    };
   }
 
   @override

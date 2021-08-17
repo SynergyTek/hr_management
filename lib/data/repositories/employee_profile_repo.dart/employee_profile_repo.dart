@@ -5,12 +5,9 @@ part of 'abstract_employee_profile_repo.dart';
 class EmployeeProfileRepository extends AbstractEmployeeProfileRepository {
   final Dio _dio = Dio();
 
-  Future<EmployeeProfileResponse> getEmployeeProfileData(
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
+  Future<EmployeeProfileResponse> getEmployeeProfileData({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.EMPLOYEE_PROFILE;
 
     try {

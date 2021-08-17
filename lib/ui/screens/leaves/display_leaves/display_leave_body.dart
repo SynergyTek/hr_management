@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:listizer/listizer.dart';
 
 import '../../../../data/models/service_models/service.dart';
@@ -25,7 +27,13 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
 
   @override
   void initState() {
-    serviceBloc..getLeavesDetails();
+    serviceBloc
+      ..getLeavesDetails(queryparams: {
+        'userid':
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+        'userId':
+            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+      });
     super.initState();
   }
 

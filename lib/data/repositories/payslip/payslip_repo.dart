@@ -6,11 +6,6 @@ class PayslipRepository extends AbstractPayslipRepository {
   Future<PayslipResponse> getPaylsipList({
     Map<String, dynamic> queryparams,
   }) async {
-    if (queryparams == null) queryparams = Map();
-    
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
     final String endpoint = APIEndpointConstants.READ_PAYSLIP_DATA;
 
     try {

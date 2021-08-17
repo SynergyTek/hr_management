@@ -9,11 +9,13 @@ class PayslipBloc {
   final BehaviorSubject<PayslipResponse> _subjectPayslip =
       BehaviorSubject<PayslipResponse>();
 
-  getManageAccrual({legalEntityId}) async {
-    Map<String, dynamic> queryparams = Map();
-    queryparams["legalEntityId"] = legalEntityId ?? '';
-    PayslipResponse response =
-        await _manageAccrualRepository.getPaylsipList(queryparams: queryparams);
+  getManageAccrual({
+    Map<String, dynamic> queryparams,
+  }) async {
+    PayslipResponse response = await _manageAccrualRepository.getPaylsipList(
+      queryparams: queryparams,
+    );
+
     _subjectPayslip.sink.add(response);
   }
 

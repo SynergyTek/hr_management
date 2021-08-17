@@ -5,13 +5,9 @@ part of 'abstract_task_repo.dart';
 class TaskRepository extends AbstractTaskRepository {
   final Dio _dio = Dio();
 
-  Future<TaskListResponseModel> getTaskHomeListData(
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<TaskListResponseModel> getTaskHomeListData({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.GET_TASK_HOME_DATA;
 
     try {
@@ -31,13 +27,9 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
-  Future<TaskResponseModel> getTaskDetailsData(
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<TaskResponseModel> getTaskDetailsData({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.GET_TASK_DETAILS;
 
     try {
@@ -58,13 +50,10 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
-  Future<TaskListResponseModel> getTaskDashBoardData(
-      {Map<String, dynamic> queryparams, String taskListStatus}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<TaskListResponseModel> getTaskDashBoardData({
+    Map<String, dynamic> queryparams,
+    String taskListStatus,
+  }) async {
     String endpoint = '';
     if (taskListStatus == 'InProgress') {
       endpoint = APIEndpointConstants.READ_TASK_DATA_IN_PROGRESS;
@@ -93,13 +82,9 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
-  Future<TaskListResponseModel> loadServiceAdhocTaskData(//TODO: enter response
-      {Map<String, dynamic> queryparams}) async {
-    if (queryparams == null) queryparams = Map();
-
-    String userId = await getUserId();
-    if (userId != null) queryparams['userid'] = userId;
-
+  Future<TaskListResponseModel> loadServiceAdhocTaskData({
+    Map<String, dynamic> queryparams,
+  }) async {
     final String endpoint = APIEndpointConstants.LOAD_SERVICE_ADHOC_TASK_DATA;
 
     try {

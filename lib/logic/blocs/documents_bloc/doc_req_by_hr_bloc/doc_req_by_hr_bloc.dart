@@ -2,7 +2,6 @@ import 'package:hr_management/data/models/documents_models/doc_req_by_hr/doc_req
 import 'package:hr_management/data/repositories/documents_repository/doc_req_by_hr/doc_req_by_hr_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-
 class DocReqByHrBloc {
   final DocReqByHrRepository _apiRepository = DocReqByHrRepository();
 
@@ -14,7 +13,9 @@ class DocReqByHrBloc {
   getData({
     Map<String, dynamic> queryparams,
   }) async {
-    DocReqByHrResponse response = await _apiRepository.getAPIData();
+    DocReqByHrResponse response = await _apiRepository.getAPIData(
+      queryparams: queryparams,
+    );
     _subject.sink.add(response);
   }
 

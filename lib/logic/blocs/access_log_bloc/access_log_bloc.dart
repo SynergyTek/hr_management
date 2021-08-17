@@ -18,15 +18,16 @@ class AccessLogBloc {
   /// Used to insert new entries.
   getInsertAccessLog({
     @required bool isSignIn,
+    @required String userId,
   }) async {
     Map<String, dynamic> queryparams = Map();
     queryparams["punchingTime"] = DateTime.now().toString();
     queryparams["punchingType"] = isSignIn ? "0" : "1";
-
-    print(queryparams.values);
+    queryparams["userId"] = userId ?? "";
+    queryparams["userid"] = userId ?? "";
 
     AccessLogResponse response = await _accessLogRepository.getInsertAccessLog(
-      queryparams: queryparams,
+      queryparams: queryparams ?? {},
     );
     _insertAccessLogSubject.sink.add(response);
   }
@@ -35,16 +36,10 @@ class AccessLogBloc {
   getAccessLogsListData({
     Map<String, dynamic> queryparams,
   }) async {
-    // adding default values.
-    if (queryparams == null) {
-      // startDate=2021-06-20 00:00:00.000&dueDate=2021-07-06 00:00:00.000
-      queryparams = {
-        'startdate': DateTime.now(),
-      };
-    }
-
-    AccessLogListDataResponse response = await _accessLogRepository
-        .getAccessLogsListData(queryparams: queryparams);
+    AccessLogListDataResponse response =
+        await _accessLogRepository.getAccessLogsListData(
+      queryparams: queryparams ?? {},
+    );
     _getAccessLogListDataSubject.sink.add(response);
   }
 

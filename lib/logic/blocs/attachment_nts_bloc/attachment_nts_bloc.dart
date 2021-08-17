@@ -18,6 +18,7 @@ class AttachmentNTSBloc {
   getData({
     @required NTSType ntsType,
     @required String ntsId,
+    String userid,
   }) async {
     AttachmentNTSResponse response = await _apiRepository.getAPIData(
       ntsType: ntsType,
@@ -36,12 +37,14 @@ class AttachmentNTSBloc {
 
     if (response.statusCode == 200) {
       getData(
-          ntsId: attachmentData.ntsId,
-          ntsType: attachmentData.ntsType == 'NTS_Service'
-              ? NTSType.service
-              : attachmentData.ntsType == 'NTS_Task'
-                  ? NTSType.task
-                  : NTSType.note);
+        userid: attachmentData.userId,
+        ntsId: attachmentData.ntsId,
+        ntsType: attachmentData.ntsType == 'NTS_Service'
+            ? NTSType.service
+            : attachmentData.ntsType == 'NTS_Task'
+                ? NTSType.task
+                : NTSType.note,
+      );
       return response.data;
     } else {
       return "";
@@ -74,6 +77,7 @@ class AttachmentNTSBloc {
       getData(
         ntsType: ntsType,
         ntsId: ntsId,
+        // userid: queryparams['userid'],
       );
   }
 

@@ -51,8 +51,8 @@ class _AppbarWidgetState extends State<AppbarWidget> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.clear();
+              // SharedPreferences prefs = await SharedPreferences.getInstance();
+              // prefs.clear();
 
               BlocProvider.of<UserModelBloc>(context).add(
                 UserModelChangeEvent(

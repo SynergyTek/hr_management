@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../data/models/nts_template_tree_list_models/nts_template_tree_list_model.dart';
 import '../../../data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
 import '../../../logic/blocs/nts_template_tree_list_bloc/nts_template_tree_list_bloc.dart';
@@ -350,14 +352,20 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
     if (_selectedIndex == 0)
       return {
         'taskTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
+        'userid':
+            BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
       };
     if (_selectedIndex == 1)
       return {
         'serviceTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
+        'userid':
+            BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
       };
     if (_selectedIndex == 2)
       return {
         'noteTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
+        'userid':
+            BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
       };
   }
 }
