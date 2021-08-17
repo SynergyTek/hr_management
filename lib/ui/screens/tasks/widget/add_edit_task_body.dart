@@ -690,6 +690,11 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                   .split('.')[1],
               url: model[i].data.url,
               ddController: _ddController);
+          if (selectValue.length < model.length) {
+            for (var j = selectValue.length; j < model.length; j++) {
+              selectValue.add(null);
+            }
+          }
         }
 
         listDynamic.add(
