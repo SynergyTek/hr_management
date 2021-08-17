@@ -40,7 +40,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
     Map<String, dynamic> queryparams = Map();
 
     if (userId != null) queryparams['userId'] = userId;
-    if (text != null) queryparams['text'] = text;
+    if (text != null) queryparams['searchText'] = text;
     if (serviceStatusIds != null)
       queryparams['serviceStatusIds'] = serviceStatusIds;
     if (userType != null) queryparams['userType'] = userType;
@@ -126,7 +126,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
   _searchSubject() {
     if (subjectController.text != null && subjectController.text.isNotEmpty) {
       _setParamsToNull();
-      // subject = subjectController.text;
+      text = subjectController.text;
       apiCall();
     }
   }

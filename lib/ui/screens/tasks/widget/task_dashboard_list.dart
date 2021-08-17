@@ -26,6 +26,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
   List<TaskListModel> _filteredTaskList = [];
   TextEditingController subjectController = TextEditingController();
   FilterListTapCallBack filterData;
+  String text;
 
   String userId;
   String taskStatusIds;
@@ -48,6 +49,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
       if (taskAssigneeIds != null)
         queryparams['TaskAssigneeIds'] = taskAssigneeIds;
       if (taskOwnerIds != null) queryparams['TaskOwnerIds'] = taskOwnerIds;
+      if (text != null) queryparams['searchText'] = text;
       taskBloc
         ..getTaskDashBoardData(
             queryparams: queryparams, taskListStatus: widget.taskListStatus);
@@ -57,6 +59,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
       if (taskAssigneeIds != null)
         queryparams['TaskAssigneeIds'] = taskAssigneeIds;
       if (taskOwnerIds != null) queryparams['TaskOwnerIds'] = taskOwnerIds;
+      if (text != null) queryparams['searchText'] = text;
 
       taskBloc..getTaskDashBoardData(queryparams: queryparams);
     }
@@ -149,7 +152,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
   _searchSubject() {
     if (subjectController.text != null && subjectController.text.isNotEmpty) {
       _setParamsToNull();
-      // subject = subjectController.text;
+      text = subjectController.text;
       apiCall();
     }
   }
@@ -208,7 +211,6 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
       if (value != 'a8fc557a-9bb6-49ca-9ead-76ce0188563c')
         assignValues(value, filterType);
       apiCall();
-      
     }
 
     Navigator.pushNamed(
