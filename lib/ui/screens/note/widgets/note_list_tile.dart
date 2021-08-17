@@ -68,6 +68,7 @@ class NoteListCard extends StatelessWidget {
         ),
         onTap: onTap
             ? () {
+                noteBloc.subjectNoteList.sink.add(null);
                 noteBloc.subjectNoteDetails.sink.add(null);
                 Navigator.pushNamed(
                   context,

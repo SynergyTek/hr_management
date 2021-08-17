@@ -54,13 +54,11 @@ class NoteBloc {
 
     if (response.isSuccess) {
       subjectNoteList.sink.add(null);
-      getNoteDetails();
+      getNoteList();
     }
 
     return response;
   }
-
-  
 
   /// Used to update an existing entry.
   putData() async {
