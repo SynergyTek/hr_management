@@ -197,7 +197,10 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Expanded(
-          child: _handleFilterChips(),
+          child: Container(
+            height: 80.0,
+            child: _handleFilterChips(),
+          ),
         ),
         IconButton(
           icon: Icon(Icons.filter_list),
@@ -343,7 +346,9 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
         );
     });
 
-    return Wrap(
+    return ListView(
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
       children: _chips,
     );
   }
