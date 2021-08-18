@@ -1463,6 +1463,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           //   labelBackgroundColor: Colors.black,
           // ),
           SpeedDialChild(
+            visible: widget?.serviceId != null && widget.serviceId.isNotEmpty,
             child: Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
             onTap: () => Navigator.pushNamed(context, NTS_SHARE,
@@ -1475,23 +1476,23 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
-          if (widget?.serviceId != null && widget.serviceId.isNotEmpty)
-            SpeedDialChild(
-              child: Icon(Icons.share, color: Colors.white),
-              backgroundColor: Colors.blue,
-              onTap: () => Navigator.pushNamed(
-                context,
-                ADD_ADHOC_TASK,
-                // arguments: ScreenArguments(
-                //   ntstype: NTSType.task,
-                //   arg4: 'ProjectTask',
-                // ),
-              ),
-              label: 'Adhoc Task',
-              labelStyle:
-                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-              labelBackgroundColor: Colors.black,
+          SpeedDialChild(
+            visible: widget?.serviceId != null && widget.serviceId.isNotEmpty,
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => Navigator.pushNamed(
+              context,
+              ADD_ADHOC_TASK,
+              // arguments: ScreenArguments(
+              //   ntstype: NTSType.task,
+              //   arg4: 'ProjectTask',
+              // ),
             ),
+            label: 'Adhoc Task',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
 
           // SpeedDialChild(
           //   child: Icon(Icons.border_all, color: Colors.white),

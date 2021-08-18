@@ -57,7 +57,9 @@ class ServiceBloc {
     if (isLeaves != null && response.isSuccess) {
       if (isLeaves) {
         subjectServiceList.sink.add(null);
-        getLeavesDetails();
+        Map<String, dynamic> queryparams = Map();
+        if (userId != null && userId.isNotEmpty) queryparams["userId"] = userId;
+        getLeavesDetails(queryparams: queryparams);
       } else {
         subjectServiceList.sink.add(null);
         getServiceHomeListData();
