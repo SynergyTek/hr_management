@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -1534,7 +1535,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
 
   _handleDownloadOnPressed({
     @required data,
-  }) {
+  }) async {
     if (data == null)
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -1548,8 +1549,32 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       ),
     );
 
+    Map<String, String> queryparams = {
+      'fileId': data?.udfValue ?? '',
+    };
+
+    Response response = await Dio().get(
+      'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment',
+      queryParameters: queryparams,
+    );
+
+    print(
+      response.headers['content-disposition'][0]
+          .split(';')[1]
+          .split('=')[1]
+          .trim(),
+    );
+
+    String fileName = response.headers['content-disposition'][0]
+        .split(';')[1]
+        .split('=')[1]
+        .trim();
+
+    if (fileName == null || fileName.isEmpty)
+      fileName = data?.label ?? 'DEFAULT_FILE_NAME';
+
     DownloadHelper().requestDownload(
-      fileName: data?.label ?? '-',
+      fileName: fileName,
       downloadURL:
           'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.udfValue ?? ''}',
     );
