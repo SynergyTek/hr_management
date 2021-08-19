@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -1463,6 +1464,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           //   labelBackgroundColor: Colors.black,
           // ),
           SpeedDialChild(
+            visible: widget?.serviceId != null && widget.serviceId.isNotEmpty,
             child: Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
             onTap: () => Navigator.pushNamed(context, NTS_SHARE,
@@ -1475,23 +1477,23 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
-          if (widget?.serviceId != null && widget.serviceId.isNotEmpty)
-            SpeedDialChild(
-              child: Icon(Icons.share, color: Colors.white),
-              backgroundColor: Colors.blue,
-              onTap: () => Navigator.pushNamed(
-                context,
-                ADD_ADHOC_TASK,
-                // arguments: ScreenArguments(
-                //   ntstype: NTSType.task,
-                //   arg4: 'ProjectTask',
-                // ),
-              ),
-              label: 'Adhoc Task',
-              labelStyle:
-                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-              labelBackgroundColor: Colors.black,
+          SpeedDialChild(
+            visible: widget?.serviceId != null && widget.serviceId.isNotEmpty,
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => Navigator.pushNamed(
+              context,
+              ADD_ADHOC_TASK,
+              // arguments: ScreenArguments(
+              //   ntstype: NTSType.task,
+              //   arg4: 'ProjectTask',
+              // ),
             ),
+            label: 'Adhoc Task',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
 
           // SpeedDialChild(
           //   child: Icon(Icons.border_all, color: Colors.white),
@@ -1609,7 +1611,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   _handleDownloadOnPressed({
     @required data,
-  }) {
+  }) async {
     if (data == null)
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -1623,8 +1625,32 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       ),
     );
 
+    Map<String, String> queryparams = {
+      'fileId': data?.udfValue ?? '',
+    };
+
+    Response response = await Dio().get(
+      'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment',
+      queryParameters: queryparams,
+    );
+
+    print(
+      response.headers['content-disposition'][0]
+          .split(';')[1]
+          .split('=')[1]
+          .trim(),
+    );
+
+    String fileName = response.headers['content-disposition'][0]
+        .split(';')[1]
+        .split('=')[1]
+        .trim();
+
+    if (fileName == null || fileName.isEmpty)
+      fileName = data?.label ?? 'DEFAULT_FILE_NAME';
+
     DownloadHelper().requestDownload(
-      fileName: data?.label ?? '-',
+      fileName: fileName,
       downloadURL:
           'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.udfValue ?? ''}',
     );

@@ -41,7 +41,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
 
     Map<String, dynamic> queryparams = Map();
 
-    if (text != null) queryparams['text'] = text;
+    if (text != null) queryparams['searchText'] = text;
     if (serviceStatusIds != null)
       queryparams['serviceStatusIds'] = serviceStatusIds;
     if (userType != null) queryparams['userType'] = userType;
