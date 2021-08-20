@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
-import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api%20bloc.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/ui/screens/dms/widget/dms_child_body.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 

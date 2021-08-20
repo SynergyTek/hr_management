@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
-import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api%20bloc.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/custom_icons.dart';

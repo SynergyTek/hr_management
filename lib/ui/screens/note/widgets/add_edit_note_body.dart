@@ -8,8 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/user/user.dart';
@@ -814,13 +816,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           ),
 
           // Callback for View
-          callBack2: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Feature under development."),
-              ),
-            );
-          },
+          callBack2: () => _handleViewOnPressed(
+            data: model[i],
+          ),
+
           readOnly: false,
         ));
       } else if (model[i].type == 'datetime') {
@@ -1548,6 +1547,29 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     final SendPort send =
         IsolateNameServer.lookupPortByName('downloader_send_port');
     send.send([id, status, progress]);
+  }
+
+  _handleViewOnPressed({
+    @required data,
+  }) async {
+    if (data == null || data?.udfValue == null || data.udfValue == '')
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Data is unavailable. Pl try again later."),
+        ),
+      );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return AttachmentViewWebview(
+            url: APIEndpointConstants.GET_ATTACHMENT_VIEW_WEBVIEW_URL +
+                '${data?.udfValue ?? ''}',
+          );
+        },
+      ),
+    );
   }
 
   _handleDownloadOnPressed({
