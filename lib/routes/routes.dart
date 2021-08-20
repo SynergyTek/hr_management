@@ -1,3 +1,4 @@
+import 'package:hr_management/ui/screens/dms/dms_child.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
 import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
@@ -47,17 +48,12 @@ import 'package:hr_management/ui/widgets/filter/nts_filter_widget.dart';
 import '../ui/screens/attendance/mark_attendance.dart';
 import '../ui/screens/attendance/show_access_logs/display_access_log_screen.dart';
 import '../ui/screens/leaves/display_leaves/display_leaves_screen.dart';
-import '../ui/screens/login/login_screen.dart';
-import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
-import '../ui/screens/my_profile/my_profile_screen.dart';
 import '../ui/screens/note/add_edit_note.dart';
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
 import '../ui/screens/registration/registration_screen.dart';
 import '../ui/screens/splash_screen/splash_screen.dart';
 import '../ui/screens/tasks/task_home_screen.dart';
-import '../ui/screens/tasks/task_list_screen.dart';
 import '../ui/widgets/custom_controls/default_dropdown_list.dart';
-import '../ui/widgets/custom_controls/user_dropdown_list.dart';
 import 'route_constants.dart';
 import 'screen_arguments.dart';
 
@@ -223,9 +219,6 @@ class AppRouter {
       case CREATE_EDIT_TASK_ROUTE:
         final args = routeSettings.arguments as ScreenArguments;
         print("args: $args");
-
-        // if (args?.arg1 == null || args.arg1.isEmpty)
-        //   throw Exception("Template Code cannot be empty or null.");
 
         return MaterialPageRoute(
           builder: (_) => AddEditTaskScreen(
@@ -405,6 +398,18 @@ class AppRouter {
       case DMS_PARENT:
         return MaterialPageRoute(
           builder: (_) => DMSParent(),
+        );
+        break;
+
+      case DMS_CHILD:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSChild(
+            parentName: args.arg1,
+            parentPath: args.arg2,
+            parentModel: args.dmsParentModel,
+            callBack: args.callBack,
+          ),
         );
         break;
 

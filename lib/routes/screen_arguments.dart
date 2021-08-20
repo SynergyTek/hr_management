@@ -1,3 +1,4 @@
+import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 
 import '../data/enums/enums.dart';
@@ -13,16 +14,19 @@ class ScreenArguments {
   final Function func;
   final NTSType ntstype;
   OnTapPressedCallBack callBack;
+  final Cwd dmsParentModel;
 
-  ScreenArguments(
-      {this.ntstype,
-      this.arg3,
-      this.arg4,
-      this.func,
-      this.arg1,
-      this.arg2,
-      this.val1,
-      this.val2,
-      this.showBack,
-      this.callBack});
+  ScreenArguments({
+    this.ntstype,
+    this.arg3,
+    this.arg4,
+    this.func,
+    this.arg1,
+    this.arg2,
+    this.val1,
+    this.val2,
+    this.showBack,
+    this.callBack,
+    this.dmsParentModel,
+  });
 }

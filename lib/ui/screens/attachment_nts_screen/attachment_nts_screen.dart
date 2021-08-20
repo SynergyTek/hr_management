@@ -24,7 +24,7 @@ class AttachmentNTSScreen extends StatelessWidget {
       appBar: AppbarWidget(
         title: "Attachments",
       ),
-      body: SafeArea( 
+      body: SafeArea(
         child: InternetConnectivityWidget(
           child: AttachmentNTSBodyWidget(
             ntsType: ntsType,
@@ -33,22 +33,20 @@ class AttachmentNTSScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-         backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         child: Icon(
           Icons.attach_file,
           size: 32,
         ),
         onPressed: () {
-            Navigator.pushNamed(
-              context,
-              NTS_ATTACHMENT,
-              arguments: ScreenArguments(
-                  arg1: ntsId,
-                  ntstype: ntsType,
-                  callBack: (dynamic value, dynamic value2, dynamic value3) {
-                    
-                  }),
-            );
+          Navigator.pushNamed(
+            context,
+            NTS_ATTACHMENT,
+            arguments: ScreenArguments(
+                arg1: ntsId,
+                ntstype: ntsType,
+                callBack: (dynamic value, dynamic value2, dynamic value3) {}),
+          );
         },
       ),
     );

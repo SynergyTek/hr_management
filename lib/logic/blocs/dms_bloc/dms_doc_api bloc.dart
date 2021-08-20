@@ -11,6 +11,9 @@ class DMSDocBloc {
   final BehaviorSubject<DMSFilesResponse> _subjectDMSGetFilesResponse =
       BehaviorSubject<DMSFilesResponse>();
 
+  final BehaviorSubject<DMSFilesResponse> _subjectDMSGetFilesChildResponse =
+      BehaviorSubject<DMSFilesResponse>();
+
   /// Used to fetch new entries.
   postGetDMSFilesData(
       {Map<String, dynamic> queryparams,
@@ -21,12 +24,25 @@ class DMSDocBloc {
     _subjectDMSGetFilesResponse.sink.add(response);
   }
 
-  dispose() {
-    _subjectDMSGetFilesResponse.close();
+  /// Used to fetch new entries.
+  postGetDMSFilesChildData(
+      {Map<String, dynamic> queryparams,
+      @required DmsPostModel dmsPostModel}) async {
+    DMSFilesResponse response = await _dmsRepository.getDMSFilesChildData(
+        queryparams: queryparams, dmsPostModel: dmsPostModel);
+
+    _subjectDMSGetFilesChildResponse.sink.add(response);
   }
 
-  BehaviorSubject<DMSFilesResponse> get subjectReadDependnetResponse =>
+  dispose() {
+    _subjectDMSGetFilesResponse.close();
+    _subjectDMSGetFilesChildResponse.close();
+  }
+
+  BehaviorSubject<DMSFilesResponse> get subjectDMSGetFilesResponse =>
       _subjectDMSGetFilesResponse;
+  BehaviorSubject<DMSFilesResponse> get subjectDMSGetFilesChildResponse =>
+      _subjectDMSGetFilesChildResponse;
 }
 
 final dmsBloc = DMSDocBloc();

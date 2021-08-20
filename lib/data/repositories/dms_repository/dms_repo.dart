@@ -11,7 +11,29 @@ class DMSRepository extends AbstractDMSRepository {
 
     try {
       Response response = await _dio.post(endpoint,
-          queryParameters: queryparams ?? {}, data: dmsPostModel);
+          queryParameters: queryparams ?? {},
+          data: jsonEncode(dmsPostModel.toJson()));
+
+      return DMSFilesResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Err: \n $err");
+      print("Stack: \n $stacktrace");
+      return DMSFilesResponse.withError("$err");
+    }
+  }
+
+  Future<DMSFilesResponse> getDMSFilesChildData({
+    Map<String, dynamic> queryparams,
+    @required DmsPostModel dmsPostModel,
+  }) async {
+    final String endpoint = APIEndpointConstants.GETDMSFILES;
+
+    try {
+      Response response = await _dio.post(endpoint,
+          queryParameters: queryparams ?? {},
+          data: jsonEncode(dmsPostModel.toJson()));
 
       return DMSFilesResponse.fromJson(
         response.data,
