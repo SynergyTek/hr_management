@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:hr_management/data/models/dms_document/dms_folder_str_response.dart';
+import 'package:hr_management/data/models/dms/dms_folder_str_response.dart';
 
 import '../../../constants/api_endpoints.dart';
 

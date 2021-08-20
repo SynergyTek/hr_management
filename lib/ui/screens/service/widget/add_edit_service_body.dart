@@ -474,6 +474,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
       print(model[i].type);
+      print(model[i].label);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
@@ -506,7 +507,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             width: MediaQuery.of(context).size.width,
             hint: model[i].label,
             icon: Icon(Icons.circle_outlined),
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Colors.grey[350]),
             // controller: _slaController,
             // isShowArrow: true,
           ));
@@ -887,12 +888,19 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           }
         }
 
-        attchmentController.text = udfJson[model[i].key] == null
-            ? (widget.serviceId == null || widget.serviceId.isEmpty)
+        attchmentController.text =
+            (udfJson[model[i].key] == null || udfJson[model[i].key].isEmpty)
                 ? " Select File to Attach "
-                : model[i].label
-            // : model[i].udfValue
-            : " (1) File Attached " + udfJson[model[i].key];
+                : (selectValue[i] == null || selectValue[i].isEmpty)
+                    ? " (1) File Attached: " + udfJson[model[i].key]
+                    : " (1) File Attached: " + selectValue[i];
+
+        // attchmentController.text = udfJson[model[i].key] == null
+        //     ? (widget.serviceId == null || widget.serviceId.isEmpty)
+        //         ? " Select File to Attach "
+        //         : model[i].label
+        //     // : model[i].udfValue
+        //     : " (1) File Attached " + udfJson[model[i].key];
 
         listDynamic.add(DynamicAttchmentWidget(
           labelName: model[i].label,
@@ -922,10 +930,12 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                   arg1: 'Note',
                   callBack: (dynamic value, dynamic value2, dynamic value3) {
                     setState(() {
+                      selectValue[i] = value2;
                       model[i].label = value2;
                       udfJson[model[i].key] = value;
                       attchmentController.text =
-                          " (1) File Attached " + udfJson[model[i].key];
+                          " (1) File Attached: " + selectValue[i];
+                      // " (1) File Attached " + udfJson[model[i].key];
                     });
                   }),
             );

@@ -1,4 +1,4 @@
-import 'package:hr_management/data/models/dms_document/dms_folder_str_response.dart';
+import 'package:hr_management/data/models/dms/dms_folder_str_response.dart';
 import 'package:hr_management/data/repositories/dms_repository/abstract_dms_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
