@@ -12,11 +12,14 @@ class DMSDocBloc {
       BehaviorSubject<DMSFilesResponse>();
 
   /// Used to fetch new entries.
-  postGetDMSFilesData(
-      {Map<String, dynamic> queryparams,
-      @required DmsPostModel dmsPostModel}) async {
+  postGetDMSFilesData({
+    Map<String, dynamic> queryparams,
+    @required DmsPostModel dmsPostModel,
+  }) async {
     DMSFilesResponse response = await _dmsRepository.getDMSFilesData(
-        queryparams: queryparams, dmsPostModel: dmsPostModel);
+      queryparams: queryparams,
+      dmsPostModel: dmsPostModel,
+    );
 
     _subjectDMSGetFilesResponse.sink.add(response);
   }

@@ -11,6 +11,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
 import 'package:hr_management/data/models/nts_dropdown/nts_dd_res_model.dart';
 import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_repo.dart';
+import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
@@ -904,13 +905,9 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           ),
 
           // Callback for View
-          callBack2: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Feature under development."),
-              ),
-            );
-          },
+          callBack2: () => _handleViewOnPressed(
+            data: model[i],
+          ),
 
           callBack: () {
             Navigator.pushNamed(
@@ -1537,6 +1534,29 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     send.send([id, status, progress]);
   }
 
+  _handleViewOnPressed({
+    @required data,
+  }) async {
+    if (data == null)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Data is unavailable. Pl try again later."),
+        ),
+      );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return AttachmentViewWebview(
+            url: APIEndpointConstants.GET_ATTACHMENT_VIEW_WEBVIEW_URL +
+                '${data?.udfValue ?? ''}',
+          );
+        },
+      ),
+    );
+  }
+
   _handleDownloadOnPressed({
     @required data,
   }) async {
@@ -1560,13 +1580,6 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     Response response = await Dio().get(
       'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment',
       queryParameters: queryparams,
-    );
-
-    print(
-      response.headers['content-disposition'][0]
-          .split(';')[1]
-          .split('=')[1]
-          .trim(),
     );
 
     String fileName = response.headers['content-disposition'][0]
