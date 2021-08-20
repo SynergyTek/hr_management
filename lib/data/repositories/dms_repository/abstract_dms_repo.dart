@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:hr_management/data/models/dms_document/dms_folder_str_response.dart';
+import 'package:flutter/foundation.dart';
+import 'package:hr_management/data/models/dms/dms_files_response.dart';
+import 'package:hr_management/data/models/dms/dms_post_model.dart';
 
 import '../../../constants/api_endpoints.dart';
 
@@ -8,7 +10,6 @@ part 'dms_repo.dart';
 abstract class AbstractDMSRepository {
   AbstractDMSRepository();
 
-  Future<DMSFlderStrResponse> getReadDependantList({
-    Map<String, dynamic> queryparams,
-  });
+  Future<DMSFilesResponse> getDMSFilesData(
+      {Map<String, dynamic> queryparams, @required DmsPostModel dmsPostModel});
 }

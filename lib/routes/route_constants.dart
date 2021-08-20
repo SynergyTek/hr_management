@@ -79,3 +79,6 @@ const String CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE =
     '/case_management_helpdesk_dashboard';
 
 const String DOWNLOAD_SCREEN_ROUTE = '/download_screen';
+
+// DMS
+const String DMS_PARENT = '/dms_parent';

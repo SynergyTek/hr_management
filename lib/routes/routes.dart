@@ -1,3 +1,4 @@
+import 'package:hr_management/ui/screens/dms/dms_parent.dart';
 import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
@@ -171,7 +172,7 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => SelectAttachment(
-            ntsId:args.arg1,
+            ntsId: args.arg1,
             ntstype: args.ntstype,
             onListTap: args.callBack,
           ),
@@ -343,8 +344,8 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => AttachmentNTSScreen(
-            ntsType: args.ntstype ,
-            ntsId: args.arg1 ,
+            ntsType: args.ntstype,
+            ntsId: args.arg1,
           ),
         );
         break;
@@ -398,6 +399,12 @@ class AppRouter {
       case DOWNLOAD_SCREEN_ROUTE:
         return MaterialPageRoute(
           builder: (_) => DownloadScreen(),
+        );
+        break;
+
+      case DMS_PARENT:
+        return MaterialPageRoute(
+          builder: (_) => DMSParent(),
         );
         break;
 

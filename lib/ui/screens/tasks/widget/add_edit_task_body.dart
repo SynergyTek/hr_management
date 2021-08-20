@@ -14,13 +14,9 @@ import 'package:hr_management/data/repositories/nts_dropdown_repo/nts_dropdown_r
 import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
-import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/user/user.dart';
 import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../widgets/appbar_widget.dart';
-import '../../../../constants/api_endpoints.dart';
-import '../../../../data/models/user/user.dart';
-import '../../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_model.dart';
 import '../../../../data/models/task_models/task_response_model.dart';

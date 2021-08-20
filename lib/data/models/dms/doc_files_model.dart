@@ -1,17 +1,16 @@
 // To parse this JSON data, do
 //
-//     final docFldrStrModel = docFldrStrModelFromJson(jsonString);
+//     final DMSFilesModel = DMSFilesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-DocFldrStrModel docFldrStrModelFromJson(String str) =>
-    DocFldrStrModel.fromJson(json.decode(str));
+DMSFilesModel dmsFilesModelFromJson(String str) =>
+    DMSFilesModel.fromJson(json.decode(str));
 
-String docFldrStrModelToJson(DocFldrStrModel data) =>
-    json.encode(data.toJson());
+String dmsFilesModelToJson(DMSFilesModel data) => json.encode(data.toJson());
 
-class DocFldrStrModel {
-  DocFldrStrModel({
+class DMSFilesModel {
+  DMSFilesModel({
     this.cwd,
     this.files,
     this.error,
@@ -23,8 +22,7 @@ class DocFldrStrModel {
   dynamic error;
   dynamic details;
 
-  factory DocFldrStrModel.fromJson(Map<String, dynamic> json) =>
-      DocFldrStrModel(
+  factory DMSFilesModel.fromJson(Map<String, dynamic> json) => DMSFilesModel(
         cwd: Cwd.fromJson(json["cwd"]),
         files: List<Cwd>.from(json["files"].map((x) => Cwd.fromJson(x))),
         error: json["error"],
@@ -120,7 +118,7 @@ class Cwd {
   dynamic targetData;
   dynamic permission;
   int folderType;
-  TemplateCode templateCode;
+  String templateCode;
   String count;
   bool canOpen;
   bool showMenu;
@@ -173,9 +171,8 @@ class Cwd {
         targetData: json["targetData"],
         permission: json["permission"],
         folderType: json["FolderType"],
-        templateCode: json["TemplateCode"] == null
-            ? null
-            : templateCodeValues.map[json["TemplateCode"]],
+        templateCode:
+            json["TemplateCode"] == null ? null : json["TemplateCode"],
         count: json["Count"] == null ? null : json["Count"],
         canOpen: json["CanOpen"],
         showMenu: json["ShowMenu"],
@@ -229,9 +226,7 @@ class Cwd {
         "targetData": targetData,
         "permission": permission,
         "FolderType": folderType,
-        "TemplateCode": templateCode == null
-            ? null
-            : templateCodeValues.reverse[templateCode],
+        "TemplateCode": templateCode == null ? null : templateCode,
         "Count": count == null ? null : count,
         "CanOpen": canOpen,
         "ShowMenu": showMenu,
@@ -257,23 +252,4 @@ class Cwd {
         "CanDeleteDocument": canDeleteDocument,
         "WorkspaceId": workspaceId == null ? null : workspaceId,
       };
-}
-
-enum TemplateCode { WORKSPACE_GENERAL }
-
-final templateCodeValues =
-    EnumValues({"WORKSPACE_GENERAL": TemplateCode.WORKSPACE_GENERAL});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
 }
