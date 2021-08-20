@@ -54,15 +54,15 @@ class ServiceBloc {
     PostResponse response = await _serviceRepository.postAPIData(
       service: service,
     );
+    Map<String, dynamic> queryparams = Map();
+    if (userId != null && userId.isNotEmpty) queryparams["userId"] = userId;
     if (isLeaves != null && response.isSuccess) {
       if (isLeaves) {
         subjectServiceList.sink.add(null);
-        Map<String, dynamic> queryparams = Map();
-        if (userId != null && userId.isNotEmpty) queryparams["userId"] = userId;
         getLeavesDetails(queryparams: queryparams);
       } else {
         subjectServiceList.sink.add(null);
-        getServiceHomeListData();
+        getServiceHomeListData(queryparams: queryparams);
       }
     }
 

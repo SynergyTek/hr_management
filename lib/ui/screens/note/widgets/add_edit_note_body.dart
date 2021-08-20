@@ -504,8 +504,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   List<Widget> addDynamic(model, createServiceFormBloc) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      // print(model[i].type);
-      // print(model[i].key);
+      print(model[i].type);
+      print(model[i].label);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
@@ -775,9 +775,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
 
         attchmentController.text =
-            (widget.noteId == null || widget.noteId.isEmpty)
+            // (widget.noteId == null ||widget.noteId.isEmpty)
+            (udfJson[model[i].key] == null || udfJson[model[i].key].isEmpty)
                 ? " Select File to Attach "
-                : " (1) File Attached " + udfJson[model[i].key];
+                : (selectValue[i] == null || selectValue[i].isEmpty)
+                    ? " (1) File Attached: " + udfJson[model[i].key]
+                    : " (1) File Attached: " + selectValue[i];
+        // : " (1) File Attached " + udfJson[model[i].key];
 
         listDynamic.add(DynamicAttchmentWidget(
           labelName: model[i].label,
@@ -792,10 +796,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   arg1: 'Note',
                   callBack: (dynamic value, dynamic value2, dynamic value3) {
                     setState(() {
+                      selectValue[i] = value2;
                       model[i].label = value2;
                       udfJson[model[i].key] = value;
                       attchmentController.text =
-                          " (1) File Attached " + udfJson[model[i].key];
+                          " (1) File Attached: " + selectValue[i];
+                      // " (1) File Attached " + udfJson[model[i].key];
                     });
                   }),
             );
