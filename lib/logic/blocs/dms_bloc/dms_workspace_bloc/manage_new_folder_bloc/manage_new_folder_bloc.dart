@@ -1,3 +1,4 @@
+import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:meta/meta.dart';
 import 'package:hr_management/data/repositories/dms_repository/dms_workspace_repository/manage_new_folder_repository/manage_new_folder_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,7 +9,7 @@ class ManageNewFolderBloc {
   final BehaviorSubject _subject = BehaviorSubject();
 
   postAPIData({
-    @required NoteTemplateViewModel model,
+    @required NoteModel model,
   }) async {
     dynamic response = await _apiRepository.postAPIData(
       model: model,
