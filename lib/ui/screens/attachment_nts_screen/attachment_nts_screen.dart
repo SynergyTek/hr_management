@@ -3,7 +3,6 @@ import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../data/enums/enums.dart';
 import '../../widgets/appbar_widget.dart';
-import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 
 import 'widgets/attachment_nts_body_widget.dart';
