@@ -7,9 +7,11 @@ import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/ui/screens/manage_document/document/widgets/document_bottom_sheet_widget.dart';
 import 'package:hr_management/ui/widgets/custom_icons.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
+import '../../../../../themes/theme_config.dart';
 
 class DMSParentBody extends StatefulWidget {
   DMSParentBody({Key key}) : super(key: key);
@@ -82,7 +84,12 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           childList[index].count,
                                           style: TextStyle(fontSize: 12),
                                         ))
-                                    : SizedBox()
+                                    : SizedBox(),
+                                IconButton(
+                                  onPressed: () =>
+                                      bottomSheet(childList[index].name),
+                                  icon: Icon(Icons.more_vert_rounded),
+                                )
                               ],
                             ),
                             onTap: () {
@@ -122,6 +129,88 @@ class _DMSParentBodyState extends State<DMSParentBody> {
           }
         },
       ),
+    );
+  }
+
+  bottomSheet(String title) {
+    showDocumentBottomSheet(
+      bottomSheetDataList: [
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: _statisticWidget(
+                context: context,
+                title: title,
+                subtitle: 'Folder Name',
+                isHeading: true,
+              ),
+            )
+          ],
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.trash),
+          title: Text('Delete'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.copy),
+          title: Text('Copy'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.expand_arrows),
+          title: Text('Move'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.archive),
+          title: Text('Archive'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.edit),
+          title: Text('Rename'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.search),
+          title: Text('Search'),
+          onTap: () {},
+        ),
+      ],
+    );
+  }
+
+  showDocumentBottomSheet({@required List<Widget> bottomSheetDataList}) {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return DocumentBottomSheetWidget(
+          bottomSheetDataList: bottomSheetDataList ?? [],
+        );
+      },
+    );
+  }
+
+  Widget _statisticWidget({
+    @required BuildContext context,
+    String title,
+    String subtitle,
+    bool isHeading = false,
+  }) {
+    return ListTile(
+      title: Text(
+        title ?? '-',
+        style: TextStyle(
+          color:
+              isHeading ? Theme.of(context).textHeadingColor : Colors.black87,
+        ),
+      ),
+      subtitle: Text(subtitle ?? '-'),
     );
   }
 }

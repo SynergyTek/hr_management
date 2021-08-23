@@ -50,6 +50,7 @@ class TaskListCard extends StatelessWidget {
                   Text(
                     assigneeDisplayName(index),
                     style: TextStyle(color: Colors.deepPurple[900]),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),

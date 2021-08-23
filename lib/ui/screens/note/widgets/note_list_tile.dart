@@ -46,6 +46,7 @@ class NoteListCard extends StatelessWidget {
                   Text(
                     ownerUserName(index),
                     style: TextStyle(color: Colors.deepPurple[900]),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
