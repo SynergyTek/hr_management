@@ -5,6 +5,8 @@ import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_b
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/helpdesk_dashboard_body_widget.dart';
+import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
+import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 import '../ui/screens/login/login_screen.dart';
@@ -175,6 +177,17 @@ class AppRouter {
         );
         break;
 
+      case NTS_TAG:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => SelectTag(
+            ntsId: args.arg1,
+            ntstype: args.ntstype,
+            onListTap: args.callBack,
+          ),
+        );
+        break;
+
       case NTS_USER_DROPDOWN:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
@@ -337,6 +350,17 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => AttachmentNTSScreen(
+            ntsType: args.ntstype,
+            ntsId: args.arg1,
+          ),
+        );
+        break;
+
+      case TAG_NTS_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+
+        return MaterialPageRoute(
+          builder: (_) => TagNTSScreen(
             ntsType: args.ntstype,
             ntsId: args.arg1,
           ),

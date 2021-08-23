@@ -132,21 +132,27 @@ class StaticField extends StatelessWidget {
   final TextEditingController controller;
   final Icon icon;
   final TextStyle style;
+  final Color color;
 
-  const StaticField(
-      {this.callBack,
-      this.isShowArrow,
-      this.hint,
-      this.validationMessage,
-      this.initialValue,
-      this.prefixIcon,
-      this.validator,
-      this.controller,
-      this.width, this.icon, this.style});
+  const StaticField({
+    this.callBack,
+    this.isShowArrow,
+    this.hint,
+    this.validationMessage,
+    this.initialValue,
+    this.prefixIcon,
+    this.validator,
+    this.controller,
+    this.width,
+    this.icon,
+    this.style,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: color ?? Colors.grey[350],
       // height: 65.0,
       width: width,
       child: Column(
@@ -158,9 +164,10 @@ class StaticField extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: hint,
                 labelText: hint,
-                labelStyle: style??TextStyle(color: Theme.of(context).primaryColor),
+                labelStyle:
+                    style ?? TextStyle(color: Theme.of(context).primaryColor),
                 // filled: true,
-                prefixIcon: icon??Icon(Icons.timer),
+                prefixIcon: icon ?? Icon(Icons.timer),
               )),
           Container(
             color: Colors.grey,
@@ -172,12 +179,10 @@ class StaticField extends StatelessWidget {
   }
 }
 
-
-
 class ExpandableField extends StatelessWidget {
   final TextEditingController controller;
   final String title;
-final List<Widget> children;
+  final List<Widget> children;
   // final String hint;
   final Key key;
   final bool isTileExpanded;
@@ -189,7 +194,8 @@ final List<Widget> children;
       // this.hint,
       this.key,
       this.valueChanged,
-      this.isTileExpanded, this.children});
+      this.isTileExpanded,
+      this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -198,21 +204,20 @@ final List<Widget> children;
       child: Padding(
         padding: EdgeInsets.only(bottom: 1.0),
         child: ExpansionTile(
-          initiallyExpanded: true,
-          // leading: Icon(Icons.calendar_today_sharp),
-          trailing: isTileExpanded
-              ? Icon(Icons.keyboard_arrow_down)
-              : Icon(Icons.keyboard_arrow_up),
-          onExpansionChanged: (bool isexpand) {
-            valueChanged(isexpand);
-          },
-          title: Text(
-            "Dates Detail",style: TextStyle(color: Theme.of(context).primaryColor),
-          ),
-          children: children
-        ),
+            initiallyExpanded: true,
+            // leading: Icon(Icons.calendar_today_sharp),
+            trailing: isTileExpanded
+                ? Icon(Icons.keyboard_arrow_down)
+                : Icon(Icons.keyboard_arrow_up),
+            onExpansionChanged: (bool isexpand) {
+              valueChanged(isexpand);
+            },
+            title: Text(
+              "Dates Detail",
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+            children: children),
       ),
     );
   }
 }
-

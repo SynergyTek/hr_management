@@ -9,6 +9,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/constants/api_endpoints.dart';
+import 'package:hr_management/constants/formats.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
@@ -540,7 +541,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             width: MediaQuery.of(context).size.width,
             hint: model[i].label,
             icon: Icon(Icons.circle_outlined),
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Colors.grey[600]),
             // controller: _slaController,
             // isShowArrow: true,
           ));
@@ -840,9 +841,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                       .split(' ')[0]
                       .contains(new RegExp(r'[a-z]'))
                   ? null
-                  : DateFormat("yyyy-MM-dd")
-                      .parse(udfJson[model[i].key])
-                      .toString()
+                  : udfJson[model[i].key].contains('/')
+                      ? DateFormat("MM/dd/yyyy")
+                          .parse(udfJson[model[i].key])
+                          .toString()
+                      : DateFormat("yyyy-MM-dd")
+                          .parse(udfJson[model[i].key])
+                          .toString()
               : null,
           name: model[i].label,
           key: new Key(model[i].label),
