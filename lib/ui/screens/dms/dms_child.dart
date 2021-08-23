@@ -24,7 +24,7 @@ class DMSChild extends StatelessWidget {
         dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
         callBack(true, null, null);
         Navigator.pop(context);
-        return true;
+        return false;
       },
       child: Scaffold(
           appBar: AppBar(
