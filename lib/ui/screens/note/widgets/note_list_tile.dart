@@ -43,10 +43,12 @@ class NoteListCard extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Text("From: "),
-                  Text(
-                    ownerUserName(index),
-                    style: TextStyle(color: Colors.deepPurple[900]),
-                    overflow: TextOverflow.ellipsis,
+                  Flexible(
+                    child: Text(
+                      ownerUserName(index),
+                      style: TextStyle(color: Colors.deepPurple[900]),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

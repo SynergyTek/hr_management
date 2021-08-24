@@ -42,15 +42,20 @@ class TaskListCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 6.0, bottom: 6.0),
               child: Row(
                 children: <Widget>[
-                  Text(
-                    ownerUserName(index),
-                    style: TextStyle(color: Colors.deepPurple[900]),
+                  Flexible(
+                    child: Text(
+                      ownerUserName(index),
+                      style: TextStyle(color: Colors.deepPurple[900]),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   Text(" to "),
-                  Text(
-                    assigneeDisplayName(index),
-                    style: TextStyle(color: Colors.deepPurple[900]),
-                    overflow: TextOverflow.ellipsis,
+                  Flexible(
+                    child: Text(
+                      assigneeDisplayName(index),
+                      style: TextStyle(color: Colors.deepPurple[900]),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
@@ -12,6 +13,7 @@ import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 import 'package:hr_management/ui/widgets/custom_icons.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
 
@@ -96,7 +98,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                                 ))
                             : SizedBox(),
                         IconButton(
-                          onPressed: () => bottomSheet(childList[index].name),
+                          onPressed: () => bottomSheet(
+                            childList[index].name,
+                            childList[index].id,
+                          ),
                           icon: Icon(Icons.more_vert_rounded),
                         )
                       ],
@@ -144,10 +149,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         },
       ),
     );
-    ;
   }
 
-  bottomSheet(String title) {
+  bottomSheet(String title, String id) {
     showDocumentBottomSheet(
       bottomSheetDataList: [
         Row(
@@ -166,34 +170,174 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ListTile(
           leading: Icon(CustomIcons.trash),
           title: Text('Delete'),
-          onTap: () {},
+          onTap: () => deleteDialog(id),
         ),
         ListTile(
           leading: Icon(CustomIcons.copy),
           title: Text('Copy'),
-          onTap: () {},
+          // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
         ),
         ListTile(
           leading: Icon(CustomIcons.expand_arrows),
           title: Text('Move'),
-          onTap: () {},
+          // onTap: () => dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: targetId),
         ),
         ListTile(
           leading: Icon(CustomIcons.archive),
           title: Text('Archive'),
-          onTap: () {},
+          onTap: () => archiveDialog(id),
         ),
         ListTile(
           leading: Icon(CustomIcons.edit),
           title: Text('Rename'),
-          onTap: () {},
+          onTap: () => renameDialog(title),
         ),
         ListTile(
           leading: Icon(CustomIcons.search),
           title: Text('Search'),
-          onTap: () {},
+          // onTap: () => dmsCrudNoteBloc..postSearchFilesAPIData(model: model),
         ),
       ],
+    );
+  }
+
+  deleteDialog(String id) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text("Are you sure you want to delete document?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text(
+                "Delete",
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                dmsCrudNoteBloc..getDeleteNoteAPIData(id: id);
+
+                displaySnackBar(
+                    text: dmsCrudNoteBloc.deleteNoteSubject.stream.value);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  archiveDialog(String id) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content:
+              Text("Are you sure you want to move the document to archive?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text(
+                "Archive",
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                dmsCrudNoteBloc..getArchiveNoteAPIData(id: id);
+
+                displaySnackBar(
+                    text: dmsCrudNoteBloc.archiveNoteSubject.stream.value);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  renameDialog(String name) {
+    TextEditingController _nameController = TextEditingController();
+    final form = GlobalKey<FormState>();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Form(
+            key: form,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Are you sure you want to rename $name?"),
+                textField(
+                    false,
+                    _nameController,
+                    'New Name',
+                    'Please Enter New Name',
+                    (val) => (val == null || val.isEmpty)
+                        ? 'Please Enter New Name'
+                        : null)
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text(
+                "Rename",
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                if (form.currentState.validate()) {
+                  Navigator.of(context).pop();
+                  // dmsCrudNoteBloc..getRenameFilesAPIData(model: model);
+
+                  // displaySnackBar(
+                  //     text: dmsCrudNoteBloc.archiveNoteSubject.stream.value);
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  textField(bool obscureText, TextEditingController controller, String label,
+      String hint, Function validator) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: TextFormField(
+        obscureText: obscureText,
+        controller: controller,
+        decoration: InputDecoration(
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          fillColor: Colors.white70,
+          filled: true,
+          border: OutlineInputBorder(),
+          labelText: label,
+          hintText: hint,
+        ),
+        validator: validator,
+      ),
     );
   }
 
