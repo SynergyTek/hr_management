@@ -501,7 +501,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             width: MediaQuery.of(context).size.width,
             hint: model[i].label,
             icon: Icon(Icons.circle_outlined),
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Colors.grey[600]),
             // controller: _slaController,
             // isShowArrow: true,
           ));

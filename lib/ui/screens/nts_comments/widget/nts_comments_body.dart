@@ -97,14 +97,17 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                                     ),
                                     textAlign: TextAlign.right,
                                   ),
-                                  Text(
-                                    "Commented by: " +
-                                        _commentsList[index]
-                                            .commentedByUserName,
-                                    style: TextStyle(
-                                      fontSize: 13,
+                                  Flexible(
+                                    child: Text(
+                                      "Commented by: " +
+                                          _commentsList[index]
+                                              .commentedByUserName,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                      ),
+                                      textAlign: TextAlign.right,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    textAlign: TextAlign.right,
                                   ),
                                 ],
                               ),

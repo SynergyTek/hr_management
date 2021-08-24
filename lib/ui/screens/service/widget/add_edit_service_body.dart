@@ -508,7 +508,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             width: MediaQuery.of(context).size.width,
             hint: model[i].label,
             icon: Icon(Icons.circle_outlined),
-            style: TextStyle(color: Colors.grey[350]),
+            style: TextStyle(color: Colors.grey[600]),
             // controller: _slaController,
             // isShowArrow: true,
           ));
@@ -1462,6 +1462,21 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           ),
 
           // SpeedDialChild(
+          //   child: Icon(
+          //     Icons.tag,
+          //     color: Colors.white,
+          //   ),
+          //   backgroundColor: Theme.of(context).textHeadingColor,
+          //   onTap: () => _handleTagOnPressed(),
+          //   label: 'Tag',
+          //   labelStyle: TextStyle(
+          //     fontWeight: FontWeight.w500,
+          //     color: Colors.white,
+          //   ),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+
+          // SpeedDialChild(
           //   child: Icon(Icons.account_tree, color: Colors.white),
           //   backgroundColor: Colors.blue,
           //   onTap: () => print('Pressed Code'),
@@ -1556,6 +1571,17 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     Navigator.pushNamed(
       context,
       ATTACHMENT_NTS_ROUTE,
+      arguments: ScreenArguments(
+        ntstype: NTSType.service,
+        arg1: serviceModel.serviceId,
+      ),
+    );
+  }
+
+  _handleTagOnPressed() {
+    Navigator.pushNamed(
+      context,
+      TAG_NTS_ROUTE,
       arguments: ScreenArguments(
         ntstype: NTSType.service,
         arg1: serviceModel.serviceId,
