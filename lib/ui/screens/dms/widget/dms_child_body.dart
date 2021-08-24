@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
-import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/manage_document/document/widgets/document_bottom_sheet_widget.dart';
@@ -34,14 +32,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   List<Cwd> filterChildList = [];
   @override
   void initState() {
+    // TODO: KM Fix id Issue on popback
     dmsBloc.postGetDMSFilesChildData(
         dmsPostModel: DmsPostModel(
       action: "read",
       path: "${widget.parentPath}",
       showHiddenItems: false,
       data: [widget.parentModel],
-      userId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+      userId: "45bba746-3309-49b7-9c03-b5793369d73c",
     ));
     super.initState();
   }
@@ -127,11 +125,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                                   showHiddenItems: false,
                                   data: [widget.parentModel],
                                   userId:
-                                      BlocProvider.of<UserModelBloc>(context)
-                                              .state
-                                              ?.userModel
-                                              ?.id ??
-                                          '',
+                                      "45bba746-3309-49b7-9c03-b5793369d73c",
                                 ));
                               }),
                         );
