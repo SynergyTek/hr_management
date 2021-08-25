@@ -434,6 +434,9 @@ class AppRouter {
             parentPath: args.arg2,
             parentModel: args.dmsParentModel,
             callBack: args.callBack,
+            pathList: args.list1,
+            parentPathList: args.list2,
+            parentModelList: args.dmsParentModelList,
           ),
         );
         break;

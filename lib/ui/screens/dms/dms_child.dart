@@ -9,12 +9,18 @@ class DMSChild extends StatelessWidget {
   final Cwd parentModel;
   final String parentPath;
   final OnTapPressedCallBack callBack;
+  final List<String> pathList;
+  final List<String> parentPathList;
+  final List<Cwd> parentModelList;
   const DMSChild(
       {Key key,
       this.parentName,
       this.parentModel,
       this.parentPath,
-      this.callBack})
+      this.callBack,
+      this.pathList,
+      this.parentPathList,
+      this.parentModelList})
       : super(key: key);
 
   @override
@@ -23,6 +29,7 @@ class DMSChild extends StatelessWidget {
       onWillPop: () async {
         dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
         callBack(true, null, null);
+        pathList.removeLast();
         Navigator.pop(context);
         return false;
       },
@@ -40,6 +47,10 @@ class DMSChild extends StatelessWidget {
           body: DMSChildBody(
             parentModel: parentModel,
             parentPath: parentPath,
+            path: pathList,
+            parentPathList: parentPathList,
+            parentModelList: parentModelList,
+            parentName: parentName,
           )),
     );
   }
