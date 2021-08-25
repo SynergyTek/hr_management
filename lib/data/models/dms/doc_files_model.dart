@@ -92,6 +92,14 @@ class Cwd {
     this.workspaceId,
   });
 
+  String get searchS {
+    return createString();
+  }
+
+  String createString() {
+    return name;
+  }
+
   dynamic data;
   bool showHiddenItems;
   dynamic searchString;

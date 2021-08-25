@@ -14,6 +14,7 @@ import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
+import 'package:listizer/listizer.dart';
 
 class DMSChildBody extends StatefulWidget {
   final Cwd parentModel;
@@ -61,61 +62,67 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             if (childList.isEmpty) {
               return EmptyFolderWidget();
             }
-            return ListView.builder(
-              itemCount: childList.length,
-              shrinkWrap: true,
+            return Listizer(
+              listItems: childList,
+              filteredSearchList: filterChildList,
+              showSearchBar: true,
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 2,
                   child: ListTile(
                     leading: Icon(
-                      childList[index].templateCode == 'WORKSPACE_GENERAL' ||
-                              childList[index].templateCode == 'GENERAL_FOLDER'
+                      filterChildList[index].templateCode ==
+                                  'WORKSPACE_GENERAL' ||
+                              filterChildList[index].templateCode ==
+                                  'GENERAL_FOLDER'
                           ? CustomIcons.folder
                           : CustomIcons.file_alt,
-                      color: childList[index].templateCode ==
+                      color: filterChildList[index].templateCode ==
                               'WORKSPACE_GENERAL'
                           ? Colors.blue
-                          : childList[index].templateCode == 'GENERAL_FOLDER'
+                          : filterChildList[index].templateCode ==
+                                  'GENERAL_FOLDER'
                               ? Colors.yellow
                               : Colors.cyan,
                     ),
                     title: Text(
-                      childList[index].name,
+                      filterChildList[index].name,
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        childList[index].count != null &&
-                                childList[index].templateCode != 'FILE'
+                        filterChildList[index].count != null &&
+                                filterChildList[index].templateCode != 'FILE'
                             ? CircleAvatar(
                                 radius: 11,
                                 child: Text(
-                                  childList[index].count,
+                                  filterChildList[index].count,
                                   style: TextStyle(fontSize: 12),
                                 ))
                             : SizedBox(),
                         IconButton(
                           onPressed: () => bottomSheet(
-                            childList[index].name,
-                            childList[index].id,
+                            filterChildList[index].name,
+                            filterChildList[index].id,
                           ),
                           icon: Icon(Icons.more_vert_rounded),
                         )
                       ],
                     ),
                     onTap: () {
-                      if (childList[index].templateCode != 'FILE') {
+                      if (filterChildList[index].templateCode != 'FILE') {
                         dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
-                        String parentPath =
-                            widget.parentPath + '/' + childList[index].id + '/';
+                        String parentPath = widget.parentPath +
+                            '/' +
+                            filterChildList[index].id +
+                            '/';
                         Navigator.pushNamed(
                           context,
                           DMS_CHILD,
                           arguments: ScreenArguments(
-                              arg1: childList[index].name,
+                              arg1: filterChildList[index].name,
                               arg2: parentPath,
-                              dmsParentModel: childList[index],
+                              dmsParentModel: filterChildList[index],
                               callBack: (dynamic value, dynamic value2,
                                   dynamic value3) {
                                 dmsBloc.postGetDMSFilesChildData(
