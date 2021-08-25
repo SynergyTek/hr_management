@@ -89,7 +89,7 @@ class _ListizerState extends State<Listizer> {
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 0.0),
+                    padding: const EdgeInsets.all(0.0),
                     child: _searchBarBuilder(context),
                   );
                 } else {
@@ -110,7 +110,8 @@ class _ListizerState extends State<Listizer> {
 
   Widget _searchBarBuilder(BuildContext context) {
     return (widget.showSearchBar != null)
-        ? Padding(
+        ? Container(
+            height: 55,
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: TextField(
               onChanged: (value) {
@@ -131,11 +132,11 @@ class _ListizerState extends State<Listizer> {
                   suffixIcon: IconButton(
                       icon: Icon(
                         Icons.cancel,
-                        size: 25.0,
+                        size: 22.0,
                       ),
                       onPressed: reset),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   )),
             ),
           )
@@ -148,10 +149,8 @@ class _ListizerState extends State<Listizer> {
       if (searchText.isNotEmpty) {
         isSearch = true;
         widget.listItems.forEach((item) {
-          if (item.searchString != null &&
-              item.searchString
-                  .toLowerCase()
-                  .contains(searchText.toLowerCase())) {
+          if (item.searchS != null &&
+              item.searchS.toLowerCase().contains(searchText.toLowerCase())) {
             widget.filteredSearchList.add(item);
           }
         });

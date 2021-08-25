@@ -25,6 +25,8 @@ class DMSParentBody extends StatefulWidget {
 class _DMSParentBodyState extends State<DMSParentBody> {
   List<Cwd> childList = [];
   List<Cwd> filterChildList = [];
+  TextEditingController searchWorkspaceTextController = TextEditingController();
+  bool isSearch = false;
   List<String> pathList = [];
   List<String> parentPathList = [];
   List<Cwd> parentModelList = [];
@@ -57,91 +59,104 @@ class _DMSParentBodyState extends State<DMSParentBody> {
               );
             }
             childList = snapshot.data.data.files;
-            return Card(
-              elevation: 4,
-              child: ExpansionTile(
-                initiallyExpanded: true,
-                leading: Icon(CustomIcons.user),
-                title: Text('Administrator'),
+            if (!isSearch) {
+              filterChildList.clear();
+              filterChildList.addAll(childList);
+            }
+            return SingleChildScrollView(
+              child: Column(
                 children: [
-                  Container(
-                    height: 78.h,
-                    child: ListView.builder(
-                      itemCount: childList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 2,
-                          child: ListTile(
-                            leading: Icon(
-                              CustomIcons.folder,
-                              color: Colors.blue,
-                            ),
-                            title: Text(
-                              childList[index].name,
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                childList[index].count != null
-                                    ? CircleAvatar(
-                                        radius: 11,
-                                        child: Text(
-                                          childList[index].count,
-                                          style: TextStyle(fontSize: 12),
-                                        ))
-                                    : SizedBox(),
-                                IconButton(
-                                  onPressed: () => bottomSheet(
-                                    childList[index].name,
-                                    childList[index].id,
+                  _searchBarBuilder(context),
+                  Card(
+                    elevation: 4,
+                    child: ExpansionTile(
+                      initiallyExpanded: true,
+                      leading: Icon(CustomIcons.user),
+                      title: Text('Administrator'),
+                      children: [
+                        Container(
+                          height: 70.h,
+                          child: ListView.builder(
+                            itemCount: filterChildList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 2,
+                                child: ListTile(
+                                  leading: Icon(
+                                    CustomIcons.folder,
+                                    color: Colors.blue,
                                   ),
-                                  icon: Icon(Icons.more_vert_rounded),
-                                )
-                              ],
-                            ),
-                            onTap: () {
-                              pathList
-                                ..clear()
-                                ..add('Administrator')
-                                ..add(childList[index].name);
-                                
-                              parentModelList
-                                ..clear()
-                                ..add(childList[index]);
+                                  title: Text(
+                                    childList[index].name,
+                                  ),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      childList[index].count != null
+                                          ? CircleAvatar(
+                                              radius: 11,
+                                              child: Text(
+                                                childList[index].count,
+                                                style: TextStyle(fontSize: 12),
+                                              ))
+                                          : SizedBox(),
+                                      IconButton(
+                                        onPressed: () => bottomSheet(
+                                          childList[index].name,
+                                          childList[index].id,
+                                        ),
+                                        icon: Icon(Icons.more_vert_rounded),
+                                      )
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    pathList
+                                      ..clear()
+                                      ..add('Administrator')
+                                      ..add(childList[index].name);
 
-                              String parentPath = snapshot.data.data.cwd.id +
-                                  '/' +
-                                  childList[index].id +
-                                  '/';
+                                    parentModelList
+                                      ..clear()
+                                      ..add(childList[index]);
 
-                              parentPathList
-                                ..clear()
-                                ..add(parentPath);
+                                    String parentPath =
+                                        snapshot.data.data.cwd.id +
+                                            '/' +
+                                            childList[index].id +
+                                            '/';
 
-                              dmsBloc.subjectDMSGetFilesChildResponse.sink
-                                  .add(null);
-                              Navigator.pushNamed(
-                                context,
-                                DMS_CHILD,
-                                arguments: ScreenArguments(
-                                  dmsParentModelList: parentModelList,
-                                    list1: pathList,
-                                    list2: parentPathList,
-                                    arg1: childList[index].name,
-                                    arg2: parentPath,
-                                    dmsParentModel: childList[index],
-                                    callBack: (dynamic value, dynamic value2,
-                                        dynamic value3) {
-                                      dmsBloc
-                                          .subjectDMSGetFilesChildResponse.sink
-                                          .add(null);
-                                    }),
+                                    parentPathList
+                                      ..clear()
+                                      ..add(parentPath);
+
+                                    dmsBloc.subjectDMSGetFilesChildResponse.sink
+                                        .add(null);
+                                    Navigator.pushNamed(
+                                      context,
+                                      DMS_CHILD,
+                                      arguments: ScreenArguments(
+                                          dmsParentModelList: parentModelList,
+                                          list1: pathList,
+                                          list2: parentPathList,
+                                          arg1: childList[index].name,
+                                          arg2: parentPath,
+                                          dmsParentModel: childList[index],
+                                          callBack: (dynamic value,
+                                              dynamic value2, dynamic value3) {
+                                            dmsBloc
+                                                .subjectDMSGetFilesChildResponse
+                                                .sink
+                                                .add(null);
+                                          }),
+                                    );
+                                  },
+                                ),
                               );
                             },
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -377,5 +392,65 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       ),
       subtitle: Text(subtitle ?? '-'),
     );
+  }
+
+  Widget _searchBarBuilder(BuildContext context) {
+    return Container(
+      height: 55,
+      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+      child: TextField(
+        onChanged: (value) {
+          filterSearchResults(value);
+        },
+        controller: searchWorkspaceTextController,
+        decoration: InputDecoration(
+            fillColor: Colors.white,
+            filled: true,
+            labelStyle: TextStyle(fontSize: 20.0, color: Colors.grey),
+            labelText: "Search",
+            hintText: "Search",
+            hintStyle: TextStyle(fontSize: 18.0, color: Colors.grey),
+            prefixIcon: Icon(
+              Icons.search,
+              color: Colors.grey[400],
+            ),
+            suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.cancel,
+                  size: 22.0,
+                ),
+                onPressed: reset),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            )),
+      ),
+    );
+  }
+
+  void filterSearchResults(String searchText) {
+    setState(() {
+      filterChildList.clear();
+      if (searchText.isNotEmpty) {
+        isSearch = true;
+        childList.forEach((item) {
+          if (item.searchS != null &&
+              item.searchS.toLowerCase().contains(searchText.toLowerCase())) {
+            filterChildList.add(item);
+          }
+        });
+      } else {
+        isSearch = false;
+      }
+    });
+  }
+
+  void reset() {
+    setState(() {
+      isSearch = false;
+      searchWorkspaceTextController.clear();
+      filterChildList.clear();
+      filterChildList.addAll(childList);
+      FocusScope.of(context).requestFocus(FocusNode());
+    });
   }
 }
