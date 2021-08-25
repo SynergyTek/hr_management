@@ -231,9 +231,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               ],
             ),
             onTap: () {
-              childPath.add(childList[index].name);
-              parentModelList.add(childList[index]);
               if (childList[index].templateCode != 'FILE') {
+                childPath.add(childList[index].name);
+                parentModelList.add(childList[index]);
                 dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
                 String parentPath =
                     widget.parentPath + '/' + childList[index].id + '/';
