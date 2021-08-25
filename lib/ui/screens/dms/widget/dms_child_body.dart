@@ -217,7 +217,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   filterChildList[index].count != null &&
-                          filterChildList[index].templateCode != 'FILE'
+                          filterChildList[index].templateCode != 'FILE' &&
+                          filterChildList[index].templateCode !='GENERAL_DOCUMENT' && 
+                          filterChildList[index].templateCode != 'PROJECT_DOCUMENTS'
                       ? CircleAvatar(
                           radius: 11,
                           child: Text(
@@ -235,9 +237,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 ],
               ),
               onTap: () {
-                if (childList[index].templateCode != 'FILE') {
-                  childPath.add(childList[index].name);
-                  parentModelList.add(childList[index]);
+                if (filterChildList[index].templateCode != 'FILE' && filterChildList[index].templateCode != 'GENERAL_DOCUMENT' 
+                && filterChildList[index].templateCode != 'PROJECT_DOCUMENTS') {
+                  childPath.add(filterChildList[index].name);
+                  parentModelList.add(filterChildList[index]);
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
                   String parentPath =
                       widget.parentPath + '/' + filterChildList[index].id + '/';
@@ -264,6 +267,18 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                           ));
                         }),
                   );
+                }
+                else if(filterChildList[index].templateCode == 'GENERAL_DOCUMENT' || filterChildList[index].templateCode == 'PROJECT_DOCUMENTS')
+                {
+                   Navigator.pushNamed(
+                  context,
+                  ADD_EDIT_NOTE_ROUTE,
+                  arguments: ScreenArguments(
+                      arg1: '',
+                      arg2: filterChildList[index].id,
+                      // arg3: filterChildList[index].noteSubject
+                      ),
+                );
                 }
               },
             ),

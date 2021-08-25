@@ -4,8 +4,6 @@ import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 
-
-
 class DMSLegalEntityScreen extends StatelessWidget {
   const DMSLegalEntityScreen();
 

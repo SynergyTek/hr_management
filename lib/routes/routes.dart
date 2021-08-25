@@ -1,5 +1,7 @@
 import 'package:hr_management/ui/screens/dms/dms_child.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/dms_legal_entity_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_manage_workspace_screen/dms_manage_workspace_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_new_folder_screen/dms_new_folder_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
 import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
@@ -441,11 +443,21 @@ class AppRouter {
         );
         break;
 
-         case DMS_LEGAL_ENTITY:
+      case DMS_LEGAL_ENTITY:
         return MaterialPageRoute(
-          builder: (_) => DMSLegalEntityScreen(
-            
-          ),
+          builder: (_) => DMSLegalEntityScreen(),
+        );
+        break;
+
+      case DMS_MANAGE_WORKSPACE_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => DMSManageWorkspaceScreen(),
+        );
+        break;
+
+      case DMS_NEW_FOLDER_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => DMSNewFolderScreen(),
         );
         break;
 

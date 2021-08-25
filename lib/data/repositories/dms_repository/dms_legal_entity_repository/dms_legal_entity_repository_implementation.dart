@@ -5,17 +5,19 @@ part of 'dms_legal_entity_repository.dart';
 class DMSLegalEntityRepository extends AbstractDMSLegalEntityRepository {
   final Dio _dio = Dio();
 
-  Future<DMSLegalEntityResponse> getAPIData() async {
+  Future<DMSLegalEntityResponse> getAPIData({
+    Map<String, dynamic> queryparams,
+  }) async {
     try {
       Response response = await _dio.get(
         APIEndpointConstants.GET_LEGAL_ENTITY_DATA,
-        queryParameters: {
-        },
+        queryParameters: queryparams ?? {},
       );
 
       return DMSLegalEntityResponse.fromJson(response.data);
     } catch (err, stacktrace) {
-      print("Stacktrace: $stacktrace \nError: $err");
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
 
       return DMSLegalEntityResponse.withError(err);
     }

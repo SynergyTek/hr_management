@@ -354,18 +354,6 @@ Widget drawerWidget(context) {
                 },
               ),
 
-              ListTile(
-                title: Text(
-                  'DMS LEGAL ENTITY',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DMS_LEGAL_ENTITY,
-                  );
-                },
-              ),
               ListTile(), //Added to avoid the last option to be hidden under "LOG OUT"
             ],
           ),

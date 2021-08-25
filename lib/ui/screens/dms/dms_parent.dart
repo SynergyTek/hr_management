@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/ui/screens/dms/widget/dms_parent_body.dart';
 
 import '../../widgets/appbar_widget.dart';
@@ -13,11 +15,60 @@ class DMSParent extends StatelessWidget {
       appBar: AppbarWidget(
         title: "DMS",
       ),
+      floatingActionButton: buildSpeedDial(context),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: DMSParentBody(),
         ),
       ),
+    );
+  }
+
+  SpeedDial buildSpeedDial(BuildContext context) {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: IconThemeData(size: 28.0),
+      backgroundColor: Colors.blue[900],
+      visible: true,
+      curve: Curves.bounceInOut,
+      children: [
+        SpeedDialChild(
+          child: Icon(
+            Icons.folder_open,
+            color: Colors.white,
+          ),
+          backgroundColor: Colors.blue,
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              DMS_NEW_FOLDER_ROUTE,
+            );
+          },
+          label: 'Create New Folder',
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+          labelBackgroundColor: Colors.black,
+        ),
+        SpeedDialChild(
+          child: Icon(
+            Icons.workspaces_outline,
+            color: Colors.white,
+          ),
+          backgroundColor: Colors.blue,
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              DMS_MANAGE_WORKSPACE_ROUTE,
+            );
+          },
+          label: 'Manage Workspace',
+          labelStyle:
+              TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+      ],
     );
   }
 }

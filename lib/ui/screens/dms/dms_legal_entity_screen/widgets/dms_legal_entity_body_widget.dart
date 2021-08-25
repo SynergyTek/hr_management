@@ -8,7 +8,11 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 class DMSLegalEntityBodyWidget extends StatefulWidget {
-  DMSLegalEntityBodyWidget();
+  final String modelName;
+
+  DMSLegalEntityBodyWidget({
+    this.modelName,
+  });
 
   @override
   _DMSLegalEntityBodyWidgetState createState() =>
@@ -22,8 +26,8 @@ class _DMSLegalEntityBodyWidgetState extends State<DMSLegalEntityBodyWidget> {
 
     dmsLegalEntityBloc
       ..getAPIData(
-          //  queryparams: _handleQueryParams(),
-          );
+        queryparams: _handleQueryParams(),
+      );
   }
 
   _handleQueryParams() {
@@ -33,6 +37,18 @@ class _DMSLegalEntityBodyWidgetState extends State<DMSLegalEntityBodyWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Theme.of(context).backgroundColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(
+            16.0,
+          ),
+          topRight: Radius.circular(
+            16.0,
+          ),
+        ),
+      ),
       padding: DEFAULT_PADDING,
       child: StreamBuilder<DMSLegalEntityResponse>(
         stream: dmsLegalEntityBloc.subject.stream,
@@ -68,95 +84,38 @@ class _DMSLegalEntityBodyWidgetState extends State<DMSLegalEntityBodyWidget> {
       shrinkWrap: true,
       itemCount: data.length,
       itemBuilder: (BuildContext context, int index) {
-        return Dismissible(
-          direction: DismissDirection.endToStart,
-          key: UniqueKey(),
-          background: slideRightBackground(),
-          child: _eachListTile(
-            data.elementAt(index),
-          ),
-          confirmDismiss: (DismissDirection direction) async {
-            final bool res = await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: Text("Are you sure you want to edit this entry?"),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text(
-                        "Cancel",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    TextButton(
-                      child: Text(
-                        "Edit",
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-            return res;
-          },
+        return _eachListTile(
+          data.elementAt(index),
         );
       },
     );
   }
 
-  Widget slideRightBackground() {
-    return Container(
-      padding: DEFAULT_LARGE_HORIZONTAL_PADDING,
-      color: Colors.green,
-      child: Align(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            SizedBox(
-              width: 20,
+  Widget _eachListTile(DMSLegalEntityModel data) {
+    return ListTile(
+      trailing: (widget.modelName != null &&
+              data?.name != null &&
+              data.name == widget.modelName)
+          ? Icon(
+              Icons.check,
+              color: Theme.of(context).textHeadingColor,
+              size: 24.0,
+            )
+          : Container(
+              width: 0,
+              height: 0,
             ),
-            Icon(
-              Icons.edit,
-              color: Colors.white,
-            ),
-            Text(
-              "\t Edit \t",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.left,
-            ),
-          ],
+      title: Text(
+        data.name != null ? data.name : "NA",
+        style: TextStyle(
+          color: Theme.of(context).textHeadingColor,
         ),
-        alignment: Alignment.centerLeft,
       ),
+      onTap: () => _handleListTileOnTap(data),
     );
   }
 
-  Widget _eachListTile(DMSLegalEntityModel data) {
-
-    return Card(
-        child: GestureDetector(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                title: Text(
-                  data.name!=null?data.name:"NA",
-                  style: TextStyle(
-                    color: Theme.of(context).textHeadingColor,
-                  ),
-                ),
-              
-            )])));
+  _handleListTileOnTap(DMSLegalEntityModel data) {
+    Navigator.of(context).pop(data);
   }
 }

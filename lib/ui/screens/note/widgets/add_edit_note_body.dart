@@ -781,9 +781,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             // (widget.noteId == null ||widget.noteId.isEmpty)
             (udfJson[model[i].key] == null || udfJson[model[i].key].isEmpty)
                 ? " Select File to Attach "
-                : (selectValue[i] == null || selectValue[i].isEmpty)
+                : (selectValue != null && selectValue.length>0)
+                ?(selectValue[i] == null || selectValue[i].isEmpty)
                     ? " (1) File Attached: " + udfJson[model[i].key]
-                    : " (1) File Attached: " + selectValue[i];
+                    : " (1) File Attached: " + selectValue[i]
+                    :"Select File to Attach";
         // : " (1) File Attached " + udfJson[model[i].key];
 
         listDynamic.add(DynamicAttchmentWidget(
