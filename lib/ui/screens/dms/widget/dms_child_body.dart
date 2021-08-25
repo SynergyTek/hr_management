@@ -47,6 +47,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   List<String> parentPathList = [];
   List<Cwd> parentModelList = [];
   bool isVisible = false;
+  String sourceId;
+  bool isPaste = false;
+  bool isCopy = false;
+  bool isMove = false;
 
   @override
   void initState() {
@@ -218,8 +222,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 children: [
                   filterChildList[index].count != null &&
                           filterChildList[index].templateCode != 'FILE' &&
-                          filterChildList[index].templateCode !='GENERAL_DOCUMENT' && 
-                          filterChildList[index].templateCode != 'PROJECT_DOCUMENTS'
+                          filterChildList[index].templateCode !=
+                              'GENERAL_DOCUMENT' &&
+                          filterChildList[index].templateCode !=
+                              'PROJECT_DOCUMENTS'
                       ? CircleAvatar(
                           radius: 11,
                           child: Text(
@@ -237,8 +243,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 ],
               ),
               onTap: () {
-                if (filterChildList[index].templateCode != 'FILE' && filterChildList[index].templateCode != 'GENERAL_DOCUMENT' 
-                && filterChildList[index].templateCode != 'PROJECT_DOCUMENTS') {
+                if (filterChildList[index].templateCode != 'FILE' &&
+                    filterChildList[index].templateCode != 'GENERAL_DOCUMENT' &&
+                    filterChildList[index].templateCode !=
+                        'PROJECT_DOCUMENTS') {
                   childPath.add(filterChildList[index].name);
                   parentModelList.add(filterChildList[index]);
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
@@ -267,18 +275,19 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                           ));
                         }),
                   );
-                }
-                else if(filterChildList[index].templateCode == 'GENERAL_DOCUMENT' || filterChildList[index].templateCode == 'PROJECT_DOCUMENTS')
-                {
-                   Navigator.pushNamed(
-                  context,
-                  ADD_EDIT_NOTE_ROUTE,
-                  arguments: ScreenArguments(
+                } else if (filterChildList[index].templateCode ==
+                        'GENERAL_DOCUMENT' ||
+                    filterChildList[index].templateCode ==
+                        'PROJECT_DOCUMENTS') {
+                  Navigator.pushNamed(
+                    context,
+                    ADD_EDIT_NOTE_ROUTE,
+                    arguments: ScreenArguments(
                       arg1: '',
                       arg2: filterChildList[index].id,
                       // arg3: filterChildList[index].noteSubject
-                      ),
-                );
+                    ),
+                  );
                 }
               },
             ),
@@ -312,11 +321,22 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ListTile(
           leading: Icon(CustomIcons.copy),
           title: Text('Copy'),
+          onTap: () => copyDialog(id),
           // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+        ),
+        Visibility(
+          visible: isPaste,
+          child: ListTile(
+            leading: Icon(CustomIcons.copy),
+            title: Text('Paste'),
+            // onTap: () => copyDialog(id),
+            // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+          ),
         ),
         ListTile(
           leading: Icon(CustomIcons.expand_arrows),
           title: Text('Move'),
+          // onTap: () => moveDialog(id),
           // onTap: () => dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: targetId),
         ),
         ListTile(
@@ -383,6 +403,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
+  copyDialog(String id) {
+    sourceId = id;
+    isCopy = true;
+    setState(() {
+      isPaste = true;
+    });
+  }
+
   archiveDialog(String id) {
     showDialog(
       context: context,
@@ -404,11 +432,26 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); //Pop dialog box
+                Navigator.of(context).pop(); //Pop bottom sheet
+                setState(() {
+                  isVisible = true;
+                });
                 dmsCrudNoteBloc..getArchiveNoteAPIData(id: id);
 
-                displaySnackBar(
-                    text: dmsCrudNoteBloc.archiveNoteSubject.stream.value);
+                if (dmsCrudNoteBloc.archiveNoteSubject.stream.value) {
+                  displaySnackBar(
+                      text: 'File saved to archive successfully',
+                      context: context);
+                } else {
+                  displaySnackBar(
+                      text: 'Unable to save file to archive', context: context);
+                }
+                setState(() {
+                  isVisible = false;
+                });
+                // displaySnackBar(
+                //     text: dmsCrudNoteBloc.archiveNoteSubject.stream.value);
               },
             ),
           ],
