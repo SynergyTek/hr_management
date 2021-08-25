@@ -31,9 +31,9 @@ class DMSLegalEntityModel {
   String contactPerson;
   String contactPersonEmail;
   String contactPersonMobile;
-  int basicSalaryPercentage;
-  int housingAllowancePercentage;
-  int transportAllowancePercentage;
+  String basicSalaryPercentage;
+  String housingAllowancePercentage;
+  String transportAllowancePercentage;
   String id;
   String createdDate;
   String createdBy;
@@ -43,60 +43,61 @@ class DMSLegalEntityModel {
   dynamic sequenceOrder;
   String companyId;
   dynamic legalEntityId;
-  int dataAction;
-  int status;
-  int versionNo;
+  String dataAction;
+  String status;
+  String versionNo;
   dynamic portalId;
 
-  DMSLegalEntityModel(
-      {this.countryName,
-      this.fiscalYearStartMonth,
-      this.fiscalYearEndMonth,
-      this.fiscalYearType,
-      this.name,
-      this.nameLocal,
-      this.code,
-      this.address,
-      this.phone,
-      this.fax,
-      this.email,
-      this.primaryContactPerson,
-      this.secondaryContactPerson,
-      this.primaryContactEmail,
-      this.secondaryContactEmail,
-      this.primaryContactMobile,
-      this.secondaryContactMobile,
-      this.primaryContactPhone,
-      this.secondaryContactPhone,
-      this.cultureInfo,
-      this.dateFormat,
-      this.dateTimeFormat,
-      this.currencySymbol,
-      this.currencyName,
-      this.timeZone,
-      this.logoFileId,
-      this.licenseKey,
-      this.sendCompanyWelcome,
-      this.countryId,
-      this.contactPerson,
-      this.contactPersonEmail,
-      this.contactPersonMobile,
-      this.basicSalaryPercentage,
-      this.housingAllowancePercentage,
-      this.transportAllowancePercentage,
-      this.id,
-      this.createdDate,
-      this.createdBy,
-      this.lastUpdatedDate,
-      this.lastUpdatedBy,
-      this.isDeleted,
-      this.sequenceOrder,
-      this.companyId,
-      this.legalEntityId,
-      this.dataAction,
-      this.status,
-      this.versionNo,
-      this.portalId});
+  DMSLegalEntityModel({
+    this.countryName,
+    this.fiscalYearStartMonth,
+    this.fiscalYearEndMonth,
+    this.fiscalYearType,
+    this.name,
+    this.nameLocal,
+    this.code,
+    this.address,
+    this.phone,
+    this.fax,
+    this.email,
+    this.primaryContactPerson,
+    this.secondaryContactPerson,
+    this.primaryContactEmail,
+    this.secondaryContactEmail,
+    this.primaryContactMobile,
+    this.secondaryContactMobile,
+    this.primaryContactPhone,
+    this.secondaryContactPhone,
+    this.cultureInfo,
+    this.dateFormat,
+    this.dateTimeFormat,
+    this.currencySymbol,
+    this.currencyName,
+    this.timeZone,
+    this.logoFileId,
+    this.licenseKey,
+    this.sendCompanyWelcome,
+    this.countryId,
+    this.contactPerson,
+    this.contactPersonEmail,
+    this.contactPersonMobile,
+    this.basicSalaryPercentage,
+    this.housingAllowancePercentage,
+    this.transportAllowancePercentage,
+    this.id,
+    this.createdDate,
+    this.createdBy,
+    this.lastUpdatedDate,
+    this.lastUpdatedBy,
+    this.isDeleted,
+    this.sequenceOrder,
+    this.companyId,
+    this.legalEntityId,
+    this.dataAction,
+    this.status,
+    this.versionNo,
+    this.portalId,
+  });
 
   DMSLegalEntityModel.fromJson(Map<String, dynamic> json) {
     countryName = json['CountryName'];
@@ -131,9 +132,10 @@ class DMSLegalEntityModel {
     contactPerson = json['ContactPerson'];
     contactPersonEmail = json['ContactPersonEmail'];
     contactPersonMobile = json['ContactPersonMobile'];
-    basicSalaryPercentage = json['BasicSalaryPercentage'];
-    housingAllowancePercentage = json['HousingAllowancePercentage'];
-    transportAllowancePercentage = json['TransportAllowancePercentage'];
+    basicSalaryPercentage = json['BasicSalaryPercentage'].toString();
+    housingAllowancePercentage = json['HousingAllowancePercentage'].toString();
+    transportAllowancePercentage =
+        json['TransportAllowancePercentage'].toString();
     id = json['Id'];
     createdDate = json['CreatedDate'];
     createdBy = json['CreatedBy'];
@@ -143,9 +145,9 @@ class DMSLegalEntityModel {
     sequenceOrder = json['SequenceOrder'];
     companyId = json['CompanyId'];
     legalEntityId = json['LegalEntityId'];
-    dataAction = json['DataAction'];
-    status = json['Status'];
-    versionNo = json['VersionNo'];
+    dataAction = json['DataAction'].toString();
+    status = json['Status'].toString();
+    versionNo = json['VersionNo'].toString();
     portalId = json['PortalId'];
   }
 

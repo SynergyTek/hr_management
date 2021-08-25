@@ -3,13 +3,16 @@ import 'package:hr_management/data/repositories/dms_repository/dms_legal_entity_
 import 'package:rxdart/rxdart.dart';
 
 class DMSLegalEntityBloc {
-
   final DMSLegalEntityRepository _apiRepository = DMSLegalEntityRepository();
 
   final BehaviorSubject<DMSLegalEntityResponse> _subject = BehaviorSubject();
 
-  getAPIData() async {
-    DMSLegalEntityResponse response = await _apiRepository.getAPIData();
+  getAPIData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    DMSLegalEntityResponse response = await _apiRepository.getAPIData(
+      queryparams: queryparams,
+    );
 
     _subject.sink.add(response);
   }
