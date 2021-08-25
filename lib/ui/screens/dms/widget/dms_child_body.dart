@@ -23,15 +23,17 @@ class DMSChildBody extends StatefulWidget {
   final List<String> path;
   final List<String> parentPathList;
   final List<Cwd> parentModelList;
-  const DMSChildBody(
-      {Key key,
-      this.parentModel,
-      this.parentPath,
-      this.callBack,
-      this.path,
-      this.parentPathList,
-      this.parentModelList})
-      : super(key: key);
+  final String parentName;
+  const DMSChildBody({
+    Key key,
+    this.parentModel,
+    this.parentPath,
+    this.callBack,
+    this.path,
+    this.parentPathList,
+    this.parentModelList,
+    this.parentName,
+  }) : super(key: key);
 
   @override
   _DMSChildBodyState createState() => _DMSChildBodyState();
@@ -43,6 +45,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   List<String> childPath = [];
   List<String> parentPathList = [];
   List<Cwd> parentModelList = [];
+  bool isVisible = false;
 
   @override
   void initState() {
@@ -64,39 +67,48 @@ class _DMSChildBodyState extends State<DMSChildBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 2.h),
-      child: StreamBuilder<DMSFilesResponse>(
-        stream: dmsBloc.subjectDMSGetFilesChildResponse.stream,
-        builder: (context, AsyncSnapshot<DMSFilesResponse> snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data.error != null && snapshot.data.error.length > 0) {
+    return Stack(children: [
+      Container(
+        padding: EdgeInsets.only(top: 2.h),
+        child: StreamBuilder<DMSFilesResponse>(
+          stream: dmsBloc.subjectDMSGetFilesChildResponse.stream,
+          builder: (context, AsyncSnapshot<DMSFilesResponse> snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data.error != null &&
+                  snapshot.data.error.length > 0) {
+                return Center(
+                  child: Text(snapshot.data.error),
+                );
+              }
+              childList = snapshot.data.data.files;
+              if (childList.isEmpty) {
+                return EmptyFolderWidget();
+              }
+              return SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    _breadCrumb(),
+                    _itemList(),
+                  ],
+                ),
+              );
+            } else {
               return Center(
-                child: Text(snapshot.data.error),
+                child: CustomProgressIndicator(),
               );
             }
-            childList = snapshot.data.data.files;
-            if (childList.isEmpty) {
-              return EmptyFolderWidget();
-            }
-            return SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              physics: AlwaysScrollableScrollPhysics(),
-              child: Column(
-                children: [
-                  _breadCrumb(),
-                  _itemList(),
-                ],
-              ),
-            );
-          } else {
-            return Center(
-              child: CustomProgressIndicator(),
-            );
-          }
-        },
+          },
+        ),
       ),
-    );
+      Visibility(
+        visible: isVisible,
+        child: Center(
+          child: CustomProgressIndicator(),
+        ),
+      ),
+    ]);
   }
 
   _breadCrumb() {
@@ -114,6 +126,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       child: BreadCrumb.builder(
         itemCount: childPath.length - 1,
         builder: (index) {
+          // if (childPath.contains(widget.parentName))
+          //   childPath.remove(widget.parentName);
           return BreadCrumbItem(
               content: Text(childPath[index]),
               borderRadius: BorderRadius.circular(4),
@@ -324,11 +338,22 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
+                setState(() {
+                  isVisible = true;
+                });
                 Navigator.of(context).pop();
                 dmsCrudNoteBloc..getDeleteNoteAPIData(id: id);
 
-                displaySnackBar(
-                    text: dmsCrudNoteBloc.deleteNoteSubject.stream.value);
+                if (dmsCrudNoteBloc.deleteNoteSubject.stream.value) {
+                  displaySnackBar(
+                      text: 'File deleted successfully', context: context);
+                } else {
+                  displaySnackBar(
+                      text: 'Unable to delete file', context: context);
+                }
+                setState(() {
+                  isVisible = false;
+                });
               },
             ),
           ],

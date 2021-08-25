@@ -12,16 +12,16 @@ class DMSChild extends StatelessWidget {
   final List<String> pathList;
   final List<String> parentPathList;
   final List<Cwd> parentModelList;
-  const DMSChild({
-    Key key,
-    this.parentName,
-    this.parentModel,
-    this.parentPath,
-    this.callBack,
-    this.pathList,
-    this.parentPathList,
-    this.parentModelList
-  }) : super(key: key);
+  const DMSChild(
+      {Key key,
+      this.parentName,
+      this.parentModel,
+      this.parentPath,
+      this.callBack,
+      this.pathList,
+      this.parentPathList,
+      this.parentModelList})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +50,7 @@ class DMSChild extends StatelessWidget {
             path: pathList,
             parentPathList: parentPathList,
             parentModelList: parentModelList,
+            parentName: parentName,
           )),
     );
   }
