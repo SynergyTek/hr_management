@@ -15,6 +15,9 @@ class ScreenArguments {
   final NTSType ntstype;
   OnTapPressedCallBack callBack;
   final Cwd dmsParentModel;
+  final List<Cwd> dmsParentModelList;
+  final List<String> list1;
+  final List<String> list2;
 
   ScreenArguments({
     this.ntstype,
@@ -28,5 +31,8 @@ class ScreenArguments {
     this.showBack,
     this.callBack,
     this.dmsParentModel,
+    this.dmsParentModelList,
+    this.list1,
+    this.list2,
   });
 }

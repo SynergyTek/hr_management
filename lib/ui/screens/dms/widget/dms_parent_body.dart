@@ -25,6 +25,10 @@ class DMSParentBody extends StatefulWidget {
 class _DMSParentBodyState extends State<DMSParentBody> {
   List<Cwd> childList = [];
   List<Cwd> filterChildList = [];
+  List<String> pathList = [];
+  List<String> parentPathList = [];
+  List<Cwd> parentModelList = [];
+
   @override
   void initState() {
     dmsBloc.postGetDMSFilesData(
@@ -97,16 +101,33 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                               ],
                             ),
                             onTap: () {
+                              pathList
+                                ..clear()
+                                ..add('Administrator')
+                                ..add(childList[index].name);
+                                
+                              parentModelList
+                                ..clear()
+                                ..add(childList[index]);
+
                               String parentPath = snapshot.data.data.cwd.id +
                                   '/' +
                                   childList[index].id +
                                   '/';
+
+                              parentPathList
+                                ..clear()
+                                ..add(parentPath);
+
                               dmsBloc.subjectDMSGetFilesChildResponse.sink
                                   .add(null);
                               Navigator.pushNamed(
                                 context,
                                 DMS_CHILD,
                                 arguments: ScreenArguments(
+                                  dmsParentModelList: parentModelList,
+                                    list1: pathList,
+                                    list2: parentPathList,
                                     arg1: childList[index].name,
                                     arg2: parentPath,
                                     dmsParentModel: childList[index],
