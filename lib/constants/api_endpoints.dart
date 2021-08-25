@@ -382,4 +382,7 @@ class APIEndpointConstants {
 
   static const GET_ATTACHMENT_VIEW_WEBVIEW_URL =
       'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=';
+
+  static const GET_LEGAL_ENTITY_DATA =
+      BASE_URL + '/cms/query/GetLegalEntityNameList';
 }
