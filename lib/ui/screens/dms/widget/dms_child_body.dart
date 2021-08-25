@@ -237,8 +237,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 ],
               ),
               onTap: () {
-                if (filterChildList[index].templateCode != 'FILE' && filterChildList[index].templateCode != 'GENERAL_DOCUMENT' 
-                && filterChildList[index].templateCode != 'PROJECT_DOCUMENTS') {
+                if (filterChildList[index].templateCode != 'FILE')// &&
+                 //filterChildList[index].templateCode != 'GENERAL_DOCUMENT' && 
+                 //filterChildList[index].templateCode != 'PROJECT_DOCUMENTS')
+                 {
                   childPath.add(filterChildList[index].name);
                   parentModelList.add(filterChildList[index]);
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
@@ -267,18 +269,18 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                         }),
                   );
                 }
-                else if(filterChildList[index].templateCode == 'GENERAL_DOCUMENT' || filterChildList[index].templateCode == 'PROJECT_DOCUMENTS')
-                {
-                   Navigator.pushNamed(
-                  context,
-                  ADD_EDIT_NOTE_ROUTE,
-                  arguments: ScreenArguments(
-                      arg1: '',
-                      arg2: filterChildList[index].id,
-                      // arg3: filterChildList[index].noteSubject
-                      ),
-                );
-                }
+                // else if(filterChildList[index].templateCode == 'GENERAL_DOCUMENT' || filterChildList[index].templateCode == 'PROJECT_DOCUMENTS')
+                // {
+                //    Navigator.pushNamed(
+                //   context,
+                //   ADD_EDIT_NOTE_ROUTE,
+                //   arguments: ScreenArguments(
+                //       arg1: '',
+                //       arg2: filterChildList[index].id,
+                //       // arg3: filterChildList[index].noteSubject
+                //       ),
+                // );
+                // }
               },
             ),
           );
@@ -329,9 +331,19 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           onTap: () => renameDialog(title),
         ),
         ListTile(
-          leading: Icon(CustomIcons.search),
-          title: Text('Search'),
-          // onTap: () => dmsCrudNoteBloc..postSearchFilesAPIData(model: model),
+          leading: Icon(CustomIcons.sticky_note),
+          title: Text('View Details'),
+          onTap: () {
+             Navigator.pushNamed(
+                  context,
+                  ADD_EDIT_NOTE_ROUTE,
+                  arguments: ScreenArguments(
+                      arg1: '',
+                      arg2: id,
+                      // arg3: filterChildList[index].noteSubject
+                      ),
+                );
+          },
         ),
       ],
     );

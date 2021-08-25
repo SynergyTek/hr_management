@@ -88,23 +88,23 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                     color: Colors.blue,
                                   ),
                                   title: Text(
-                                    childList[index].name,
+                                    filterChildList[index].name,
                                   ),
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      childList[index].count != null
+                                      filterChildList[index].count != null
                                           ? CircleAvatar(
                                               radius: 11,
                                               child: Text(
-                                                childList[index].count,
+                                                filterChildList[index].count,
                                                 style: TextStyle(fontSize: 12),
                                               ))
                                           : SizedBox(),
                                       IconButton(
                                         onPressed: () => bottomSheet(
-                                          childList[index].name,
-                                          childList[index].id,
+                                          filterChildList[index].name,
+                                          filterChildList[index].id,
                                         ),
                                         icon: Icon(Icons.more_vert_rounded),
                                       )
@@ -114,16 +114,16 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                     pathList
                                       ..clear()
                                       ..add('Administrator')
-                                      ..add(childList[index].name);
+                                      ..add(filterChildList[index].name);
 
                                     parentModelList
                                       ..clear()
-                                      ..add(childList[index]);
+                                      ..add(filterChildList[index]);
 
                                     String parentPath =
                                         snapshot.data.data.cwd.id +
                                             '/' +
-                                            childList[index].id +
+                                            filterChildList[index].id +
                                             '/';
 
                                     parentPathList
@@ -139,9 +139,10 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           dmsParentModelList: parentModelList,
                                           list1: pathList,
                                           list2: parentPathList,
-                                          arg1: childList[index].name,
+                                          arg1: filterChildList[index].name,
                                           arg2: parentPath,
-                                          dmsParentModel: childList[index],
+                                          dmsParentModel:
+                                              filterChildList[index],
                                           callBack: (dynamic value,
                                               dynamic value2, dynamic value3) {
                                             dmsBloc
@@ -214,9 +215,19 @@ class _DMSParentBodyState extends State<DMSParentBody> {
           onTap: () => renameDialog(title),
         ),
         ListTile(
-          leading: Icon(CustomIcons.search),
-          title: Text('Search'),
-          // onTap: () => dmsCrudNoteBloc..postSearchFilesAPIData(model: model),
+          leading: Icon(CustomIcons.sticky_note),
+          title: Text('View Details'),
+          onTap: () {
+             Navigator.pushNamed(
+                  context,
+                  ADD_EDIT_NOTE_ROUTE,
+                  arguments: ScreenArguments(
+                      arg1: '',
+                      arg2: id,
+                      // arg3: filterChildList[index].noteSubject
+                      ),
+                );
+          },
         ),
       ],
     );
