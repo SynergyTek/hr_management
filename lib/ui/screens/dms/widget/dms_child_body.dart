@@ -143,7 +143,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
 
                 for (var i = childPath.length - 1; i > index; i--) {
                   childPath.remove(childPath[i]);
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                 }
                 dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
                 if (childPath[index] == 'Administrator') {
@@ -246,6 +246,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
                   String parentPath =
                       widget.parentPath + '/' + filterChildList[index].id + '/';
+                  parentPathList.add(parentPath);
                   Navigator.pushNamed(
                     context,
                     DMS_CHILD,
@@ -369,10 +370,11 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
+                Navigator.of(context).pop(); //Pop dialog box
+                Navigator.of(context).pop(); //Pop bottom sheet
                 setState(() {
                   isVisible = true;
                 });
-                Navigator.of(context).pop();
                 dmsCrudNoteBloc..getDeleteNoteAPIData(id: id);
 
                 if (dmsCrudNoteBloc.deleteNoteSubject.stream.value) {
