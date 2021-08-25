@@ -245,9 +245,12 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                     context,
                     DMS_CHILD,
                     arguments: ScreenArguments(
+                        list1: childPath,
+                        list2: parentPathList,
                         arg1: filterChildList[index].name,
                         arg2: parentPath,
                         dmsParentModel: filterChildList[index],
+                        dmsParentModelList: parentModelList,
                         callBack:
                             (dynamic value, dynamic value2, dynamic value3) {
                           dmsBloc.postGetDMSFilesChildData(
