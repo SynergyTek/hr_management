@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/dms/dms_document_type_model/dms_document_type_model.dart';
-import 'package:hr_management/data/models/dms/dms_document_type_model/dms_document_type_response.dart';
 import 'package:hr_management/data/models/dms/dms_legal_entity_model/dms_legal_entity_model.dart';
+import 'package:hr_management/data/models/dms/parent_workspace_id_name_list_model/parent_workspace_id_name_list_model.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/document_template_id_name_list_by_user_bloc/document_template_id_name_list_by_user_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/manage_workspace_bloc/manage_workspace_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/widgets/dms_legal_entity_body_widget.dart';
+import 'package:hr_management/ui/screens/dms/dms_parent_workspace_id_name_list_screen/widgets/dms_parent_workspace_id_name_list_body_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 import 'package:hr_management/ui/widgets/multi_select_form_widget/multi_select_form_widget.dart';
-import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 
 import '../../../../../themes/theme_config.dart';
@@ -48,7 +48,7 @@ class _DMSManageWorkspaceBodyWidgetState
       legalEntityId: _selectedLegalEntityData?.id ?? "",
       ownerUserId:
           BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
-      parentNoteId: "f7c7d31e-bc19-49ee-8236-227a507382c5",
+      parentNoteId: _selectedParentWorkspace?.id ?? "",
       sequenceOrder: _sequenceOrderTextEditingController?.text ?? "",
       workspaceName:
           _workspaceNameTextEditingController?.text ?? "Default Workspace Name",
@@ -68,7 +68,7 @@ class _DMSManageWorkspaceBodyWidgetState
               shrinkWrap: true,
               children: [
                 _legalEntityWidget(),
-                // _parentWorkspaceWidget(),
+                _parentWorkspaceWidget(),
                 _workspaceNameWidget(),
                 _documentTypeWidget(),
                 _sequenceOrderWidget(),
@@ -143,13 +143,39 @@ class _DMSManageWorkspaceBodyWidgetState
     return ListTile(
       minVerticalPadding: 8.0,
       title: Text("Parent Workspace"),
-      subtitle: Container(
-        padding: DEFAULT_VERTICAL_PADDING,
-        child: Placeholder(
-          fallbackHeight: 48.0,
-        ),
+      trailing: Icon(
+        Icons.chevron_right,
+      ),
+      subtitle: _selectedParentWorkspace?.name == null
+          ? Container()
+          : Text(_selectedParentWorkspace.name),
+      onTap: () => _handleParentWorkspaceOnTap(),
+    );
+  }
+
+  ParentWorkspaceIdNameListModel _selectedParentWorkspace =
+      ParentWorkspaceIdNameListModel();
+  void _handleParentWorkspaceOnTap() async {
+    _selectedParentWorkspace = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Select Parent Workspace"),
+            ),
+            body: SafeArea(
+              child: InternetConnectivityWidget(
+                child: ParentWorkspaceIdNameListBodyWidget(
+                  data: _selectedParentWorkspace,
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
+
+    setState(() {});
   }
 
   Widget _workspaceNameWidget() {
@@ -235,6 +261,13 @@ class _DMSManageWorkspaceBodyWidgetState
       return;
     }
 
+    if (_selectedParentWorkspace?.name == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Parent Workspace cannot be null or empty.")),
+      );
+      return;
+    }
+
     if (_workspaceNameTextEditingController?.text == null ||
         _workspaceNameTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -258,13 +291,34 @@ class _DMSManageWorkspaceBodyWidgetState
       return;
     }
 
-    // dmsManageWorkspaceBloc
-    //   ..postAPIData(
-    //     queryparams: _handleQueryParams(),
-    //   );
+    dmsManageWorkspaceBloc
+      ..postAPIData(
+        queryparams: _handleQueryParams(),
+      );
 
-    // TODO
-    // ReadParentWorkspaceIdNameList(long? legalEntity, string id)
+    String message = "Workspace couldn't be created, pl try again later.";
+    if (dmsManageWorkspaceBloc.subject.stream.valueOrNull != null) {
+      if (dmsManageWorkspaceBloc.subject.stream.valueOrNull['success'] ==
+          true) {
+        message =
+            "Workspace '${_workspaceNameTextEditingController.text}' created successfully.";
+      } else if (dmsManageWorkspaceBloc.subject.stream.valueOrNull['error'] !=
+              null ||
+          dmsManageWorkspaceBloc.subject.stream.valueOrNull['error'] != '') {
+        message = dmsManageWorkspaceBloc.subject.stream.valueOrNull['error'];
+      }
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+
+    // if the folder has been created successfully, pop,
+    // else do nothing
+    if (dmsManageWorkspaceBloc.subject.stream.valueOrNull['success'] == true)
+      Navigator.of(context).pop();
   }
 
   /// Cancel everything and

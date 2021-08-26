@@ -1,18 +1,21 @@
+import 'package:hr_management/data/models/dms/parent_workspace_id_name_list_model/parent_workspace_id_name_list_response.dart';
 import 'package:hr_management/data/repositories/dms_repository/dms_workspace_repository/parent_workspace_id_name_list_repository/parent_workspace_id_name_list_repository.dart';
-import 'package:meta/meta.dart';
+
 import 'package:rxdart/rxdart.dart';
 
-class ParentWorkspaceIdNameListBloc {
+class DMSParentWorkspaceIdNameListBloc {
   final ParentWorkspaceIdNameListRepository _apiRepository =
       ParentWorkspaceIdNameListRepository();
 
-  final BehaviorSubject _subject = BehaviorSubject();
+  final BehaviorSubject<ParentWorkspaceIdNameListResponse> _subject =
+      BehaviorSubject<ParentWorkspaceIdNameListResponse>();
 
   getAPIData({
-    @required String legalEntity,
-    @required String id,
+    String legalEntity,
+    String id,
   }) async {
-    dynamic response = await _apiRepository.getAPIData(
+    ParentWorkspaceIdNameListResponse response =
+        await _apiRepository.getAPIData(
       legalEntity: legalEntity,
       id: id,
     );
@@ -24,7 +27,7 @@ class ParentWorkspaceIdNameListBloc {
     _subject.close();
   }
 
-  BehaviorSubject get subject => _subject;
+  BehaviorSubject<ParentWorkspaceIdNameListResponse> get subject => _subject;
 }
 
-final parentWorkspaceIdNameListBloc = ParentWorkspaceIdNameListBloc();
+final dmsParentWorkspaceIdNameListBloc = DMSParentWorkspaceIdNameListBloc();
