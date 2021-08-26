@@ -8,6 +8,13 @@ import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 
 class DMSParent extends StatelessWidget {
+  final String sourceId;
+  final bool isCopy;
+  final bool isCut;
+
+  const DMSParent({Key key, this.sourceId, this.isCopy, this.isCut})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +25,11 @@ class DMSParent extends StatelessWidget {
       floatingActionButton: buildSpeedDial(context),
       body: SafeArea(
         child: InternetConnectivityWidget(
-          child: DMSParentBody(),
+          child: DMSParentBody(
+            sourceId: sourceId,
+            isCopy: isCopy,
+            isCut: isCut,
+          ),
         ),
       ),
     );

@@ -1,7 +1,5 @@
 part of 'manage_new_folder_repository.dart';
 
-/// API Repository defines https client object, and our network call methods
-/// which will be used to fetch data from Apis will map the JSON to its model.
 class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
   final Dio _dio = Dio();
 
@@ -11,13 +9,17 @@ class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
     try {
       Response response = await _dio.post(
         APIEndpointConstants.POST_MANAGE_NEW_FOLDER_DATA,
-        queryParameters: queryparams ?? {},
+        data: queryparams ?? {},
       );
 
-      if (response.data == null) return false;
+      if (response?.data == null ||
+          response.data['success'] == null ||
+          response.data['success'] == false) return false;
+
       return true;
     } catch (err, stacktrace) {
-      print("Stacktrace: $stacktrace \nError: $err");
+      print("Error: $err");
+      print("Stacktrace: $stacktrace");
 
       return false;
     }

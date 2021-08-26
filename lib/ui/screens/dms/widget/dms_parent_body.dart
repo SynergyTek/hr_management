@@ -16,7 +16,12 @@ import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
 
 class DMSParentBody extends StatefulWidget {
-  DMSParentBody({Key key}) : super(key: key);
+  final String sourceId;
+  final bool isCopy;
+  final bool isCut;
+
+  const DMSParentBody({Key key, this.sourceId, this.isCopy, this.isCut})
+      : super(key: key);
 
   @override
   _DMSParentBodyState createState() => _DMSParentBodyState();
@@ -30,9 +35,20 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   List<String> pathList = [];
   List<String> parentPathList = [];
   List<Cwd> parentModelList = [];
+  String sourceId;
+  bool isCopy = false;
+  bool isCut = false;
 
   @override
   void initState() {
+    apiCall();
+    isCopy = widget.isCopy;
+    isCut = widget.isCut;
+    sourceId = widget.sourceId;
+    super.initState();
+  }
+
+  apiCall() {
     dmsBloc.postGetDMSFilesData(
         dmsPostModel: DmsPostModel(
       action: "read",
@@ -42,7 +58,6 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       userId:
           BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
     ));
-    super.initState();
   }
 
   @override
@@ -105,6 +120,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                         onPressed: () => bottomSheet(
                                           filterChildList[index].name,
                                           filterChildList[index].id,
+                                          snapshot.data.data.cwd.id,
                                         ),
                                         icon: Icon(Icons.more_vert_rounded),
                                       )
@@ -141,6 +157,9 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           list2: parentPathList,
                                           arg1: filterChildList[index].name,
                                           arg2: parentPath,
+                                          arg3: widget.sourceId,
+                                          val1: widget.isCopy,
+                                          val2: widget.isCut,
                                           dmsParentModel:
                                               filterChildList[index],
                                           callBack: (dynamic value,
@@ -173,7 +192,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     );
   }
 
-  bottomSheet(String title, String id) {
+  bottomSheet(String title, String id, String path) {
     showDocumentBottomSheet(
       bottomSheetDataList: [
         Row(
@@ -277,17 +296,94 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); //Pop dialog box
+                Navigator.of(context).pop(); //Pop bottom sheet
+                // setState(() {
+                //   isVisible = true;
+                // });
                 dmsCrudNoteBloc..getDeleteNoteAPIData(id: id);
 
-                displaySnackBar(
-                    text: dmsCrudNoteBloc.deleteNoteSubject.stream.value);
+                if (dmsCrudNoteBloc.deleteNoteSubject.stream.hasValue) {
+                  if (dmsCrudNoteBloc.deleteNoteSubject.stream.value) {
+                    displaySnackBar(
+                        text: 'File deleted successfully', context: context);
+                    dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+                    apiCall();
+                  } else {
+                    displaySnackBar(
+                        text: 'Unable to delete file', context: context);
+                  }
+                }
+                // setState(() {
+                //   isVisible = false;
+                // });
               },
             ),
           ],
         );
       },
     );
+  }
+
+  copyDialog(String id) {
+    Navigator.pop(context);
+    sourceId = id;
+    setState(() {
+      isCopy = true;
+      isCut = false;
+    });
+  }
+
+  cutDialog(String id) {
+    Navigator.pop(context);
+    sourceId = id;
+    setState(() {
+      isCut = true;
+      isCopy = false;
+    });
+  }
+
+  pasteDialog(String _path) {
+    // String _path;
+    // int length = widget.parentPath.split('/').length;
+    // _path = widget.parentPath.split('/')[length - 2];
+    Navigator.pop(context);
+    if (widget.isCopy || isCopy) {
+      dmsCrudNoteBloc
+        ..getCopyNoteAPIData(
+            sourceId: sourceId,
+            // sourceId: widget.sourceId,
+            targetId: _path,
+            userId: '45bba746-3309-49b7-9c03-b5793369d73c');
+      if (dmsCrudNoteBloc.copyNoteSubject.stream.hasValue) {
+        if (dmsCrudNoteBloc.copyNoteSubject.stream.value) {
+          displaySnackBar(text: 'File copied successfully', context: context);
+          dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+          apiCall();
+          isCopy = false;
+          isCut = false;
+        } else {
+          displaySnackBar(text: 'Unable to copy file', context: context);
+        }
+      }
+
+      sourceId = '';
+    } else if (widget.isCut || isCut) {
+      dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: _path);
+      if (dmsCrudNoteBloc.moveNoteSubject.stream.hasValue) {
+        if (dmsCrudNoteBloc.moveNoteSubject.stream.value) {
+          displaySnackBar(text: 'File moved successfully', context: context);
+          dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+          apiCall();
+          isCopy = false;
+          isCut = false;
+        } else {
+          displaySnackBar(text: 'Unable to move file', context: context);
+        }
+      }
+
+      sourceId = '';
+    }
   }
 
   archiveDialog(String id) {
@@ -311,11 +407,31 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); //Pop dialog box
+                Navigator.of(context).pop(); //Pop bottom sheet
+                // setState(() {
+                //   isVisible = true;
+                // });
                 dmsCrudNoteBloc..getArchiveNoteAPIData(id: id);
 
-                displaySnackBar(
-                    text: dmsCrudNoteBloc.archiveNoteSubject.stream.value);
+                if (dmsCrudNoteBloc.archiveNoteSubject.stream.hasValue) {
+                  if (dmsCrudNoteBloc.archiveNoteSubject.stream.value) {
+                    displaySnackBar(
+                        text: 'File saved to archive successfully',
+                        context: context);
+                    dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+                    apiCall();
+                  } else {
+                    displaySnackBar(
+                        text: 'Unable to save file to archive',
+                        context: context);
+                  }
+                }
+                // setState(() {
+                //   isVisible = false;
+                // });
+                // displaySnackBar(
+                //     text: dmsCrudNoteBloc.archiveNoteSubject.stream.value);
               },
             ),
           ],

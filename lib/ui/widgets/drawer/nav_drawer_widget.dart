@@ -347,10 +347,12 @@ Widget drawerWidget(context) {
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DMS_PARENT,
-                  );
+                  Navigator.pushNamed(context, DMS_PARENT,
+                      arguments: ScreenArguments(
+                        val1: false,
+                        val2: false,
+                        arg3: '',
+                      ));
                 },
               ),
 
