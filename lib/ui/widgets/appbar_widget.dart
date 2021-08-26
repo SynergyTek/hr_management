@@ -44,34 +44,9 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       backgroundColor: widget.backgroundColor,
       elevation: 0,
       bottom: widget.bottom,
-      actions: []
-        ..addAll(widget?.actions ?? [])
-        ..add(ProfileSettingsIconButton())
-        ..add(
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              // SharedPreferences prefs = await SharedPreferences.getInstance();
-              // prefs.clear();
-
-              BlocProvider.of<UserModelBloc>(context).add(
-                UserModelChangeEvent(
-                  userModel: null,
-                ),
-              );
-
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                LOGIN_ROUTE,
-                ModalRoute.withName('/login'),
-              );
-            },
-          ),
-        ),
-      // actions: [
-      //   ProfileSettingsIconButton(),
-      // ]..addAll(widget?.actions ?? []),
       title: Text(widget.title),
+      actions: []..addAll(widget?.actions ?? []),
+      // ..add(ProfileSettingsIconButton()),
     );
   }
 }

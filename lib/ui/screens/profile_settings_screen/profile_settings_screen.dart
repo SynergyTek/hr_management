@@ -82,19 +82,18 @@ class ProfileSettingsScreen extends StatelessWidget {
         ),
 
         // For the Dark Mode List Tile.
-        BlocBuilder<ProfileSettingsBloc, ProfileSettingsState>(
-          builder: (context, state) {
-            return ProfileSettingsListTile(
-              title: "Dark Mode",
-              isCheckBoxSelected:
-                  state?.profileSettingsModel?.isDarkModeEnabled ?? false,
-              profileSettingsModel: ProfileSettingsModel(
-                isDarkModeEnabled:
-                    !state.profileSettingsModel.isDarkModeEnabled,
-              ),
-            );
-          },
-        ),
+        // BlocBuilder<ProfileSettingsBloc, ProfileSettingsState>(
+        //   builder: (context, state) {
+        //     return ProfileSettingsListTile(
+        //       title: "Dark Mode",
+        //       isCheckBoxSelected:
+        //           state?.profileSettingsModel?.isDarkModeEnabled ?? false,
+        //       profileSettingsModel: ProfileSettingsModel(
+        //         isDarkModeEnabled: !state.profileSettingsModel.isDarkModeEnabled,
+        //       ),
+        //     );
+        //   },
+        // ),
       ],
     );
   }
