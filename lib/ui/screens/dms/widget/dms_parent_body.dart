@@ -208,6 +208,14 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             )
           ],
         ),
+           ListTile(
+             leading: Icon(
+               CustomIcons.folder,
+               color: Colors.blue,
+             ),
+             title: Text('Create Workspace'),
+             // onTap: () => deleteDialog(id),
+           ),
         ListTile(
           leading: Icon(
             CustomIcons.folder,
