@@ -204,7 +204,7 @@ class ExpandableField extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(bottom: 1.0),
         child: ExpansionTile(
-            initiallyExpanded: true,
+            initiallyExpanded: false,
             // leading: Icon(Icons.calendar_today_sharp),
             trailing: isTileExpanded
                 ? Icon(Icons.keyboard_arrow_down)

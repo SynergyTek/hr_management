@@ -217,9 +217,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   filterChildList[index].count != null &&
-                          filterChildList[index].templateCode != 'FILE' &&
-                          filterChildList[index].templateCode !='GENERAL_DOCUMENT' && 
-                          filterChildList[index].templateCode != 'PROJECT_DOCUMENTS'
+                          filterChildList[index].templateCode == 'GENERAL_FOLDER' //||
+                          // filterChildList[index].templateCode !='GENERAL_DOCUMENT' && 
+                          // filterChildList[index].templateCode != 'PROJECT_DOCUMENTS'
                       ? CircleAvatar(
                           radius: 11,
                           child: Text(
@@ -270,18 +270,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                         }),
                   );
                 }
-                // else if(filterChildList[index].templateCode == 'GENERAL_DOCUMENT' || filterChildList[index].templateCode == 'PROJECT_DOCUMENTS')
-                // {
-                //    Navigator.pushNamed(
-                //   context,
-                //   ADD_EDIT_NOTE_ROUTE,
-                //   arguments: ScreenArguments(
-                //       arg1: '',
-                //       arg2: filterChildList[index].id,
-                //       // arg3: filterChildList[index].noteSubject
-                //       ),
-                // );
-                // }
               },
             ),
           );

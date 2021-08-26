@@ -33,11 +33,11 @@ class PrimaryButton extends StatelessWidget {
           elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(backgroundColor) ??
               MaterialStateProperty.all(Theme.of(context).textHeadingColor),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius ?? 32.0),
-            ),
-          ),
+          // shape: MaterialStateProperty.all(
+          //   RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.circular(borderRadius ?? 32.0),
+          //   ),
+          // ),
         ),
         onPressed: () => handleOnPressed(),
         child: SizedBox(
@@ -48,6 +48,8 @@ class PrimaryButton extends StatelessWidget {
               buttonText ?? "",
               style: TextStyle(
                 color: foregroundColor ?? Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
               ),
             ),
           ),

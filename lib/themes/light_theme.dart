@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class LightTheme {
-  static const Color _PRIMARY_COLOR = Colors.blue;
-  // static const Color _PRIMARY_COLOR = Color(0xFFFF7643);
+  // static const Color _PRIMARY_COLOR = Colors.blue;
+  static const Color _PRIMARY_COLOR = Color(0xFF006699);
 
   static const Color _PRIMARY_LIGHT_COLOR = Colors.lightBlueAccent;
   static const Color _SECONDARY_LIGHT_COLOR = Color(0xFFFFECDF);
