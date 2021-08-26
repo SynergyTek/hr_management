@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/manage_new_folder_bloc/manage_new_folder_bloc.dart';
 
 import 'package:hr_management/ui/widgets/primary_button.dart';
 
@@ -96,20 +97,11 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
     bool obscureText = false,
     keyboardType = TextInputType.text,
   }) {
-    return Container(
-      padding: DEFAULT_VERTICAL_PADDING,
-      child: TextFormField(
-        obscureText: obscureText,
-        controller: controller,
-        textCapitalization: TextCapitalization.words,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          fillColor: Colors.white70,
-          filled: true,
-          border: OutlineInputBorder(),
-        ),
-      ),
+    return TextFormField(
+      obscureText: obscureText,
+      controller: controller,
+      textCapitalization: TextCapitalization.words,
+      keyboardType: keyboardType,
     );
   }
 
@@ -130,10 +122,10 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
       return;
     }
 
-    // dmsNewFolderBloc
-    //   ..postAPIData(
-    //     queryparams: _handleQueryParams(),
-    //   );
+    dmsManageNewFolderBloc
+      ..postAPIData(
+        queryparams: _handleQueryParams(),
+      );
 
     // After everything is successful, pop.
     // _handleCancelOnPressed();

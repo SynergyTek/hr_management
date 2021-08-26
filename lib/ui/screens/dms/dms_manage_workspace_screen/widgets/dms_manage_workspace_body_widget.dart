@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/models/dms/dms_document_type_model/dms_document_type_model.dart';
+import 'package:hr_management/data/models/dms/dms_document_type_model/dms_document_type_response.dart';
 import 'package:hr_management/data/models/dms/dms_legal_entity_model/dms_legal_entity_model.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_model.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/document_template_id_name_list_by_user_bloc/document_template_id_name_list_by_user_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/manage_workspace_bloc/manage_workspace_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/widgets/dms_legal_entity_body_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/ui/widgets/multi_select_form_widget/multi_select_form_widget.dart';
+import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 
 import '../../../../../themes/theme_config.dart';
@@ -21,23 +28,11 @@ class _DMSManageWorkspaceBodyWidgetState
   //
   DMSLegalEntityModel _selectedLegalEntityData;
 
-  //
-  int _selectedDocumentTypeIndex;
-
   TextEditingController _workspaceNameTextEditingController =
       TextEditingController();
 
   TextEditingController _sequenceOrderTextEditingController =
       TextEditingController();
-
-  List<String> _documentTypeList = [
-    'General Document',
-    'Engineering sub-contract',
-    'Vendor Documents',
-    'Request for Inspection Halul',
-    'Request for Inspection',
-    'Project Documents',
-  ];
 
   @override
   void initState() {
@@ -46,18 +41,19 @@ class _DMSManageWorkspaceBodyWidgetState
 
   _handleQueryParams() {
     return WorkspaceViewModel(
-      // legalEntityName: null,
-      // TODO
       parentNoteId: 'f7c7d31e-bc19-49ee-8236-227a507382c5',
-      // createdbyName: null,
       workspaceName: _workspaceNameTextEditingController?.text ?? "-",
-      // parentName: null,
-      // noteSubject: null,
       sequenceOrder: _sequenceOrderTextEditingController.text ?? '',
       legalEntityId: _selectedLegalEntityData?.id ?? "",
-      // createdBy: null,
-      // TODO
-      documentTypeId: '6b2ccd42-a79a-4dff-b800-4bbc5a9a744f',
+      documentTypeId: _getDocumentTypeIdList(),
+
+      createdBy:
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+
+      // legalEntityName: null,
+      // createdbyName: null,
+      // parentName: null,
+      // noteSubject: null,
       // workspaceId: null,
       // noteId: null,
       // documentTypeIds: null,
@@ -88,7 +84,7 @@ class _DMSManageWorkspaceBodyWidgetState
             ),
           ),
           Container(
-            height: 96.0,
+            // height: 96.0,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -178,73 +174,38 @@ class _DMSManageWorkspaceBodyWidgetState
     return ListTile(
       minVerticalPadding: 8.0,
       title: Text("Document Type"),
-      trailing: Text(
-        _selectedDocumentTypeIndex == null
-            ? "Select"
-            : _documentTypeList?.elementAt(_selectedDocumentTypeIndex),
-        style: Theme.of(context).textTheme.headline6.copyWith(
-              color: Theme.of(context).textHeadingColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 16.0,
+      trailing: _selectedDataMap != null && _selectedDataMap.keys.length > 0
+          ? CircleAvatar(
+              backgroundColor: Theme.of(context).textHeadingColor,
+              foregroundColor: Colors.white,
+              child: Text(_selectedDataMap?.keys?.length.toString() ?? '-'),
+            )
+          : Icon(
+              Icons.chevron_right,
             ),
-      ),
       onTap: () => _handleDocumentTypeOnTap(),
     );
   }
 
+  Map<String, DMSDocumentTypeModel> _selectedDataMap;
+
   void _handleDocumentTypeOnTap() async {
-    _selectedLegalEntityData = await showModalBottomSheet(
-      context: context,
-      enableDrag: true,
-      isScrollControlled: false,
-      isDismissible: false,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(
-                  16.0,
-                ),
-                topRight: Radius.circular(
-                  16.0,
-                ),
-              ),
+    _selectedDataMap = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Document Type"),
             ),
-            padding: DEFAULT_PADDING,
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: _documentTypeList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    trailing: (_selectedDocumentTypeIndex != null &&
-                            _selectedDocumentTypeIndex == index)
-                        ? Icon(
-                            Icons.check,
-                            color: Theme.of(context).textHeadingColor,
-                            size: 24.0,
-                          )
-                        : Container(
-                            width: 0,
-                            height: 0,
-                          ),
-                    title: Text(
-                      _documentTypeList.elementAt(index),
-                      style: TextStyle(
-                        color: Theme.of(context).textHeadingColor,
-                      ),
-                    ),
-                    onTap: () => _handleListTileOnTap(
-                      index,
-                    ),
-                  );
-                }),
-          ),
-        );
-      },
+            body: MultiSelectFormWidget<DMSDocumentTypeModel>(
+              initCallback: dmsDocumentTemplateIdNameListByUserBloc.getAPIData,
+              stream: dmsDocumentTemplateIdNameListByUserBloc.subject.stream,
+              titleKey: 'DisplayName',
+              selectedDataMap: _selectedDataMap,
+            ),
+          );
+        },
+      ),
     );
 
     setState(() {});
@@ -266,37 +227,15 @@ class _DMSManageWorkspaceBodyWidgetState
     bool obscureText = false,
     keyboardType = TextInputType.text,
   }) {
-    return Container(
-      padding: DEFAULT_VERTICAL_PADDING,
-      child: TextFormField(
-        obscureText: obscureText,
-        controller: controller,
-        textCapitalization: TextCapitalization.words,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          fillColor: Colors.white70,
-          filled: true,
-          border: OutlineInputBorder(),
-        ),
-      ),
+    return TextFormField(
+      obscureText: obscureText,
+      controller: controller,
+      textCapitalization: TextCapitalization.words,
+      keyboardType: keyboardType,
     );
   }
 
-  _handleListTileOnTap(int index) {
-    setState(() {
-      _selectedDocumentTypeIndex = index;
-    });
-
-    Navigator.of(context).pop();
-  }
-
   _handleSaveOnPressed() {
-    // print(_selectedLegalEntityData?.name);
-    // print(_workspaceNameTextEditingController.text);
-    // print(_documentTypeList.elementAt(_selectedDocumentTypeIndex));
-    // print(_sequenceOrderTextEditingController.text);
-
     if (_selectedLegalEntityData?.name == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Legal Entity cannot be null or empty.")),
@@ -307,14 +246,14 @@ class _DMSManageWorkspaceBodyWidgetState
     if (_workspaceNameTextEditingController?.text == null ||
         _workspaceNameTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Legal Entity cannot be null or empty.")),
+        SnackBar(content: Text("Workspace Name cannot be null or empty.")),
       );
       return;
     }
 
-    if (_selectedDocumentTypeIndex == null) {
+    if (_selectedDataMap == null || _selectedDataMap.keys.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Legal Entity cannot be null or empty.")),
+        SnackBar(content: Text("Document type cannot be null or empty.")),
       );
       return;
     }
@@ -322,15 +261,17 @@ class _DMSManageWorkspaceBodyWidgetState
     if (_sequenceOrderTextEditingController?.text == null ||
         _sequenceOrderTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Legal Entity cannot be null or empty.")),
+        SnackBar(content: Text("Sequence Order cannot be null or empty.")),
       );
       return;
     }
 
-    dmsManageWorkspaceBloc
-      ..postAPIData(
-        queryparams: _handleQueryParams(),
-      );
+    // dmsManageWorkspaceBloc
+    //   ..postAPIData(
+    //     queryparams: _handleQueryParams(),
+    //   );
+
+    _handleQueryParams();
 
     // After everything is successful, pop.
     // _handleCancelOnPressed();
@@ -340,9 +281,22 @@ class _DMSManageWorkspaceBodyWidgetState
   _handleCancelOnPressed() {
     _selectedLegalEntityData = null;
     _workspaceNameTextEditingController.clear();
-    _selectedDocumentTypeIndex = null;
+    _selectedDataMap = null;
     _sequenceOrderTextEditingController.clear();
 
     Navigator.of(context).pop();
+  }
+
+  // Helper function to handle all document type list for queryparams.
+  List<String> _getDocumentTypeIdList() {
+    if (_selectedDataMap == null || _selectedDataMap.values.isEmpty) return [];
+
+    List<String> _list = [];
+
+    _selectedDataMap.values.forEach((element) {
+      _list.add(element.id);
+    });
+
+    return _list;
   }
 }

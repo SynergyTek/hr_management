@@ -8,7 +8,7 @@ class WorkspaceViewModel {
   String sequenceOrder;
   String legalEntityId;
   String createdBy;
-  String documentTypeId;
+  List<String> documentTypeId;
   String workspaceId;
   String noteId;
   String documentTypeIds;
@@ -45,7 +45,7 @@ class WorkspaceViewModel {
     sequenceOrder = json['sequenceOrder'];
     legalEntityId = json['legalEntityId'];
     createdBy = json['createdBy'];
-    documentTypeId = json['documentTypeId'];
+    documentTypeId = List<String>.from(json["documentTypeId"].map((x) => x));
     workspaceId = json['workspaceId'];
     noteId = json['noteId'];
     documentTypeIds = json['documentTypeIds'];

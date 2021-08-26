@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../constants/api_endpoints.dart';
@@ -11,6 +10,6 @@ abstract class AbstractManageNewFolderRepository {
   AbstractManageNewFolderRepository();
 
   Future<dynamic> postAPIData({
-    @required NoteModel model,
+    @required Map<String, dynamic> queryparams,
   });
 }
