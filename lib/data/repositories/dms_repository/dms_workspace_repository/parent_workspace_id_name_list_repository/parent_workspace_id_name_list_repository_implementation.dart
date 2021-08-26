@@ -4,25 +4,29 @@ class ParentWorkspaceIdNameListRepository
     extends AbstractParentWorkspaceIdNameListRepository {
   final Dio _dio = Dio();
 
-  Future getAPIData({
-    @required String legalEntity,
-    @required String id,
+  Future<ParentWorkspaceIdNameListResponse> getAPIData({
+    String legalEntity,
+    String id,
   }) async {
     try {
       Response response = await _dio.get(
         APIEndpointConstants.GET_PARENT_WORKSPACE_ID_NAME_LIST_DATA,
-        queryParameters: {
-          'legalEntity': legalEntity,
-          'id': id,
-        },
+        queryParameters: (legalEntity == null ||
+                legalEntity.isEmpty ||
+                id == null ||
+                id.isEmpty)
+            ? {}
+            : {
+                'legalEntity': legalEntity,
+                'id': id,
+              },
       );
-      return true;
-      // return AttachmentNTSResponse.fromJson(response.data);
+
+      return ParentWorkspaceIdNameListResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
-      return false;
 
-      // return AttachmentNTSResponse.withError("$err");
+      return ParentWorkspaceIdNameListResponse.withError("$err");
     }
   }
 }

@@ -1,0 +1,22 @@
+import 'package:meta/meta.dart';
+
+import 'parent_workspace_id_name_list_model.dart';
+
+class ParentWorkspaceIdNameListResponse {
+  String error;
+  List<ParentWorkspaceIdNameListModel> data;
+
+  ParentWorkspaceIdNameListResponse({
+    @required this.data,
+  });
+
+  ParentWorkspaceIdNameListResponse.fromJson(List response)
+      : data = response
+            .map((i) => new ParentWorkspaceIdNameListModel.fromJson(i))
+            .toList(),
+        error = "";
+
+  ParentWorkspaceIdNameListResponse.withError(String errorValue)
+      : data = [],
+        error = errorValue;
+}

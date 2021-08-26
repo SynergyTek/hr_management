@@ -377,7 +377,7 @@ class APIEndpointConstants {
   static const POST_MANAGE_UPLOADED_FILE_DATA = BASE_URL + '/dms/query/';
 
   static const GET_PARENT_WORKSPACE_ID_NAME_LIST_DATA =
-      BASE_URL + '/dms/query/';
+      BASE_URL + '/dms/query/ReadParentWorkspaceIdNameList';
 
   static const GET_DOCUMENT_TEMPLATE_ID_NAME_LIST_BY_USER_DATA = BASE_URL +
       '/dms/query/GetDocumentTemplateIdNameListByUser?userId=45bba746-3309-49b7-9c03-b5793369d73c';
