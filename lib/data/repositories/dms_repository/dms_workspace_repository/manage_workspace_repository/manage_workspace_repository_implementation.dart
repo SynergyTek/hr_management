@@ -6,13 +6,13 @@ class ManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
   Future postAPIData({
     @required Map<String, dynamic> queryparams,
   }) async {
-    print(APIEndpointConstants.POST_MANAGE_WORKSPACE_DATA);
-
     try {
       Response response = await _dio.post(
         APIEndpointConstants.POST_MANAGE_WORKSPACE_DATA,
-        queryParameters: queryparams,
+        data: queryparams,
       );
+
+      print(response.data);
 
       return response.data;
       // return WorkspaceViewResponse.fromJson(response.data);

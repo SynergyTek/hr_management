@@ -90,7 +90,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                       title: Text('Administrator'),
                       children: [
                         Container(
-                          height: 70.h,
+                          height: 75.h,
                           child: ListView.builder(
                             itemCount: filterChildList.length,
                             shrinkWrap: true,

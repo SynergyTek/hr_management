@@ -14,9 +14,6 @@ class ManageWorkspaceBloc {
       queryparams: queryparams,
     );
 
-    print(queryparams.entries);
-    print(response);
-
     _subject.sink.add(response);
   }
 

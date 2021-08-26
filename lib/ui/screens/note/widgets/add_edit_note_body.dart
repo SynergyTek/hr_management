@@ -315,6 +315,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       if (!noteModel.hideSubject) {
         createServiceFormBloc.subject
             .updateInitialValue(subjectValue ?? noteModel.noteSubject ?? "");
+        createServiceFormBloc.description
+            .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
         widgets.add(
           BlocTextBoxWidget(
             fieldName: 'Subject',
@@ -426,15 +428,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               )
             ],
           ),
-        ],
-      ));
-
-      if (!noteModel.hideDescription) {
-        createServiceFormBloc.description
-            .updateInitialValue(descriptionValue ?? noteModel.noteDescription);
-        widgets.add(
           Visibility(
-            visible: true,
+            visible: !noteModel.hideDescription,
             child: BlocTextBoxWidget(
               fieldName: 'Description',
               readonly: false,
@@ -447,8 +442,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               },
             ),
           ),
-        );
-      }
+        ],
+      ));
 
       widgets.add(
         NTSDropDownSelect(
@@ -462,8 +457,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             User _user = value;
             _fromddController.text = _user.name;
             ownerUserId = _user.id;
-            //     selectValue[i] = _selectedIdNameViewModel.name;
-            //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
           },
         ),
       );
@@ -781,11 +774,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             // (widget.noteId == null ||widget.noteId.isEmpty)
             (udfJson[model[i].key] == null || udfJson[model[i].key].isEmpty)
                 ? " Select File to Attach "
-                : (selectValue != null && selectValue.length>0)
-                ?(selectValue[i] == null || selectValue[i].isEmpty)
-                    ? " (1) File Attached: " + udfJson[model[i].key]
-                    : " (1) File Attached: " + selectValue[i]
-                    :"Select File to Attach";
+                : (selectValue != null && selectValue.length > 0)
+                    ? (selectValue[i] == null || selectValue[i].isEmpty)
+                        ? " (1) File Attached: " + udfJson[model[i].key]
+                        : " (1) File Attached: " + selectValue[i]
+                    : "Select File to Attach";
         // : " (1) File Attached " + udfJson[model[i].key];
 
         listDynamic.add(DynamicAttchmentWidget(
@@ -1061,7 +1054,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   ) {
     return Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ListView(
             shrinkWrap: true,
@@ -1097,9 +1090,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               Visibility(
                 visible: noteModel.isCloseButtonVisible,
                 child: PrimaryButton(
+                  backgroundColor: Colors.grey,
                   buttonText: 'Close',
                   handleOnPressed: () => Navigator.pop(context),
-                  width: 100,
+                  width: 80,
                 ),
               ),
               Visibility(

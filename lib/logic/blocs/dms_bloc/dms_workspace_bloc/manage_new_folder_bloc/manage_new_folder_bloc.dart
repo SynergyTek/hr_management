@@ -1,18 +1,18 @@
-import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:meta/meta.dart';
 import 'package:hr_management/data/repositories/dms_repository/dms_workspace_repository/manage_new_folder_repository/manage_new_folder_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ManageNewFolderBloc {
-  final ManageNewFolderRepository _apiRepository = ManageNewFolderRepository();
+class DMSManageNewFolderBloc {
+  final DMSManageNewFolderRepository _apiRepository =
+      DMSManageNewFolderRepository();
 
   final BehaviorSubject _subject = BehaviorSubject();
 
   postAPIData({
-    @required NoteModel model,
+    @required Map<String, dynamic> queryparams,
   }) async {
     dynamic response = await _apiRepository.postAPIData(
-      model: model,
+      queryparams: queryparams,
     );
 
     _subject.sink.add(response);
@@ -25,4 +25,4 @@ class ManageNewFolderBloc {
   BehaviorSubject get subject => _subject;
 }
 
-final manageNewFolderBloc = ManageNewFolderBloc();
+final dmsManageNewFolderBloc = DMSManageNewFolderBloc();
