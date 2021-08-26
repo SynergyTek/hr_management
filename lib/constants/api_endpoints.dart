@@ -369,9 +369,11 @@ class APIEndpointConstants {
   static const POST_DMS_SEARCH_FILE_DATA = BASE_URL + '/dms/query/';
 
   static const POST_MANAGE_WORKSPACE_DATA =
-      BASE_URL + '/dms/command/ManageWorkspace';
+      BASE_URL + '/api/command/ManageWorkspace';
 
-  static const POST_MANAGE_NEW_FOLDER_DATA = BASE_URL + '/dms/query/';
+  static const POST_MANAGE_NEW_FOLDER_DATA =
+      BASE_URL + '/api/command/ManageNewFolder';
+
   static const POST_MANAGE_UPLOADED_FILE_DATA = BASE_URL + '/dms/query/';
 
   static const GET_PARENT_WORKSPACE_ID_NAME_LIST_DATA =

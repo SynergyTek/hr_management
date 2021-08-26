@@ -41,25 +41,17 @@ class _DMSManageWorkspaceBodyWidgetState
 
   _handleQueryParams() {
     return WorkspaceViewModel(
-      parentNoteId: 'f7c7d31e-bc19-49ee-8236-227a507382c5',
-      workspaceName: _workspaceNameTextEditingController?.text ?? "-",
-      sequenceOrder: _sequenceOrderTextEditingController.text ?? '',
-      legalEntityId: _selectedLegalEntityData?.id ?? "",
+      activeUserId:
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+      dataAction: "Create",
       documentTypeId: _getDocumentTypeIdList(),
-
-      createdBy:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
-
-      // legalEntityName: null,
-      // createdbyName: null,
-      // parentName: null,
-      // noteSubject: null,
-      // workspaceId: null,
-      // noteId: null,
-      // documentTypeIds: null,
-      // documentTypeNoteId: null,
-      // id: null,
-      // type: null,
+      legalEntityId: _selectedLegalEntityData?.id ?? "",
+      ownerUserId:
+          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+      parentNoteId: "f7c7d31e-bc19-49ee-8236-227a507382c5",
+      sequenceOrder: _sequenceOrderTextEditingController?.text ?? "",
+      workspaceName:
+          _workspaceNameTextEditingController?.text ?? "Default Workspace Name",
     ).toJson();
   }
 
@@ -271,10 +263,8 @@ class _DMSManageWorkspaceBodyWidgetState
     //     queryparams: _handleQueryParams(),
     //   );
 
-    _handleQueryParams();
-
-    // After everything is successful, pop.
-    // _handleCancelOnPressed();
+    // TODO
+    // ReadParentWorkspaceIdNameList(long? legalEntity, string id)
   }
 
   /// Cancel everything and
