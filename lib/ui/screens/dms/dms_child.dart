@@ -12,16 +12,22 @@ class DMSChild extends StatelessWidget {
   final List<String> pathList;
   final List<String> parentPathList;
   final List<Cwd> parentModelList;
-  const DMSChild(
-      {Key key,
-      this.parentName,
-      this.parentModel,
-      this.parentPath,
-      this.callBack,
-      this.pathList,
-      this.parentPathList,
-      this.parentModelList})
-      : super(key: key);
+  final String sourceId;
+  final bool isCopy;
+  final bool isCut;
+  const DMSChild({
+    Key key,
+    this.parentName,
+    this.parentModel,
+    this.parentPath,
+    this.callBack,
+    this.pathList,
+    this.parentPathList,
+    this.parentModelList,
+    this.sourceId,
+    this.isCopy,
+    this.isCut,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +36,8 @@ class DMSChild extends StatelessWidget {
         dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
         callBack(true, null, null);
         pathList.removeLast();
+        parentPathList.removeLast();
+        parentModelList.removeLast();
         Navigator.pop(context);
         return false;
       },
@@ -39,6 +47,9 @@ class DMSChild extends StatelessWidget {
                 onPressed: () {
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
                   callBack(true, null, null);
+                  pathList.removeLast();
+                  parentPathList.removeLast();
+                  parentModelList.removeLast();
                   Navigator.pop(context);
                 },
                 icon: Icon(Icons.arrow_back)),
@@ -51,6 +62,9 @@ class DMSChild extends StatelessWidget {
             parentPathList: parentPathList,
             parentModelList: parentModelList,
             parentName: parentName,
+            sourceId: sourceId,
+            isCopy: isCopy,
+            isCut: isCut,
           )),
     );
   }

@@ -360,10 +360,10 @@ class APIEndpointConstants {
   static const GETDMSFILES = BASE_URL + '/dms/query/GetFiles';
 
   static const GET_DMS_ARCHIVE_NOTE_DATA = BASE_URL + '/dms/query/ArchiveNote';
-  static const GET_DMS_COPY_NOTE_DATA = BASE_URL + '/dms/query/';
+  static const GET_DMS_COPY_NOTE_DATA = BASE_URL + '/dms/query/CopyNote';
   static const GET_DMS_CREATE_NOTE_DATA = BASE_URL + '/dms/query/';
   static const GET_DMS_DELETE_NOTE_DATA = BASE_URL + '/dms/query/DeleteNote';
-  static const GET_DMS_MOVE_NOTE_DATA = BASE_URL + '/dms/query/';
+  static const GET_DMS_MOVE_NOTE_DATA = BASE_URL + '/dms/query/MoveNote';
   static const GET_DMS_RENAME_NOTE_DATA = BASE_URL + '/dms/query/';
 
   static const POST_DMS_SEARCH_FILE_DATA = BASE_URL + '/dms/query/';
