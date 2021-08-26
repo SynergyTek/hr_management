@@ -229,8 +229,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                       : SizedBox(),
                   IconButton(
                     onPressed: () => bottomSheet(
-                      filterChildList[index].name,
-                      filterChildList[index].id,
+                      filterChildList[index],
                     ),
                     icon: Icon(Icons.more_vert_rounded),
                   )
@@ -278,7 +277,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  bottomSheet(String title, String id) {
+  bottomSheet(Cwd item) {
     showDocumentBottomSheet(
       bottomSheetDataList: [
         Row(
@@ -287,17 +286,136 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: title,
-                subtitle: 'Folder Name',
+                title: item.name,
+                // subtitle: 'Folder Name',
                 isHeading: true,
               ),
             )
           ],
         ),
+         Visibility(
+           visible:item.templateCode=="WORKSPACE_GENERAL" ,
+          child: ListTile(
+            leading: Icon(
+              CustomIcons.folder,
+              color: Colors.blue,
+            ),
+            title: Text('Create Workspace'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+         Visibility(
+           visible:item.templateCode=="WORKSPACE_GENERAL" ,
+          child: ListTile(
+             leading: Icon(
+              CustomIcons.folder,
+              color: Colors.blue,
+            ),
+            title: Text('Edit Workspace'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+         Visibility(
+           visible:item.templateCode=='GENERAL_FOLDER' ||item.templateCode=="WORKSPACE_GENERAL" ,
+           child: ListTile(
+             leading: Icon(
+              CustomIcons.folder,
+              color: Colors.yellow,
+            ),
+            title: Text('Create Folder'),
+            // onTap: () => deleteDialog(id),
+                 ),
+         ),
+          Visibility(
+           visible:item.templateCode=='GENERAL_FOLDER'  ,
+          child: ListTile(
+             leading: Icon(
+              CustomIcons.pencil,
+            ),
+            title: Text('Edit Folder'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+         Visibility(
+           visible:item.templateCode=='GENERAL_FOLDER' ||item.templateCode=="WORKSPACE_GENERAL" ,
+          child: ListTile(
+             leading: Icon(
+              CustomIcons.folder_open,
+            ),
+            title: Text('Upload Folder'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+         Visibility(
+           visible:item.templateCode=='GENERAL_FOLDER'  ,
+          child: ListTile(
+             leading: Icon(
+              CustomIcons.folder_open,
+            ),
+            title: Text('Upload File'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+         Visibility(
+           visible:item.templateCode=='GENERAL_FOLDER' ,
+          child: ListTile(
+            leading: Icon(
+              CustomIcons.plus_square,
+            ),
+            title: Text('Create Document'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+          Visibility(
+           visible:item.templateCode=='GENERAL_DOCUMENT' ,
+           child: ListTile(
+            leading: Icon(
+              CustomIcons.pencil,
+            ),
+            title: Text('Edit Document'),
+            // onTap: () => deleteDialog(id),
+                 ),
+         ),
+         Visibility(
+           visible:item.templateCode=='GENERAL_DOCUMENT' ,
+           child: ListTile(
+           leading: Icon(
+              CustomIcons.file_word,
+            ),
+            title: Text('View Workflow'),
+            // onTap: () => deleteDialog(id),
+                 ),
+         ),
+          Visibility(
+           visible:item.templateCode=='GENERAL_DOCUMENT' ,
+           child: ListTile(
+            leading: Icon(CustomIcons.arrow_alt_from_top),
+            title: Text('Raise Approval Request'),
+            // onTap: () => deleteDialog(id),
+                 ),
+         ),
+         Visibility(
+           visible:item.templateCode=='GENERAL_DOCUMENT' ,
+          child: ListTile(
+            leading: Icon(CustomIcons.arrows),
+            title: Text('View Approval Request'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.bags_shopping),
+          title: Text('Manage Permission'),
+          // onTap: () => deleteDialog(id),
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.eye),
+          title: Text('View Permission'),
+          // onTap: () => deleteDialog(id),
+        ),
         ListTile(
           leading: Icon(CustomIcons.trash),
           title: Text('Delete'),
-          onTap: () => deleteDialog(id),
+          onTap: () => deleteDialog(item.id),
         ),
         ListTile(
           leading: Icon(CustomIcons.copy),
@@ -312,12 +430,12 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ListTile(
           leading: Icon(CustomIcons.archive),
           title: Text('Archive'),
-          onTap: () => archiveDialog(id),
+          onTap: () => archiveDialog(item.id),
         ),
         ListTile(
           leading: Icon(CustomIcons.edit),
           title: Text('Rename'),
-          onTap: () => renameDialog(title),
+          onTap: () => renameDialog(item.name),
         ),
         ListTile(
           leading: Icon(CustomIcons.sticky_note),
@@ -328,7 +446,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                   ADD_EDIT_NOTE_ROUTE,
                   arguments: ScreenArguments(
                       arg1: '',
-                      arg2: id,
+                      arg2: item.id,
                       // arg3: filterChildList[index].noteSubject
                       ),
                 );

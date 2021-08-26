@@ -59,7 +59,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: DEFAULT_PADDING,
+                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: StreamBuilder<NTSTemplateTreeListResponse>(
                   stream: ntsTemplateTreeListBloc.subject.stream,
                   builder: (context, AsyncSnapshot snapshot) {
@@ -333,7 +333,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
         ..add(
           Container(
             padding: DEFAULT_HORIZONTAL_PADDING,
-            child: Chip(
+            child: _chips==[]?Text('Select Templates') :Chip(
               backgroundColor: Theme.of(context).textHeadingColor,
               label: Text(
                 eachChip.displayName ?? "",

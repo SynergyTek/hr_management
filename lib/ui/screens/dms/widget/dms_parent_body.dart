@@ -183,50 +183,74 @@ class _DMSParentBodyState extends State<DMSParentBody> {
               child: _statisticWidget(
                 context: context,
                 title: title,
-                subtitle: 'Folder Name',
+                // subtitle: 'Folder Name',
                 isHeading: true,
               ),
             )
           ],
         ),
         ListTile(
-          leading: Icon(CustomIcons.trash),
-          title: Text('Delete'),
-          onTap: () => deleteDialog(id),
+          leading: Icon(
+            CustomIcons.folder,
+            color: Colors.blue,
+          ),
+          title: Text('Edit Workspace'),
+          // onTap: () => deleteDialog(id),
         ),
         ListTile(
-          leading: Icon(CustomIcons.copy),
-          title: Text('Copy'),
-          // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+          leading: Icon(
+            CustomIcons.folder,
+            color: Colors.yellow,
+          ),
+          title: Text('Create Folder'),
+          // onTap: () => deleteDialog(id),
         ),
         ListTile(
-          leading: Icon(CustomIcons.expand_arrows),
-          title: Text('Move'),
-          // onTap: () => dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: targetId),
+          leading: Icon(
+            CustomIcons.folder_upload
+          ),
+          title: Text('Upload Folder'),
+          // onTap: () => deleteDialog(id),
         ),
-        ListTile(
-          leading: Icon(CustomIcons.archive),
-          title: Text('Archive'),
-          onTap: () => archiveDialog(id),
-        ),
-        ListTile(
-          leading: Icon(CustomIcons.edit),
-          title: Text('Rename'),
-          onTap: () => renameDialog(title),
-        ),
+        
+        // ListTile(
+        //   leading: Icon(CustomIcons.trash),
+        //   title: Text('Delete'),
+        //   onTap: () => deleteDialog(id),
+        // ),
+        // ListTile(
+        //   leading: Icon(CustomIcons.copy),
+        //   title: Text('Copy'),
+        //   // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+        // ),
+        // ListTile(
+        //   leading: Icon(CustomIcons.expand_arrows),
+        //   title: Text('Move'),
+        //   // onTap: () => dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: targetId),
+        // ),
+        // ListTile(
+        //   leading: Icon(CustomIcons.archive),
+        //   title: Text('Archive'),
+        //   onTap: () => archiveDialog(id),
+        // ),
+        // ListTile(
+        //   leading: Icon(CustomIcons.edit),
+        //   title: Text('Rename'),
+        //   onTap: () => renameDialog(title),
+        // ),
         ListTile(
           leading: Icon(CustomIcons.sticky_note),
           title: Text('View Details'),
           onTap: () {
-             Navigator.pushNamed(
-                  context,
-                  ADD_EDIT_NOTE_ROUTE,
-                  arguments: ScreenArguments(
-                      arg1: '',
-                      arg2: id,
-                      // arg3: filterChildList[index].noteSubject
-                      ),
-                );
+            Navigator.pushNamed(
+              context,
+              ADD_EDIT_NOTE_ROUTE,
+              arguments: ScreenArguments(
+                arg1: '',
+                arg2: id,
+                // arg3: filterChildList[index].noteSubject
+              ),
+            );
           },
         ),
       ],

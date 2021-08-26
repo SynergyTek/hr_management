@@ -60,7 +60,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
       crossAxisCount: 3,
       crossAxisSpacing: 10.0,
       mainAxisSpacing: 12.0,
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
       children: <Widget>[
         buildTile(
           isTile: false,
