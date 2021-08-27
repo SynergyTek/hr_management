@@ -152,31 +152,25 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ]),
       padding: EdgeInsets.all(8),
       child: BreadCrumb.builder(
-        itemCount: childPath.length - 1,
+        itemCount: childPath.length,
         builder: (index) {
           return BreadCrumbItem(
               content: Text(childPath[index]),
               borderRadius: BorderRadius.circular(4),
               padding: EdgeInsets.all(4),
               onTap: () {
-                for (var i = childPath.length - 2; i > index - 1; i--) {
-                  parentPathList.remove(parentPathList[i]);
-                  parentModelList.remove(parentModelList[i]);
-                  Navigator.pop(context);
-                }
-
-                for (var i = childPath.length - 1; i > index; i--) {
-                  childPath.remove(childPath[i]);
-                }
-                dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
                 if (childPath[index] == 'Administrator') {
+                  _preProcess(index);
                   Navigator.pushNamed(context, DMS_PARENT,
                       arguments: ScreenArguments(
                         val1: isCopy,
                         val2: isCut,
                         arg3: sourceId,
                       ));
+                } else if (index == childPath.length - 1) {
+                  print('Same folder');
                 } else {
+                  _preProcess(index);
                   Navigator.pushNamed(
                     context,
                     DMS_CHILD,
@@ -213,6 +207,19 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         overflow: ScrollableOverflow(),
       ),
     );
+  }
+
+  _preProcess(int index) {
+    for (var i = childPath.length - 2; i > index - 1; i--) {
+      parentPathList.remove(parentPathList[i]);
+      parentModelList.remove(parentModelList[i]);
+      Navigator.pop(context);
+    }
+
+    for (var i = childPath.length - 1; i > index; i--) {
+      childPath.remove(childPath[i]);
+    }
+    dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
   }
 
   _itemList() {
