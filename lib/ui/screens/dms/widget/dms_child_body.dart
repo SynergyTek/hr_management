@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
@@ -407,7 +408,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               CustomIcons.plus_square,
             ),
             title: Text('Create Document'),
-            // onTap: () => deleteDialog(id),
+            onTap: () => Navigator.pushNamed(
+              context,
+              NTS_TEMPLATE_REQUEST,
+              arguments: ScreenArguments(
+                ntstype: NTSType.note,
+                arg4: 'GENERAL_DOCUMENT',
+              ),
+            ),
           ),
         ),
         Visibility(

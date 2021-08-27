@@ -36,7 +36,8 @@ class NTSTemplateBloc {
       _subject.sink.add(null);
       queryparams = {
         "templateType": "Note",
-        "categoryCode": "", //categoryCode,
+        // "categoryCode": "", //categoryCode,
+        "categoryCode": categoryCode ?? "", //categoryCode,
       };
     }
 

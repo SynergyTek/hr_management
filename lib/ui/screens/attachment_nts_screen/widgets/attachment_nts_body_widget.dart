@@ -3,7 +3,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
+import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
 
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/attachment_nts_models/attachment_nts_model.dart';
@@ -147,12 +149,25 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
       );
   }
 
-  void _handleViewOnPressed({
-    @required AttachmentNTSModel data,
-  }) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Feature under development."),
+_handleViewOnPressed({
+    @required data,
+  }) async {
+    if (data == null)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Data is unavailable. Pl try again later."),
+        ),
+      );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return AttachmentViewWebview(
+            url: APIEndpointConstants.GET_ATTACHMENT_VIEW_WEBVIEW_URL +
+                '${data?.udfValue ?? ''}',
+          );
+        },
       ),
     );
   }
