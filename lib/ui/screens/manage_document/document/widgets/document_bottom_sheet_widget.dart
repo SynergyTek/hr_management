@@ -26,9 +26,11 @@ class DocumentBottomSheetWidget extends StatelessWidget {
           ),
         ),
         padding: DEFAULT_LARGE_PADDING,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: bottomSheetDataList ?? [],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: bottomSheetDataList ?? [],
+          ),
         ),
       ),
     );
