@@ -423,12 +423,8 @@ class AppRouter {
         break;
 
       case DMS_PARENT:
-        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => DMSParent(
-            sourceId: args.arg3,
-            isCopy: args.val1,
-            isCut: args.val2,),
+          builder: (_) => DMSParent(),
         );
         break;
 
@@ -443,9 +439,6 @@ class AppRouter {
             pathList: args.list1,
             parentPathList: args.list2,
             parentModelList: args.dmsParentModelList,
-            sourceId: args.arg3,
-            isCopy: args.val1,
-            isCut: args.val2,
           ),
         );
         break;

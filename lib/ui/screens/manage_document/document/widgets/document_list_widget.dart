@@ -1026,7 +1026,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
-      isScrollControlled: true,
+      isScrollControlled: false,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return DocumentBottomSheetWidget(

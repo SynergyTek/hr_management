@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:sizer/sizer.dart';
 
@@ -39,6 +40,10 @@ class InitScreen extends StatelessWidget {
 
           BlocProvider<ProfileSettingsBloc>(
             create: (context) => ProfileSettingsBloc(),
+          ),
+
+          BlocProvider<CutCopyPasteBloc>(
+            create: (context) => CutCopyPasteBloc(),
           ),
         ],
         child: Sizer(builder: (context, orientation, deviceType) {

@@ -157,9 +157,6 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           list2: parentPathList,
                                           arg1: filterChildList[index].name,
                                           arg2: parentPath,
-                                          arg3: widget.sourceId,
-                                          val1: widget.isCopy,
-                                          val2: widget.isCut,
                                           dmsParentModel:
                                               filterChildList[index],
                                           callBack: (dynamic value,
@@ -208,14 +205,14 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             )
           ],
         ),
-           ListTile(
-             leading: Icon(
-               CustomIcons.folder,
-               color: Colors.blue,
-             ),
-             title: Text('Create Workspace'),
-             // onTap: () => deleteDialog(id),
-           ),
+        ListTile(
+          leading: Icon(
+            CustomIcons.folder,
+            color: Colors.blue,
+          ),
+          title: Text('Create Workspace'),
+          // onTap: () => deleteDialog(id),
+        ),
         ListTile(
           leading: Icon(
             CustomIcons.folder,
@@ -233,13 +230,11 @@ class _DMSParentBodyState extends State<DMSParentBody> {
           // onTap: () => deleteDialog(id),
         ),
         ListTile(
-          leading: Icon(
-            CustomIcons.folder_upload
-          ),
+          leading: Icon(CustomIcons.folder_upload),
           title: Text('Upload Folder'),
           // onTap: () => deleteDialog(id),
         ),
-        
+
         // ListTile(
         //   leading: Icon(CustomIcons.trash),
         //   title: Text('Delete'),
@@ -525,7 +520,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
-      isScrollControlled: true,
+      isScrollControlled: false,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return DocumentBottomSheetWidget(
