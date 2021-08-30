@@ -11,24 +11,27 @@ class DocumentBottomSheetWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(
-            16.0,
-          ),
-          topRight: Radius.circular(
-            16.0,
+    return SingleChildScrollView(
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(
+              16.0,
+            ),
+            topRight: Radius.circular(
+              16.0,
+            ),
           ),
         ),
-      ),
-      padding: DEFAULT_LARGE_PADDING,
-      child: ListView(
-        shrinkWrap: true,
-        // mainAxisSize: MainAxisSize.min,
-        children: bottomSheetDataList ?? [],
+        padding: DEFAULT_LARGE_PADDING,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: bottomSheetDataList ?? [],
+          ),
+        ),
       ),
     );
   }
