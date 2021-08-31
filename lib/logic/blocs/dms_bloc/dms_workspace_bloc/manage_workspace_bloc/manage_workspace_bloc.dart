@@ -4,7 +4,8 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ManageWorkspaceBloc {
-  final ManageWorkspaceRepository _apiRepository = ManageWorkspaceRepository();
+  final DMSManageWorkspaceRepository _apiRepository =
+      DMSManageWorkspaceRepository();
 
   final BehaviorSubject _subject = BehaviorSubject();
 

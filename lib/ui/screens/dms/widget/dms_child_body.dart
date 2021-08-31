@@ -325,7 +325,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               child: _statisticWidget(
                 context: context,
                 title: item.name,
-                // subtitle: 'Folder Name',
+                subtitle: '',
                 isHeading: true,
               ),
             )
@@ -362,7 +362,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               color: Colors.yellow,
             ),
             title: Text('Create Folder'),
-            // onTap: () => deleteDialog(id),
+            onTap: () => _handleCreateFolderOnTap(item),
           ),
         ),
         Visibility(
@@ -372,7 +372,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               CustomIcons.pencil,
             ),
             title: Text('Edit Folder'),
-            // onTap: () => deleteDialog(id),
+            onTap: () => _handleEditFolderOnTap(item),
           ),
         ),
         Visibility(
@@ -830,6 +830,26 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ),
       ),
       subtitle: Text(subtitle ?? '-'),
+    );
+  }
+
+  _handleEditFolderOnTap(Cwd item) {
+    Navigator.of(context).pushNamed(
+      DMS_NEW_FOLDER_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+        arg2: item.name,
+        arg3: item.folderType.toString(),
+      ),
+    );
+  }
+
+  _handleCreateFolderOnTap(Cwd item) {
+    Navigator.of(context).pushNamed(
+      DMS_NEW_FOLDER_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+      ),
     );
   }
 }

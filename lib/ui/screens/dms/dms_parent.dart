@@ -43,25 +43,25 @@ class DMSParent extends StatelessWidget {
       visible: true,
       curve: Curves.bounceInOut,
       children: [
-        SpeedDialChild(
-          child: Icon(
-            Icons.folder_open,
-            color: Colors.white,
-          ),
-          backgroundColor: Colors.blue,
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              DMS_NEW_FOLDER_ROUTE,
-            );
-          },
-          label: 'Create New Folder',
-          labelStyle: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-          ),
-          labelBackgroundColor: Colors.black,
-        ),
+        // SpeedDialChild(
+        //   child: Icon(
+        //     Icons.folder_open,
+        //     color: Colors.white,
+        //   ),
+        //   backgroundColor: Colors.blue,
+        //   onTap: () {
+        //     Navigator.pushNamed(
+        //       context,
+        //       DMS_NEW_FOLDER_ROUTE,
+        //     );
+        //   },
+        //   label: 'Create New Folder',
+        //   labelStyle: TextStyle(
+        //     fontWeight: FontWeight.w500,
+        //     color: Colors.white,
+        //   ),
+        //   labelBackgroundColor: Colors.black,
+        // ),
         SpeedDialChild(
           child: Icon(
             Icons.workspaces_outline,
@@ -74,9 +74,11 @@ class DMSParent extends StatelessWidget {
               DMS_MANAGE_WORKSPACE_ROUTE,
             );
           },
-          label: 'Manage Workspace',
-          labelStyle:
-              TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          label: 'Create Workspace',
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
           labelBackgroundColor: Colors.black,
         ),
       ],

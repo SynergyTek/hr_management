@@ -1,6 +1,6 @@
 part of 'manage_workspace_repository.dart';
 
-class ManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
+class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
   final Dio _dio = Dio();
 
   Future postAPIData({
