@@ -24,4 +24,24 @@ class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
       return false;
     }
   }
+
+  Future<NoteModel> getAPIData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_LEGAL_ENTITY_DATA,
+        queryParameters: queryparams ?? {},
+      );
+
+      var result = NoteModel.fromJson(response.data);
+
+      return result;
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return err;
+    }
+  }
 }

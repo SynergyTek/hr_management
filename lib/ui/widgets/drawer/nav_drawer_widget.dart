@@ -347,12 +347,22 @@ Widget drawerWidget(context) {
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, DMS_PARENT,
-                      arguments: ScreenArguments(
-                        val1: false,
-                        val2: false,
-                        arg3: '',
-                      ));
+                  Navigator.pushNamed(
+                    context,
+                    DMS_PARENT,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'DMS SUPPORT',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_SUPPORT,
+                  );
                 },
               ),
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
+import 'package:hr_management/data/models/dms/dms_manage_workspace_input_model/dms_manage_workspace_input_model.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
@@ -121,6 +122,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           filterChildList[index].name,
                                           filterChildList[index].id,
                                           snapshot.data.data.cwd.id,
+                                          data: filterChildList[index],
                                         ),
                                         icon: Icon(Icons.more_vert_rounded),
                                       )
@@ -157,9 +159,6 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           list2: parentPathList,
                                           arg1: filterChildList[index].name,
                                           arg2: parentPath,
-                                          arg3: widget.sourceId,
-                                          val1: widget.isCopy,
-                                          val2: widget.isCut,
                                           dmsParentModel:
                                               filterChildList[index],
                                           callBack: (dynamic value,
@@ -192,7 +191,12 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     );
   }
 
-  bottomSheet(String title, String id, String path) {
+  bottomSheet(
+    String title,
+    String id,
+    String path, {
+    Cwd data,
+  }) {
     showDocumentBottomSheet(
       bottomSheetDataList: [
         Row(
@@ -202,27 +206,30 @@ class _DMSParentBodyState extends State<DMSParentBody> {
               child: _statisticWidget(
                 context: context,
                 title: title,
-                // subtitle: 'Folder Name',
+                subtitle: '',
                 isHeading: true,
               ),
             )
           ],
         ),
-           ListTile(
-             leading: Icon(
-               CustomIcons.folder,
-               color: Colors.blue,
-             ),
-             title: Text('Create Workspace'),
-             // onTap: () => deleteDialog(id),
-           ),
+        ListTile(
+          leading: Icon(
+            CustomIcons.folder,
+            color: Colors.blue,
+          ),
+          title: Text('Create Workspace'),
+          onTap: () => _handleCreateWorkspaceOnTap(id),
+        ),
         ListTile(
           leading: Icon(
             CustomIcons.folder,
             color: Colors.blue,
           ),
           title: Text('Edit Workspace'),
-          // onTap: () => deleteDialog(id),
+          onTap: () => _handleEditWorkspaceOnTap(
+            id,
+            data: data,
+          ),
         ),
         ListTile(
           leading: Icon(
@@ -230,16 +237,14 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             color: Colors.yellow,
           ),
           title: Text('Create Folder'),
-          // onTap: () => deleteDialog(id),
+          onTap: () => _handleCreateNewFolderOnTap(id),
         ),
         ListTile(
-          leading: Icon(
-            CustomIcons.folder_upload
-          ),
+          leading: Icon(CustomIcons.folder_upload),
           title: Text('Upload Folder'),
           // onTap: () => deleteDialog(id),
         ),
-        
+
         // ListTile(
         //   leading: Icon(CustomIcons.trash),
         //   title: Text('Delete'),
@@ -525,7 +530,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
-      isScrollControlled: true,
+      isScrollControlled: false,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return DocumentBottomSheetWidget(
@@ -611,5 +616,40 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       filterChildList.addAll(childList);
       FocusScope.of(context).requestFocus(FocusNode());
     });
+  }
+
+  _handleCreateNewFolderOnTap(String id) {
+    Navigator.of(context).pushNamed(
+      DMS_NEW_FOLDER_ROUTE,
+      arguments: ScreenArguments(
+        arg1: id,
+      ),
+    );
+  }
+
+  _handleCreateWorkspaceOnTap(String id) {
+    Navigator.of(context).pushNamed(
+      DMS_MANAGE_WORKSPACE_ROUTE,
+    );
+  }
+
+  _handleEditWorkspaceOnTap(
+    String id, {
+    Cwd data,
+  }) {
+    print(data);
+
+    Navigator.of(context).pushNamed(
+      DMS_MANAGE_WORKSPACE_ROUTE,
+      arguments: ScreenArguments(
+        dynamicArgument: DMSManageWorkspaceInputModel(
+          documentTypeModelList: [""],
+          legalEntityModel: "",
+          parentWorkspaceModel: data.parentId ?? "",
+          sequenceOrder: "",
+          workspaceName: data.name ?? "",
+        ),
+      ),
+    );
   }
 }

@@ -84,6 +84,7 @@ const String DOWNLOAD_SCREEN_ROUTE = '/download_screen';
 
 // DMS
 const String DMS_PARENT = '/dms_parent';
+const String DMS_SUPPORT = '/dms_support';
 const String DMS_CHILD = '/dms_child';
 const String DMS_LEGAL_ENTITY = '/dms_legal_entity';
 

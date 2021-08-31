@@ -18,6 +18,7 @@ class ScreenArguments {
   final List<Cwd> dmsParentModelList;
   final List<String> list1;
   final List<String> list2;
+  final dynamic dynamicArgument;
 
   ScreenArguments({
     this.ntstype,
@@ -34,5 +35,6 @@ class ScreenArguments {
     this.dmsParentModelList,
     this.list1,
     this.list2,
+    this.dynamicArgument,
   });
 }

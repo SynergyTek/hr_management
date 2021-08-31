@@ -371,8 +371,14 @@ class APIEndpointConstants {
   static const POST_MANAGE_WORKSPACE_DATA =
       BASE_URL + '/api/command/ManageWorkspace';
 
+  static const CREATE_WORKSPACE =
+      BASE_URL + '/api/command/CreateWorkspace';
+
   static const POST_MANAGE_NEW_FOLDER_DATA =
       BASE_URL + '/api/command/ManageNewFolder';
+
+      static const CREATE_FOLDER =
+      BASE_URL + '/api/command/CreateFolder';
 
   static const POST_MANAGE_UPLOADED_FILE_DATA = BASE_URL + '/dms/query/';
 

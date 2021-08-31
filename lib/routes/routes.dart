@@ -3,6 +3,7 @@ import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/dms_legal_e
 import 'package:hr_management/ui/screens/dms/dms_manage_workspace_screen/dms_manage_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_new_folder_screen/dms_new_folder_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
+import 'package:hr_management/ui/screens/dms/dms_support/dms_support_screen.dart';
 import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
@@ -423,12 +424,14 @@ class AppRouter {
         break;
 
       case DMS_PARENT:
-        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => DMSParent(
-            sourceId: args.arg3,
-            isCopy: args.val1,
-            isCut: args.val2,),
+          builder: (_) => DMSParent(),
+        );
+        break;
+
+      case DMS_SUPPORT:
+        return MaterialPageRoute(
+          builder: (_) => DMSSupport(),
         );
         break;
 
@@ -443,9 +446,6 @@ class AppRouter {
             pathList: args.list1,
             parentPathList: args.list2,
             parentModelList: args.dmsParentModelList,
-            sourceId: args.arg3,
-            isCopy: args.val1,
-            isCut: args.val2,
           ),
         );
         break;
@@ -457,14 +457,23 @@ class AppRouter {
         break;
 
       case DMS_MANAGE_WORKSPACE_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+
         return MaterialPageRoute(
-          builder: (_) => DMSManageWorkspaceScreen(),
+          builder: (_) => DMSManageWorkspaceScreen(
+            dmsManageWorkspaceInputModel: args?.dynamicArgument,
+          ),
         );
         break;
 
       case DMS_NEW_FOLDER_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => DMSNewFolderScreen(),
+          builder: (_) => DMSNewFolderScreen(
+            parentId: args.arg1,
+            folderName: args.arg2,
+            sequenceOrder: args.arg3,
+          ),
         );
         break;
 

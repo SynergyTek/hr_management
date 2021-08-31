@@ -10,7 +10,15 @@ import "package:hr_management/ui/widgets/primary_button.dart";
 import "../../../../../themes/theme_config.dart";
 
 class DMSNewFolderBodyWidget extends StatefulWidget {
-  DMSNewFolderBodyWidget();
+  final String parentId;
+  final String folderName;
+  final String sequenceOrder;
+
+  DMSNewFolderBodyWidget({
+    @required this.parentId,
+    this.folderName,
+    this.sequenceOrder,
+  });
 
   @override
   _DMSNewFolderBodyWidgetState createState() => _DMSNewFolderBodyWidgetState();
@@ -26,18 +34,35 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
 
   @override
   void initState() {
+
+    var queryparams = {
+        "id": "6b7f31db-d61b-4001-bd7f-596661b2c29c",
+      };
+    dmsManageNewFolderBloc.getAPIData(queryparams: queryparams);
+   
     super.initState();
+
+    if (widget?.folderName != null && widget.folderName.isNotEmpty) {
+      _newFolderNameTextEditingController.text = widget.folderName;
+    }
+
+    // if (widget?.sequenceOrder != null && widget.sequenceOrder.isNotEmpty) {
+    //   print(widget.sequenceOrder);
+    //   _sequenceOrderTextEditingController.text = widget.sequenceOrder;
+    // }
   }
 
   _handleQueryParams() {
     return ManageNewFolderPayloadModel(
       activeUserId:
           BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
-      dataAction: "Create",
+      dataAction: widget?.folderName != null && widget.folderName.isNotEmpty
+          ? "Edit"
+          : "Create",
       noteSubject: _newFolderNameTextEditingController?.text.toString() ?? "",
       ownerUserId:
           BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
-      parentNoteId: "f7c7d31e-bc19-49ee-8236-227a507382c5",
+      parentNoteId: widget?.parentId ?? "",
       sequenceOrder: _sequenceOrderTextEditingController?.text.toString() ?? "",
     ).toJson();
   }
@@ -89,7 +114,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
   Widget _newFolderNameWidget() {
     return ListTile(
       minVerticalPadding: 8.0,
-      title: Text("New Folder Name"),
+      title: Text("Folder Name"),
       subtitle: _textField(
         controller: _newFolderNameTextEditingController,
       ),
@@ -143,7 +168,8 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
       );
 
     String message = "Folder couldn't be created, pl try again later.";
-    if (dmsManageNewFolderBloc.subject.stream.valueOrNull) {
+    if (dmsManageNewFolderBloc.subject.stream.valueOrNull != null &&
+        dmsManageNewFolderBloc.subject.stream.valueOrNull) {
       message =
           "Folder '${_newFolderNameTextEditingController.text}' created successfully.";
     }
@@ -156,7 +182,8 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
 
     // if the folder has been created successfully, pop,
     // else do nothing
-    if (dmsManageNewFolderBloc.subject.stream.valueOrNull)
+    if (dmsManageNewFolderBloc.subject.stream.valueOrNull != null &&
+        dmsManageNewFolderBloc.subject.stream.valueOrNull)
       Navigator.of(context).pop();
   }
 

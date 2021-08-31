@@ -165,6 +165,7 @@ class TaskListModel {
   dynamic templateCode;
   int taskType;
   String startDate;
+  String displayStartDate;
   String dueDate;
   String taskSLA;
   String actualSLA;
@@ -401,6 +402,7 @@ class TaskListModel {
       this.templateCode,
       this.taskType,
       this.startDate,
+      this.displayStartDate,
       this.dueDate,
       this.taskSLA,
       this.actualSLA,
@@ -657,6 +659,7 @@ class TaskListModel {
     templateCode = json['TemplateCode'];
     taskType = json['TaskType'];
     startDate = json['StartDate'];
+    displayStartDate = json['DisplayStartDate'];
     dueDate = json['DueDate'];
     taskSLA = json['TaskSLA'];
     actualSLA = json['ActualSLA'];

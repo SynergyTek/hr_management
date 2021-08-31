@@ -15,7 +15,7 @@ class DMSChild extends StatelessWidget {
   final String sourceId;
   final bool isCopy;
   final bool isCut;
-  const DMSChild({
+  DMSChild({
     Key key,
     this.parentName,
     this.parentModel,
@@ -62,9 +62,6 @@ class DMSChild extends StatelessWidget {
             parentPathList: parentPathList,
             parentModelList: parentModelList,
             parentName: parentName,
-            sourceId: sourceId,
-            isCopy: isCopy,
-            isCut: isCut,
           )),
     );
   }

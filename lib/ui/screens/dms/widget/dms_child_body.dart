@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_model.dart';
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
+import 'package:hr_management/logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
@@ -162,12 +165,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               onTap: () {
                 if (childPath[index] == 'Administrator') {
                   _preProcess(index);
-                  Navigator.pushNamed(context, DMS_PARENT,
-                      arguments: ScreenArguments(
-                        val1: isCopy,
-                        val2: isCut,
-                        arg3: sourceId,
-                      ));
+                  Navigator.pushNamed(
+                    context,
+                    DMS_PARENT,
+                  );
                 } else if (index == childPath.length - 1) {
                   print('Same folder');
                 } else {
@@ -182,9 +183,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                       arg2: parentPathList[index - 1],
                       dmsParentModel: parentModelList[index - 1],
                       dmsParentModelList: parentModelList,
-                      val1: isCopy,
-                      val2: isCut,
-                      arg3: sourceId,
                       callBack:
                           (dynamic value, dynamic value2, dynamic value3) {
                         dmsBloc.postGetDMSFilesChildData(
@@ -296,9 +294,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                         arg2: parentPath,
                         dmsParentModel: filterChildList[index],
                         dmsParentModelList: parentModelList,
-                        val1: isCopy,
-                        val2: isCut,
-                        arg3: sourceId,
                         callBack:
                             (dynamic value, dynamic value2, dynamic value3) {
                           dmsBloc.postGetDMSFilesChildData(
@@ -330,7 +325,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               child: _statisticWidget(
                 context: context,
                 title: item.name,
-                // subtitle: 'Folder Name',
+                subtitle: '',
                 isHeading: true,
               ),
             )
@@ -367,7 +362,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               color: Colors.yellow,
             ),
             title: Text('Create Folder'),
-            // onTap: () => deleteDialog(id),
+            onTap: () => _handleCreateFolderOnTap(item),
           ),
         ),
         Visibility(
@@ -377,7 +372,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               CustomIcons.pencil,
             ),
             title: Text('Edit Folder'),
-            // onTap: () => deleteDialog(id),
+            onTap: () => _handleEditFolderOnTap(item),
           ),
         ),
         Visibility(
@@ -475,7 +470,16 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           onTap: () => copyDialog(item.id),
         ),
         Visibility(
-          visible: sourceId != null && sourceId.isNotEmpty,
+          visible: BlocProvider.of<CutCopyPasteBloc>(context)
+                      .state
+                      ?.cutCopyPasteModel
+                      ?.sourceId !=
+                  null &&
+              BlocProvider.of<CutCopyPasteBloc>(context)
+                  .state
+                  .cutCopyPasteModel
+                  .sourceId
+                  .isNotEmpty,
           child: ListTile(
             leading: Icon(CustomIcons.copy),
             title: Text('Paste'),
@@ -567,32 +571,57 @@ class _DMSChildBodyState extends State<DMSChildBody> {
 
   copyDialog(String id) {
     Navigator.pop(context);
-    sourceId = id;
     setState(() {
+      sourceId = id;
       isCopy = true;
       isCut = false;
     });
+    cutCopyPasteModelPostRequest(sourceId, isCopy, isCut);
+  }
+
+  cutCopyPasteModelPostRequest(
+    String sourceId,
+    bool isCopy,
+    bool isCut,
+  ) {
+    try {
+      BlocProvider.of<CutCopyPasteBloc>(context).add(
+        CutCopyPasteChangeEvent(
+          cutCopyPasteModel: CutCopyPasteModel(
+            sourceId: sourceId,
+            isCopy: isCopy,
+            isCut: isCut,
+          ),
+        ),
+      );
+    } catch (e) {
+      throw e.toString();
+    }
   }
 
   cutDialog(String id) {
     Navigator.pop(context);
-    sourceId = id;
     setState(() {
+      sourceId = id;
       isCut = true;
       isCopy = false;
     });
+    cutCopyPasteModelPostRequest(sourceId, isCopy, isCut);
   }
 
   pasteDialog(String id) {
-    // String _path;
-    // int length = widget.parentPath.split('/').length;
-    // _path = widget.parentPath.split('/')[length - 2];
     Navigator.pop(context);
-    if (widget.isCopy || isCopy) {
+    if (BlocProvider.of<CutCopyPasteBloc>(context)
+            .state
+            .cutCopyPasteModel
+            .isCopy ||
+        BlocProvider.of<CutCopyPasteBloc>(context)
+            .state
+            .cutCopyPasteModel
+            .isCopy) {
       dmsCrudNoteBloc
         ..getCopyNoteAPIData(
             sourceId: sourceId,
-            // sourceId: widget.sourceId,
             targetId: id,
             userId: '45bba746-3309-49b7-9c03-b5793369d73c');
       if (dmsCrudNoteBloc.copyNoteSubject.stream.hasValue) {
@@ -602,6 +631,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           apiCall();
           isCopy = false;
           isCut = false;
+          BlocProvider.of<CutCopyPasteBloc>(context).add(
+            CutCopyPasteSuccessEvent(),
+          );
         } else {
           displaySnackBar(text: 'Unable to copy file', context: context);
         }
@@ -612,7 +644,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       }
 
       sourceId = '';
-    } else if (widget.isCut || isCut) {
+    } else if (BlocProvider.of<CutCopyPasteBloc>(context)
+            .state
+            .cutCopyPasteModel
+            .isCut ||
+        BlocProvider.of<CutCopyPasteBloc>(context)
+            .state
+            .cutCopyPasteModel
+            .isCut) {
       dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: id);
       if (dmsCrudNoteBloc.moveNoteSubject.stream.hasValue) {
         if (dmsCrudNoteBloc.moveNoteSubject.stream.value) {
@@ -621,6 +660,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           apiCall();
           isCopy = false;
           isCut = false;
+          BlocProvider.of<CutCopyPasteBloc>(context).add(
+            CutCopyPasteSuccessEvent(),
+          );
         } else {
           displaySnackBar(text: 'Unable to move file', context: context);
         }
@@ -678,8 +720,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 setState(() {
                   isVisible = false;
                 });
-                // displaySnackBar(
-                //     text: dmsCrudNoteBloc.archiveNoteSubject.stream.value);
               },
             ),
           ],
@@ -765,7 +805,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
-      isScrollControlled: true,
+      isScrollControlled: false,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return DocumentBottomSheetWidget(
@@ -790,6 +830,26 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ),
       ),
       subtitle: Text(subtitle ?? '-'),
+    );
+  }
+
+  _handleEditFolderOnTap(Cwd item) {
+    Navigator.of(context).pushNamed(
+      DMS_NEW_FOLDER_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+        arg2: item.name,
+        arg3: item.folderType.toString(),
+      ),
+    );
+  }
+
+  _handleCreateFolderOnTap(Cwd item) {
+    Navigator.of(context).pushNamed(
+      DMS_NEW_FOLDER_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+      ),
     );
   }
 }
