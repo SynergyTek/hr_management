@@ -7,7 +7,7 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 class ParentWorkspaceIdNameListBodyWidget extends StatefulWidget {
-  final ParentWorkspaceIdNameListModel data;
+  final DMSParentWorkspaceIdNameListModel data;
   ParentWorkspaceIdNameListBodyWidget({
     @required this.data,
   });
@@ -53,7 +53,7 @@ class _ParentWorkspaceIdNameListBodyWidgetState
     );
   }
 
-  Widget _bodyWidget(List<ParentWorkspaceIdNameListModel> data) {
+  Widget _bodyWidget(List<DMSParentWorkspaceIdNameListModel> data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
@@ -78,7 +78,7 @@ class _ParentWorkspaceIdNameListBodyWidgetState
     );
   }
 
-  Widget _eachListTile(ParentWorkspaceIdNameListModel data) {
+  Widget _eachListTile(DMSParentWorkspaceIdNameListModel data) {
     return ListTile(
       leading: Icon(Icons.list_outlined),
       trailing: (widget?.data?.name != null &&
@@ -103,7 +103,7 @@ class _ParentWorkspaceIdNameListBodyWidgetState
     );
   }
 
-  _handleListTileOnTap(ParentWorkspaceIdNameListModel data) {
+  _handleListTileOnTap(DMSParentWorkspaceIdNameListModel data) {
     Navigator.of(context).pop(data);
   }
 }

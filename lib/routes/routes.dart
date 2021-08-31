@@ -450,14 +450,23 @@ class AppRouter {
         break;
 
       case DMS_MANAGE_WORKSPACE_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+
         return MaterialPageRoute(
-          builder: (_) => DMSManageWorkspaceScreen(),
+          builder: (_) => DMSManageWorkspaceScreen(
+            dmsManageWorkspaceInputModel: args?.dynamicArgument,
+          ),
         );
         break;
 
       case DMS_NEW_FOLDER_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => DMSNewFolderScreen(),
+          builder: (_) => DMSNewFolderScreen(
+            parentId: args.arg1,
+            folderName: args.arg2,
+            sequenceOrder: args.arg3,
+          ),
         );
         break;
 

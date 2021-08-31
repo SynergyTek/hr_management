@@ -1,17 +1,17 @@
-class ParentWorkspaceIdNameListModel {
+class DMSParentWorkspaceIdNameListModel {
   String id;
   String name;
   bool hasChildren;
   List<Children> children;
 
-  ParentWorkspaceIdNameListModel({
+  DMSParentWorkspaceIdNameListModel({
     this.id,
     this.name,
     this.hasChildren,
     this.children,
   });
 
-  ParentWorkspaceIdNameListModel.fromJson(Map<String, dynamic> json) {
+  DMSParentWorkspaceIdNameListModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['Name'];
     hasChildren = json['hasChildren'];
