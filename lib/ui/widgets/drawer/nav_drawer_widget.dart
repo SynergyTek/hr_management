@@ -353,6 +353,18 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
+              ListTile(
+                title: Text(
+                  'DMS SUPPORT',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_SUPPORT,
+                  );
+                },
+              ),
 
               ListTile(), //Added to avoid the last option to be hidden under "LOG OUT"
             ],
