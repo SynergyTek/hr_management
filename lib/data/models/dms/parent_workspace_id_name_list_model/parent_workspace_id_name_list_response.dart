@@ -4,7 +4,7 @@ import 'parent_workspace_id_name_list_model.dart';
 
 class ParentWorkspaceIdNameListResponse {
   String error;
-  List<ParentWorkspaceIdNameListModel> data;
+  List<DMSParentWorkspaceIdNameListModel> data;
 
   ParentWorkspaceIdNameListResponse({
     @required this.data,
@@ -12,7 +12,7 @@ class ParentWorkspaceIdNameListResponse {
 
   ParentWorkspaceIdNameListResponse.fromJson(List response)
       : data = response
-            .map((i) => new ParentWorkspaceIdNameListModel.fromJson(i))
+            .map((i) => new DMSParentWorkspaceIdNameListModel.fromJson(i))
             .toList(),
         error = "";
 

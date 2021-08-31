@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_model.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_response.dart';
 import 'package:meta/meta.dart';
 
@@ -11,6 +12,10 @@ abstract class AbstractManageWorkspaceRepository {
   AbstractManageWorkspaceRepository();
 
   Future<dynamic> postAPIData({
+    @required Map<String, dynamic> queryparams,
+  });
+
+  Future<WorkspaceViewModel> getAPIData({
     @required Map<String, dynamic> queryparams,
   });
 }
