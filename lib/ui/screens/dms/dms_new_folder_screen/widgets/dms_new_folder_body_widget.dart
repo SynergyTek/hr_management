@@ -34,6 +34,12 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
 
   @override
   void initState() {
+
+    var queryparams = {
+        "id": "6b7f31db-d61b-4001-bd7f-596661b2c29c",
+      };
+    dmsManageNewFolderBloc.getAPIData(queryparams: queryparams);
+   
     super.initState();
 
     if (widget?.folderName != null && widget.folderName.isNotEmpty) {

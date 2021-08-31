@@ -29,12 +29,12 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
   }) async {
     try {
       Response response = await _dio.get(
-        APIEndpointConstants.GET_LEGAL_ENTITY_DATA,
+        APIEndpointConstants.CREATE_WORKSPACE,
         queryParameters: queryparams ?? {},
       );
 
- var result =WorkspaceViewModel.fromJson(response.data);
-     
+      var result = WorkspaceViewModel.fromJson(response.data);
+
       return result;
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");
