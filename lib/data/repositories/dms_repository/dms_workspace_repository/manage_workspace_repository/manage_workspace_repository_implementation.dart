@@ -23,4 +23,24 @@ class ManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
       return err;
     }
   }
+
+  Future<WorkspaceViewModel> getAPIData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_LEGAL_ENTITY_DATA,
+        queryParameters: queryparams ?? {},
+      );
+
+ var result =WorkspaceViewModel.fromJson(response.data);
+     
+      return result;
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return err;
+    }
+  }
 }

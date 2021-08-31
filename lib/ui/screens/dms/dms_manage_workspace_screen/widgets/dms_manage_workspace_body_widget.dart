@@ -36,6 +36,10 @@ class _DMSManageWorkspaceBodyWidgetState
 
   @override
   void initState() {
+     var queryparams = {
+        "workspaceId": "f7c7d31e-bc19-49ee-8236-227a507382c5",
+      };
+    dmsManageWorkspaceBloc.getAPIData(queryparams: queryparams);
     super.initState();
   }
 
