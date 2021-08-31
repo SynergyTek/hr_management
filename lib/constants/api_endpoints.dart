@@ -390,4 +390,7 @@ class APIEndpointConstants {
 
   static const GET_LEGAL_ENTITY_DATA =
       BASE_URL + '/cms/query/GetLegalEntityNameList';
+      
+
+      static const GET_DOCUMENT_ACTION_DATA = BASE_URL + '/dms/query/GetArchivedDocumentData';
 }
