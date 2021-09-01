@@ -125,7 +125,8 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
             ),
           ),
           IconButton(
-            onPressed: () => _handleDeleteOnPressed(data: data),
+            onPressed: () => _deleteDialog(data: data),
+            // onPressed: () => _handleDeleteOnPressed(data: data),
             icon: Icon(
               Icons.delete_forever_sharp,
               color: Colors.red,
@@ -136,9 +137,39 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
     );
   }
 
+  _deleteDialog({
+    @required AttachmentNTSModel data,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text("Are you sure you want to delete attachment?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text(
+                "Delete",
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () => _handleDeleteOnPressed(data: data),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _handleDeleteOnPressed({
     @required AttachmentNTSModel data,
   }) {
+    Navigator.of(context).pop();
     attachmentNTSBloc
       ..deleteData(
         queryparams: {
@@ -149,7 +180,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
       );
   }
 
-_handleViewOnPressed({
+  _handleViewOnPressed({
     @required data,
   }) async {
     if (data == null)
