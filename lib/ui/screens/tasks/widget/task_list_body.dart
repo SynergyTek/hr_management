@@ -19,12 +19,15 @@ class _TaskListBodyState extends State<TaskListBody> {
     _widgetOptions = <Widget>[
       TaskDashboardList(
         taskListStatus: 'InProgress',
+        onTap: true,
       ),
       TaskDashboardList(
         taskListStatus: 'Overdue',
+        onTap: true,
       ),
       TaskDashboardList(
         taskListStatus: 'Complete',
+        onTap: true,
       )
     ];
   }

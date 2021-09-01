@@ -17,7 +17,9 @@ typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskDashboardList extends StatefulWidget {
   final String taskListStatus;
-  TaskDashboardList({Key key, this.taskListStatus}) : super(key: key);
+  final bool onTap;
+  TaskDashboardList({Key key, this.taskListStatus, this.onTap})
+      : super(key: key);
 
   @override
   _TaskDashboardListState createState() => _TaskDashboardListState();
@@ -122,7 +124,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
                     return TaskListCard(
                       index: index,
                       taskList: _taskList,
-                      onTap: false,
+                      onTap: widget.onTap ?? false,
                     );
                   },
                 );
@@ -181,6 +183,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     taskStatusIds = null;
     taskAssigneeIds = null;
     taskOwnerIds = null;
+    text = null;
   }
 
   Widget wrappedButtons() {

@@ -34,39 +34,36 @@ class _DMSTaskListState extends State<DMSTaskList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.75,
-      child: StreamBuilder<TaskListResponseModel>(
-        stream: taskBloc.subjectTaskList.stream,
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data.error != null && snapshot.data.error.length > 0) {
-              return Center(
-                child: Text(snapshot.data.error),
-              );
-            }
-            if (snapshot.data.data == null || snapshot.data.data.length == 0) {
-              return EmptyListWidget();
-            }
-            _taskList = snapshot.data.data;
-            return Listizer(
-              listItems: _taskList,
-              filteredSearchList: _filteredTaskList,
-              itemBuilder: (context, index) {
-                return DMSTaskListCard(
-                  index: index,
-                  taskList: _taskList,
-                  onTap: false,
-                );
-              },
-            );
-          } else {
+    return StreamBuilder<TaskListResponseModel>(
+      stream: taskBloc.subjectTaskList.stream,
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data.error != null && snapshot.data.error.length > 0) {
             return Center(
-              child: CustomProgressIndicator(),
+              child: Text(snapshot.data.error),
             );
           }
-        },
-      ),
+          if (snapshot.data.data == null || snapshot.data.data.length == 0) {
+            return EmptyListWidget();
+          }
+          _taskList = snapshot.data.data;
+          return Listizer(
+            listItems: _taskList,
+            filteredSearchList: _filteredTaskList,
+            itemBuilder: (context, index) {
+              return DMSTaskListCard(
+                index: index,
+                taskList: _taskList,
+                onTap: false,
+              );
+            },
+          );
+        } else {
+          return Center(
+            child: CustomProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
