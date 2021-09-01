@@ -7,10 +7,10 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 class DMSLegalEntityBodyWidget extends StatefulWidget {
-  final String modelName;
+  final String modelId;
 
   DMSLegalEntityBodyWidget({
-    this.modelName,
+    this.modelId,
   });
 
   @override
@@ -123,9 +123,9 @@ class _DMSLegalEntityBodyWidgetState extends State<DMSLegalEntityBodyWidget> {
   Widget _eachListTile(DMSLegalEntityModel data) {
     return ListTile(
       leading: Icon(Icons.list_outlined),
-      trailing: (widget.modelName != null &&
-              data?.name != null &&
-              data.name == widget.modelName)
+      trailing: (widget.modelId != null &&
+              data?.id != null &&
+              data.id == widget.modelId)
           ? Icon(
               Icons.check_box,
               color: Theme.of(context).textHeadingColor,

@@ -9,10 +9,12 @@ class DMSDocumentTemplateIdNameListByUserBloc {
   final BehaviorSubject<DMSDocumentTypeResponse> _subject =
       BehaviorSubject<DMSDocumentTypeResponse>();
 
-  getAPIData() async {
+  Future<DMSDocumentTypeResponse> getAPIData() async {
     DMSDocumentTypeResponse response = await _apiRepository.getAPIData();
 
     _subject.sink.add(response);
+
+    return response;
   }
 
   dispose() {

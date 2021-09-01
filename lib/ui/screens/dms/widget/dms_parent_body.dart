@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
-import 'package:hr_management/data/models/dms/dms_manage_workspace_input_model/dms_manage_workspace_input_model.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
@@ -637,18 +636,10 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     String id, {
     Cwd data,
   }) {
-    print(data);
-
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
       arguments: ScreenArguments(
-        dynamicArgument: DMSManageWorkspaceInputModel(
-          documentTypeModelList: [""],
-          legalEntityModel: "",
-          parentWorkspaceModel: data.parentId ?? "",
-          sequenceOrder: "",
-          workspaceName: data.name ?? "",
-        ),
+        arg1: data.id ?? "",
       ),
     );
   }

@@ -46,27 +46,27 @@ class WorkspaceViewModel {
   });
 
   WorkspaceViewModel.fromJson(Map<String, dynamic> json) {
-    legalEntityName = json['legalEntityName'];
-    parentNoteId = json['parentNoteId'];
-    createdbyName = json['createdbyName'];
-    workspaceName = json['workspaceName'];
-    parentName = json['parentName'];
-    noteSubject = json['noteSubject'];
-    sequenceOrder = json['sequenceOrder'];
-    legalEntityId = json['legalEntityId'];
-    createdBy = json['createdBy'];
-    documentTypeId = List<String>.from(json["documentTypeId"].map((x) => x));
-    workspaceId = json['workspaceId'];
-    noteId = json['noteId'];
-    documentTypeIds = json['documentTypeIds'];
-    documentTypeNoteId = json['documentTypeNoteId'];
-    id = json['id'];
-    type = json['type'];
+    legalEntityName = json['LegalEntityName'];
+    parentNoteId = json['ParentNoteId'];
+    createdbyName = json['CreatedbyName'];
+    workspaceName = json['WorkspaceName'];
+    parentName = json['ParentName'];
+    noteSubject = json['NoteSubject'];
+    sequenceOrder = json['SequenceOrder'].toString();
+    legalEntityId = json['LegalEntityId'];
+    createdBy = json['reatedBy'];
+    documentTypeId = json['DocumentTypeId'].cast<String>();
+    workspaceId = json['WorkspaceId'];
+    noteId = json['NoteId'];
+    documentTypeIds = json['DocumentTypeIds'];
+    documentTypeNoteId = json['DocumentTypeNoteId'];
+    id = json['Id'];
+    type = json['Type'];
 
     //
-    dataAction = json['dataAction'];
-    activeUserId = json['activeUserId'];
-    ownerUserId = json['ownerUserId'];
+    dataAction = json['DataAction'].toString();
+    activeUserId = json['ActiveUserId'].toString();
+    ownerUserId = json['OwnerUserId'].toString();
   }
 
   Map<String, dynamic> toJson() {

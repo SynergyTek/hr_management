@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/themes/theme_config.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
   final String loadingText;
@@ -11,28 +12,22 @@ class CustomProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-          elevation: 20,
+          elevation: 8,
           child: Padding(
-            padding: const EdgeInsets.all(26),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
+            padding: DEFAULT_LARGE_PADDING,
+            child: Wrap(
+              // mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator(
-
-
-                    //              color: Theme.of(context).primaryColor,
-                    // color: Theme.of(context).primaryColor,
-
-
-                    // color: Theme.of(context).primaryColor,
-
-                    ),
+                CircularProgressIndicator(),
                 SizedBox(
                   width: 16,
                 ),
                 Text(
                   loadingText ?? "Please Wait...",
-                  style: TextStyle(fontSize: 18),
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        color: Theme.of(context).textHeadingColor,
+                        fontSize: 16.0,
+                      ),
                 )
               ],
             ),
