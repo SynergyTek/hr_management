@@ -45,21 +45,25 @@ class _DMSSupportState extends State<DMSSupport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: drawerWidget(context),
-        appBar: AppbarWidget(
-          title: "DMS Support",
-        ),
-        body: SafeArea(
-          child: InternetConnectivityWidget(
-            child: Column(
-              children: [
-                _toggle(),
-                _body(),
-              ],
-            ),
+      drawer: drawerWidget(context),
+      appBar: AppbarWidget(
+        title: "DMS Support",
+      ),
+      body: SafeArea(
+        child: InternetConnectivityWidget(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _toggle(),
+              Expanded(
+                child: _body(),
+              ),
+            ],
           ),
         ),
-        bottomNavigationBar: _bottomNavigation());
+      ),
+      bottomNavigationBar: _bottomNavigation(),
+    );
   }
 
   void _onItemTapped(int index) {
