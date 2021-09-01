@@ -339,7 +339,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               color: Colors.blue,
             ),
             title: Text('Create Workspace'),
-            // onTap: () => deleteDialog(id),
+           onTap: () => _handleCreateWorkspaceOnTap(item.id),
           ),
         ),
         Visibility(
@@ -350,7 +350,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               color: Colors.blue,
             ),
             title: Text('Edit Workspace'),
-            // onTap: () => deleteDialog(id),
+             onTap: () => _handleEditWorkspaceOnTap(
+            item.id,
+            data: item.data,
+          ),
           ),
         ),
         Visibility(
@@ -849,6 +852,25 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       DMS_NEW_FOLDER_ROUTE,
       arguments: ScreenArguments(
         arg1: item.id,
+      ),
+    );
+  }
+
+  
+  _handleCreateWorkspaceOnTap(String id) {
+    Navigator.of(context).pushNamed(
+      DMS_MANAGE_WORKSPACE_ROUTE,
+    );
+  }
+
+  _handleEditWorkspaceOnTap(
+    String id, {
+    Cwd data,
+  }) {
+    Navigator.of(context).pushNamed(
+      DMS_MANAGE_WORKSPACE_ROUTE,
+      arguments: ScreenArguments(
+        arg1: data.id ?? "",
       ),
     );
   }
