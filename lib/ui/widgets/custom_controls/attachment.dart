@@ -445,9 +445,9 @@ class _SelectAttachmentState extends State<SelectAttachment> {
           //     '5', MediaFileType.RECORD_AUDIO),
           // fabIconText(CustomIcons.video_plus, "RECORD VIDEO", Colors.cyan, '6',
           //     MediaFileType.RECORD_VIDEO),
-          fabIconText(CustomIcons.file_pdf, "PDF", Colors.redAccent, '7',
-              MediaFileType.CUSTOM),
-          fabIconText(CustomIcons.file_plus, "DOCUMENT", Colors.green, '8',
+          // fabIconText(CustomIcons.file_pdf, "PDF", Colors.redAccent, '7',
+          //     MediaFileType.CUSTOM),
+          fabIconText(CustomIcons.file_plus, "ANY", Colors.green, '8',
               MediaFileType.ANY)
         ],
       ),
