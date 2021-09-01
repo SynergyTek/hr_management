@@ -12,11 +12,12 @@ class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
         data: queryparams ?? {},
       );
 
-      if (response?.data == null ||
-          response.data['success'] == null ||
-          response.data['success'] == false) return false;
+      if (response?.data != null && response.data['success'] != null ||
+          response.data['success'] == true) {
+        return true;
+      }
 
-      return true;
+      return false;
     } catch (err, stacktrace) {
       print("Error: $err");
       print("Stacktrace: $stacktrace");
@@ -30,7 +31,7 @@ class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
   }) async {
     try {
       Response response = await _dio.get(
-        APIEndpointConstants.GET_LEGAL_ENTITY_DATA,
+        APIEndpointConstants.GET_CREATE_FOLDER_DATA,
         queryParameters: queryparams ?? {},
       );
 

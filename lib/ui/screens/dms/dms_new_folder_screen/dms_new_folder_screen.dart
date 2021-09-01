@@ -7,13 +7,13 @@ import 'widgets/dms_new_folder_body_widget.dart';
 
 class DMSNewFolderScreen extends StatelessWidget {
   final String parentId;
+  final String folderId;
   final String folderName;
-  final String sequenceOrder;
 
   const DMSNewFolderScreen({
     @required this.parentId,
+    this.folderId,
     this.folderName,
-    this.sequenceOrder,
   });
 
   @override
@@ -29,8 +29,8 @@ class DMSNewFolderScreen extends StatelessWidget {
         child: InternetConnectivityWidget(
           child: DMSNewFolderBodyWidget(
             parentId: parentId,
+            folderId: folderId,
             folderName: folderName,
-            sequenceOrder: sequenceOrder,
           ),
         ),
       ),

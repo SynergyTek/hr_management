@@ -2,22 +2,24 @@ import "package:flutter/material.dart";
 
 import "package:flutter_bloc/flutter_bloc.dart";
 import 'package:hr_management/data/models/dms/manage_new_folder_payload_model/manage_new_folder_payload_model.dart';
+import 'package:hr_management/data/models/note/note_model.dart';
 import "package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/manage_new_folder_bloc/manage_new_folder_bloc.dart";
 import "package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart";
 
 import "package:hr_management/ui/widgets/primary_button.dart";
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 import "../../../../../themes/theme_config.dart";
 
 class DMSNewFolderBodyWidget extends StatefulWidget {
   final String parentId;
+  final String folderId;
   final String folderName;
-  final String sequenceOrder;
 
   DMSNewFolderBodyWidget({
     @required this.parentId,
+    this.folderId,
     this.folderName,
-    this.sequenceOrder,
   });
 
   @override
@@ -34,22 +36,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
 
   @override
   void initState() {
-
-    var queryparams = {
-        "id": "6b7f31db-d61b-4001-bd7f-596661b2c29c",
-      };
-    dmsManageNewFolderBloc.getAPIData(queryparams: queryparams);
-   
     super.initState();
-
-    if (widget?.folderName != null && widget.folderName.isNotEmpty) {
-      _newFolderNameTextEditingController.text = widget.folderName;
-    }
-
-    // if (widget?.sequenceOrder != null && widget.sequenceOrder.isNotEmpty) {
-    //   print(widget.sequenceOrder);
-    //   _sequenceOrderTextEditingController.text = widget.sequenceOrder;
-    // }
   }
 
   _handleQueryParams() {
@@ -64,50 +51,90 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
           BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
       parentNoteId: widget?.parentId ?? "",
       sequenceOrder: _sequenceOrderTextEditingController?.text.toString() ?? "",
+      id: widget.folderId ?? "",
     ).toJson();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Use case: When editing an existing folder.
+    if (widget?.folderName != null && widget.folderName.isNotEmpty) {
+      return Container(
+        padding: DEFAULT_PADDING,
+        child: FutureBuilder<NoteModel>(
+          future: dmsManageNewFolderBloc.getAPIData(
+            queryparams: {
+              "id": widget.folderId ?? "",
+            },
+          ),
+          builder: (BuildContext context, AsyncSnapshot<NoteModel> snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child:
+                    Text("An error occured while fetching Workspace metadata."),
+              );
+            } else if (snapshot.hasData) {
+              _handleEditFolder(
+                dmsFolderMetadata: snapshot.data,
+              );
+
+              return _bodyWidget();
+            }
+
+            return Center(
+              child: CustomProgressIndicator(
+                loadingText: 'Fetching folder \nmetadata',
+              ),
+            );
+          },
+        ),
+      );
+    }
+
+    // Use case: When creating a new folder.
     return Container(
       padding: DEFAULT_PADDING,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                _newFolderNameWidget(),
-                _sequenceOrderWidget(),
-              ],
-            ),
+      child: _bodyWidget(),
+    );
+  }
+
+  Widget _bodyWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              _newFolderNameWidget(),
+              _sequenceOrderWidget(),
+            ],
           ),
-          Container(
-            height: 96.0,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: PrimaryButton(
-                    backgroundColor: Colors.white10,
-                    foregroundColor: Colors.black87,
-                    buttonText: "Cancel",
-                    handleOnPressed: () => _handleCancelOnPressed(),
-                  ),
+        ),
+        Container(
+          height: 96.0,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: PrimaryButton(
+                  backgroundColor: Colors.white10,
+                  foregroundColor: Colors.black87,
+                  buttonText: "Cancel",
+                  handleOnPressed: () => _handleCancelOnPressed(),
                 ),
-                Expanded(
-                  child: PrimaryButton(
-                    buttonText: "Save",
-                    handleOnPressed: () => _handleSaveOnPressed(),
-                  ),
+              ),
+              Expanded(
+                child: PrimaryButton(
+                  buttonText: "Save",
+                  handleOnPressed: () => _handleSaveOnPressed(),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -145,7 +172,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
     );
   }
 
-  _handleSaveOnPressed() {
+  _handleSaveOnPressed() async {
     if (_newFolderNameTextEditingController?.text == null ||
         _newFolderNameTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -162,16 +189,15 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
       return;
     }
 
-    dmsManageNewFolderBloc
-      ..postAPIData(
-        queryparams: _handleQueryParams(),
-      );
+    bool response = await dmsManageNewFolderBloc.postAPIData(
+      queryparams: _handleQueryParams(),
+    );
 
     String message = "Folder couldn't be created, pl try again later.";
-    if (dmsManageNewFolderBloc.subject.stream.valueOrNull != null &&
-        dmsManageNewFolderBloc.subject.stream.valueOrNull) {
-      message =
-          "Folder '${_newFolderNameTextEditingController.text}' created successfully.";
+    if (response != null && response) {
+      message = widget?.folderName != null && widget.folderName.isNotEmpty
+          ? "Folder '${_newFolderNameTextEditingController.text}' edited successfully."
+          : "Folder '${_newFolderNameTextEditingController.text}' created successfully.";
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -182,9 +208,10 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
 
     // if the folder has been created successfully, pop,
     // else do nothing
-    if (dmsManageNewFolderBloc.subject.stream.valueOrNull != null &&
-        dmsManageNewFolderBloc.subject.stream.valueOrNull)
+    if (response != null && response) {
       Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    }
   }
 
   /// Cancel everything and
@@ -193,5 +220,23 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
     _sequenceOrderTextEditingController.clear();
 
     Navigator.of(context).pop();
+  }
+
+  _handleEditFolder({
+    @required NoteModel dmsFolderMetadata,
+  }) {
+    print(dmsFolderMetadata);
+
+    if (dmsFolderMetadata == null) return;
+
+    if (widget?.folderName != null && widget.folderName.isNotEmpty) {
+      _newFolderNameTextEditingController.text = widget.folderName;
+    }
+
+    if (dmsFolderMetadata?.sequenceOrder != null &&
+        dmsFolderMetadata.sequenceOrder.toString().isNotEmpty) {
+      _sequenceOrderTextEditingController.text =
+          dmsFolderMetadata.sequenceOrder.toString();
+    }
   }
 }

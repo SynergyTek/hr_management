@@ -6,6 +6,8 @@ class ManageNewFolderPayloadModel {
   String activeUserId;
   String ownerUserId;
 
+  String id;
+
   ManageNewFolderPayloadModel({
     this.dataAction,
     this.noteSubject,
@@ -13,6 +15,7 @@ class ManageNewFolderPayloadModel {
     this.parentNoteId,
     this.activeUserId,
     this.ownerUserId,
+    this.id,
   });
 
   ManageNewFolderPayloadModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +25,7 @@ class ManageNewFolderPayloadModel {
     parentNoteId = json['ParentNoteId'];
     activeUserId = json['ActiveUserId'];
     ownerUserId = json['OwnerUserId'];
+    id = json['Id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +36,7 @@ class ManageNewFolderPayloadModel {
     data['ParentNoteId'] = this.parentNoteId;
     data['ActiveUserId'] = this.activeUserId;
     data['OwnerUserId'] = this.ownerUserId;
+    data['Id'] = this.id;
     return data;
   }
 }

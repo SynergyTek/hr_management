@@ -217,7 +217,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             color: Colors.blue,
           ),
           title: Text('Create Workspace'),
-          onTap: () => _handleCreateWorkspaceOnTap(id),
+          onTap: () => _handleCreateWorkspaceOnTap(),
         ),
         ListTile(
           leading: Icon(
@@ -626,7 +626,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     );
   }
 
-  _handleCreateWorkspaceOnTap(String id) {
+  _handleCreateWorkspaceOnTap() {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
     );

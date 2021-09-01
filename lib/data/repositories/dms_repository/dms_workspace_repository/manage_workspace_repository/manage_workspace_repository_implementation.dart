@@ -15,11 +15,9 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
       print(response.data);
 
       return response.data;
-      // return WorkspaceViewResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
 
-      // return WorkspaceViewResponse.withError("$err");
       return err;
     }
   }
@@ -29,7 +27,7 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
   }) async {
     try {
       Response response = await _dio.get(
-        APIEndpointConstants.CREATE_WORKSPACE,
+        APIEndpointConstants.GET_CREATE_WORKSPACE_DATA,
         queryParameters: queryparams ?? {},
       );
 

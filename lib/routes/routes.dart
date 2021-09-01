@@ -471,8 +471,8 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSNewFolderScreen(
             parentId: args.arg1,
-            folderName: args.arg2,
-            sequenceOrder: args.arg3,
+            folderId: args.arg2,
+            folderName: args.arg3,
           ),
         );
         break;

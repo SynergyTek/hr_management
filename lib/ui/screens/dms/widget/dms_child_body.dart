@@ -339,7 +339,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               color: Colors.blue,
             ),
             title: Text('Create Workspace'),
-           onTap: () => _handleCreateWorkspaceOnTap(item.id),
+            onTap: () => _handleCreateWorkspaceOnTap(),
           ),
         ),
         Visibility(
@@ -350,10 +350,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               color: Colors.blue,
             ),
             title: Text('Edit Workspace'),
-             onTap: () => _handleEditWorkspaceOnTap(
-            item.id,
-            data: item.data,
-          ),
+            onTap: () => _handleEditWorkspaceOnTap(
+              data: item,
+            ),
           ),
         ),
         Visibility(
@@ -840,9 +839,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     Navigator.of(context).pushNamed(
       DMS_NEW_FOLDER_ROUTE,
       arguments: ScreenArguments(
-        arg1: item.id,
-        arg2: item.name,
-        arg3: item.folderType.toString(),
+        arg1: item.id, // Parent id
+        arg2: item.id, // Folder id
+        arg3: item.name, // Folder Name
       ),
     );
   }
@@ -856,16 +855,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  
-  _handleCreateWorkspaceOnTap(String id) {
+  _handleCreateWorkspaceOnTap() {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
     );
   }
 
-  _handleEditWorkspaceOnTap(
-    String id, {
-    Cwd data,
+  _handleEditWorkspaceOnTap({
+    @required Cwd data,
   }) {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,

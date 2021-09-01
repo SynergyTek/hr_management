@@ -10,7 +10,7 @@ class ManageWorkspaceBloc {
   final BehaviorSubject _subject = BehaviorSubject();
   final BehaviorSubject _getAPISubject = BehaviorSubject();
 
-  postAPIData({
+  Future postAPIData({
     @required Map<String, dynamic> queryparams,
   }) async {
     dynamic response = await _apiRepository.postAPIData(
@@ -18,6 +18,8 @@ class ManageWorkspaceBloc {
     );
 
     _subject.sink.add(response);
+
+    return response;
   }
 
   Future<WorkspaceViewModel> getAPIData({
