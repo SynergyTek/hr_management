@@ -372,29 +372,32 @@ Widget drawerWidget(context) {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: ListTile(
-            tileColor: Colors.white,
-            title: Text(
-              'LOG OUT',
-              style: TextStyle(fontSize: fontSize, color: fontColor),
+          child: Container(
+            color: Colors.white,
+            child: ListTile(
+              tileColor: Colors.white,
+              title: Text(
+                'LOG OUT',
+                style: TextStyle(fontSize: fontSize, color: fontColor),
+              ),
+              trailing: Icon(Icons.logout),
+              onTap: () async {
+                // SharedPreferences prefs = await SharedPreferences.getInstance();
+                // prefs.clear();
+
+                BlocProvider.of<UserModelBloc>(context).add(
+                  UserModelChangeEvent(
+                    userModel: null,
+                  ),
+                );
+
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  LOGIN_ROUTE,
+                  ModalRoute.withName('/login'),
+                );
+              },
             ),
-            trailing: Icon(Icons.logout),
-            onTap: () async {
-              // SharedPreferences prefs = await SharedPreferences.getInstance();
-              // prefs.clear();
-
-              BlocProvider.of<UserModelBloc>(context).add(
-                UserModelChangeEvent(
-                  userModel: null,
-                ),
-              );
-
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                LOGIN_ROUTE,
-                ModalRoute.withName('/login'),
-              );
-            },
           ),
         ),
       ],
