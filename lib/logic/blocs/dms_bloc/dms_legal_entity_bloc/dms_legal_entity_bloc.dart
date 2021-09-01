@@ -7,7 +7,7 @@ class DMSLegalEntityBloc {
 
   final BehaviorSubject<DMSLegalEntityResponse> _subject = BehaviorSubject();
 
-  getAPIData({
+  Future<DMSLegalEntityResponse> getAPIData({
     Map<String, dynamic> queryparams,
   }) async {
     DMSLegalEntityResponse response = await _apiRepository.getAPIData(
@@ -15,6 +15,8 @@ class DMSLegalEntityBloc {
     );
 
     _subject.sink.add(response);
+
+    return response;
   }
 
   dispose() {

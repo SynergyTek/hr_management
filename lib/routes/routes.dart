@@ -461,7 +461,7 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => DMSManageWorkspaceScreen(
-            dmsManageWorkspaceInputModel: args?.dynamicArgument,
+            parentWorkspaceId: args?.arg1,
           ),
         );
         break;

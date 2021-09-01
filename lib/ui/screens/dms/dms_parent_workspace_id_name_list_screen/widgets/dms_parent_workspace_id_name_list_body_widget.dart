@@ -72,13 +72,47 @@ class _ParentWorkspaceIdNameListBodyWidgetState
       },
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
-          data.elementAt(index),
+          data: data.elementAt(index),
         );
+        // return _eachBodyItem(
+        //   data: data.elementAt(index),
+        // );
       },
     );
   }
 
-  Widget _eachListTile(DMSParentWorkspaceIdNameListModel data) {
+  // Widget _eachBodyItem({
+  //   @required DMSParentWorkspaceIdNameListModel data,
+  // }) {
+  //   // If there are no children we have reached the last level (child) of the tree.
+  //   // else, we need expansion tile to handle it.
+  //   if (data?.children == null || data.children.isEmpty) {
+  //     return _eachListTile(data: data);
+  //   }
+
+  //   return _eachExpansionTile(data: data);
+  // }
+
+  // Widget _eachExpansionTile({
+  //   @required DMSParentWorkspaceIdNameListModel data,
+  // }) {
+  //   return ExpansionTile(
+  //     title: Text(data?.name ?? ""),
+  //     children: List.generate(
+  //       data.children.length,
+  //       (index) => ListTile(
+  //         title: Text(data.children.elementAt(index).id),
+  //         subtitle: Text(
+  //           data.children.elementAt(index).subjectLabelName ?? '-',
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget _eachListTile({
+    @required DMSParentWorkspaceIdNameListModel data,
+  }) {
     return ListTile(
       leading: Icon(Icons.list_outlined),
       trailing: (widget?.data?.name != null &&
