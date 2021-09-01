@@ -56,6 +56,9 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
         queryparams['TaskAssigneeIds'] = taskAssigneeIds;
       if (taskOwnerIds != null) queryparams['TaskOwnerIds'] = taskOwnerIds;
       if (text != null) queryparams['searchText'] = text;
+      // queryparams['templateCodes'] = 'PMS_DEVELOPMENT_ADHOC_TASK,HajjLeaveRequest';
+      // queryparams['moduleCodes'] = 'HR,PJM';
+      // queryparams['categoryCodes'] = 'PerformanceDocument,STEP_TASK_CATEGORY';
       taskBloc
         ..getTaskDashBoardData(
           queryparams: queryparams,

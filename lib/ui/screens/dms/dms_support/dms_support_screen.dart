@@ -45,21 +45,25 @@ class _DMSSupportState extends State<DMSSupport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: drawerWidget(context),
-        appBar: AppbarWidget(
-          title: "DMS Support",
-        ),
-        body: SafeArea(
-          child: InternetConnectivityWidget(
-            child: Column(
-              children: [
-                _toggle(),
-                _body(),
-              ],
-            ),
+      drawer: drawerWidget(context),
+      appBar: AppbarWidget(
+        title: "DMS Support",
+      ),
+      body: SafeArea(
+        child: InternetConnectivityWidget(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _toggle(),
+              Expanded(
+                child: _body(),
+              ),
+            ],
           ),
         ),
-        bottomNavigationBar: _bottomNavigation());
+      ),
+      bottomNavigationBar: _bottomNavigation(),
+    );
   }
 
   void _onItemTapped(int index) {
@@ -88,6 +92,7 @@ class _DMSSupportState extends State<DMSSupport> {
 
     // queryparams['templateCodes'] = 'DMS_SUPPORT_TICKET';
     // queryparams['categoryCodes'] = 'DMS_TASK';
+    // queryparams['portalName'] = 'DMS';
     queryparams['requestby'] = requestBy;
     // queryparams['userId'] = '45bba746-3309-49b7-9c03-b5793369d73c';
 

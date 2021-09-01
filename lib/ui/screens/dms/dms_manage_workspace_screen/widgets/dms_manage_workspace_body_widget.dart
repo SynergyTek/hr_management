@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/dms/dms_document_type_model/dms_document_type_model.dart';
+import 'package:hr_management/data/models/dms/dms_document_type_model/dms_document_type_response.dart';
 import 'package:hr_management/data/models/dms/dms_legal_entity_model/dms_legal_entity_model.dart';
-import 'package:hr_management/data/models/dms/dms_manage_workspace_input_model/dms_manage_workspace_input_model.dart';
+import 'package:hr_management/data/models/dms/dms_legal_entity_model/dms_legal_entity_response.dart';
 import 'package:hr_management/data/models/dms/parent_workspace_id_name_list_model/parent_workspace_id_name_list_model.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_model.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/dms_legal_entity_bloc/dms_legal_entity_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/document_template_id_name_list_by_user_bloc/document_template_id_name_list_by_user_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/manage_workspace_bloc/manage_workspace_bloc.dart';
-import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/parent_workspace_id_name_list_bloc/parent_workspace_id_name_list_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/widgets/dms_legal_entity_body_widget.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent_workspace_id_name_list_screen/widgets/dms_parent_workspace_id_name_list_body_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 import 'package:hr_management/ui/widgets/multi_select_form_widget/multi_select_form_widget.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 import '../../../../../themes/theme_config.dart';
 
 class DMSManageWorkspaceBodyWidget extends StatefulWidget {
-  final DMSManageWorkspaceInputModel dmsManageWorkspaceInputModel;
+  final String parentWorkspaceId;
 
   DMSManageWorkspaceBodyWidget({
-    this.dmsManageWorkspaceInputModel,
+    this.parentWorkspaceId,
   });
 
   @override
@@ -42,59 +44,20 @@ class _DMSManageWorkspaceBodyWidgetState
 
   @override
   void initState() {
-     var queryparams = {
-        "workspaceId": "f7c7d31e-bc19-49ee-8236-227a507382c5",
-      };
-    dmsManageWorkspaceBloc.getAPIData(queryparams: queryparams);
     super.initState();
-
-    // If the input model is not null
-    // that means the user is in the
-    // * edit mode,
-    // and the UI needs to pre-fill all the existing values.
-    if (widget.dmsManageWorkspaceInputModel != null) {
-      // _selectedLegalEntityData =
-      //     widget.dmsManageWorkspaceInputModel.legalEntityModel;
-
-      // dmsParentWorkspaceIdNameListBloc..getAPIData();
-      // if (dmsParentWorkspaceIdNameListBloc.subject.stream.valueOrNull != null) {
-      //   dmsParentWorkspaceIdNameListBloc.subject.stream.valueOrNull.data
-      //       .forEach((element) {
-      //     if (widget.dmsManageWorkspaceInputModel.parentWorkspaceModel ==
-      //         element.id) {
-      //       _selectedParentWorkspace = element;
-      //     }
-
-      //     print(_selectedParentWorkspace);
-      //   });
-      // }
-
-      _selectedParentWorkspace = DMSParentWorkspaceIdNameListModel(
-        id: widget.dmsManageWorkspaceInputModel.parentWorkspaceModel,
-      );
-
-      _workspaceNameTextEditingController.text =
-          widget.dmsManageWorkspaceInputModel.workspaceName;
-
-      // // TODO:
-      // // _selectedDocumentTypeMap =
-      // //     widget.dmsManageWorkspaceInputModel.documentTypeModelList;
-
-      // _sequenceOrderTextEditingController.text =
-      //     widget.dmsManageWorkspaceInputModel.sequenceOrder;
-    }
   }
 
   _handleQueryParams() {
+    // Use case: Creating a new workspace.
     return WorkspaceViewModel(
       activeUserId:
           BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
-      dataAction:
-          widget.dmsManageWorkspaceInputModel != null ? "Edit" : "Create",
+      dataAction: widget.parentWorkspaceId != null ? "Edit" : "Create",
       documentTypeId: _getDocumentTypeIdList(),
       legalEntityId: _selectedLegalEntityData?.id ?? "",
       ownerUserId:
           BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+      // ! TODO: no data found for parent workspace while editing.
       parentNoteId: _selectedParentWorkspace?.id ?? "",
       sequenceOrder: _sequenceOrderTextEditingController?.text ?? "",
       workspaceName:
@@ -104,48 +67,131 @@ class _DMSManageWorkspaceBodyWidgetState
 
   @override
   Widget build(BuildContext context) {
+    // Use case: When editing a new workspace
+    if (widget?.parentWorkspaceId != null)
+      return Container(
+        padding: DEFAULT_PADDING,
+        child: FutureBuilder(
+          future: dmsLegalEntityBloc.getAPIData(),
+          builder: (BuildContext context,
+              AsyncSnapshot<DMSLegalEntityResponse> legalEntitySnapshot) {
+            if (legalEntitySnapshot.hasError) {
+              return Center(
+                child: Text(
+                    "An error occured while fetching Legal Entity metadata."),
+              );
+            } else if (legalEntitySnapshot.hasData) {
+              return FutureBuilder(
+                future: dmsDocumentTemplateIdNameListByUserBloc.getAPIData(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<DMSDocumentTypeResponse>
+                        documentTypeSnapshot) {
+                  if (documentTypeSnapshot.hasError) {
+                    return Center(
+                      child: Text(
+                          "An error occured while fetching Document Type metadata."),
+                    );
+                  } else if (documentTypeSnapshot.hasData) {
+                    return FutureBuilder(
+                      future: dmsManageWorkspaceBloc.getAPIData(
+                        queryparams: {
+                          "workspaceId": widget.parentWorkspaceId ?? "",
+                        },
+                      ),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<WorkspaceViewModel>
+                              workspaceViewSnapshot) {
+                        if (workspaceViewSnapshot.hasError) {
+                          return Center(
+                            child: Text(
+                                "An error occured while fetching Workspace metadata."),
+                          );
+                        } else if (workspaceViewSnapshot.hasData) {
+                          _handleEditWorkspace(
+                            dmsLegalEntityMetadata:
+                                legalEntitySnapshot?.data?.data ?? [],
+                            dmsDocumentTypeMetadata:
+                                documentTypeSnapshot?.data?.data ?? [],
+                            dmsWorkspaceMetadata: workspaceViewSnapshot.data,
+                          );
+
+                          return _bodyWidget();
+                        }
+
+                        return Center(
+                          child: CustomProgressIndicator(
+                            loadingText: 'Fetching workspace \nmetadata',
+                          ),
+                        );
+                      },
+                    );
+                  }
+
+                  return Center(
+                    child: CustomProgressIndicator(
+                      loadingText: 'Fetching document type \nmetadata',
+                    ),
+                  );
+                },
+              );
+            }
+
+            return Center(
+              child: CustomProgressIndicator(
+                loadingText: 'Fetching legal entity \nmetadata',
+              ),
+            );
+          },
+        ),
+      );
+
+    // Use case: When creating a new workspace
     return Container(
       padding: DEFAULT_PADDING,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                _legalEntityWidget(),
-                _parentWorkspaceWidget(),
-                _workspaceNameWidget(),
-                _documentTypeWidget(),
-                _sequenceOrderWidget(),
-              ],
-            ),
+      child: _bodyWidget(),
+    );
+  }
+
+  Widget _bodyWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              _legalEntityWidget(),
+              _parentWorkspaceWidget(),
+              _workspaceNameWidget(),
+              _documentTypeWidget(),
+              _sequenceOrderWidget(),
+            ],
           ),
-          Container(
-            // height: 96.0,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: PrimaryButton(
-                    backgroundColor: Colors.white10,
-                    foregroundColor: Colors.black87,
-                    buttonText: "Cancel",
-                    handleOnPressed: () => _handleCancelOnPressed(),
-                  ),
+        ),
+        Container(
+          // height: 96.0,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: PrimaryButton(
+                  backgroundColor: Colors.white10,
+                  foregroundColor: Colors.black87,
+                  buttonText: "Cancel",
+                  handleOnPressed: () => _handleCancelOnPressed(),
                 ),
-                Expanded(
-                  child: PrimaryButton(
-                    buttonText: "Save",
-                    handleOnPressed: () => _handleSaveOnPressed(),
-                  ),
+              ),
+              Expanded(
+                child: PrimaryButton(
+                  buttonText: "Save",
+                  handleOnPressed: () => _handleSaveOnPressed(),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -176,7 +222,7 @@ class _DMSManageWorkspaceBodyWidgetState
         return SafeArea(
           child: InternetConnectivityWidget(
             child: DMSLegalEntityBodyWidget(
-              modelName: _selectedLegalEntityData?.name ?? null,
+              modelId: _selectedLegalEntityData?.name ?? null,
             ),
           ),
         );
@@ -239,13 +285,15 @@ class _DMSManageWorkspaceBodyWidgetState
     return ListTile(
       minVerticalPadding: 8.0,
       title: Text("Document Type"),
+      subtitle: _handleDocumentTypeChips(),
       trailing: _selectedDocumentTypeMap != null &&
               _selectedDocumentTypeMap.keys.length > 0
           ? CircleAvatar(
               backgroundColor: Theme.of(context).textHeadingColor,
               foregroundColor: Colors.white,
               child: Text(
-                  _selectedDocumentTypeMap?.keys?.length.toString() ?? '-'),
+                _selectedDocumentTypeMap?.keys?.length.toString() ?? '-',
+              ),
             )
           : Icon(
               Icons.chevron_right,
@@ -254,7 +302,42 @@ class _DMSManageWorkspaceBodyWidgetState
     );
   }
 
-  Map<String, DMSDocumentTypeModel> _selectedDocumentTypeMap;
+  Widget _handleDocumentTypeChips() {
+    // Guard clause
+    if (_selectedDocumentTypeMap == null ||
+        _selectedDocumentTypeMap.keys.length == 0) {
+      return Container();
+    }
+
+    // List<Widget> _selectedDocumentChipList = [];
+    // _selectedDocumentTypeMap.keys.forEach((element) {});
+
+    return Container(
+      height: 48.0,
+      child: ListView(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        children: List.generate(
+          _selectedDocumentTypeMap.keys.length,
+          (index) => Container(
+            padding: const EdgeInsets.only(right: 4.0),
+            child: Chip(
+              // backgroundColor: Theme.of(context).textHeadingColor,
+              label: Text(
+                _selectedDocumentTypeMap.keys.elementAt(index) ?? "",
+                style: TextStyle(
+                  fontSize: 12,
+                  // color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Map<String, DMSDocumentTypeModel> _selectedDocumentTypeMap = Map();
 
   void _handleDocumentTypeOnTap() async {
     _selectedDocumentTypeMap = await Navigator.of(context).push(
@@ -376,6 +459,7 @@ class _DMSManageWorkspaceBodyWidgetState
   /// Cancel everything and
   _handleCancelOnPressed() {
     _selectedLegalEntityData = null;
+    _selectedParentWorkspace = null;
     _workspaceNameTextEditingController.clear();
     _selectedDocumentTypeMap = null;
     _sequenceOrderTextEditingController.clear();
@@ -383,7 +467,7 @@ class _DMSManageWorkspaceBodyWidgetState
     Navigator.of(context).pop();
   }
 
-  // Helper function to handle all document type list for queryparams.
+  /// Helper function to handle all document type list for queryparams.
   List<String> _getDocumentTypeIdList() {
     if (_selectedDocumentTypeMap == null ||
         _selectedDocumentTypeMap.values.isEmpty) return [];
@@ -395,5 +479,57 @@ class _DMSManageWorkspaceBodyWidgetState
     });
 
     return _list;
+  }
+
+  /// If the input model is not null
+  /// that means the user is in the
+  /// * edit mode,
+  /// and the UI needs to pre-fill all the existing values.
+  void _handleEditWorkspace({
+    List<DMSLegalEntityModel> dmsLegalEntityMetadata,
+    List<DMSDocumentTypeModel> dmsDocumentTypeMetadata,
+    WorkspaceViewModel dmsWorkspaceMetadata,
+  }) {
+    if (widget.parentWorkspaceId != null) {
+      if (dmsWorkspaceMetadata != null) {
+        //
+        // Legal entity
+        if (dmsLegalEntityMetadata != null) {
+          dmsLegalEntityMetadata.forEach((element) {
+            if (element.id == dmsWorkspaceMetadata?.legalEntityId) {
+              _selectedLegalEntityData = element;
+            }
+          });
+        }
+
+        // ! Selected parent workspace data is not available.
+        // Parent Workspace
+        // _selectedParentWorkspace = DMSParentWorkspaceIdNameListModel(
+        //   id: widget.parentWorkspaceId,
+        // );
+
+        // Document Type:
+        if (dmsDocumentTypeMetadata != null &&
+            dmsWorkspaceMetadata?.documentTypeId != null &&
+            dmsWorkspaceMetadata.documentTypeId.isNotEmpty) {
+          dmsDocumentTypeMetadata.forEach((element) {
+            dmsWorkspaceMetadata.documentTypeId
+                .forEach((eachMetadataDocumentId) {
+              if (element.id == eachMetadataDocumentId) {
+                _selectedDocumentTypeMap[element.displayName] = element;
+              }
+            });
+          });
+        }
+
+        // Workspace name:
+        _workspaceNameTextEditingController.text =
+            dmsWorkspaceMetadata?.workspaceName ?? "";
+
+        // Sequence Order:
+        _sequenceOrderTextEditingController.text =
+            dmsWorkspaceMetadata?.sequenceOrder ?? "";
+      }
+    }
   }
 }

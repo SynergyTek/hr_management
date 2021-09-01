@@ -8,6 +8,7 @@ class ManageWorkspaceBloc {
       DMSManageWorkspaceRepository();
 
   final BehaviorSubject _subject = BehaviorSubject();
+  final BehaviorSubject _getAPISubject = BehaviorSubject();
 
   postAPIData({
     @required Map<String, dynamic> queryparams,
@@ -19,21 +20,25 @@ class ManageWorkspaceBloc {
     _subject.sink.add(response);
   }
 
-  getAPIData({
-    Map<String, dynamic> queryparams,
+  Future<WorkspaceViewModel> getAPIData({
+    @required Map<String, dynamic> queryparams,
   }) async {
     WorkspaceViewModel response = await _apiRepository.getAPIData(
       queryparams: queryparams,
     );
 
-    _subject.sink.add(response);
+    _getAPISubject.sink.add(response);
+
+    return response;
   }
 
   dispose() {
     _subject.close();
+    _getAPISubject.close();
   }
 
   BehaviorSubject get subject => _subject;
+  BehaviorSubject get getAPISubject => _getAPISubject;
 }
 
 final dmsManageWorkspaceBloc = ManageWorkspaceBloc();
