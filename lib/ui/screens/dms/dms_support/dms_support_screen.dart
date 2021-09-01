@@ -88,6 +88,7 @@ class _DMSSupportState extends State<DMSSupport> {
 
     // queryparams['templateCodes'] = 'DMS_SUPPORT_TICKET';
     // queryparams['categoryCodes'] = 'DMS_TASK';
+    // queryparams['portalName'] = 'DMS';
     queryparams['requestby'] = requestBy;
     // queryparams['userId'] = '45bba746-3309-49b7-9c03-b5793369d73c';
 

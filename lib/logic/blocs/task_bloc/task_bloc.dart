@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../../../data/models/api_models/post_response_model.dart';
@@ -58,7 +60,11 @@ class TaskBloc {
     if (response.isSuccess) {
       _subjectTaskList.sink.add(null);
 
-      getTaskHomeListData(queryparams: null);
+      Map<String, dynamic> queryparams = Map();
+      queryparams['userid'] = taskModel.activeUserId;
+      queryparams['userId'] = taskModel.activeUserId;
+
+      getTaskHomeListData(queryparams: queryparams);
     }
 
     return response;
