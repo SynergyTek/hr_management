@@ -5,12 +5,12 @@ part of 'dms_document_action_repository.dart';
 class DMSDocumentActionRepository extends AbstractDMSDocumentActionRepository {
   final Dio _dio = Dio();
 
-  Future<DMSDocumentActionResponse> getAPIData({
+  Future<DMSDocumentActionResponse> getArchiveDocumentData({
     Map<String, dynamic> queryparams,
   }) async {
     try {
       Response response = await _dio.get(
-        APIEndpointConstants.GET_DOCUMENT_ACTION_DATA,
+        APIEndpointConstants.GET_DOCUMENT_ARCHIVE_DATA,
         queryParameters: queryparams ?? {},
       );
 
@@ -22,5 +22,62 @@ class DMSDocumentActionRepository extends AbstractDMSDocumentActionRepository {
       return DMSDocumentActionResponse.withError(err);
     }
   }
+
+  Future<DMSDocumentActionResponse> getBinDocumentData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_BIN_DOCUMENT_DATA,
+        queryParameters: queryparams ?? {},
+      );
+
+      return DMSDocumentActionResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return DMSDocumentActionResponse.withError(err);
+    }
+  }
+
+  Future<DMSDocumentActionResponse> getDocumentHistoryData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_DOCUMENT_DATA,
+        queryParameters: queryparams ?? {},
+      );
+
+      return DMSDocumentActionResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return DMSDocumentActionResponse.withError(err);
+    }
+  }
+
+Future<DMSDocumentActionResponse> getSearchDocumentData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_ALL_FOLDER_AND_DOCUMENT_DATA,
+        queryParameters: queryparams ?? {},
+      );
+
+      return DMSDocumentActionResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return DMSDocumentActionResponse.withError(err);
+    }
+  }
+
+  
+  
 }
 

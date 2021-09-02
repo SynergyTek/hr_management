@@ -7,5 +7,11 @@ part 'dms_document_action_repository_implementation.dart';
 abstract class AbstractDMSDocumentActionRepository {
   AbstractDMSDocumentActionRepository();
 
-  Future<DMSDocumentActionResponse> getAPIData();
+  Future<DMSDocumentActionResponse> getArchiveDocumentData();
+
+  Future<DMSDocumentActionResponse> getBinDocumentData();
+
+  Future<DMSDocumentActionResponse> getDocumentHistoryData();
+
+  Future<DMSDocumentActionResponse> getSearchDocumentData();
 }

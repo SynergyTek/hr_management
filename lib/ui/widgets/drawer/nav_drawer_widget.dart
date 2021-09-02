@@ -341,9 +341,15 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
-              ListTile(
+              ExpansionTile(
                 title: Text(
                   'DMS',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                children: [
+                  ListTile(
+                title: Text(
+                  'Document',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
                 onTap: () {
@@ -353,7 +359,56 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
+               
               ListTile(
+                title: Text(
+                  'Documeny Search',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_SEARCH_ROUTE,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Document History',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_HISTORY_ROUTE,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Document Bin',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_BIN_ROUTE,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Document Archive',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_ARCHIVE_ROUTE,
+                  );
+                },
+              ),
+                 ListTile(
                 title: Text(
                   'DMS SUPPORT',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
@@ -365,6 +420,11 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
+                ],
+              ),
+            
+              
+              
 
               ListTile(), //Added to avoid the last option to be hidden under "LOG OUT"
             ],

@@ -4,6 +4,7 @@ import 'package:hr_management/ui/screens/dms/dms_manage_workspace_screen/dms_man
 import 'package:hr_management/ui/screens/dms/dms_new_folder_screen/dms_new_folder_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
 import 'package:hr_management/ui/screens/dms/dms_support/dms_support_screen.dart';
+import 'package:hr_management/ui/screens/dms/document_action/document_action_screen.dart';
 import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
@@ -473,6 +474,42 @@ class AppRouter {
             parentId: args.arg1,
             folderId: args.arg2,
             folderName: args.arg3,
+          ),
+        );
+        break;
+
+          case DMS_ARCHIVE_ROUTE:
+        // final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DocumentActionScreen(
+            action: 'Archive',
+          ),
+        );
+        break;
+        
+          case DMS_BIN_ROUTE:
+        // final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DocumentActionScreen(
+            action: 'Bin',
+          ),
+        );
+        break;
+        
+          case DMS_HISTORY_ROUTE:
+        // final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DocumentActionScreen(
+            action: 'History',
+          ),
+        );
+        break;
+        
+          case DMS_SEARCH_ROUTE:
+        // final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DocumentActionScreen(
+            action: 'Search',
           ),
         );
         break;

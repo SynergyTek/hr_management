@@ -386,6 +386,18 @@ class APIEndpointConstants {
   static const GET_DOCUMENT_TEMPLATE_ID_NAME_LIST_BY_USER_DATA = BASE_URL +
       '/dms/query/GetDocumentTemplateIdNameListByUser?userId=45bba746-3309-49b7-9c03-b5793369d73c';
 
+      
+      static const GET_DOCUMENT_ARCHIVE_DATA = BASE_URL + '/dms/query/GetArchivedDocumentData';
+
+      
+      static const GET_BIN_DOCUMENT_DATA = BASE_URL + '/dms/query/GetBinDocumentData';
+
+      
+      static const GET_DOCUMENT_DATA = BASE_URL + '/dms/query/ReadDocumentData';
+
+      
+      static const GET_ALL_FOLDER_AND_DOCUMENT_DATA = BASE_URL + '/dms/query/GetAllFolderAndDocument';
+
   //************************************************************************//
   // DMS API:
 
@@ -396,5 +408,4 @@ class APIEndpointConstants {
       BASE_URL + '/cms/query/GetLegalEntityNameList';
       
 
-      static const GET_DOCUMENT_ACTION_DATA = BASE_URL + '/dms/query/GetArchivedDocumentData';
 }

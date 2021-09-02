@@ -90,3 +90,7 @@ const String DMS_LEGAL_ENTITY = '/dms_legal_entity';
 
 const String DMS_MANAGE_WORKSPACE_ROUTE = '/dms_manage_workspace';
 const String DMS_NEW_FOLDER_ROUTE = '/dms_new_folder';
+const String DMS_ARCHIVE_ROUTE = '/dms_archive_document';
+const String DMS_BIN_ROUTE = '/dms_bin_document';
+const String DMS_HISTORY_ROUTE = '/dms_history_document';
+const String DMS_SEARCH_ROUTE = '/dms_search_document';

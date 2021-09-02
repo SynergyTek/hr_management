@@ -7,10 +7,40 @@ class DMSDocumentActionBloc {
 
   final BehaviorSubject<DMSDocumentActionResponse> _subject = BehaviorSubject();
 
-  getAPIData({
+  getArchiveDocumentData({
     Map<String, dynamic> queryparams,
   }) async {
-    DMSDocumentActionResponse response = await _apiRepository.getAPIData(
+    DMSDocumentActionResponse response = await _apiRepository.getArchiveDocumentData(
+      queryparams: queryparams,
+    );
+
+    _subject.sink.add(response);
+  }
+
+  getBinDocumentData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    DMSDocumentActionResponse response = await _apiRepository.getBinDocumentData(
+      queryparams: queryparams,
+    );
+
+    _subject.sink.add(response);
+  }
+
+  getDocumentHistoryData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    DMSDocumentActionResponse response = await _apiRepository.getDocumentHistoryData(
+      queryparams: queryparams,
+    );
+
+    _subject.sink.add(response);
+  }
+
+  getSearchDocumentData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    DMSDocumentActionResponse response = await _apiRepository.getSearchDocumentData(
       queryparams: queryparams,
     );
 
