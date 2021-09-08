@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/constants/formats.dart';
 import 'package:hr_management/data/models/dms/dms_document_action_model/dms_document_action_model.dart';
 import 'package:hr_management/data/models/dms/dms_document_action_model/dms_document_action_response.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_document_action_bloc/dms_document_action_bloc.dart';
@@ -47,15 +48,60 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
                 return EmptyListWidget();
               }
               _documentList = snapshot.data.data.reversed.toList();
-              return Listizer(
+                 return Listizer(
                 listItems: _documentList,
                 filteredSearchList: _filteredDocumentList,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_filteredDocumentList[index].documentName??''),
+                  return Card(
+                    elevation: 4,
+                    child: ListTile(
+                      title: Text(
+                        _filteredDocumentList[index].documentName??'',
+                        maxLines: 2,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      subtitle: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6.0),
+                            child: Row(
+                              children: <Widget>[
+                                Text("Parent Name: "),
+                                Text(_filteredDocumentList[index].parentName??''),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text("Updated By: "),
+                              Flexible(
+                                child: Text(
+                                  _filteredDocumentList[index].updatedByUser??'',
+                                  style:
+                                      TextStyle(color: Colors.deepPurple[900]),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('Updated On:'),
+                              Text(_filteredDocumentList[index].createdDate!=null?
+                                dateformatter.format(DateTime.parse(
+                                    _filteredDocumentList[index].createdDate)):'',
+                                style: TextStyle(color: Colors.red[700]),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      onTap: () {},
+                    ),
                   );
                 },
               );
+         
             } else {
               return Center(
                 child: CustomProgressIndicator(

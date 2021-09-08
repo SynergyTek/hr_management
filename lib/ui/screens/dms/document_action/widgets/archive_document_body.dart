@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/constants/formats.dart';
 import 'package:hr_management/data/models/dms/dms_document_action_model/dms_document_action_model.dart';
 import 'package:hr_management/data/models/dms/dms_document_action_model/dms_document_action_response.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_document_action_bloc/dms_document_action_bloc.dart';
@@ -51,8 +52,74 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                 listItems: _documentList,
                 filteredSearchList: _filteredDocumentList,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_filteredDocumentList[index].documentName),
+                  return Card(
+                    elevation: 4,
+                    child: ListTile(
+                      title: Text(
+                        _filteredDocumentList[index].documentName,
+                        maxLines: 2,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      subtitle: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6.0),
+                            child: Row(
+                              children: <Widget>[
+                                Text("Document Type: "),
+                                Text(_filteredDocumentList[index].documentType),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text("Updated By: "),
+                              Flexible(
+                                child: Text(
+                                  _filteredDocumentList[index].updatedByUser,
+                                  style:
+                                      TextStyle(color: Colors.deepPurple[900]),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text("Status: "),
+                              Flexible(
+                                child: Text(
+                                  _filteredDocumentList[index].statusName,
+                                  style: TextStyle(color: Colors.green[800]),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('Created On: '),
+                              Text(
+                                dateformatter.format(DateTime.parse(
+                                    _filteredDocumentList[index]
+                                        .createdDate)),
+                                style: TextStyle(color: Colors.red[700]),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('Modified On: '),
+                              Text(
+                                dateformatter.format(DateTime.parse(
+                                    _filteredDocumentList[index].updatedDate)),
+                                style: TextStyle(color: Colors.red[700]),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      onTap: () {},
+                    ),
                   );
                 },
               );
