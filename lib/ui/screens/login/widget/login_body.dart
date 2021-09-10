@@ -216,7 +216,7 @@ class _LoginBodyState extends State<LoginBody> {
           showCPI = false;
         });
 
-        displaySnackBar(text: 'Login successful!', context: context);
+        displaySnackBar(text: 'Login Successful!', context: context);
         Navigator.pushReplacementNamed(
           context,
           WORKLIST_DASHBOARD,
@@ -227,7 +227,7 @@ class _LoginBodyState extends State<LoginBody> {
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('invalid username and password'),
+            content: Text('Invalid Username and Password'),
           ),
         );
       }
