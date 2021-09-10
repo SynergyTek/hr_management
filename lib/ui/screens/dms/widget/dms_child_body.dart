@@ -459,7 +459,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ListTile(
           leading: Icon(CustomIcons.eye),
           title: Text('View Permission'),
-          // onTap: () => deleteDialog(id),
+          onTap: () => _handleViewPermissionOnTap(item),
         ),
         ListTile(
           leading: Icon(CustomIcons.trash),
@@ -832,6 +832,15 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ),
       ),
       subtitle: Text(subtitle ?? '-'),
+    );
+  }
+
+  _handleViewPermissionOnTap(Cwd item) {
+    Navigator.of(context).pushNamed(
+      DMS_VIEW_PERMISSION_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+      ),
     );
   }
 

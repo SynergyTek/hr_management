@@ -77,6 +77,24 @@ Future<DMSDocumentActionResponse> getSearchDocumentData({
     }
   }
 
+Future<DMSDocumentActionResponse> getViewPermissionData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_VIEW_PERMISSIONS_DATA,
+        queryParameters: queryparams ?? {},
+      );
+
+      return DMSDocumentActionResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return DMSDocumentActionResponse.withError(err);
+    }
+  }
+
   
   
 }

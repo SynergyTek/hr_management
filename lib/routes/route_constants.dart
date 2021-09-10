@@ -94,3 +94,4 @@ const String DMS_ARCHIVE_ROUTE = '/dms_archive_document';
 const String DMS_BIN_ROUTE = '/dms_bin_document';
 const String DMS_HISTORY_ROUTE = '/dms_history_document';
 const String DMS_SEARCH_ROUTE = '/dms_search_document';
+const String DMS_VIEW_PERMISSION_ROUTE = '/dms_view_permission';

@@ -14,4 +14,6 @@ abstract class AbstractDMSDocumentActionRepository {
   Future<DMSDocumentActionResponse> getDocumentHistoryData();
 
   Future<DMSDocumentActionResponse> getSearchDocumentData();
+
+  Future<DMSDocumentActionResponse> getViewPermissionData();
 }

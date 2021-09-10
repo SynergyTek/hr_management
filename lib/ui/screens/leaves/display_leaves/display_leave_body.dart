@@ -134,7 +134,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                 //   ),
                                 // ),
                                 Text(
-                                  _serviceList[index].leaveStatus,
+                                  _serviceList[index].leaveStatus ?? '-',
                                   style: TextStyle(color: Colors.green),
                                 ),
                               ],

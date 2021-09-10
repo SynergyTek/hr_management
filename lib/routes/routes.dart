@@ -4,6 +4,7 @@ import 'package:hr_management/ui/screens/dms/dms_manage_workspace_screen/dms_man
 import 'package:hr_management/ui/screens/dms/dms_new_folder_screen/dms_new_folder_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
 import 'package:hr_management/ui/screens/dms/dms_support/dms_support_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/dms_view_permission_screen.dart';
 import 'package:hr_management/ui/screens/dms/document_action/document_action_screen.dart';
 import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
@@ -478,7 +479,7 @@ class AppRouter {
         );
         break;
 
-          case DMS_ARCHIVE_ROUTE:
+      case DMS_ARCHIVE_ROUTE:
         // final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => DocumentActionScreen(
@@ -486,8 +487,8 @@ class AppRouter {
           ),
         );
         break;
-        
-          case DMS_BIN_ROUTE:
+
+      case DMS_BIN_ROUTE:
         // final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => DocumentActionScreen(
@@ -495,8 +496,8 @@ class AppRouter {
           ),
         );
         break;
-        
-          case DMS_HISTORY_ROUTE:
+
+      case DMS_HISTORY_ROUTE:
         // final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => DocumentActionScreen(
@@ -504,12 +505,21 @@ class AppRouter {
           ),
         );
         break;
-        
-          case DMS_SEARCH_ROUTE:
+
+      case DMS_SEARCH_ROUTE:
         // final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => DocumentActionScreen(
             action: 'Search',
+          ),
+        );
+        break;
+
+      case DMS_VIEW_PERMISSION_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSViewPermissionScreen(
+            parentId: args.arg1,
           ),
         );
         break;

@@ -3,14 +3,16 @@ import 'package:hr_management/data/repositories/dms_repository/dms_document_acti
 import 'package:rxdart/rxdart.dart';
 
 class DMSDocumentActionBloc {
-  final DMSDocumentActionRepository _apiRepository = DMSDocumentActionRepository();
+  final DMSDocumentActionRepository _apiRepository =
+      DMSDocumentActionRepository();
 
   final BehaviorSubject<DMSDocumentActionResponse> _subject = BehaviorSubject();
 
   getArchiveDocumentData({
     Map<String, dynamic> queryparams,
   }) async {
-    DMSDocumentActionResponse response = await _apiRepository.getArchiveDocumentData(
+    DMSDocumentActionResponse response =
+        await _apiRepository.getArchiveDocumentData(
       queryparams: queryparams,
     );
 
@@ -20,7 +22,8 @@ class DMSDocumentActionBloc {
   getBinDocumentData({
     Map<String, dynamic> queryparams,
   }) async {
-    DMSDocumentActionResponse response = await _apiRepository.getBinDocumentData(
+    DMSDocumentActionResponse response =
+        await _apiRepository.getBinDocumentData(
       queryparams: queryparams,
     );
 
@@ -30,7 +33,8 @@ class DMSDocumentActionBloc {
   getDocumentHistoryData({
     Map<String, dynamic> queryparams,
   }) async {
-    DMSDocumentActionResponse response = await _apiRepository.getDocumentHistoryData(
+    DMSDocumentActionResponse response =
+        await _apiRepository.getDocumentHistoryData(
       queryparams: queryparams,
     );
 
@@ -40,7 +44,19 @@ class DMSDocumentActionBloc {
   getSearchDocumentData({
     Map<String, dynamic> queryparams,
   }) async {
-    DMSDocumentActionResponse response = await _apiRepository.getSearchDocumentData(
+    DMSDocumentActionResponse response =
+        await _apiRepository.getSearchDocumentData(
+      queryparams: queryparams,
+    );
+
+    _subject.sink.add(response);
+  }
+
+  getViewPermissionData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    DMSDocumentActionResponse response =
+        await _apiRepository.getViewPermissionData(
       queryparams: queryparams,
     );
 
