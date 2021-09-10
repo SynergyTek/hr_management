@@ -348,83 +348,91 @@ Widget drawerWidget(context) {
                 ),
                 children: [
                   ListTile(
-                title: Text(
-                  'Document',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DMS_PARENT,
-                  );
-                },
-              ),
-               
-              ListTile(
-                title: Text(
-                  'Documeny Search',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DMS_SEARCH_ROUTE,
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Document History',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DMS_HISTORY_ROUTE,
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Document Bin',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DMS_BIN_ROUTE,
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Document Archive',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DMS_ARCHIVE_ROUTE,
-                  );
-                },
-              ),
-                 ListTile(
-                title: Text(
-                  'DMS SUPPORT',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DMS_SUPPORT,
-                  );
-                },
-              ),
+                    title: Text(
+                      'Document',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_PARENT,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Documeny Search',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_SEARCH_ROUTE,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Document History',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_HISTORY_ROUTE,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Document Bin',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_BIN_ROUTE,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Document Archive',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_ARCHIVE_ROUTE,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'DMS SUPPORT',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_SUPPORT,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'DOCUMENT WORKSPACE',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_WORKSPACE_ROUTE,
+                      );
+                    },
+                  ),
                 ],
               ),
-            
-              
-              
 
               ListTile(), //Added to avoid the last option to be hidden under "LOG OUT"
             ],

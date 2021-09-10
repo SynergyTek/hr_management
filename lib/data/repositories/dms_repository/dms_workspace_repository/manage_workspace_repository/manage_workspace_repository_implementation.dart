@@ -41,4 +41,44 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
       return err;
     }
   }
+
+  Future<WorkspaceViewResponse> getWorkspaceData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_WORKSPACE_DATA,
+        queryParameters: queryparams ?? {},
+      );
+
+      WorkspaceViewResponse result = WorkspaceViewResponse.fromJson(response.data);
+
+      return result;
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return err;
+    }
+  }
+
+  Future<WorkspaceViewModel> deleteWorkspace({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.DELETE_WORKSPACE,
+        queryParameters: queryparams ?? {},
+      );
+
+      var result = WorkspaceViewModel.fromJson(response.data);
+
+      return result;
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return err;
+    }
+  }
 }

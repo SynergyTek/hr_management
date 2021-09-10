@@ -374,6 +374,10 @@ class APIEndpointConstants {
   static const GET_CREATE_WORKSPACE_DATA =
       BASE_URL + '/api/command/CreateWorkspace';
 
+  static const GET_WORKSPACE_DATA = BASE_URL + '/dms/query/ReadWorkspaceData';
+
+  static const DELETE_WORKSPACE = BASE_URL + '/dms/query/DeleteWorkspace';
+
   static const POST_MANAGE_NEW_FOLDER_DATA =
       BASE_URL + '/api/command/ManageNewFolder';
 

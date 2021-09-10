@@ -5,6 +5,7 @@ import 'package:hr_management/ui/screens/dms/dms_new_folder_screen/dms_new_folde
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
 import 'package:hr_management/ui/screens/dms/dms_support/dms_support_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/dms_view_permission_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_workspace_screen/dms_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/document_action/document_action_screen.dart';
 import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
@@ -521,6 +522,11 @@ class AppRouter {
           builder: (_) => DMSViewPermissionScreen(
             parentId: args.arg1,
           ),
+        );
+        break;
+      case DMS_WORKSPACE_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => DMSWorkspaceScreen(),
         );
         break;
 
