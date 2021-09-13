@@ -6,6 +6,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+// 345435
 class NewDownloadHelper {
   /// handlePermissions:
   /// This method checks whether all the required permissions are provided by the user for download to start.

@@ -171,7 +171,19 @@ class _DownloaderState extends State<Downloader> {
         await OpenFile.open(savePath);
       }
     } else {
-      FlutterDownloader.open(taskId: taskId);
+      bool isOpen = await FlutterDownloader.open(taskId: taskId);
+
+      if (isOpen == null || !isOpen) {
+        // Getting out of the downloads screen.
+        Navigator.of(context).pop();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                "Something went wrong, pl check the file name & file extension are present."),
+          ),
+        );
+      }
     }
   }
 
