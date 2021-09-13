@@ -111,9 +111,7 @@ class _DownloaderState extends State<Downloader> {
                                       fontWeight: FontWeight.bold,
                                     ),
                           ),
-                          onPressed: () => _openfile(
-                            taskId: taskId,
-                          ),
+                          onPressed: () => _openfile(),
                         )
                       : Container(
                           width: 64,
@@ -158,32 +156,29 @@ class _DownloaderState extends State<Downloader> {
     });
   }
 
-  void _openfile({
-    @required String taskId,
-  }) async {
-    // If taskId is null and View is available for the user
-    // it means that the file already exists and the user clicked
-    // on don't overwrite option.
-    if (taskId == null || taskId.isEmpty) {
-      String dir = (await getExternalStorageDirectory()).path;
-      String savePath = '$dir/${widget.filename}';
-      if (await File(savePath).exists()) {
-        await OpenFile.open(savePath);
-      }
-    } else {
-      bool isOpen = await FlutterDownloader.open(taskId: taskId);
+  void _openfile() async {
+    String dir = (await getExternalStorageDirectory()).path;
+    String savePath = '$dir/${widget.filename}';
+    if (await File(savePath).exists()) {
+      OpenResult _openResult = await OpenFile.open(savePath);
 
-      if (isOpen == null || !isOpen) {
-        // Getting out of the downloads screen.
+      if (_openResult.type != ResultType.done) {
         Navigator.of(context).pop();
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-                "Something went wrong, pl check the file name & file extension are present."),
+            content: Text("Error: ${_openResult.message}"),
           ),
         );
       }
+    } else {
+      Navigator.of(context).pop();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("File couldn't be saved, Pl try again later."),
+        ),
+      );
     }
   }
 
@@ -205,7 +200,10 @@ class _DownloaderState extends State<Downloader> {
             ),
             actions: [
               TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                  _openfile();
+                },
                 child: Text("View file"),
               ),
               ElevatedButton(
