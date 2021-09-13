@@ -23,9 +23,8 @@ void main() async {
     ),
   );
 
-  await FlutterDownloader.initialize(
-      debug: true // optional: set false to disable printing logs to console
-      );
+  // optional: set false to disable printing logs to console
+  await FlutterDownloader.initialize(debug: !true);
 
   runApp(InitScreen());
 }

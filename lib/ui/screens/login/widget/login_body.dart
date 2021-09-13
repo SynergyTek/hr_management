@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
 import 'package:hr_management/data/models/profile_settings_model.dart';
 import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
 import 'package:hr_management/logic/blocs/profile_settings_bloc/profile_settings_bloc.dart';
@@ -42,6 +43,7 @@ class _LoginBodyState extends State<LoginBody> {
     super.initState();
 
     LocationBloc().checkForLocationPermission();
+    NewDownloadHelper().handlePermissions();
   }
 
   @override

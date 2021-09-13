@@ -7,11 +7,9 @@ import 'package:hr_management/ui/screens/dms/dms_support/dms_support_screen.dart
 import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/dms_view_permission_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_workspace_screen/dms_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/document_action/document_action_screen.dart';
-import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
-import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/helpdesk_dashboard_body_widget.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 
@@ -417,12 +415,6 @@ class AppRouter {
       case CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE:
         return MaterialPageRoute(
           builder: (_) => CaseManagementHelpdeskDashboardScreen(),
-        );
-        break;
-
-      case DOWNLOAD_SCREEN_ROUTE:
-        return MaterialPageRoute(
-          builder: (_) => DownloadScreen(),
         );
         break;
 

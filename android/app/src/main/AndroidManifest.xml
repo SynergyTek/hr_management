@@ -1,21 +1,48 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hr_management">
+    
+        <!-- xmlns:tools="http://schemas.android.com/tools" -->
+  
+        <!-- For location tracking -->
+        <uses-permission android:name="android.permisssion.ACCESS_COARSE_LOCATION"/>
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+        <!-- Permission for downloading via internet and accessing the device memory to read and write. -->
+        <uses-permission android:name="android.permission.INTERNET"/>
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
    <application
         android:label="Synergy HRM"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         >
+        
+        <!-- Code to enable on click from notification when download has completed. -->
+        <provider
+            android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
+            android:authorities="${applicationId}.flutter_downloader.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
-<provider
-    android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
-    android:authorities="${applicationId}.flutter_downloader.provider"
-    android:exported="false"
-    android:grantUriPermissions="true">
-    <meta-data
-        android:name="android.support.FILE_PROVIDER_PATHS"
-        android:resource="@xml/provider_paths"/>
-</provider>
+        <!-- Configuration to manage concurrent download tasks. -->
+        <!-- <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove" />
+
+        <provider
+            android:name="vn.hunghd.flutterdownloader.FlutterDownloaderInitializer"
+            android:authorities="${applicationId}.flutter-downloader-init"
+            android:exported="false">
+            <meta-data
+                android:name="vn.hunghd.flutterdownloader.MAX_CONCURRENT_TASKS"
+                android:value="5" />
+        </provider> -->
 
         <activity
             android:name=".MainActivity"
@@ -51,8 +78,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permisssion.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 </manifest>
