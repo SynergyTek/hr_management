@@ -57,7 +57,8 @@ class ManageWorkspaceBloc {
     );
 
     _getAPISubject.sink.add(response);
-
+    getWorkspaceSubject.sink.add(null);
+    getWorkspaceData(queryparams: {});
     return response;
   }
 
@@ -69,7 +70,8 @@ class ManageWorkspaceBloc {
 
   BehaviorSubject get subject => _subject;
   BehaviorSubject get getAPISubject => _getAPISubject;
-  BehaviorSubject get getWorkspaceSubject => _getWorkspaceSubject;
+  BehaviorSubject<WorkspaceViewResponse> get getWorkspaceSubject =>
+      _getWorkspaceSubject;
 }
 
 final dmsManageWorkspaceBloc = ManageWorkspaceBloc();
