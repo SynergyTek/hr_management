@@ -59,4 +59,22 @@ class DocumentPermissionRepository
       return PermissionResponse.withError(err);
     }
   }
+
+  Future<PermissionResponse> deletePermission({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.DELETE_PERMISSIONS,
+        queryParameters: queryparams ?? {},
+      );
+
+      return PermissionResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return PermissionResponse.withError(err);
+    }
+  }
 }

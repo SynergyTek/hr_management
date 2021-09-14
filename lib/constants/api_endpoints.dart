@@ -425,6 +425,8 @@ class APIEndpointConstants {
   static const DISABLE_PARENT_PERMISSIONS =
       BASE_URL + '/dms/query/DisableParentPermission';
 
+  static const DELETE_PERMISSIONS = BASE_URL + '/dms/query/DeletePermission';
+
   //************************************************************************//
   // PERMISSION API Ends:
 }

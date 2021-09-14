@@ -38,6 +38,16 @@ class PermissionBloc {
     _subject.sink.add(response);
   }
 
+  deletePermission({
+    Map<String, dynamic> queryparams,
+  }) async {
+    PermissionResponse response = await _apiRepository.deletePermission(
+      queryparams: queryparams,
+    );
+
+    _subject.sink.add(response);
+  }
+
   dispose() {
     _subject.close();
   }
