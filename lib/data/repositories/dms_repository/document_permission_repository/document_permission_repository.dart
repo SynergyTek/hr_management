@@ -18,7 +18,7 @@ abstract class AbstractDocumentPermissionRepository {
     Map<String, dynamic> queryparams,
   });
 
-  Future<PermissionResponse> deletePermission({
+  Future<bool> deletePermission({
     Map<String, dynamic> queryparams,
   });
 }

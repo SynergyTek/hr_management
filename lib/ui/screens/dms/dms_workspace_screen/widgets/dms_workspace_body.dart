@@ -60,15 +60,15 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                       direction: Axis.horizontal,
                       actionExtentRatio: 0.20,
                       actions: <Widget>[
-                        // IconSlideAction(
-                        //   caption: 'Share',
-                        //   color: Colors.blue,
-                        //   icon: Icons.share,
-                        //   onTap: () => print('Share'),
-                        // ),
+                        IconSlideAction(
+                          caption: 'Permission',
+                          color: Colors.blue,
+                          icon: Icons.share,
+                          onTap: () => permissionScreen(),
+                        ),
                         IconSlideAction(
                             caption: 'Delete',
-                            color: Colors.indigo,
+                            color: Colors.red[300],
                             icon: Icons.delete,
                             onTap: () {
                               deleteDialog(_itemList[index].noteId);
@@ -198,6 +198,11 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
         arg1: id ?? "",
       ),
     );
+  }
+
+  permissionScreen() {
+    print('permission----');
+    return Container();
   }
 
   deleteDialog(String id) {

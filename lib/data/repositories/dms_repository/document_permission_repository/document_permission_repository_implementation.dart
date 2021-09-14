@@ -60,7 +60,7 @@ class DocumentPermissionRepository
     }
   }
 
-  Future<PermissionResponse> deletePermission({
+  Future<bool> deletePermission({
     Map<String, dynamic> queryparams,
   }) async {
     try {
@@ -69,12 +69,11 @@ class DocumentPermissionRepository
         queryParameters: queryparams ?? {},
       );
 
-      return PermissionResponse.fromJson(response.data);
+      return response.data;
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
-
-      return PermissionResponse.withError(err);
+      return false;
     }
   }
 }

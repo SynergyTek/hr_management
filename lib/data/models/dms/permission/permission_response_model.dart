@@ -14,7 +14,7 @@ class PermissionResponse {
       : data = response.map((i) => new Permission.fromJson(i)).toList(),
         error = "";
 
-  PermissionResponse.withError(String errorValue)
+  PermissionResponse.withError(dynamic errorValue)
       : data = null,
         error = errorValue;
 }
