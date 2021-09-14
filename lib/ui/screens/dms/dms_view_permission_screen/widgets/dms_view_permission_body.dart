@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/dms/dms_document_action_model/dms_document_action_response.dart';
+import 'package:hr_management/data/models/dms/permission/permission_response_model.dart';
 import 'package:hr_management/data/models/service_models/service.dart';
-import 'package:hr_management/logic/blocs/dms_bloc/dms_document_action_bloc/dms_document_action_bloc.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:listizer/listizer.dart';
@@ -21,9 +22,11 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
 
   @override
   void initState() {
-    dmsDocumentActionBloc
+    permissionBloc
       ..getViewPermissionData(queryparams: {
         'NoteId': widget.parentId,
+        'workspaceId': '',
+        'parentId': ''
       });
     super.initState();
   }
@@ -32,10 +35,9 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
-      child: StreamBuilder<DMSDocumentActionResponse>(
-          stream: dmsDocumentActionBloc.subject.stream,
-          builder:
-              (context, AsyncSnapshot<DMSDocumentActionResponse> snapshot) {
+      child: StreamBuilder<PermissionResponse>(
+          stream: permissionBloc.subject.stream,
+          builder: (context, AsyncSnapshot<PermissionResponse> snapshot) {
             print("Snapshot data: ${snapshot.data}");
             if (snapshot.hasData) {
               // if (snapshot.data == null ||

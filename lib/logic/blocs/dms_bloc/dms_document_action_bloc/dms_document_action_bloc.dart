@@ -52,17 +52,6 @@ class DMSDocumentActionBloc {
     _subject.sink.add(response);
   }
 
-  getViewPermissionData({
-    Map<String, dynamic> queryparams,
-  }) async {
-    DMSDocumentActionResponse response =
-        await _apiRepository.getViewPermissionData(
-      queryparams: queryparams,
-    );
-
-    _subject.sink.add(response);
-  }
-
   dispose() {
     _subject.close();
   }
