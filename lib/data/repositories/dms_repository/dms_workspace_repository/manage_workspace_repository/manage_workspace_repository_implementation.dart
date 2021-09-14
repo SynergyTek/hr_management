@@ -37,8 +37,8 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
-
-      return err;
+      return null;
+      // return err;
     }
   }
 
@@ -51,7 +51,8 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
         queryParameters: queryparams ?? {},
       );
 
-      WorkspaceViewResponse result = WorkspaceViewResponse.fromJson(response.data);
+      WorkspaceViewResponse result =
+          WorkspaceViewResponse.fromJson(response.data);
 
       return result;
     } catch (err, stacktrace) {
@@ -72,7 +73,7 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
       );
 
       var result = WorkspaceViewModel.fromJson(response.data);
-
+      
       return result;
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");

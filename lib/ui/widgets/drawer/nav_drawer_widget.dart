@@ -68,6 +68,18 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
+              // ListTile(
+              //   title: Text(
+              //     'DOCUMENT WORKSPACE',
+              //     style: TextStyle(fontSize: fontSize, color: fontColor),
+              //   ),
+              //   onTap: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       DMS_WORKSPACE_ROUTE,
+              //     );
+              //   },
+              // ),
 
               DrawerListTileWidget(
                 title: 'WORKLIST DASHBOARD',
