@@ -90,3 +90,6 @@ const String DMS_LEGAL_ENTITY = '/dms_legal_entity';
 
 const String DMS_MANAGE_WORKSPACE_ROUTE = '/dms_manage_workspace';
 const String DMS_NEW_FOLDER_ROUTE = '/dms_new_folder';
+
+const String REGISTER_FACE_WEB = '/register_face_web';
+const String MARK_ATTENDANCE_WEB = '/mark_attendance_web';
