@@ -8,6 +8,7 @@ import 'package:hr_management/ui/screens/dms/dms_support/dms_support_screen.dart
 import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/dms_view_permission_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_workspace_screen/dms_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/document_action/document_action_screen.dart';
+import 'package:hr_management/ui/screens/face_detection_web/face_detection_webview.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
@@ -531,6 +532,26 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSWorkspaceScreen(),
         );
+        break;
+
+      case REGISTER_FACE_WEB:
+        return MaterialPageRoute(
+          builder: (_) => FaceDeteWebview(
+            url: 'https://xtranet.aitalkx.com/TAA/Attendance/RegisterFace',
+            urlModuleName: 'Register Face',
+          ),
+        );
+        break;
+
+      case MARK_ATTENDANCE_WEB:
+        return MaterialPageRoute(
+          builder: (_) => FaceDeteWebview(
+            url:
+                'https://xtranet.aitalkx.com/TAA/Attendance/FaceDetectionAttendance',
+            urlModuleName: 'Mark Attendance',
+          ),
+        );
+
         break;
 
       // 404 route.

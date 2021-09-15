@@ -91,6 +91,34 @@ Widget drawerWidget(context) {
               //   },
               // ),
 
+              ExpansionTile(
+                title: Text(
+                  'TIME AND ATTENEDANCE WEB',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                children: [
+                  DrawerListTileWidget(
+                    title: 'REGISTER FACE',
+                    // trailing: Icon(Icons.payment),
+                    listTileOnTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        REGISTER_FACE_WEB,
+                      );
+                    },
+                  ),
+                  DrawerListTileWidget(
+                    title: 'MARK ATTENDANCE',
+                    listTileOnTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        MARK_ATTENDANCE_WEB,
+                      );
+                    },
+                  ),
+                ],
+              ),
+
               DrawerListTileWidget(
                 title: 'WORKLIST DASHBOARD',
                 listTileOnTap: () {
