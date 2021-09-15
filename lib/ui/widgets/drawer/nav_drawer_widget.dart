@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/image_path_constants.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';

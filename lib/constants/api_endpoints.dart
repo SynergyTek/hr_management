@@ -1,5 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
-
 class APIEndpointConstants {
   /// API Key to be used for accessing the API.
   static const String API_KEY = "2872b6179f2419aea44d59a61ef48f41";
@@ -206,14 +204,9 @@ class APIEndpointConstants {
   //Payroll API Endpoints Block End
   //************************************************************************//
 
-  //User Endpoints
+  //USER/TEAMS/GROUP Endpoints
 
   static const READ_USER_DATA = '$BASE_URL/cms/user/ReadUserData';
-
-  //User API Endpoints Block End
-  //************************************************************************//
-
-  //User Endpoints
 
   static const READ_TEAM_DATA = '$BASE_URL/cms/query/ReadTeamData';
 
@@ -411,6 +404,29 @@ class APIEndpointConstants {
   static const GET_LEGAL_ENTITY_DATA =
       BASE_URL + '/cms/query/GetLegalEntityNameList';
 
+  //************************************************************************//
+  //  DMS USER API Starts:
+
+  static const GET_USERS_ID_NAME_LIST =
+      '$BASE_URL/dms/query/GetUsersIdNameList';
+
+  static const GET_USERS_GROUP_ID_NAME_LIST =
+      '$BASE_URL/dms/query/GetUserGroupIdNameList';
+
+  //************************************************************************//
+  //  PERMISSION API Starts:
+
   static const GET_VIEW_PERMISSIONS_DATA =
-      BASE_URL + '/dms/query/ViewPermissionData';
+      BASE_URL + '/dms/query/ViewPermission';
+
+  static const GET_PERMISSIONS_DETAILS =
+      BASE_URL + '/dms/query/GetPermissionDetails';
+
+  static const DISABLE_PARENT_PERMISSIONS =
+      BASE_URL + '/dms/query/DisableParentPermission';
+
+  static const DELETE_PERMISSIONS = BASE_URL + '/dms/query/DeletePermission';
+
+  //************************************************************************//
+  // PERMISSION API Ends:
 }

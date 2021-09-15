@@ -454,7 +454,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ListTile(
           leading: Icon(CustomIcons.bags_shopping),
           title: Text('Manage Permission'),
-          // onTap: () => deleteDialog(id),
+          onTap: () => _handleManagePermissionOnTap(item),
         ),
         ListTile(
           leading: Icon(CustomIcons.eye),
@@ -835,11 +835,26 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
+  _handleManagePermissionOnTap(Cwd item) {
+    Navigator.of(context).pushNamed(
+      DMS_VIEW_PERMISSION_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+        arg2: item.parentId,
+        arg3: item.workspaceId,
+        val1: true,
+      ),
+    );
+  }
+
   _handleViewPermissionOnTap(Cwd item) {
     Navigator.of(context).pushNamed(
       DMS_VIEW_PERMISSION_ROUTE,
       arguments: ScreenArguments(
         arg1: item.id,
+        arg2: item.parentId,
+        arg3: item.workspaceId,
+        val1: false,
       ),
     );
   }

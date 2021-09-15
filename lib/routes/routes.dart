@@ -518,7 +518,10 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => DMSViewPermissionScreen(
-            parentId: args.arg1,
+            noteId: args.arg1,
+            parentId: args.arg2,
+            workspaceId: args.arg3,
+            isManagePermission: args.val1,
           ),
         );
         break;

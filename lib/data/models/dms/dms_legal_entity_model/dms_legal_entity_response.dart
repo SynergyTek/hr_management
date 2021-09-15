@@ -16,7 +16,7 @@ class DMSLegalEntityResponse {
             response.map((i) => new DMSLegalEntityModel.fromJson(i)).toList(),
         error = "";
 
-  DMSLegalEntityResponse.withError(String errorValue)
-      : data = null,
-        error = errorValue;
+DMSLegalEntityResponse.withError(String errorValue)
+    : data = null,
+      error = errorValue;
 }
