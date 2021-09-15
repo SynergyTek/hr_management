@@ -158,6 +158,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       child: BreadCrumb.builder(
         itemCount: childPath.length,
         builder: (index) {
+          print(childPath);
+          print('-----------------------------------------------');
           return BreadCrumbItem(
               content: Text(childPath[index]),
               borderRadius: BorderRadius.circular(4),
@@ -339,7 +341,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               color: Colors.blue,
             ),
             title: Text('Create Workspace'),
-           onTap: () => _handleCreateWorkspaceOnTap(item.id),
+            onTap: () => _handleCreateWorkspaceOnTap(),
           ),
         ),
         Visibility(
@@ -350,10 +352,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               color: Colors.blue,
             ),
             title: Text('Edit Workspace'),
-             onTap: () => _handleEditWorkspaceOnTap(
-            item.id,
-            data: item.data,
-          ),
+            onTap: () => _handleEditWorkspaceOnTap(
+              data: item,
+            ),
           ),
         ),
         Visibility(
@@ -455,12 +456,12 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ListTile(
           leading: Icon(CustomIcons.bags_shopping),
           title: Text('Manage Permission'),
-          // onTap: () => deleteDialog(id),
+          onTap: () => _handleManagePermissionOnTap(item),
         ),
         ListTile(
           leading: Icon(CustomIcons.eye),
           title: Text('View Permission'),
-          // onTap: () => deleteDialog(id),
+          onTap: () => _handleViewPermissionOnTap(item),
         ),
         ListTile(
           leading: Icon(CustomIcons.trash),
@@ -836,13 +837,39 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
+  _handleManagePermissionOnTap(Cwd item) {
+    Navigator.of(context).pushNamed(
+      DMS_VIEW_PERMISSION_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+        arg2: item.parentId,
+        arg3: item.workspaceId,
+        val1: true,
+        list1: childPath,
+      ),
+    );
+  }
+
+  _handleViewPermissionOnTap(Cwd item) {
+    Navigator.of(context).pushNamed(
+      DMS_VIEW_PERMISSION_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+        arg2: item.parentId,
+        arg3: item.workspaceId,
+        val1: false,
+        list1: childPath,
+      ),
+    );
+  }
+
   _handleEditFolderOnTap(Cwd item) {
     Navigator.of(context).pushNamed(
       DMS_NEW_FOLDER_ROUTE,
       arguments: ScreenArguments(
-        arg1: item.id,
-        arg2: item.name,
-        arg3: item.folderType.toString(),
+        arg1: item.id, // Parent id
+        arg2: item.id, // Folder id
+        arg3: item.name, // Folder Name
       ),
     );
   }
@@ -856,16 +883,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  
-  _handleCreateWorkspaceOnTap(String id) {
+  _handleCreateWorkspaceOnTap() {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
     );
   }
 
-  _handleEditWorkspaceOnTap(
-    String id, {
-    Cwd data,
+  _handleEditWorkspaceOnTap({
+    @required Cwd data,
   }) {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,

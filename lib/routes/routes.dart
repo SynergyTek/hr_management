@@ -1,15 +1,17 @@
 import 'package:hr_management/ui/screens/dms/dms_child.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/dms_legal_entity_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_manage_permission/dms_add_edit_permission_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_manage_workspace_screen/dms_manage_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_new_folder_screen/dms_new_folder_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
 import 'package:hr_management/ui/screens/dms/dms_support/dms_support_screen.dart';
-import 'package:hr_management/ui/screens/download_screen/download_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/dms_view_permission_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_workspace_screen/dms_workspace_screen.dart';
+import 'package:hr_management/ui/screens/dms/document_action/document_action_screen.dart';
 import 'package:hr_management/ui/screens/face_detection_web/face_detection_webview.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
-import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/widgets/helpdesk_dashboard_body_widget.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 
@@ -418,12 +420,6 @@ class AppRouter {
         );
         break;
 
-      case DOWNLOAD_SCREEN_ROUTE:
-        return MaterialPageRoute(
-          builder: (_) => DownloadScreen(),
-        );
-        break;
-
       case DMS_PARENT:
         return MaterialPageRoute(
           builder: (_) => DMSParent(),
@@ -433,6 +429,11 @@ class AppRouter {
       case DMS_SUPPORT:
         return MaterialPageRoute(
           builder: (_) => DMSSupport(),
+        );
+        break;
+      case DMS_ADD_EDIT_PERMISSION_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => DmsAddEditPermissionScreen(),
         );
         break;
 
@@ -472,9 +473,63 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSNewFolderScreen(
             parentId: args.arg1,
-            folderName: args.arg2,
-            sequenceOrder: args.arg3,
+            folderId: args.arg2,
+            folderName: args.arg3,
           ),
+        );
+        break;
+
+      case DMS_ARCHIVE_ROUTE:
+        // final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DocumentActionScreen(
+            action: 'Archive',
+          ),
+        );
+        break;
+
+      case DMS_BIN_ROUTE:
+        // final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DocumentActionScreen(
+            action: 'Bin',
+          ),
+        );
+        break;
+
+      case DMS_HISTORY_ROUTE:
+        // final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DocumentActionScreen(
+            action: 'History',
+          ),
+        );
+        break;
+
+      case DMS_SEARCH_ROUTE:
+        // final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DocumentActionScreen(
+            action: 'Search',
+          ),
+        );
+        break;
+
+      case DMS_VIEW_PERMISSION_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSViewPermissionScreen(
+            noteId: args.arg1,
+            parentId: args.arg2,
+            workspaceId: args.arg3,
+            isManagePermission: args.val1,
+            path: args.list1,
+          ),
+        );
+        break;
+      case DMS_WORKSPACE_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => DMSWorkspaceScreen(),
         );
         break;
 
@@ -495,6 +550,7 @@ class AppRouter {
             urlModuleName: 'Mark Attendance',
           ),
         );
+
         break;
 
       // 404 route.

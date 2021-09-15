@@ -90,6 +90,12 @@ const String DMS_LEGAL_ENTITY = '/dms_legal_entity';
 
 const String DMS_MANAGE_WORKSPACE_ROUTE = '/dms_manage_workspace';
 const String DMS_NEW_FOLDER_ROUTE = '/dms_new_folder';
-
+const String DMS_ARCHIVE_ROUTE = '/dms_archive_document';
+const String DMS_BIN_ROUTE = '/dms_bin_document';
+const String DMS_HISTORY_ROUTE = '/dms_history_document';
+const String DMS_SEARCH_ROUTE = '/dms_search_document';
+const String DMS_VIEW_PERMISSION_ROUTE = '/dms_view_permission';
+const String DMS_WORKSPACE_ROUTE = '/dms_workspace';
+const String DMS_ADD_EDIT_PERMISSION_ROUTE = '/dms_add_edit_permission';
 const String REGISTER_FACE_WEB = '/register_face_web';
 const String MARK_ATTENDANCE_WEB = '/mark_attendance_web';

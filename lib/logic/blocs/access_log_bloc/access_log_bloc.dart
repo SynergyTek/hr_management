@@ -24,7 +24,6 @@ class AccessLogBloc {
     queryparams["punchingTime"] = DateTime.now().toString();
     queryparams["punchingType"] = isSignIn ? "0" : "1";
     queryparams["userId"] = userId ?? "";
-    queryparams["userid"] = userId ?? "";
 
     AccessLogResponse response = await _accessLogRepository.getInsertAccessLog(
       queryparams: queryparams ?? {},

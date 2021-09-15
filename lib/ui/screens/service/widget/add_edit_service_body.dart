@@ -8,7 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
+import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
+import 'package:hr_management/data/helpers/download_helper/downloader_screen/downloader.dart';
 import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
@@ -914,11 +915,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             data: model[i],
           ),
 
-          // Callback for View
-          callBack2: () => _handleViewOnPressed(
-            data: model[i],
-          ),
-
           callBack: () {
             Navigator.pushNamed(
               context,
@@ -1593,93 +1589,18 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   //            Download code goes here.                //
   // -------------------------------------------------- //
 
-  List _tasks;
-  List _items;
-  bool _isLoading;
-  bool _permissionReady;
-  ReceivePort _port = ReceivePort();
-
-  void _bindBackgroundIsolate() {
-    bool isSuccess = IsolateNameServer.registerPortWithName(
-      _port.sendPort,
-      'downloader_send_port',
-    );
-
-    if (!isSuccess) {
-      _unbindBackgroundIsolate();
-      _bindBackgroundIsolate();
-      return;
-    }
-
-    _port.listen((dynamic data) {
-      print("data: $data");
-
-      String id = data[0];
-      DownloadTaskStatus status = data[1];
-      int progress = data[2];
-
-      if (_tasks != null && _tasks.isNotEmpty) {
-        final task = _tasks.firstWhere((task) => task.taskId == id);
-        setState(() {
-          task.status = status;
-          task.progress = progress;
-        });
-      }
-    });
-  }
-
-  void _unbindBackgroundIsolate() {
-    IsolateNameServer.removePortNameMapping('downloader_send_port');
-  }
-
-  static void downloadCallback(
-    String id,
-    DownloadTaskStatus status,
-    int progress,
-  ) {
-    final SendPort send =
-        IsolateNameServer.lookupPortByName('downloader_send_port');
-    send.send([id, status, progress]);
-  }
-
-  _handleViewOnPressed({
-    @required data,
-  }) async {
-    if (data == null)
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Data is unavailable. Pl try again later."),
-        ),
-      );
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return AttachmentViewWebview(
-            url: APIEndpointConstants.GET_ATTACHMENT_VIEW_WEBVIEW_URL +
-                '${data?.udfValue ?? ''}',
-          );
-        },
-      ),
-    );
-  }
-
   _handleDownloadOnPressed({
     @required data,
   }) async {
-    if (data == null)
+    if (data == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Data is unavailable. Pl try again later."),
         ),
       );
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Download queued."),
-      ),
-    );
+      return;
+    }
 
     Map<String, String> queryparams = {
       'fileId': data?.udfValue ?? '',
@@ -1705,10 +1626,21 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     if (fileName == null || fileName.isEmpty)
       fileName = data?.label ?? 'DEFAULT_FILE_NAME';
 
-    DownloadHelper().requestDownload(
-      fileName: fileName,
-      downloadURL:
-          'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.udfValue ?? ''}',
+    NewDownloadHelper().unbindPortToMainIsolate();
+
+    showModalBottomSheet(
+      context: context,
+      isDismissible: true,
+      isScrollControlled: false,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (BuildContext context) {
+        return Downloader(
+          filename: fileName,
+          url:
+              'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.udfValue ?? ''}',
+        );
+      },
     );
   }
 }

@@ -1,5 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
-
 class APIEndpointConstants {
   /// API Key to be used for accessing the API.
   static const String API_KEY = "2872b6179f2419aea44d59a61ef48f41";
@@ -206,14 +204,9 @@ class APIEndpointConstants {
   //Payroll API Endpoints Block End
   //************************************************************************//
 
-  //User Endpoints
+  //USER/TEAMS/GROUP Endpoints
 
   static const READ_USER_DATA = '$BASE_URL/cms/user/ReadUserData';
-
-  //User API Endpoints Block End
-  //************************************************************************//
-
-  //User Endpoints
 
   static const READ_TEAM_DATA = '$BASE_URL/cms/query/ReadTeamData';
 
@@ -371,14 +364,17 @@ class APIEndpointConstants {
   static const POST_MANAGE_WORKSPACE_DATA =
       BASE_URL + '/api/command/ManageWorkspace';
 
-  static const CREATE_WORKSPACE =
+  static const GET_CREATE_WORKSPACE_DATA =
       BASE_URL + '/api/command/CreateWorkspace';
+
+  static const GET_WORKSPACE_DATA = BASE_URL + '/dms/query/ReadWorkspaceData';
+
+  static const DELETE_WORKSPACE = BASE_URL + '/dms/query/DeleteWorkspace';
 
   static const POST_MANAGE_NEW_FOLDER_DATA =
       BASE_URL + '/api/command/ManageNewFolder';
 
-      static const CREATE_FOLDER =
-      BASE_URL + '/api/command/CreateFolder';
+  static const GET_CREATE_FOLDER_DATA = BASE_URL + '/api/command/CreateFolder';
 
   static const POST_MANAGE_UPLOADED_FILE_DATA = BASE_URL + '/dms/query/';
 
@@ -388,6 +384,17 @@ class APIEndpointConstants {
   static const GET_DOCUMENT_TEMPLATE_ID_NAME_LIST_BY_USER_DATA = BASE_URL +
       '/dms/query/GetDocumentTemplateIdNameListByUser?userId=45bba746-3309-49b7-9c03-b5793369d73c';
 
+  static const GET_DOCUMENT_ARCHIVE_DATA =
+      BASE_URL + '/dms/query/GetArchivedDocumentData';
+
+  static const GET_BIN_DOCUMENT_DATA =
+      BASE_URL + '/dms/query/GetBinDocumentData';
+
+  static const GET_DOCUMENT_DATA = BASE_URL + '/dms/query/ReadDocumentData';
+
+  static const GET_ALL_FOLDER_AND_DOCUMENT_DATA =
+      BASE_URL + '/dms/query/GetAllFolderAndDocument';
+
   //************************************************************************//
   // DMS API:
 
@@ -396,4 +403,30 @@ class APIEndpointConstants {
 
   static const GET_LEGAL_ENTITY_DATA =
       BASE_URL + '/cms/query/GetLegalEntityNameList';
+
+  //************************************************************************//
+  //  DMS USER API Starts:
+
+  static const GET_USERS_ID_NAME_LIST =
+      '$BASE_URL/dms/query/GetUsersIdNameList';
+
+  static const GET_USERS_GROUP_ID_NAME_LIST =
+      '$BASE_URL/dms/query/GetUserGroupIdNameList';
+
+  //************************************************************************//
+  //  PERMISSION API Starts:
+
+  static const GET_VIEW_PERMISSIONS_DATA =
+      BASE_URL + '/dms/query/ViewPermission';
+
+  static const GET_PERMISSIONS_DETAILS =
+      BASE_URL + '/dms/query/GetPermissionDetails';
+
+  static const DISABLE_PARENT_PERMISSIONS =
+      BASE_URL + '/dms/query/DisableParentPermission';
+
+  static const DELETE_PERMISSIONS = BASE_URL + '/dms/query/DeletePermission';
+
+  //************************************************************************//
+  // PERMISSION API Ends:
 }

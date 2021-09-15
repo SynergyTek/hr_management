@@ -39,7 +39,9 @@ dependencies:
   intl: ^0.17.0
   location: ^4.3.0
   mime_type: ^1.0.0
+  open_file: ^3.2.1
   path_provider: ^2.0.1
+  permission_handler: ^8.1.6
   rxdart: ^0.27.1
   shared_preferences: ^2.0.6
   sizer: ^2.0.13

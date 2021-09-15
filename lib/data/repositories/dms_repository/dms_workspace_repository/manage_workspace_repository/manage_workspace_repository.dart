@@ -18,4 +18,12 @@ abstract class AbstractManageWorkspaceRepository {
   Future<WorkspaceViewModel> getAPIData({
     @required Map<String, dynamic> queryparams,
   });
+
+  Future<WorkspaceViewResponse> getWorkspaceData({
+    @required Map<String, dynamic> queryparams,
+  });
+
+  Future<WorkspaceViewModel> deleteWorkspace({
+    @required Map<String, dynamic> queryparams,
+  });
 }

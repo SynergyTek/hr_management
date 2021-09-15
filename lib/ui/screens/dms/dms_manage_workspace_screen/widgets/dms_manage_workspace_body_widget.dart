@@ -42,6 +42,8 @@ class _DMSManageWorkspaceBodyWidgetState
   TextEditingController _sequenceOrderTextEditingController =
       TextEditingController();
 
+  String _workspaceId = "";
+
   @override
   void initState() {
     super.initState();
@@ -57,11 +59,13 @@ class _DMSManageWorkspaceBodyWidgetState
       legalEntityId: _selectedLegalEntityData?.id ?? "",
       ownerUserId:
           BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
-      // ! TODO: no data found for parent workspace while editing.
+      // ! TODO: no data found for parent workspace in the metadata API while editing in use case.
       parentNoteId: _selectedParentWorkspace?.id ?? "",
       sequenceOrder: _sequenceOrderTextEditingController?.text ?? "",
       workspaceName:
           _workspaceNameTextEditingController?.text ?? "Default Workspace Name",
+
+      id: _workspaceId ?? "",
     ).toJson();
   }
 
@@ -385,7 +389,7 @@ class _DMSManageWorkspaceBodyWidgetState
     );
   }
 
-  _handleSaveOnPressed() {
+  _handleSaveOnPressed() async {
     if (_selectedLegalEntityData?.name == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Legal Entity cannot be null or empty.")),
@@ -424,22 +428,18 @@ class _DMSManageWorkspaceBodyWidgetState
       return;
     }
 
-    dmsManageWorkspaceBloc
-      ..postAPIData(
-        queryparams: _handleQueryParams(),
-      );
+    var response = await dmsManageWorkspaceBloc.postAPIData(
+      queryparams: _handleQueryParams(),
+    );
 
     String message = "Workspace couldn't be created, try again later.";
 
-    if (dmsManageWorkspaceBloc.subject.stream.valueOrNull != null) {
-      if (dmsManageWorkspaceBloc.subject.stream.valueOrNull['success'] ==
-          true) {
+    if (response != null) {
+      if (response['success'] == true) {
         message =
             "Workspace '${_workspaceNameTextEditingController.text}' created successfully.";
-      } else if (dmsManageWorkspaceBloc.subject.stream.valueOrNull['error'] !=
-              null ||
-          dmsManageWorkspaceBloc.subject.stream.valueOrNull['error'] != '') {
-        message = dmsManageWorkspaceBloc.subject.stream.valueOrNull['error'];
+      } else if (response['error'] != null || response['error'] != '') {
+        message = response['error'];
       }
     }
 
@@ -451,9 +451,9 @@ class _DMSManageWorkspaceBodyWidgetState
 
     // if the folder has been created successfully, pop,
     // else do nothing
-    if (dmsManageWorkspaceBloc.subject.stream.valueOrNull != null &&
-        dmsManageWorkspaceBloc.subject.stream.valueOrNull['success'] == true)
+    if (response != null && response['success'] == true) {
       Navigator.of(context).pop();
+    }
   }
 
   /// Cancel everything and
@@ -529,6 +529,8 @@ class _DMSManageWorkspaceBodyWidgetState
         // Sequence Order:
         _sequenceOrderTextEditingController.text =
             dmsWorkspaceMetadata?.sequenceOrder ?? "";
+
+        _workspaceId = dmsWorkspaceMetadata?.id ?? "";
       }
     }
   }

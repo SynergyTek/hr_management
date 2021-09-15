@@ -47,18 +47,6 @@ class DynamicAttchmentWidget extends StatelessWidget {
               visible: fileId == null ? false : true,
               child: IconButton(
                 icon: Icon(
-                  Icons.remove_red_eye,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  callBack2();
-                },
-              ),
-            ),
-            Visibility(
-              visible: fileId == null ? false : true,
-              child: IconButton(
-                icon: Icon(
                   Icons.download,
                   color: Colors.green,
                 ),

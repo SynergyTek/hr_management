@@ -9,8 +9,8 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/constants/api_endpoints.dart';
-import 'package:hr_management/constants/formats.dart';
-import 'package:hr_management/data/helpers/download_helper/download_helper.dart';
+import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
+import 'package:hr_management/data/helpers/download_helper/downloader_screen/downloader.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
@@ -118,11 +118,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   '',
         ),
       );
-
-    // Initialising the flutter downloader plugin, and,
-    // creating a background isolate to handle the download process.
-    _bindBackgroundIsolate();
-    FlutterDownloader.registerCallback(downloadCallback);
   }
 
   _handleNoteDetailsQueryparams({
@@ -146,7 +141,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         child: StreamBuilder<NoteResponse>(
             stream: noteBloc.subjectNoteDetails.stream,
             builder: (context, AsyncSnapshot snapshot) {
-              print("Snapshot data: ${snapshot.data}");
+              // print("Snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
                 if (snapshot?.data?.error != null &&
                     snapshot.data.error.length > 0) {
@@ -500,8 +495,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   List<Widget> addDynamic(model, createServiceFormBloc) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      print(model[i].type);
-      print(model[i].label);
+      // print(model[i].type);
+      // print(model[i].label);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
@@ -767,7 +762,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          print(model[i].udfValue);
+          // print(model[i].udfValue);
         }
 
         attchmentController.text =
@@ -799,7 +794,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                       udfJson[model[i].key] = value;
                       attchmentController.text =
                           " (1) File Attached: " + selectValue[i];
-                      // " (1) File Attached " + udfJson[model[i].key];
                     });
                   }),
             );
@@ -808,11 +802,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
           // Callback for Download
           callBack1: () => _handleDownloadOnPressed(
-            data: model[i],
-          ),
-
-          // Callback for View
-          callBack2: () => _handleViewOnPressed(
             data: model[i],
           ),
 
@@ -826,7 +815,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          print(model[i].udfValue);
+          // print(model[i].udfValue);
         }
         listDynamic.add(new DynamicDateTimeBox(
           code: udfJson[model[i].key].isNotEmpty
@@ -849,7 +838,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           selectDate: (DateTime date) {
             if (date != null) {
               model[i].inputFormat = date.toString();
-              print(model[i].inputFormat);
+              // print(model[i].inputFormat);
               udfJson[model[i].key] = date.toString();
               if (model[i].key == 'LeaveStartDate') {
                 leaveStartDate = date;
@@ -1338,7 +1327,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     // postDataAction;
     postNoteModel.noteStatusCode = noteStatusCode;
     postNoteModel.json = jsonEncode(udfJson);
-    print(udfJson);
+    // print(udfJson);
 
     setState(() {
       isVisible = true;
@@ -1353,7 +1342,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
       ),
     );
-    print(result);
+    // print(result);
     if (result.isSuccess) {
       setState(() {
         isVisible = false;
@@ -1369,12 +1358,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     displaySnackBar(text: resultMsg, context: context);
   }
 
-  editNoteDDValue(
-      {String idKey,
-      String nameKey,
-      String url,
-      String code,
-      TextEditingController ddController}) async {
+  editNoteDDValue({
+    String idKey,
+    String nameKey,
+    String url,
+    String code,
+    TextEditingController ddController,
+  }) async {
     NTSDdRepository ntsDdRepository = NTSDdRepository();
     String completeUrl = url + "&filterKey=$idKey&filterValue=$code";
     NTSDdResponse ntsDdResponse = await ntsDdRepository.getFilteredDDData(
@@ -1482,7 +1472,6 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     udfJsonCompWidgetList = [];
     columnComponent = [];
     componentComList = [];
-    _unbindBackgroundIsolate();
     super.dispose();
   }
 
@@ -1501,93 +1490,18 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   //            Download code goes here.                //
   // -------------------------------------------------- //
 
-  List _tasks;
-  List _items;
-  bool _isLoading;
-  bool _permissionReady;
-  ReceivePort _port = ReceivePort();
-
-  void _bindBackgroundIsolate() {
-    bool isSuccess = IsolateNameServer.registerPortWithName(
-      _port.sendPort,
-      'downloader_send_port',
-    );
-
-    if (!isSuccess) {
-      _unbindBackgroundIsolate();
-      _bindBackgroundIsolate();
-      return;
-    }
-
-    _port.listen((dynamic data) {
-      print("data: $data");
-
-      String id = data[0];
-      DownloadTaskStatus status = data[1];
-      int progress = data[2];
-
-      if (_tasks != null && _tasks.isNotEmpty) {
-        final task = _tasks.firstWhere((task) => task.taskId == id);
-        setState(() {
-          task.status = status;
-          task.progress = progress;
-        });
-      }
-    });
-  }
-
-  void _unbindBackgroundIsolate() {
-    IsolateNameServer.removePortNameMapping('downloader_send_port');
-  }
-
-  static void downloadCallback(
-    String id,
-    DownloadTaskStatus status,
-    int progress,
-  ) {
-    final SendPort send =
-        IsolateNameServer.lookupPortByName('downloader_send_port');
-    send.send([id, status, progress]);
-  }
-
-  _handleViewOnPressed({
-    @required data,
-  }) async {
-    if (data == null || data?.udfValue == null || data.udfValue == '')
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Data is unavailable. Pl try again later."),
-        ),
-      );
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return AttachmentViewWebview(
-            url: APIEndpointConstants.GET_ATTACHMENT_VIEW_WEBVIEW_URL +
-                '${data?.udfValue ?? ''}',
-          );
-        },
-      ),
-    );
-  }
-
   _handleDownloadOnPressed({
     @required data,
   }) async {
-    if (data == null)
+    if (data == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Data is unavailable. Pl try again later."),
         ),
       );
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Download queued."),
-      ),
-    );
+      return;
+    }
 
     Map<String, String> queryparams = {
       'fileId': data?.udfValue ?? '',
@@ -1613,10 +1527,21 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     if (fileName == null || fileName.isEmpty)
       fileName = data?.label ?? 'DEFAULT_FILE_NAME';
 
-    DownloadHelper().requestDownload(
-      fileName: fileName,
-      downloadURL:
-          'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.udfValue ?? ''}',
+    NewDownloadHelper().unbindPortToMainIsolate();
+
+    showModalBottomSheet(
+      context: context,
+      isDismissible: true,
+      isScrollControlled: false,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (BuildContext context) {
+        return Downloader(
+          filename: fileName,
+          url:
+              'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.udfValue ?? ''}',
+        );
+      },
     );
   }
 }

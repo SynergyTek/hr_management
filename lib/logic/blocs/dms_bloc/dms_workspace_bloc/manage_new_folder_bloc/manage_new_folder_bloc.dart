@@ -9,17 +9,18 @@ class DMSManageNewFolderBloc {
 
   final BehaviorSubject _subject = BehaviorSubject();
 
-  postAPIData({
+  Future<bool> postAPIData({
     @required Map<String, dynamic> queryparams,
   }) async {
-    dynamic response = await _apiRepository.postAPIData(
+    bool response = await _apiRepository.postAPIData(
       queryparams: queryparams,
     );
 
     _subject.sink.add(response);
+    return response;
   }
 
-  getAPIData({
+  Future<NoteModel> getAPIData({
     Map<String, dynamic> queryparams,
   }) async {
     NoteModel response = await _apiRepository.getAPIData(
@@ -27,6 +28,8 @@ class DMSManageNewFolderBloc {
     );
 
     _subject.sink.add(response);
+
+    return response;
   }
 
   dispose() {

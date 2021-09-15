@@ -15,11 +15,9 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
       print(response.data);
 
       return response.data;
-      // return WorkspaceViewResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
 
-      // return WorkspaceViewResponse.withError("$err");
       return err;
     }
   }
@@ -29,12 +27,53 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
   }) async {
     try {
       Response response = await _dio.get(
-        APIEndpointConstants.CREATE_WORKSPACE,
+        APIEndpointConstants.GET_CREATE_WORKSPACE_DATA,
         queryParameters: queryparams ?? {},
       );
 
       var result = WorkspaceViewModel.fromJson(response.data);
 
+      return result;
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+      return null;
+      // return err;
+    }
+  }
+
+  Future<WorkspaceViewResponse> getWorkspaceData({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_WORKSPACE_DATA,
+        queryParameters: queryparams ?? {},
+      );
+
+      WorkspaceViewResponse result =
+          WorkspaceViewResponse.fromJson(response.data);
+
+      return result;
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return err;
+    }
+  }
+
+  Future<WorkspaceViewModel> deleteWorkspace({
+    Map<String, dynamic> queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.DELETE_WORKSPACE,
+        queryParameters: queryparams ?? {},
+      );
+
+      var result = WorkspaceViewModel.fromJson(response.data);
+      
       return result;
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");
