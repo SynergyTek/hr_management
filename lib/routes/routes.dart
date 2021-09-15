@@ -1,5 +1,6 @@
 import 'package:hr_management/ui/screens/dms/dms_child.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/dms_legal_entity_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_manage_permission/dms_add_edit_permission_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_manage_workspace_screen/dms_manage_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_new_folder_screen/dms_new_folder_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
@@ -427,6 +428,11 @@ class AppRouter {
       case DMS_SUPPORT:
         return MaterialPageRoute(
           builder: (_) => DMSSupport(),
+        );
+        break;
+      case DMS_ADD_EDIT_PERMISSION_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => DmsAddEditPermissionScreen(),
         );
         break;
 
