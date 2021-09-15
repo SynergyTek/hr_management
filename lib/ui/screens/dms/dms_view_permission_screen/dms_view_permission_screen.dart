@@ -10,12 +10,14 @@ class DMSViewPermissionScreen extends StatelessWidget {
   final String parentId;
   final String workspaceId;
   final bool isManagePermission;
+  final List<String> path;
 
   const DMSViewPermissionScreen({
     @required this.noteId,
+    @required this.isManagePermission,
     this.parentId,
     this.workspaceId,
-    @required this.isManagePermission,
+    this.path,
   });
 
   @override
@@ -31,6 +33,7 @@ class DMSViewPermissionScreen extends StatelessWidget {
             parentId: parentId,
             workspaceId: workspaceId,
             isManagePermission: isManagePermission,
+            path: path,
           ),
         ),
       ),

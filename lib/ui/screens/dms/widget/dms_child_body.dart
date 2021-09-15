@@ -158,6 +158,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       child: BreadCrumb.builder(
         itemCount: childPath.length,
         builder: (index) {
+          print(childPath);
+          print('-----------------------------------------------');
           return BreadCrumbItem(
               content: Text(childPath[index]),
               borderRadius: BorderRadius.circular(4),
@@ -843,6 +845,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         arg2: item.parentId,
         arg3: item.workspaceId,
         val1: true,
+        list1: childPath,
       ),
     );
   }
@@ -855,6 +858,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         arg2: item.parentId,
         arg3: item.workspaceId,
         val1: false,
+        list1: childPath,
       ),
     );
   }

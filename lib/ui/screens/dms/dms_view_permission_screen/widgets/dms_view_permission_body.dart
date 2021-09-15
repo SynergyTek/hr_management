@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
@@ -14,12 +15,14 @@ class DMSViewPermissionBody extends StatefulWidget {
   final String parentId;
   final String workspaceId;
   final bool isManagePermission;
+  final List<String> path;
 
   const DMSViewPermissionBody({
     @required this.noteId,
+    @required this.isManagePermission,
     this.parentId,
     this.workspaceId,
-    @required this.isManagePermission,
+    this.path,
   });
 
   @override
@@ -61,17 +64,29 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
           print("Snapshot data: ${snapshot.data}");
           if (snapshot.hasData) {
             if (snapshot.data == null || snapshot.data.data.length == 0) {
-              return EmptyListWidget();
+              return Column(
+                children: [
+                  _breadCrumb(),
+                  Expanded(child: EmptyListWidget()),
+                ],
+              );
             }
             _permission = snapshot.data.data;
-            return Listizer(
-              listItems: _permission,
-              filteredSearchList: _filteredPermissionList,
-              itemBuilder: (context, index) {
-                return widget.isManagePermission
-                    ? _slidablePermissionCard(index)
-                    : _permissionCard(index: index, onTap: () {});
-              },
+            return Column(
+              children: [
+                _breadCrumb(),
+                Expanded(
+                  child: Listizer(
+                    listItems: _permission,
+                    filteredSearchList: _filteredPermissionList,
+                    itemBuilder: (context, index) {
+                      return widget.isManagePermission
+                          ? _slidablePermissionCard(index)
+                          : _permissionCard(index: index, onTap: () {});
+                    },
+                  ),
+                ),
+              ],
             );
           } else {
             return Center(
@@ -91,11 +106,6 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
       direction: Axis.horizontal,
       actionExtentRatio: 0.20,
       actions: <Widget>[
-        // IconSlideAction(
-        //   caption: 'Permission',
-        //   color: Colors.blue,
-        //   icon: Icons.share,
-        // ),
         IconSlideAction(
             caption: 'Delete',
             color: Colors.red[300],
@@ -170,14 +180,6 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                     ])
                   ]),
             ),
-            Row(
-              children: <Widget>[
-                // Text(
-                //   _serviceList[index].leaveStatus ?? '-',
-                //   style: TextStyle(color: Colors.green),
-                // ),
-              ],
-            ),
           ],
         ),
         onTap: onTap,
@@ -215,6 +217,37 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
           ],
         );
       },
+    );
+  }
+
+  _breadCrumb() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0, 1), blurRadius: 3, color: Colors.black26)
+          ]),
+      padding: EdgeInsets.all(8),
+      child: BreadCrumb.builder(
+        itemCount: widget.path.length,
+        builder: (index) {
+          return BreadCrumbItem(
+            content: Text(widget.path[index]),
+            borderRadius: BorderRadius.circular(4),
+            padding: EdgeInsets.all(4),
+            onTap: () {},
+          );
+        },
+        divider: Icon(
+          Icons.chevron_right,
+          color: Colors.black,
+        ),
+        overflow: ScrollableOverflow(),
+      ),
     );
   }
 }

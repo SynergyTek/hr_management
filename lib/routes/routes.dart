@@ -516,6 +516,7 @@ class AppRouter {
             parentId: args.arg2,
             workspaceId: args.arg3,
             isManagePermission: args.val1,
+            path: args.list1,
           ),
         );
         break;
