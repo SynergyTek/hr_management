@@ -30,7 +30,6 @@ Future<void> main() async {
   await Permission.camera.request();
   await Permission.microphone.request();
   // optional: set false to disable printing logs to console
-  await FlutterDownloader.initialize(debug: !true);
 
   runApp(InitScreen());
 }
