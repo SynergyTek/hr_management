@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/enums/enums.dart';
+
 import 'package:hr_management/data/models/dms/dms_legal_entity_model/dms_legal_entity_model.dart';
+import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/common_bloc/common_bloc.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/widgets/dms_legal_entity_body_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
+import 'package:hr_management/ui/widgets/primary_button.dart';
 
 enum PermissionType { User, WorkspaceUserGroup }
 
 class DmsAddEditPermissionBody extends StatefulWidget {
-  DmsAddEditPermissionBody({Key key}) : super(key: key);
+  final bool isCreatePermission;
+  DmsAddEditPermissionBody({
+    @required this.isCreatePermission,
+  });
 
   @override
   _DmsAddEditPermissionBodyState createState() =>
@@ -23,6 +31,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
   TextEditingController _userddController = new TextEditingController();
   User user = User();
   String enumType;
+  Permission _permission = Permission();
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +95,35 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
               apiCallEnumId();
             },
           ),
+          Expanded(child: SizedBox()),
+          _buttonsRow(),
         ],
       ),
+    );
+  }
+
+  _buttonsRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        PrimaryButton(
+          backgroundColor: Colors.grey,
+          buttonText: 'Cancel',
+          handleOnPressed: () => Navigator.pop(context),
+          width: 100,
+        ),
+        PrimaryButton(
+          backgroundColor: Colors.green,
+          buttonText: 'Submit',
+          handleOnPressed: () {
+            // _permission.dataAction = widget.isCreatePermission ? 0 : 1;
+            // ? PermissionDataAction.Create
+            // : PermissionDataAction.Edit;
+            // permissionBloc..savePermission(permissionModel: _permission);
+          },
+          width: 100,
+        ),
+      ],
     );
   }
 
@@ -178,6 +214,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
   optionsRow({String text, Function onTap, bool applied}) {
     return InkWell(
       child: Container(
+        alignment: Alignment.topLeft,
         color: applied ? Colors.blue[300] : null,
         padding: const EdgeInsets.all(8.0),
         child: Row(

@@ -521,6 +521,7 @@ class AppRouter {
             noteId: args.arg1,
             parentId: args.arg2,
             workspaceId: args.arg3,
+            inheritanceType: args.arg4,
             isManagePermission: args.val1,
             path: args.list1,
           ),

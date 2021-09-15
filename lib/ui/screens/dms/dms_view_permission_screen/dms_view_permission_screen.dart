@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hr_management/routes/route_constants.dart';
 
 import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/widgets/dms_view_permission_body.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
@@ -11,6 +12,7 @@ class DMSViewPermissionScreen extends StatelessWidget {
   final String workspaceId;
   final bool isManagePermission;
   final List<String> path;
+  final String inheritanceType;
 
   const DMSViewPermissionScreen({
     @required this.noteId,
@@ -18,6 +20,7 @@ class DMSViewPermissionScreen extends StatelessWidget {
     this.parentId,
     this.workspaceId,
     this.path,
+    this.inheritanceType,
   });
 
   @override
@@ -56,8 +59,18 @@ class DMSViewPermissionScreen extends StatelessWidget {
             color: Colors.white,
           ),
           backgroundColor: Colors.blue,
-          onTap: () {},
-          label: 'Disable Inheritance',
+          onTap: () {
+            //   String inheritanceStatus =
+            //       inheritanceType == 'true' ? 'true' : 'false';
+            //   permissionBloc
+            //     ..disableParentPermission(queryparams: {
+            //       "id": "$noteId",
+            //       "InheritanceStatus": "$inheritanceStatus",
+            //     });
+          },
+          label: inheritanceType == 'true'
+              ? 'Enable Inheritance'
+              : 'Disable Inheritance',
           labelStyle: TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.white,
@@ -70,7 +83,10 @@ class DMSViewPermissionScreen extends StatelessWidget {
             color: Colors.white,
           ),
           backgroundColor: Colors.blue,
-          onTap: () {},
+          onTap: () => Navigator.pushNamed(
+            context,
+            DMS_ADD_EDIT_PERMISSION_ROUTE,
+          ),
           label: 'Add Permission',
           labelStyle: TextStyle(
             fontWeight: FontWeight.w500,

@@ -6,7 +6,7 @@ class DocumentPermissionRepository
     extends AbstractDocumentPermissionRepository {
   final Dio _dio = Dio();
 
-  Future<PermissionResponse> getViewPermissionData({
+  Future<ViewPermissionResponse> getViewPermissionData({
     Map<String, dynamic> queryparams,
   }) async {
     try {
@@ -15,12 +15,12 @@ class DocumentPermissionRepository
         queryParameters: queryparams ?? {},
       );
 
-      return PermissionResponse.fromJson(response.data);
+      return ViewPermissionResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return PermissionResponse.withError(err);
+      return ViewPermissionResponse.withError(err);
     }
   }
 
@@ -55,7 +55,7 @@ class DocumentPermissionRepository
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
-
+      // return null;
       return PermissionResponse.withError(err);
     }
   }
@@ -74,6 +74,25 @@ class DocumentPermissionRepository
       print("Stacktrace: $stacktrace");
       print("Error: $err");
       return false;
+    }
+  }
+
+  Future<PermissionResponse> savePermission(
+      {Permission permissionModel}) async {
+    try {
+      Response response = await _dio.post(
+        APIEndpointConstants.SAVE_PERMISSIONS,
+        data: jsonEncode(permissionModel.toJson()) ?? {},
+        // queryParameters: queryparams ?? {},
+      );
+
+      return PermissionResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+      return PermissionResponse.withError("$err");
     }
   }
 }
