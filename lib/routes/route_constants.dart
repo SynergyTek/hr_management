@@ -96,3 +96,4 @@ const String DMS_HISTORY_ROUTE = '/dms_history_document';
 const String DMS_SEARCH_ROUTE = '/dms_search_document';
 const String DMS_VIEW_PERMISSION_ROUTE = '/dms_view_permission';
 const String DMS_WORKSPACE_ROUTE = '/dms_workspace';
+const String DMS_ADD_EDIT_PERMISSION_ROUTE = '/dms_add_edit_permission';

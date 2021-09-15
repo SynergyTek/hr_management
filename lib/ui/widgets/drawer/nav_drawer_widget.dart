@@ -429,6 +429,18 @@ Widget drawerWidget(context) {
                       );
                     },
                   ),
+                  ListTile(
+                    title: Text(
+                      'DOCUMENT PERMISSION',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_ADD_EDIT_PERMISSION_ROUTE,
+                      );
+                    },
+                  ),
                 ],
               ),
 
