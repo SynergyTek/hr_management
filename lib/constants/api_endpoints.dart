@@ -427,7 +427,7 @@ class APIEndpointConstants {
 
   static const DELETE_PERMISSIONS = BASE_URL + '/dms/query/DeletePermission';
 
-  static const SAVE_PERMISSIONS = BASE_URL + '/dms/query/SavePermission';
+  static const SAVE_PERMISSIONS = BASE_URL + '/api/command/SavePermission';
 
   //************************************************************************//
   // PERMISSION API Ends:

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Permission {
   String userPermissionGroup;
   bool disablePermissionInheritance;
@@ -165,4 +167,56 @@ class Permission {
     data['PortalId'] = this.portalId;
     return data;
   }
+}
+
+PermissionSubmitModel permissionSubmitModelFromJson(String str) => PermissionSubmitModel.fromJson(json.decode(str));
+
+String permissionSubmitModelToJson(PermissionSubmitModel data) => json.encode(data.toJson());
+
+class PermissionSubmitModel {
+    PermissionSubmitModel({
+        this.permissionType,
+        this.access,
+        this.appliesTo,
+        this.noteId,
+        this.permittedUserId,
+        this.permittedUserGroupId,
+        this.id,
+        this.legalEntityId,
+        this.dataAction,
+    });
+
+    int permissionType;
+    int access;
+    int appliesTo;
+    String noteId;
+    dynamic permittedUserId;
+    dynamic permittedUserGroupId;
+    dynamic id;
+    dynamic legalEntityId;
+    String dataAction;
+
+    factory PermissionSubmitModel.fromJson(Map<String, dynamic> json) => PermissionSubmitModel(
+        permissionType: json["PermissionType"],
+        access: json["Access"],
+        appliesTo: json["AppliesTo"],
+        noteId: json["NoteId"],
+        permittedUserId: json["PermittedUserId"],
+        permittedUserGroupId: json["PermittedUserGroupId"],
+        id: json["Id"],
+        legalEntityId: json["LegalEntityId"],
+        dataAction: json["DataAction"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "PermissionType": permissionType,
+        "Access": access,
+        "AppliesTo": appliesTo,
+        "NoteId": noteId,
+        "PermittedUserId": permittedUserId,
+        "PermittedUserGroupId": permittedUserGroupId,
+        "Id": id,
+        "LegalEntityId": legalEntityId,
+        "DataAction": dataAction,
+    };
 }

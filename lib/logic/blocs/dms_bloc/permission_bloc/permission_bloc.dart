@@ -33,14 +33,15 @@ class PermissionBloc {
     _subject.sink.add(response);
   }
 
-  disableParentPermission({
+  Future<String> disableParentPermission({
     Map<String, dynamic> queryparams,
   }) async {
-    PermissionResponse response = await _apiRepository.disableParentPermission(
+    ViewPermissionResponse response =
+        await _apiRepository.disableParentPermission(
       queryparams: queryparams,
     );
-
-    _subject.sink.add(response);
+    // _viewPermissionSubject.sink.add(response);
+    return response.error;
   }
 
   deletePermission({
@@ -59,8 +60,8 @@ class PermissionBloc {
     }
   }
 
-  savePermission({Permission permissionModel}) async {
-    PermissionResponse response = await _apiRepository.savePermission(
+  savePermission({PermissionSubmitModel permissionModel}) async {
+    SubmitPermissionResponse response = await _apiRepository.savePermission(
       permissionModel: permissionModel,
     );
     return response;

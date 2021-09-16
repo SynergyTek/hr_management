@@ -17,7 +17,7 @@ abstract class AbstractDocumentPermissionRepository {
     Map<String, dynamic> queryparams,
   });
 
-  Future<PermissionResponse> disableParentPermission({
+  Future<ViewPermissionResponse> disableParentPermission({
     Map<String, dynamic> queryparams,
   });
 
@@ -25,7 +25,7 @@ abstract class AbstractDocumentPermissionRepository {
     Map<String, dynamic> queryparams,
   });
 
-  Future<PermissionResponse> savePermission({
-    Permission permissionModel,
+  Future<SubmitPermissionResponse> savePermission({
+    PermissionSubmitModel permissionModel,
   });
 }
