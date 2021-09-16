@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:hr_management/data/lists/lists.dart';
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:listizer/listizer.dart';
@@ -33,16 +34,6 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
   List<Permission> _permission = [];
   List<Permission> _filteredPermissionList = [];
   SlidableController _slidableController;
-
-  List<String> type = ['Allow', 'Deny'];
-  List<String> access = ['Read Only', 'Modify', 'Full Access'];
-  List<String> appliesTo = [
-    'Only This Folder',
-    'This Folder And Files',
-    'This Folder Subfolders And Files',
-    'Only This Document',
-    'All Documents',
-  ];
 
   @override
   void initState() {
@@ -149,7 +140,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                     Row(children: <Widget>[
                       Text("Type: "),
                       Text(_permission[index].permissionType != null
-                          ? type[_permission[index].permissionType]
+                          ? dmsPermissionType[_permission[index].permissionType]
                           : "-"),
                     ])
                   ]),
@@ -162,7 +153,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                     Row(children: <Widget>[
                       Text("Access: "),
                       Text(_permission[index].access != null
-                          ? access[_permission[index].access]
+                          ? dmsAccessType[_permission[index].access]
                           : "-"),
                     ])
                   ]),
@@ -175,7 +166,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                     Row(children: <Widget>[
                       Text("Applies To: "),
                       Text(_permission[index].appliesTo != null
-                          ? appliesTo[_permission[index].appliesTo]
+                          ? dmsAppliesToType[_permission[index].appliesTo]
                           : "-"),
                     ])
                   ]),

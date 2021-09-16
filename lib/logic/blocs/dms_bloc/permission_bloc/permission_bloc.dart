@@ -1,3 +1,4 @@
+import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/data/models/dms/permission/permission_response_model.dart';
 import 'package:hr_management/data/repositories/dms_repository/document_permission_repository/document_permission_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -7,15 +8,19 @@ class PermissionBloc {
       DocumentPermissionRepository();
 
   final BehaviorSubject<PermissionResponse> _subject = BehaviorSubject();
+  final BehaviorSubject<ViewPermissionResponse> _viewPermissionSubject =
+      BehaviorSubject();
 
   getViewPermissionData({
     Map<String, dynamic> queryparams,
   }) async {
-    PermissionResponse response = await _apiRepository.getViewPermissionData(
+    ViewPermissionResponse response =
+        await _apiRepository.getViewPermissionData(
       queryparams: queryparams,
     );
 
-    _subject.sink.add(response);
+    _viewPermissionSubject.sink.add(response);
+    return response.data;
   }
 
   getPermissionDetails({
@@ -28,14 +33,15 @@ class PermissionBloc {
     _subject.sink.add(response);
   }
 
-  disableParentPermission({
+  Future<String> disableParentPermission({
     Map<String, dynamic> queryparams,
   }) async {
-    PermissionResponse response = await _apiRepository.disableParentPermission(
+    ViewPermissionResponse response =
+        await _apiRepository.disableParentPermission(
       queryparams: queryparams,
     );
-
-    _subject.sink.add(response);
+    // _viewPermissionSubject.sink.add(response);
+    return response.error;
   }
 
   deletePermission({
@@ -54,8 +60,22 @@ class PermissionBloc {
     }
   }
 
+  savePermission({PermissionSubmitModel permissionModel}) async {
+    SubmitPermissionResponse response = await _apiRepository.savePermission(
+      permissionModel: permissionModel,
+    );
+    return response;
+    // if (response) {
+    //   permissionBloc.subject.sink.add(null);
+    //   getPermissionDetails(queryparams: {
+    //     'NoteId': noteId,
+    //   });
+    // }
+  }
+
   dispose() {
     _subject.close();
+    _viewPermissionSubject.close();
   }
 
   BehaviorSubject<PermissionResponse> get subject => _subject;

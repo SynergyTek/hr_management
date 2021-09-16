@@ -202,7 +202,11 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
 
   permissionScreen() {
     print('permission----');
-    return Container();
+    Navigator.pushNamed(
+      context,
+      DMS_ADD_EDIT_PERMISSION_ROUTE,
+    );
+    // return Container();
   }
 
   deleteDialog(String id) {

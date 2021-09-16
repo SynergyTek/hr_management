@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/data/models/dms/permission/permission_response_model.dart';
 import '../../../../../constants/api_endpoints.dart';
 part 'document_permission_repository_implementation.dart';
@@ -7,18 +10,22 @@ part 'document_permission_repository_implementation.dart';
 abstract class AbstractDocumentPermissionRepository {
   AbstractDocumentPermissionRepository();
 
-  Future<PermissionResponse> getViewPermissionData(
+  Future<ViewPermissionResponse> getViewPermissionData(
       {Map<String, dynamic> queryparams});
 
   Future<PermissionResponse> getPermissionDetails({
     Map<String, dynamic> queryparams,
   });
 
-  Future<PermissionResponse> disableParentPermission({
+  Future<ViewPermissionResponse> disableParentPermission({
     Map<String, dynamic> queryparams,
   });
 
   Future<bool> deletePermission({
     Map<String, dynamic> queryparams,
+  });
+
+  Future<SubmitPermissionResponse> savePermission({
+    PermissionSubmitModel permissionModel,
   });
 }

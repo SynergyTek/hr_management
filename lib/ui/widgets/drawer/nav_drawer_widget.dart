@@ -66,6 +66,30 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
+              ListTile(
+                title: Text(
+                  'Document',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_PARENT,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'DOCUMENT WORKSPACE',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_WORKSPACE_ROUTE,
+                  );
+                },
+              ),
 
               ExpansionTile(
                 title: Text(

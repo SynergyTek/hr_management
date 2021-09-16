@@ -432,8 +432,11 @@ class AppRouter {
         );
         break;
       case DMS_ADD_EDIT_PERMISSION_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => DmsAddEditPermissionScreen(),
+          builder: (_) => DmsAddEditPermissionScreen(
+            noteId: args.arg1,
+          ),
         );
         break;
 
@@ -522,6 +525,7 @@ class AppRouter {
             noteId: args.arg1,
             parentId: args.arg2,
             workspaceId: args.arg3,
+            inheritanceType: args.arg4,
             isManagePermission: args.val1,
             path: args.list1,
           ),

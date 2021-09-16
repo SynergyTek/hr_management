@@ -18,3 +18,35 @@ class PermissionResponse {
       : data = null,
         error = errorValue;
 }
+
+class ViewPermissionResponse {
+  final Permission data;
+  String error;
+
+  ViewPermissionResponse({
+    @required this.data,
+  });
+
+  ViewPermissionResponse.fromJson(Map<String, dynamic> response)
+      : data = Permission.fromJson(response);
+
+  ViewPermissionResponse.withError(dynamic errorValue)
+      : data = null,
+        error = errorValue;
+}
+
+class SubmitPermissionResponse {
+  final PermissionSubmitModel data;
+  String error;
+
+  SubmitPermissionResponse({
+    @required this.data,
+  });
+
+  SubmitPermissionResponse.fromJson(Map<String, dynamic> response)
+      : data = PermissionSubmitModel.fromJson(response);
+
+  SubmitPermissionResponse.withError(dynamic errorValue)
+      : data = null,
+        error = errorValue;
+}
