@@ -6,9 +6,11 @@ import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_mo
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
+import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/manage_document/document/widgets/document_bottom_sheet_widget.dart';
@@ -158,6 +160,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       child: BreadCrumb.builder(
         itemCount: childPath.length,
         builder: (index) {
+          print(childPath);
+          print('-----------------------------------------------');
           return BreadCrumbItem(
               content: Text(childPath[index]),
               borderRadius: BorderRadius.circular(4),
@@ -454,7 +458,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         ListTile(
           leading: Icon(CustomIcons.bags_shopping),
           title: Text('Manage Permission'),
-          // onTap: () => deleteDialog(id),
+          onTap: () => _handleManagePermissionOnTap(item),
         ),
         ListTile(
           leading: Icon(CustomIcons.eye),
@@ -835,11 +839,44 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  _handleViewPermissionOnTap(Cwd item) {
+  _handleManagePermissionOnTap(Cwd item) async {
+    Permission _permission =
+        await permissionBloc.getViewPermissionData(queryparams: {
+      "NoteId": "${item.id}",
+      "WorkspaceId": "${item.workspaceId}",
+      "ParentId": "${item.parentId}",
+    });
+
     Navigator.of(context).pushNamed(
       DMS_VIEW_PERMISSION_ROUTE,
       arguments: ScreenArguments(
         arg1: item.id,
+        arg2: item.parentId,
+        arg3: item.workspaceId,
+        arg4: _permission.disablePermissionInheritance.toString(),
+        val1: true,
+        list1: childPath,
+      ),
+    );
+  }
+
+  _handleViewPermissionOnTap(Cwd item) async {
+    Permission _permission =
+        await permissionBloc.getViewPermissionData(queryparams: {
+      "NoteId": "${item.id}",
+      "WorkspaceId": "${item.workspaceId}",
+      "ParentId": "${item.parentId}",
+    });
+
+    Navigator.of(context).pushNamed(
+      DMS_VIEW_PERMISSION_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.id,
+        arg2: item.parentId,
+        arg3: item.workspaceId,
+        arg4: _permission.disablePermissionInheritance.toString(),
+        val1: false,
+        list1: childPath,
       ),
     );
   }

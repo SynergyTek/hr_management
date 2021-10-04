@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/image_path_constants.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
@@ -68,18 +66,58 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
-              // ListTile(
-              //   title: Text(
-              //     'DOCUMENT WORKSPACE',
-              //     style: TextStyle(fontSize: fontSize, color: fontColor),
-              //   ),
-              //   onTap: () {
-              //     Navigator.pushNamed(
-              //       context,
-              //       DMS_WORKSPACE_ROUTE,
-              //     );
-              //   },
-              // ),
+              ListTile(
+                title: Text(
+                  'Document',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_PARENT,
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'DOCUMENT WORKSPACE',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_WORKSPACE_ROUTE,
+                  );
+                },
+              ),
+
+              ExpansionTile(
+                title: Text(
+                  'TIME AND ATTENEDANCE WEB',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                children: [
+                  DrawerListTileWidget(
+                    title: 'REGISTER FACE',
+                    // trailing: Icon(Icons.payment),
+                    listTileOnTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        REGISTER_FACE_WEB,
+                      );
+                    },
+                  ),
+                  DrawerListTileWidget(
+                    title: 'MARK ATTENDANCE',
+                    listTileOnTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        MARK_ATTENDANCE_WEB,
+                      );
+                    },
+                  ),
+                ],
+              ),
 
               DrawerListTileWidget(
                 title: 'WORKLIST DASHBOARD',
@@ -440,6 +478,18 @@ Widget drawerWidget(context) {
                       Navigator.pushNamed(
                         context,
                         DMS_WORKSPACE_ROUTE,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'DOCUMENT PERMISSION',
+                      style: TextStyle(fontSize: fontSize, color: fontColor),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        DMS_ADD_EDIT_PERMISSION_ROUTE,
                       );
                     },
                   ),

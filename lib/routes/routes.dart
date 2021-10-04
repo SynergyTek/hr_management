@@ -1,5 +1,6 @@
 import 'package:hr_management/ui/screens/dms/dms_child.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/dms_legal_entity_screen.dart';
+import 'package:hr_management/ui/screens/dms/dms_manage_permission/dms_add_edit_permission_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_manage_workspace_screen/dms_manage_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_new_folder_screen/dms_new_folder_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent.dart';
@@ -7,6 +8,7 @@ import 'package:hr_management/ui/screens/dms/dms_support/dms_support_screen.dart
 import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/dms_view_permission_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_workspace_screen/dms_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/document_action/document_action_screen.dart';
+import 'package:hr_management/ui/screens/face_detection_web/face_detection_webview.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
@@ -429,6 +431,14 @@ class AppRouter {
           builder: (_) => DMSSupport(),
         );
         break;
+      case DMS_ADD_EDIT_PERMISSION_ROUTE:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DmsAddEditPermissionScreen(
+            noteId: args.arg1,
+          ),
+        );
+        break;
 
       case DMS_CHILD:
         final args = routeSettings.arguments as ScreenArguments;
@@ -512,7 +522,12 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => DMSViewPermissionScreen(
-            parentId: args.arg1,
+            noteId: args.arg1,
+            parentId: args.arg2,
+            workspaceId: args.arg3,
+            inheritanceType: args.arg4,
+            isManagePermission: args.val1,
+            path: args.list1,
           ),
         );
         break;
@@ -520,6 +535,26 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSWorkspaceScreen(),
         );
+        break;
+
+      case REGISTER_FACE_WEB:
+        return MaterialPageRoute(
+          builder: (_) => FaceDeteWebview(
+            url: 'https://xtranet.aitalkx.com/TAA/Attendance/RegisterFace',
+            urlModuleName: 'Register Face',
+          ),
+        );
+        break;
+
+      case MARK_ATTENDANCE_WEB:
+        return MaterialPageRoute(
+          builder: (_) => FaceDeteWebview(
+            url:
+                'https://xtranet.aitalkx.com/TAA/Attendance/FaceDetectionAttendance',
+            urlModuleName: 'Mark Attendance',
+          ),
+        );
+
         break;
 
       // 404 route.

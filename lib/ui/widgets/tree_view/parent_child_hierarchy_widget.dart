@@ -59,7 +59,7 @@ class DocumentChildWidget extends StatelessWidget {
                                 ? documentViewModel.name
                                 : "",
                             maxLines: 2,
-                            style: Theme.of(context).textTheme.title),
+                            style: Theme.of(context).textTheme.headline6),
                       ),
                     ),
                     documentViewModel.count != null
@@ -137,7 +137,7 @@ class DocumentParentWidget extends StatelessWidget {
                           ? documentViewModel.name
                           : "",
                       maxLines: 2,
-                      style: Theme.of(context).textTheme.title),
+                      style: Theme.of(context).textTheme.headline6),
                 ),
               ),
               documentViewModel.count != null
