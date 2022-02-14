@@ -55,11 +55,12 @@ class DocumentChildWidget extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         // color: Colors.red,
                         child: Text(
-                            documentViewModel.name != null
-                                ? documentViewModel.name
-                                : "",
-                            maxLines: 2,
-                            style: Theme.of(context).textTheme.title),
+                          documentViewModel.name != null
+                              ? documentViewModel.name
+                              : "",
+                          maxLines: 2,
+                          // style: Theme.of(context).textTheme.title,
+                        ),
                       ),
                     ),
                     documentViewModel.count != null
@@ -133,11 +134,12 @@ class DocumentParentWidget extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   // color: Colors.red,
                   child: Text(
-                      documentViewModel.name != null
-                          ? documentViewModel.name
-                          : "",
-                      maxLines: 2,
-                      style: Theme.of(context).textTheme.title),
+                    documentViewModel.name != null
+                        ? documentViewModel.name
+                        : "",
+                    maxLines: 2,
+                    // style: Theme.of(context).textTheme.title,
+                  ),
                 ),
               ),
               documentViewModel.count != null
