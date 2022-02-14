@@ -1,4 +1,4 @@
-import 'package:geocoder/geocoder.dart';
+import 'package:geocoding/geocoding.dart' as geo;
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
@@ -460,15 +460,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   getUserAddressFromCoord({LocationData locationData}) async {
-    // From coordinates
-    final coordinates =
-        new Coordinates(locationData.latitude, locationData.longitude);
-    List<Address> addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    Address first = addresses.first;
-    // print("${first.featureName} : ${first.addressLine}");
-    setState(() {
-      _location = first.addressLine;
-    });
+    List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
+        locationData.latitude, locationData.longitude);
+    geo.Placemark place = placemarks[0];
+    print(place);
+    _location = place.name;
   }
 }
