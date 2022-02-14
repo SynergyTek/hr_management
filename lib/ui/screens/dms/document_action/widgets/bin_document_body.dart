@@ -18,7 +18,7 @@ class BinDocumentBody extends StatefulWidget {
 }
 
 class _BinDocumentBodyState extends State<BinDocumentBody> {
-   List<DMSDocumentActionModel> _documentList = [];
+  List<DMSDocumentActionModel> _documentList = [];
   List<DMSDocumentActionModel> _filteredDocumentList = [];
 
   @override
@@ -48,7 +48,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                 return EmptyListWidget();
               }
               _documentList = snapshot.data.data.reversed.toList();
-                  return Listizer(
+              return Listizer(
                 listItems: _documentList,
                 filteredSearchList: _filteredDocumentList,
                 itemBuilder: (context, index) {
@@ -56,7 +56,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(
-                        _filteredDocumentList[index].documentName,
+                        _filteredDocumentList[index].documentName ?? '',
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline6,
                       ),
@@ -100,8 +100,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                               Text('Created On: '),
                               Text(
                                 dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index]
-                                        .createdDate)),
+                                    _filteredDocumentList[index].createdDate)),
                                 style: TextStyle(color: Colors.red[700]),
                               ),
                             ],
@@ -123,7 +122,6 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                   );
                 },
               );
-         
             } else {
               return Center(
                 child: CustomProgressIndicator(
