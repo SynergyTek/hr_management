@@ -464,6 +464,6 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         locationData.latitude, locationData.longitude);
     geo.Placemark place = placemarks[0];
     print(place);
-    _location = place.name;
+    _location = place.street;
   }
 }
