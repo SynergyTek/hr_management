@@ -37,7 +37,7 @@ dependencies:
   hydrated_bloc: ^7.0.1
   image_picker: ^0.8.2
   intl: ^0.17.0
-  location: ^4.3.0
+  location: ^4.1.1
   mime_type: ^1.0.0
   open_file: ^3.2.1
   path_provider: ^2.0.1
