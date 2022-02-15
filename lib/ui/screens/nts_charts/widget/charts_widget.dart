@@ -43,7 +43,7 @@ class _ChartsState extends State<Charts> {
                   dataSource: widget.chartDataLIst,
                   xValueMapper: (ChartModel data, _) => data.type,
                   yValueMapper: (ChartModel data, _) => data.value,
-                  enableSmartLabels: true,
+                  // enableSmartLabels: true,/// TODO Commented due to package incompatability issues
                   dataLabelMapper: (ChartModel data, _) => '${data.value}',
                 )
               ])
@@ -67,7 +67,7 @@ class _ChartsState extends State<Charts> {
                       dataSource: widget.chartDataLIst,
                       xValueMapper: (ChartModel data, _) => data.type,
                       yValueMapper: (ChartModel data, _) => data.value,
-                      enableSmartLabels: true,
+                      // enableSmartLabels: true, /// TODO Commented due to package incompatability issues 
                       dataLabelMapper: (ChartModel data, _) => '${data.value}',
                     )
                   ])

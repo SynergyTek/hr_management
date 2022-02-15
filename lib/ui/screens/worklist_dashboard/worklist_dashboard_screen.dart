@@ -12,7 +12,6 @@ import '../../../routes/route_constants.dart';
 import '../../../routes/screen_arguments.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
-
 import 'widgets/note_worklist.dart';
 import 'widgets/task_service_worklist.dart';
 
@@ -71,7 +70,8 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
                         );
                       }
 
-                      return _filterWidget(snapshot.data.data);
+                      return Container();
+                      //  _filterWidget(snapshot.data.data);
                     } else {
                       return CircularProgressIndicator();
                     }
@@ -86,97 +86,97 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
         ),
       ),
       // ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        child: Icon(
-          Icons.add,
-          size: 32,
-        ),
-        onPressed: () {
-          if (ntsType == NTSType.task) {
-            Navigator.pushNamed(
-              context,
-              NTS_TEMPLATE_REQUEST,
-              arguments: ScreenArguments(
-                ntstype: NTSType.task,
-                arg4: '', //'STEP_TASK_CATEGORY',
-              ),
-            );
-          } else if (ntsType == NTSType.service) {
-            Navigator.pushNamed(
-              context,
-              NTS_TEMPLATE_REQUEST,
-              arguments: ScreenArguments(
-                ntstype: NTSType.service,
-                arg4: '',
-              ),
-            );
-          } else if (ntsType == NTSType.note) {
-            Navigator.pushNamed(
-              context,
-              NTS_TEMPLATE_REQUEST,
-              arguments: ScreenArguments(
-                ntstype: NTSType.note,
-                arg4: '',
-              ),
-            );
-          }
-        },
-      ),
-      bottomNavigationBar: StreamBuilder<WorklistDashboardResponse>(
-          stream: null,
-          builder: (context, snapshot) {
-            return BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.file_copy),
-                  tooltip: 'TASK',
-                  // icon: Icon(Icons.task),
-                  label: 'TASK',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.miscellaneous_services),
-                  label: 'SERVICE',
-                  tooltip: 'SERVICE',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.note),
-                  label: 'NOTE',
-                  tooltip: 'NOTE',
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: Theme.of(context).primaryColor,
-              onTap: _onItemTapped,
-            );
-          }),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Theme.of(context).primaryColor,
+      //   child: Icon(
+      //     Icons.add,
+      //     size: 32,
+      //   ),
+      //   onPressed: () {
+      //     if (ntsType == NTSType.task) {
+      //       Navigator.pushNamed(
+      //         context,
+      //         NTS_TEMPLATE_REQUEST,
+      //         arguments: ScreenArguments(
+      //           ntstype: NTSType.task,
+      //           arg4: '', //'STEP_TASK_CATEGORY',
+      //         ),
+      //       );
+      //     } else if (ntsType == NTSType.service) {
+      //       Navigator.pushNamed(
+      //         context,
+      //         NTS_TEMPLATE_REQUEST,
+      //         arguments: ScreenArguments(
+      //           ntstype: NTSType.service,
+      //           arg4: '',
+      //         ),
+      //       );
+      //     } else if (ntsType == NTSType.note) {
+      //       Navigator.pushNamed(
+      //         context,
+      //         NTS_TEMPLATE_REQUEST,
+      //         arguments: ScreenArguments(
+      //           ntstype: NTSType.note,
+      //           arg4: '',
+      //         ),
+      //       );
+      //     }
+      //   },
+      // ),
+      // bottomNavigationBar: StreamBuilder<WorklistDashboardResponse>(
+      //     stream: null,
+      //     builder: (context, snapshot) {
+      //       return BottomNavigationBar(
+      //         items: const <BottomNavigationBarItem>[
+      //           BottomNavigationBarItem(
+      //             icon: Icon(Icons.file_copy),
+      //             tooltip: 'TASK',
+      //             // icon: Icon(Icons.task),
+      //             label: 'TASK',
+      //           ),
+      //           BottomNavigationBarItem(
+      //             icon: Icon(Icons.miscellaneous_services),
+      //             label: 'SERVICE',
+      //             tooltip: 'SERVICE',
+      //           ),
+      //           BottomNavigationBarItem(
+      //             icon: Icon(Icons.note),
+      //             label: 'NOTE',
+      //             tooltip: 'NOTE',
+      //           ),
+      //         ],
+      //         currentIndex: _selectedIndex,
+      //         selectedItemColor: Theme.of(context).primaryColor,
+      //         onTap: _onItemTapped,
+      //       );
+      //     }),
     );
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      if (_selectedIndex == 0) {
-        ntsType = NTSType.task;
-        title = 'Task';
-      } else if (_selectedIndex == 1) {
-        ntsType = NTSType.service;
-        title = 'Service';
-      } else if (_selectedIndex == 2) {
-        ntsType = NTSType.note;
-        title = 'Note';
-      }
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //     if (_selectedIndex == 0) {
+  //       ntsType = NTSType.task;
+  //       title = 'Task';
+  //     } else if (_selectedIndex == 1) {
+  //       ntsType = NTSType.service;
+  //       title = 'Service';
+  //     } else if (_selectedIndex == 2) {
+  //       ntsType = NTSType.note;
+  //       title = 'Note';
+  //     }
 
-      // Clearing old filter values.
-      ntsTemplateTreeListBloc..subject.add(null);
+  //     // Clearing old filter values.
+  //     ntsTemplateTreeListBloc..subject.add(null);
 
-      // Refreshing the filter data accroding to the selected type.
-      ntsTemplateTreeListBloc..getData(queryparams: _handleQueryParams());
+  //     // Refreshing the filter data accroding to the selected type.
+  //     ntsTemplateTreeListBloc..getData(queryparams: _handleQueryParams());
 
-      // Clearing all the selected filters.
-      _checkedFilterSelectedItemsMap.clear();
-    });
-  }
+  //     // Clearing all the selected filters.
+  //     _checkedFilterSelectedItemsMap.clear();
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -191,186 +191,188 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
     if (_selectedIndex == 2) return {'id': 'Note'};
   }
 
-  Widget _filterWidget(List data) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Expanded(
-          child: Container(
-            height: 80.0,
-            child: _handleFilterChips(),
-          ),
-        ),
-        IconButton(
-          icon: Icon(Icons.filter_list),
-          onPressed: () => _handleFilterOnPressed(data),
-        ),
-      ],
-    );
-  }
+  // Widget _filterWidget(List data) {
+  //   return Row(
+  //     mainAxisSize: MainAxisSize.max,
+  //     mainAxisAlignment: MainAxisAlignment.end,
+  //     children: [
+  //       Expanded(
+  //         child: Container(
+  //           height: 80.0,
+  //           child: _handleFilterChips(),
+  //         ),
+  //       ),
+  //       IconButton(
+  //         icon: Icon(Icons.filter_list),
+  //         onPressed: () => _handleFilterOnPressed(data),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  _handleFilterOnPressed(List<NTSTemplateTreeListModel> data) {
-    showModalBottomSheet(
-      context: context,
-      enableDrag: true,
-      isScrollControlled: false,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(
-                16.0,
-              ),
-              topRight: Radius.circular(
-                16.0,
-              ),
-            ),
-          ),
-          width: double.infinity,
-          padding: DEFAULT_LARGE_PADDING,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: Icon(Icons.filter_list),
-                title: Text("Filter"),
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _eachItemExpansionTile(
-                      data.elementAt(index),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  // _handleFilterOnPressed(List<NTSTemplateTreeListModel> data) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     enableDrag: true,
+  //     isScrollControlled: false,
+  //     backgroundColor: Colors.transparent,
+  //     builder: (BuildContext context) {
+  //       return Container(
+  //         decoration: BoxDecoration(
+  //           color: Theme.of(context).backgroundColor,
+  //           borderRadius: BorderRadius.only(
+  //             topLeft: Radius.circular(
+  //               16.0,
+  //             ),
+  //             topRight: Radius.circular(
+  //               16.0,
+  //             ),
+  //           ),
+  //         ),
+  //         width: double.infinity,
+  //         padding: DEFAULT_LARGE_PADDING,
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             ListTile(
+  //               leading: Icon(Icons.filter_list),
+  //               title: Text("Filter"),
+  //               trailing: IconButton(
+  //                 icon: Icon(
+  //                   Icons.close,
+  //                   color: Theme.of(context).accentColor,
+  //                 ),
+  //                 onPressed: () => Navigator.of(context).pop(),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               child: ListView.builder(
+  //                 shrinkWrap: true,
+  //                 itemCount: data.length,
+  //                 itemBuilder: (BuildContext context, int index) {
+  //                   return _eachItemExpansionTile(
+  //                     data.elementAt(index),
+  //                   );
+  //                 },
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
-  Widget _eachItemExpansionTile(NTSTemplateTreeListModel eachData) {
-    return ExpansionTile(
-      title: Text(eachData.name),
-      children: _expansionTileChildren(eachData),
-    );
-  }
+  // Widget _eachItemExpansionTile(NTSTemplateTreeListModel eachData) {
+  //   return ExpansionTile(
+  //     title: Text(eachData.name),
+  //     children: _expansionTileChildren(eachData),
+  //   );
+  // }
 
-  List<Widget> _expansionTileChildren(NTSTemplateTreeListModel eachData) {
-    List<Widget> _expansionTileWidgetList = [];
+  // List<Widget> _expansionTileChildren(NTSTemplateTreeListModel eachData) {
+  //   List<Widget> _expansionTileWidgetList = [];
 
-    if (eachData?.treeViewModelChildren == null)
-      return _expansionTileWidgetList..add(Container());
+  //   if (eachData?.treeViewModelChildren == null)
+  //     return _expansionTileWidgetList..add(Container());
 
-    eachData.treeViewModelChildren.forEach((eachItem) {
-      _expansionTileWidgetList
-        ..add(
-          StatefulBuilder(
-            builder: (BuildContext context, innerSetState) {
-              // return ListTile(
-              // leading: Icon(Icons.filter_list),
-              return CheckboxListTile(
-                title: Text(eachItem.displayName ?? ""),
-                value: eachItem?.checked ?? false,
-                onChanged: (bool hasChanged) {
-                  // onTap: () {
-                  innerSetState(() {
-                    setState(() {
-                      // Updating the value of the checkbox listtile.
-                      eachItem.checked = !eachItem.checked;
+  //   eachData.treeViewModelChildren.forEach((eachItem) {
+  //     _expansionTileWidgetList
+  //       ..add(
+  //         StatefulBuilder(
+  //           builder: (BuildContext context, innerSetState) {
+  //             // return ListTile(
+  //             // leading: Icon(Icons.filter_list),
+  //             return CheckboxListTile(
+  //               title: Text(eachItem.displayName ?? ""),
+  //               value: eachItem?.checked ?? false,
+  //               onChanged: (bool hasChanged) {
+  //                 // onTap: () {
+  //                 innerSetState(() {
+  //                   setState(() {
+  //                     // Updating the value of the checkbox listtile.
+  //                     eachItem.checked = !eachItem.checked;
 
-                      // If key is already present remove the entry from the map.
-                      // If the id is not present in the map then add a new entry to the map.
-                      if (!_checkedFilterSelectedItemsMap
-                          .containsKey(eachItem.id)) {
-                        _checkedFilterSelectedItemsMap[eachItem.id] = eachItem;
-                      } else {
-                        _checkedFilterSelectedItemsMap.remove(eachItem.id);
-                      }
+  //                     // If key is already present remove the entry from the map.
+  //                     // If the id is not present in the map then add a new entry to the map.
+  //                     if (!_checkedFilterSelectedItemsMap
+  //                         .containsKey(eachItem.id)) {
+  //                       _checkedFilterSelectedItemsMap[eachItem.id] = eachItem;
+  //                     } else {
+  //                       _checkedFilterSelectedItemsMap.remove(eachItem.id);
+  //                     }
 
-                      if (_selectedIndex != 2)
-                        worklistDashboardBloc
-                          ..getWorklistDashboardData(
-                            queryparams: _handleWorkListDashboardQueryParams(),
-                          );
+  //                     if (_selectedIndex != 2)
+  //                       worklistDashboardBloc
+  //                         ..getWorklistDashboardData(
+  //                           queryparams: _handleWorkListDashboardQueryParams(),
+  //                         );
 
-                      if (_selectedIndex == 2)
-                        worklistDashboardBloc
-                          ..getWorklistDashboardNoteData(
-                            queryparams: _handleWorkListDashboardQueryParams(),
-                          );
-                    });
-                  });
-                },
-              );
-            },
-          ),
-        );
-    });
+  //                     if (_selectedIndex == 2)
+  //                       worklistDashboardBloc
+  //                         ..getWorklistDashboardNoteData(
+  //                           queryparams: _handleWorkListDashboardQueryParams(),
+  //                         );
+  //                   });
+  //                 });
+  //               },
+  //             );
+  //           },
+  //         ),
+  //       );
+  //   });
 
-    return _expansionTileWidgetList;
-  }
+  //   return _expansionTileWidgetList;
+  // }
 
-  Widget _handleFilterChips() {
-    List<Widget> _chips = [];
+  // Widget _handleFilterChips() {
+  //   List<Widget> _chips = [];
 
-    _checkedFilterSelectedItemsMap.values.forEach((eachChip) {
-      _chips
-        ..add(
-          Container(
-            padding: DEFAULT_HORIZONTAL_PADDING,
-            child: _chips==[]?Text('Select Templates') :Chip(
-              backgroundColor: Theme.of(context).textHeadingColor,
-              label: Text(
-                eachChip.displayName ?? "",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        );
-    });
+  //   _checkedFilterSelectedItemsMap.values.forEach((eachChip) {
+  //     _chips
+  //       ..add(
+  //         Container(
+  //           padding: DEFAULT_HORIZONTAL_PADDING,
+  //           child: _chips == []
+  //               ? Text('Select Templates')
+  //               : Chip(
+  //                   backgroundColor: Theme.of(context).textHeadingColor,
+  //                   label: Text(
+  //                     eachChip.displayName ?? "",
+  //                     style: TextStyle(
+  //                       color: Colors.white,
+  //                     ),
+  //                   ),
+  //                 ),
+  //         ),
+  //       );
+  //   });
 
-    return ListView(
-      shrinkWrap: true,
-      scrollDirection: Axis.horizontal,
-      children: _chips,
-    );
-  }
+  //   return ListView(
+  //     shrinkWrap: true,
+  //     scrollDirection: Axis.horizontal,
+  //     children: _chips,
+  //   );
+  // }
 
-  _handleWorkListDashboardQueryParams() {
-    if (_selectedIndex == 0)
-      return {
-        'taskTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
-        'userid':
-            BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
-      };
-    if (_selectedIndex == 1)
-      return {
-        'serviceTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
-        'userid':
-            BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
-      };
-    if (_selectedIndex == 2)
-      return {
-        'noteTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
-        'userid':
-            BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
-      };
-  }
+  // _handleWorkListDashboardQueryParams() {
+  //   if (_selectedIndex == 0)
+  //     return {
+  //       'taskTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
+  //       'userid':
+  //           BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
+  //     };
+  //   if (_selectedIndex == 1)
+  //     return {
+  //       'serviceTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
+  //       'userid':
+  //           BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
+  //     };
+  //   if (_selectedIndex == 2)
+  //     return {
+  //       'noteTemplateIds': _checkedFilterSelectedItemsMap.keys.join(','),
+  //       'userid':
+  //           BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
+  //     };
+  // }
 }
