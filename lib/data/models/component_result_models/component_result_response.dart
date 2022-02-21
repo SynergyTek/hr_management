@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 import 'component_result_model.dart';
 
 class ComponentResultResponse {
-  final List<ComponentResultModel> data;
-  String error;
+  final List<ComponentResultModel>? data;
+  String? error;
 
   ComponentResultResponse({
-    @required this.data,
+    required this.data,
   });
 
   ComponentResultResponse.fromJson(List response)

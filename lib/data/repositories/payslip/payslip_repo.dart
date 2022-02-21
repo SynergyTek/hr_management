@@ -4,7 +4,7 @@ class PayslipRepository extends AbstractPayslipRepository {
   final Dio _dio = Dio();
 
   Future<PayslipResponse> getPaylsipList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.READ_PAYSLIP_DATA;
 

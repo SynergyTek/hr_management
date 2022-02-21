@@ -1,19 +1,19 @@
 class ChartModel {
-  String id;
-  String type;
-  String code;
-  int value;
-  String type1;
-  int count1;
-  int count2;
-  String projectId;
-  String projectName;
-  String projectStartDate;
-  String assigneeId;
-  String taskCreatedDate;
-  int days;
-  int actualSLA;
-  String groupName;
+  String? id;
+  String? type;
+  String? code;
+  int? value;
+  String? type1;
+  int? count1;
+  int? count2;
+  String? projectId;
+  String? projectName;
+  String? projectStartDate;
+  String? assigneeId;
+  String? taskCreatedDate;
+  int? days;
+  int? actualSLA;
+  String? groupName;
 
   ChartModel(
       {this.id,

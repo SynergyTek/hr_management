@@ -13,8 +13,8 @@ abstract class AbstractDMSRepository {
   AbstractDMSRepository();
 
   Future<DMSFilesResponse> getDMSFilesData(
-      {Map<String, dynamic> queryparams, @required DmsPostModel dmsPostModel});
+      {Map<String, dynamic>? queryparams, required DmsPostModel dmsPostModel});
 
   Future<DMSFilesResponse> getDMSFilesChildData(
-      {Map<String, dynamic> queryparams, @required DmsPostModel dmsPostModel});
+      {Map<String, dynamic>? queryparams, required DmsPostModel dmsPostModel});
 }

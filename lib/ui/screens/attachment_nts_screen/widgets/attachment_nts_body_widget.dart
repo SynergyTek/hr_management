@@ -12,12 +12,12 @@ import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
 
 class AttachmentNTSBodyWidget extends StatefulWidget {
-  final NTSType ntsType;
-  final String ntsId;
+  final NTSType? ntsType;
+  final String? ntsId;
 
   AttachmentNTSBodyWidget({
-    @required this.ntsType,
-    @required this.ntsId,
+    required this.ntsType,
+    required this.ntsId,
   });
 
   @override
@@ -60,12 +60,12 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
     );
   }
 
-  Widget _attachmentListWidget(List<AttachmentNTSModel> data) {
+  Widget _attachmentListWidget(List<AttachmentNTSModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -82,7 +82,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   }
 
   Widget _eachListTile({
-    @required AttachmentNTSModel data,
+    required AttachmentNTSModel data,
   }) {
     return ListTile(
       leading: Icon(Icons.attach_file),
@@ -123,7 +123,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   }
 
   _deleteDialog({
-    @required AttachmentNTSModel data,
+    required AttachmentNTSModel data,
   }) {
     showDialog(
       context: context,
@@ -152,7 +152,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   }
 
   void _handleDeleteOnPressed({
-    @required AttachmentNTSModel data,
+    required AttachmentNTSModel data,
   }) {
     Navigator.of(context).pop();
     attachmentNTSBloc
@@ -166,7 +166,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   }
 
   _handleViewOnPressed({
-    @required data,
+    required data,
   }) async {
     if (data == null)
       ScaffoldMessenger.of(context).showSnackBar(
@@ -200,7 +200,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   // -------------------------------------------------- //
 
   _handleDownloadOnPressed({
-    @required AttachmentNTSModel data,
+    required AttachmentNTSModel data,
   }) {
     NewDownloadHelper().unbindPortToMainIsolate();
 

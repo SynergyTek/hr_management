@@ -7,7 +7,7 @@ class DocumentPermissionRepository
   final Dio _dio = Dio();
 
   Future<ViewPermissionResponse> getViewPermissionData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -25,7 +25,7 @@ class DocumentPermissionRepository
   }
 
   Future<PermissionResponse> getPermissionDetails({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -43,7 +43,7 @@ class DocumentPermissionRepository
   }
 
   Future<ViewPermissionResponse> disableParentPermission({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -60,8 +60,8 @@ class DocumentPermissionRepository
     }
   }
 
-  Future<bool> deletePermission({
-    Map<String, dynamic> queryparams,
+  Future<bool?> deletePermission({
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -78,11 +78,11 @@ class DocumentPermissionRepository
   }
 
   Future<SubmitPermissionResponse> savePermission(
-      {PermissionSubmitModel permissionModel}) async {
+      {PermissionSubmitModel? permissionModel}) async {
     try {
       Response response = await _dio.post(
         APIEndpointConstants.SAVE_PERMISSIONS,
-        data: jsonEncode(permissionModel.toJson()) ?? {},
+        data: jsonEncode(permissionModel!.toJson()) ?? {},
         // queryParameters: queryparams ?? {},
       );
 

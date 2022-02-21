@@ -10,7 +10,7 @@ class TestScreenBodyWidget extends StatefulWidget {
   final NTSType ntsType;
 
   TestScreenBodyWidget({
-    @required this.ntsType,
+    required this.ntsType,
   });
 
   @override
@@ -48,7 +48,7 @@ class _TestScreenBodyWidgetState extends State<TestScreenBodyWidget> {
     );
   }
 
-  Widget _testWidget(List data) {
+  Widget _testWidget(List? data) {
     return Container();
   }
 }

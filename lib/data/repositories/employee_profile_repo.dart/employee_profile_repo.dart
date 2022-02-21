@@ -6,7 +6,7 @@ class EmployeeProfileRepository extends AbstractEmployeeProfileRepository {
   final Dio _dio = Dio();
 
   Future<EmployeeProfileResponse> getEmployeeProfileData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.EMPLOYEE_PROFILE;
 

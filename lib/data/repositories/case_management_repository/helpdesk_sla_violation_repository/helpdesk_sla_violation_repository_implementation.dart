@@ -5,7 +5,7 @@ class HelpdeskSLAViolationRepository
   final Dio _dio = Dio();
 
   Future<CaseManagementResponse> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     //
     String endpoint = APIEndpointConstants.GET_HELPDESK_SLA_VIOLATION;
@@ -25,21 +25,21 @@ class HelpdeskSLAViolationRepository
 
   @override
   Future<bool> deleteAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     throw UnimplementedError();
   }
 
   @override
   Future<CaseManagementResponse> postAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<CaseManagementResponse> putAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }

@@ -8,18 +8,18 @@ class NtsChartBloc {
   final NTSChartRepository _ntsRepository = NTSChartRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<ChartResponse> _subjectChartByStatus =
-      BehaviorSubject<ChartResponse>();
+  final BehaviorSubject<ChartResponse?> _subjectChartByStatus =
+      BehaviorSubject<ChartResponse?>();
 
-  final BehaviorSubject<ChartResponse> _subjectChartByUserType =
-      BehaviorSubject<ChartResponse>();
+  final BehaviorSubject<ChartResponse?> _subjectChartByUserType =
+      BehaviorSubject<ChartResponse?>();
 
-  final BehaviorSubject<ChartResponse> _subjectDatewiseSLA =
-      BehaviorSubject<ChartResponse>();
+  final BehaviorSubject<ChartResponse?> _subjectDatewiseSLA =
+      BehaviorSubject<ChartResponse?>();
 
   getChartByStatus({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     ChartResponse response = await _ntsRepository.getChartByStatus(
       queryparams: queryparams,
@@ -30,8 +30,8 @@ class NtsChartBloc {
   }
 
   getChartByUserType({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     ChartResponse response = await _ntsRepository.getChartByUserType(
       queryparams: queryparams,
@@ -42,8 +42,8 @@ class NtsChartBloc {
   }
 
   getDatewiseSLA({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     ChartResponse response = await _ntsRepository.getDatewiseSLA(
       queryparams: queryparams,
@@ -77,11 +77,11 @@ class NtsChartBloc {
     _subjectDatewiseSLA.close();
   }
 
-  BehaviorSubject<ChartResponse> get subjectChartByStatus =>
+  BehaviorSubject<ChartResponse?> get subjectChartByStatus =>
       _subjectChartByStatus;
-  BehaviorSubject<ChartResponse> get subjectChartByUserType =>
+  BehaviorSubject<ChartResponse?> get subjectChartByUserType =>
       _subjectChartByUserType;
-  BehaviorSubject<ChartResponse> get subjectDatewiseSLA => _subjectDatewiseSLA;
+  BehaviorSubject<ChartResponse?> get subjectDatewiseSLA => _subjectDatewiseSLA;
 }
 
 final ntsChartBloc = NtsChartBloc();

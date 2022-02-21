@@ -1,6 +1,3 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../data/models/api_models/post_response_model.dart';
@@ -12,14 +9,14 @@ class NoteBloc {
   final NoteRepository _noteRepository = NoteRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<NoteResponse> _subjectNoteDetails =
-      BehaviorSubject<NoteResponse>();
-  final BehaviorSubject<NoteListResponse> _subjectNoteList =
-      BehaviorSubject<NoteListResponse>();
+  final BehaviorSubject<NoteResponse?> _subjectNoteDetails =
+      BehaviorSubject<NoteResponse?>();
+  final BehaviorSubject<NoteListResponse?> _subjectNoteList =
+      BehaviorSubject<NoteListResponse?>();
 
   /// Used to fetch new entries.
   getNoteDetails({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     NoteResponse response = await _noteRepository.getNoteDetail(
       queryparams: queryparams,
@@ -28,7 +25,7 @@ class NoteBloc {
   }
 
   getNoteList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     NoteListResponse response = await _noteRepository.getNoteList(
       queryparams: queryparams,
@@ -37,7 +34,7 @@ class NoteBloc {
   }
 
   getNoteDashBoardData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     NoteListResponse response =
         await _noteRepository.getNoteDashBoardData(queryparams: queryparams);
@@ -46,14 +43,14 @@ class NoteBloc {
 
   /// Used to create new entries.
   Future<PostResponse> postNoteData({
-    @required NoteModel noteModel,
-    Map<String, dynamic> queryparams,
+    required NoteModel noteModel,
+    Map<String, dynamic>? queryparams,
   }) async {
     PostResponse response = await _noteRepository.postNoteAPIData(
       note: noteModel,
     );
 
-    if (response.isSuccess) {
+    if (response.isSuccess!) {
       subjectNoteList.sink.add(null);
       getNoteList();
     }
@@ -84,8 +81,8 @@ class NoteBloc {
     _subjectNoteList.close();
   }
 
-  BehaviorSubject<NoteResponse> get subjectNoteDetails => _subjectNoteDetails;
-  BehaviorSubject<NoteListResponse> get subjectNoteList => _subjectNoteList;
+  BehaviorSubject<NoteResponse?> get subjectNoteDetails => _subjectNoteDetails;
+  BehaviorSubject<NoteListResponse?> get subjectNoteList => _subjectNoteList;
 }
 
 final noteBloc = NoteBloc();

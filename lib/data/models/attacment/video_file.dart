@@ -3,10 +3,10 @@ import 'dart:core';
 
 //@JsonSerializable(explicitToJson: true)
 class VideoFile {
-  String fileName;
-  String mimeType;
-  String imageData;
-  String stringData;
+  String? fileName;
+  String? mimeType;
+  String? imageData;
+  String? stringData;
 
   VideoFile();
 
@@ -17,10 +17,10 @@ class VideoFile {
 
 VideoFile _$VideoFilePostFromJson(Map<String, dynamic> json) {
   return VideoFile()
-    ..fileName = json['FileName'] as String
-    ..mimeType = json['MimeType'] as String
-    ..imageData = json['ImageData'] as String
-    ..stringData = json['stringData'] as String;
+    ..fileName = json['FileName'] as String?
+    ..mimeType = json['MimeType'] as String?
+    ..imageData = json['ImageData'] as String?
+    ..stringData = json['stringData'] as String?;
   }
   Map<String, dynamic> _$VideoFilePostToJson(VideoFile instance) => <String, dynamic>{
       'FileName': instance.fileName,

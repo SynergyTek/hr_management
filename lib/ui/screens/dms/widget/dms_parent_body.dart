@@ -16,11 +16,11 @@ import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
 
 class DMSParentBody extends StatefulWidget {
-  final String sourceId;
-  final bool isCopy;
-  final bool isCut;
+  final String? sourceId;
+  final bool? isCopy;
+  final bool? isCut;
 
-  const DMSParentBody({Key key, this.sourceId, this.isCopy, this.isCut})
+  const DMSParentBody({Key? key, this.sourceId, this.isCopy, this.isCut})
       : super(key: key);
 
   @override
@@ -28,16 +28,16 @@ class DMSParentBody extends StatefulWidget {
 }
 
 class _DMSParentBodyState extends State<DMSParentBody> {
-  List<Cwd> childList = [];
+  List<Cwd>? childList = [];
   List<Cwd> filterChildList = [];
   TextEditingController searchWorkspaceTextController = TextEditingController();
   bool isSearch = false;
-  List<String> pathList = [];
+  List<String?> pathList = [];
   List<String> parentPathList = [];
   List<Cwd> parentModelList = [];
-  String sourceId;
-  bool isCopy = false;
-  bool isCut = false;
+  String? sourceId;
+  bool? isCopy = false;
+  bool? isCut = false;
 
   @override
   void initState() {
@@ -68,15 +68,15 @@ class _DMSParentBodyState extends State<DMSParentBody> {
         stream: dmsBloc.subjectDMSGetFilesResponse.stream,
         builder: (context, AsyncSnapshot<DMSFilesResponse> snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data.error != null && snapshot.data.error.length > 0) {
+            if (snapshot.data!.error != null && snapshot.data!.error!.length > 0) {
               return Center(
-                child: Text(snapshot.data.error),
+                child: Text(snapshot.data!.error!),
               );
             }
-            childList = snapshot.data.data.files;
+            childList = snapshot.data!.data!.files;
             if (!isSearch) {
               filterChildList.clear();
-              filterChildList.addAll(childList);
+              filterChildList.addAll(childList!);
             }
             return SingleChildScrollView(
               child: Column(
@@ -103,7 +103,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                     color: Colors.blue,
                                   ),
                                   title: Text(
-                                    filterChildList[index].name,
+                                    filterChildList[index].name!,
                                   ),
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -112,7 +112,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           ? CircleAvatar(
                                               radius: 11,
                                               child: Text(
-                                                filterChildList[index].count,
+                                                filterChildList[index].count!,
                                                 style: TextStyle(fontSize: 12),
                                               ))
                                           : SizedBox(),
@@ -120,7 +120,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                         onPressed: () => bottomSheet(
                                           filterChildList[index].name,
                                           filterChildList[index].id,
-                                          snapshot.data.data.cwd.id,
+                                          snapshot.data!.data!.cwd!.id,
                                           data: filterChildList[index],
                                         ),
                                         icon: Icon(Icons.more_vert_rounded),
@@ -138,9 +138,9 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                       ..add(filterChildList[index]);
 
                                     String parentPath =
-                                        snapshot.data.data.cwd.id +
+                                        snapshot.data!.data!.cwd!.id! +
                                             '/' +
-                                            filterChildList[index].id +
+                                            filterChildList[index].id! +
                                             '/';
 
                                     parentPathList
@@ -191,10 +191,10 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   }
 
   bottomSheet(
-    String title,
-    String id,
-    String path, {
-    Cwd data,
+    String? title,
+    String? id,
+    String? path, {
+    Cwd? data,
   }) {
     showDocumentBottomSheet(
       bottomSheetDataList: [
@@ -227,7 +227,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
           title: Text('Edit Workspace'),
           onTap: () => _handleEditWorkspaceOnTap(
             id,
-            data: data,
+            data: data!,
           ),
         ),
         ListTile(
@@ -360,7 +360,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     // int length = widget.parentPath.split('/').length;
     // _path = widget.parentPath.split('/')[length - 2];
     Navigator.pop(context);
-    if (widget.isCopy || isCopy) {
+    if (widget.isCopy! || isCopy!) {
       dmsCrudNoteBloc
         ..getCopyNoteAPIData(
             sourceId: sourceId,
@@ -380,7 +380,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       }
 
       sourceId = '';
-    } else if (widget.isCut || isCut) {
+    } else if (widget.isCut! || isCut!) {
       dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: _path);
       if (dmsCrudNoteBloc.moveNoteSubject.stream.hasValue) {
         if (dmsCrudNoteBloc.moveNoteSubject.stream.value) {
@@ -490,7 +490,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
-                if (form.currentState.validate()) {
+                if (form.currentState!.validate()) {
                   Navigator.of(context).pop();
                   // dmsCrudNoteBloc..getRenameFilesAPIData(model: model);
 
@@ -520,12 +520,12 @@ class _DMSParentBodyState extends State<DMSParentBody> {
           labelText: label,
           hintText: hint,
         ),
-        validator: validator,
+        validator: validator as String? Function(String?)?,
       ),
     );
   }
 
-  showDocumentBottomSheet({@required List<Widget> bottomSheetDataList}) {
+  showDocumentBottomSheet({required List<Widget> bottomSheetDataList}) {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
@@ -540,9 +540,9 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   }
 
   Widget _statisticWidget({
-    @required BuildContext context,
-    String title,
-    String subtitle,
+    required BuildContext context,
+    String? title,
+    String? subtitle,
     bool isHeading = false,
   }) {
     return ListTile(
@@ -595,9 +595,9 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       filterChildList.clear();
       if (searchText.isNotEmpty) {
         isSearch = true;
-        childList.forEach((item) {
+        childList!.forEach((item) {
           if (item.searchS != null &&
-              item.searchS.toLowerCase().contains(searchText.toLowerCase())) {
+              item.searchS!.toLowerCase().contains(searchText.toLowerCase())) {
             filterChildList.add(item);
           }
         });
@@ -612,12 +612,12 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       isSearch = false;
       searchWorkspaceTextController.clear();
       filterChildList.clear();
-      filterChildList.addAll(childList);
+      filterChildList.addAll(childList!);
       FocusScope.of(context).requestFocus(FocusNode());
     });
   }
 
-  _handleCreateNewFolderOnTap(String id) {
+  _handleCreateNewFolderOnTap(String? id) {
     Navigator.of(context).pushNamed(
       DMS_NEW_FOLDER_ROUTE,
       arguments: ScreenArguments(
@@ -633,8 +633,8 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   }
 
   _handleEditWorkspaceOnTap(
-    String id, {
-    Cwd data,
+    String? id, {
+    required Cwd data,
   }) {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,

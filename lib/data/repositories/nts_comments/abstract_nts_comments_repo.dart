@@ -17,22 +17,22 @@ abstract class AbstractNTSCommentsRepository {
   AbstractNTSCommentsRepository();
 
   Future<CommentListResponse> getCommentsData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<PostResponse> postCommentData({
-    PostComment comment,
-    NTSType ntsType,
+    PostComment? comment,
+    NTSType? ntsType,
   });
 
   Future<CommentResponse> putAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
-  Future<bool> deleteAPIData({
+  Future<bool?> deleteAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   });
 }

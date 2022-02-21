@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class BlocTextBoxWidget extends StatelessWidget {
-  final String labelName;
-  final String fieldName;
-  final bool readonly;
-  final TextFieldBloc textFieldBloc;
-  final ValueChanged<String> updateValue;
-  final TextInputType keyboardType;
-  final Widget prefixIcon;
-  final Iterable<String> autofillHints;
-  final SuffixButton suffixButton;
-  final Function onChanged;
-  final int maxLines;
-  final bool obscureText;
+  final String? labelName;
+  final String? fieldName;
+  final bool? readonly;
+  final TextFieldBloc? textFieldBloc;
+  final ValueChanged<String>? updateValue;
+  final TextInputType? keyboardType;
+  final Widget? prefixIcon;
+  final Iterable<String>? autofillHints;
+  final SuffixButton? suffixButton;
+  final Function? onChanged;
+  final int? maxLines;
+  final bool? obscureText;
 
   const BlocTextBoxWidget(
       {this.labelName,
@@ -36,8 +36,8 @@ class BlocTextBoxWidget extends StatelessWidget {
       child: TextFieldBlocBuilder(
         obscureText: obscureText ?? false,
         maxLines: maxLines ?? 1,
-        key: Key(fieldName),
-        textFieldBloc: textFieldBloc,
+        key: Key(fieldName!),
+        textFieldBloc: textFieldBloc!,
         readOnly: readonly ?? false,
         keyboardType: keyboardType ?? TextInputType.name,
         suffixButton: suffixButton,
@@ -50,7 +50,7 @@ class BlocTextBoxWidget extends StatelessWidget {
         // autofillHints: [
         //   AutofillHints.username,
         // ],
-        onChanged: onChanged,
+        onChanged: onChanged as void Function(String)?,
       ),
     );
   }

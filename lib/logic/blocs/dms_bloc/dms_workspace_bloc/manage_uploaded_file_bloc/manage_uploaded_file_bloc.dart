@@ -10,7 +10,7 @@ class ManageUploadedFileBloc {
   final BehaviorSubject _subject = BehaviorSubject();
 
   postAPIData({
-    @required NoteModel model,
+    required NoteModel model,
   }) async {
     dynamic response = await _apiRepository.postAPIData(
       model: model,

@@ -18,8 +18,8 @@ class NtsCommentBloc {
       BehaviorSubject<CommentListResponse>();
 
   getCommentsData({
-    String ntsId,
-    NTSType ntsType,
+    String? ntsId,
+    NTSType? ntsType,
   }) async {
     Map<String, dynamic> queryparams = Map();
     if (ntsType == NTSType.service) {
@@ -40,10 +40,10 @@ class NtsCommentBloc {
 
   /// Used to create new entries.
   Future<PostResponse> postCommentData({
-    PostComment comment,
-    String ntsId,
-    NTSType ntsType,
-    String userid,
+    required PostComment comment,
+    String? ntsId,
+    NTSType? ntsType,
+    String? userid,
   }) async {
     // PostComment comment=new PostComment();
     // comment.comment = comment ?? '';
@@ -81,9 +81,9 @@ class NtsCommentBloc {
 
   /// Used to delete a particular entry.
   deleteData({
-    @required Map<String, dynamic> queryparams,
-    @required String ntsId,
-    @required NTSType ntsType,
+    required Map<String, dynamic> queryparams,
+    required String ntsId,
+    required NTSType ntsType,
   }) async {
     // Delete here
     await _ntsRepository.deleteAPIData(

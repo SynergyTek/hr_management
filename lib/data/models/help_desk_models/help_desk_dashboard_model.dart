@@ -14,10 +14,10 @@ class HelpDeskDashboardModel {
     this.serviceApproachingViolation,
   });
 
-  int openRequestCount;
-  int slaViolated;
-  int serviceApproachingViolationInaMin;
-  int serviceApproachingViolation;
+  int? openRequestCount;
+  int? slaViolated;
+  int? serviceApproachingViolationInaMin;
+  int? serviceApproachingViolation;
 
   factory HelpDeskDashboardModel.fromJson(Map<String, dynamic> json) =>
       HelpDeskDashboardModel(

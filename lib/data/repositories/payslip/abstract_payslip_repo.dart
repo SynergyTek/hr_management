@@ -9,6 +9,6 @@ abstract class AbstractPayslipRepository {
   AbstractPayslipRepository();
 
   Future<PayslipResponse> getPaylsipList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

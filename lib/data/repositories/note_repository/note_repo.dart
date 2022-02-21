@@ -6,7 +6,7 @@ class NoteRepository extends AbstractNoteRepository {
   final Dio _dio = Dio();
 
   Future<NoteResponse> getNoteDetail({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_NOTE_DETAILS;
 
@@ -29,7 +29,7 @@ class NoteRepository extends AbstractNoteRepository {
   }
 
   Future<NoteListResponse> getNoteList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.READ_NOTE_HOME_DATA;
 
@@ -50,7 +50,7 @@ class NoteRepository extends AbstractNoteRepository {
   }
 
   Future<NoteListResponse> getNoteDashBoardData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.READ_NOTE_DASHBOARD_DATA;
 
@@ -71,21 +71,21 @@ class NoteRepository extends AbstractNoteRepository {
   }
 
   @override
-  Future<NoteResponse> deleteNoteAPIData({Map<String, dynamic> queryparams}) {
+  Future<NoteResponse> deleteNoteAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
   Future<PostResponse> postNoteAPIData({
-    Map<String, dynamic> queryparams,
-    @required NoteModel note,
+    required NoteModel note,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.MANAGE_NOTE;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(note.toJson()) ?? {},
+        data: jsonEncode(note.toJson()),
       );
 
       print("response: ${response.data}");
@@ -94,7 +94,7 @@ class NoteRepository extends AbstractNoteRepository {
         response.data,
       );
 
-      if (result.isSuccess) {
+      if (result.isSuccess!) {
         if (note.noteStatusCode == 'NOTE_STATUS_DRAFT')
           result.messages = 'Note saved as Draft';
         else if (note.noteStatusCode == 'NOTE_STATUS_INPROGRESS')
@@ -114,7 +114,7 @@ class NoteRepository extends AbstractNoteRepository {
   }
 
   @override
-  Future<NoteResponse> putNoteAPIData({Map<String, dynamic> queryparams}) {
+  Future<NoteResponse> putNoteAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 }

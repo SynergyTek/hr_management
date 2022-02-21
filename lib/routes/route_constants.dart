@@ -24,7 +24,6 @@ const String FORGOT_PASSWORD_ROUTE = "/forgot_password";
 // * POST-AUTHENTICATION Routes:
 // ---------------------------//
 // Home Screen route:
-const String HOME_ROUTE = "/home";
 const String MARK_ATTENDANCE_ROUTE = "/mark_attendance";
 const String NTS_TEMPLATE_REQUEST = "/nts_request";
 const String REGISTRATION_ROUTE = "/registration_form";

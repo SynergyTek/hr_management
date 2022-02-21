@@ -65,7 +65,7 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
     );
   }
 
-  Widget _listviewWidget(List<DocReqByHrModel> data) {
+  Widget _listviewWidget(List<DocReqByHrModel>? data) {
     return ListView.builder(
       itemCount: data?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
@@ -77,7 +77,7 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
             style: TextStyle(
               color: _handleListTileColor(
                 context,
-                data.elementAt(index),
+                data!.elementAt(index),
               ),
             ),
           ),
@@ -87,7 +87,7 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
     );
   }
 
-  _handleListTileOnTap(DocReqByHrModel data) {
+  _handleListTileOnTap(DocReqByHrModel? data) {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
@@ -105,7 +105,7 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
     DocReqByHrModel data,
   ) {
     // Guard clause
-    if (data?.status == null || data.status.isEmpty) return Colors.white54;
+    if (data?.status == null || data.status!.isEmpty) return Colors.white54;
 
     if (data.status == 'In Progress') return Colors.green;
     if (data.status == 'Draft') return Colors.orangeAccent;

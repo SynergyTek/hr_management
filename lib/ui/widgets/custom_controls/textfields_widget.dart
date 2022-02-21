@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DescriptionText extends StatelessWidget {
-  final TextEditingController controller;
-  final String title;
-  final String hint;
-  final Key key;
+  final TextEditingController? controller;
+  final String? title;
+  final String? hint;
+  final Key? key;
 
   const DescriptionText({
     this.controller,
@@ -38,14 +38,14 @@ class DescriptionText extends StatelessWidget {
 }
 
 class DescriptionTextWithValidation extends StatelessWidget {
-  final TextEditingController controller;
-  final String title;
-  final String hint;
-  final Key key;
-  final String validationMessage;
-  final FormFieldValidator<String> validator;
-  final FocusNode textFocus;
-  final TextInputType inputType;
+  final TextEditingController? controller;
+  final String? title;
+  final String? hint;
+  final Key? key;
+  final String? validationMessage;
+  final FormFieldValidator<String>? validator;
+  final FocusNode? textFocus;
+  final TextInputType? inputType;
   const DescriptionTextWithValidation({
     this.controller,
     this.title,
@@ -79,24 +79,24 @@ class DescriptionTextWithValidation extends StatelessWidget {
         ),
         validator: validator != null
             ? validator
-            : (String value) => value.isEmpty ? validationMessage : null,
+            : ((String value) => value.isEmpty ? validationMessage : null) as String? Function(String?)?,
       ),
     );
   }
 }
 
 class HollowTextBoxField extends StatelessWidget {
-  final TextEditingController controller;
-  final String title;
-  final String hint;
-  final Icon prefixIcon;
-  final TextInputType inputType;
-  final String validationMessage;
-  final FormFieldValidator<String> validator;
-  final Key key;
-  final Widget suffixWidget;
-  final FocusNode textFocus;
-  final List<TextInputFormatter> inputFormatter;
+  final TextEditingController? controller;
+  final String? title;
+  final String? hint;
+  final Icon? prefixIcon;
+  final TextInputType? inputType;
+  final String? validationMessage;
+  final FormFieldValidator<String>? validator;
+  final Key? key;
+  final Widget? suffixWidget;
+  final FocusNode? textFocus;
+  final List<TextInputFormatter>? inputFormatter;
 
   const HollowTextBoxField(
       {this.controller,
@@ -134,20 +134,20 @@ class HollowTextBoxField extends StatelessWidget {
         maxLines: 1,
         validator: (validator != null)
             ? validator
-            : (String value) => value.isEmpty ? validationMessage : null,
+            : ((String value) => value.isEmpty ? validationMessage : null) as String? Function(String?)?,
       ),
     );
   }
 }
 
 class FixedTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String title;
+  final TextEditingController? controller;
+  final String? title;
 
-  final Icon prefixIcon;
-  final TextInputType inputType;
-  final Widget leadingWidget;
-  final Key key;
+  final Icon? prefixIcon;
+  final TextInputType? inputType;
+  final Widget? leadingWidget;
+  final Key? key;
 
   const FixedTextField(
       {this.controller,
@@ -184,13 +184,13 @@ class FixedTextField extends StatelessWidget {
 }
 
 class ExpandableDescriptionField extends StatelessWidget {
-  final TextEditingController controller;
-  final String title;
+  final TextEditingController? controller;
+  final String? title;
 
   // final String hint;
-  final Key key;
-  final bool isTileExpanded;
-  final ValueChanged valueChanged;
+  final Key? key;
+  final bool? isTileExpanded;
+  final ValueChanged? valueChanged;
 
   const ExpandableDescriptionField(
       {this.controller,
@@ -209,11 +209,11 @@ class ExpandableDescriptionField extends StatelessWidget {
         child: ExpansionTile(
           initiallyExpanded: true,
           leading: Icon(Icons.description),
-          trailing: isTileExpanded
+          trailing: isTileExpanded!
               ? Icon(Icons.keyboard_arrow_down)
               : Icon(Icons.keyboard_arrow_up),
           onExpansionChanged: (bool isexpand) {
-            valueChanged(isexpand);
+            valueChanged!(isexpand);
           },
           title: Text(
             "Add Descripition",

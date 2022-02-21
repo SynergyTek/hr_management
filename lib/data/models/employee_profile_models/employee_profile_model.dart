@@ -88,84 +88,84 @@ class EmployeeProfileModel {
     this.versionNo,
   });
 
-  String personId;
-  String userId;
+  String? personId;
+  String? userId;
   dynamic userRole;
   dynamic positionId;
-  String personNo;
-  String title;
-  int gender;
-  String nationalityName;
-  int maritalStatus;
-  String religion;
+  String? personNo;
+  String? title;
+  int? gender;
+  String? nationalityName;
+  int? maritalStatus;
+  String? religion;
   dynamic birthTown;
   dynamic birthCountryName;
-  DateTime dateOfBirth;
-  String personalEmail;
-  String personFullName;
-  String locationName;
-  String gradeName;
-  String organizationName;
-  String jobName;
-  String positionName;
-  String assignmentTypeName;
-  DateTime dateOfJoin;
+  DateTime? dateOfBirth;
+  String? personalEmail;
+  String? personFullName;
+  String? locationName;
+  String? gradeName;
+  String? organizationName;
+  String? jobName;
+  String? positionName;
+  String? assignmentTypeName;
+  DateTime? dateOfJoin;
   dynamic personTypeName;
-  String photoName;
+  String? photoName;
   dynamic base64Img;
   dynamic assignmentStatusName;
   dynamic page;
   dynamic dependentId;
-  String mobile;
-  String presentUnitNumber;
-  String presentBuildingNumber;
-  String presentStreetName;
-  String presentCity;
-  String presentPostalCode;
-  String presentAdditionalNumber;
+  String? mobile;
+  String? presentUnitNumber;
+  String? presentBuildingNumber;
+  String? presentStreetName;
+  String? presentCity;
+  String? presentPostalCode;
+  String? presentAdditionalNumber;
   dynamic presentConutryId;
-  String presentCountryName;
-  String homeUnitNumber;
-  String homeBuildingNumber;
-  String homeStreetName;
-  String homeCity;
-  String homePostalCode;
-  String homeAdditionalNumber;
+  String? presentCountryName;
+  String? homeUnitNumber;
+  String? homeBuildingNumber;
+  String? homeStreetName;
+  String? homeCity;
+  String? homePostalCode;
+  String? homeAdditionalNumber;
   dynamic homeConutryId;
-  String homeCountryName;
-  String emergencyContactName1;
-  String emergencyContactNo1;
-  String relationship1;
+  String? homeCountryName;
+  String? emergencyContactName1;
+  String? emergencyContactNo1;
+  String? relationship1;
   dynamic otherRelation1;
-  String emergencyContactName2;
-  String emergencyContactNo2;
-  String relationship2;
+  String? emergencyContactName2;
+  String? emergencyContactNo2;
+  String? relationship2;
   dynamic otherRelation2;
   dynamic contactConutryId;
-  String contactCountryName;
+  String? contactCountryName;
   dynamic contactCountryCode;
-  String contactCountryDialCode;
+  String? contactCountryDialCode;
   dynamic emergencyContactConutryId1;
-  String emergencyContactCountryName1;
+  String? emergencyContactCountryName1;
   dynamic emergencyContactConutryCode1;
-  String emergencyContactCountryDialCode1;
+  String? emergencyContactCountryDialCode1;
   dynamic emergencyContactConutryId2;
-  String emergencyContactCountryName2;
+  String? emergencyContactCountryName2;
   dynamic emergencyContactConutryCode2;
-  String emergencyContactCountryDialCode2;
+  String? emergencyContactCountryDialCode2;
   dynamic noteTableRows;
   dynamic templateId;
-  String id;
-  DateTime createdDate;
-  String createdBy;
-  DateTime lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
-  int sequenceOrder;
-  String companyId;
-  int dataAction;
-  int status;
-  int versionNo;
+  String? id;
+  DateTime? createdDate;
+  String? createdBy;
+  DateTime? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
+  int? sequenceOrder;
+  String? companyId;
+  int? dataAction;
+  int? status;
+  int? versionNo;
 
   factory EmployeeProfileModel.fromJson(Map<String, dynamic> json) =>
       EmployeeProfileModel(
@@ -264,7 +264,7 @@ class EmployeeProfileModel {
         "Religion": religion,
         "BirthTown": birthTown,
         "BirthCountryName": birthCountryName,
-        "DateOfBirth": dateOfBirth.toIso8601String(),
+        "DateOfBirth": dateOfBirth!.toIso8601String(),
         "PersonalEmail": personalEmail,
         "PersonFullName": personFullName,
         "LocationName": locationName,
@@ -273,7 +273,7 @@ class EmployeeProfileModel {
         "JobName": jobName,
         "PositionName": positionName,
         "AssignmentTypeName": assignmentTypeName,
-        "DateOfJoin": dateOfJoin.toIso8601String(),
+        "DateOfJoin": dateOfJoin!.toIso8601String(),
         "PersonTypeName": personTypeName,
         "PhotoName": photoName,
         "base64Img": base64Img,
@@ -320,9 +320,9 @@ class EmployeeProfileModel {
         "NoteTableRows": noteTableRows,
         "TemplateId": templateId,
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,

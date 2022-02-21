@@ -9,7 +9,7 @@ import '../../../widgets/internet_connectivity_widget.dart';
 import 'display_leave_body.dart';
 
 class DisplayLeaves extends StatelessWidget {
-  const DisplayLeaves({Key key}) : super(key: key);
+  const DisplayLeaves({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -5,11 +5,11 @@ import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 typedef ActionCallBack = void Function(dynamic key, dynamic value);
 
 class DocumentChildWidget extends StatelessWidget {
-  final Cwd documentViewModel;
-  final OnTapPressedCallBack onTapPressedCallBack;
-  final ActionCallBack onTapListCallBack;
-  final bool isArchive;
-  final bool showMenu;
+  final Cwd? documentViewModel;
+  final OnTapPressedCallBack? onTapPressedCallBack;
+  final ActionCallBack? onTapListCallBack;
+  final bool? isArchive;
+  final bool? showMenu;
   DocumentChildWidget(
       {this.documentViewModel,
       this.onTapPressedCallBack,
@@ -44,7 +44,7 @@ class DocumentChildWidget extends StatelessWidget {
               ),
               title: InkWell(
                 onTap: () {
-                  onTapListCallBack(documentViewModel, context);
+                  onTapListCallBack!(documentViewModel, context);
                   // navigateToChild(context, documentViewModel);
                 },
                 child: Row(
@@ -55,18 +55,18 @@ class DocumentChildWidget extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         // color: Colors.red,
                         child: Text(
-                            documentViewModel.name != null
-                                ? documentViewModel.name
+                            documentViewModel!.name != null
+                                ? documentViewModel!.name!
                                 : "",
                             maxLines: 2,
                             style: Theme.of(context).textTheme.headline6),
                       ),
                     ),
-                    documentViewModel.count != null
+                    documentViewModel!.count != null
                         ? CircleAvatar(
                             radius: 11,
                             child: Text(
-                              documentViewModel.count.toString(),
+                              documentViewModel!.count.toString(),
                               style: TextStyle(fontSize: 12),
                             ))
                         : SizedBox()
@@ -79,7 +79,7 @@ class DocumentChildWidget extends StatelessWidget {
                   Icons.more_vert,
                 ),
                 onPressed: () {
-                  onTapPressedCallBack(context, imageUri, documentViewModel);
+                  onTapPressedCallBack!(context, imageUri, documentViewModel);
                 },
               ),
             ),
@@ -96,11 +96,11 @@ class DocumentChildWidget extends StatelessWidget {
 }
 
 class DocumentParentWidget extends StatelessWidget {
-  final Cwd documentViewModel;
-  final OnTapPressedCallBack onTapPressedCallBack;
-  final ActionCallBack onTapListCallBack;
-  final bool isArchive;
-  final bool showMenu;
+  final Cwd? documentViewModel;
+  final OnTapPressedCallBack? onTapPressedCallBack;
+  final ActionCallBack? onTapListCallBack;
+  final bool? isArchive;
+  final bool? showMenu;
   DocumentParentWidget(
       {this.documentViewModel,
       this.onTapPressedCallBack,
@@ -123,7 +123,7 @@ class DocumentParentWidget extends StatelessWidget {
         ),
         title: InkWell(
           onTap: () {
-            onTapListCallBack(documentViewModel, context);
+            onTapListCallBack!(documentViewModel, context);
           },
           child: Row(
             children: <Widget>[
@@ -133,32 +133,32 @@ class DocumentParentWidget extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   // color: Colors.red,
                   child: Text(
-                      documentViewModel.name != null
-                          ? documentViewModel.name
+                      documentViewModel!.name != null
+                          ? documentViewModel!.name!
                           : "",
                       maxLines: 2,
                       style: Theme.of(context).textTheme.headline6),
                 ),
               ),
-              documentViewModel.count != null
+              documentViewModel!.count != null
                   ? CircleAvatar(
                       radius: 11,
                       child: Text(
-                        documentViewModel.count.toString(),
+                        documentViewModel!.count.toString(),
                         style: TextStyle(fontSize: 12),
                       ))
                   : SizedBox()
             ],
           ),
         ),
-        trailing: documentViewModel.templateCode != "LEGALENTITY_FOLDER"
+        trailing: documentViewModel!.templateCode != "LEGALENTITY_FOLDER"
             ? IconButton(
                 padding: EdgeInsets.symmetric(horizontal: 0),
                 iconSize: 20,
                 icon: Icon(Icons.more_vert),
                 color: Colors.grey[600],
                 onPressed: () {
-                  onTapPressedCallBack(context, imageUri, documentViewModel);
+                  onTapPressedCallBack!(context, imageUri, documentViewModel);
                 },
               )
             : SizedBox(),

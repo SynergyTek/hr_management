@@ -7,7 +7,7 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widget/my_profile_body_widget.dart';
 
 class MyProfileScreen extends StatefulWidget {
-  const MyProfileScreen({Key key}) : super(key: key);
+  const MyProfileScreen({Key? key}) : super(key: key);
 
   @override
   _MyProfileScreenState createState() => _MyProfileScreenState();

@@ -4,7 +4,7 @@ class DependentRepository extends AbstractDependentRepository {
   final Dio _dio = Dio();
 
   Future<ReadDependnetResponse> getReadDependantList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.READ_DEPENDENT_LIST;
 
@@ -25,7 +25,7 @@ class DependentRepository extends AbstractDependentRepository {
   }
 
   Future<DependnetDocReqResponse> getReadDependantDocumentRequestList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(

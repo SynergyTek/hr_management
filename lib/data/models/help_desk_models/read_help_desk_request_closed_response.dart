@@ -1,8 +1,8 @@
 import 'read_help_desk_request_closed_model.dart';
 
 class ReadHelpDeskRequestClosedResponse {
-  List<ReadHelpDeskRequestClosedModel> data;
-  String error;
+  List<ReadHelpDeskRequestClosedModel>? data;
+  String? error;
 
   ReadHelpDeskRequestClosedResponse({this.data});
 

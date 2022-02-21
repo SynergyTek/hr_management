@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'task_list_model.dart';
 
 class TaskListResponseModel {
-  final List<TaskListModel> data;
-  String error;
+  final List<TaskListModel>? data;
+  String? error;
 
   TaskListResponseModel({
-    @required this.data,
+    required this.data,
   });
 
   TaskListResponseModel.fromJson(List response)

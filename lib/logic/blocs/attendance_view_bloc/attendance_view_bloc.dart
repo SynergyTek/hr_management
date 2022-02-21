@@ -12,7 +12,7 @@ class AttendanceViewBloc {
 
   /// Used to fetch new entries.
   getData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     AttendanceViewResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,

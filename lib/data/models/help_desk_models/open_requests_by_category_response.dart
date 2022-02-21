@@ -1,8 +1,8 @@
 import 'open_requests_by_category_model.dart';
 
 class OpenRequestsByCategoryResponse {
-  List<OpenRequestsByCategoryModel> data;
-  String error;
+  List<OpenRequestsByCategoryModel>? data;
+  String? error;
 
   OpenRequestsByCategoryResponse({this.data});
 

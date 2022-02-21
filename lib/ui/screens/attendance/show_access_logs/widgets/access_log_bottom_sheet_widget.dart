@@ -7,7 +7,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
   final AccessLogModel eachAccessLogModelElement;
 
   const AccessLogBottomSheetWidget({
-    @required this.eachAccessLogModelElement,
+    required this.eachAccessLogModelElement,
   });
 
   @override
@@ -48,7 +48,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
                   Text(
                     eachAccessLogModelElement?.devicePunchingTypeText ?? '-',
                     style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                      fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                       color: _handleListTileColor(context),
                       fontWeight: FontWeight.bold,
                     ),
@@ -135,7 +135,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
   Color _handleListTileColor(BuildContext context) {
     // Guard clause
     if (eachAccessLogModelElement?.devicePunchingType == null ||
-        eachAccessLogModelElement.devicePunchingType.isNaN)
+        eachAccessLogModelElement.devicePunchingType!.isNaN)
       return Colors.white54;
 
     return eachAccessLogModelElement.devicePunchingType == 0

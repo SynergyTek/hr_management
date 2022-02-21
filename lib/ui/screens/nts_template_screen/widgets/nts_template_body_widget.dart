@@ -12,12 +12,12 @@ class NTSTemplateBodyWidget extends StatefulWidget {
   /// T.subject.stream.
   /// Example: leaveTempBloc.subject.stream
   final Stream<dynamic> stream;
-  final NTSType ntsType;
-  final String categoryCode;
+  final NTSType? ntsType;
+  final String? categoryCode;
 
   NTSTemplateBodyWidget({
-    @required this.stream,
-    @required this.ntsType,
+    required this.stream,
+    required this.ntsType,
     this.categoryCode,
   });
 
@@ -28,14 +28,14 @@ class NTSTemplateBodyWidget extends StatefulWidget {
 class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
   Map<String, TreeViewModelChildren> _checkedFilterSelectedItemsMap = Map();
   int _selectedIndex = 0;
-  List<NTSTemplateModel> templateModels = [];
-  List<NTSTemplateModel> _filteredTemplateModels = [];
-  List<String> categoryList = [];
-  String selectedCategory = "All";
+  List<NTSTemplateModel>? templateModels = [];
+  List<NTSTemplateModel>? _filteredTemplateModels = [];
+  List<String?> categoryList = [];
+  String? selectedCategory = "All";
 
   @override
   void initState() {
-    if (widget.categoryCode != null && widget.categoryCode.isNotEmpty) {
+    if (widget.categoryCode != null && widget.categoryCode!.isNotEmpty) {
       selectedCategory = widget.categoryCode;
     }
     super.initState();
@@ -62,18 +62,18 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
 
             templateModels = snapshot.data.data;
             var singleitem =
-                templateModels.map((x) => x.templateCategoryName).toList();
+                templateModels!.map((x) => x.templateCategoryName).toList();
             categoryList = singleitem.toSet().toList();
 
             if (selectedCategory != "All") {
-              _filteredTemplateModels = templateModels
+              _filteredTemplateModels = templateModels!
                   .where((element) =>
                       element.templateCategoryName == selectedCategory)
                   .toList();
             } else {
               _filteredTemplateModels = templateModels;
             }
-            _filteredTemplateModels.sort((a, b) => a.displayName.compareTo(b.displayName));
+            _filteredTemplateModels!.sort((a, b) => a.displayName!.compareTo(b.displayName!));
 
             return Container(
               child: Center(
@@ -109,7 +109,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: Text(selectedCategory,
+            child: Text(selectedCategory!,
                 style: Theme.of(context).textTheme.headline6),
           ),
           IconButton(
@@ -177,7 +177,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
                             ? Theme.of(context).primaryColor
                             : Colors.grey[100],
                       ),
-                      title: Text(categoryList[index]),
+                      title: Text(categoryList[index]!),
                       onTap: () {
                         setState(() {
                           selectedCategory = categoryList[index];
@@ -197,7 +197,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
 
   Widget _eachItemExpansionTile(NTSTemplateModel eachData) {
     return ExpansionTile(
-      title: Text(eachData.name),
+      title: Text(eachData.name!),
       // children: _expansionTileChildren(eachData),
     );
   }

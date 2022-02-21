@@ -181,7 +181,7 @@ class NoteModel {
   });
 
   dynamic jsonCopy;
-  String json;
+  String? json;
   dynamic dataJson;
   dynamic page;
   dynamic pageId;
@@ -190,35 +190,35 @@ class NoteModel {
   dynamic prms;
   dynamic udfs;
   dynamic readoOnlyUdfs;
-  String templateCode;
-  String templateDisplayName;
-  int noteCount;
+  String? templateCode;
+  String? templateDisplayName;
+  int? noteCount;
   dynamic noteTemplateVm;
   dynamic templateViewModel;
   dynamic noteTable;
-  List<ColumnList> columnList;
+  List<ColumnList>? columnList;
   dynamic parentTemplateId;
-  String activeUserId;
-  String noteNo;
-  String noteId;
-  String udfNoteTableId;
-  String startDate;
+  String? activeUserId;
+  String? noteNo;
+  String? noteId;
+  String? udfNoteTableId;
+  String? startDate;
   dynamic expiryDate;
   dynamic slaSeconds;
-  String actualSla;
+  String? actualSla;
   dynamic reminderDate;
-  String noteStatusBgCss;
-  String noteStatusFontCss;
-  String noteStatusId;
-  String tableMetadataId;
-  String noteStatusCode;
-  String noteStatusName;
-  String noteActionId;
-  String noteActionCode;
-  String noteActionName;
-  String notePriorityId;
-  String notePriorityCode;
-  String notePriorityName;
+  String? noteStatusBgCss;
+  String? noteStatusFontCss;
+  String? noteStatusId;
+  String? tableMetadataId;
+  String? noteStatusCode;
+  String? noteStatusName;
+  String? noteActionId;
+  String? noteActionCode;
+  String? noteActionName;
+  String? notePriorityId;
+  String? notePriorityCode;
+  String? notePriorityName;
   dynamic submittedDate;
   dynamic completedDate;
   dynamic canceledDate;
@@ -229,77 +229,77 @@ class NoteModel {
   dynamic userRating;
   dynamic cancelReason;
   dynamic completeReason;
-  String requestedByUserId;
-  String requestedByUserName;
-  String requestedByUserEmail;
-  String requestedByUserPhotoId;
-  String ownerUserId;
-  String ownerUserName;
-  String ownerUserEmail;
-  String ownerUserPhotoId;
+  String? requestedByUserId;
+  String? requestedByUserName;
+  String? requestedByUserEmail;
+  String? requestedByUserPhotoId;
+  String? ownerUserId;
+  String? ownerUserName;
+  String? ownerUserEmail;
+  String? ownerUserPhotoId;
   dynamic noteOwnerTypeId;
-  int activeUserType;
+  int? activeUserType;
   dynamic sharedByUserId;
   dynamic sharedWithUserId;
-  String sharedListText;
+  String? sharedListText;
   dynamic sharedList;
   dynamic assignedToUserEmail;
   dynamic lockStatus;
   dynamic parentNoteId;
-  bool includeReadonlyData;
-  bool isDraftButtonVisible;
-  bool isAcceptButtonVisible;
-  bool isSubmitButtonVisible;
-  bool isExpireButtonVisible;
-  bool isInEditMode;
-  bool isVersioningButtonVisible;
-  bool isReplyButtonVisible;
-  bool isBackButtonVisibile;
-  bool isAddCommentEnabled;
-  bool isAddAttachmentEnabled;
-  bool isSharingEnabled;
-  bool isCompleteButtonVisible;
-  bool isCloseButtonVisible;
-  int sharedCount;
-  int attachmentCount;
-  int notificationCount;
-  int commentCount;
-  bool canChangeOwner;
+  bool? includeReadonlyData;
+  bool? isDraftButtonVisible;
+  bool? isAcceptButtonVisible;
+  bool? isSubmitButtonVisible;
+  bool? isExpireButtonVisible;
+  bool? isInEditMode;
+  bool? isVersioningButtonVisible;
+  bool? isReplyButtonVisible;
+  bool? isBackButtonVisibile;
+  bool? isAddCommentEnabled;
+  bool? isAddAttachmentEnabled;
+  bool? isSharingEnabled;
+  bool? isCompleteButtonVisible;
+  bool? isCloseButtonVisible;
+  int? sharedCount;
+  int? attachmentCount;
+  int? notificationCount;
+  int? commentCount;
+  bool? canChangeOwner;
   dynamic noteSequenceOrder;
   dynamic noteDescription;
-  String noteSubject;
-  bool includeSharedList;
+  String? noteSubject;
+  bool? includeSharedList;
   dynamic customUrl;
   dynamic returnUrl;
   dynamic layoutMode;
   dynamic popupCallbackMethod;
   dynamic noteIndexPageTemplateDetails;
   dynamic notificationTemplate;
-  bool isVersioning;
+  bool? isVersioning;
   dynamic chartItems;
   dynamic resource;
-  bool ignorePermission;
-  bool enableIndexPage;
-  bool enableNoteNumberManual;
-  bool enableSaveAsDraft;
+  bool? ignorePermission;
+  bool? enableIndexPage;
+  bool? enableNoteNumberManual;
+  bool? enableSaveAsDraft;
   dynamic saveAsDraftText;
   dynamic saveAsDraftCss;
   dynamic completeButtonText;
   dynamic completeButtonCss;
-  bool enableBackButton;
+  bool? enableBackButton;
   dynamic backButtonText;
   dynamic backButtonCss;
-  bool enableAttachment;
-  bool enableComment;
-  bool disableVersioning;
+  bool? enableAttachment;
+  bool? enableComment;
+  bool? disableVersioning;
   dynamic saveNewVersionButtonText;
   dynamic saveNewVersionButtonCss;
-  String templateId;
+  String? templateId;
   dynamic template;
-  String noteIndexPageTemplateId;
+  String? noteIndexPageTemplateId;
   dynamic noteIndexPageTemplate;
-  int createReturnType;
-  int editReturnType;
+  int? createReturnType;
+  int? editReturnType;
   dynamic preScript;
   dynamic postScript;
   dynamic iconFileId;
@@ -314,43 +314,43 @@ class NoteModel {
   dynamic requestedByUserText;
   dynamic priorityId;
   dynamic priority;
-  bool enableCancelButton;
-  bool isCancelReasonRequired;
+  bool? enableCancelButton;
+  bool? isCancelReasonRequired;
   dynamic cancelButtonText;
   dynamic cancelButtonCss;
-  bool isUdfTemplate;
-  bool isCompleteReasonRequired;
+  bool? isUdfTemplate;
+  bool? isCompleteReasonRequired;
   dynamic noteNoText;
   dynamic descriptionText;
-  bool hideHeader;
-  bool hideSubject;
-  bool hideDescription;
-  bool hideStartDate;
-  bool hideExpiryDate;
-  bool hidePriority;
-  bool hideOwner;
-  bool isSubjectMandatory;
-  bool isSubjectUnique;
-  bool isDescriptionMandatory;
-  bool hideToolbar;
-  bool hideBanner;
-  bool allowPastStartDate;
-  bool enablePrintButton;
+  bool? hideHeader;
+  bool? hideSubject;
+  bool? hideDescription;
+  bool? hideStartDate;
+  bool? hideExpiryDate;
+  bool? hidePriority;
+  bool? hideOwner;
+  bool? isSubjectMandatory;
+  bool? isSubjectUnique;
+  bool? isDescriptionMandatory;
+  bool? hideToolbar;
+  bool? hideBanner;
+  bool? allowPastStartDate;
+  bool? enablePrintButton;
   dynamic printButtonText;
-  bool enableDataPermission;
+  bool? enableDataPermission;
   dynamic dataPermissionColumnId;
-  String id;
-  DateTime createdDate;
-  String createdBy;
-  DateTime lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
-  int sequenceOrder;
-  String companyId;
-  String legalEntityId;
-  int dataAction;
-  int status;
-  int versionNo;
+  String? id;
+  DateTime? createdDate;
+  String? createdBy;
+  DateTime? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
+  int? sequenceOrder;
+  String? companyId;
+  String? legalEntityId;
+  int? dataAction;
+  int? status;
+  int? versionNo;
   dynamic portalId;
 
   factory NoteModel.fromJson(Map<String, dynamic> json) => NoteModel(
@@ -546,7 +546,7 @@ class NoteModel {
         "NoteTemplateVM": noteTemplateVm,
         "TemplateViewModel": templateViewModel,
         "NoteTable": noteTable,
-        "ColumnList": List<dynamic>.from(columnList.map((x) => x.toJson())),
+        "ColumnList": List<dynamic>.from(columnList!.map((x) => x.toJson())),
         "ParentTemplateId": parentTemplateId,
         "ActiveUserId": activeUserId,
         "NoteNo": noteNo,
@@ -690,9 +690,9 @@ class NoteModel {
         "EnableDataPermission": enableDataPermission,
         "DataPermissionColumnId": dataPermissionColumnId,
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,
@@ -778,74 +778,74 @@ class ColumnList {
     this.portalId,
   });
 
-  String foreignKeyTableId;
-  String foreignKeyTableName;
-  String foreignKeyColumnId;
-  String foreignKeyColumnName;
+  String? foreignKeyTableId;
+  String? foreignKeyTableName;
+  String? foreignKeyColumnId;
+  String? foreignKeyColumnName;
   dynamic foreignKeyDisplayColumnId;
-  String foreignKeyDisplayColumnName;
+  String? foreignKeyDisplayColumnName;
   dynamic dataTypestr;
   dynamic value;
-  bool isForeignKeyTableColumn;
+  bool? isForeignKeyTableColumn;
   dynamic tableName;
   dynamic tableSchemaName;
   dynamic tableAliasName;
   dynamic tableMetadataName;
-  bool isVisible;
-  bool isEditable;
-  int activeUserType;
-  String ntsStatusCode;
-  bool isChecked;
-  bool ignorePermission;
-  String name;
-  bool isDefaultDisplayColumn;
-  String labelName;
-  String alias;
-  bool isNullable;
-  int dataType;
-  int udfUiType;
-  bool isForeignKey;
-  bool isVirtualColumn;
-  bool isVirtualForeignKey;
-  bool isPrimaryKey;
-  bool isSystemColumn;
-  bool isUniqueColumn;
-  bool isLogColumn;
-  bool isUdfColumn;
-  bool isHiddenColumn;
-  bool hideForeignKeyTableColumns;
-  bool isReferenceColumn;
+  bool? isVisible;
+  bool? isEditable;
+  int? activeUserType;
+  String? ntsStatusCode;
+  bool? isChecked;
+  bool? ignorePermission;
+  String? name;
+  bool? isDefaultDisplayColumn;
+  String? labelName;
+  String? alias;
+  bool? isNullable;
+  int? dataType;
+  int? udfUiType;
+  bool? isForeignKey;
+  bool? isVirtualColumn;
+  bool? isVirtualForeignKey;
+  bool? isPrimaryKey;
+  bool? isSystemColumn;
+  bool? isUniqueColumn;
+  bool? isLogColumn;
+  bool? isUdfColumn;
+  bool? isHiddenColumn;
+  bool? hideForeignKeyTableColumns;
+  bool? isReferenceColumn;
   dynamic referenceTableName;
   dynamic referenceTableSchemaName;
   dynamic foreignKeyTable;
-  String foreignKeyTableAliasName;
-  String foreignKeyTableSchemaName;
+  String? foreignKeyTableAliasName;
+  String? foreignKeyTableSchemaName;
   dynamic foreignKeyDisplayColumnReferenceId;
   dynamic foreignKeyColumn;
   dynamic foreignKeyDisplayColumn;
-  String foreignKeyDisplayColumnLabelName;
-  String foreignKeyDisplayColumnAlias;
-  int foreignKeyDisplayColumnDataType;
-  String foreignKeyConstraintName;
-  String tableMetadataId;
+  String? foreignKeyDisplayColumnLabelName;
+  String? foreignKeyDisplayColumnAlias;
+  int? foreignKeyDisplayColumnDataType;
+  String? foreignKeyConstraintName;
+  String? tableMetadataId;
   dynamic tableMetadata;
-  List<String> editableBy;
-  List<dynamic> viewableBy;
-  List<dynamic> editableContext;
-  List<dynamic> viewableContext;
-  bool showInForeignKeyReference;
-  String id;
-  DateTime createdDate;
-  String createdBy;
-  DateTime lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
+  List<String>? editableBy;
+  List<dynamic>? viewableBy;
+  List<dynamic>? editableContext;
+  List<dynamic>? viewableContext;
+  bool? showInForeignKeyReference;
+  String? id;
+  DateTime? createdDate;
+  String? createdBy;
+  DateTime? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
   dynamic sequenceOrder;
-  String companyId;
-  String legalEntityId;
-  int dataAction;
-  int status;
-  int versionNo;
+  String? companyId;
+  String? legalEntityId;
+  int? dataAction;
+  int? status;
+  int? versionNo;
   dynamic portalId;
 
   factory ColumnList.fromJson(Map<String, dynamic> json) => ColumnList(
@@ -1017,15 +1017,15 @@ class ColumnList {
             foreignKeyConstraintName == null ? null : foreignKeyConstraintName,
         "TableMetadataId": tableMetadataId,
         "TableMetadata": tableMetadata,
-        "EditableBy": List<dynamic>.from(editableBy.map((x) => x)),
-        "ViewableBy": List<dynamic>.from(viewableBy.map((x) => x)),
-        "EditableContext": List<dynamic>.from(editableContext.map((x) => x)),
-        "ViewableContext": List<dynamic>.from(viewableContext.map((x) => x)),
+        "EditableBy": List<dynamic>.from(editableBy!.map((x) => x)),
+        "ViewableBy": List<dynamic>.from(viewableBy!.map((x) => x)),
+        "EditableContext": List<dynamic>.from(editableContext!.map((x) => x)),
+        "ViewableContext": List<dynamic>.from(viewableContext!.map((x) => x)),
         "ShowInForeignKeyReference": showInForeignKeyReference,
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,

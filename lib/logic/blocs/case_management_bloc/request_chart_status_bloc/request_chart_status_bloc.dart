@@ -13,7 +13,7 @@ class RequestChartStatusBloc {
 
   /// Used to fetch new/existing entries.
   getData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     OpenRequestsByCategoryResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,

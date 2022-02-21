@@ -7,17 +7,17 @@ import '../../../../data/models/payslip/payslip_res_model.dart';
 import '../../../../logic/blocs/payslip_bloc/payslip_bloc.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 class PayslipBody extends StatefulWidget {
-  PayslipBody({Key key}) : super(key: key);
+  PayslipBody({Key? key}) : super(key: key);
 
   @override
   _PayslipBodyState createState() => _PayslipBodyState();
 }
 
 class _PayslipBodyState extends State<PayslipBody> {
-  List<PayslipModel> paySlipList = [];
+  List<PayslipModel>? paySlipList = [];
   List<PayslipModel> filterPaySlipList = [];
 
   @override
@@ -46,13 +46,13 @@ class _PayslipBodyState extends State<PayslipBody> {
         stream: payslipBloc.subjectPayslip.stream,
         builder: (context, AsyncSnapshot<PayslipResponse> snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data.error != null && snapshot.data.error.length > 0) {
+            if (snapshot.data!.error != null && snapshot.data!.error!.length > 0) {
               return Center(
-                child: Text(snapshot.data.error),
+                child: Text(snapshot.data!.error!),
               );
             }
-            paySlipList = snapshot.data.data;
-            if (paySlipList == null || paySlipList.length == 0) {
+            paySlipList = snapshot.data!.data;
+            if (paySlipList == null || paySlipList!.length == 0) {
               return EmptyListWidget();
             }
             return Listizer(
@@ -192,34 +192,34 @@ class _PayslipBodyState extends State<PayslipBody> {
   }
 
   String salaryName(int index) {
-    return paySlipList[index].salaryName ?? "-";
+    return paySlipList![index].salaryName ?? "-";
   }
 
   String personFullName(int index) {
-    return paySlipList[index].personFullName ?? "-";
+    return paySlipList![index].personFullName ?? "-";
   }
 
   String personNo(int index) {
-    return paySlipList[index].personNo ?? "-";
+    return paySlipList![index].personNo ?? "-";
   }
 
   String payrollStartDate(int index) {
-    return paySlipList[index].payrollStartDate ?? "-";
+    return paySlipList![index].payrollStartDate as String? ?? "-";
   }
 
   String payrollEndDate(int index) {
-    return paySlipList[index].payrollEndDate ?? "-";
+    return paySlipList![index].payrollEndDate as String? ?? "-";
   }
 
   String totalEarning(int index) {
-    return paySlipList[index].totalEarning ?? "-";
+    return paySlipList![index].totalEarning as String? ?? "-";
   }
 
   String totalDeduction(int index) {
-    return paySlipList[index].totalDeduction ?? "-";
+    return paySlipList![index].totalDeduction as String? ?? "-";
   }
 
   String netAmount(int index) {
-    return paySlipList[index].netAmount ?? "-";
+    return paySlipList![index].netAmount as String? ?? "-";
   }
 }

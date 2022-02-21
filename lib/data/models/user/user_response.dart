@@ -4,12 +4,12 @@ import 'team_model.dart';
 import 'user.dart';
 
 class UserListResponse {
-  bool isSuccess;
-  List<User> list;
-  String error;
+  bool? isSuccess;
+  List<User>? list;
+  String? error;
 
   UserListResponse({
-    @required this.list,
+    required this.list,
   });
 
   UserListResponse.fromJson(List response)
@@ -21,12 +21,12 @@ class UserListResponse {
 }
 
 class ReadTeamDataResponse {
-  bool isSuccess;
-  List<ReadTeamDataModel> list;
-  String error;
+  bool? isSuccess;
+  List<ReadTeamDataModel>? list;
+  String? error;
 
   ReadTeamDataResponse({
-    @required this.list,
+    required this.list,
   });
 
   ReadTeamDataResponse.fromJson(List response)

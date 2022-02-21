@@ -10,7 +10,7 @@ class PayslipBloc {
       BehaviorSubject<PayslipResponse>();
 
   getManageAccrual({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     PayslipResponse response = await _manageAccrualRepository.getPaylsipList(
       queryparams: queryparams,

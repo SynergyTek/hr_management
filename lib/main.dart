@@ -31,12 +31,10 @@ Future<void> main() async {
     _permissionGranted = await loc.Location().requestPermission();
   }
 
-  await FlutterDownloader.initialize(
-      debug: true // optional: set false to disable printing logs to console
-      );
+  await FlutterDownloader.initialize(debug: false);
+
   await Permission.camera.request();
   await Permission.microphone.request();
-  // optional: set false to disable printing logs to console
 
   runApp(InitScreen());
 }

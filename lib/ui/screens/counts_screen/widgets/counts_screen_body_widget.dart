@@ -29,19 +29,19 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
           stream: countsAPIBloc.subject.stream,
           builder: (context, AsyncSnapshot<CountsAPIResponse> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.error != null &&
-                  snapshot.data.error.length > 0) {
+              if (snapshot.data!.error != null &&
+                  snapshot.data!.error!.length > 0) {
                 return Center(
-                  child: Text(snapshot.data.error),
+                  child: Text(snapshot.data!.error!),
                 );
               }
 
               return _listWidget(
-                snapshot.data,
+                snapshot.data!,
               );
             } else if (snapshot.hasError) {
               return Center(
-                child: Text(snapshot.data.error),
+                child: Text(snapshot.data!.error!),
               );
             } else {
               return _loadingWidget();
@@ -66,7 +66,7 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
         children: [
           _eachCount(
             tooltip: "Attachments count",
-            count: apiResponse.data.serviceAttachmentCount,
+            count: apiResponse.data!.serviceAttachmentCount,
             icon: Icon(
               Icons.attach_file,
               color: Colors.white,
@@ -74,7 +74,7 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
           ),
           _eachCount(
             tooltip: "Comments count",
-            count: apiResponse.data.serviceCommentsCount,
+            count: apiResponse.data!.serviceCommentsCount,
             icon: Icon(
               Icons.comment_outlined,
               color: Colors.white,
@@ -82,7 +82,7 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
           ),
           _eachCount(
             tooltip: "Notifications count",
-            count: apiResponse.data.serviceNotificationCount,
+            count: apiResponse.data!.serviceNotificationCount,
             icon: Icon(
               Icons.notifications_on_outlined,
               color: Colors.white,
@@ -90,7 +90,7 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
           ),
           _eachCount(
             tooltip: "Shared count",
-            count: apiResponse.data.serviceSharedCount,
+            count: apiResponse.data!.serviceSharedCount,
             icon: Icon(
               Icons.share_outlined,
               color: Colors.white,
@@ -102,9 +102,9 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
   }
 
   Widget _eachCount({
-    @required String tooltip,
-    @required int count,
-    @required Icon icon,
+    required String tooltip,
+    required int? count,
+    required Icon icon,
   }) {
     return Expanded(
       child: Tooltip(
@@ -117,7 +117,7 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
                 left: MediaQuery.of(context).size.width * 0.165,
                 child: Text(
                   count.toString() ?? "",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
                         color: Colors.white,
                       ),
                 ),

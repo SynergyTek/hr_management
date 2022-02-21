@@ -20,14 +20,14 @@ class DependentListModel {
     this.userRole,
   });
 
-  String dependentId;
+  String? dependentId;
   dynamic personId;
   dynamic userId;
-  String firstName;
-  String iqamahIdNationalityId;
-  String relationshipTypeName;
-  DateTime dateOfBirth;
-  String noteId;
+  String? firstName;
+  String? iqamahIdNationalityId;
+  String? relationshipTypeName;
+  DateTime? dateOfBirth;
+  String? noteId;
   dynamic userRole;
 
   factory DependentListModel.fromJson(Map<String, dynamic> json) =>
@@ -50,7 +50,7 @@ class DependentListModel {
         "FirstName": firstName,
         "IqamahIdNationalityId": iqamahIdNationalityId,
         "RelationshipTypeName": relationshipTypeName,
-        "DateOfBirth": dateOfBirth.toIso8601String(),
+        "DateOfBirth": dateOfBirth!.toIso8601String(),
         "NoteId": noteId,
         "UserRole": userRole,
       };

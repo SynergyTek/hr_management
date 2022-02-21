@@ -13,6 +13,6 @@ abstract class AbstractLoginRepository {
 
   Future<LoginAPIResponse> postAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

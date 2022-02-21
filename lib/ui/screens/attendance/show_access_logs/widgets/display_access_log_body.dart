@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:listizer/listizer.dart';
 
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import '../../../../listizer/listizer.dart';
 import '../../../../../data/models/access_log/access_log_model.dart';
 import '../../../../../data/models/access_log/access_log_response.dart';
 import '../../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
@@ -13,7 +13,7 @@ import '../../../../widgets/progress_indicator.dart';
 import 'access_log_list_tile_widget.dart';
 
 class DisplayAccessLogBody extends StatefulWidget {
-  DisplayAccessLogBody({Key key}) : super(key: key);
+  DisplayAccessLogBody({Key? key}) : super(key: key);
 
   @override
   _DisplayAccessLogBodyState createState() => _DisplayAccessLogBodyState();
@@ -23,8 +23,8 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
   List<AccessLogModel> _accessLogList = [];
   List<AccessLogModel> _filteredAccessLogList = [];
 
-  DateTime startDate;
-  DateTime endDate;
+  DateTime? startDate;
+  DateTime? endDate;
 
   @override
   void initState() {
@@ -36,8 +36,8 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
   }
 
   _handleQueryparams({
-    DateTime startDate,
-    DateTime dueDate,
+    DateTime? startDate,
+    DateTime? dueDate,
   }) {
     if (startDate == null)
       return {
@@ -116,11 +116,11 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
                 builder: (context,
                     AsyncSnapshot<AccessLogListDataResponse> snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data.data == null ||
-                        snapshot.data.data.length == 0) {
+                    if (snapshot.data!.data == null ||
+                        snapshot.data!.data.length == 0) {
                       return EmptyListWidget();
                     }
-                    _accessLogList = snapshot.data.data.reversed.toList();
+                    _accessLogList = snapshot.data!.data.reversed.toList();
                     return Listizer(
                       listItems: _accessLogList,
                       filteredSearchList: _filteredAccessLogList,
@@ -157,7 +157,7 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
       return;
     }
 
-    if (endDate != null && startDate.compareTo(endDate) > 0) {
+    if (endDate != null && startDate!.compareTo(endDate!) > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Start date cannot be greater than the End date."),

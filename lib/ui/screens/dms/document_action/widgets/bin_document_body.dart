@@ -8,10 +8,10 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../../listizer/listizer.dart';
 
 class BinDocumentBody extends StatefulWidget {
-  BinDocumentBody({Key key}) : super(key: key);
+  BinDocumentBody({Key? key}) : super(key: key);
 
   @override
   _BinDocumentBodyState createState() => _BinDocumentBodyState();
@@ -43,11 +43,11 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
           builder:
               (context, AsyncSnapshot<DMSDocumentActionResponse> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.data == null ||
-                  snapshot.data.data.length == 0) {
+              if (snapshot.data!.data == null ||
+                  snapshot.data!.data!.length == 0) {
                 return EmptyListWidget();
               }
-              _documentList = snapshot.data.data.reversed.toList();
+              _documentList = snapshot.data!.data!.reversed.toList();
               return Listizer(
                 listItems: _documentList,
                 filteredSearchList: _filteredDocumentList,
@@ -67,7 +67,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                             child: Row(
                               children: <Widget>[
                                 Text("Document Type: "),
-                                Text(_filteredDocumentList[index].documentType),
+                                Text(_filteredDocumentList[index].documentType!),
                               ],
                             ),
                           ),
@@ -76,7 +76,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                               Text("Updated By: "),
                               Flexible(
                                 child: Text(
-                                  _filteredDocumentList[index].updatedByUser,
+                                  _filteredDocumentList[index].updatedByUser!,
                                   style:
                                       TextStyle(color: Colors.deepPurple[900]),
                                   overflow: TextOverflow.ellipsis,
@@ -89,7 +89,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                               Text("Status: "),
                               Flexible(
                                 child: Text(
-                                  _filteredDocumentList[index].statusName,
+                                  _filteredDocumentList[index].statusName!,
                                   style: TextStyle(color: Colors.green[800]),
                                 ),
                               ),
@@ -100,7 +100,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                               Text('Created On: '),
                               Text(
                                 dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].createdDate)),
+                                    _filteredDocumentList[index].createdDate!)),
                                 style: TextStyle(color: Colors.red[700]),
                               ),
                             ],
@@ -110,7 +110,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
                               Text('Modified On: '),
                               Text(
                                 dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].updatedDate)),
+                                    _filteredDocumentList[index].updatedDate!)),
                                 style: TextStyle(color: Colors.red[700]),
                               ),
                             ],

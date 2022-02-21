@@ -11,11 +11,11 @@ abstract class AbstractNTSChartRepository {
   AbstractNTSChartRepository();
 
   Future<ChartResponse> getChartByStatus(
-      {Map<String, dynamic> queryparams, NTSType ntsType});
+      {Map<String, dynamic>? queryparams, NTSType? ntsType});
 
   Future<ChartResponse> getChartByUserType(
-      {Map<String, dynamic> queryparams, NTSType ntsType});
+      {Map<String, dynamic>? queryparams, NTSType? ntsType});
 
   Future<ChartResponse> getDatewiseSLA(
-      {Map<String, dynamic> queryparams, NTSType ntsType});
+      {Map<String, dynamic>? queryparams, NTSType? ntsType});
 }

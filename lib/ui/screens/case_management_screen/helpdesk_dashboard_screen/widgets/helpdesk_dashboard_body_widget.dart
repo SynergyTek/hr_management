@@ -85,21 +85,21 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
   }
 
   Widget _eachListTile({
-    String title,
-    Function listTileOnTap,
+    String? title,
+    Function? listTileOnTap,
   }) {
     return Card(
       child: ListTile(
         title: Text(title ?? "-"),
         trailing: Icon(Icons.chevron_right),
-        onTap: () => listTileOnTap(),
+        onTap: () => listTileOnTap!(),
       ),
     );
   }
 
   _push({
-    @required String title,
-    @required Widget child,
+    required String title,
+    required Widget child,
   }) =>
       Navigator.push(
         context,

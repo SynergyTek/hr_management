@@ -8,10 +8,10 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../../listizer/listizer.dart';
 
 class ArchiveDocumentBody extends StatefulWidget {
-  ArchiveDocumentBody({Key key}) : super(key: key);
+  ArchiveDocumentBody({Key? key}) : super(key: key);
 
   @override
   _ArchiveDocumentBodyState createState() => _ArchiveDocumentBodyState();
@@ -43,11 +43,11 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
           builder:
               (context, AsyncSnapshot<DMSDocumentActionResponse> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.data == null ||
-                  snapshot.data.data.length == 0) {
+              if (snapshot.data!.data == null ||
+                  snapshot.data!.data!.length == 0) {
                 return EmptyListWidget();
               }
-              _documentList = snapshot.data.data.reversed.toList();
+              _documentList = snapshot.data!.data!.reversed.toList();
               return Listizer(
                 listItems: _documentList,
                 filteredSearchList: _filteredDocumentList,
@@ -56,7 +56,7 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(
-                        _filteredDocumentList[index].documentName,
+                        _filteredDocumentList[index].documentName!,
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline6,
                       ),
@@ -67,7 +67,7 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                             child: Row(
                               children: <Widget>[
                                 Text("Document Type: "),
-                                Text(_filteredDocumentList[index].documentType),
+                                Text(_filteredDocumentList[index].documentType!),
                               ],
                             ),
                           ),
@@ -76,7 +76,7 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                               Text("Updated By: "),
                               Flexible(
                                 child: Text(
-                                  _filteredDocumentList[index].updatedByUser,
+                                  _filteredDocumentList[index].updatedByUser!,
                                   style:
                                       TextStyle(color: Colors.deepPurple[900]),
                                   overflow: TextOverflow.ellipsis,
@@ -89,7 +89,7 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                               Text("Status: "),
                               Flexible(
                                 child: Text(
-                                  _filteredDocumentList[index].statusName,
+                                  _filteredDocumentList[index].statusName!,
                                   style: TextStyle(color: Colors.green[800]),
                                 ),
                               ),
@@ -101,7 +101,7 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                               Text(
                                 dateformatter.format(DateTime.parse(
                                     _filteredDocumentList[index]
-                                        .createdDate)),
+                                        .createdDate!)),
                                 style: TextStyle(color: Colors.red[700]),
                               ),
                             ],
@@ -111,7 +111,7 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                               Text('Modified On: '),
                               Text(
                                 dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].updatedDate)),
+                                    _filteredDocumentList[index].updatedDate!)),
                                 style: TextStyle(color: Colors.red[700]),
                               ),
                             ],

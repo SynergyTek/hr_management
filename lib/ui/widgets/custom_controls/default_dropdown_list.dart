@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listizer/listizer.dart';
+import '../../listizer/listizer.dart';
 
 import '../../../data/models/nts_dropdown/nts_dd_res_model.dart';
 import '../../../data/models/nts_dropdown/nts_dropdown_model.dart';
@@ -12,13 +12,13 @@ import '../nts_dropdown_select.dart';
 import '../progress_indicator.dart';
 
 class DropDownDefaultList extends StatefulWidget {
-  final ListTapPressedCallBack onListTap;
-  final String url;
-  final String ddName;
-  final String idKey;
-  final String nameKey;
+  final ListTapPressedCallBack? onListTap;
+  final String? url;
+  final String? ddName;
+  final String? idKey;
+  final String? nameKey;
   DropDownDefaultList(
-      {Key key,
+      {Key? key,
       this.onListTap,
       this.ddName,
       this.idKey,
@@ -36,7 +36,7 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
   @override
   void initState() {
     ntsDdBloc
-      ..getData(url: widget.url, idKey: widget.idKey, nameKey: widget.nameKey);
+      ..getData(url: widget.url!, idKey: widget.idKey, nameKey: widget.nameKey);
     super.initState();
   }
 
@@ -44,19 +44,19 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppbarWidget(
-          title: "Select " + widget.ddName,
+          title: "Select " + widget.ddName!,
         ),
         body: Container(
           padding: DEFAULT_LARGE_PADDING,
-          child: StreamBuilder<NTSDdResponse>(
+          child: StreamBuilder<NTSDdResponse?>(
               stream: ntsDdBloc.subject.stream,
-              builder: (context, AsyncSnapshot<NTSDdResponse> snapshot) {
+              builder: (context, AsyncSnapshot<NTSDdResponse?> snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data.data == null ||
-                      snapshot.data.data.length == 0) {
+                  if (snapshot.data!.data == null ||
+                      snapshot.data!.data.length == 0) {
                     return EmptyListWidget();
                   }
-                  _idNameModelList = snapshot.data.data;
+                  _idNameModelList = snapshot.data!.data;
                   return Listizer(
                     showSearchBar: true,
                     listItems: _idNameModelList,
@@ -71,13 +71,13 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
                             color: Theme.of(context).primaryColorLight),
                         title: Text(
                           _filteredIdNameModelList[index].name != null
-                              ? _filteredIdNameModelList[index].name
+                              ? _filteredIdNameModelList[index].name!
                               : "",
                           maxLines: 2,
                         ),
                         onTap: () {
                           if (widget.onListTap != null) {
-                            widget.onListTap(_filteredIdNameModelList[index]);
+                            widget.onListTap!(_filteredIdNameModelList[index]);
                             Navigator.pop(context);
                           }
                         },

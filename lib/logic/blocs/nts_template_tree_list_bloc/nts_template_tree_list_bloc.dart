@@ -13,7 +13,7 @@ class NTSTemplateTreeListBloc {
 
   /// Used to fetch new entries.
   getData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     NTSTemplateTreeListResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,

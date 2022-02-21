@@ -10,7 +10,7 @@ class TagBloc {
       BehaviorSubject();
 
   getNTSTagData({
-    Map<String, dynamic> queryparams, // String userId,
+    Map<String, dynamic>? queryparams, // String userId,
   }) async {
     TagCategoryResponseModel response = await _tagRepository.getNTSTagData(
       queryparams: queryparams,
@@ -19,7 +19,7 @@ class TagBloc {
   }
 
   getTagCategoriesWithTag({
-    Map<String, dynamic> queryparams, // String userId,
+    Map<String, dynamic>? queryparams, // String userId,
   }) async {
     TagCategoryResponseModel response =
         await _tagRepository.getTagCategoriesWithTag(

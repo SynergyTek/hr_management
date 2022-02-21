@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import '../../../../data/models/manage_accural/manage_accrual_model.dart';
 import '../../../../data/models/manage_accural/manage_accrual_res_model.dart';
@@ -10,14 +10,14 @@ import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
 
 class ManageAccrualBody extends StatefulWidget {
-  const ManageAccrualBody({Key key}) : super(key: key);
+  const ManageAccrualBody({Key? key}) : super(key: key);
 
   @override
   _ManageAccrualBodyState createState() => _ManageAccrualBodyState();
 }
 
 class _ManageAccrualBodyState extends State<ManageAccrualBody> {
-  List<ManageAccrualModel> manageAccrualList = [];
+  List<ManageAccrualModel>? manageAccrualList = [];
   List<ManageAccrualModel> filterAccrualList = [];
 
   @override
@@ -45,12 +45,12 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
         stream: manageAccrualBloc.subjectManageAccrual.stream,
         builder: (context, AsyncSnapshot<ManageAccrualResponse> snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data.error != null && snapshot.data.error.length > 0) {
+            if (snapshot.data!.error != null && snapshot.data!.error!.length > 0) {
               return Center(
-                child: Text(snapshot.data.error),
+                child: Text(snapshot.data!.error!),
               );
             }
-            manageAccrualList = snapshot.data.data;
+            manageAccrualList = snapshot.data!.data;
             return Listizer(
               listItems: manageAccrualList,
               filteredSearchList: filterAccrualList,
@@ -164,30 +164,30 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
   }
 
   String description(int index) {
-    return manageAccrualList[index].description ?? "-";
+    return manageAccrualList![index].description ?? "-";
   }
 
   String accrualDate(int index) {
-    return manageAccrualList[index].yearMonthText ?? "-";
+    return manageAccrualList![index].yearMonthText ?? "-";
   }
 
   String eosAccrual(int index) {
-    return manageAccrualList[index].eosAccrualText ?? "-";
+    return manageAccrualList![index].eosAccrualText ?? "-";
   }
 
   String flightTicketAccrual(int index) {
-    return manageAccrualList[index].flightTicketAccrualText ?? "-";
+    return manageAccrualList![index].flightTicketAccrualText ?? "-";
   }
 
   String vacationAccrual(int index) {
-    return manageAccrualList[index].vacationAccrualText ?? "-";
+    return manageAccrualList![index].vacationAccrualText ?? "-";
   }
 
   String sickLeaveAccrual(int index) {
-    return manageAccrualList[index].sickLeaveAccrualText ?? "-";
+    return manageAccrualList![index].sickLeaveAccrualText ?? "-";
   }
 
   String loanAccrual(int index) {
-    return manageAccrualList[index].loanAccrualText ?? "-";
+    return manageAccrualList![index].loanAccrualText ?? "-";
   }
 }

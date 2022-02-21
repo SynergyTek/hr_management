@@ -10,7 +10,7 @@ class TestScreen extends StatelessWidget {
   final NTSType ntsType;
 
   const TestScreen({
-    @required this.ntsType,
+    required this.ntsType,
   });
 
   @override

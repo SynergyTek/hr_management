@@ -5,8 +5,8 @@ class ParentWorkspaceIdNameListRepository
   final Dio _dio = Dio();
 
   Future<ParentWorkspaceIdNameListResponse> getAPIData({
-    String legalEntity,
-    String id,
+    String? legalEntity,
+    String? id,
   }) async {
     try {
       Response response = await _dio.get(

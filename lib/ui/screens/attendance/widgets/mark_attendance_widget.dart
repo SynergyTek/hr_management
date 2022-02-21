@@ -24,16 +24,13 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isPermissonGranted = false;
 
   bool _isLocationServiceEnabled = false;
-  bool _isLocationPermissionEnabled = false;
 
   dynamic isInLocation;
-  String _location = "Test Location...";
+  String? _location = "Fetching location data...";
 
   // signed in/out check
   bool isSignedIn = false;
   bool isSignedOut = true;
-
-  Location _locationService = new Location();
 
   bool isVisible = false;
 
@@ -47,41 +44,28 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     );
   }
 
-  calculateDistance(double latitude, double longitude) async {
+  calculateDistance() {
     bool result = false;
-    final double radius = 0.2;
+    final double radius = 0.25;
 
-    var currentLatitude = 23.277345657348633; //lalghati
-    var currentLongitude = 77.35205841064453;
-    var newLatitude = 23.27268409729004; //lalghati square
-    var newLongitude = 77.36927032470703;
+    var officeLatitude = 23.201535;
+    var officeLongitude = 77.4149217;
 
-    // print("location:" + latitude.toString() + longitude.toString());
-
-    // for (var i = 0; i <= locationList.length - 1; i++) {
-    // print("count:" + i.toString());
-    // final double distance = await Geolocator.distanceBetween(
-    //     locationList[i].latitude,
-    //     locationList[i].longitude,
-    //     currentLocation.latitude,
-    //     currentLocation.longitude);
-
-    final double distance = await Geolocator.distanceBetween(
-        newLatitude, newLongitude, currentLatitude, currentLongitude);
-
-    // print("location:" +
-    //     locationList[i].latitude.toString() +
-    //     locationList[i].longitude.toString());
+    final double distance = Geolocator.distanceBetween(
+      BlocProvider.of<LocationBloc>(context).state.locationData?.latitude ??
+          0.0,
+      BlocProvider.of<LocationBloc>(context).state.locationData?.longitude ??
+          0.0,
+      officeLatitude,
+      officeLongitude,
+    );
 
     var distanceInkm = distance / 1000;
-    // print("distance" + distanceInkm.toString());
-
     distanceInkm < radius ? result = true : result = false;
-    // print(distanceInkm < radius);
-    // if (result) {
+
+    print(
+        "Distance from Office: $distanceInkm & \nis in the proximity of the office: $result, Current location: (${BlocProvider.of<LocationBloc>(context).state.locationData?.latitude}, ${BlocProvider.of<LocationBloc>(context).state.locationData?.longitude})");
     return result;
-    // }
-    // }
   }
 
   @override
@@ -93,20 +77,22 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LocationBloc, LocationState>(builder: (context, state) {
-      getUserAddressFromCoord(locationData: state.locationData);
-      return Stack(
-        children: <Widget>[
-          attendanceTab(),
-          Visibility(
-            visible: isVisible,
-            child: Center(
-              child: CustomProgressIndicator(),
+    return BlocBuilder<LocationBloc, LocationState>(
+      builder: (context, state) {
+        getUserAddressFromCoord(locationData: state.locationData!);
+        return Stack(
+          children: <Widget>[
+            attendanceTab(),
+            Visibility(
+              visible: isVisible,
+              child: Center(
+                child: CustomProgressIndicator(),
+              ),
             ),
-          ),
-        ],
-      );
-    });
+          ],
+        );
+      },
+    );
   }
 
   attendanceTab() {
@@ -276,7 +262,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                         ),
                         Expanded(
                           child: Text(
-                            _location,
+                            _location!,
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ),
@@ -377,6 +363,14 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     // Whether the location services are on.
     await _checkLocationService();
 
+    if (calculateDistance() == false) {
+      displaySnackBar(
+        context: context,
+        text: 'Failure: You are not in the proximity of the office.',
+      );
+      return;
+    }
+
     if (isSignedOut == true) {
       setState(() {
         isVisible = true;
@@ -423,6 +417,14 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     // Whether the location services are on.
     await _checkLocationService();
 
+    if (calculateDistance() == false) {
+      displaySnackBar(
+        context: context,
+        text: 'Failure: You are not in the proximity of the office.',
+      );
+      return;
+    }
+
     if (isSignedIn == true) {
       setState(() {
         isVisible = true;
@@ -459,11 +461,16 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     }
   }
 
-  getUserAddressFromCoord({LocationData locationData}) async {
+  getUserAddressFromCoord({required LocationData locationData}) async {
     List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
-        locationData.latitude, locationData.longitude);
+      locationData.latitude!,
+      locationData.longitude!,
+    );
+
     geo.Placemark place = placemarks[0];
     print(place);
-    _location = place.street;
+
+    _location =
+        "${place.name == null || place.name!.isEmpty ? '' : place.name! + ', '}\n${place.street == null || place.street!.isEmpty ? '' : place.street! + ', '}${place.subLocality == null || place.subLocality!.isEmpty ? null : place.subLocality! + ', '}${place.locality == null || place.locality!.isEmpty ? null : place.locality! + ', '}\n${place.subAdministrativeArea == null || place.subAdministrativeArea!.isEmpty ? '' : place.subAdministrativeArea! + ', '}${place.administrativeArea == null || place.administrativeArea!.isEmpty ? '' : place.administrativeArea! + ', '}\n${place.postalCode == null || place.postalCode!.isEmpty ? '' : place.postalCode! + ', '}${place.isoCountryCode == null || place.isoCountryCode!.isEmpty ? '' : place.isoCountryCode! + '.'}";
   }
 }

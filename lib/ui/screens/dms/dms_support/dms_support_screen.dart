@@ -18,7 +18,7 @@ class DMSSupport extends StatefulWidget {
 class _DMSSupportState extends State<DMSSupport> {
   int _selectedIndex = 0;
   List<bool> isSelected = [true, false];
-  List<Widget> _widgetOptions = [];
+  List<Widget>? _widgetOptions = [];
   String requestBy = 'RequestedByMe';
   String taskListStatus = 'InProgress';
 
@@ -146,7 +146,7 @@ class _DMSSupportState extends State<DMSSupport> {
   }
 
   _body() {
-    return _widgetOptions.elementAt(_selectedIndex);
+    return _widgetOptions!.elementAt(_selectedIndex);
   }
 
   _bottomNavigation() {

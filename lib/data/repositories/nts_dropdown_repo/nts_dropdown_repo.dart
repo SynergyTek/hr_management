@@ -5,27 +5,20 @@ import '../../models/nts_dropdown/nts_dd_res_model.dart';
 
 part 'nts_dropdown_implementation.dart';
 
-// Overview of the repository class.
 abstract class AbstractNTSDdRepository {
   AbstractNTSDdRepository();
 
   Future<NTSDdResponse> getdynamicUrlData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
+    required String url,
+    String? idKey,
+    String? nameKey,
   });
 
-  Future<NTSDdResponse> postAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
-  });
-
-  Future<NTSDdResponse> putAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
-  });
-
-  Future<NTSDdResponse> deleteAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+  Future<NTSDdResponse> getFilteredDDData({
+    Map<String, dynamic>? queryparams,
+    required String url,
+    String? idKey,
+    String? nameKey,
   });
 }

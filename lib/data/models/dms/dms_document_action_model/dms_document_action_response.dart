@@ -6,11 +6,11 @@ import 'dms_document_action_model.dart';
 
 
 class DMSDocumentActionResponse {
-  final List<DMSDocumentActionModel> data;
-  String error;
+  final List<DMSDocumentActionModel>? data;
+  String? error;
 
   DMSDocumentActionResponse({
-    @required this.data,
+    required this.data,
   });
 
   DMSDocumentActionResponse.fromJson(List response)

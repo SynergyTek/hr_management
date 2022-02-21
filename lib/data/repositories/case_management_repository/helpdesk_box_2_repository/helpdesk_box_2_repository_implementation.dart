@@ -4,7 +4,7 @@ class HelpdeskBox2Repository extends AbstractHelpdeskBox2Repository {
   final Dio _dio = Dio();
 
   Future<CaseManagementResponse> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     //
     String endpoint = APIEndpointConstants.GET_HELPDESK_BOX_2;
@@ -24,21 +24,21 @@ class HelpdeskBox2Repository extends AbstractHelpdeskBox2Repository {
 
   @override
   Future<bool> deleteAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     throw UnimplementedError();
   }
 
   @override
   Future<CaseManagementResponse> postAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<CaseManagementResponse> putAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }

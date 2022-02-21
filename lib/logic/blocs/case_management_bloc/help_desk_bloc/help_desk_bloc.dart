@@ -14,7 +14,7 @@ class HelpDeskBloc {
       BehaviorSubject<ReadHelpDeskRequestClosedResponse>();
 
   getHelpdeskDashboardData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     HelpDeskDashboardResponse response =
         await _helpDeskRepository.getHelpdeskDashboardData(
@@ -25,7 +25,7 @@ class HelpDeskBloc {
   }
 
   getHelpDeskRequestClosedData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     ReadHelpDeskRequestClosedResponse response =
         await _helpDeskRepository.getHelpDeskRequestClosedData(

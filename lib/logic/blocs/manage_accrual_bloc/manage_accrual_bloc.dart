@@ -11,7 +11,7 @@ class ManageAccrualBloc {
       BehaviorSubject<ManageAccrualResponse>();
 
   getManageAccrual({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     ManageAccrualResponse response =
         await _manageAccrualRepository.getManageAccrual(

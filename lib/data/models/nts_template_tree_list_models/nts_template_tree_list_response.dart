@@ -4,10 +4,10 @@ import 'nts_template_tree_list_model.dart';
 
 class NTSTemplateTreeListResponse {
   final List<NTSTemplateTreeListModel> data;
-  String error;
+  String? error;
 
   NTSTemplateTreeListResponse({
-    @required this.data,
+    required this.data,
   });
 
   NTSTemplateTreeListResponse.fromJson(List response)

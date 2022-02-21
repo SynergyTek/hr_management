@@ -8,10 +8,10 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../../listizer/listizer.dart';
 
 class SearchDocumentBody extends StatefulWidget {
-  SearchDocumentBody({Key key}) : super(key: key);
+  SearchDocumentBody({Key? key}) : super(key: key);
 
   @override
   _SearchDocumentBodyState createState() => _SearchDocumentBodyState();
@@ -43,11 +43,11 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
           builder:
               (context, AsyncSnapshot<DMSDocumentActionResponse> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.data == null ||
-                  snapshot.data.data.length == 0) {
+              if (snapshot.data!.data == null ||
+                  snapshot.data!.data!.length == 0) {
                 return EmptyListWidget();
               }
-              _documentList = snapshot.data.data.reversed.toList();
+              _documentList = snapshot.data!.data!.reversed.toList();
                  return Listizer(
                 listItems: _documentList,
                 filteredSearchList: _filteredDocumentList,
@@ -89,7 +89,7 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
                               Text('Updated On:'),
                               Text(_filteredDocumentList[index].createdDate!=null?
                                 dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].createdDate)):'',
+                                    _filteredDocumentList[index].createdDate!)):'',
                                 style: TextStyle(color: Colors.red[700]),
                               ),
                             ],

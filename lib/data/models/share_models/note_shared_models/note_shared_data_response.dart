@@ -1,9 +1,9 @@
 import 'note_shared_data_model.dart';
 
 class NoteSharedDataResponse {
-  bool isSuccess;
-  List<NoteSharedDataModel> list;
-  String error;
+  bool? isSuccess;
+  List<NoteSharedDataModel>? list;
+  String? error;
 
   NoteSharedDataResponse({this.list});
 

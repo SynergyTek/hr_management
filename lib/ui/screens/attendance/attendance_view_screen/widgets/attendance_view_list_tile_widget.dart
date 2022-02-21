@@ -8,7 +8,7 @@ class AttendanceViewListTileWidget extends StatelessWidget {
   final AttendanceViewModel eachAttendanceViewModelElement;
 
   AttendanceViewListTileWidget({
-    @required this.eachAttendanceViewModelElement,
+    required this.eachAttendanceViewModelElement,
   });
 
   @override

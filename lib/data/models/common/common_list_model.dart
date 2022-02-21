@@ -30,23 +30,23 @@ class CommonListModel {
         this.portalId,
     });
 
-    String name;
-    String code;
-    int enumId;
+    String? name;
+    String? code;
+    int? enumId;
     dynamic dateTest;
     dynamic dataType;
-    String id;
-    DateTime createdDate;
+    String? id;
+    DateTime? createdDate;
     dynamic createdBy;
-    DateTime lastUpdatedDate;
+    DateTime? lastUpdatedDate;
     dynamic lastUpdatedBy;
-    bool isDeleted;
+    bool? isDeleted;
     dynamic sequenceOrder;
     dynamic companyId;
     dynamic legalEntityId;
-    int dataAction;
-    int status;
-    int versionNo;
+    int? dataAction;
+    int? status;
+    int? versionNo;
     dynamic portalId;
 
     factory CommonListModel.fromJson(Map<String, dynamic> json) => CommonListModel(
@@ -77,9 +77,9 @@ class CommonListModel {
         "DateTest": dateTest,
         "DataType": dataType,
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,

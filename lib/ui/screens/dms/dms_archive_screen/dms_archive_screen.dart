@@ -5,7 +5,7 @@ import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 
 class DMSArchiveScreen extends StatelessWidget {
-  const DMSArchiveScreen({ Key key }) : super(key: key);
+  const DMSArchiveScreen({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

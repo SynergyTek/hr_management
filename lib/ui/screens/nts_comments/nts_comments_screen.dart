@@ -5,10 +5,10 @@ import '../../widgets/appbar_widget.dart';
 import 'widget/nts_comments_body.dart';
 
 class NTSCommentsScreen extends StatelessWidget {
-  const NTSCommentsScreen({Key key, this.ntsType, this.ntsId})
+  const NTSCommentsScreen({Key? key, this.ntsType, this.ntsId})
       : super(key: key);
-  final NTSType ntsType;
-  final String ntsId;
+  final NTSType? ntsType;
+  final String? ntsId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

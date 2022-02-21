@@ -9,7 +9,7 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
-import 'package:listizer/listizer.dart';
+import '../../../../listizer/listizer.dart';
 
 class DMSWorkspaceBody extends StatefulWidget {
   @override
@@ -17,9 +17,9 @@ class DMSWorkspaceBody extends StatefulWidget {
 }
 
 class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
-  List<WorkspaceViewModel> _itemList = [];
+  List<WorkspaceViewModel>? _itemList = [];
   List<WorkspaceViewModel> _filteredItemList = [];
-  SlidableController _slidableController;
+  SlidableController? _slidableController;
   bool isVisible = false;
 
   @override
@@ -38,24 +38,24 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
       children: [
         Container(
           padding: DEFAULT_PADDING,
-          child: StreamBuilder<WorkspaceViewResponse>(
+          child: StreamBuilder<WorkspaceViewResponse?>(
             stream: dmsManageWorkspaceBloc.getWorkspaceSubject.stream,
             builder: (BuildContext context,
-                AsyncSnapshot<WorkspaceViewResponse> snapshot) {
+                AsyncSnapshot<WorkspaceViewResponse?> snapshot) {
               if (snapshot.hasData) {
                 // print("Snapshot data: ${snapshot.data.data}");
-                if (snapshot.data.data == null ||
-                    snapshot.data.data.length == 0) {
+                if (snapshot.data!.data == null ||
+                    snapshot.data!.data!.length == 0) {
                   return EmptyListWidget();
                 }
-                _itemList = snapshot.data.data;
+                _itemList = snapshot.data!.data;
                 return Listizer(
                   listItems: _itemList,
                   filteredSearchList: _filteredItemList,
                   itemBuilder: (context, index) {
                     return Slidable(
                       actionPane: SlidableStrechActionPane(),
-                      key: Key(_itemList[index].workspaceName),
+                      key: Key(_itemList![index].workspaceName!),
                       controller: _slidableController,
                       direction: Axis.horizontal,
                       actionExtentRatio: 0.20,
@@ -71,7 +71,7 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                             color: Colors.red[300],
                             icon: Icons.delete,
                             onTap: () {
-                              deleteDialog(_itemList[index].noteId);
+                              deleteDialog(_itemList![index].noteId);
                               if (dmsManageWorkspaceBloc
                                   .getAPISubject.stream.hasValue) {
                                 if (dmsManageWorkspaceBloc
@@ -102,8 +102,8 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                         child: ListTile(
                           tileColor: Theme.of(context).notInvertedColor,
                           title: Text(
-                            _itemList[index].workspaceName != null
-                                ? _itemList[index].workspaceName
+                            _itemList![index].workspaceName != null
+                                ? _itemList![index].workspaceName!
                                 : "-",
                             maxLines: 2,
                             style: Theme.of(context).textTheme.headline6,
@@ -119,8 +119,8 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                                     Row(
                                       children: <Widget>[
                                         Text("Parent Name: "),
-                                        Text(_itemList[index].parentName != null
-                                            ? _itemList[index].parentName
+                                        Text(_itemList![index].parentName != null
+                                            ? _itemList![index].parentName!
                                             : "-"),
                                       ],
                                     )
@@ -136,9 +136,9 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                                     Row(
                                       children: <Widget>[
                                         Text("Legal Entity Name: "),
-                                        Text(_itemList[index].legalEntityName !=
+                                        Text(_itemList![index].legalEntityName !=
                                                 null
-                                            ? _itemList[index].legalEntityName
+                                            ? _itemList![index].legalEntityName!
                                             : "-"),
                                       ],
                                     )
@@ -154,9 +154,9 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                                     Row(
                                       children: <Widget>[
                                         Text("Created By Name: "),
-                                        Text(_itemList[index].createdbyName !=
+                                        Text(_itemList![index].createdbyName !=
                                                 null
-                                            ? _itemList[index].createdbyName
+                                            ? _itemList![index].createdbyName!
                                             : "-"),
                                       ],
                                     )
@@ -166,7 +166,7 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                             ],
                           ),
                           onTap: () => _handleEditWorkspaceOnTap(
-                              id: _itemList[index].noteId),
+                              id: _itemList![index].noteId),
                         ),
                       ),
                     );
@@ -190,7 +190,7 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
   }
 
   _handleEditWorkspaceOnTap({
-    String id,
+    String? id,
   }) {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
@@ -209,7 +209,7 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
     // return Container();
   }
 
-  deleteDialog(String id) {
+  deleteDialog(String? id) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

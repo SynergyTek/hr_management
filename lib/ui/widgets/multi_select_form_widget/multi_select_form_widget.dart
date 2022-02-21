@@ -15,14 +15,14 @@ class MultiSelectFormWidget<T> extends StatefulWidget {
   final Function initCallback;
   final Stream stream;
   final String titleKey;
-  final Map<String, T> selectedDataMap;
-  final String onWillPopScopeErrorMessage;
+  final Map<String?, T>? selectedDataMap;
+  final String? onWillPopScopeErrorMessage;
 
   MultiSelectFormWidget({
-    @required this.initCallback,
-    @required this.stream,
-    @required this.titleKey,
-    @required this.selectedDataMap,
+    required this.initCallback,
+    required this.stream,
+    required this.titleKey,
+    required this.selectedDataMap,
     this.onWillPopScopeErrorMessage,
   }) : assert(titleKey != null);
 
@@ -32,7 +32,7 @@ class MultiSelectFormWidget<T> extends StatefulWidget {
 }
 
 class _MultiSelectFormWidgetState<T> extends State<MultiSelectFormWidget> {
-  Map<String, T> selectedDataMap;
+  Map<String?, T>? selectedDataMap;
 
   @override
   void initState() {
@@ -41,10 +41,10 @@ class _MultiSelectFormWidgetState<T> extends State<MultiSelectFormWidget> {
     widget.initCallback();
 
     if (widget?.selectedDataMap == null ||
-        widget.selectedDataMap.keys.isEmpty) {
-      selectedDataMap = Map<String, T>();
+        widget.selectedDataMap!.keys.isEmpty) {
+      selectedDataMap = Map<String?, T>();
     } else {
-      selectedDataMap = widget.selectedDataMap;
+      selectedDataMap = widget.selectedDataMap as Map<String?, T>?;
     }
   }
 
@@ -85,12 +85,12 @@ class _MultiSelectFormWidgetState<T> extends State<MultiSelectFormWidget> {
     );
   }
 
-  Widget _bodyWidget(List<T> data) {
+  Widget _bodyWidget(List<T>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -111,24 +111,24 @@ class _MultiSelectFormWidgetState<T> extends State<MultiSelectFormWidget> {
 
               return CheckboxListTile(
                 value:
-                    selectedDataMap.containsKey(_eachListTile[widget.titleKey]),
-                onChanged: (bool _) {
+                    selectedDataMap!.containsKey(_eachListTile[widget.titleKey]),
+                onChanged: (bool? _) {
                   // If the entry is already present in the map,
                   // i.e. the value is already selected,
                   // remove the entry from the selected data map.
 
-                  if (selectedDataMap
+                  if (selectedDataMap!
                       .containsKey(_eachListTile[widget.titleKey])) {
                     // print("Removing: ${_eachListTile[widget.titleKey]}");
 
-                    selectedDataMap.remove(_eachListTile[widget.titleKey]);
+                    selectedDataMap!.remove(_eachListTile[widget.titleKey]);
                   }
 
                   // else: it is a fresh entry and we need to add it to the map.
                   else {
                     // print("Adding: ${_eachListTile[widget.titleKey]}");
 
-                    selectedDataMap[_eachListTile[widget.titleKey]] =
+                    selectedDataMap![_eachListTile[widget.titleKey]] =
                         data.elementAt(index);
                   }
 

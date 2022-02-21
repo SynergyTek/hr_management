@@ -13,8 +13,8 @@ class LoginBloc {
 
   /// Used to create new entries.
   postData({
-    Map<String, dynamic> queryparams,
-    LoginRequestModel loginResponseModel,
+    Map<String, dynamic>? queryparams,
+    LoginRequestModel? loginResponseModel,
   }) async {
     LoginAPIResponse response = await _loginRepository.postAPIData(
       queryparams: queryparams,

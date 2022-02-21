@@ -6,11 +6,11 @@ import 'login_response_model.dart';
 /// list of APIData and error string if our API call gets failed
 /// or returns an error in response.
 class LoginAPIResponse {
-  final LoginResponseModel data;
-  String error;
+  final LoginResponseModel? data;
+  String? error;
 
   LoginAPIResponse({
-    @required this.data,
+    required this.data,
   });
 
   LoginAPIResponse.fromJson(Map<String, dynamic> response)

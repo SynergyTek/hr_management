@@ -52,14 +52,14 @@ class _SLAViolatedRequestsWidgetState extends State<SLAViolatedRequestsWidget> {
     );
   }
 
-  Widget _bodyWidget(HelpDeskDashboardModel data) {
+  Widget _bodyWidget(HelpDeskDashboardModel? data) {
     print(data);
 
     if (data == null)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -67,7 +67,7 @@ class _SLAViolatedRequestsWidgetState extends State<SLAViolatedRequestsWidget> {
 
     return GaugeChartWidget(
       gaugeValueList: [
-        data.slaViolated.toDouble(),
+        data.slaViolated!.toDouble(),
         // data.openRequestCount.toDouble(),
       ],
       child: _childWidget(data),
@@ -86,7 +86,7 @@ class _SLAViolatedRequestsWidgetState extends State<SLAViolatedRequestsWidget> {
             children: [
               Text(
                 "${data?.slaViolated ?? "-"}",
-                style: Theme.of(context).textTheme.headline5.copyWith(
+                style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,
                     fontWeight: FontWeight.w600),
               ),
@@ -101,7 +101,7 @@ class _SLAViolatedRequestsWidgetState extends State<SLAViolatedRequestsWidget> {
             children: [
               Text(
                 "${data?.openRequestCount ?? "-"}",
-                style: Theme.of(context).textTheme.headline5.copyWith(
+                style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,
                     fontWeight: FontWeight.w600),
               ),

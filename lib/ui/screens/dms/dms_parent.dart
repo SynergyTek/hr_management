@@ -8,11 +8,11 @@ import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 
 class DMSParent extends StatelessWidget {
-  final String sourceId;
-  final bool isCopy;
-  final bool isCut;
+  final String? sourceId;
+  final bool? isCopy;
+  final bool? isCut;
 
-  const DMSParent({Key key, this.sourceId, this.isCopy, this.isCut})
+  const DMSParent({Key? key, this.sourceId, this.isCopy, this.isCut})
       : super(key: key);
 
   @override

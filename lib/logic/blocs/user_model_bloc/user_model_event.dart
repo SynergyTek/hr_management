@@ -8,9 +8,9 @@ abstract class UserModelEvent extends Equatable {
 }
 
 class UserModelChangeEvent extends UserModelEvent {
-  final LoginResponseModel userModel;
+  final LoginResponseModel? userModel;
 
   UserModelChangeEvent({
-    @required this.userModel,
+    this.userModel,
   });
 }

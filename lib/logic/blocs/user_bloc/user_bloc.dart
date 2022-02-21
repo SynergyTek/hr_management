@@ -5,14 +5,14 @@ import 'package:rxdart/rxdart.dart';
 class UserBloc {
   final UserRepository _userRepository = UserRepository();
 
-  final BehaviorSubject<UserListResponse> _subjectUserDataList =
-      BehaviorSubject<UserListResponse>();
+  final BehaviorSubject<UserListResponse?> _subjectUserDataList =
+      BehaviorSubject<UserListResponse?>();
 
   final BehaviorSubject<ReadTeamDataResponse> _subjectReadTeamData =
       BehaviorSubject<ReadTeamDataResponse>();
 
   readUserData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     UserListResponse response =
         await _userRepository.readUserData(queryparams: queryparams);
@@ -20,14 +20,14 @@ class UserBloc {
   }
 
   readTeamData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     ReadTeamDataResponse response =
         await _userRepository.readTeamData(queryparams: queryparams);
     _subjectReadTeamData.sink.add(response);
   }
 
-  BehaviorSubject<UserListResponse> get subjectUserDataList =>
+  BehaviorSubject<UserListResponse?> get subjectUserDataList =>
       _subjectUserDataList;
 
   BehaviorSubject<ReadTeamDataResponse> get subjectReadTeamData =>

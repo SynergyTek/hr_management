@@ -1,30 +1,30 @@
 class WorklistDashboardCount {
-  int sRequestedByMe;
-  int sRequestOverdue;
-  int sRequestCompleted;
-  int sRequestDraft;
-  int sRequestPending;
-  int sRequestCancel;
-  int sSharedWithMe;
-  int sShareWithPending;
-  int sShareWithCompleted;
-  int sShareWithOverdue;
-  int sShareWithCancel;
-  int tRequestedByMe;
-  int tRequestOverdue;
-  int tRequestCompleted;
-  int tRequestDraft;
-  int tRequestPending;
-  int tAssignedToMe;
-  int tAssignPending;
-  int tAssignCompleted;
-  int tAssignOverdue;
-  int tAssignReject;
-  int tSharedWithMe;
-  int tShareWithPending;
-  int tShareWithCompleted;
-  int tShareWithOverdue;
-  int tShareWithReject;
+  int? sRequestedByMe;
+  int? sRequestOverdue;
+  int? sRequestCompleted;
+  int? sRequestDraft;
+  int? sRequestPending;
+  int? sRequestCancel;
+  int? sSharedWithMe;
+  int? sShareWithPending;
+  int? sShareWithCompleted;
+  int? sShareWithOverdue;
+  int? sShareWithCancel;
+  int? tRequestedByMe;
+  int? tRequestOverdue;
+  int? tRequestCompleted;
+  int? tRequestDraft;
+  int? tRequestPending;
+  int? tAssignedToMe;
+  int? tAssignPending;
+  int? tAssignCompleted;
+  int? tAssignOverdue;
+  int? tAssignReject;
+  int? tSharedWithMe;
+  int? tShareWithPending;
+  int? tShareWithCompleted;
+  int? tShareWithOverdue;
+  int? tShareWithReject;
 
   WorklistDashboardCount(
       {this.sRequestedByMe,
@@ -116,18 +116,18 @@ class WorklistDashboardCount {
 }
 
 class NoteWorklistDashboardCount {
-  int createdByMe;
-  int createdByMeExpired;
-  int createdByMeActive;
-  int createdByMeDraft;
-  int sharedByMe;
-  int sharedByMeExpired;
-  int sharedByMeActive;
-  int sharedByMeDraft;
-  int shareWithMe;
-  int sharedWithMeExpired;
-  int sharedWithMeActive;
-  int sharedWithMeDraft;
+  int? createdByMe;
+  int? createdByMeExpired;
+  int? createdByMeActive;
+  int? createdByMeDraft;
+  int? sharedByMe;
+  int? sharedByMeExpired;
+  int? sharedByMeActive;
+  int? sharedByMeDraft;
+  int? shareWithMe;
+  int? sharedWithMeExpired;
+  int? sharedWithMeActive;
+  int? sharedWithMeDraft;
 
   NoteWorklistDashboardCount(
       {this.createdByMe,

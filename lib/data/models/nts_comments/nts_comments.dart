@@ -1,35 +1,35 @@
 import 'dart:convert';
 
 class Comment {
-  String commentedByUserName;
-  String commentedToUserName;
-  String photoId;
-  bool isAddCommentEnabled;
-  String comment;
-  String commentedDate;
-  String commentToUserId;
-  String commentToUser;
-  String commentedByUserId;
-  String commentedByUser;
-  String ntsTaskId;
-  String ntsServiceId;
-  String ntsNoteId;
-  String ntsTask;
-  String parentCommentId;
-  String parentComment;
-  String id;
-  String createdDate;
-  String createdBy;
-  String lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
-  String sequenceOrder;
-  String companyId;
-  String legalEntityId;
-  int dataAction;
-  int status;
-  int versionNo;
-  String portalId;
+  String? commentedByUserName;
+  String? commentedToUserName;
+  String? photoId;
+  bool? isAddCommentEnabled;
+  String? comment;
+  String? commentedDate;
+  String? commentToUserId;
+  String? commentToUser;
+  String? commentedByUserId;
+  String? commentedByUser;
+  String? ntsTaskId;
+  String? ntsServiceId;
+  String? ntsNoteId;
+  String? ntsTask;
+  String? parentCommentId;
+  String? parentComment;
+  String? id;
+  String? createdDate;
+  String? createdBy;
+  String? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
+  String? sequenceOrder;
+  String? companyId;
+  String? legalEntityId;
+  int? dataAction;
+  int? status;
+  int? versionNo;
+  String? portalId;
 
   Comment(
       {this.commentedByUserName,
@@ -130,12 +130,12 @@ class Comment {
 }
 
 class PostComment {
-  String comment;
-  String ntsTaskId;
-  String ntsServiceId;
-  String ntsNoteId;
-  String commentToUserId;
-  String commentedByUserId;
+  String? comment;
+  String? ntsTaskId;
+  String? ntsServiceId;
+  String? ntsNoteId;
+  String? commentToUserId;
+  String? commentedByUserId;
   PostComment({
     this.comment,
     this.ntsTaskId,

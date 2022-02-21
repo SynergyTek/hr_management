@@ -1,10 +1,10 @@
 part of './my_profile_body_widget.dart';
 
 Widget _statisticWidget({
-  @required BuildContext context,
-  String title,
-  String subtitle,
-  Widget icon,
+  required BuildContext context,
+  String? title,
+  String? subtitle,
+  Widget? icon,
 }) {
   return Container(
     padding: DEFAULT_HORIZONTAL_PADDING,
@@ -34,7 +34,7 @@ Widget _statisticWidget({
 }
 
 Widget _profilePicture({
-  @required String profilePicturePath,
+  required String profilePicturePath,
 }) {
   return Container(
     padding: DEFAULT_LARGE_HORIZONTAL_PADDING,
@@ -60,15 +60,15 @@ Widget _profilePicture({
 }
 
 Widget _profileInformation({
-  @required EmployeeProfileModel data,
-  @required BuildContext context,
+  required EmployeeProfileModel data,
+  required BuildContext context,
 }) {
   return Expanded(
     child: ListTile(
       title: Text(
         data.personFullName ?? '',
         textAlign: TextAlign.right,
-        style: Theme.of(context).textTheme.bodyText1.copyWith(
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.white,
               fontSize: 16.0,
@@ -81,14 +81,14 @@ Widget _profileInformation({
           Text(
             data.personalEmail ?? '',
             textAlign: TextAlign.right,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
                   color: Colors.white,
                 ),
           ),
           Text(
             data.mobile ?? '',
             textAlign: TextAlign.right,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
                   color: Colors.white,
                 ),
           ),
@@ -99,8 +99,8 @@ Widget _profileInformation({
 }
 
 Widget _basicInformationWidget({
-  @required BuildContext context,
-  @required EmployeeProfileModel data,
+  required BuildContext context,
+  required EmployeeProfileModel data,
 }) {
   return ExpansionTile(
     initiallyExpanded: true,
@@ -159,9 +159,9 @@ Widget _basicInformationWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title:
-                    DateFormat.yMMMMd().format(data?.dateOfBirth).toString() ??
-                        'NA',
+                title: data.dateOfBirth == null
+                    ? 'NA'
+                    : DateFormat.yMMMMd().format(data.dateOfBirth!).toString(),
                 subtitle: "D.O.B.",
                 icon: Icon(
                   Icons.calendar_today_rounded,
@@ -198,8 +198,8 @@ Widget _basicInformationWidget({
 }
 
 Widget _jobDetailsWidget({
-  @required BuildContext context,
-  @required EmployeeProfileModel data,
+  required BuildContext context,
+  required EmployeeProfileModel data,
 }) {
   return ExpansionTile(
     initiallyExpanded: false,
@@ -274,7 +274,7 @@ Widget _jobDetailsWidget({
               child: _statisticWidget(
                 context: context,
                 title: DateFormat.yMMMMd()
-                        .format(data?.dateOfJoin ?? "")
+                        .format(data?.dateOfJoin ?? "" as DateTime)
                         .toString() ??
                     'NA',
                 subtitle: "Date of Joining",
@@ -300,8 +300,8 @@ Widget _jobDetailsWidget({
 }
 
 Widget _presentCountryAddressWidget({
-  @required BuildContext context,
-  @required EmployeeProfileModel data,
+  required BuildContext context,
+  required EmployeeProfileModel data,
 }) {
   return ExpansionTile(
     initiallyExpanded: false,
@@ -399,8 +399,8 @@ Widget _presentCountryAddressWidget({
 }
 
 Widget _homeCountryAddressWidget({
-  @required BuildContext context,
-  @required EmployeeProfileModel data,
+  required BuildContext context,
+  required EmployeeProfileModel data,
 }) {
   return ExpansionTile(
     initiallyExpanded: false,
@@ -498,8 +498,8 @@ Widget _homeCountryAddressWidget({
 }
 
 Widget _emergencyContactInfo1Widget({
-  @required BuildContext context,
-  @required EmployeeProfileModel data,
+  required BuildContext context,
+  required EmployeeProfileModel data,
 }) {
   return ExpansionTile(
     initiallyExpanded: false,
@@ -526,9 +526,9 @@ Widget _emergencyContactInfo1Widget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data.emergencyContactCountryDialCode1 +
+                title: data.emergencyContactCountryDialCode1! +
                     ' ' +
-                    data.emergencyContactNo1,
+                    data.emergencyContactNo1!,
                 subtitle: "Number",
                 icon: Icon(
                   Icons.phone,
@@ -572,8 +572,8 @@ Widget _emergencyContactInfo1Widget({
 }
 
 Widget _emergencyContactInfo2Widget({
-  @required BuildContext context,
-  @required EmployeeProfileModel data,
+  required BuildContext context,
+  required EmployeeProfileModel data,
 }) {
   return ExpansionTile(
     initiallyExpanded: false,
@@ -600,9 +600,9 @@ Widget _emergencyContactInfo2Widget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data.emergencyContactCountryDialCode1 +
+                title: data.emergencyContactCountryDialCode1! +
                     ' ' +
-                    data.emergencyContactNo2,
+                    data.emergencyContactNo2!,
                 subtitle: "Number",
                 icon: Icon(
                   Icons.phone,

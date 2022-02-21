@@ -4,9 +4,9 @@ import 'package:hr_management/ui/screens/dms/dms_manage_permission/widgets/dms_a
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 
 class DmsAddEditPermissionScreen extends StatelessWidget {
-  final String noteId;
+  final String? noteId;
   const DmsAddEditPermissionScreen({
-    @required this.noteId,
+    required this.noteId,
   });
 
   @override

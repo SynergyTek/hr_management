@@ -1,25 +1,25 @@
 class WorkspaceViewModel {
-  String legalEntityName;
-  String parentNoteId;
-  String createdbyName;
-  String workspaceName;
-  String parentName;
-  String noteSubject;
-  String sequenceOrder;
-  String legalEntityId;
-  String createdBy;
-  List documentTypeId;
-  String workspaceId;
-  String noteId;
-  String documentTypeIds;
-  String documentTypeNoteId;
-  String id;
-  String type;
+  String? legalEntityName;
+  String? parentNoteId;
+  String? createdbyName;
+  String? workspaceName;
+  String? parentName;
+  String? noteSubject;
+  String? sequenceOrder;
+  String? legalEntityId;
+  String? createdBy;
+  List? documentTypeId;
+  String? workspaceId;
+  String? noteId;
+  String? documentTypeIds;
+  String? documentTypeNoteId;
+  String? id;
+  String? type;
 
   //
-  String dataAction;
-  String activeUserId;
-  String ownerUserId;
+  String? dataAction;
+  String? activeUserId;
+  String? ownerUserId;
 
   WorkspaceViewModel({
     this.legalEntityName,

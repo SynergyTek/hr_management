@@ -5,16 +5,16 @@ import '../../themes/theme_config.dart';
 class PrimaryButton extends StatelessWidget {
   final String buttonText;
   final Function handleOnPressed;
-  final double width;
-  final double height;
-  final double borderRadius;
+  final double? width;
+  final double? height;
+  final double? borderRadius;
 
-  final Color backgroundColor;
-  final Color foregroundColor;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
 
   const PrimaryButton({
-    @required this.buttonText,
-    @required this.handleOnPressed,
+    required this.buttonText,
+    required this.handleOnPressed,
     this.width,
     this.height,
     this.borderRadius,

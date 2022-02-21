@@ -4,7 +4,7 @@ class HelpDeskRepository extends AbstractHelpDeskRepository {
   final Dio _dio = Dio();
 
   Future<HelpDeskDashboardResponse> getHelpdeskDashboardData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.HELPDESK_DASHBOARD;
 
@@ -25,7 +25,7 @@ class HelpDeskRepository extends AbstractHelpDeskRepository {
   }
 
   Future<ReadHelpDeskRequestClosedResponse> getHelpDeskRequestClosedData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.READ_HELP_DESK_REQUEST_CLOSED;
 

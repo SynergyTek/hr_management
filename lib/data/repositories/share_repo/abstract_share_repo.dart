@@ -16,38 +16,41 @@ abstract class AbstractShareRepository {
   AbstractShareRepository();
 
   Future<ServiceSharedDataResponse> getServiceSharedData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<TaskSharedDataResponse> getTaskSharedData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<NoteSharedDataResponse> getNoteSharedData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future deleteServiceShared({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future deleteTaskShared({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future deleteNoteShared({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<PostResponse> postShareService({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
+    required ServiceSharePostModel data,
   });
 
   Future<PostResponse> postShareTask({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
+    required TaskSharePostModel data,
   });
 
   Future<PostResponse> postShareNote({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
+    required NoteSharePostModel data,
   });
 }

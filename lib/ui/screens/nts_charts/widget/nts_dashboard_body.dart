@@ -7,8 +7,8 @@ import '../../tasks/widget/task_dashboard_list.dart';
 import '../nts_charts_screen.dart';
 
 class NTSDashboardBody extends StatefulWidget {
-  const NTSDashboardBody({Key key, this.ntsType}) : super(key: key);
-  final NTSType ntsType;
+  const NTSDashboardBody({Key? key, this.ntsType}) : super(key: key);
+  final NTSType? ntsType;
   @override
   _NTSDashboardBodyState createState() => _NTSDashboardBodyState();
 }
@@ -16,12 +16,12 @@ class NTSDashboardBody extends StatefulWidget {
 class _NTSDashboardBodyState extends State<NTSDashboardBody> {
   int _selectedIndex = 0;
 
-  List<Widget> _widgetOptions = [];
+  List<Widget?>? _widgetOptions = [];
 
   @override
   void initState() {
     super.initState();
-    _widgetOptions = <Widget>[
+    _widgetOptions = <Widget?>[
       NTSChart(
         ntsType: widget.ntsType,
       ),
@@ -39,7 +39,7 @@ class _NTSDashboardBodyState extends State<NTSDashboardBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions!.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -59,8 +59,8 @@ class _NTSDashboardBodyState extends State<NTSDashboardBody> {
     );
   }
 
-  Widget ntsDashboard() {
-    Widget footerWidget;
+  Widget? ntsDashboard() {
+    Widget? footerWidget;
     switch (widget.ntsType) {
       case NTSType.service:
         footerWidget = ServiceDashboardList();

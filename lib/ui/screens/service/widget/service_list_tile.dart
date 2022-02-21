@@ -5,11 +5,11 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 
 class ServiceListCard extends StatelessWidget {
-  final bool onTap;
-  final List<Service> serviceList;
+  final bool? onTap;
+  final List<Service>? serviceList;
   final int index;
   const ServiceListCard(
-      {Key key, @required this.serviceList, @required this.index, this.onTap})
+      {Key? key, required this.serviceList, required this.index, this.onTap})
       : super(key: key);
 
   @override
@@ -69,16 +69,16 @@ class ServiceListCard extends StatelessWidget {
             ),
           ],
         ),
-        onTap: onTap
+        onTap: onTap!
             ? () {
                 serviceBloc.subject.sink.add(null);
                 Navigator.pushNamed(
                   context,
                   CREATE_SERVICE_ROUTE,
                   arguments: ScreenArguments(
-                    arg1: serviceList[index].templateCode,
-                    arg2: serviceList[index].id,
-                    arg3: serviceList[index].serviceSubject,
+                    arg1: serviceList![index].templateCode,
+                    arg2: serviceList![index].id,
+                    arg3: serviceList![index].serviceSubject,
                     val1: false,
                   ),
                 );
@@ -89,22 +89,22 @@ class ServiceListCard extends StatelessWidget {
   }
 
   String serviceSubject(int index) {
-    return serviceList[index].serviceSubject ?? "-";
+    return serviceList![index].serviceSubject ?? "-";
   }
 
   String serviceNoValue(int index) {
-    return serviceList[index].serviceNo ?? "-";
+    return serviceList![index].serviceNo ?? "-";
   }
 
   String ownerUserName(int index) {
-    return serviceList[index].ownerUserUserName ?? "-";
+    return serviceList![index].ownerUserUserName ?? "-";
   }
 
   String noteStatusName(int index) {
-    return serviceList[index].serviceStatusName ?? "-";
+    return serviceList![index].serviceStatusName ?? "-";
   }
 
   String expiryDate(int index) {
-    return serviceList[index].dueDateDisplay ?? "-";
+    return serviceList![index].dueDateDisplay ?? "-";
   }
 }

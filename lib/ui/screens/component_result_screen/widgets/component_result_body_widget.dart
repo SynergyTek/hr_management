@@ -12,7 +12,7 @@ class ComponentResultBodyWidget extends StatefulWidget {
   final String serviceId;
 
   ComponentResultBodyWidget({
-    @required this.serviceId,
+    required this.serviceId,
   });
 
   @override
@@ -58,12 +58,12 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
     );
   }
 
-  Widget _componentResultWidget(List<ComponentResultModel> data) {
+  Widget _componentResultWidget(List<ComponentResultModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -80,7 +80,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
   }
 
   Widget _eachListTile({
-    @required ComponentResultModel data,
+    required ComponentResultModel data,
   }) {
     return Card(
       child: ListTile(
@@ -95,7 +95,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
         ),
         trailing: Text(
           data?.componentStatusName ?? "-",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: _handleListTileColor(context, data.componentStatusName),
               ),
         ),
@@ -103,7 +103,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
     );
   }
 
-  Color _handleListTileColor(BuildContext context, String data) {
+  Color _handleListTileColor(BuildContext context, String? data) {
     // Guard clause
     if (data == null || data.isEmpty) return Colors.white54;
 

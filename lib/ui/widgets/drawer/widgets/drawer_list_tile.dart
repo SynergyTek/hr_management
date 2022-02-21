@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class DrawerListTileWidget extends StatelessWidget {
   final String title;
   final Function listTileOnTap;
-  final String subtitle;
-  final Widget leading;
-  final Widget trailing;
+  final String? subtitle;
+  final Widget? leading;
+  final Widget? trailing;
 
   const DrawerListTileWidget({
-    @required this.title,
-    @required this.listTileOnTap,
+    required this.title,
+    required this.listTileOnTap,
     this.subtitle,
     this.leading,
     this.trailing,

@@ -11,6 +11,6 @@ abstract class AbstractManageAccrualRepository {
   AbstractManageAccrualRepository();
 
   Future<ManageAccrualResponse> getManageAccrual({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

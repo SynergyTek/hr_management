@@ -11,14 +11,14 @@ import '../../../widgets/progress_indicator.dart';
 import 'tile_block.dart';
 
 class NoteWorklist extends StatefulWidget {
-  const NoteWorklist({Key key}) : super(key: key);
+  const NoteWorklist({Key? key}) : super(key: key);
 
   @override
   _NoteWorklistState createState() => _NoteWorklistState();
 }
 
 class _NoteWorklistState extends State<NoteWorklist> {
-  NoteWorklistDashboardCount dashboardCount = new NoteWorklistDashboardCount();
+  NoteWorklistDashboardCount? dashboardCount = new NoteWorklistDashboardCount();
   void initState() {
     super.initState();
     worklistDashboardBloc
@@ -30,7 +30,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
   _handleQueryparams() {
     return {
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state.userModel.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel!.id ?? '',
     };
   }
 
@@ -40,12 +40,12 @@ class _NoteWorklistState extends State<NoteWorklist> {
         stream: worklistDashboardBloc.subjectWorklistNoteDashboardList.stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data.error != null && snapshot.data.error.length > 0) {
+            if (snapshot.data!.error != null && snapshot.data!.error!.length > 0) {
               return Center(
-                child: Text(snapshot.data.error),
+                child: Text(snapshot.data!.error!),
               );
             }
-            dashboardCount = snapshot.data.data;
+            dashboardCount = snapshot.data!.data;
             return noteWorklistGrid();
           } else {
             return Center(
@@ -65,7 +65,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
         buildTile(
           isTile: false,
           status: 'Created by Me',
-          value: dashboardCount.createdByMe,
+          value: dashboardCount!.createdByMe,
           context: context,
         ),
         buildTile(
@@ -75,7 +75,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
           context: context,
           tabName: "userDetails",
           mode: 'REQ_BY',
-          value: dashboardCount.createdByMeExpired,
+          value: dashboardCount!.createdByMeExpired,
           ntsType: NTSType.note,
           image: Image(
             image: AssetImage('assets/images/notes-overdue.png'),
@@ -86,7 +86,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             status: 'Complete',
             bgColor: Colors.green,
             context: context,
-            value: dashboardCount.createdByMeActive,
+            value: dashboardCount!.createdByMeActive,
             image:
                 Image(image: AssetImage('assets/images/notes-completed.png')),
             tabName: "userDetails",
@@ -97,7 +97,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             status: 'Draft',
             bgColor: Colors.lightBlue,
             context: context,
-            value: dashboardCount.createdByMeDraft,
+            value: dashboardCount!.createdByMeDraft,
             image: Image(image: AssetImage('assets/images/notes-draft.png')),
             tabName: "userDetails",
             ntsType: NTSType.note,
@@ -106,14 +106,14 @@ class _NoteWorklistState extends State<NoteWorklist> {
           isTile: false,
           status: 'Shared by Me',
           context: context,
-          value: dashboardCount.sharedByMe,
+          value: dashboardCount!.sharedByMe,
         ),
         buildTile(
             isTile: true,
             status: 'Expired',
             bgColor: Colors.redAccent,
             context: context,
-            value: dashboardCount.sharedByMeExpired,
+            value: dashboardCount!.sharedByMeExpired,
             image: Image(image: AssetImage('assets/images/notes-overdue.png')),
             tabName: "NoteSharedBy",
             ntsType: NTSType.note,
@@ -123,7 +123,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             status: 'Complete',
             bgColor: Colors.green,
             context: context,
-            value: dashboardCount.sharedByMeActive,
+            value: dashboardCount!.sharedByMeActive,
             ntsType: NTSType.note,
             image:
                 Image(image: AssetImage('assets/images/notes-completed.png')),
@@ -134,7 +134,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             status: 'Draft',
             bgColor: Colors.lightBlue,
             context: context,
-            value: dashboardCount.sharedByMeDraft,
+            value: dashboardCount!.sharedByMeDraft,
             image: Image(image: AssetImage('assets/images/notes-draft.png')),
             tabName: "NoteSharedBy",
             ntsType: NTSType.note,
@@ -149,7 +149,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             status: 'Expired',
             bgColor: Colors.redAccent,
             context: context,
-            value: dashboardCount.sharedWithMeExpired,
+            value: dashboardCount!.sharedWithMeExpired,
             image: Image(image: AssetImage('assets/images/notes-overdue.png')),
             ntsType: NTSType.note,
             tabName: "NoteSharedWith",
@@ -159,7 +159,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             status: 'Complete',
             bgColor: Colors.green,
             context: context,
-            value: dashboardCount.sharedWithMeActive,
+            value: dashboardCount!.sharedWithMeActive,
             ntsType: NTSType.note,
             image:
                 Image(image: AssetImage('assets/images/notes-completed.png')),
@@ -170,7 +170,7 @@ class _NoteWorklistState extends State<NoteWorklist> {
             status: 'Draft',
             bgColor: Colors.lightBlue,
             context: context,
-            value: dashboardCount.sharedWithMeDraft,
+            value: dashboardCount!.sharedWithMeDraft,
             image: Image(image: AssetImage('assets/images/notes-draft.png')),
             ntsType: NTSType.note,
             tabName: "NoteSharedWith",

@@ -10,7 +10,7 @@ class LocationConnectivityWidget extends StatelessWidget {
   final Widget child;
 
   const LocationConnectivityWidget({
-    @required this.child,
+    required this.child,
   }) : assert(child != null);
 
   @override

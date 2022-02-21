@@ -13,15 +13,15 @@ class TaskBloc {
   final TaskRepository _taskRepository = TaskRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<TaskListResponseModel> _subjectTaskList =
-      BehaviorSubject<TaskListResponseModel>();
+  final BehaviorSubject<TaskListResponseModel?> _subjectTaskList =
+      BehaviorSubject<TaskListResponseModel?>();
 
-  final BehaviorSubject<TaskResponseModel> _subjectGetTaskDetails =
-      BehaviorSubject<TaskResponseModel>();
+  final BehaviorSubject<TaskResponseModel?> _subjectGetTaskDetails =
+      BehaviorSubject<TaskResponseModel?>();
 
   /// Used to fetch new entries.
   getTaskHomeListData({
-    Map<String, dynamic> queryparams, // String userId,
+    Map<String, dynamic>? queryparams, // String userId,
   }) async {
     TaskListResponseModel response = await _taskRepository.getTaskHomeListData(
       queryparams: queryparams,
@@ -30,9 +30,9 @@ class TaskBloc {
   }
 
   getTaskDetails({
-    String templateCode,
-    String taskId,
-    String userId,
+    String? templateCode,
+    String? taskId,
+    String? userId,
   }) async {
     Map<String, dynamic> queryparams = Map();
 
@@ -50,14 +50,14 @@ class TaskBloc {
 
   /// Used to create new entries.
   Future<PostResponse> postData({
-    @required TaskModel taskModel,
+    required TaskModel taskModel,
   }) async {
     PostResponse response = await _taskRepository.postAPIData(
       taskModel: taskModel,
     );
 
     // Reload task home if draft/submit is successful
-    if (response.isSuccess) {
+    if (response.isSuccess!) {
       _subjectTaskList.sink.add(null);
 
       Map<String, dynamic> queryparams = Map();
@@ -71,9 +71,9 @@ class TaskBloc {
   }
 
   getTaskDashBoardData({
-    Map<String, dynamic> queryparams,
-    String taskListStatus,
-    String requestBy, // String userId,
+    Map<String, dynamic>? queryparams,
+    String? taskListStatus,
+    String? requestBy, // String userId,
   }) async {
     TaskListResponseModel response = await _taskRepository.getTaskDashBoardData(
       queryparams: queryparams,
@@ -84,8 +84,8 @@ class TaskBloc {
   }
 
   loadServiceAdhocTaskData({
-    Map<String, dynamic> queryparams,
-    String taskListStatus,
+    Map<String, dynamic>? queryparams,
+    String? taskListStatus,
   }) async {
     TaskListResponseModel response =
         await _taskRepository.loadServiceAdhocTaskData(
@@ -117,9 +117,9 @@ class TaskBloc {
     _subjectGetTaskDetails.close();
   }
 
-  BehaviorSubject<TaskListResponseModel> get subjectTaskList =>
+  BehaviorSubject<TaskListResponseModel?> get subjectTaskList =>
       _subjectTaskList;
-  BehaviorSubject<TaskResponseModel> get subjectGetTaskDetails =>
+  BehaviorSubject<TaskResponseModel?> get subjectGetTaskDetails =>
       _subjectGetTaskDetails;
 }
 

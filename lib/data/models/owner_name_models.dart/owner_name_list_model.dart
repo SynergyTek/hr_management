@@ -59,7 +59,7 @@ class OwnerNameListModel {
         this.taskOwnerIds,
     });
 
-    String id;
+    String? id;
     dynamic status;
     dynamic operation;
     dynamic taskId;
@@ -80,7 +80,7 @@ class OwnerNameListModel {
     dynamic moduleName;
     dynamic moduleCode;
     dynamic userId;
-    String ownerName;
+    String? ownerName;
     dynamic assignedToUserName;
     dynamic userRole;
     dynamic serviceId;
@@ -93,10 +93,10 @@ class OwnerNameListModel {
     dynamic ntsType;
     dynamic userfilter;
     dynamic projectfilter;
-    int days;
-    int actualSla;
-    int chartFilter;
-    int pieChartFilter;
+    int? days;
+    int? actualSla;
+    int? chartFilter;
+    int? pieChartFilter;
     dynamic period;
     dynamic taskfilter;
     dynamic datefilter;

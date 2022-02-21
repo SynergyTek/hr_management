@@ -9,10 +9,10 @@ abstract class AbstractDependentRepository {
   AbstractDependentRepository();
 
   Future<ReadDependnetResponse> getReadDependantList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<DependnetDocReqResponse> getReadDependantDocumentRequestList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

@@ -14,7 +14,7 @@ import '../../widgets/form_widgets/bloc_text_box_widget.dart';
 import '../../widgets/form_widgets/bloc_time_picker_widget.dart';
 
 class RegistrationForm extends StatefulWidget {
-  RegistrationForm({Key key}) : super(key: key);
+  RegistrationForm({Key? key}) : super(key: key);
 
   @override
   _RegistrationFormState createState() => _RegistrationFormState();

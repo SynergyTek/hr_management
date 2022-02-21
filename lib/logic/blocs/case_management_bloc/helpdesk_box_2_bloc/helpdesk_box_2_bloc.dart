@@ -12,7 +12,7 @@ class HelpdeskBox2Bloc {
 
   /// Used to fetch new/existing entries.
   getData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     CaseManagementResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,

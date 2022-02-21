@@ -17,8 +17,8 @@ class AccessLogBloc {
 
   /// Used to insert new entries.
   getInsertAccessLog({
-    @required bool isSignIn,
-    @required String userId,
+    required bool isSignIn,
+    required String userId,
   }) async {
     Map<String, dynamic> queryparams = Map();
     queryparams["punchingTime"] = DateTime.now().toString();
@@ -33,7 +33,7 @@ class AccessLogBloc {
 
   /// getAccessLogsListData: is used to fetch all access log data for a particular period.
   getAccessLogsListData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     AccessLogListDataResponse response =
         await _accessLogRepository.getAccessLogsListData(

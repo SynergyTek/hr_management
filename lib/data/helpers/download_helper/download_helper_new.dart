@@ -1,7 +1,7 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -25,13 +25,14 @@ class NewDownloadHelper {
   /// saveDirectoryPath:
   /// this method returns the path where the downloaded files will be stored.
   Future<String> saveDirectoryPath() async {
-    final externalStorageDirectory = await getExternalStorageDirectory();
+    final externalStorageDirectory =
+        await (getExternalStorageDirectory() as FutureOr<Directory>);
     return externalStorageDirectory.path;
   }
 
-  Future<String> requestDownload({
-    @required String url,
-    @required String filename,
+  Future<String?> requestDownload({
+    required String url,
+    required String filename,
   }) async {
     return await FlutterDownloader.enqueue(
       url: url,
@@ -66,7 +67,7 @@ class NewDownloadHelper {
     // using it's sendport to send data back to the main isolate.
     //
     final SendPort sendPort =
-        IsolateNameServer.lookupPortByName("mainIsolatePort");
+        IsolateNameServer.lookupPortByName("mainIsolatePort")!;
     sendPort.send(
       {
         "id": id,

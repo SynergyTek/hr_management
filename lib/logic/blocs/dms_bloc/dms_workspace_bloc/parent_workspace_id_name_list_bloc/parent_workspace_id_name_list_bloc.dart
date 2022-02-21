@@ -11,8 +11,8 @@ class DMSParentWorkspaceIdNameListBloc {
       BehaviorSubject<ParentWorkspaceIdNameListResponse>();
 
   getAPIData({
-    String legalEntity,
-    String id,
+    String? legalEntity,
+    String? id,
   }) async {
     ParentWorkspaceIdNameListResponse response =
         await _apiRepository.getAPIData(

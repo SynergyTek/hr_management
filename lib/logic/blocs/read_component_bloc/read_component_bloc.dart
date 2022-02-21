@@ -10,7 +10,7 @@ class ReadComponentBloc {
       BehaviorSubject<ReadComponentResponse>();
 
   readComponentData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     ReadComponentResponse response =
         await _userRepository.readComponentData(queryparams: queryparams);

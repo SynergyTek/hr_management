@@ -12,35 +12,35 @@ abstract class AbstractDMSCRUDNoteRepository {
   AbstractDMSCRUDNoteRepository();
 
   Future<bool> getArchiveNoteAPIData({
-    @required String id,
+    required String id,
   });
 
   Future<bool> getCopyNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
-    @required String userId,
+    required String sourceId,
+    required String targetId,
+    required String userId,
   });
 
   Future<bool> getCreateNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
-    @required String userId,
+    required String sourceId,
+    required String targetId,
+    required String userId,
   });
 
   Future<bool> getDeleteNoteAPIData({
-    @required String id,
+    required String id,
   });
 
   Future<bool> getMoveNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
+    required String sourceId,
+    required String targetId,
   });
 
   Future<bool> getRenameFilesAPIData({
-    @required DmsPostModel model,
+    required DmsPostModel model,
   });
 
   Future<bool> postSearchFilesAPIData({
-    @required DmsPostModel model,
+    required DmsPostModel model,
   });
 }

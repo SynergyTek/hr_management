@@ -12,11 +12,11 @@ part 'internet_state.dart';
 
 class InternetBloc extends Bloc<InternetEvent, InternetState> {
   final Connectivity connectivity;
-  StreamSubscription internetStreamSubscription;
+  late StreamSubscription internetStreamSubscription;
 
   // Initialising the InitialState of the Internet as Loading state.
   InternetBloc({
-    @required this.connectivity,
+    required this.connectivity,
   })
   // : super(InternetLoadingState()) {
   : super(InternetDisconnectedState()) {

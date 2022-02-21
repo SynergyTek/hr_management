@@ -9,7 +9,7 @@ class CountsAPIRepository extends AbstractCountsAPIRepository {
 
   Future<CountsAPIResponse> getAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     await _getAttachmentCount();
     await _getCommentsCount();
@@ -20,23 +20,23 @@ class CountsAPIRepository extends AbstractCountsAPIRepository {
   }
 
   @override
-  Future<CountsAPIResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
+  Future<CountsAPIResponse> deleteAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<CountsAPIResponse> postAPIData({Map<String, dynamic> queryparams}) {
+  Future<CountsAPIResponse> postAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<CountsAPIResponse> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<CountsAPIResponse> putAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   _getAttachmentCount({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     String endpoint = APIEndpointConstants.GET_SERVICE_ATTACHMENT_COUNT;
 
@@ -60,7 +60,7 @@ class CountsAPIRepository extends AbstractCountsAPIRepository {
 
   _getCommentsCount({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     String endpoint = APIEndpointConstants.GET_SERVICE_COMMENTS_COUNT;
 
@@ -84,7 +84,7 @@ class CountsAPIRepository extends AbstractCountsAPIRepository {
 
   _getNotificationCount({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     String endpoint = APIEndpointConstants.GET_SERVICE_NOTIFICATION_COUNT;
 
@@ -108,7 +108,7 @@ class CountsAPIRepository extends AbstractCountsAPIRepository {
 
   _getSharedCount({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     String endpoint = APIEndpointConstants.GET_SERVICE_SHARED_COUNT;
 

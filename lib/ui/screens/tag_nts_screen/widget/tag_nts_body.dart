@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
 
 class TagNTSBodyWidget extends StatefulWidget {
-  final NTSType ntsType;
-  final String ntsId;
+  final NTSType? ntsType;
+  final String? ntsId;
 
   TagNTSBodyWidget({
-    @required this.ntsType,
-    @required this.ntsId,
+    required this.ntsType,
+    required this.ntsId,
   });
 
   @override

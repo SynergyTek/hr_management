@@ -22,7 +22,7 @@ class SplashPageDots extends StatelessWidget {
   }
 
   Widget _renderPageCountEachDot({
-    int index,
+    int? index,
   }) {
     return BlocBuilder<OnboardingCubit, int>(
       builder: (context, state) {

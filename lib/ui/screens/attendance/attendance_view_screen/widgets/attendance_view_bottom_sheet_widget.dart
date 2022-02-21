@@ -7,7 +7,7 @@ class AttendanceViewBottomSheetWidget extends StatelessWidget {
   final AttendanceViewModel eachAttendanceViewModelElement;
 
   const AttendanceViewBottomSheetWidget({
-    @required this.eachAttendanceViewModelElement,
+    required this.eachAttendanceViewModelElement,
   });
 
   @override
@@ -49,7 +49,7 @@ class AttendanceViewBottomSheetWidget extends StatelessWidget {
                     // eachAttendanceViewModelElement?. ??
                     'NA',
                     style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                      fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                       color: _handleListTileColor(context),
                       fontWeight: FontWeight.bold,
                     ),

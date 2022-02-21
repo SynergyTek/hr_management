@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 typedef Widget ItemBuilder(BuildContext context, dynamic item);
 
 class Listizer extends StatefulWidget {
-  final List<dynamic> listItems;
-  final List<dynamic> filteredSearchList;
-  final ItemBuilder itemBuilder;
-  final bool showSearchBar;
-  final bool doAddSeperator;
-  final ScrollController controller;
+  final List<dynamic>? listItems;
+  final List<dynamic>? filteredSearchList;
+  final ItemBuilder? itemBuilder;
+  final bool? showSearchBar;
+  final bool? doAddSeperator;
+  final ScrollController? controller;
   Listizer({
     this.listItems,
     this.itemBuilder,
@@ -27,7 +27,7 @@ class Listizer extends StatefulWidget {
 class _ListizerState extends State<Listizer> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
-  ScrollController _controller = new ScrollController();
+  ScrollController? _controller = new ScrollController();
   TextEditingController searchTextController = TextEditingController();
   bool status = false;
   bool isSearch = false;
@@ -57,8 +57,8 @@ class _ListizerState extends State<Listizer> {
   Widget build(BuildContext context) {
     if (!isSearch) {
       setState(() {
-        widget.filteredSearchList.clear();
-        widget.filteredSearchList.addAll(widget.listItems);
+        widget.filteredSearchList!.clear();
+        widget.filteredSearchList!.addAll(widget.listItems!);
       });
     }
     return Column(
@@ -85,7 +85,7 @@ class _ListizerState extends State<Listizer> {
               },
               // controller: _controller,
               shrinkWrap: true,
-              itemCount: widget.filteredSearchList.length + 1,
+              itemCount: widget.filteredSearchList!.length + 1,
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Padding(
@@ -93,7 +93,7 @@ class _ListizerState extends State<Listizer> {
                     child: _searchBarBuilder(context),
                   );
                 } else {
-                  return widget.itemBuilder(context, index - 1);
+                  return widget.itemBuilder!(context, index - 1);
                 }
               },
             ),
@@ -145,13 +145,13 @@ class _ListizerState extends State<Listizer> {
 
   void filterSearchResults(String searchText) {
     setState(() {
-      widget.filteredSearchList.clear();
+      widget.filteredSearchList!.clear();
       if (searchText.isNotEmpty) {
         isSearch = true;
-        widget.listItems.forEach((item) {
+        widget.listItems!.forEach((item) {
           if (item.searchS != null &&
               item.searchS.toLowerCase().contains(searchText.toLowerCase())) {
-            widget.filteredSearchList.add(item);
+            widget.filteredSearchList!.add(item);
           }
         });
       } else {
@@ -164,8 +164,8 @@ class _ListizerState extends State<Listizer> {
     setState(() {
       isSearch = false;
       searchTextController.clear();
-      widget.filteredSearchList.clear();
-      widget.filteredSearchList.addAll(widget.listItems);
+      widget.filteredSearchList!.clear();
+      widget.filteredSearchList!.addAll(widget.listItems!);
       FocusScope.of(context).requestFocus(new FocusNode());
     });
   }

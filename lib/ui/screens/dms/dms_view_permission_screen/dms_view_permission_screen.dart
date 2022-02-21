@@ -10,16 +10,16 @@ import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 
 class DMSViewPermissionScreen extends StatelessWidget {
-  final String noteId;
-  final String parentId;
-  final String workspaceId;
-  final bool isManagePermission;
-  final List<String> path;
-  final String inheritanceType;
+  final String? noteId;
+  final String? parentId;
+  final String? workspaceId;
+  final bool? isManagePermission;
+  final List<String?>? path;
+  final String? inheritanceType;
 
   const DMSViewPermissionScreen({
-    @required this.noteId,
-    @required this.isManagePermission,
+    required this.noteId,
+    required this.isManagePermission,
     this.parentId,
     this.workspaceId,
     this.path,
@@ -30,7 +30,7 @@ class DMSViewPermissionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarWidget(
-        title: isManagePermission ? 'Manage Permission' : 'View Permission',
+        title: isManagePermission! ? 'Manage Permission' : 'View Permission',
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(
@@ -44,7 +44,7 @@ class DMSViewPermissionScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton:
-          isManagePermission ? buildSpeedDial(context) : Container(),
+          isManagePermission! ? buildSpeedDial(context) : Container(),
     );
   }
 
@@ -65,7 +65,7 @@ class DMSViewPermissionScreen extends StatelessWidget {
           onTap: () async {
             String inheritanceStatus =
                 inheritanceType == 'true' ? 'false' : 'true';
-            String error =
+            String? error =
                 await permissionBloc.disableParentPermission(queryparams: {
               "id": "$noteId",
               "InheritanceStatus": "$inheritanceStatus",

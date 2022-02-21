@@ -1,9 +1,9 @@
 import 'service_shared_data_model.dart';
 
 class ServiceSharedDataResponse {
-  bool isSuccess;
-  List<ServiceSharedDataModel> list;
-  String error;
+  bool? isSuccess;
+  List<ServiceSharedDataModel>? list;
+  String? error;
 
   ServiceSharedDataResponse({this.list});
 

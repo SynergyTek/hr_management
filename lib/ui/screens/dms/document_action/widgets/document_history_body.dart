@@ -8,17 +8,17 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../../listizer/listizer.dart';
 
 class DocumentHistoryBody extends StatefulWidget {
-  DocumentHistoryBody({Key key}) : super(key: key);
+  DocumentHistoryBody({Key? key}) : super(key: key);
 
   @override
   _DocumentHistoryBodyState createState() => _DocumentHistoryBodyState();
 }
 
 class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
-   List<DMSDocumentActionModel> _documentList = [];
+  List<DMSDocumentActionModel> _documentList = [];
   List<DMSDocumentActionModel> _filteredDocumentList = [];
 
   @override
@@ -43,12 +43,12 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
           builder:
               (context, AsyncSnapshot<DMSDocumentActionResponse> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.data == null ||
-                  snapshot.data.data.length == 0) {
+              if (snapshot.data!.data == null ||
+                  snapshot.data!.data!.length == 0) {
                 return EmptyListWidget();
               }
-              _documentList = snapshot.data.data.reversed.toList();
-                  return Listizer(
+              _documentList = snapshot.data!.data!.reversed.toList();
+              return Listizer(
                 listItems: _documentList,
                 filteredSearchList: _filteredDocumentList,
                 itemBuilder: (context, index) {
@@ -56,7 +56,7 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(
-                        _filteredDocumentList[index].documentName,
+                        _filteredDocumentList[index].documentName!,
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline6,
                       ),
@@ -67,7 +67,7 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                             child: Row(
                               children: <Widget>[
                                 Text("Document Type: "),
-                                Text(_filteredDocumentList[index].documentType),
+                                Text(_filteredDocumentList[index].documentType!),
                               ],
                             ),
                           ),
@@ -76,7 +76,7 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                               Text("Updated By: "),
                               Flexible(
                                 child: Text(
-                                  _filteredDocumentList[index].updatedByUser,
+                                  _filteredDocumentList[index].updatedByUser!,
                                   style:
                                       TextStyle(color: Colors.deepPurple[900]),
                                   overflow: TextOverflow.ellipsis,
@@ -89,7 +89,7 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                               Text("Status: "),
                               Flexible(
                                 child: Text(
-                                  _filteredDocumentList[index].statusName,
+                                  _filteredDocumentList[index].statusName!,
                                   style: TextStyle(color: Colors.green[800]),
                                 ),
                               ),
@@ -100,8 +100,7 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                               Text('Created On: '),
                               Text(
                                 dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index]
-                                        .createdDate)),
+                                    _filteredDocumentList[index].createdDate!)),
                                 style: TextStyle(color: Colors.red[700]),
                               ),
                             ],
@@ -111,7 +110,7 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                               Text('Modified On: '),
                               Text(
                                 dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].updatedDate)),
+                                    _filteredDocumentList[index].updatedDate!)),
                                 style: TextStyle(color: Colors.red[700]),
                               ),
                             ],
@@ -123,7 +122,6 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                   );
                 },
               );
-         
             } else {
               return Center(
                 child: CustomProgressIndicator(

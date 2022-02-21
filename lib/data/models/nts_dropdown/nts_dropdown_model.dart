@@ -1,14 +1,14 @@
 class NTSDropdownModel {
   NTSDropdownModel({this.id, this.name});
 
-  String id;
-  String name;
+  String? id;
+  String? name;
 
   factory NTSDropdownModel.fromJson(
-      Map<String, dynamic> json, String idkey, String nameKey) {
+      Map<String, dynamic> json, String? idkey, String? nameKey) {
     return NTSDropdownModel(
-      id: json[idkey],
-      name: json[nameKey],
+      id: json[idkey!],
+      name: json[nameKey!],
     );
   }
 

@@ -2,11 +2,11 @@ import 'package:hr_management/data/models/dms/workspace_view_model/workspace_vie
 import 'package:meta/meta.dart';
 
 class WorkspaceViewResponse {
-  final List<WorkspaceViewModel> data;
-  String error;
+  final List<WorkspaceViewModel>? data;
+  String? error;
 
   WorkspaceViewResponse({
-    @required this.data,
+    required this.data,
   });
 
   WorkspaceViewResponse.fromJson(List response)

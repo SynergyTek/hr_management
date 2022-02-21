@@ -9,7 +9,7 @@ class AccessLogListTileWidget extends StatelessWidget {
   final AccessLogModel eachAccessLogModelElement;
 
   AccessLogListTileWidget({
-    @required this.eachAccessLogModelElement,
+    required this.eachAccessLogModelElement,
   });
 
   @override
@@ -32,7 +32,7 @@ class AccessLogListTileWidget extends StatelessWidget {
                   Text(
                     eachAccessLogModelElement?.devicePunchingTypeText ?? '-',
                     style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.bodyText1.fontSize,
+                      fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
                       color: _handleListTileColor(context),
                       fontWeight: FontWeight.bold,
                     ),
@@ -67,7 +67,7 @@ class AccessLogListTileWidget extends StatelessWidget {
   Color _handleListTileColor(BuildContext context) {
     // Guard clause
     if (eachAccessLogModelElement?.devicePunchingType == null ||
-        eachAccessLogModelElement.devicePunchingType.isNaN)
+        eachAccessLogModelElement.devicePunchingType!.isNaN)
       return Colors.white54;
 
     return eachAccessLogModelElement.devicePunchingType == 0
@@ -82,8 +82,10 @@ class AccessLogListTileWidget extends StatelessWidget {
 
   /// Helper function that returns formatted Punching time.
   String punchingTime() {
-    return dateTimeformatter
-            .format(DateTime.parse(eachAccessLogModelElement?.punchingTime)) ??
-        'NA';
+    return eachAccessLogModelElement.punchingTime == null
+        ? 'NA'
+        : dateTimeformatter.format(
+            DateTime.parse(eachAccessLogModelElement.punchingTime!),
+          );
   }
 }

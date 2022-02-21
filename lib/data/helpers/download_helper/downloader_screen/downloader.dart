@@ -15,8 +15,8 @@ class Downloader extends StatefulWidget {
   final String url;
 
   Downloader({
-    @required this.filename,
-    @required this.url,
+    required this.filename,
+    required this.url,
   });
 
   @override
@@ -24,11 +24,11 @@ class Downloader extends StatefulWidget {
 }
 
 class _DownloaderState extends State<Downloader> {
-  String taskId = "";
-  DownloadTaskStatus taskStatus = DownloadTaskStatus.undefined;
-  double taskProgress = 0.0;
+  String? taskId = "";
+  DownloadTaskStatus? taskStatus = DownloadTaskStatus.undefined;
+  double? taskProgress = 0.0;
 
-  bool isOverwritePermitted = true;
+  bool? isOverwritePermitted = true;
 
   // This is being initialised in the main isolate as it will receive
   // the data from the background isolate.
@@ -157,7 +157,7 @@ class _DownloaderState extends State<Downloader> {
   }
 
   void _openfile() async {
-    String dir = (await getExternalStorageDirectory()).path;
+    String dir = (await getExternalStorageDirectory())!.path;
     String savePath = '$dir/${widget.filename}';
     if (await File(savePath).exists()) {
       OpenResult _openResult = await OpenFile.open(savePath);
@@ -183,7 +183,7 @@ class _DownloaderState extends State<Downloader> {
   }
 
   _showAlertDialog() async {
-    String dir = (await getExternalStorageDirectory()).path;
+    String dir = (await getExternalStorageDirectory())!.path;
     String savePath = '$dir/${widget.filename}';
 
     // File exists already.

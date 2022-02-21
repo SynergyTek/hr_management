@@ -8,7 +8,7 @@ class AccessLogRepository extends AbstractAccessLogRepository {
   /// getInsertAccessLog: is used for Sign-in and Signout using UI.
   Future<AccessLogResponse> getInsertAccessLog({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.INSERT_ACCESS_LOG;
 
@@ -23,7 +23,7 @@ class AccessLogRepository extends AbstractAccessLogRepository {
 
       if (response?.data != null)
         return AccessLogResponse.fromJson(
-          queryparams["punchingType"],
+          queryparams!["punchingType"],
         );
 
       return AccessLogResponse.withError("-1");
@@ -35,7 +35,7 @@ class AccessLogRepository extends AbstractAccessLogRepository {
   /// getAccessLogsListData
   Future<AccessLogListDataResponse> getAccessLogsListData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     if (queryparams == null) queryparams = Map();
 
@@ -57,19 +57,19 @@ class AccessLogRepository extends AbstractAccessLogRepository {
   }
 
   @override
-  Future<AccessLogResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
+  Future<AccessLogResponse> deleteAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
   Future<AccessLogResponse> postAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
-  Future<AccessLogResponse> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<AccessLogResponse> putAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 }

@@ -5,11 +5,11 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 
 class TaskListCard extends StatelessWidget {
-  final bool onTap;
+  final bool? onTap;
   final int index;
-  final List<TaskListModel> taskList;
+  final List<TaskListModel>? taskList;
   const TaskListCard(
-      {Key key, @required this.index, @required this.taskList, this.onTap})
+      {Key? key, required this.index, required this.taskList, this.onTap})
       : super(key: key);
 
   @override
@@ -76,7 +76,7 @@ class TaskListCard extends StatelessWidget {
             ),
           ],
         ),
-        onTap: onTap
+        onTap: onTap!
             ? () {
                 taskBloc.subjectGetTaskDetails.sink.add(null);
                 Navigator.pushNamed(
@@ -84,8 +84,8 @@ class TaskListCard extends StatelessWidget {
                   CREATE_EDIT_TASK_ROUTE,
                   arguments: ScreenArguments(
                       arg1: '',
-                      arg2: taskList[index].id,
-                      arg3: taskList[index].taskSubject),
+                      arg2: taskList![index].id,
+                      arg3: taskList![index].taskSubject),
                   // arg3: _taskList[index].templateMasterCode),
                 );
               }
@@ -95,26 +95,26 @@ class TaskListCard extends StatelessWidget {
   }
 
   String taskSubject(int index) {
-    return taskList[index].taskSubject ?? "-";
+    return taskList![index].taskSubject ?? "-";
   }
 
   String taskNoValue(int index) {
-    return taskList[index].taskNo ?? "-";
+    return taskList![index].taskNo ?? "-";
   }
 
   String ownerUserName(int index) {
-    return taskList[index].ownerUserName ?? "-";
+    return taskList![index].ownerUserName ?? "-";
   }
 
   String assigneeDisplayName(int index) {
-    return taskList[index].assigneeDisplayName ?? "-";
+    return taskList![index].assigneeDisplayName ?? "-";
   }
 
   String taskStatusName(int index) {
-    return taskList[index].taskStatusName ?? "-";
+    return taskList![index].taskStatusName ?? "-";
   }
 
   String dueDateDisplay(int index) {
-    return taskList[index].dueDateDisplay ?? "-";
+    return taskList![index].dueDateDisplay ?? "-";
   }
 }

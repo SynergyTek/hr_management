@@ -9,11 +9,11 @@ part 'location_bloc_event.dart';
 part 'location_bloc_state.dart';
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
-  bool _serviceEnabled;
+  late bool _serviceEnabled;
   Location location = new Location();
-  PermissionStatus _permissionGranted;
+  PermissionStatus? _permissionGranted;
 
-  StreamSubscription<LocationData> locationStreamSubscription;
+  StreamSubscription<LocationData>? locationStreamSubscription;
 
   LocationBloc() : super(LocationInitialState());
 

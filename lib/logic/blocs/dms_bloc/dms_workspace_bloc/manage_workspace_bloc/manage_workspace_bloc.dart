@@ -10,11 +10,11 @@ class ManageWorkspaceBloc {
 
   final BehaviorSubject _subject = BehaviorSubject();
   final BehaviorSubject _getAPISubject = BehaviorSubject();
-  final BehaviorSubject<WorkspaceViewResponse> _getWorkspaceSubject =
-      BehaviorSubject<WorkspaceViewResponse>();
+  final BehaviorSubject<WorkspaceViewResponse?> _getWorkspaceSubject =
+      BehaviorSubject<WorkspaceViewResponse?>();
 
   Future postAPIData({
-    @required Map<String, dynamic> queryparams,
+    required Map<String, dynamic> queryparams,
   }) async {
     dynamic response = await _apiRepository.postAPIData(
       queryparams: queryparams,
@@ -25,10 +25,10 @@ class ManageWorkspaceBloc {
     return response;
   }
 
-  Future<WorkspaceViewModel> getAPIData({
-    @required Map<String, dynamic> queryparams,
+  Future<WorkspaceViewModel?> getAPIData({
+    required Map<String, dynamic> queryparams,
   }) async {
-    WorkspaceViewModel response = await _apiRepository.getAPIData(
+    WorkspaceViewModel? response = await _apiRepository.getAPIData(
       queryparams: queryparams,
     );
 
@@ -38,7 +38,7 @@ class ManageWorkspaceBloc {
   }
 
   Future<WorkspaceViewResponse> getWorkspaceData({
-    @required Map<String, dynamic> queryparams,
+    required Map<String, dynamic> queryparams,
   }) async {
     WorkspaceViewResponse response = await _apiRepository.getWorkspaceData(
       queryparams: queryparams,
@@ -50,7 +50,7 @@ class ManageWorkspaceBloc {
   }
 
   Future<WorkspaceViewModel> deleteWorkspace({
-    @required Map<String, dynamic> queryparams,
+    required Map<String, dynamic> queryparams,
   }) async {
     WorkspaceViewModel response = await _apiRepository.deleteWorkspace(
       queryparams: queryparams,
@@ -70,7 +70,7 @@ class ManageWorkspaceBloc {
 
   BehaviorSubject get subject => _subject;
   BehaviorSubject get getAPISubject => _getAPISubject;
-  BehaviorSubject<WorkspaceViewResponse> get getWorkspaceSubject =>
+  BehaviorSubject<WorkspaceViewResponse?> get getWorkspaceSubject =>
       _getWorkspaceSubject;
 }
 

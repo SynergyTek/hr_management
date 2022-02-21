@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 import 'parent_workspace_id_name_list_model.dart';
 
 class ParentWorkspaceIdNameListResponse {
-  String error;
+  String? error;
   List<DMSParentWorkspaceIdNameListModel> data;
 
   ParentWorkspaceIdNameListResponse({
-    @required this.data,
+    required this.data,
   });
 
   ParentWorkspaceIdNameListResponse.fromJson(List response)

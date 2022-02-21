@@ -6,7 +6,7 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   animated_widgets: ^1.1.0
@@ -26,13 +26,12 @@ dependencies:
   flutter_downloader: ^1.6.1
   flutter_form_bloc: ^0.20.4
   flutter_inappwebview: ^5.3.2
-  flutter_simple_treeview: ^2.0.2
+  flutter_simple_treeview: ^3.0.1
   flutter_slidable: ^0.6.0
   flutter_sound: ^8.3.4
   flutter_speed_dial: ^4.1.0
   flutter_staggered_grid_view: ^0.4.0
   flutter_svg: ^0.22.0
-  # geocoder: ^0.2.1
   geolocator: ^7.1.0
   hydrated_bloc: ^7.0.1
   image_picker: ^0.8.2
@@ -53,17 +52,14 @@ dependencies:
   geocoding: ^2.0.2
 
 dev_dependencies:
+  flutter_lints: ^1.0.0
+
   flutter_test:
     sdk: flutter
-  listizer:
-    path: ./listizer
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/formio.html
-    - assets/formio.full.css
-    - assets/formio.full.js
     - assets/images/
     - assets/icons/
 

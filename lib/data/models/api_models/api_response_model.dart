@@ -10,8 +10,8 @@ class APIResponse {
   final String error;
 
   APIResponse({
-    @required this.data,
-    @required this.error,
+    required this.data,
+    required this.error,
   });
 
   APIResponse.fromJson(Map<String, dynamic> json)

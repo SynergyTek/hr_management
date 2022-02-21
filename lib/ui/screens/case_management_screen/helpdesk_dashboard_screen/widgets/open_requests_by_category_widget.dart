@@ -52,7 +52,7 @@ class _OpenRequestsByCategoryWidgetState
       );
   }
 
-  _handleQueryparams({FilterListModel model}) {
+  _handleQueryparams({FilterListModel? model}) {
     if (model == null)
       return {
         'type': 'Category',
@@ -86,12 +86,12 @@ class _OpenRequestsByCategoryWidgetState
     );
   }
 
-  Widget _bodyWidget(List<OpenRequestsByCategoryModel> data) {
+  Widget _bodyWidget(List<OpenRequestsByCategoryModel>? data) {
     if (data == null)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -103,7 +103,7 @@ class _OpenRequestsByCategoryWidgetState
         ..add(
           PieChartData(
             x: element.type,
-            y: element.value.toDouble(),
+            y: element.value!.toDouble(),
           ),
         );
     });
@@ -151,12 +151,12 @@ class _OpenRequestsByCategoryWidgetState
           CaseManagementFilterBottomModalSheetWidget(
         data: data,
       ),
-    ).then((List<FilterListModel> value) {
+    ).then((List<FilterListModel>? value) {
       if (value != null) {
         data = value;
       }
 
-      value.forEach((element) {
+      value!.forEach((element) {
         if (element.isChecked == true) {
           requestChartStatusBloc
             ..getData(
@@ -169,9 +169,9 @@ class _OpenRequestsByCategoryWidgetState
 }
 
 class PieChartData {
-  final String x;
-  final double y;
-  final Color color;
+  final String? x;
+  final double? y;
+  final Color? color;
 
   PieChartData({
     this.x,

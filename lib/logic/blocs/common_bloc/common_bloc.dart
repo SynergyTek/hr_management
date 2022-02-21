@@ -8,17 +8,17 @@ import '../../../data/repositories/common/abstract_common_repo.dart';
 class CommonBloc {
   final CommonRepository _commonRepository = CommonRepository();
 
-  final BehaviorSubject<CommonListResponse> _subjectCommonList =
-      BehaviorSubject<CommonListResponse>();
+  final BehaviorSubject<CommonListResponse?> _subjectCommonList =
+      BehaviorSubject<CommonListResponse?>();
 
-  final BehaviorSubject<OwnerNameListResponse> _subjectOwnerNameList =
-      BehaviorSubject<OwnerNameListResponse>();
+  final BehaviorSubject<OwnerNameListResponse?> _subjectOwnerNameList =
+      BehaviorSubject<OwnerNameListResponse?>();
 
-  final BehaviorSubject<EnumTreeListResponse> _subjectEnumTreeList =
-      BehaviorSubject<EnumTreeListResponse>();
+  final BehaviorSubject<EnumTreeListResponse?> _subjectEnumTreeList =
+      BehaviorSubject<EnumTreeListResponse?>();
 
   getLOVIdNameList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     CommonListResponse response =
         await _commonRepository.getLOVIdNameList(queryparams: queryparams);
@@ -26,7 +26,7 @@ class CommonBloc {
   }
 
   getEnumIdNameList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     CommonListResponse response =
         await _commonRepository.getEnumIdNameList(queryparams: queryparams);
@@ -34,7 +34,7 @@ class CommonBloc {
   }
 
   getUserIdNameList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     CommonListResponse response =
         await _commonRepository.getUserIdNameList(queryparams: queryparams);
@@ -42,7 +42,7 @@ class CommonBloc {
   }
 
   getOwnerIdNameList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     OwnerNameListResponse response =
         await _commonRepository.getOwnerIdNameList(queryparams: queryparams);
@@ -50,7 +50,7 @@ class CommonBloc {
   }
 
   getEnumAsTreeList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     EnumTreeListResponse response =
         await _commonRepository.getEnumAsTreeList(queryparams: queryparams);
@@ -58,7 +58,7 @@ class CommonBloc {
   }
 
   getModuleTreeList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     EnumTreeListResponse response =
         await _commonRepository.getModuleTreeList(queryparams: queryparams);
@@ -71,13 +71,13 @@ class CommonBloc {
     _subjectEnumTreeList.close();
   }
 
-  BehaviorSubject<CommonListResponse> get subjectCommonList =>
+  BehaviorSubject<CommonListResponse?> get subjectCommonList =>
       _subjectCommonList;
 
-  BehaviorSubject<OwnerNameListResponse> get subjectOwnerNameList =>
+  BehaviorSubject<OwnerNameListResponse?> get subjectOwnerNameList =>
       _subjectOwnerNameList;
 
-  BehaviorSubject<EnumTreeListResponse> get subjectEnumTreeList =>
+  BehaviorSubject<EnumTreeListResponse?> get subjectEnumTreeList =>
       _subjectEnumTreeList;
 }
 

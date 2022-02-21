@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 import 'note_index_model.dart';
 
 class NoteIndexResponse {
-  final List<NoteIndexModel> data;
-  String error;
+  final List<NoteIndexModel>? data;
+  String? error;
 
   NoteIndexResponse({
-    @required this.data,
+    required this.data,
   });
 
   NoteIndexResponse.fromJson(List response)

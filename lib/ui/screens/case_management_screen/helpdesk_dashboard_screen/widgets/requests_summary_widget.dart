@@ -52,7 +52,7 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
       );
   }
 
-  _handleQueryparams({FilterListModel model}) {
+  _handleQueryparams({FilterListModel? model}) {
     if (model == null)
       return {
         'type': 'thisweek',
@@ -86,12 +86,12 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
     );
   }
 
-  Widget _bodyWidget(List<CaseManagementModel> data) {
+  Widget _bodyWidget(List<CaseManagementModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -173,12 +173,12 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
           CaseManagementFilterBottomModalSheetWidget(
         data: data,
       ),
-    ).then((List<FilterListModel> value) {
+    ).then((List<FilterListModel>? value) {
       if (value != null) {
         data = value;
       }
 
-      value.forEach((element) {
+      value!.forEach((element) {
         if (element.isChecked == true) {
           helpdeskBox2Bloc
             ..getData(

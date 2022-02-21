@@ -6,7 +6,7 @@ class TagRepository extends AbstractTagRepository {
   final Dio _dio = Dio();
 
   Future<TagCategoryResponseModel> getNTSTagData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.READ_NTS_TAG_DATA;
 
@@ -28,7 +28,7 @@ class TagRepository extends AbstractTagRepository {
   }
 
   Future<TagCategoryResponseModel> getTagCategoriesWithTag({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.READ_TAG_CATEGORIES_WITH_TAG;
 

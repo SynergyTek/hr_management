@@ -7,7 +7,6 @@ import 'package:sizer/sizer.dart';
 
 import '../../../logic/blocs/internet_bloc/internet_bloc.dart';
 import '../../../logic/blocs/location_bloc/location_bloc.dart';
-import '../../../logic/blocs/profile_settings_bloc/profile_settings_bloc.dart';
 import '../../../routes/route_constants.dart';
 import '../../../routes/routes.dart';
 import '../../../themes/app_theme.dart';
@@ -38,10 +37,6 @@ class InitScreen extends StatelessWidget {
             create: (context) => UserModelBloc(),
           ),
 
-          BlocProvider<ProfileSettingsBloc>(
-            create: (context) => ProfileSettingsBloc(),
-          ),
-
           BlocProvider<CutCopyPasteBloc>(
             create: (context) => CutCopyPasteBloc(),
           ),
@@ -55,18 +50,9 @@ class InitScreen extends StatelessWidget {
                 theme: AppTheme.lightTheme,
                 // Dark Theme:
                 darkTheme: AppTheme.darkTheme,
+
                 // ThemeMode:
-                themeMode: context.select(
-                  (ProfileSettingsBloc profileSettingsBloc) {
-                    if (profileSettingsBloc
-                            ?.state?.profileSettingsModel?.isDarkModeEnabled ==
-                        null) return ThemeMode.light;
-                    return profileSettingsBloc
-                            .state.profileSettingsModel.isDarkModeEnabled
-                        ? ThemeMode.dark
-                        : ThemeMode.light;
-                  },
-                ),
+                themeMode: ThemeMode.light,
 
                 // Defining the named routes and declaring the initial route of the application.
                 onGenerateRoute: AppRouter.generateRoute,

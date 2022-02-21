@@ -7,12 +7,12 @@ import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 
 class TagNTSScreen extends StatelessWidget {
-  final NTSType ntsType;
-  final String ntsId;
+  final NTSType? ntsType;
+  final String? ntsId;
 
   const TagNTSScreen({
-    @required this.ntsType,
-    @required this.ntsId,
+    required this.ntsType,
+    required this.ntsId,
   });
 
   @override

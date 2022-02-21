@@ -39,30 +39,30 @@ class ReadTeamDataModel {
     this.portalId,
   });
 
-  int dataAction;
+  int? dataAction;
   dynamic userIds;
   dynamic teamOwnerId;
-  bool isTeamOwner;
+  bool? isTeamOwner;
   dynamic userName;
-  String name;
-  String description;
-  String code;
+  String? name;
+  String? description;
+  String? code;
   dynamic logoId;
   dynamic groupCode;
-  int teamWorkAssignmentType;
-  int teamType;
-  String id;
-  DateTime createdDate;
-  String createdBy;
-  DateTime lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
+  int? teamWorkAssignmentType;
+  int? teamType;
+  String? id;
+  DateTime? createdDate;
+  String? createdBy;
+  DateTime? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
   dynamic sequenceOrder;
-  String companyId;
-  String legalEntityId;
-  int status;
-  int versionNo;
-  String portalId;
+  String? companyId;
+  String? legalEntityId;
+  int? status;
+  int? versionNo;
+  String? portalId;
 
   factory ReadTeamDataModel.fromJson(Map<String, dynamic> json) =>
       ReadTeamDataModel(
@@ -107,9 +107,9 @@ class ReadTeamDataModel {
         "TeamWorkAssignmentType": teamWorkAssignmentType,
         "TeamType": teamType,
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,

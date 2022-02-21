@@ -31,12 +31,12 @@ typedef OnTapPressedCallBack = void Function(
 
 class SelectAttachment extends StatefulWidget {
   final dynamic selectedModel;
-  final NTSType ntstype;
-  final OnTapPressedCallBack onListTap;
-  final String ntsId;
+  final NTSType? ntstype;
+  final OnTapPressedCallBack? onListTap;
+  final String? ntsId;
 
   SelectAttachment({
-    Key key,
+    Key? key,
     this.selectedModel,
     this.ntstype,
     this.onListTap,
@@ -49,24 +49,24 @@ class SelectAttachment extends StatefulWidget {
 class _SelectAttachmentState extends State<SelectAttachment> {
   TextEditingController _descriptionController = new TextEditingController();
   var _formStateKey = GlobalKey<FormState>();
-  String _fileName;
-  String _path;
-  List<String> _paths;
-  FilePickerResult filePickerResult;
-  String _extension;
+  String? _fileName;
+  String? _path;
+  List<String?>? _paths;
+  FilePickerResult? filePickerResult;
+  String? _extension;
   bool _loadingPath = false;
   bool _multiPick = false;
   bool loading = false;
 
-  MediaFileType _pickingType;
-  FileType _fileType;
+  MediaFileType? _pickingType;
+  late FileType _fileType;
   String _documentType = "";
   TextEditingController _controller = new TextEditingController();
   RecordingFormat _recordingFormat = new RecordingFormat();
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
   bool _isBusy = false;
-  XFile _imageFile;
+  XFile? _imageFile;
 
   @override
   void initState() {
@@ -146,16 +146,16 @@ class _SelectAttachmentState extends State<SelectAttachment> {
                                     child: new Scrollbar(
                                         child: new ListView.separated(
                                       itemCount:
-                                          _paths != null && _paths.isNotEmpty
-                                              ? _paths.length
+                                          _paths != null && _paths!.isNotEmpty
+                                              ? _paths!.length
                                               : 1,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         final bool isMultiPath =
-                                            _paths != null && _paths.isNotEmpty;
+                                            _paths != null && _paths!.isNotEmpty;
                                         final String name = 'File $index: ' +
                                             (isMultiPath
-                                                ? _paths.toList()[index]
+                                                ? _paths!.toList()[index]!
                                                 : _fileName ?? '...');
                                         // final path = isMultiPath
                                         //     ? _paths.values
@@ -204,9 +204,9 @@ class _SelectAttachmentState extends State<SelectAttachment> {
   }
 
   _handleNoteDetailsQueryparams({
-    String templatecode,
-    String noteId,
-    String userid,
+    String? templatecode,
+    String? noteId,
+    String? userid,
   }) {
     return {
       'templatecode': templatecode,
@@ -239,7 +239,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
             allowedExtensions: (_extension?.isNotEmpty ?? false)
                 ? _extension?.replaceAll(' ', '')?.split(',')
                 : null);
-        _paths = filePickerResult.paths;
+        _paths = filePickerResult!.paths;
       } else {
         _paths = null;
         filePickerResult = await FilePicker.platform.pickFiles(
@@ -256,17 +256,17 @@ class _SelectAttachmentState extends State<SelectAttachment> {
     setState(() {
       _loadingPath = false;
       _fileName = _path != null
-          ? _path.split('/').last
+          ? _path!.split('/').last
           : _paths != null
               ? _paths.toString()
               : '...';
     });
   }
 
-  Future<Uint8List> _readFileByte(String filePath) async {
+  Future<Uint8List?> _readFileByte(String filePath) async {
     Uri myUri = Uri.parse(filePath);
     File mediaFile = new File.fromUri(myUri);
-    Uint8List bytes;
+    Uint8List? bytes;
     await mediaFile.readAsBytes().then((value) {
       bytes = Uint8List.fromList(value);
     }).catchError((onError) {
@@ -282,8 +282,8 @@ class _SelectAttachmentState extends State<SelectAttachment> {
       setState(() {
         _isBusy = true;
       });
-      Uint8List mediaFileByte;
-      await _readFileByte(_path).then((bytesData) {
+      Uint8List? mediaFileByte;
+      await _readFileByte(_path!).then((bytesData) {
         mediaFileByte = bytesData;
       });
 
@@ -296,27 +296,27 @@ class _SelectAttachmentState extends State<SelectAttachment> {
           _pickingType == MediaFileType.CAPTURE_IMAGE) {
         _documentType = "image";
         post.name = 'Image';
-        createPostModel(post, mediaFileByte);
+        createPostModel(post, mediaFileByte!);
       } else if (_pickingType == MediaFileType.AUDIO ||
           _recordingFormat.type == "Audio") {
         _documentType = "audio";
         post.name = 'Audio';
-        createPostModel(post, mediaFileByte);
+        createPostModel(post, mediaFileByte!);
       } else if (_pickingType == MediaFileType.VIDEO ||
           _recordingFormat.type == "Video") {
         _documentType = "video";
         post.name = 'Video';
-        createPostModel(post, mediaFileByte);
+        createPostModel(post, mediaFileByte!);
         post.fileType = "mp4";
       } else if (_pickingType == MediaFileType.CUSTOM ||
           _pickingType == MediaFileType.ANY) {
         post.name = _fileName;
-        createPostModel(post, mediaFileByte);
+        createPostModel(post, mediaFileByte!);
       }
 
-      String result = await attachmentNTSBloc.postAttachmentDocumentData(
+      String result = await (attachmentNTSBloc.postAttachmentDocumentData(
         attachmentData: post,
-      );
+      ) as FutureOr<String>);
 
       print(result);
       if (result.isNotEmpty) {
@@ -333,7 +333,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
       displaySnackBar(text: resultMsg, context: context);
       // var result = await imageUploadRequest(post, context);
       if (result != null) {
-        widget.onListTap(result, _fileName, _pickingType);
+        widget.onListTap!(result, _fileName, _pickingType);
       }
 
       Navigator.of(context).pop();
@@ -346,7 +346,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
     post.ntsId = widget.ntsId;
     post.userId = context.read<UserModelBloc>().state?.userModel?.id ?? '';
     //'45bba746-3309-49b7-9c03-b5793369d73c';
-    post.fileType = ("." + (_path).split(".")[(_path).split(".").length - 1])
+    post.fileType = ("." + _path!.split(".")[_path!.split(".").length - 1])
         .replaceAll(".", "");
     post.isNtsComments = false;
     // post.ntsId = _ntsId; // only for comments we need to send
@@ -357,12 +357,12 @@ class _SelectAttachmentState extends State<SelectAttachment> {
             : 'NTS_Note';
     post.comment = _descriptionController.text;
     var mediaFile = new VideoFile();
-    mediaFile.fileName = _path.split('/').last;
+    mediaFile.fileName = _path!.split('/').last;
     mediaFile.imageData = "";
     mediaFile.mimeType = mime(_path);
     mediaFile.stringData = base64Encode(mediaFileByte);
     post.images = [];
-    post.images.add(mediaFile);
+    post.images!.add(mediaFile);
   }
 
   void getRecordedAVPath(dynamic value, dynamic value2) {
@@ -374,30 +374,30 @@ class _SelectAttachmentState extends State<SelectAttachment> {
     setState(() {
       _loadingPath = false;
       _fileName = _path != null
-          ? _path.split('/').last
+          ? _path!.split('/').last
           : _paths != null
               ? _paths.toString()
               : '...';
     });
   }
 
-  VideoPlayerController _vcontroller;
+  VideoPlayerController? _vcontroller;
   bool isVideo = false;
   void _onImageButtonPressed(ImageSource source) async {
     if (_vcontroller != null) {
-      await _vcontroller.setVolume(0.0);
+      await _vcontroller!.setVolume(0.0);
     }
     try {
       _imageFile = await ImagePicker().pickImage(
           source: source, maxWidth: 300, maxHeight: 300, imageQuality: 50);
-      _path = _imageFile.path;
+      _path = _imageFile!.path;
       setState(() => _loadingPath = true);
       // print(_path);
       if (!mounted) return;
       setState(() {
         _loadingPath = false;
         _fileName = _path != null
-            ? _path.split('/').last
+            ? _path!.split('/').last
             : _paths != null
                 ? _paths.toString()
                 : '...';
@@ -512,6 +512,6 @@ enum MediaFileType {
 }
 
 class RecordingFormat {
-  String path;
-  String type;
+  String? path;
+  String? type;
 }

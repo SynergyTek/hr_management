@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 class DropdownFormField<T> extends StatelessWidget {
-  final String hint;
+  final String? hint;
   dynamic value;
   final List<T> items;
-  final Function onChanged;
-  final Function validator;
-  final Function onSaved;
+  final Function? onChanged;
+  final Function? validator;
+  final Function? onSaved;
   dynamic initialValue;
-  final bool isExpanded;
-  final Widget prefixWidget;
+  final bool? isExpanded;
+  final Widget? prefixWidget;
 
   DropdownFormField(
       {this.hint,
       dynamic value,
-      this.items,
+      required this.items,
       this.onChanged,
       this.validator,
       dynamic initialValue,
@@ -32,7 +32,7 @@ class DropdownFormField<T> extends StatelessWidget {
       child: FormField<T>(
         initialValue: initialValue,
         onSaved: (val) => onSaved,
-        validator: validator,
+        validator: validator as String? Function(T?)?,
         builder: (FormFieldState<T> state) {
           return InputDecorator(
             decoration: InputDecoration(
@@ -44,11 +44,11 @@ class DropdownFormField<T> extends StatelessWidget {
             child: DropdownButtonHideUnderline(
               child: DropdownButton<T>(
                 value: value,
-                hint: Text(hint == null ? "" : hint),
+                hint: Text(hint == null ? "" : hint!),
                 isDense: true,
                 onChanged: (dynamic newValue) {
                   state.didChange(newValue);
-                  onChanged(newValue);
+                  onChanged!(newValue);
                 },
                 items: items.map((dynamic value) {
                   return DropdownMenuItem<T>(

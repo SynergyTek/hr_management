@@ -10,12 +10,12 @@ import '../../../../logic/blocs/nts_comments/nts_comments_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 class NTSCommentsBody extends StatefulWidget {
-  NTSCommentsBody({Key key, this.ntsType, this.ntsId}) : super(key: key);
-  final NTSType ntsType;
-  final String ntsId;
+  NTSCommentsBody({Key? key, this.ntsType, this.ntsId}) : super(key: key);
+  final NTSType? ntsType;
+  final String? ntsId;
   @override
   _NTSCommentsBodyState createState() => _NTSCommentsBodyState();
 }
@@ -33,7 +33,7 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
 
   TextEditingController _commentController = new TextEditingController();
   PostComment comment = new PostComment();
-  List<Comment> _commentsList = [];
+  List<Comment>? _commentsList = [];
   List<Comment> _filteredCommentsList = [];
   bool isVisible = false;
 
@@ -84,14 +84,14 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                               child: Column(
                                 children: [
                                   Text(
-                                    _commentsList[index].comment,
+                                    _commentsList![index].comment!,
                                     style: TextStyle(
                                         fontSize: 16, color: Colors.black87),
                                     textAlign: TextAlign.left,
                                   ),
                                   Text(
                                     dateformatter.format(DateTime.parse(
-                                        _commentsList[index].commentedDate)),
+                                        _commentsList![index].commentedDate!)),
                                     style: TextStyle(
                                       fontSize: 13,
                                     ),
@@ -100,8 +100,8 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                                   Flexible(
                                     child: Text(
                                       "Commented by: " +
-                                          _commentsList[index]
-                                              .commentedByUserName,
+                                          _commentsList![index]
+                                              .commentedByUserName!,
                                       style: TextStyle(
                                         fontSize: 13,
                                       ),
@@ -116,7 +116,7 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                         ),
                         IconButton(
                           onPressed: () => _handleDeleteOnPressed(
-                            data: _commentsList.elementAt(index),
+                            data: _commentsList!.elementAt(index),
                           ),
                           icon: Icon(
                             Icons.delete_forever_sharp,
@@ -196,7 +196,7 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                       setState(() {
                         isVisible = true;
                       });
-                      String resultMsg = '';
+                      String? resultMsg = '';
                       PostResponse result =
                           await ntsCommentBloc.postCommentData(
                         ntsType: widget.ntsType,
@@ -208,7 +208,7 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                                 ?.id ??
                             '',
                       );
-                      if (result.isSuccess) {
+                      if (result.isSuccess!) {
                         setState(() {
                           isVisible = false;
                         });
@@ -243,7 +243,7 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
   }
 
   _handleDeleteOnPressed({
-    @required Comment data,
+    required Comment data,
   }) {
     ntsCommentBloc
       ..deleteData(

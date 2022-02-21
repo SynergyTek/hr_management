@@ -7,10 +7,10 @@ import 'leave_temp_model.dart';
 /// or returns an error in response.
 class LeaveTempResponse {
   final List<LeaveTemplateModel> data;
-  String error;
+  String? error;
 
   LeaveTempResponse({
-    @required this.data,
+    required this.data,
   });
 
   LeaveTempResponse.fromJson(List response)

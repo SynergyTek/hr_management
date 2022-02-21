@@ -4,7 +4,7 @@ class RequestChartStatusRepository extends AbstractRequestChartStatusRepository 
   final Dio _dio = Dio();
 
   Future<OpenRequestsByCategoryResponse> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     //
     String endpoint = APIEndpointConstants.GET_REQUEST_CHART_STATUS;
@@ -25,21 +25,21 @@ class RequestChartStatusRepository extends AbstractRequestChartStatusRepository 
 
   @override
   Future<bool> deleteAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     throw UnimplementedError();
   }
 
   @override
   Future<OpenRequestsByCategoryResponse> postAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<OpenRequestsByCategoryResponse> putAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }

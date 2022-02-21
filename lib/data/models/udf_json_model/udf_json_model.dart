@@ -9,7 +9,7 @@ class UdfJson {
     this.components,
   });
 
-  List<UdfJsonComponent> components;
+  List<UdfJsonComponent>? components;
 
   factory UdfJson.fromJson(Map<String, dynamic> json) => UdfJson(
         components: List<UdfJsonComponent>.from(
@@ -21,7 +21,7 @@ class UdfJson {
 
   Map<String, dynamic> toJson() => {
         "components": List<UdfJsonComponent>.from(
-          components.map(
+          components!.map(
             (x) => x.toJson(),
           ),
         ),
@@ -47,22 +47,22 @@ class UdfJsonComponent {
       this.udfValue,
       this.disabled});
 
-  String label;
-  List<Columns> columns;
-  String key;
-  String type;
-  Data data;
-  bool input;
-  bool tableView;
-  List<ComponentComponent> components;
-  String title;
-  bool disabled;
-  String idPath;
-  String template;
-  String inputFormat;
-  Validate validate;
-  String value;
-  String udfValue;
+  String? label;
+  List<Columns>? columns;
+  String? key;
+  String? type;
+  Data? data;
+  bool? input;
+  bool? tableView;
+  List<ComponentComponent>? components;
+  String? title;
+  bool? disabled;
+  String? idPath;
+  String? template;
+  String? inputFormat;
+  Validate? validate;
+  String? value;
+  String? udfValue;
 
   factory UdfJsonComponent.fromJson(Map<String, dynamic> json) =>
       UdfJsonComponent(
@@ -95,21 +95,21 @@ class UdfJsonComponent {
         "label": label,
         "columns": columns == null
             ? null
-            : List<Columns>.from(columns.map((x) => x.toJson())),
+            : List<Columns>.from(columns!.map((x) => x.toJson())),
         "key": key,
         "type": type,
         "input": input,
         "tableView": tableView,
         "components": components == null
             ? null
-            : List<ComponentComponent>.from(components.map((x) => x.toJson())),
+            : List<ComponentComponent>.from(components!.map((x) => x.toJson())),
         "title": title == null ? null : title,
-        'data': this.data != null ? this.data.toJson() : null,
+        'data': this.data != null ? this.data!.toJson() : null,
         'idPath': this.idPath,
         'template': this.template,
         'inputFormat': this.inputFormat,
         'validate':
-            this.validate.toJson() != null ? this.validate.toJson() : null,
+            this.validate!.toJson() != null ? this.validate!.toJson() : null,
         'value': this.value,
         'udfValue': this.udfValue,
         'disabled': this.disabled
@@ -126,12 +126,12 @@ class Columns {
     this.size,
   });
 
-  List<ColumnComponent> components;
-  int width;
-  int offset;
-  int push;
-  int pull;
-  String size;
+  List<ColumnComponent>? components;
+  int? width;
+  int? offset;
+  int? push;
+  int? pull;
+  String? size;
 
   factory Columns.fromJson(Map<String, dynamic> json) => Columns(
         components: List<ColumnComponent>.from(
@@ -145,7 +145,7 @@ class Columns {
 
   Map<String, dynamic> toJson() => {
         "components":
-            List<ColumnComponent>.from(components.map((x) => x.toJson())),
+            List<ColumnComponent>.from(components!.map((x) => x.toJson())),
         "width": width,
         "offset": offset,
         "push": push,
@@ -201,50 +201,50 @@ class ColumnComponent {
       this.value,
       this.udfValue});
 
-  String label;
-  bool tableView;
-  String ntsType;
-  List<String> editableContext;
-  List<String> viewableContext;
-  List<String> viewableBy;
-  List<String> editableBy;
-  String key;
-  String type;
-  bool input;
-  bool hideOnChildrenHidden;
-  String columnMetadataId;
-  String format;
-  bool enableMinDateInput;
-  DatePicker datePicker;
-  bool enableMaxDateInput;
-  bool enableTime;
-  String onChangeServerLogic;
-  Validate validate;
-  WidgetClass widget;
-  bool mask;
-  bool spellcheck;
-  bool disabled;
-  bool delimiter;
-  bool requireDecimal;
-  String inputFormat;
-  String loadTable;
-  String parameterCode;
-  String dataSrc;
-  Data data;
-  String valueProperty;
-  String idPath;
-  String template;
-  double selectThreshold;
-  Indexeddb indexeddb;
-  bool isDependantComponent;
-  bool disableLimit;
-  String allTable;
-  String mapId;
-  String mapValue;
-  String rowDataValue;
-  bool autoExpand;
-  String value;
-  String udfValue;
+  String? label;
+  bool? tableView;
+  String? ntsType;
+  List<String>? editableContext;
+  List<String>? viewableContext;
+  List<String>? viewableBy;
+  List<String>? editableBy;
+  String? key;
+  String? type;
+  bool? input;
+  bool? hideOnChildrenHidden;
+  String? columnMetadataId;
+  String? format;
+  bool? enableMinDateInput;
+  DatePicker? datePicker;
+  bool? enableMaxDateInput;
+  bool? enableTime;
+  String? onChangeServerLogic;
+  Validate? validate;
+  WidgetClass? widget;
+  bool? mask;
+  bool? spellcheck;
+  bool? disabled;
+  bool? delimiter;
+  bool? requireDecimal;
+  String? inputFormat;
+  String? loadTable;
+  String? parameterCode;
+  String? dataSrc;
+  Data? data;
+  String? valueProperty;
+  String? idPath;
+  String? template;
+  double? selectThreshold;
+  Indexeddb? indexeddb;
+  bool? isDependantComponent;
+  bool? disableLimit;
+  String? allTable;
+  String? mapId;
+  String? mapValue;
+  String? rowDataValue;
+  bool? autoExpand;
+  String? value;
+  String? udfValue;
 
   ColumnComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
@@ -254,20 +254,20 @@ class ColumnComponent {
       editableContext = (json['editableContext'] != null &&
               json['editableContext'].isNotEmpty)
           ? json['editableContext'].cast<String>()
-          : '';
+          : '' as List<String>?;
     if (json.containsKey('viewableContext'))
       viewableContext = (json['viewableContext'] != null &&
               json['viewableContext'].isNotEmpty)
           ? json['viewableContext'].cast<String>()
-          : '';
+          : '' as List<String>?;
     if (json.containsKey('viewableBy'))
       viewableBy = (json['viewableBy'] != null && json['viewableBy'].isNotEmpty)
           ? json['viewableBy'].cast<String>()
-          : '';
+          : '' as List<String>?;
     if (json.containsKey('editableBy'))
       editableBy = (json['editableBy'] != null && json['editableBy'].isNotEmpty)
           ? json['editableBy'].cast<String>()
-          : '';
+          : '' as List<String>?;
     key = json['key'];
     type = json['type'];
     input = json['input'];
@@ -330,16 +330,16 @@ class ColumnComponent {
     data['format'] = this.format;
     data['enableMinDateInput'] = this.enableMinDateInput;
     if (this.datePicker != null) {
-      data['datePicker'] = this.datePicker.toJson();
+      data['datePicker'] = this.datePicker!.toJson();
     }
     data['enableMaxDateInput'] = this.enableMaxDateInput;
     data['enableTime'] = this.enableTime;
     data['onChangeServerLogic'] = this.onChangeServerLogic;
     if (this.validate != null) {
-      data['validate'] = this.validate.toJson();
+      data['validate'] = this.validate!.toJson();
     }
     if (this.widget != null) {
-      data['widget'] = this.widget.toJson();
+      data['widget'] = this.widget!.toJson();
     }
     data['mask'] = this.mask;
     data['spellcheck'] = this.spellcheck;
@@ -351,14 +351,14 @@ class ColumnComponent {
     data['parameterCode'] = this.parameterCode;
     data['dataSrc'] = this.dataSrc;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     data['valueProperty'] = this.valueProperty;
     data['idPath'] = this.idPath;
     data['template'] = this.template;
     data['selectThreshold'] = this.selectThreshold;
     if (this.indexeddb != null) {
-      data['indexeddb'] = this.indexeddb.toJson();
+      data['indexeddb'] = this.indexeddb!.toJson();
     }
     data['isDependantComponent'] = this.isDependantComponent;
     data['disableLimit'] = this.disableLimit;
@@ -380,9 +380,9 @@ class Data {
     this.headers,
   });
 
-  List<Value> values;
-  String url;
-  List<Header> headers;
+  List<Value>? values;
+  String? url;
+  List<Header>? headers;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         values: json["values"] == null
@@ -394,9 +394,9 @@ class Data {
       );
 
   Map<String, dynamic> toJson() => {
-        "values": List<Header>.from(values.map((x) => x.toJson())),
+        "values": List<Header>.from(values!.map((x) => x.toJson())),
         "url": url,
-        "headers": List<Header>.from(headers.map((x) => x.toJson())),
+        "headers": List<Header>.from(headers!.map((x) => x.toJson())),
       };
 }
 
@@ -406,8 +406,8 @@ class Header {
     this.value,
   });
 
-  String key;
-  String value;
+  String? key;
+  String? value;
 
   factory Header.fromJson(Map<String, dynamic> json) => Header(
         key: json["key"],
@@ -426,8 +426,8 @@ class Value {
     this.value,
   });
 
-  String label;
-  String value;
+  String? label;
+  String? value;
 
   factory Value.fromJson(Map<String, dynamic> json) => Value(
         label: json["label"],
@@ -446,8 +446,8 @@ class DatePicker {
     this.disableWeekdays,
   });
 
-  bool disableWeekends;
-  bool disableWeekdays;
+  bool? disableWeekends;
+  bool? disableWeekdays;
 
   factory DatePicker.fromJson(Map<String, dynamic> json) => DatePicker(
         disableWeekends: json["disableWeekends"],
@@ -465,21 +465,21 @@ class Indexeddb {
     this.filter,
   });
 
-  Filter filter;
+  Filter? filter;
 
   factory Indexeddb.fromJson(Map<String, dynamic> json) => Indexeddb(
         filter: Filter.fromJson(json["filter"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "filter": filter.toJson(),
+        "filter": filter!.toJson(),
       };
 }
 
 class Filter {
   Filter();
 
-  factory Filter.fromJson(Map<String, dynamic> json) => Filter();
+  factory Filter.fromJson(Map<String, dynamic>? json) => Filter();
 
   Map<String, dynamic> toJson() => {};
 }
@@ -490,8 +490,8 @@ class Validate {
     this.onlyAvailableItems,
   });
 
-  bool required;
-  bool onlyAvailableItems;
+  bool? required;
+  bool? onlyAvailableItems;
 
   factory Validate.fromJson(Map<String, dynamic> json) => Validate(
         required: json["required"] == null ? null : json["required"],
@@ -527,21 +527,21 @@ class WidgetClass {
     this.maxDate,
   });
 
-  String type;
-  String displayInTimezone;
-  String locale;
-  bool useLocaleSettings;
-  bool allowInput;
-  String mode;
-  bool enableTime;
-  bool noCalendar;
-  String format;
-  int hourIncrement;
-  int minuteIncrement;
-  bool time24Hr;
+  String? type;
+  String? displayInTimezone;
+  String? locale;
+  bool? useLocaleSettings;
+  bool? allowInput;
+  String? mode;
+  bool? enableTime;
+  bool? noCalendar;
+  String? format;
+  int? hourIncrement;
+  int? minuteIncrement;
+  bool? time24Hr;
   dynamic minDate;
-  bool disableWeekends;
-  bool disableWeekdays;
+  bool? disableWeekends;
+  bool? disableWeekdays;
   dynamic maxDate;
 
   factory WidgetClass.fromJson(Map<String, dynamic> json) => WidgetClass(
@@ -584,25 +584,25 @@ class WidgetClass {
 }
 
 class ComponentComponent {
-  String label;
-  bool tableView;
-  String ntsType;
-  List<String> editableContext;
-  List<String> viewableContext;
-  List<String> viewableBy;
-  List<String> editableBy;
-  String key;
-  String type;
-  bool input;
-  bool disabled;
-  String columnMetadataId;
-  bool autoExpand;
-  Validate validate;
-  String value;
-  String udfValue;
-  String template;
-  String idPath;
-  Data data;
+  String? label;
+  bool? tableView;
+  String? ntsType;
+  List<String>? editableContext;
+  List<String>? viewableContext;
+  List<String>? viewableBy;
+  List<String>? editableBy;
+  String? key;
+  String? type;
+  bool? input;
+  bool? disabled;
+  String? columnMetadataId;
+  bool? autoExpand;
+  Validate? validate;
+  String? value;
+  String? udfValue;
+  String? template;
+  String? idPath;
+  Data? data;
 
   ComponentComponent({
     this.label,
@@ -633,19 +633,19 @@ class ComponentComponent {
     if (json.containsKey('editableContext'))
       editableContext = (json['editableContext'] != null )
           ? json['editableContext'].cast<String>()
-          : '';
+          : '' as List<String>?;
     if (json.containsKey('viewableContext'))
       viewableContext = (json['viewableContext'] != null )
           ? json['viewableContext'].cast<String>()
-          : '';
+          : '' as List<String>?;
     if (json.containsKey('viewableBy'))
       viewableBy = (json['viewableBy'] != null )
           ? json['viewableBy'].cast<String>()
-          : '';
+          : '' as List<String>?;
     if (json.containsKey('editableBy'))
       editableBy = (json['editableBy'] != null )
           ? json['editableBy'].cast<String>()
-          : '';
+          : '' as List<String>?;
            data= json['data'] != null ? Data.fromJson(json['data']) : null;
     disabled = json['disabled'] ?? false;
     key = json['key'];
@@ -677,10 +677,10 @@ class ComponentComponent {
     data['columnMetadataId'] = this.columnMetadataId;
     data['autoExpand'] = this.autoExpand;
     if (this.validate != null) {
-      data['validate'] = this.validate.toJson();
+      data['validate'] = this.validate!.toJson();
     }
      if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     data['value'] = this.value;
     data['udfValue'] = this.udfValue;

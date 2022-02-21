@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 import 'attendance_view_models.dart';
 
 class AttendanceViewResponse {
-  String error;
+  String? error;
   List<AttendanceViewModel> data;
 
   AttendanceViewResponse({
-    @required this.data,
+    required this.data,
   });
 
   AttendanceViewResponse.fromJson(List response)

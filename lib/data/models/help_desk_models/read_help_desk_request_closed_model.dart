@@ -31,18 +31,18 @@ class ReadHelpDeskRequestClosedModel {
 
   dynamic id;
   dynamic name;
-  double inProgress;
-  double draft;
-  double overDue;
-  double completed;
+  double? inProgress;
+  double? draft;
+  double? overDue;
+  double? completed;
   dynamic templateCode;
   dynamic templateName;
   dynamic priority;
   dynamic categoryCode;
-  double count;
-  String day;
-  double violated;
-  double nonViolated;
+  double? count;
+  String? day;
+  double? violated;
+  double? nonViolated;
   dynamic dueDate;
 
   factory ReadHelpDeskRequestClosedModel.fromJson(Map<String, dynamic> json) =>

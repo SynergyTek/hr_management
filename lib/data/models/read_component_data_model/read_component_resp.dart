@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'read_component_data_model.dart';
 
 class ReadComponentResponse {
-  bool isSuccess;
-  List<ReadComponentResultDataModel> list;
-  String error;
+  bool? isSuccess;
+  List<ReadComponentResultDataModel>? list;
+  String? error;
 
   ReadComponentResponse({
-    @required this.list,
+    required this.list,
   });
 
   ReadComponentResponse.fromJson(List response)

@@ -11,10 +11,10 @@ abstract class AbstractManageNewFolderRepository {
   AbstractManageNewFolderRepository();
 
   Future<dynamic> postAPIData({
-    @required Map<String, dynamic> queryparams,
+    required Map<String, dynamic> queryparams,
   });
 
    Future<NoteModel> getAPIData({
-    @required Map<String, dynamic> queryparams,
+    required Map<String, dynamic> queryparams,
   });
 }

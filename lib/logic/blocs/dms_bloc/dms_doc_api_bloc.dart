@@ -11,13 +11,13 @@ class DMSDocBloc {
   final BehaviorSubject<DMSFilesResponse> _subjectDMSGetFilesResponse =
       BehaviorSubject<DMSFilesResponse>();
 
-  final BehaviorSubject<DMSFilesResponse> _subjectDMSGetFilesChildResponse =
-      BehaviorSubject<DMSFilesResponse>();
+  final BehaviorSubject<DMSFilesResponse?> _subjectDMSGetFilesChildResponse =
+      BehaviorSubject<DMSFilesResponse?>();
 
   /// Used to fetch new entries.
   postGetDMSFilesData({
-    Map<String, dynamic> queryparams,
-    @required DmsPostModel dmsPostModel,
+    Map<String, dynamic>? queryparams,
+    required DmsPostModel dmsPostModel,
   }) async {
     DMSFilesResponse response = await _dmsRepository.getDMSFilesData(
       queryparams: queryparams,
@@ -29,8 +29,8 @@ class DMSDocBloc {
 
   /// Used to fetch new entries.
   postGetDMSFilesChildData(
-      {Map<String, dynamic> queryparams,
-      @required DmsPostModel dmsPostModel}) async {
+      {Map<String, dynamic>? queryparams,
+      required DmsPostModel dmsPostModel}) async {
     DMSFilesResponse response = await _dmsRepository.getDMSFilesChildData(
         queryparams: queryparams, dmsPostModel: dmsPostModel);
 
@@ -44,7 +44,7 @@ class DMSDocBloc {
 
   BehaviorSubject<DMSFilesResponse> get subjectDMSGetFilesResponse =>
       _subjectDMSGetFilesResponse;
-  BehaviorSubject<DMSFilesResponse> get subjectDMSGetFilesChildResponse =>
+  BehaviorSubject<DMSFilesResponse?> get subjectDMSGetFilesChildResponse =>
       _subjectDMSGetFilesChildResponse;
 }
 

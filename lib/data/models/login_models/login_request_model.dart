@@ -1,6 +1,6 @@
 class LoginRequestModel {
-  String email;
-  String password;
+  String? email;
+  String? password;
 
   LoginRequestModel({
     this.email,

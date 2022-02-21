@@ -1,9 +1,9 @@
 import 'common_list_model.dart';
 
 class CommonListResponse {
-  bool isSuccess;
-  List<CommonListModel> list;
-  String error;
+  bool? isSuccess;
+  List<CommonListModel>? list;
+  String? error;
 
   CommonListResponse({this.list});
 

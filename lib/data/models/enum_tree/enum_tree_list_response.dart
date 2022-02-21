@@ -1,9 +1,9 @@
 import 'enum_tree_list_model.dart';
 
 class EnumTreeListResponse {
-  bool isSuccess;
-  List<EnumTreeListModel> list;
-  String error;
+  bool? isSuccess;
+  List<EnumTreeListModel>? list;
+  String? error;
 
   EnumTreeListResponse({this.list});
 

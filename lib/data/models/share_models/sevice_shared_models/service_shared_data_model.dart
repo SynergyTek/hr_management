@@ -40,10 +40,10 @@ class ServiceSharedDataModel {
         this.portalId,
     });
 
-    String name;
+    String? name;
     dynamic photoId;
-    String type;
-    bool isSharingEnabled;
+    String? type;
+    bool? isSharingEnabled;
     dynamic serviceSharedWithTypeId;
     dynamic serviceSharedWithType;
     dynamic sharedWithUserId;
@@ -54,19 +54,19 @@ class ServiceSharedDataModel {
     dynamic sharedBy;
     dynamic ntsServiceId;
     dynamic ntsService;
-    DateTime sharedDate;
-    String id;
-    DateTime createdDate;
+    DateTime? sharedDate;
+    String? id;
+    DateTime? createdDate;
     dynamic createdBy;
-    DateTime lastUpdatedDate;
+    DateTime? lastUpdatedDate;
     dynamic lastUpdatedBy;
-    bool isDeleted;
+    bool? isDeleted;
     dynamic sequenceOrder;
     dynamic companyId;
     dynamic legalEntityId;
-    int dataAction;
-    int status;
-    int versionNo;
+    int? dataAction;
+    int? status;
+    int? versionNo;
     dynamic portalId;
 
     factory ServiceSharedDataModel.fromJson(Map<String, dynamic> json) => ServiceSharedDataModel(
@@ -115,11 +115,11 @@ class ServiceSharedDataModel {
         "SharedBy": sharedBy,
         "NtsServiceId": ntsServiceId,
         "NtsService": ntsService,
-        "SharedDate": sharedDate.toIso8601String(),
+        "SharedDate": sharedDate!.toIso8601String(),
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,

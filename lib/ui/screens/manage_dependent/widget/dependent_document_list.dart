@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import '../../../../data/models/dependent/dependent_doc_req_model.dart';
 import '../../../../logic/blocs/dependent_bloc/dependent_api_bloc.dart';
@@ -16,7 +16,7 @@ class DependentDocumentList extends StatefulWidget {
 }
 
 class _DependentDocumentListState extends State<DependentDocumentList> {
-  List<DependentDocReqListModel> _dependnetDocReqList = [];
+  List<DependentDocReqListModel>? _dependnetDocReqList = [];
   List<DependentDocReqListModel> _filteredDependnetDocReqList = [];
 
   @override
@@ -64,11 +64,11 @@ class _DependentDocumentListState extends State<DependentDocumentList> {
     );
   }
 
-  _dependentDocListCard({int index}) {
+  _dependentDocListCard({required int index}) {
     return Card(
       elevation: 4,
       child: ListTile(
-        title: Text(_dependnetDocReqList[index].documentType),
+        title: Text(_dependnetDocReqList![index].documentType!),
         subtitle: Column(
           children: [
             Padding(
@@ -79,7 +79,7 @@ class _DependentDocumentListState extends State<DependentDocumentList> {
                   Row(
                     children: <Widget>[
                       Text("Service No: "),
-                      Text(_dependnetDocReqList[index].serviceNo),
+                      Text(_dependnetDocReqList![index].serviceNo!),
                     ],
                   )
                 ],
@@ -89,12 +89,12 @@ class _DependentDocumentListState extends State<DependentDocumentList> {
               children: [
                 Expanded(
                   child: Text(
-                    _dependnetDocReqList[index].status,
+                    _dependnetDocReqList![index].status!,
                     style: TextStyle(color: Colors.green[800]),
                   ),
                 ),
                 Text(
-                  _dependnetDocReqList[index]
+                  _dependnetDocReqList![index]
                       .issueDate
                       .toString()
                       .split(' ')[0],
@@ -109,8 +109,8 @@ class _DependentDocumentListState extends State<DependentDocumentList> {
             context,
             CREATE_SERVICE_ROUTE,
             arguments: ScreenArguments(
-              arg1: _dependnetDocReqList[index].templateCode,
-              arg2: _dependnetDocReqList[index].serviceId,
+              arg1: _dependnetDocReqList![index].templateCode,
+              arg2: _dependnetDocReqList![index].serviceId,
               arg3: '',
               val1: false,
             ),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SelectTextField extends StatelessWidget {
-  final String title;
-  final void Function(BuildContext) callBack;
-  final bool isShowArrow;
-  final String hint;
-  final String validationMessage;
-  final TextEditingController controller;
-  final Widget prefixIcon;
-  final FormFieldValidator<String> validator;
+  final String? title;
+  final void Function(BuildContext)? callBack;
+  final bool? isShowArrow;
+  final String? hint;
+  final String? validationMessage;
+  final TextEditingController? controller;
+  final Widget? prefixIcon;
+  final FormFieldValidator<String>? validator;
 
   const SelectTextField(
       {this.title,
@@ -37,17 +37,17 @@ class SelectTextField extends StatelessWidget {
                 prefixIcon:
                     prefixIcon != null ? prefixIcon : Icon(Icons.select_all),
                 suffixIcon:
-                    isShowArrow ? Icon(Icons.keyboard_arrow_right) : null,
+                    isShowArrow! ? Icon(Icons.keyboard_arrow_right) : null,
                 // filled: true,
-                labelText: "Select " + title,
-                hintText: "Select " + hint,
+                labelText: "Select " + title!,
+                hintText: "Select " + hint!,
                 errorStyle: TextStyle(fontSize: 12.0)),
             maxLines: 1,
             validator: validator != null
                 ? validator
-                : (String value) => value.isEmpty ? validationMessage : null,
-            onSaved: (String value) {
-              controller.text = value;
+                : ((String value) => value.isEmpty ? validationMessage : null) as String? Function(String?)?,
+            onSaved: (String? value) {
+              controller!.text = value!;
             },
           ),
           Visibility(
@@ -56,7 +56,7 @@ class SelectTextField extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
-                callBack(context);
+                callBack!(context);
               },
             ),
           )
@@ -67,13 +67,13 @@ class SelectTextField extends StatelessWidget {
 }
 
 class SelectDateField extends StatelessWidget {
-  final void Function() callBack;
-  final bool isShowArrow;
-  final String hint;
-  final String validationMessage;
-  final TextEditingController controller;
-  final Widget prefixIcon;
-  final FormFieldValidator<String> validator;
+  final void Function()? callBack;
+  final bool? isShowArrow;
+  final String? hint;
+  final String? validationMessage;
+  final TextEditingController? controller;
+  final Widget? prefixIcon;
+  final FormFieldValidator<String>? validator;
 
   const SelectDateField(
       {this.callBack,
@@ -121,18 +121,18 @@ class SelectDateField extends StatelessWidget {
 }
 
 class StaticField extends StatelessWidget {
-  final void Function() callBack;
-  final bool isShowArrow;
-  final String hint;
-  final String validationMessage;
-  final String initialValue;
-  final Widget prefixIcon;
-  final FormFieldValidator<String> validator;
-  final double width;
-  final TextEditingController controller;
-  final Icon icon;
-  final TextStyle style;
-  final Color color;
+  final void Function()? callBack;
+  final bool? isShowArrow;
+  final String? hint;
+  final String? validationMessage;
+  final String? initialValue;
+  final Widget? prefixIcon;
+  final FormFieldValidator<String>? validator;
+  final double? width;
+  final TextEditingController? controller;
+  final Icon? icon;
+  final TextStyle? style;
+  final Color? color;
 
   const StaticField({
     this.callBack,
@@ -180,13 +180,13 @@ class StaticField extends StatelessWidget {
 }
 
 class ExpandableField extends StatelessWidget {
-  final TextEditingController controller;
-  final String title;
-  final List<Widget> children;
+  final TextEditingController? controller;
+  final String? title;
+  final List<Widget>? children;
   // final String hint;
-  final Key key;
-  final bool isTileExpanded;
-  final ValueChanged valueChanged;
+  final Key? key;
+  final bool? isTileExpanded;
+  final ValueChanged? valueChanged;
 
   const ExpandableField(
       {this.controller,
@@ -206,17 +206,17 @@ class ExpandableField extends StatelessWidget {
         child: ExpansionTile(
             initiallyExpanded: false,
             // leading: Icon(Icons.calendar_today_sharp),
-            trailing: isTileExpanded
+            trailing: isTileExpanded!
                 ? Icon(Icons.keyboard_arrow_down)
                 : Icon(Icons.keyboard_arrow_up),
             onExpansionChanged: (bool isexpand) {
-              valueChanged(isexpand);
+              valueChanged!(isexpand);
             },
             title: Text(
               "Dates Detail",
               style: TextStyle(color: Theme.of(context).primaryColor),
             ),
-            children: children),
+            children: children!),
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hr_management/data/lists/lists.dart';
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
-import 'package:listizer/listizer.dart';
+import '../../../../listizer/listizer.dart';
 
 import 'package:hr_management/data/models/dms/permission/permission_response_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
@@ -12,15 +12,15 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 class DMSViewPermissionBody extends StatefulWidget {
-  final String noteId;
-  final String parentId;
-  final String workspaceId;
-  final bool isManagePermission;
-  final List<String> path;
+  final String? noteId;
+  final String? parentId;
+  final String? workspaceId;
+  final bool? isManagePermission;
+  final List<String?>? path;
 
   const DMSViewPermissionBody({
-    @required this.noteId,
-    @required this.isManagePermission,
+    required this.noteId,
+    required this.isManagePermission,
     this.parentId,
     this.workspaceId,
     this.path,
@@ -31,9 +31,9 @@ class DMSViewPermissionBody extends StatefulWidget {
 }
 
 class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
-  List<Permission> _permission = [];
+  List<Permission>? _permission = [];
   List<Permission> _filteredPermissionList = [];
-  SlidableController _slidableController;
+  SlidableController? _slidableController;
 
   @override
   void initState() {
@@ -49,12 +49,12 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
-      child: StreamBuilder<PermissionResponse>(
+      child: StreamBuilder<PermissionResponse?>(
         stream: permissionBloc.subject.stream,
-        builder: (context, AsyncSnapshot<PermissionResponse> snapshot) {
+        builder: (context, AsyncSnapshot<PermissionResponse?> snapshot) {
           print("Snapshot data: ${snapshot.data}");
           if (snapshot.hasData) {
-            if (snapshot.data == null || snapshot.data.data.length == 0) {
+            if (snapshot.data == null || snapshot.data!.data!.length == 0) {
               return Column(
                 children: [
                   _breadCrumb(),
@@ -62,7 +62,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                 ],
               );
             }
-            _permission = snapshot.data.data;
+            _permission = snapshot.data!.data;
             return Column(
               children: [
                 _breadCrumb(),
@@ -71,7 +71,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                     listItems: _permission,
                     filteredSearchList: _filteredPermissionList,
                     itemBuilder: (context, index) {
-                      return widget.isManagePermission
+                      return widget.isManagePermission!
                           ? _slidablePermissionCard(index)
                           : _permissionCard(index: index, onTap: () {});
                     },
@@ -91,7 +91,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
 
   _slidablePermissionCard(int index) {
     return Slidable(
-      key: Key(_permission[index].permittedUserId),
+      key: Key(_permission![index].permittedUserId!),
       controller: _slidableController,
       actionPane: SlidableStrechActionPane(),
       direction: Axis.horizontal,
@@ -109,7 +109,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
     );
   }
 
-  _permissionCard({int index, Function onTap}) {
+  _permissionCard({required int index, Function? onTap}) {
     return Card(
       elevation: 4,
       child: ListTile(
@@ -121,8 +121,8 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
           children: [
             Text("User/Permission Group"),
             Text(
-              _permission[index].permittedUserId != null
-                  ? _permission[index].permittedUserId
+              _permission![index].permittedUserId != null
+                  ? _permission![index].permittedUserId!
                   : "",
               maxLines: 2,
               style: Theme.of(context).textTheme.headline6,
@@ -139,8 +139,8 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                   children: <Widget>[
                     Row(children: <Widget>[
                       Text("Type: "),
-                      Text(_permission[index].permissionType != null
-                          ? dmsPermissionType[_permission[index].permissionType]
+                      Text(_permission![index].permissionType != null
+                          ? dmsPermissionType[_permission![index].permissionType!]!
                           : "-"),
                     ])
                   ]),
@@ -152,8 +152,8 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                   children: <Widget>[
                     Row(children: <Widget>[
                       Text("Access: "),
-                      Text(_permission[index].access != null
-                          ? dmsAccessType[_permission[index].access]
+                      Text(_permission![index].access != null
+                          ? dmsAccessType[_permission![index].access!]!
                           : "-"),
                     ])
                   ]),
@@ -165,15 +165,15 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                   children: <Widget>[
                     Row(children: <Widget>[
                       Text("Applies To: "),
-                      Text(_permission[index].appliesTo != null
-                          ? dmsAppliesToType[_permission[index].appliesTo]
+                      Text(_permission![index].appliesTo != null
+                          ? dmsAppliesToType[_permission![index].appliesTo!]!
                           : "-"),
                     ])
                   ]),
             ),
           ],
         ),
-        onTap: onTap,
+        onTap: onTap as void Function()?,
       ),
     );
   }
@@ -201,8 +201,8 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                 Navigator.of(context).pop(); //Pop dialog box
                 permissionBloc
                   ..deletePermission(
-                      queryparams: {"Id": "${_permission[index].id}"},
-                      noteId: _permission[index].noteId);
+                      queryparams: {"Id": "${_permission![index].id}"},
+                      noteId: _permission![index].noteId);
               },
             ),
           ],
@@ -224,10 +224,10 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
           ]),
       padding: EdgeInsets.all(8),
       child: BreadCrumb.builder(
-        itemCount: widget.path.length,
+        itemCount: widget.path!.length,
         builder: (index) {
           return BreadCrumbItem(
-            content: Text(widget.path[index]),
+            content: Text(widget.path![index]!),
             borderRadius: BorderRadius.circular(4),
             padding: EdgeInsets.all(4),
             onTap: () {},

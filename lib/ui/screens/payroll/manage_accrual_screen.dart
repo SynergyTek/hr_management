@@ -6,7 +6,7 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widget/manage_accrual_body.dart';
 
 class ManageAccrualScreen extends StatelessWidget {
-  const ManageAccrualScreen({Key key}) : super(key: key);
+  const ManageAccrualScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

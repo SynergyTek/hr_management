@@ -5,11 +5,11 @@ import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 
 class DMSTaskListCard extends StatelessWidget {
-  final bool onTap;
-  final int index;
-  final List<TaskListModel> taskList;
+  final bool? onTap;
+  final int? index;
+  final List<TaskListModel>? taskList;
 
-  const DMSTaskListCard({Key key, this.onTap, this.index, this.taskList})
+  const DMSTaskListCard({Key? key, this.onTap, this.index, this.taskList})
       : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class DMSTaskListCard extends StatelessWidget {
       elevation: 4,
       child: ListTile(
         title: Text(
-          taskSubject(index),
+          taskSubject(index!),
           maxLines: 2,
           style: Theme.of(context).textTheme.headline6,
         ),
@@ -33,12 +33,12 @@ class DMSTaskListCard extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Text("Ticket No: "),
-                        Text(taskNoValue(index)),
+                        Text(taskNoValue(index!)),
                       ],
                     ),
                   ),
                   Text(
-                    taskStatusName(index),
+                    taskStatusName(index!),
                     style: TextStyle(color: Colors.green[800]),
                   ),
                 ],
@@ -49,7 +49,7 @@ class DMSTaskListCard extends StatelessWidget {
                 Text("Requested By: "),
                 Flexible(
                   child: Text(
-                    ownerUserName(index),
+                    ownerUserName(index!),
                     style: TextStyle(color: Colors.deepPurple[900]),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -61,7 +61,7 @@ class DMSTaskListCard extends StatelessWidget {
                 Text("Assigned To: "),
                 Flexible(
                   child: Text(
-                    assigneeDisplayName(index),
+                    assigneeDisplayName(index!),
                     style: TextStyle(color: Colors.deepPurple[900]),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -75,7 +75,7 @@ class DMSTaskListCard extends StatelessWidget {
                     children: [
                       Text('Start Date: '),
                       Text(
-                        startDateDisplay(index),
+                        startDateDisplay(index!),
                         style: TextStyle(color: Colors.red[700]),
                       ),
                     ],
@@ -86,7 +86,7 @@ class DMSTaskListCard extends StatelessWidget {
                     children: [
                       Text('Due Date: '),
                       Text(
-                        dueDateDisplay(index),
+                        dueDateDisplay(index!),
                         style: TextStyle(color: Colors.red[700]),
                       ),
                     ],
@@ -103,8 +103,8 @@ class DMSTaskListCard extends StatelessWidget {
             CREATE_EDIT_TASK_ROUTE,
             arguments: ScreenArguments(
                 arg1: '',
-                arg2: taskList[index].id,
-                arg3: taskList[index].taskSubject),
+                arg2: taskList![index!].id,
+                arg3: taskList![index!].taskSubject),
             // arg3: _taskList[index].templateMasterCode),
           );
         },
@@ -113,30 +113,30 @@ class DMSTaskListCard extends StatelessWidget {
   }
 
   String taskSubject(int index) {
-    return taskList[index].taskSubject ?? "-";
+    return taskList![index].taskSubject ?? "-";
   }
 
   String taskNoValue(int index) {
-    return taskList[index].taskNo ?? "-";
+    return taskList![index].taskNo ?? "-";
   }
 
   String ownerUserName(int index) {
-    return taskList[index].ownerUserName ?? "-";
+    return taskList![index].ownerUserName ?? "-";
   }
 
   String assigneeDisplayName(int index) {
-    return taskList[index].assigneeDisplayName ?? "-";
+    return taskList![index].assigneeDisplayName ?? "-";
   }
 
   String taskStatusName(int index) {
-    return taskList[index].taskStatusName ?? "-";
+    return taskList![index].taskStatusName ?? "-";
   }
 
   String startDateDisplay(int index) {
-    return taskList[index].displayStartDate ?? "-";
+    return taskList![index].displayStartDate ?? "-";
   }
 
   String dueDateDisplay(int index) {
-    return taskList[index].displayDueDate ?? "-";
+    return taskList![index].displayDueDate ?? "-";
   }
 }

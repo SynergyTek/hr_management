@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/data/models/dms/permission/permission_response_model.dart';
 import 'package:hr_management/data/repositories/dms_repository/document_permission_repository/document_permission_repository.dart';
@@ -7,12 +9,12 @@ class PermissionBloc {
   final DocumentPermissionRepository _apiRepository =
       DocumentPermissionRepository();
 
-  final BehaviorSubject<PermissionResponse> _subject = BehaviorSubject();
+  final BehaviorSubject<PermissionResponse?> _subject = BehaviorSubject();
   final BehaviorSubject<ViewPermissionResponse> _viewPermissionSubject =
       BehaviorSubject();
 
   getViewPermissionData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     ViewPermissionResponse response =
         await _apiRepository.getViewPermissionData(
@@ -24,7 +26,7 @@ class PermissionBloc {
   }
 
   getPermissionDetails({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     PermissionResponse response = await _apiRepository.getPermissionDetails(
       queryparams: queryparams,
@@ -33,8 +35,8 @@ class PermissionBloc {
     _subject.sink.add(response);
   }
 
-  Future<String> disableParentPermission({
-    Map<String, dynamic> queryparams,
+  Future<String?> disableParentPermission({
+    Map<String, dynamic>? queryparams,
   }) async {
     ViewPermissionResponse response =
         await _apiRepository.disableParentPermission(
@@ -45,12 +47,12 @@ class PermissionBloc {
   }
 
   deletePermission({
-    Map<String, dynamic> queryparams,
-    String noteId,
+    Map<String, dynamic>? queryparams,
+    String? noteId,
   }) async {
-    bool response = await _apiRepository.deletePermission(
+    bool response = await (_apiRepository.deletePermission(
       queryparams: queryparams,
-    );
+    ) as FutureOr<bool>);
 
     if (response) {
       permissionBloc.subject.sink.add(null);
@@ -60,7 +62,7 @@ class PermissionBloc {
     }
   }
 
-  savePermission({PermissionSubmitModel permissionModel}) async {
+  savePermission({required PermissionSubmitModel permissionModel}) async {
     SubmitPermissionResponse response = await _apiRepository.savePermission(
       permissionModel: permissionModel,
     );
@@ -78,7 +80,7 @@ class PermissionBloc {
     _viewPermissionSubject.close();
   }
 
-  BehaviorSubject<PermissionResponse> get subject => _subject;
+  BehaviorSubject<PermissionResponse?> get subject => _subject;
 }
 
 final permissionBloc = PermissionBloc();

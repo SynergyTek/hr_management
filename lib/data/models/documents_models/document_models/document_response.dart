@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 import 'document_model.dart';
 
 class DocumentResponse {
-  final List<DocumentModel> data;
-  String error;
+  final List<DocumentModel>? data;
+  String? error;
 
   DocumentResponse({
-    @required this.data,
+    required this.data,
   });
 
   DocumentResponse.fromJson(Map<String, dynamic> response)

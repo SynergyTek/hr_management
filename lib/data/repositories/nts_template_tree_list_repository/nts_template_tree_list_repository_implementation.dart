@@ -8,7 +8,7 @@ class NTSTemplateTreeListRepository
 
   Future<NTSTemplateTreeListResponse> getAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     String endpoint = APIEndpointConstants.WORKLIST_DASHBOARD_TREE_LIST_DATA;
 
@@ -28,21 +28,21 @@ class NTSTemplateTreeListRepository
 
   @override
   Future<NTSTemplateTreeListResponse> deleteAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     // TODO: implement deleteAPIData
     throw UnimplementedError();
   }
 
   @override
   Future<NTSTemplateTreeListResponse> postAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     // TODO: implement postAPIData
     throw UnimplementedError();
   }
 
   @override
   Future<NTSTemplateTreeListResponse> putAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     // TODO: implement putAPIData
     throw UnimplementedError();
   }

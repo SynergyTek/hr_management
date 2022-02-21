@@ -22,8 +22,8 @@ class ShareBloc {
       BehaviorSubject<NoteSharedDataResponse>();
 
   getNTSSharedData({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     if (ntsType == NTSType.service) {
       ServiceSharedDataResponse response =
@@ -41,8 +41,8 @@ class ShareBloc {
   }
 
   deleteNTSSharedData({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     if (ntsType == NTSType.service) {
       // ServiceSharedDataResponse response =
@@ -59,23 +59,23 @@ class ShareBloc {
     }
   }
 
-  Future<PostResponse> postNTSSharedData({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
-    NoteSharePostModel noteData,
-    TaskSharePostModel taskData,
-    ServiceSharePostModel serviceData,
+  Future<PostResponse?> postNTSSharedData({
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
+    NoteSharePostModel? noteData,
+    TaskSharePostModel? taskData,
+    ServiceSharePostModel? serviceData,
   }) async {
-    PostResponse response;
+    PostResponse? response;
     if (ntsType == NTSType.service) {
       response = await _shareRepository.postShareService(
-          queryparams: queryparams, data: serviceData);
+          queryparams: queryparams, data: serviceData!);
     } else if (ntsType == NTSType.task) {
       response = await _shareRepository.postShareTask(
-          queryparams: queryparams, data: taskData);
+          queryparams: queryparams, data: taskData!);
     } else if (ntsType == NTSType.note) {
       response = await _shareRepository.postShareNote(
-          queryparams: queryparams, data: noteData);
+          queryparams: queryparams, data: noteData!);
     }
     return response;
   }

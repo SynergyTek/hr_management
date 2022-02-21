@@ -7,12 +7,12 @@ class NoteIndexBloc {
   final NoteIndexRepository _apiRepository = NoteIndexRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<NoteIndexResponse> _subject =
-      BehaviorSubject<NoteIndexResponse>();
+  final BehaviorSubject<NoteIndexResponse?> _subject =
+      BehaviorSubject<NoteIndexResponse?>();
 
   /// Used to fetch new entries.
   getData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     NoteIndexResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,
@@ -45,7 +45,7 @@ class NoteIndexBloc {
     _subject.close();
   }
 
-  BehaviorSubject<NoteIndexResponse> get subject => _subject;
+  BehaviorSubject<NoteIndexResponse?> get subject => _subject;
 }
 
 final noteIndexBloc = NoteIndexBloc();

@@ -6,8 +6,8 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   final Dio _dio = Dio();
 
   Future<CommentListResponse> getCommentsData({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
@@ -39,9 +39,9 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
 
   @override
   Future<PostResponse> postCommentData({
-    PostComment comment,
-    NTSType ntsType,
-    String userid,
+    PostComment? comment,
+    NTSType? ntsType,
+    String? userid,
   }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
@@ -52,7 +52,7 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       endpoint = APIEndpointConstants.POST_TASK_COMMENT;
     }
 
-    comment.commentedByUserId = userid;
+    comment!.commentedByUserId = userid;
 
     dynamic model = jsonEncode(comment.toJson());
     try {
@@ -78,14 +78,14 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
   }
 
   @override
-  Future<CommentResponse> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<CommentResponse> putAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> deleteAPIData({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+  Future<bool?> deleteAPIData({
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
@@ -104,7 +104,7 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
 
       // print("[DIO]: \nDelete API data: ${response.data}");
 
-      return response.data as bool;
+      return response.data as bool?;
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");

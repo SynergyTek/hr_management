@@ -6,7 +6,7 @@ class DocumentBottomSheetWidget extends StatelessWidget {
   final List<Widget> bottomSheetDataList;
 
   const DocumentBottomSheetWidget({
-    @required this.bottomSheetDataList,
+    required this.bottomSheetDataList,
   });
 
   @override

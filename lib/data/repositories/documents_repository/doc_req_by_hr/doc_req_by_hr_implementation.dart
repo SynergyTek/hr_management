@@ -7,7 +7,7 @@ class DocReqByHrRepository extends AbstractDocReqByHrRepository {
 
   Future<DocReqByHrResponse> getAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_PERSON_DOCUMENTS_DATA;
 
@@ -27,21 +27,21 @@ class DocReqByHrRepository extends AbstractDocReqByHrRepository {
 
   @override
   Future<DocReqByHrResponse> deleteAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<DocReqByHrResponse> postAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<DocReqByHrResponse> putAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }

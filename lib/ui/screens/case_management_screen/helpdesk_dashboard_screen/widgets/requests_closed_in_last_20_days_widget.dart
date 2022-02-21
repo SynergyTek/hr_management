@@ -56,12 +56,12 @@ class _RequestsClosedInLast20DaysWidgetState
     );
   }
 
-  Widget _bodyWidget(List<ReadHelpDeskRequestClosedModel> data) {
+  Widget _bodyWidget(List<ReadHelpDeskRequestClosedModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),

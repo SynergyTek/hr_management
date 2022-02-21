@@ -16,7 +16,7 @@ import 'widgets/note_worklist.dart';
 import 'widgets/task_service_worklist.dart';
 
 class WorklistDashboard extends StatefulWidget {
-  const WorklistDashboard({Key key}) : super(key: key);
+  const WorklistDashboard({Key? key}) : super(key: key);
 
   @override
   _WorklistDashboardState createState() => _WorklistDashboardState();
@@ -27,7 +27,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
   String title = 'Task';
   int _selectedIndex = 0;
   NTSType ntsType = NTSType.task;
-  List<Widget> _widgetOptions = [];
+  List<Widget>? _widgetOptions = [];
   @override
   void initState() {
     super.initState();
@@ -79,7 +79,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
                 ),
               ),
               Expanded(
-                child: _widgetOptions.elementAt(_selectedIndex),
+                child: _widgetOptions!.elementAt(_selectedIndex),
               ),
             ],
           ),

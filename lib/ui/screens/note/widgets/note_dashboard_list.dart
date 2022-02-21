@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/note/note_list_model.dart';
@@ -17,7 +17,7 @@ class NoteDashboardList extends StatefulWidget {
 }
 
 class _NoteDashboardListState extends State<NoteDashboardList> {
-  List<NoteListModel> _noteList = [];
+  List<NoteListModel>? _noteList = [];
   List<NoteListModel> _filteredNoteList = [];
   TextEditingController subjectController = TextEditingController();
 
@@ -172,8 +172,8 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
   }
 
   customButton({
-    String buttonText,
-    Function handleOnPressed,
+    required String buttonText,
+    Function? handleOnPressed,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -187,7 +187,7 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
             ),
           ),
         ),
-        onPressed: () => handleOnPressed(),
+        onPressed: () => handleOnPressed!(),
         child: Text(buttonText),
       ),
     );

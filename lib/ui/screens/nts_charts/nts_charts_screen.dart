@@ -11,16 +11,16 @@ import '../../widgets/nts_widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class NTSChart extends StatefulWidget {
-  final NTSType ntsType;
-  const NTSChart({Key key, this.ntsType}) : super(key: key);
+  final NTSType? ntsType;
+  const NTSChart({Key? key, this.ntsType}) : super(key: key);
 
   @override
   _NTSChartState createState() => _NTSChartState();
 }
 
 class _NTSChartState extends State<NTSChart> {
-  List<ChartModel> chartByStatus = [];
-  List<ChartModel> chartUserType = [];
+  List<ChartModel>? chartByStatus = [];
+  List<ChartModel>? chartUserType = [];
   String chartTitle = '';
   DateTime fromDate = DateTime(
       DateTime.now().year, DateTime.now().month - 1, DateTime.now().day);
@@ -88,19 +88,19 @@ class _NTSChartState extends State<NTSChart> {
                     style: TextStyle(fontSize: 14),
                   ),
                 ),
-                StreamBuilder<ChartResponse>(
+                StreamBuilder<ChartResponse?>(
                     stream: ntsChartBloc.subjectChartByStatus.stream,
-                    builder: (context, AsyncSnapshot<ChartResponse> snapshot) {
+                    builder: (context, AsyncSnapshot<ChartResponse?> snapshot) {
                       if (snapshot.hasData) {
-                        if (snapshot.data.list == null ||
-                            snapshot.data.list.length == 0) {
+                        if (snapshot.data!.list == null ||
+                            snapshot.data!.list!.length == 0) {
                           return Center(
                               child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('No Data'),
                           ));
                         }
-                        chartByStatus = snapshot.data.list;
+                        chartByStatus = snapshot.data!.list;
                         return Charts(
                           chartDataLIst: chartByStatus,
                           chartType: 'donut',
@@ -128,19 +128,19 @@ class _NTSChartState extends State<NTSChart> {
                     style: TextStyle(fontSize: 14),
                   ),
                 ),
-                StreamBuilder<ChartResponse>(
+                StreamBuilder<ChartResponse?>(
                     stream: ntsChartBloc.subjectChartByUserType.stream,
-                    builder: (context, AsyncSnapshot<ChartResponse> snapshot) {
+                    builder: (context, AsyncSnapshot<ChartResponse?> snapshot) {
                       if (snapshot.hasData) {
-                        if (snapshot.data.list == null ||
-                            snapshot.data.list.length == 0) {
+                        if (snapshot.data!.list == null ||
+                            snapshot.data!.list!.length == 0) {
                           return Center(
                               child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('No Data'),
                           ));
                         }
-                        chartUserType = snapshot.data.list;
+                        chartUserType = snapshot.data!.list;
                         return Charts(
                           chartDataLIst: chartUserType,
                           chartType: 'pie',
@@ -224,19 +224,19 @@ class _NTSChartState extends State<NTSChart> {
                     )
                   ],
                 ),
-                StreamBuilder<ChartResponse>(
+                StreamBuilder<ChartResponse?>(
                     stream: ntsChartBloc.subjectDatewiseSLA.stream,
-                    builder: (context, AsyncSnapshot<ChartResponse> snapshot) {
+                    builder: (context, AsyncSnapshot<ChartResponse?> snapshot) {
                       if (snapshot.hasData) {
-                        if (snapshot.data.list == null ||
-                            snapshot.data.list.length == 0) {
+                        if (snapshot.data!.list == null ||
+                            snapshot.data!.list!.length == 0) {
                           return Center(
                               child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('No Data'),
                           ));
                         }
-                        chartUserType = snapshot.data.list;
+                        chartUserType = snapshot.data!.list;
                         return Container(
                           height: 50.h,
                           child: Charts(
@@ -259,7 +259,7 @@ class _NTSChartState extends State<NTSChart> {
     );
   }
 
-  Widget chartCard({Widget child}) {
+  Widget chartCard({Widget? child}) {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 0.2.h, horizontal: 1.w),
         child: Card(

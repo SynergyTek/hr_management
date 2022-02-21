@@ -8,27 +8,27 @@ import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import 'service_list_tile.dart';
 
 class ServiceDashboardList extends StatefulWidget {
-  ServiceDashboardList({Key key}) : super(key: key);
+  ServiceDashboardList({Key? key}) : super(key: key);
 
   @override
   _ServiceDashboardListState createState() => _ServiceDashboardListState();
 }
 
 class _ServiceDashboardListState extends State<ServiceDashboardList> {
-  List<Service> _serviceList = [];
+  List<Service>? _serviceList = [];
   List<Service> _filteredServiceList = [];
 
   TextEditingController subjectController = TextEditingController();
 
-  String userId;
-  String text;
-  String serviceStatusIds;
-  String userType;
+  String? userId;
+  String? text;
+  String? serviceStatusIds;
+  String? userType;
 
   @override
   void initState() {
@@ -66,7 +66,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
           children: [wrappedButtons()],
         ),
         Expanded(
-          child: StreamBuilder<ServiceListResponse>(
+          child: StreamBuilder<ServiceListResponse?>(
             stream: serviceBloc.subjectServiceList.stream,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
@@ -203,8 +203,8 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
   }
 
   customButton({
-    String buttonText,
-    Function handleOnPressed,
+    required String buttonText,
+    Function? handleOnPressed,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -218,7 +218,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
             ),
           ),
         ),
-        onPressed: () => handleOnPressed(),
+        onPressed: () => handleOnPressed!(),
         child: Text(buttonText),
       ),
     );

@@ -9,12 +9,12 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widgets/nts_template_body_widget.dart';
 
 class NTSTemplateScreen extends StatefulWidget {
-  final NTSType ntsType;
-  final String categoryCode;
+  final NTSType? ntsType;
+  final String? categoryCode;
 
   const NTSTemplateScreen({
-    @required this.ntsType,
-    @required this.categoryCode,
+    required this.ntsType,
+    required this.categoryCode,
   });
 
   @override
@@ -54,8 +54,8 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
     );
   }
 
-  String titleText() {
-    String title;
+  String? titleText() {
+    String? title;
     if (widget.categoryCode == 'Leave' && widget.ntsType == NTSType.service)
       title = 'Leave Templates';
     else if (widget.categoryCode == 'Adhoc Task' &&

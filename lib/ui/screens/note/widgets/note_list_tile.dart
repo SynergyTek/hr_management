@@ -5,11 +5,11 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 
 class NoteListCard extends StatelessWidget {
-  final bool onTap;
-  final List<NoteListModel> noteList;
+  final bool? onTap;
+  final List<NoteListModel>? noteList;
   final int index;
   const NoteListCard(
-      {Key key, @required this.index, @required this.noteList, this.onTap})
+      {Key? key, required this.index, required this.noteList, this.onTap})
       : super(key: key);
 
   @override
@@ -69,7 +69,7 @@ class NoteListCard extends StatelessWidget {
             ),
           ],
         ),
-        onTap: onTap
+        onTap: onTap!
             ? () {
                 noteBloc.subjectNoteList.sink.add(null);
                 noteBloc.subjectNoteDetails.sink.add(null);
@@ -78,8 +78,8 @@ class NoteListCard extends StatelessWidget {
                   ADD_EDIT_NOTE_ROUTE,
                   arguments: ScreenArguments(
                       arg1: '',
-                      arg2: noteList[index].id,
-                      arg3: noteList[index].noteSubject),
+                      arg2: noteList![index].id,
+                      arg3: noteList![index].noteSubject),
                 );
               }
             : () {},
@@ -88,26 +88,26 @@ class NoteListCard extends StatelessWidget {
   }
 
   String noteSubject(int index) {
-    return noteList[index].noteSubject ?? "-";
+    return noteList![index].noteSubject ?? "-";
   }
 
   String noteNoValue(int index) {
-    return noteList[index].noteNo ?? "-";
+    return noteList![index].noteNo ?? "-";
   }
 
   String ownerUserName(int index) {
-    return noteList[index].ownerUserName ?? "-";
+    return noteList![index].ownerUserName ?? "-";
   }
 
   String assigneeDisplayName(int index) {
-    return noteList[index].assigneeDisplayName ?? "-";
+    return noteList![index].assigneeDisplayName ?? "-";
   }
 
   String noteStatusName(int index) {
-    return noteList[index].noteStatusName ?? "-";
+    return noteList![index].noteStatusName ?? "-";
   }
 
   String expiryDate(int index) {
-    return noteList[index].expiryDateDisplay ?? "-";
+    return noteList![index].expiryDateDisplay ?? "-";
   }
 }

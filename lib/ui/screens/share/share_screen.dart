@@ -5,10 +5,10 @@ import '../../widgets/appbar_widget.dart';
 import 'widgets/share_screen_body.dart';
 
 class ShareScreen extends StatelessWidget {
-  final NTSType ntsType;
-  final String ntsId;
+  final NTSType? ntsType;
+  final String? ntsId;
 
-  const ShareScreen({Key key, this.ntsType, this.ntsId}) : super(key: key);
+  const ShareScreen({Key? key, this.ntsType, this.ntsId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

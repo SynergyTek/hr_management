@@ -4,13 +4,13 @@ import 'nts_dropdown_model.dart';
 
 class NTSDdResponse {
   final List<NTSDropdownModel> data;
-  String error;
+  String? error;
 
   NTSDdResponse({
-    @required this.data,
+    required this.data,
   });
 
-  NTSDdResponse.fromJson(List response, String idKey, String nameKey)
+  NTSDdResponse.fromJson(List response, String? idKey, String? nameKey)
       : data = (response)
             .map((i) => new NTSDropdownModel.fromJson(i, idKey, nameKey))
             .toList();

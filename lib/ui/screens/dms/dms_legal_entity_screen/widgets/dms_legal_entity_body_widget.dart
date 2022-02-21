@@ -7,7 +7,7 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 class DMSLegalEntityBodyWidget extends StatefulWidget {
-  final String modelId;
+  final String? modelId;
 
   DMSLegalEntityBodyWidget({
     this.modelId,
@@ -75,7 +75,7 @@ class _DMSLegalEntityBodyWidgetState extends State<DMSLegalEntityBodyWidget> {
     );
   }
 
-  Widget _listviewWidget(List<DMSLegalEntityModel> data) {
+  Widget _listviewWidget(List<DMSLegalEntityModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
@@ -94,7 +94,7 @@ class _DMSLegalEntityBodyWidgetState extends State<DMSLegalEntityBodyWidget> {
             padding: DEFAULT_LARGE_VERTICAL_PADDING,
             child: Text(
               "Select Legal Entity",
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     color: Theme.of(context).textHeadingColor,
                     fontWeight: FontWeight.w600,
                     fontSize: 18.0,
@@ -136,8 +136,8 @@ class _DMSLegalEntityBodyWidgetState extends State<DMSLegalEntityBodyWidget> {
               height: 0,
             ),
       title: Text(
-        data.name != null ? data.name : "NA",
-        style: Theme.of(context).textTheme.bodyText1.copyWith(
+        data.name != null ? data.name! : "NA",
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
               color: Colors.black87,
             ),
       ),

@@ -90,32 +90,32 @@ class _CaseManagementBodyWidgetState extends State<CaseManagementBodyWidget> {
   }
 
   void _handleListTileOnTap({
-    BuildContext context,
-    String listTileDataKey,
+    BuildContext? context,
+    String? listTileDataKey,
   }) {
     if (listTileDataKey == null || listTileDataKey.isEmpty) return;
 
     if (listTileDataKey == 'Home')
       Navigator.pushNamed(
-        context,
+        context!,
         WORKLIST_DASHBOARD,
       );
 
     if (listTileDataKey == 'Dashboard')
       Navigator.pushNamed(
-        context,
+        context!,
         CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE,
       );
 
     if (listTileDataKey == 'Task List')
       Navigator.pushNamed(
-        context,
+        context!,
         TASK_HOME,
       );
 
     if (listTileDataKey == 'Service List')
       Navigator.pushNamed(
-        context,
+        context!,
         SERVICE_HOME,
       );
 
