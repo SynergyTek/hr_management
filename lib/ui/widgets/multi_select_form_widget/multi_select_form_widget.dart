@@ -40,7 +40,7 @@ class _MultiSelectFormWidgetState<T> extends State<MultiSelectFormWidget> {
 
     widget.initCallback();
 
-    if (widget?.selectedDataMap == null ||
+    if (widget.selectedDataMap == null ||
         widget.selectedDataMap!.keys.isEmpty) {
       selectedDataMap = Map<String?, T>();
     } else {
@@ -55,7 +55,7 @@ class _MultiSelectFormWidgetState<T> extends State<MultiSelectFormWidget> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              widget?.onWillPopScopeErrorMessage ??
+              widget.onWillPopScopeErrorMessage ??
                   'Please use the action buttons to navigate.',
             ),
           ),

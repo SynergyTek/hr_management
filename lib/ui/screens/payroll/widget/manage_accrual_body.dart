@@ -33,7 +33,7 @@ class _ManageAccrualBodyState extends State<ManageAccrualBody> {
   _handleQueryparams() {
     return {
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 

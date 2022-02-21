@@ -35,7 +35,7 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
         queryParameters: {
           'sourceId': sourceId ?? '',
           'targetId': targetId ?? '',
-          'userId': userId ?? '',
+          'userId': userId,
         },
       );
 
@@ -58,9 +58,9 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
       Response response = await _dio.get(
         APIEndpointConstants.GET_DMS_CREATE_NOTE_DATA,
         queryParameters: {
-          'sourceId': sourceId ?? '',
-          'targetId': targetId ?? '',
-          'userId': userId ?? '',
+          'sourceId': sourceId,
+          'targetId': targetId,
+          'userId': userId,
         },
       );
 

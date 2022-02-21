@@ -56,7 +56,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
             }
 
             // if no data is present
-            if (snapshot?.data?.data == null || snapshot.data.data == []) {
+            if (snapshot.data?.data == null || snapshot.data.data == []) {
               return EmptyListWidget();
             }
 

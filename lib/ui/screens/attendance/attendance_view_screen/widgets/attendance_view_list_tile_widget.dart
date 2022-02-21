@@ -65,11 +65,11 @@ class AttendanceViewListTileWidget extends StatelessWidget {
 
   /// Helper function that returns formatted employee name.
   String rosterHours() {
-    return eachAttendanceViewModelElement?.rosterText ?? 'NA';
+    return eachAttendanceViewModelElement.rosterText ?? 'NA';
   }
 
   /// Helper function that returns formatted Punching time.
   String actualHours() {
-    return eachAttendanceViewModelElement?.actualText ?? 'NA';
+    return eachAttendanceViewModelElement.actualText ?? 'NA';
   }
 }

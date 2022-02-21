@@ -44,7 +44,7 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
         'startdate': DateTime.now(),
         'startDate': DateTime.now(),
         'userId':
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       };
 
     return {
@@ -52,7 +52,7 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
       'startDate': startDate,
       'dueDate': dueDate,
       'userId':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 

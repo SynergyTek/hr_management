@@ -21,7 +21,7 @@ class _CaseManagementFilterBottomModalSheetWidgetState
   void initState() {
     super.initState();
 
-    data = widget?.data ?? [];
+    data = widget.data ?? [];
   }
 
   @override
@@ -74,13 +74,13 @@ class _CaseManagementFilterBottomModalSheetWidgetState
   }
 
   Widget _eachListTile(FilterListModel eachData) {
-    if (eachData?.filterDisplayTitle == null) return Container();
+    if (eachData.filterDisplayTitle == null) return Container();
 
     return StatefulBuilder(
       builder: (BuildContext context, innerSetState) {
         return CheckboxListTile(
           title: Text(eachData.filterDisplayTitle ?? ""),
-          value: eachData?.isChecked ?? false,
+          value: eachData.isChecked ?? false,
           onChanged: (bool? hasChanged) {
             innerSetState(() {
               setState(() {

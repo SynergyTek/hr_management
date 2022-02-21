@@ -47,7 +47,7 @@ class _ServiceDashboardListState extends State<ServiceDashboardList> {
     if (userType != null) queryparams['userType'] = userType;
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     serviceBloc.getServiceDashBoardData(
       queryparams: queryparams,

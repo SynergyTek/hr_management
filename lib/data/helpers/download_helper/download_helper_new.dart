@@ -26,8 +26,8 @@ class NewDownloadHelper {
   /// this method returns the path where the downloaded files will be stored.
   Future<String> saveDirectoryPath() async {
     final externalStorageDirectory =
-        await (getExternalStorageDirectory() as FutureOr<Directory>);
-    return externalStorageDirectory.path;
+        await (getExternalStorageDirectory() as FutureOr<Directory?>);
+    return externalStorageDirectory!.path;
   }
 
   Future<String?> requestDownload({

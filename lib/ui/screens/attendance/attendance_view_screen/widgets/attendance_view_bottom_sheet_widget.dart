@@ -32,14 +32,14 @@ class AttendanceViewBottomSheetWidget extends StatelessWidget {
           // For basic details:
           ListTile(
             title: Text(
-              eachAttendanceViewModelElement?.employeeName ?? '',
+              eachAttendanceViewModelElement.employeeName ?? '',
               style: TextStyle(
                 color: Theme.of(context).textHeadingColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
             subtitle: Text(
-              eachAttendanceViewModelElement?.attDate ?? 'NA',
+              eachAttendanceViewModelElement.attDate ?? 'NA',
             ),
             trailing: Container(
               child: Column(
@@ -71,7 +71,7 @@ class AttendanceViewBottomSheetWidget extends StatelessWidget {
                     // style: Theme.of(context).textTheme.bodyText1,
                   ),
                   subtitle: Text(
-                    eachAttendanceViewModelElement?.rosterText ?? 'NA',
+                    eachAttendanceViewModelElement.rosterText ?? 'NA',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -83,7 +83,7 @@ class AttendanceViewBottomSheetWidget extends StatelessWidget {
                     // style: Theme.of(context).textTheme.bodyText1,
                   ),
                   subtitle: Text(
-                    eachAttendanceViewModelElement?.actualText ?? 'NA',
+                    eachAttendanceViewModelElement.actualText ?? 'NA',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -98,7 +98,7 @@ class AttendanceViewBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAttendanceViewModelElement?.employeeComments ?? 'NA',
+              eachAttendanceViewModelElement.employeeComments ?? 'NA',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -110,7 +110,7 @@ class AttendanceViewBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAttendanceViewModelElement?.employeeComments ?? 'NA',
+              eachAttendanceViewModelElement.employeeComments ?? 'NA',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),

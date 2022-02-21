@@ -21,7 +21,7 @@ class AccessLogRepository extends AbstractAccessLogRepository {
         queryParameters: queryparams ?? {},
       );
 
-      if (response?.data != null)
+      if (response.data != null)
         return AccessLogResponse.fromJson(
           queryparams!["punchingType"],
         );

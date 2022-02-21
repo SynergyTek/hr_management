@@ -32,7 +32,7 @@ class _NTSTemplateScreenState extends State<NTSTemplateScreen> {
         categoryCode: widget.categoryCode,
         ntsType: widget.ntsType,
         userid:
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       );
   }
 

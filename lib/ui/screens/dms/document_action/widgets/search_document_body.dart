@@ -27,7 +27,7 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
       ..getSearchDocumentData(
         queryparams: {
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         },
       );

@@ -30,9 +30,9 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
     serviceBloc
       ..getLeavesDetails(queryparams: {
         'userid':
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         'userId':
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       });
     super.initState();
   }

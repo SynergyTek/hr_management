@@ -290,7 +290,7 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
     super.initState();
 
     setState(() {
-      selectedDate = widget?.code == null ? null : DateTime.parse(widget.code!);
+      selectedDate = widget.code == null ? null : DateTime.parse(widget.code!);
     });
   }
 

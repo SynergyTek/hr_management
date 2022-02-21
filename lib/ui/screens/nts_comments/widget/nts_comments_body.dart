@@ -204,7 +204,7 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                         comment: comment,
                         userid: BlocProvider.of<UserModelBloc>(context)
                                 .state
-                                ?.userModel
+                                .userModel
                                 ?.id ??
                             '',
                       );
@@ -250,8 +250,8 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
         queryparams: {
           'Id': data.id,
         },
-        ntsId: widget?.ntsId ?? '',
-        ntsType: widget?.ntsType ?? NTSType.service,
+        ntsId: widget.ntsId ?? '',
+        ntsType: widget.ntsType ?? NTSType.service,
       );
   }
 }

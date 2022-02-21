@@ -237,7 +237,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
             allowMultiple: true,
             type: _fileType,
             allowedExtensions: (_extension?.isNotEmpty ?? false)
-                ? _extension?.replaceAll(' ', '')?.split(',')
+                ? _extension?.replaceAll(' ', '').split(',')
                 : null);
         _paths = filePickerResult!.paths;
       } else {
@@ -245,9 +245,9 @@ class _SelectAttachmentState extends State<SelectAttachment> {
         filePickerResult = await FilePicker.platform.pickFiles(
             type: _fileType,
             allowedExtensions: (_extension?.isNotEmpty ?? false)
-                ? _extension?.replaceAll(' ', '')?.split(',')
+                ? _extension?.replaceAll(' ', '').split(',')
                 : null);
-        _path = filePickerResult?.files?.single?.path;
+        _path = filePickerResult?.files.single.path;
       }
     } on Exception catch (e) {
       print("Unsupported operation" + e.toString());
@@ -290,7 +290,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
       var post = Attachment();
 
       post.userId =
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
       if (_pickingType == MediaFileType.IMAGE ||
           _pickingType == MediaFileType.CAPTURE_IMAGE) {
@@ -344,7 +344,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
 
   void createPostModel(Attachment post, Uint8List mediaFileByte) {
     post.ntsId = widget.ntsId;
-    post.userId = context.read<UserModelBloc>().state?.userModel?.id ?? '';
+    post.userId = context.read<UserModelBloc>().state.userModel?.id ?? '';
     //'45bba746-3309-49b7-9c03-b5793369d73c';
     post.fileType = ("." + _path!.split(".")[_path!.split(".").length - 1])
         .replaceAll(".", "");

@@ -43,7 +43,7 @@ class _SLAViolatedRequestsWidgetState extends State<SLAViolatedRequestsWidget> {
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }
@@ -85,7 +85,7 @@ class _SLAViolatedRequestsWidgetState extends State<SLAViolatedRequestsWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "${data?.slaViolated ?? "-"}",
+                "${data.slaViolated ?? "-"}",
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,
                     fontWeight: FontWeight.w600),
@@ -100,7 +100,7 @@ class _SLAViolatedRequestsWidgetState extends State<SLAViolatedRequestsWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "${data?.openRequestCount ?? "-"}",
+                "${data.openRequestCount ?? "-"}",
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,
                     fontWeight: FontWeight.w600),

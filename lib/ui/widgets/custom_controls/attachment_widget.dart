@@ -32,7 +32,7 @@ class DynamicAttchmentWidget extends StatelessWidget {
                   new TextFormField(
                       readOnly: readOnly ?? true,
                       style: TextStyle(fontSize: 15),
-                      key: new Key(fieldName!),
+                      key: new Key(fieldName ?? ''),
                       controller: controller,
                       textInputAction: TextInputAction.done,
                       cursorColor: Theme.of(context).primaryColor,

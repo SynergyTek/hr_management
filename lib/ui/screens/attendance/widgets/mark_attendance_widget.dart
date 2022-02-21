@@ -156,11 +156,11 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                           child: ListTile(
                             tileColor: Theme.of(context).textHeadingColor,
                             title: Text(
-                              state?.userModel?.jobTitle ?? '-',
+                              state.userModel?.jobTitle ?? '-',
                               style: TextStyle(color: Colors.white),
                             ),
                             subtitle: Text(
-                              state?.userModel?.email ?? '-',
+                              state.userModel?.email ?? '-',
                               style: TextStyle(color: Colors.white),
                             ),
                             leading: CircleAvatar(
@@ -379,14 +379,14 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       await accessLogBloc.getInsertAccessLog(
         isSignIn: true,
         userId:
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       );
 
       setState(() {
         isVisible = false;
       });
 
-      print("Sign In isSignIn?: ${accessLogBloc?.subject?.value?.isSignIn}");
+      print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
       print(
           "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
 
@@ -432,7 +432,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       await accessLogBloc.getInsertAccessLog(
         isSignIn: false,
         userId:
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       );
       setState(() {
         isVisible = false;

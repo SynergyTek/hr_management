@@ -37,7 +37,7 @@ class _NoteDashboardListState extends State<NoteDashboardList> {
   _handleQueryparams() {
     return {
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 

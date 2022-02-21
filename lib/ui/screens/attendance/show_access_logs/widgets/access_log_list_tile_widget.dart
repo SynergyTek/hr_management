@@ -30,7 +30,7 @@ class AccessLogListTileWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    eachAccessLogModelElement?.devicePunchingTypeText ?? '-',
+                    eachAccessLogModelElement.devicePunchingTypeText ?? '-',
                     style: TextStyle(
                       fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
                       color: _handleListTileColor(context),
@@ -66,7 +66,7 @@ class AccessLogListTileWidget extends StatelessWidget {
 
   Color _handleListTileColor(BuildContext context) {
     // Guard clause
-    if (eachAccessLogModelElement?.devicePunchingType == null ||
+    if (eachAccessLogModelElement.devicePunchingType == null ||
         eachAccessLogModelElement.devicePunchingType!.isNaN)
       return Colors.white54;
 
@@ -77,7 +77,7 @@ class AccessLogListTileWidget extends StatelessWidget {
 
   /// Helper function that returns formatted employee name.
   String employeeName() {
-    return eachAccessLogModelElement?.personFullName ?? 'NA';
+    return eachAccessLogModelElement.personFullName ?? 'NA';
   }
 
   /// Helper function that returns formatted Punching time.

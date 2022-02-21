@@ -121,7 +121,7 @@ class TaskRepository extends AbstractTaskRepository {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(taskModel.toJson()) ?? {},
+        data: jsonEncode(taskModel.toJson()) ,
       );
 
       var result = PostResponse.fromJson(

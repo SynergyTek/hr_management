@@ -105,10 +105,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     noteBloc
       ..getNoteDetails(
         queryparams: _handleNoteDetailsQueryparams(
-          noteId: widget?.noteId ?? '',
-          templatecode: widget?.templateCode ?? '',
+          noteId: widget.noteId ?? '',
+          templatecode: widget.templateCode ?? '',
           userid:
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         ),
       );
@@ -137,7 +137,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             builder: (context, AsyncSnapshot snapshot) {
               // print("Snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
-                if (snapshot?.data?.error != null &&
+                if (snapshot.data?.error != null &&
                     snapshot.data.error.length > 0) {
                   return Center(
                     child: Text(snapshot.data.error),
@@ -145,7 +145,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 }
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
-                noteModel = snapshot?.data?.data;
+                noteModel = snapshot.data?.data;
 
                 parseJsonToUDFModel(
                   createServiceFormBloc,
@@ -1116,7 +1116,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   handleOnPressed: () {
                     bool isValid = false;
                     for (var i = 0; i < columnComponent.length; i++) {
-                      if (columnComponent[i]?.validate?.required != null &&
+                      if (columnComponent[i].validate?.required != null &&
                           columnComponent[i].validate!.required == true &&
                           udfJson.containsKey(columnComponent[i].key) &&
                           (udfJson[columnComponent[i].key] == null ||
@@ -1128,7 +1128,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                       }
                     }
                     for (var i = 0; i < componentComList.length; i++) {
-                      if (componentComList[i]?.validate?.required != null &&
+                      if (componentComList[i].validate?.required != null &&
                           componentComList[i].validate!.required == true &&
                           udfJson.containsKey(componentComList[i].key) &&
                           (udfJson[componentComList[i].key] == null ||
@@ -1140,7 +1140,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                       }
                     }
                     for (var i = 0; i < udfJsonComponent.length; i++) {
-                      if (udfJsonComponent[i]?.validate?.required != null &&
+                      if (udfJsonComponent[i].validate?.required != null &&
                           udfJsonComponent[i].validate!.required == true &&
                           udfJson.containsKey(udfJsonComponent[i].key) &&
                           (udfJson[udfJsonComponent[i].key] == null ||
@@ -1169,7 +1169,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
   requiredFieldValidations() {
     for (var i = 0; i < columnComponent.length; i++) {
-      if (columnComponent[i]?.validate?.required != null &&
+      if (columnComponent[i].validate?.required != null &&
           columnComponent[i].validate!.required == true &&
           udfJson.containsKey(columnComponent[i].key) &&
           (udfJson[columnComponent[i].key] == null ||
@@ -1180,7 +1180,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       }
     }
     for (var i = 0; i < componentComList.length; i++) {
-      if (componentComList[i]?.validate?.required != null &&
+      if (componentComList[i].validate?.required != null &&
           componentComList[i].validate!.required == true &&
           udfJson.containsKey(componentComList[i].key) &&
           (udfJson[componentComList[i].key] == null ||
@@ -1192,7 +1192,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       }
     }
     for (var i = 0; i < udfJsonComponent.length; i++) {
-      if (udfJsonComponent[i]?.validate?.required != null &&
+      if (udfJsonComponent[i].validate?.required != null &&
           udfJsonComponent[i].validate!.required == true &&
           udfJson.containsKey(udfJsonComponent[i].key) &&
           (udfJson[udfJsonComponent[i].key] == null ||
@@ -1331,10 +1331,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     PostResponse result = await noteBloc.postNoteData(
       noteModel: postNoteModel,
       queryparams: _handleNoteDetailsQueryparams(
-        noteId: widget?.noteId ?? '',
-        templatecode: widget?.templateCode ?? '',
+        noteId: widget.noteId ?? '',
+        templatecode: widget.templateCode ?? '',
         userid:
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       ),
     );
     // print(result);
@@ -1368,7 +1368,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       url: completeUrl,
     );
 
-    ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
+    ddController.text = ntsDdResponse.data.elementAt(0).name ?? '';
     // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
 
@@ -1414,7 +1414,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           ),
 
           SpeedDialChild(
-            visible: widget?.noteId != null && widget.noteId!.isNotEmpty,
+            visible: widget.noteId != null && widget.noteId!.isNotEmpty,
             child: Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
             // onTap: () => print('Pressed Code for NOte'),

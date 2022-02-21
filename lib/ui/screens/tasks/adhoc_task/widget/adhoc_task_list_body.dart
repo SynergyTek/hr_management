@@ -26,10 +26,10 @@ class _AdhocTaskListBodyState extends State<AdhocTaskListBody> {
       ..loadServiceAdhocTaskData(
         queryparams: {
           'userid':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         },
       );

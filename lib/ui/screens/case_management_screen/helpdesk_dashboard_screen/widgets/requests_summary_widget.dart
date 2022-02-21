@@ -77,7 +77,7 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }
@@ -109,8 +109,8 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   name: 'Draft',
                   width: 0.25,
                   dataSource: data ?? [],
-                  yValueMapper: (CaseManagementModel model, _) => model?.draft,
-                  xValueMapper: (CaseManagementModel model, _) => model?.day,
+                  yValueMapper: (CaseManagementModel model, _) => model.draft,
+                  xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
               )
               ..add(
@@ -120,8 +120,8 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   width: 0.25,
                   dataSource: data ?? [],
                   yValueMapper: (CaseManagementModel model, _) =>
-                      model?.inProgress,
-                  xValueMapper: (CaseManagementModel model, _) => model?.day,
+                      model.inProgress,
+                  xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
               )
               ..add(
@@ -131,8 +131,8 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   width: 0.25,
                   dataSource: data ?? [],
                   yValueMapper: (CaseManagementModel model, _) =>
-                      model?.overDue,
-                  xValueMapper: (CaseManagementModel model, _) => model?.day,
+                      model.overDue,
+                  xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
               )
               ..add(
@@ -142,8 +142,8 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   width: 0.25,
                   dataSource: data ?? [],
                   yValueMapper: (CaseManagementModel model, _) =>
-                      model?.completed,
-                  xValueMapper: (CaseManagementModel model, _) => model?.day,
+                      model.completed,
+                  xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
               ),
           ),

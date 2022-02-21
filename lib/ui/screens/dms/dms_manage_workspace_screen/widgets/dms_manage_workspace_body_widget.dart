@@ -53,17 +53,17 @@ class _DMSManageWorkspaceBodyWidgetState
     // Use case: Creating a new workspace.
     return WorkspaceViewModel(
       activeUserId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       dataAction: widget.parentWorkspaceId != null ? "Edit" : "Create",
       documentTypeId: _getDocumentTypeIdList(),
       legalEntityId: _selectedLegalEntityData?.id ?? "",
       ownerUserId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       // ! TODO: no data found for parent workspace in the metadata API while editing in use case.
       parentNoteId: _selectedParentWorkspace?.id ?? "",
-      sequenceOrder: _sequenceOrderTextEditingController?.text ?? "",
+      sequenceOrder: _sequenceOrderTextEditingController.text ?? "",
       workspaceName:
-          _workspaceNameTextEditingController?.text ?? "Default Workspace Name",
+          _workspaceNameTextEditingController.text ?? "Default Workspace Name",
 
       id: _workspaceId ?? "",
     ).toJson();
@@ -72,7 +72,7 @@ class _DMSManageWorkspaceBodyWidgetState
   @override
   Widget build(BuildContext context) {
     // Use case: When editing a new workspace
-    if (widget?.parentWorkspaceId != null)
+    if (widget.parentWorkspaceId != null)
       return Container(
         padding: DEFAULT_PADDING,
         child: FutureBuilder(
@@ -113,9 +113,9 @@ class _DMSManageWorkspaceBodyWidgetState
                         } else if (workspaceViewSnapshot.hasData) {
                           _handleEditWorkspace(
                             dmsLegalEntityMetadata:
-                                legalEntitySnapshot?.data?.data ?? [],
+                                legalEntitySnapshot.data?.data ?? [],
                             dmsDocumentTypeMetadata:
-                                documentTypeSnapshot?.data?.data ?? [],
+                                documentTypeSnapshot.data?.data ?? [],
                             dmsWorkspaceMetadata: workspaceViewSnapshot.data,
                           );
 
@@ -296,7 +296,7 @@ class _DMSManageWorkspaceBodyWidgetState
               backgroundColor: Theme.of(context).textHeadingColor,
               foregroundColor: Colors.white,
               child: Text(
-                _selectedDocumentTypeMap?.keys?.length.toString() ?? '-',
+                _selectedDocumentTypeMap?.keys.length.toString() ?? '-',
               ),
             )
           : Icon(
@@ -404,7 +404,7 @@ class _DMSManageWorkspaceBodyWidgetState
       return;
     }
 
-    if (_workspaceNameTextEditingController?.text == null ||
+    if (_workspaceNameTextEditingController.text == null ||
         _workspaceNameTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Workspace Name cannot be null or empty.")),
@@ -420,7 +420,7 @@ class _DMSManageWorkspaceBodyWidgetState
       return;
     }
 
-    if (_sequenceOrderTextEditingController?.text == null ||
+    if (_sequenceOrderTextEditingController.text == null ||
         _sequenceOrderTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Sequence Order cannot be null or empty.")),
@@ -496,7 +496,7 @@ class _DMSManageWorkspaceBodyWidgetState
         // Legal entity
         if (dmsLegalEntityMetadata != null) {
           dmsLegalEntityMetadata.forEach((element) {
-            if (element.id == dmsWorkspaceMetadata?.legalEntityId) {
+            if (element.id == dmsWorkspaceMetadata.legalEntityId) {
               _selectedLegalEntityData = element;
             }
           });
@@ -510,7 +510,7 @@ class _DMSManageWorkspaceBodyWidgetState
 
         // Document Type:
         if (dmsDocumentTypeMetadata != null &&
-            dmsWorkspaceMetadata?.documentTypeId != null &&
+            dmsWorkspaceMetadata.documentTypeId != null &&
             dmsWorkspaceMetadata.documentTypeId!.isNotEmpty) {
           dmsDocumentTypeMetadata.forEach((element) {
             dmsWorkspaceMetadata.documentTypeId!
@@ -524,13 +524,13 @@ class _DMSManageWorkspaceBodyWidgetState
 
         // Workspace name:
         _workspaceNameTextEditingController.text =
-            dmsWorkspaceMetadata?.workspaceName ?? "";
+            dmsWorkspaceMetadata.workspaceName ?? "";
 
         // Sequence Order:
         _sequenceOrderTextEditingController.text =
-            dmsWorkspaceMetadata?.sequenceOrder ?? "";
+            dmsWorkspaceMetadata.sequenceOrder ?? "";
 
-        _workspaceId = dmsWorkspaceMetadata?.id ?? "";
+        _workspaceId = dmsWorkspaceMetadata.id ?? "";
       }
     }
   }

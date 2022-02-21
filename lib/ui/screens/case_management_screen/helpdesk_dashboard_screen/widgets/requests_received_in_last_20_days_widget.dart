@@ -45,7 +45,7 @@ class _RequestsReceivedInLast20DaysWidgetState
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }
@@ -73,8 +73,8 @@ class _RequestsReceivedInLast20DaysWidgetState
             width: 0.25,
             color: Colors.orangeAccent,
             dataSource: data ?? [],
-            yValueMapper: (CaseManagementModel model, _) => model?.violated,
-            xValueMapper: (CaseManagementModel model, _) => model?.day,
+            yValueMapper: (CaseManagementModel model, _) => model.violated,
+            xValueMapper: (CaseManagementModel model, _) => model.day,
           ),
         )
         ..add(
@@ -83,8 +83,8 @@ class _RequestsReceivedInLast20DaysWidgetState
             width: 0.25,
             color: Colors.blueAccent,
             dataSource: data ?? [],
-            yValueMapper: (CaseManagementModel model, _) => model?.nonViolated,
-            xValueMapper: (CaseManagementModel model, _) => model?.day,
+            yValueMapper: (CaseManagementModel model, _) => model.nonViolated,
+            xValueMapper: (CaseManagementModel model, _) => model.day,
           ),
         ),
     );

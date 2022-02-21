@@ -84,7 +84,7 @@ class _ChartsState extends State<Charts> {
                     LineSeries<ChartModel, String>(
                       dataSource: widget.chartDataLIst!,
                       name: '${widget.nts} SLA',
-                      xValueMapper: (ChartModel data, _) => data?.type,
+                      xValueMapper: (ChartModel data, _) => data.type,
                       yValueMapper: (ChartModel data, _) => data.actualSLA,
                       dataLabelSettings: DataLabelSettings(
                         isVisible: true,
@@ -95,7 +95,7 @@ class _ChartsState extends State<Charts> {
                     LineSeries<ChartModel, String>(
                       dataSource: widget.chartDataLIst!,
                       name: 'Actual SLA',
-                      xValueMapper: (ChartModel data, _) => data?.type,
+                      xValueMapper: (ChartModel data, _) => data.type,
                       yValueMapper: (ChartModel data, _) => data.days,
                       dataLabelSettings: DataLabelSettings(
                           isVisible: true,

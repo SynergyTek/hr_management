@@ -32,7 +32,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
   }
 
   _handleQueryparams() => {
-        'serviceId': widget?.serviceId ?? '',
+        'serviceId': widget.serviceId ?? '',
       };
 
   @override
@@ -70,7 +70,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
       );
 
     return ListView.builder(
-      itemCount: data?.length ?? 0,
+      itemCount: data.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
           data: data.elementAt(index),
@@ -84,17 +84,17 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
   }) {
     return Card(
       child: ListTile(
-        title: Text(data?.assignee ?? "-"),
+        title: Text(data.assignee ?? "-"),
         subtitle: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("${data.startDate} to ${data.endDate}"),
-            Text("Error: ${data?.error ?? "NA"}"),
+            Text("Error: ${data.error ?? "NA"}"),
           ],
         ),
         trailing: Text(
-          data?.componentStatusName ?? "-",
+          data.componentStatusName ?? "-",
           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: _handleListTileColor(context, data.componentStatusName),
               ),

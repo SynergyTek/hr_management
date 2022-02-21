@@ -66,7 +66,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
     if (mode != null) queryparams['mode'] = mode;
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     noteBloc.getNoteList(queryparams: queryparams);
   }

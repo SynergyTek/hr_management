@@ -27,7 +27,7 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
       ..getDocumentHistoryData(
         queryparams: {
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         },
       );

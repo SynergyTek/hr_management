@@ -31,7 +31,7 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
   _handleQueryParams() {
     return {
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 
@@ -49,7 +49,7 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
               );
             }
 
-            if (snapshot?.data?.data == null)
+            if (snapshot.data?.data == null)
               return Center(
                 child: Text("No data available."),
               );
@@ -70,10 +70,10 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
       itemCount: data?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text(data?.elementAt(index)?.documentType ?? "NA"),
-          subtitle: Text(data?.elementAt(index)?.serviceNo ?? "NA"),
+          title: Text(data?.elementAt(index).documentType ?? "NA"),
+          subtitle: Text(data?.elementAt(index).serviceNo ?? "NA"),
           trailing: Text(
-            data?.elementAt(index)?.status ?? "NA",
+            data?.elementAt(index).status ?? "NA",
             style: TextStyle(
               color: _handleListTileColor(
                 context,
@@ -81,7 +81,7 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
               ),
             ),
           ),
-          onTap: () => _handleListTileOnTap(data?.elementAt(index)),
+          onTap: () => _handleListTileOnTap(data.elementAt(index)),
         );
       },
     );
@@ -105,7 +105,7 @@ class _DocReqByHrBodyWidgetState extends State<DocReqByHrBodyWidget> {
     DocReqByHrModel data,
   ) {
     // Guard clause
-    if (data?.status == null || data.status!.isEmpty) return Colors.white54;
+    if (data.status == null || data.status!.isEmpty) return Colors.white54;
 
     if (data.status == 'In Progress') return Colors.green;
     if (data.status == 'Draft') return Colors.orangeAccent;

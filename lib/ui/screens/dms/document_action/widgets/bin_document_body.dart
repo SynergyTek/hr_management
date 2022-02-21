@@ -27,7 +27,7 @@ class _BinDocumentBodyState extends State<BinDocumentBody> {
       ..getBinDocumentData(
         queryparams: {
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         },
       );

@@ -124,7 +124,7 @@ class _DMSLegalEntityBodyWidgetState extends State<DMSLegalEntityBodyWidget> {
     return ListTile(
       leading: Icon(Icons.list_outlined),
       trailing: (widget.modelId != null &&
-              data?.id != null &&
+              data.id != null &&
               data.id == widget.modelId)
           ? Icon(
               Icons.check_box,

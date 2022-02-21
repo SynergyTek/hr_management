@@ -72,10 +72,10 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
     Map<String, dynamic> queryparams = Map();
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     if (text != null) {
       queryparams['text'] = text;

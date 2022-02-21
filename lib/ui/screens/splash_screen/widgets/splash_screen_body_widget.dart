@@ -24,7 +24,7 @@ class SplashScreenBodyWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              titleText ?? "",
+              titleText ,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,

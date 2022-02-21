@@ -42,7 +42,7 @@ class _OpenRequestsWidgetState extends State<OpenRequestsWidget> {
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }

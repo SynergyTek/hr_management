@@ -90,9 +90,9 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     if (text != null) queryparams['text'] = text;
 
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     // call bloc with updated query params.
     taskBloc

@@ -44,7 +44,7 @@ class _RequestsApproachingSLAViolationsWidgetState
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }
@@ -86,7 +86,7 @@ class _RequestsApproachingSLAViolationsWidgetState
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "${data?.serviceApproachingViolationInaMin ?? "-"}",
+                "${data.serviceApproachingViolationInaMin ?? "-"}",
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,
                     fontWeight: FontWeight.w600),
@@ -101,7 +101,7 @@ class _RequestsApproachingSLAViolationsWidgetState
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "${data?.serviceApproachingViolation ?? "-"}",
+                "${data.serviceApproachingViolation ?? "-"}",
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,
                     fontWeight: FontWeight.w600),

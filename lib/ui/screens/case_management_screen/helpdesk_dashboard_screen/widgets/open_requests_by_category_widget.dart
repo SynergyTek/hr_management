@@ -77,7 +77,7 @@ class _OpenRequestsByCategoryWidgetState
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }
@@ -117,9 +117,9 @@ class _OpenRequestsByCategoryWidgetState
             series: []..add(
                 PieSeries<PieChartData, String>(
                     dataSource: pieChartData ?? [],
-                    pointColorMapper: (PieChartData model, _) => model?.color,
-                    yValueMapper: (PieChartData model, _) => model?.y,
-                    xValueMapper: (PieChartData model, _) => model?.x,
+                    pointColorMapper: (PieChartData model, _) => model.color,
+                    yValueMapper: (PieChartData model, _) => model.y,
+                    xValueMapper: (PieChartData model, _) => model.x,
                     dataLabelSettings: DataLabelSettings(
                       isVisible: true,
                     )),

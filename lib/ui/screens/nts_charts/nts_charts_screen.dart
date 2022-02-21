@@ -38,13 +38,13 @@ class _NTSChartState extends State<NTSChart> {
     queryparams["startDate"] = dateformatterWithSlash.format(fromDate) ?? '';
     queryparams["dueDate"] = dateformatterWithSlash.format(toDate) ?? '';
     queryparams["userid"] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     ntsChartBloc
       ..getChartByStatus(
         queryparams: {
           'userid':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         },
         ntsType: widget.ntsType,
@@ -54,7 +54,7 @@ class _NTSChartState extends State<NTSChart> {
       ..getChartByUserType(
         queryparams: {
           'userid':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         },
         ntsType: widget.ntsType,
@@ -173,7 +173,7 @@ class _NTSChartState extends State<NTSChart> {
                   children: [
                     Expanded(
                       child: DynamicDateTimeBox(
-                        code: fromDate?.toString() ?? null,
+                        code: fromDate.toString() ?? null,
                         name: 'From',
                         key: new Key('Start Date'),
                         selectDate: (DateTime date) {
@@ -187,7 +187,7 @@ class _NTSChartState extends State<NTSChart> {
                     ),
                     Expanded(
                       child: DynamicDateTimeBox(
-                        code: toDate?.toString() ?? null,
+                        code: toDate.toString() ?? null,
                         name: 'To',
                         key: new Key('End Date'),
                         selectDate: (DateTime date) {
@@ -212,7 +212,7 @@ class _NTSChartState extends State<NTSChart> {
                         queryparams["userid"] =
                             BlocProvider.of<UserModelBloc>(context)
                                     .state
-                                    ?.userModel
+                                    .userModel
                                     ?.id ??
                                 '';
                         ntsChartBloc

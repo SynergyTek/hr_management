@@ -36,7 +36,7 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
   _handleQueryParams() {
     return {
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 
@@ -54,7 +54,7 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
               );
             }
 
-            if (snapshot?.data?.data == null)
+            if (snapshot.data?.data == null)
               return Center(
                 child: Text("No data available."),
               );

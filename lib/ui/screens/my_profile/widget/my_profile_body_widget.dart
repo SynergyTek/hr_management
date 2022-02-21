@@ -35,7 +35,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
   _handleQueryparams() {
     return {
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 
@@ -54,7 +54,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
               );
             }
 
-            if (snapshot?.data?.data == null)
+            if (snapshot.data?.data == null)
               return Center(
                 child: Text("No data available."),
               );

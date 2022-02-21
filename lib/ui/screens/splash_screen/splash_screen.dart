@@ -57,7 +57,7 @@ class SplashScreen extends StatelessWidget {
     // print(id);
 
     String? username =
-        BlocProvider.of<UserModelBloc>(context)?.state?.userModel?.email;
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.email;
 
     print("Username: $username");
 

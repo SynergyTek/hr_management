@@ -110,9 +110,9 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       'templatecode': widget.templateCode ?? '',
       'serviceId': widget.serviceId ?? '',
       'userId':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 
@@ -127,13 +127,13 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
               stream: serviceBloc.subject.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot?.data?.error != null &&
+                  if (snapshot.data?.error != null &&
                       snapshot.data!.error!.length > 0) {
                     return Center(
                       child: Text(snapshot.data!.error!),
                     );
                   }
-                  serviceModel = snapshot?.data?.data;
+                  serviceModel = snapshot.data?.data;
 
                   final createServiceFormBloc =
                       context.read<CreateServiceFormBloc>();
@@ -448,7 +448,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   rowChild(String data, String field, int flex) {
     return Expanded(
-      flex: flex ?? 0,
+      flex: flex,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -550,7 +550,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId != null || widget.serviceId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          leaveDurationControllerCalendarDays.text = model[i].udfValue;
+          leaveDurationControllerCalendarDays.text =
+              model[i].udfValue.toString();
           initialValue = leaveDurationControllerCalendarDays.text;
         }
         if (model[i].key == 'LeaveDurationCalendarDays') {
@@ -902,7 +903,8 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           labelName: model[i].label,
           controller: attchmentController,
 
-          fileId: model[i].udfValue,
+          fileId: model[i].udfValue ?? '',
+          
 
           // Callback for Download
           callBack1: () => _handleDownloadOnPressed(
@@ -1091,7 +1093,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                 handleOnPressed: () {
                   bool isValid = false;
                   for (var i = 0; i < columnComponent.length; i++) {
-                    if (columnComponent[i]?.validate?.required != null &&
+                    if (columnComponent[i].validate?.required != null &&
                         columnComponent[i].validate!.required == true &&
                         udfJson.containsKey(columnComponent[i].key) &&
                         (udfJson[columnComponent[i].key] == null ||
@@ -1103,7 +1105,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     }
                   }
                   for (var i = 0; i < componentComList.length; i++) {
-                    if (componentComList[i]?.validate?.required != null &&
+                    if (componentComList[i].validate?.required != null &&
                         componentComList[i].validate!.required == true &&
                         udfJson.containsKey(componentComList[i].key) &&
                         (udfJson[componentComList[i].key] == null ||
@@ -1115,7 +1117,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
                     }
                   }
                   for (var i = 0; i < udfJsonComponent.length; i++) {
-                    if (udfJsonComponent[i]?.validate?.required != null &&
+                    if (udfJsonComponent[i].validate?.required != null &&
                         udfJsonComponent[i].validate!.required == true &&
                         udfJson.containsKey(udfJsonComponent[i].key) &&
                         (udfJson[udfJsonComponent[i].key] == null ||
@@ -1143,7 +1145,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
 
   requiredFieldValidations() {
     for (var i = 0; i < columnComponent.length; i++) {
-      if (columnComponent[i]?.validate?.required != null &&
+      if (columnComponent[i].validate?.required != null &&
           columnComponent[i].validate!.required == true &&
           udfJson.containsKey(columnComponent[i].key) &&
           (udfJson[columnComponent[i].key] == null ||
@@ -1154,7 +1156,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       }
     }
     for (var i = 0; i < componentComList.length; i++) {
-      if (componentComList[i]?.validate?.required != null &&
+      if (componentComList[i].validate?.required != null &&
           componentComList[i].validate!.required == true &&
           udfJson.containsKey(componentComList[i].key) &&
           (udfJson[componentComList[i].key] == null ||
@@ -1166,7 +1168,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
       }
     }
     for (var i = 0; i < udfJsonComponent.length; i++) {
-      if (udfJsonComponent[i]?.validate?.required != null &&
+      if (udfJsonComponent[i].validate?.required != null &&
           udfJsonComponent[i].validate!.required == true &&
           udfJson.containsKey(udfJsonComponent[i].key) &&
           (udfJson[udfJsonComponent[i].key] == null ||
@@ -1357,8 +1359,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     });
 
     PostResponse result = await serviceBloc.postData(
-      userId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+      userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       isLeaves: widget.isLeave,
       service: postServiceModel,
     );
@@ -1393,7 +1394,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     );
 
     print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
-    ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
+    ddController.text = ntsDdResponse.data.elementAt(0).name ?? '';
     // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
 
@@ -1477,7 +1478,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           //   labelBackgroundColor: Colors.black,
           // ),
           SpeedDialChild(
-            visible: widget?.serviceId != null && widget.serviceId!.isNotEmpty,
+            visible: widget.serviceId != null && widget.serviceId!.isNotEmpty,
             child: Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
             onTap: () => Navigator.pushNamed(context, NTS_SHARE,
@@ -1491,7 +1492,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
             labelBackgroundColor: Colors.black,
           ),
           SpeedDialChild(
-            visible: widget?.serviceId != null && widget.serviceId!.isNotEmpty,
+            visible: widget.serviceId != null && widget.serviceId!.isNotEmpty,
             child: Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
             onTap: () => Navigator.pushNamed(

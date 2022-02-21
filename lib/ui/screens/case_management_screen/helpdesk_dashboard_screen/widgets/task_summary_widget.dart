@@ -62,7 +62,7 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
       );
 
     return ListView.builder(
-      itemCount: data?.length ?? 0,
+      itemCount: data.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
           data: data.elementAt(index),
@@ -78,7 +78,7 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
       child: ListTile(
         title: Container(
           padding: DEFAULT_VERTICAL_PADDING,
-          child: Text(data?.name ?? "-"),
+          child: Text(data.name ?? "-"),
         ),
         subtitle: Column(
           mainAxisSize: MainAxisSize.min,
@@ -98,7 +98,7 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.inProgress.toString() ?? "-",
+                          text: data.inProgress.toString() ?? "-",
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
@@ -118,7 +118,7 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.draft.toString() ?? "-",
+                          text: data.draft.toString() ?? "-",
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
@@ -143,7 +143,7 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.overDue.toString() ?? "-",
+                          text: data.overDue.toString() ?? "-",
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
@@ -163,7 +163,7 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.completed.toString() ?? "-",
+                          text: data.completed.toString() ?? "-",
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),

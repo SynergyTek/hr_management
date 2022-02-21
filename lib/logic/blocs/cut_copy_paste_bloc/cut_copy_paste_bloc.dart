@@ -26,9 +26,9 @@ class CutCopyPasteBloc extends Bloc<CutCopyPasteEvent, CutCopyPasteState> {
     if (event is CutCopyPasteChangeEvent) {
       yield CutCopyPasteUserDefinedState(
         cutCopyPasteModel: CutCopyPasteModel(
-          sourceId: event?.cutCopyPasteModel?.sourceId ?? null,
-          isCopy: event?.cutCopyPasteModel?.isCopy ?? false,
-          isCut: event?.cutCopyPasteModel?.isCut ?? false,
+          sourceId: event.cutCopyPasteModel?.sourceId ?? null,
+          isCopy: event.cutCopyPasteModel?.isCopy ?? false,
+          isCut: event.cutCopyPasteModel?.isCut ?? false,
         ),
       );
     } else if (event is CutCopyPasteSuccessEvent) {

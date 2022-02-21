@@ -282,9 +282,9 @@ class ManageAccrualModel {
   bool? isExecuteAllEmployee;
   int? totalProcessed;
   int? totalSucceeded;
-  int? executePayrollTotal;
-  int? executePayrollError;
-  int? payslipTotal;
+  dynamic executePayrollTotal;
+  dynamic executePayrollError;
+  dynamic payslipTotal;
   int? payslipError;
   int? bankLetterTotal;
   int? bankLetterError;

@@ -139,7 +139,7 @@ class AppRouter {
             templateCode: args!.arg1,
             noteId: args.arg2,
             title: args.arg3,
-            isDependent: args?.val1 ?? false,
+            isDependent: args.val1 ?? false,
           ),
         );
 

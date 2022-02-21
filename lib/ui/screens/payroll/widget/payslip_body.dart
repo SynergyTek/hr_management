@@ -34,7 +34,7 @@ class _PayslipBodyState extends State<PayslipBody> {
       'month': '7',
       'year': '2021',
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
     };
   }
 

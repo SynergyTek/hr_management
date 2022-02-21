@@ -127,7 +127,7 @@ Widget _basicInformationWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.religion,
+                title: data.religion,
                 subtitle: "Religion",
                 // icon: Icon(
                 //   Icons.person,
@@ -147,7 +147,7 @@ Widget _basicInformationWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.locationName,
+                title: data.locationName,
                 subtitle: "Location",
                 icon: Icon(
                   Icons.location_pin,
@@ -181,7 +181,7 @@ Widget _basicInformationWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.nationalityName,
+                title: data.nationalityName,
                 subtitle: "Nationality",
                 // icon: Icon(
                 //   Icons.person,
@@ -274,7 +274,7 @@ Widget _jobDetailsWidget({
               child: _statisticWidget(
                 context: context,
                 title: DateFormat.yMMMMd()
-                        .format(data?.dateOfJoin ?? "" as DateTime)
+                        .format(data.dateOfJoin ?? "" as DateTime)
                         .toString() ??
                     'NA',
                 subtitle: "Date of Joining",
@@ -316,14 +316,14 @@ Widget _presentCountryAddressWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.presentUnitNumber ?? '-',
+                title: data.presentUnitNumber ?? '-',
                 subtitle: "Unit #",
               ),
             ),
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.presentBuildingNumber ?? '-',
+                title: data.presentBuildingNumber ?? '-',
                 subtitle: "Building #",
               ),
             ),
@@ -338,14 +338,14 @@ Widget _presentCountryAddressWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.presentStreetName ?? '-',
+                title: data.presentStreetName ?? '-',
                 subtitle: "Street",
               ),
             ),
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.presentCity ?? '-',
+                title: data.presentCity ?? '-',
                 subtitle: "City",
               ),
             ),
@@ -360,14 +360,14 @@ Widget _presentCountryAddressWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.presentPostalCode ?? '-',
+                title: data.presentPostalCode ?? '-',
                 subtitle: "Postal Code",
               ),
             ),
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.presentCountryName ?? '-',
+                title: data.presentCountryName ?? '-',
                 subtitle: "Country",
               ),
             ),
@@ -382,7 +382,7 @@ Widget _presentCountryAddressWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.presentAdditionalNumber ?? '-',
+                title: data.presentAdditionalNumber ?? '-',
                 subtitle: "Additional Number",
                 icon: Icon(
                   Icons.phone,
@@ -415,14 +415,14 @@ Widget _homeCountryAddressWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.homeUnitNumber ?? '-',
+                title: data.homeUnitNumber ?? '-',
                 subtitle: "Unit #",
               ),
             ),
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.homeBuildingNumber ?? '-',
+                title: data.homeBuildingNumber ?? '-',
                 subtitle: "Building #",
               ),
             ),
@@ -437,14 +437,14 @@ Widget _homeCountryAddressWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.homeStreetName ?? '-',
+                title: data.homeStreetName ?? '-',
                 subtitle: "Street",
               ),
             ),
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.homeCity ?? '-',
+                title: data.homeCity ?? '-',
                 subtitle: "City",
               ),
             ),
@@ -459,14 +459,14 @@ Widget _homeCountryAddressWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.homePostalCode ?? '-',
+                title: data.homePostalCode ?? '-',
                 subtitle: "Postal Code",
               ),
             ),
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.homeCountryName ?? '-',
+                title: data.homeCountryName ?? '-',
                 subtitle: "Country",
               ),
             ),
@@ -481,7 +481,7 @@ Widget _homeCountryAddressWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.homeAdditionalNumber ?? '-',
+                title: data.homeAdditionalNumber ?? '-',
                 subtitle: "Additional Number",
                 icon: Icon(
                   Icons.phone,
@@ -514,7 +514,7 @@ Widget _emergencyContactInfo1Widget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.emergencyContactName1 ?? '-',
+                title: data.emergencyContactName1 ?? '-',
                 subtitle: "Name",
                 icon: Icon(
                   Icons.person,
@@ -548,14 +548,14 @@ Widget _emergencyContactInfo1Widget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.relationship1 ?? '-',
+                title: data.relationship1 ?? '-',
                 subtitle: "Relationship",
               ),
             ),
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.emergencyContactCountryName1 ?? '-',
+                title: data.emergencyContactCountryName1 ?? '-',
                 subtitle: "Country",
                 icon: Icon(
                   Icons.location_pin,
@@ -588,7 +588,7 @@ Widget _emergencyContactInfo2Widget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.emergencyContactName2 ?? '-',
+                title: data.emergencyContactName2 ?? '-',
                 subtitle: "Name",
                 icon: Icon(
                   Icons.person,
@@ -622,14 +622,14 @@ Widget _emergencyContactInfo2Widget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.relationship2 ?? '-',
+                title: data.relationship2 ?? '-',
                 subtitle: "Relationship",
               ),
             ),
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data?.emergencyContactCountryName2 ?? '-',
+                title: data.emergencyContactCountryName2 ?? '-',
                 subtitle: "Country",
                 icon: Icon(
                   Icons.location_pin,

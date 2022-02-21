@@ -478,7 +478,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         Visibility(
           visible: BlocProvider.of<CutCopyPasteBloc>(context)
                       .state
-                      ?.cutCopyPasteModel
+                      .cutCopyPasteModel
                       ?.sourceId !=
                   null &&
               BlocProvider.of<CutCopyPasteBloc>(context)
@@ -815,7 +815,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return DocumentBottomSheetWidget(
-          bottomSheetDataList: bottomSheetDataList ?? [],
+          bottomSheetDataList: bottomSheetDataList,
         );
       },
     );

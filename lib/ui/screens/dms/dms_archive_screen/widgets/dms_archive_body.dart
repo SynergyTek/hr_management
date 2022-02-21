@@ -35,7 +35,7 @@ class _DMSArchiveBodyState extends State<DMSArchiveBody> {
   _handleQueryParams() {
     return {
       'userId':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 

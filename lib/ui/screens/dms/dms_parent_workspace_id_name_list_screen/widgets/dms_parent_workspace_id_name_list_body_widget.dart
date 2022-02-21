@@ -43,7 +43,7 @@ class _ParentWorkspaceIdNameListBodyWidgetState
                 );
               }
 
-              return _bodyWidget(snapshot?.data?.data ?? []);
+              return _bodyWidget(snapshot.data?.data ?? []);
             } else {
               return CustomProgressIndicator();
             }
@@ -115,8 +115,8 @@ class _ParentWorkspaceIdNameListBodyWidgetState
   }) {
     return ListTile(
       leading: Icon(Icons.list_outlined),
-      trailing: (widget?.data?.name != null &&
-              data?.name != null &&
+      trailing: (widget.data?.name != null &&
+              data.name != null &&
               widget.data!.name == data.name)
           ? Icon(
               Icons.check_box,

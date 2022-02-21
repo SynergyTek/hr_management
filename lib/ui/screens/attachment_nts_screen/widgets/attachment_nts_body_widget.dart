@@ -32,8 +32,8 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
 
     attachmentNTSBloc
       ..getData(
-        ntsId: widget?.ntsId,
-        ntsType: widget?.ntsType,
+        ntsId: widget.ntsId,
+        ntsType: widget.ntsType,
       );
   }
 
@@ -72,7 +72,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
       );
 
     return ListView.builder(
-      itemCount: data?.length ?? 0,
+      itemCount: data.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
           data: data.elementAt(index),
@@ -87,7 +87,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
     return ListTile(
       leading: Icon(Icons.attach_file),
       title: Text(
-        data?.fileName ?? '-',
+        data.fileName ?? '-',
         style: TextStyle(
           color: Theme.of(context).textHeadingColor,
         ),
@@ -96,7 +96,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(data?.createdDateDisplay ?? '-'),
+          Text(data.createdDateDisplay ?? '-'),
         ],
       ),
       trailing: Row(
@@ -160,8 +160,8 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
         queryparams: {
           'Id': data.id,
         },
-        ntsId: widget?.ntsId ?? '',
-        ntsType: widget?.ntsType ?? NTSType.service,
+        ntsId: widget.ntsId ?? '',
+        ntsType: widget.ntsType ?? NTSType.service,
       );
   }
 
@@ -212,7 +212,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
       enableDrag: true,
       builder: (BuildContext context) {
         return Downloader(
-          filename: data?.fileName ?? "DEFAULT_FILE_NAME",
+          filename: data.fileName ?? "DEFAULT_FILE_NAME",
           url:
               'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.id ?? ''}',
         );

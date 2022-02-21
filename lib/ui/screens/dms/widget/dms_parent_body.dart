@@ -56,7 +56,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       showHiddenItems: false,
       data: [],
       userId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     ));
   }
 
@@ -533,7 +533,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return DocumentBottomSheetWidget(
-          bottomSheetDataList: bottomSheetDataList ?? [],
+          bottomSheetDataList: bottomSheetDataList,
         );
       },
     );

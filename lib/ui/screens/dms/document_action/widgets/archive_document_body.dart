@@ -27,7 +27,7 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
       ..getArchiveDocumentData(
         queryparams: {
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         },
       );

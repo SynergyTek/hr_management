@@ -86,9 +86,9 @@ class _DMSSupportState extends State<DMSSupport> {
     taskBloc.subjectTaskList.sink.add(null);
     Map<String, dynamic> queryparams = Map();
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     // queryparams['templateCodes'] = 'DMS_SUPPORT_TICKET';
     // queryparams['categoryCodes'] = 'DMS_TASK';

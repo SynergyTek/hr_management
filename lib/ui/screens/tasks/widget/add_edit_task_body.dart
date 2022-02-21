@@ -98,7 +98,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         templateCode: widget.templateCode,
         taskId: widget.taskId,
         userId:
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       );
   }
 
@@ -113,7 +113,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             builder: (context, AsyncSnapshot snapshot) {
               print("Snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
-                if (snapshot?.data?.error != null &&
+                if (snapshot.data?.error != null &&
                     snapshot.data.error.length > 0) {
                   return Center(
                     child: Text(snapshot.data.error),
@@ -121,7 +121,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                 }
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
-                taskModel = snapshot?.data?.data;
+                taskModel = snapshot.data?.data;
 
                 if (taskModel!.json != null) {
                   parseJsonToUDFModel(
@@ -543,7 +543,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          leaveDurationControllerCalendarDays.text = model[i].udfValue;
+          leaveDurationControllerCalendarDays.text = model[i].udfValue ?? '';
           initialValue = leaveDurationControllerCalendarDays.text;
         }
         if (model[i].key == 'LeaveDurationCalendarDays') {
@@ -1011,7 +1011,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
     );
 
     print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
-    ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
+    ddController.text = ntsDdResponse.data.elementAt(0).name ?? '';
     // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
 
@@ -1134,7 +1134,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
               handleOnPressed: () {
                 bool isValid = false;
                 for (var i = 0; i < columnComponent.length; i++) {
-                  if (columnComponent[i]?.validate?.required != null &&
+                  if (columnComponent[i].validate?.required != null &&
                       columnComponent[i].validate!.required == true &&
                       udfJson.containsKey(columnComponent[i].key) &&
                       (udfJson[columnComponent[i].key] == null ||
@@ -1146,7 +1146,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                   }
                 }
                 for (var i = 0; i < componentComList.length; i++) {
-                  if (componentComList[i]?.validate?.required != null &&
+                  if (componentComList[i].validate?.required != null &&
                       componentComList[i].validate!.required == true &&
                       udfJson.containsKey(componentComList[i].key) &&
                       (udfJson[componentComList[i].key] == null ||
@@ -1158,7 +1158,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                   }
                 }
                 for (var i = 0; i < udfJsonComponent.length; i++) {
-                  if (udfJsonComponent[i]?.validate?.required != null &&
+                  if (udfJsonComponent[i].validate?.required != null &&
                       udfJsonComponent[i].validate!.required == true &&
                       udfJson.containsKey(udfJsonComponent[i].key) &&
                       (udfJson[udfJsonComponent[i].key] == null ||
@@ -1185,7 +1185,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
 
   requiredFieldValidations() {
     for (var i = 0; i < columnComponent.length; i++) {
-      if (columnComponent[i]?.validate?.required != null &&
+      if (columnComponent[i].validate?.required != null &&
           columnComponent[i].validate!.required == true &&
           udfJson.containsKey(columnComponent[i].key) &&
           (udfJson[columnComponent[i].key] == null ||
@@ -1196,7 +1196,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       }
     }
     for (var i = 0; i < componentComList.length; i++) {
-      if (componentComList[i]?.validate?.required != null &&
+      if (componentComList[i].validate?.required != null &&
           componentComList[i].validate!.required == true &&
           udfJson.containsKey(componentComList[i].key) &&
           (udfJson[componentComList[i].key] == null ||
@@ -1208,7 +1208,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
       }
     }
     for (var i = 0; i < udfJsonComponent.length; i++) {
-      if (udfJsonComponent[i]?.validate?.required != null &&
+      if (udfJsonComponent[i].validate?.required != null &&
           udfJsonComponent[i].validate!.required == true &&
           udfJson.containsKey(udfJsonComponent[i].key) &&
           (udfJson[udfJsonComponent[i].key] == null ||

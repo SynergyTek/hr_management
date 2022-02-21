@@ -32,21 +32,21 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
           // For basic details:
           ListTile(
             title: Text(
-              eachAccessLogModelElement?.personFullName ?? '',
+              eachAccessLogModelElement.personFullName ?? '',
               style: TextStyle(
                 color: Theme.of(context).textHeadingColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
             subtitle: Text(
-              eachAccessLogModelElement?.personId ?? '-',
+              eachAccessLogModelElement.personId ?? '-',
             ),
             trailing: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    eachAccessLogModelElement?.devicePunchingTypeText ?? '-',
+                    eachAccessLogModelElement.devicePunchingTypeText ?? '-',
                     style: TextStyle(
                       fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                       color: _handleListTileColor(context),
@@ -66,7 +66,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAccessLogModelElement?.punchingTime ?? '-',
+              eachAccessLogModelElement.punchingTime ?? '-',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -78,7 +78,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAccessLogModelElement?.sponsorshipNo ?? '-',
+              eachAccessLogModelElement.sponsorshipNo ?? '-',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -94,9 +94,9 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
                     // style: Theme.of(context).textTheme.bodyText1,
                   ),
                   subtitle: Text(
-                    eachAccessLogModelElement?.deviceName ??
+                    eachAccessLogModelElement.deviceName ??
                         '-' +
-                            '(${eachAccessLogModelElement?.deviceIpAddress ?? '-'})',
+                            '(${eachAccessLogModelElement.deviceIpAddress ?? '-'})',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -108,7 +108,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
                     // style: Theme.of(context).textTheme.bodyText1,
                   ),
                   subtitle: Text(
-                    eachAccessLogModelElement?.biometricId ?? '-',
+                    eachAccessLogModelElement.biometricId ?? '-',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -123,7 +123,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAccessLogModelElement?.signInLocation ?? '-',
+              eachAccessLogModelElement.signInLocation ?? '-',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -134,7 +134,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
 
   Color _handleListTileColor(BuildContext context) {
     // Guard clause
-    if (eachAccessLogModelElement?.devicePunchingType == null ||
+    if (eachAccessLogModelElement.devicePunchingType == null ||
         eachAccessLogModelElement.devicePunchingType!.isNaN)
       return Colors.white54;
 
