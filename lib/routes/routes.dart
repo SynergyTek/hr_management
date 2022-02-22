@@ -206,10 +206,9 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments?;
         return MaterialPageRoute(
           builder: (_) => NTSFilterWidget(
-            ntsFilter: args!.ntstype,
-            onListTap: args.func as void Function(dynamic, FilterType?)?,
-            isDashboard: args.val2,
-          ),
+              ntsFilter: args!.ntstype,
+              isDashboard: args.val2,
+              onListTap: args.func as void Function(dynamic, FilterType)?),
         );
 
       case CREATE_EDIT_TASK_ROUTE:

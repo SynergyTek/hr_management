@@ -417,25 +417,25 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
   manageValues(List<dynamic>? dataList, int index) {
     // All module filters
     if (filterType == FilterType.module || filterType == FilterType.role)
-      widget.onListTap!(dataList![index].id, filterType);
+      widget.onListTap!(dataList![index].id, filterType!);
     // Service Home
     else if (!widget.isDashboard! && widget.ntsFilter == NTSType.service)
-      widget.onListTap!(dataList![index].code, filterType);
+      widget.onListTap!(dataList![index].code, filterType!);
     // Service Home Dashboard
     else if (widget.isDashboard! && widget.ntsFilter == NTSType.service)
-      widget.onListTap!(dataList![index].id, filterType);
+      widget.onListTap!(dataList![index].id, filterType!);
     // Task Home
     else if (!widget.isDashboard! && widget.ntsFilter == NTSType.task)
-      widget.onListTap!(dataList![index].code, filterType);
+      widget.onListTap!(dataList![index].code, filterType!);
     // Task Home Dashboard
     else if (widget.isDashboard! && widget.ntsFilter == NTSType.task)
-      widget.onListTap!(dataList![index].id, filterType);
+      widget.onListTap!(dataList![index].id, filterType!);
     // Note Home
     else if (!widget.isDashboard! && widget.ntsFilter == NTSType.note)
-      widget.onListTap!(dataList![index].code, filterType);
+      widget.onListTap!(dataList![index].code, filterType!);
     // Note Home Dashboard
     else if (widget.isDashboard! && widget.ntsFilter == NTSType.note)
-      widget.onListTap!(dataList![index].id, filterType);
+      widget.onListTap!(dataList![index].id, filterType!);
   }
 
   valueslist() {

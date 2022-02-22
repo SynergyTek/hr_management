@@ -15,7 +15,7 @@ import '../../../listizer/listizer.dart';
 
 import 'task_list_tile.dart';
 
-typedef FilterListTapCallBack = void Function(dynamic key1, FilterType? key2);
+typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskHomeBody extends StatefulWidget {
   final String? mode;
