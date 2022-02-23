@@ -63,8 +63,10 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
                   if (snapshot.hasData) {
                     if (snapshot.data.error != null &&
                         snapshot.data.error.length > 0) {
-                      return Center(
-                        child: Text(snapshot.data.error),
+                      return Expanded(
+                        child: Center(
+                          child: Text(snapshot.data.error),
+                        ),
                       );
                     }
 

@@ -12,11 +12,13 @@ class UdfJson {
   List<UdfJsonComponent>? components;
 
   factory UdfJson.fromJson(Map<String, dynamic> json) => UdfJson(
-        components: List<UdfJsonComponent>.from(
-          json["components"].map(
-            (x) => UdfJsonComponent.fromJson(x),
-          ),
-        ),
+        components: json["components"] == null
+            ? null
+            : List<UdfJsonComponent>.from(
+                json["components"].map(
+                  (x) => UdfJsonComponent.fromJson(x),
+                ),
+              ),
       );
 
   Map<String, dynamic> toJson() => {
@@ -199,7 +201,8 @@ class ColumnComponent {
       this.rowDataValue,
       this.autoExpand,
       this.value,
-      this.udfValue});
+      this.udfValue,
+      this.fileTypes});
 
   String? label;
   bool? tableView;
@@ -245,6 +248,7 @@ class ColumnComponent {
   bool? autoExpand;
   String? value;
   String? udfValue;
+  List<FileTypeData>? fileTypes;
 
   ColumnComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
@@ -311,6 +315,11 @@ class ColumnComponent {
     autoExpand = json['autoExpand'];
     value = json['value'];
     udfValue = json['udfValue'];
+    fileTypes:
+    json["fileTypes"] == null
+        ? null
+        : List<FileTypeData>.from(
+            json["fileTypes"].map((x) => FileTypeData.fromJson(x)));
   }
 
   Map<String, dynamic> toJson() {
@@ -369,8 +378,29 @@ class ColumnComponent {
     data['autoExpand'] = this.autoExpand;
     data['value'] = this.value;
     data['udfValue'] = this.udfValue;
+
     return data;
   }
+}
+
+class FileTypeData {
+  FileTypeData({
+    this.label,
+    this.value,
+  });
+
+  String? label;
+  String? value;
+
+  factory FileTypeData.fromJson(Map<String, dynamic> json) => FileTypeData(
+        label: json["label"],
+        value: json["value"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "label": label,
+        "value": value,
+      };
 }
 
 class Data {
@@ -378,19 +408,28 @@ class Data {
     this.values,
     this.url,
     this.headers,
+    this.fileValues,
   });
 
   List<Value>? values;
   String? url;
   List<Header>? headers;
+  List<FileTypeData>? fileValues;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        values: json["values"] == null
+  factory Data.fromJson(Map<String, dynamic>? json) => Data(
+    
+        values: json?["values"] == null
             ? null
-            : List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
-        url: json["url"],
-        headers:
-            List<Header>.from(json["headers"].map((x) => Header.fromJson(x))),
+            : List<Value>.from(json?["values"].map((x) => Value.fromJson(x))),
+        url: json?["url"],
+        headers: json?["headers"] == null
+            ? null
+            : List<Header>.from(
+                json?["headers"].map((x) => Header.fromJson(x))),
+                fileValues: json?["values"] == null
+            ? null
+            : List<FileTypeData>.from(
+                json?["values"].map((x) => FileTypeData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -604,49 +643,48 @@ class ComponentComponent {
   String? idPath;
   Data? data;
 
-  ComponentComponent({
-    this.label,
-    this.tableView,
-    this.ntsType,
-    this.editableContext,
-    this.viewableContext,
-    this.viewableBy,
-    this.editableBy,
-    this.key,
-    this.type,
-    this.input,
-    this.disabled,
-    this.columnMetadataId,
-    this.autoExpand,
-    this.validate,
-    this.value,
-    this.udfValue,
-    this.template,
-    this.idPath,
-    this.data
-  });
+  ComponentComponent(
+      {this.label,
+      this.tableView,
+      this.ntsType,
+      this.editableContext,
+      this.viewableContext,
+      this.viewableBy,
+      this.editableBy,
+      this.key,
+      this.type,
+      this.input,
+      this.disabled,
+      this.columnMetadataId,
+      this.autoExpand,
+      this.validate,
+      this.value,
+      this.udfValue,
+      this.template,
+      this.idPath,
+      this.data});
 
   ComponentComponent.fromJson(Map<String, dynamic> json) {
     label = json['label'];
     tableView = json['tableView'];
     ntsType = json['ntsType'];
     if (json.containsKey('editableContext'))
-      editableContext = (json['editableContext'] != null )
+      editableContext = (json['editableContext'] != null)
           ? json['editableContext'].cast<String>()
           : '' as List<String>?;
     if (json.containsKey('viewableContext'))
-      viewableContext = (json['viewableContext'] != null )
+      viewableContext = (json['viewableContext'] != null)
           ? json['viewableContext'].cast<String>()
           : '' as List<String>?;
     if (json.containsKey('viewableBy'))
-      viewableBy = (json['viewableBy'] != null )
+      viewableBy = (json['viewableBy'] != null)
           ? json['viewableBy'].cast<String>()
           : '' as List<String>?;
     if (json.containsKey('editableBy'))
-      editableBy = (json['editableBy'] != null )
+      editableBy = (json['editableBy'] != null)
           ? json['editableBy'].cast<String>()
           : '' as List<String>?;
-           data= json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     disabled = json['disabled'] ?? false;
     key = json['key'];
     type = json['type'];
@@ -679,7 +717,7 @@ class ComponentComponent {
     if (this.validate != null) {
       data['validate'] = this.validate!.toJson();
     }
-     if (this.data != null) {
+    if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
     data['value'] = this.value;

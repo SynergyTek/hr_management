@@ -123,10 +123,10 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                     context.read<CreateServiceFormBloc>();
                 taskModel = snapshot.data?.data;
 
-                if (taskModel!.json != null) {
+                if (taskModel?.json != null) {
                   parseJsonToUDFModel(
                     createServiceFormBloc,
-                    taskModel!.json,
+                    taskModel?.json,
                   );
                 }
 
@@ -143,7 +143,7 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
                   body: FormBlocListener<CreateServiceFormBloc, String, String>(
                     onSuccess: (context, state) {},
                     onFailure: (context, state) {},
-                    child: taskModel!.id != null
+                    child: taskModel?.id != null
                         ? setTaskView(
                             context,
                             createServiceFormBloc,
@@ -655,14 +655,14 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select') {
-        TextEditingController _ddController = new TextEditingController();
+        TextEditingController _ddController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId!.isEmpty)) {
           udfJson[model[i].key] = '';
-          if (selectValue.length < model.length) {
-            for (var j = selectValue.length; j < model.length; j++) {
-              selectValue.add(null);
-            }
+        }
+        if (selectValue.length < model.length) {
+          for (var j = selectValue.length; j < model.length; j++) {
+            selectValue.add('');
           }
         }
 
@@ -670,26 +670,265 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             (selectValue[i] != null && selectValue[i]!.isNotEmpty)) {
           _ddController.text = selectValue[i]!;
         }
+
+        // if (model[i].defaultValue != null && model[i].defaultValue.isNotEmpty) {
+        //   editTaskDDValue(
+        //       code: model[i].defaultValue,
+        //       idKey: model[i].idPath,
+        //       nameKey: (model[i].template)
+        //           .toString()
+        //           .replaceAll('<span>{{', '')
+        //           .replaceAll('}}</span>', '')
+        //           .trim()
+        //           .split('.')[1],
+        //       url: model[i].data.url,
+        //       ddController: _ddController);
+        // }
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId != null || widget.taskId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          editTaskDDValue(
-              code: udfJson[model[i].key],
-              idKey: model[i].idPath,
-              nameKey: (model[i].template)
-                  .toString()
-                  .replaceAll('<span>{{', '')
-                  .replaceAll('}}</span>', '')
-                  .trim()
-                  .split('.')[1],
-              url: model[i].data.url,
-              ddController: _ddController);
+          if (model[i].template == null) {
+            List<FileTypeData> _value = model[i].data.fileValues;
+            _value.forEach((element) {
+              if (element.value == model[i].udfValue) {
+                _ddController.text = element.label!;
+              }
+            });
+          } else {
+            // if else loop added to separate processing of multi-select and
+            // single-select conditions
+            // if (model[i].multiple != null &&
+            //     model[i].multiple &&
+            //     udfJson[model[i].key] != null &&
+            //     udfJson[model[i].key]!.isNotEmpty) {
+            // getMultiSelectListNames(
+            //   udfValue: udfJson[model[i].key],
+            //   idKey: model[i].idPath,
+            //   nameKey: (model[i].template)
+            //       .toString()
+            //       .replaceAll('<span>{{', '')
+            //       .replaceAll('}}</span>', '')
+            //       .trim()
+            //       .split('.')[1],
+            //   url: model[i].data.url,
+            //   ddController: _ddController,
+            // ).then((value) => _ddController.text =
+            //     value.toString().split('[')[1].split(']')[0]);
+            // } else {
+            editTaskDDValue(
+                code: udfJson[model[i].key].toString(),
+                idKey: model[i].idPath,
+                nameKey: (model[i].template)
+                    .toString()
+                    .replaceAll('<span>{{', '')
+                    .replaceAll('}}</span>', '')
+                    .trim()
+                    .split('.')[1],
+                url: model[i].data.url,
+                ddController: _ddController);
+            // }
+          }
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
-              selectValue.add(null);
+              selectValue.add('');
             }
           }
         }
+
+        /// This variable carries the items already selected from the multiselect list
+        // List<String>? _dropdownModelListMultiselect = [];
+
+        List<NTSDropdownModel>? _dropdownModelList = [];
+        model[i].data?.values?.forEach(
+              (e) => _dropdownModelList.add(
+                NTSDropdownModel(
+                  id: e.value,
+                  name: e.label,
+                ),
+              ),
+            );
+        if ((selectValue != null && selectValue.isNotEmpty) &&
+            (selectValue[i] != null && selectValue[i]!.isNotEmpty)) {
+          _ddController.text = selectValue[i]!;
+        }
+
+        // if ((model[i].key == 'CommunityHallNameId' ||
+        //         model[i].key == 'WardNo') &&
+        //     widget.extraInformationMap != null &&
+        //     widget.extraInformationMap![model[i].key] != null) {
+        //   _ddController.text = widget.extraInformationMap![model[i].key]!.name!;
+        //   udfJson[model[i].key] =
+        //       widget.extraInformationMap![model[i].key]!.id!;
+        // }
+
+        // if (widget.extraInformationMap != null &&
+        //     widget.extraInformationMap!.containsKey(model[i].key) &&
+        //     widget.extraInformationMap![model[i].key]?.id != null) {
+        //   udfJson[model[i].key] =
+        //       widget.extraInformationMap![model[i].key]!.id!.toString();
+        //   //Below loop added to fix issue in "Sanitation tax registration - residential"
+        //   if (widget.extraInformationMap![model[i].key] != null &&
+        //       (widget.extraInformationMap![model[i].key]!.id!.toString() ==
+        //           widget.extraInformationMap![model[i].key]!.name)) {
+        //     editTaskDDValue(
+        //         code: udfJson[model[i].key].toString(),
+        //         idKey: model[i].idPath,
+        //         nameKey: (model[i].template)
+        //             .toString()
+        //             .replaceAll('<span>{{', '')
+        //             .replaceAll('}}</span>', '')
+        //             .trim()
+        //             .split('.')[1],
+        //         url: model[i].data.url,
+        //         ddController: _ddController);
+        //   } else {
+        //     _ddController.text =
+        //         widget.extraInformationMap![model[i].key]!.name ?? "NA";
+        //   }
+        // }
+
+        // listDynamic.add(
+        //   AbsorbPointer(
+        //     absorbing: !widget.isEmployeePortal &&
+        //         (widget.taskId != null && widget.taskId.isNotEmpty),
+        //     child: NTSDropDownSelect(
+        //       isRequired: model[i].validate?.required,
+        //       title: model[i].label,
+        //       controller: _ddController,
+        //       hint: model[i].label,
+        //       validationMessage: "Select " + model[i].label,
+        //       isShowArrow: true,
+        //       typeKey: typeKey,
+        //       multiple: model[i].multiple ?? false,
+        //       isReadonly: ((widget.extraInformationMap != null &&
+        //                       widget.extraInformationMap!
+        //                           .containsKey(model[i].key)) ||
+        //                   model[i].key == 'CommunityHallNameId' &&
+        //                       widget.extraInformationMap != null) ||
+        //               model[i].disabled.toString() == 'true'
+        //           ? true
+        //           : false,
+        //       nameKey: model[i].template != null
+        //           ? (model[i].template)
+        //               .toString()
+        //               .replaceAll('<span>{{', '')
+        //               .replaceAll('}}</span>', '')
+        //               .trim()
+        //               .split('.')[1]
+        //           : '',
+        //       idKey: model[i].idPath,
+        //       url: model[i].data.url,
+        //       dropdownValues: (model[i].multiple != null && model[i].multiple)
+        //           ? []
+        //           : _dropdownModelList,
+        //       multiSelectDropdownValues: (model[i].multiple != null &&
+        //               model[i].multiple &&
+        //               (widget.taskId == null || widget.taskId.isEmpty) &&
+        //               udfJson[model[i].key].isNotEmpty)
+        //           ? udfJson[model[i].key]
+        //           : [],
+        //       onListTap: (dynamic value) {
+        //         if (value.runtimeType.toString() == 'NTSDropdownModel' ||
+        //             value.runtimeType.toString() == 'CommonListModel') {
+        //           if (model[i].key == 'Ward' ||
+        //               model[i].key == 'WardId' ||
+        //               model[i].key == 'wardId' ||
+        //               model[i].key == 'WardNo') {
+        //             commonBloc.subjectCommonList.sink.add(null);
+        //             CommonListModel _selectedIdNameViewModel = value;
+        //             _ddController.text =
+        //                 _selectedIdNameViewModel.name.toString();
+        //             udfJson[model[i].key] =
+        //                 _selectedIdNameViewModel.id.toString();
+        //           } else {
+        //             // ntsDdBloc.subject.sink.add(null);
+        //             NTSDropdownModel _selectedIdNameViewModel = value;
+        //             _ddController.text =
+        //                 _selectedIdNameViewModel.name.toString();
+        //             udfJson[model[i].key] =
+        //                 _selectedIdNameViewModel.id.toString();
+        //           }
+        //           selectValue[i] = _ddController.text;
+        //           if (model[i].key == 'ComplaintType') {
+        //             setState(() {
+        //               typeKey = value.id;
+        //             });
+        //           }
+        //           if (model[i].key == 'EventTypeId' ||
+        //               model[i].key == 'ChooseType' ||
+        //               model[i].key == 'DebrisType' ||
+        //               model[i].key == 'serviceName') {
+        //             //'ChooseType' added for 'Meat Waste Clearance Form'
+        //             //'DebrisType' added for 'Construction and debris waste clearance form'
+        //             //'serviceName' added for 'Tax Registration for Commercial Users'
+        //             setState(() {
+        //               conditionalValues[model[i].key] = value.id;
+        //             });
+        //           }
+        //         } else {
+        //           List<String> _categoryName = [];
+        //           List<String> _categoryId = [];
+        //           List<NTSDropdownModel> _list = value;
+
+        //           _list.forEach(
+        //             (element) {
+        //               _categoryName.add(element.name!);
+        //               _categoryId.add(element.id!);
+        //             },
+        //           );
+
+        //           ntsDdBloc.subject.sink.add(null);
+        //           _dropdownModelListMultiselect = _categoryId;
+
+        //           udfJson[model[i].key] = _dropdownModelListMultiselect;
+
+        //           _ddController.text =
+        //               _categoryName.toString().split('[')[1].split(']')[0];
+        //           selectValue[i] = _ddController.text;
+        //           setState(() {});
+        //         }
+        //       },
+        //     ),
+        //   ),
+        // );
+
+        // ---------------------------------------------------------
+
+        // TextEditingController _ddController = new TextEditingController();
+        // if (!udfJson.containsKey(model[i].key) &&
+        //     (widget.taskId == null || widget.taskId!.isEmpty)) {
+        //   udfJson[model[i].key] = '';
+        //   if (selectValue.length < model.length) {
+        //     for (var j = selectValue.length; j < model.length; j++) {
+        //       selectValue.add(null);
+        //     }
+        //   }
+        // }
+
+        // if ((selectValue != null && selectValue.isNotEmpty) &&
+        //     (selectValue[i] != null && selectValue[i]!.isNotEmpty)) {
+        //   _ddController.text = selectValue[i]!;
+        // }
+        // if (!udfJson.containsKey(model[i].key) &&
+        //     (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+        //   udfJson[model[i].key] = model[i].udfValue ?? '';
+        //   editTaskDDValue(
+        //       code: udfJson[model[i].key],
+        //       idKey: model[i].idPath,
+        //       nameKey: (model[i].template)
+        //           .toString()
+        //           .replaceAll('<span>{{', '')
+        //           .replaceAll('}}</span>', '')
+        //           .trim()
+        //           .split('.')[1],
+        //       url: model[i].data.url,
+        //       ddController: _ddController);
+        //   if (selectValue.length < model.length) {
+        //     for (var j = selectValue.length; j < model.length; j++) {
+        //       selectValue.add(null);
+        //     }
+        //   }
+        // }
 
         listDynamic.add(
           NTSDropDownSelect(
@@ -698,12 +937,14 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
             hint: model[i].label,
             validationMessage: "Select " + model[i].label,
             isShowArrow: true,
-            nameKey: (model[i].template)
-                .toString()
-                .replaceAll('<span>{{', '')
-                .replaceAll('}}</span>', '')
-                .trim()
-                .split('.')[1],
+            nameKey: model[i].template != null
+                ? (model[i].template)
+                    .toString()
+                    .replaceAll('<span>{{', '')
+                    .replaceAll('}}</span>', '')
+                    .trim()
+                    .split('.')[1]
+                : '',
             idKey: model[i].idPath,
             url: model[i].data.url,
             onListTap: (dynamic value) {
