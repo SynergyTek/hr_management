@@ -48,7 +48,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
             if (snapshot.data!.error != null &&
                 snapshot.data!.error!.length > 0) {
               return Center(
-                child: Text(snapshot.data!.error!),
+                child: Expanded(child: Text(snapshot.data!.error!)),
               );
             }
             dashboardCount = snapshot.data!.data;
