@@ -23,6 +23,7 @@ class NTSTemplateBloc {
       _subject.sink.add(null);
       queryparams = {
         "templateType": "Service",
+        "categoryCode":"Employee_Service,Leave,CHR,HR_DOCUMENTS,CMS_SEBI_INT,TMSUSERMGMT,Dependent Documents,PersonDocuments,Separation,TimePermission"
       };
     } else if (ntsType == NTSType.task) {
       _subject.sink.add(null);
