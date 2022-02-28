@@ -74,9 +74,11 @@ class DMSTaskListCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Text('Start Date: '),
-                      Text(
-                        startDateDisplay(index!),
-                        style: TextStyle(color: Colors.red[700]),
+                      Expanded(
+                        child: Text(
+                          startDateDisplay(index!),
+                          style: TextStyle(color: Colors.red[700]),
+                        ),
                       ),
                     ],
                   ),
@@ -85,9 +87,11 @@ class DMSTaskListCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Text('Due Date: '),
-                      Text(
-                        dueDateDisplay(index!),
-                        style: TextStyle(color: Colors.red[700]),
+                      Expanded(
+                        child: Text(
+                          dueDateDisplay(index!),
+                          style: TextStyle(color: Colors.red[700]),
+                        ),
                       ),
                     ],
                   ),

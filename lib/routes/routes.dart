@@ -384,7 +384,7 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments?;
         return MaterialPageRoute(
           builder: (_) => DmsAddEditPermissionScreen(
-            noteId: args!.arg1,
+            noteId: args?.arg1,
           ),
         );
 
