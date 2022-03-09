@@ -50,7 +50,7 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
       );
   }
 
-  _handleQueryparams({FilterListModel model}) {
+  _handleQueryparams({FilterListModel? model}) {
     if (model == null)
       return {
         'type': 'Category',
@@ -84,12 +84,12 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
     );
   }
 
-  Widget _bodyWidget(List<CaseManagementModel> data) {
+  Widget _bodyWidget(List<CaseManagementModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -101,7 +101,7 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
         _filterWidget(),
         Expanded(
           child: ListView.builder(
-            itemCount: data?.length ?? 0,
+            itemCount: data.length ?? 0,
             itemBuilder: (BuildContext context, int index) {
               return _eachListTile(
                 data: data.elementAt(index),
@@ -114,13 +114,13 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
   }
 
   Widget _eachListTile({
-    @required CaseManagementModel data,
+    required CaseManagementModel data,
   }) {
     return Card(
       child: ListTile(
         title: Container(
           padding: DEFAULT_VERTICAL_PADDING,
-          child: Text(data?.name ?? "-"),
+          child: Text(data.name ?? "-"),
         ),
         subtitle: Column(
           mainAxisSize: MainAxisSize.min,
@@ -140,8 +140,8 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.inProgress.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.inProgress.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -160,8 +160,8 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.draft.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.draft.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -185,8 +185,8 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.overDue.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.overDue.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -205,8 +205,8 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.completed.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.completed.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -243,12 +243,12 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
           CaseManagementFilterBottomModalSheetWidget(
         data: data,
       ),
-    ).then((List<FilterListModel> value) {
+    ).then((List<FilterListModel>? value) {
       if (value != null) {
         data = value;
       }
 
-      value.forEach((element) {
+      value!.forEach((element) {
         if (element.isChecked == true) {
           helpdeskBox1Bloc
             ..getData(

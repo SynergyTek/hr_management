@@ -16,7 +16,7 @@ import 'widgets/note_worklist.dart';
 import 'widgets/task_service_worklist.dart';
 
 class WorklistDashboard extends StatefulWidget {
-  const WorklistDashboard({Key key}) : super(key: key);
+  const WorklistDashboard({Key? key}) : super(key: key);
 
   @override
   _WorklistDashboardState createState() => _WorklistDashboardState();
@@ -27,7 +27,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
   String title = 'Task';
   int _selectedIndex = 0;
   NTSType ntsType = NTSType.task;
-  List<Widget> _widgetOptions = [];
+  List<Widget>? _widgetOptions = [];
   @override
   void initState() {
     super.initState();
@@ -57,29 +57,28 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child: StreamBuilder<NTSTemplateTreeListResponse>(
-                  stream: ntsTemplateTreeListBloc.subject.stream,
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data.error != null &&
-                          snapshot.data.error.length > 0) {
-                        return Center(
+              StreamBuilder<NTSTemplateTreeListResponse>(
+                stream: ntsTemplateTreeListBloc.subject.stream,
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data.error != null &&
+                        snapshot.data.error.length > 0) {
+                      return Expanded(
+                        child: Center(
                           child: Text(snapshot.data.error),
-                        );
-                      }
-
-                      return Container();
-                      //  _filterWidget(snapshot.data.data);
-                    } else {
-                      return CircularProgressIndicator();
+                        ),
+                      );
                     }
-                  },
-                ),
+
+                    return Container();
+                    //  _filterWidget(snapshot.data.data);
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
               ),
               Expanded(
-                child: _widgetOptions.elementAt(_selectedIndex),
+                child: _widgetOptions!.elementAt(_selectedIndex),
               ),
             ],
           ),

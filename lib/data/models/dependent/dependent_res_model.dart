@@ -8,10 +8,10 @@ import 'dependent_list_model.dart';
 /// or returns an error in response.
 class ReadDependnetResponse {
   final List<DependentListModel> data;
-  String error;
+  String? error;
 
   ReadDependnetResponse({
-    @required this.data,
+    required this.data,
   });
 
   ReadDependnetResponse.fromJson(List response)
@@ -25,10 +25,10 @@ class ReadDependnetResponse {
 
 class DependnetDocReqResponse {
   final List<DependentDocReqListModel> data;
-  String error;
+  String? error;
 
   DependnetDocReqResponse({
-    @required this.data,
+    required this.data,
   });
 
   DependnetDocReqResponse.fromJson(List response)

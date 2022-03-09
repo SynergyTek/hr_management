@@ -1,9 +1,9 @@
 import 'owner_name_list_model.dart';
 
 class OwnerNameListResponse {
-  bool isSuccess;
-  List<OwnerNameListModel> list;
-  String error;
+  bool? isSuccess;
+  List<OwnerNameListModel>? list;
+  String? error;
 
   OwnerNameListResponse({this.list});
 

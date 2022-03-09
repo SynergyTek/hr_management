@@ -9,7 +9,7 @@ class DMSDocumentActionBloc {
   final BehaviorSubject<DMSDocumentActionResponse> _subject = BehaviorSubject();
 
   getArchiveDocumentData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     DMSDocumentActionResponse response =
         await _apiRepository.getArchiveDocumentData(
@@ -20,7 +20,7 @@ class DMSDocumentActionBloc {
   }
 
   getBinDocumentData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     DMSDocumentActionResponse response =
         await _apiRepository.getBinDocumentData(
@@ -31,7 +31,7 @@ class DMSDocumentActionBloc {
   }
 
   getDocumentHistoryData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     DMSDocumentActionResponse response =
         await _apiRepository.getDocumentHistoryData(
@@ -42,7 +42,7 @@ class DMSDocumentActionBloc {
   }
 
   getSearchDocumentData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     DMSDocumentActionResponse response =
         await _apiRepository.getSearchDocumentData(

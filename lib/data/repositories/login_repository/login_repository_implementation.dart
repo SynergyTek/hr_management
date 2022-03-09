@@ -7,8 +7,8 @@ class LoginRepository extends AbstractLoginRepository {
 
   @override
   Future<LoginAPIResponse> postAPIData({
-    Map<String, dynamic> queryparams,
-    LoginRequestModel loginResponseModel,
+    Map<String, dynamic>? queryparams,
+    LoginRequestModel? loginResponseModel,
   }) async {
     final String endpoint = APIEndpointConstants.MANAGE_LOGIN;
     try {

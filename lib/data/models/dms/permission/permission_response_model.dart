@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'permission_model.dart';
 
 class PermissionResponse {
-  final List<Permission> data;
-  String error;
+  final List<Permission>? data;
+  String? error;
 
   PermissionResponse({
-    @required this.data,
+    required this.data,
   });
 
   PermissionResponse.fromJson(List response)
@@ -20,11 +20,11 @@ class PermissionResponse {
 }
 
 class ViewPermissionResponse {
-  final Permission data;
-  String error;
+  final Permission? data;
+  String? error;
 
   ViewPermissionResponse({
-    @required this.data,
+    required this.data,
   });
 
   ViewPermissionResponse.fromJson(Map<String, dynamic> response)
@@ -36,11 +36,11 @@ class ViewPermissionResponse {
 }
 
 class SubmitPermissionResponse {
-  final PermissionSubmitModel data;
-  String error;
+  final PermissionSubmitModel? data;
+  String? error;
 
   SubmitPermissionResponse({
-    @required this.data,
+    required this.data,
   });
 
   SubmitPermissionResponse.fromJson(Map<String, dynamic> response)

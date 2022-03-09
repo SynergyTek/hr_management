@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'chart_model.dart';
 
 class ChartResponse {
-  bool isSuccess;
-  List<ChartModel> list;
-  String error;
+  bool? isSuccess;
+  List<ChartModel>? list;
+  String? error;
 
   ChartResponse({
-    @required this.list,
+    required this.list,
   });
 
   ChartResponse.fromJson(List response)

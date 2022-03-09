@@ -4,15 +4,15 @@ class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
   final Dio _dio = Dio();
 
   Future postAPIData({
-    @required Map<String, dynamic> queryparams,
+    required Map<String, dynamic> queryparams,
   }) async {
     try {
       Response response = await _dio.post(
         APIEndpointConstants.POST_MANAGE_NEW_FOLDER_DATA,
-        data: queryparams ?? {},
+        data: queryparams,
       );
 
-      if (response?.data != null && response.data['success'] != null ||
+      if (response.data != null && response.data['success'] != null ||
           response.data['success'] == true) {
         return true;
       }
@@ -27,7 +27,7 @@ class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
   }
 
   Future<NoteModel> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -42,7 +42,7 @@ class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return err;
+      return Future.error(err);
     }
   }
 }

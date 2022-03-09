@@ -27,23 +27,23 @@ class LeaveTemplateModel {
     this.versionNo,
   });
 
-  int taskType;
-  String categoryCode;
-  String iconFileId;
-  String templateColor;
-  String displayName;
-  String code;
-  String description;
-  int templateStatus;
-  int templateType;
-  int tableSelectionType;
-  String id;
-  DateTime createdDate;
-  DateTime lastUpdatedDate;
-  bool isDeleted;
-  int dataAction;
-  int status;
-  int versionNo;
+  int? taskType;
+  String? categoryCode;
+  String? iconFileId;
+  String? templateColor;
+  String? displayName;
+  String? code;
+  String? description;
+  int? templateStatus;
+  int? templateType;
+  int? tableSelectionType;
+  String? id;
+  DateTime? createdDate;
+  DateTime? lastUpdatedDate;
+  bool? isDeleted;
+  int? dataAction;
+  int? status;
+  int? versionNo;
 
   factory LeaveTemplateModel.fromJson(Map<String, dynamic> json) {
     print(json['Code']);
@@ -81,8 +81,8 @@ class LeaveTemplateModel {
         "TemplateType": templateType,
         "TableSelectionType": tableSelectionType,
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "IsDeleted": isDeleted,
         "DataAction": dataAction,
         "Status": status,

@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
-import 'package:hr_management/data/models/profile_settings_model.dart';
 import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
-import 'package:hr_management/logic/blocs/profile_settings_bloc/profile_settings_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../data/models/login_models/login_response_model.dart';
 import '../../../widgets/snack_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../data/models/login_models/login_request_model.dart';
 import '../../../../data/models/login_models/login_response.dart';
 
@@ -24,7 +19,7 @@ import 'package:animated_widgets/animated_widgets.dart';
 import '../login_form_bloc.dart';
 
 class LoginBody extends StatefulWidget {
-  LoginBody({Key key}) : super(key: key);
+  LoginBody({Key? key}) : super(key: key);
 
   @override
   _LoginBodyState createState() => _LoginBodyState();
@@ -184,8 +179,8 @@ class _LoginBodyState extends State<LoginBody> {
   }
 
   loginViewModelPostRequest(
-    String email,
-    String password,
+    String? email,
+    String? password,
   ) async {
     Map<String, dynamic> queryparams = Map();
 

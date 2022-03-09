@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
-import 'package:listizer/listizer.dart';
+import '../../listizer/listizer.dart';
 
 typedef OnTapPressedCallBack = void Function(
   dynamic key,
@@ -12,12 +12,12 @@ typedef OnTapPressedCallBack = void Function(
 
 class SelectTag extends StatefulWidget {
   final dynamic selectedModel;
-  final NTSType ntstype;
-  final OnTapPressedCallBack onListTap;
-  final String ntsId;
+  final NTSType? ntstype;
+  final OnTapPressedCallBack? onListTap;
+  final String? ntsId;
 
   const SelectTag(
-      {Key key, this.selectedModel, this.ntstype, this.onListTap, this.ntsId})
+      {Key? key, this.selectedModel, this.ntstype, this.onListTap, this.ntsId})
       : super(key: key);
 
   @override
@@ -27,7 +27,7 @@ class SelectTag extends StatefulWidget {
 class _SelectTagState extends State<SelectTag> {
   List<String> _teamDataList = ['1', '2', '3'];
   List<String> _filteredTeamDataList = [];
-  final List<bool> _chkVal = <bool>[false, false, false];
+  final List<bool?> _chkVal = <bool?>[false, false, false];
   List<String> tags = [];
 
   @override
@@ -58,7 +58,7 @@ class _SelectTagState extends State<SelectTag> {
                   _teamDataList[index],
                   maxLines: 2,
                 ),
-                onChanged: (bool value) {
+                onChanged: (bool? value) {
                   setState(() {
                     _chkVal[index] = value;
                     (_chkVal[index] == true)

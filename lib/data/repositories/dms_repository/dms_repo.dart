@@ -4,8 +4,8 @@ class DMSRepository extends AbstractDMSRepository {
   final Dio _dio = Dio();
 
   Future<DMSFilesResponse> getDMSFilesData({
-    Map<String, dynamic> queryparams,
-    @required DmsPostModel dmsPostModel,
+    Map<String, dynamic>? queryparams,
+    required DmsPostModel dmsPostModel,
   }) async {
     final String endpoint = APIEndpointConstants.GETDMSFILES;
 
@@ -25,8 +25,8 @@ class DMSRepository extends AbstractDMSRepository {
   }
 
   Future<DMSFilesResponse> getDMSFilesChildData({
-    Map<String, dynamic> queryparams,
-    @required DmsPostModel dmsPostModel,
+    Map<String, dynamic>? queryparams,
+    required DmsPostModel dmsPostModel,
   }) async {
     final String endpoint = APIEndpointConstants.GETDMSFILES;
 

@@ -39,19 +39,19 @@ class EnumTreeListModel {
     this.fieldDataType,
   });
 
-  String id;
-  String name;
-  String displayName;
+  String? id;
+  String? name;
+  String? displayName;
   dynamic iconCss;
   dynamic iconTitle;
-  String parentId;
-  bool hasChildren;
-  bool expanded;
-  String type;
+  String? parentId;
+  bool? hasChildren;
+  bool? expanded;
+  String? type;
   dynamic portalId;
   dynamic rootId;
-  int itemLevel;
-  bool checked;
+  int? itemLevel;
+  bool? checked;
   dynamic url;
   dynamic userRoleId;
   dynamic projectId;
@@ -60,12 +60,12 @@ class EnumTreeListModel {
   dynamic stageId;
   dynamic batchId;
   dynamic statusCode;
-  String statusCodeStr;
+  String? statusCodeStr;
   dynamic bannerId;
   dynamic bannerStyle;
   dynamic directory;
   dynamic templateType;
-  String templateTypeText;
+  String? templateTypeText;
   dynamic fieldDataType;
 
   factory EnumTreeListModel.fromJson(Map<String, dynamic> json) =>

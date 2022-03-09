@@ -6,7 +6,7 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widget/payslip_body.dart';
 
 class PayslipScreen extends StatelessWidget {
-  const PayslipScreen({Key key}) : super(key: key);
+  const PayslipScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

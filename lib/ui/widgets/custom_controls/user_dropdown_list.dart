@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listizer/listizer.dart';
+import '../../listizer/listizer.dart';
 
 import '../../../data/models/user/user.dart';
 import '../../../data/models/user/user_response.dart';
@@ -13,10 +13,10 @@ import '../nts_dropdown_select.dart';
 import '../progress_indicator.dart';
 
 class UserDropDownList extends StatefulWidget {
-  final ListTapPressedCallBack onListTap;
+  final ListTapPressedCallBack? onListTap;
 
   const UserDropDownList({
-    Key key,
+    Key? key,
     this.onListTap,
   }) : super(key: key);
 
@@ -25,7 +25,7 @@ class UserDropDownList extends StatefulWidget {
 }
 
 class _UserStateDropDownList extends State<UserDropDownList> {
-  List<User> _userDataList = [];
+  List<User>? _userDataList = [];
   List<User> _filterUserDataList = [];
   @override
   void initState() {
@@ -41,16 +41,16 @@ class _UserStateDropDownList extends State<UserDropDownList> {
       ),
       body: Container(
         padding: DEFAULT_LARGE_PADDING,
-        child: StreamBuilder<UserListResponse>(
+        child: StreamBuilder<UserListResponse?>(
           stream: userBLoc.subjectUserDataList.stream,
-          builder: (context, AsyncSnapshot<UserListResponse> snapshot) {
+          builder: (context, AsyncSnapshot<UserListResponse?> snapshot) {
             print("Snapshot data: ${snapshot.data}");
             if (snapshot.hasData) {
-              if (snapshot.data.list == null ||
-                  snapshot.data.list.length == 0) {
+              if (snapshot.data!.list == null ||
+                  snapshot.data!.list!.length == 0) {
                 return EmptyListWidget();
               }
-              _userDataList = snapshot.data.list;
+              _userDataList = snapshot.data!.list;
               return Listizer(
                 showSearchBar: true,
                 listItems: _userDataList,
@@ -58,21 +58,21 @@ class _UserStateDropDownList extends State<UserDropDownList> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: TextCircleAvater(
-                      text: _userDataList[index].name,
+                      text: _userDataList![index].name,
                       context: context,
                       radius: 20,
                       fontSize: 18,
                       color: Theme.of(context).primaryColorLight,
                     ),
                     title: Text(
-                      _userDataList[index].name != null
-                          ? _userDataList[index].name
+                      _userDataList![index].name != null
+                          ? _userDataList![index].name!
                           : "",
                       maxLines: 2,
                     ),
                     onTap: () {
                       if (widget.onListTap != null) {
-                        widget.onListTap(_userDataList[index]);
+                        widget.onListTap!(_userDataList![index]);
                         Navigator.pop(context);
                       }
                     },

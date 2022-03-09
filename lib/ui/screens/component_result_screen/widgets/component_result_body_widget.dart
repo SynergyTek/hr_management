@@ -12,7 +12,7 @@ class ComponentResultBodyWidget extends StatefulWidget {
   final String serviceId;
 
   ComponentResultBodyWidget({
-    @required this.serviceId,
+    required this.serviceId,
   });
 
   @override
@@ -32,7 +32,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
   }
 
   _handleQueryparams() => {
-        'serviceId': widget?.serviceId ?? '',
+        'serviceId': widget.serviceId ?? '',
       };
 
   @override
@@ -58,19 +58,19 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
     );
   }
 
-  Widget _componentResultWidget(List<ComponentResultModel> data) {
+  Widget _componentResultWidget(List<ComponentResultModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
       );
 
     return ListView.builder(
-      itemCount: data?.length ?? 0,
+      itemCount: data.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
           data: data.elementAt(index),
@@ -80,22 +80,22 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
   }
 
   Widget _eachListTile({
-    @required ComponentResultModel data,
+    required ComponentResultModel data,
   }) {
     return Card(
       child: ListTile(
-        title: Text(data?.assignee ?? "-"),
+        title: Text(data.assignee ?? "-"),
         subtitle: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("${data.startDate} to ${data.endDate}"),
-            Text("Error: ${data?.error ?? "NA"}"),
+            Text("Error: ${data.error ?? "NA"}"),
           ],
         ),
         trailing: Text(
-          data?.componentStatusName ?? "-",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          data.componentStatusName ?? "-",
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: _handleListTileColor(context, data.componentStatusName),
               ),
         ),
@@ -103,7 +103,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
     );
   }
 
-  Color _handleListTileColor(BuildContext context, String data) {
+  Color _handleListTileColor(BuildContext context, String? data) {
     // Guard clause
     if (data == null || data.isEmpty) return Colors.white54;
 

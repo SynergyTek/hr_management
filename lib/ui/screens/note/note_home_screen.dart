@@ -8,12 +8,12 @@ import '../../widgets/drawer/nav_drawer_widget.dart';
 import 'widgets/note_home_body.dart';
 
 class NoteHomeScreen extends StatelessWidget {
-  final String mode;
-  final String noteStatus;
-  final String moduleId;
-  final bool showBack;
+  final String? mode;
+  final String? noteStatus;
+  final String? moduleId;
+  final bool? showBack;
   const NoteHomeScreen({
-    Key key,
+    Key? key,
     this.noteStatus,
     this.moduleId,
     this.mode,
@@ -23,7 +23,7 @@ class NoteHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: showBack ? null : drawerWidget(context),
+      drawer: showBack! ? null : drawerWidget(context),
       appBar: AppbarWidget(
         title: "Note Home",
       ),

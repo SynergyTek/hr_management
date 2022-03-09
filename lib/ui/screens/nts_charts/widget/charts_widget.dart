@@ -4,11 +4,11 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../data/models/nts_charts/chart_model.dart';
 
 class Charts extends StatefulWidget {
-  final List<ChartModel> chartDataLIst;
-  final String chartType;
-  final String nts;
+  final List<ChartModel>? chartDataLIst;
+  final String? chartType;
+  final String? nts;
 
-  const Charts({Key key, this.chartDataLIst, this.chartType, this.nts})
+  const Charts({Key? key, this.chartDataLIst, this.chartType, this.nts})
       : super(key: key);
 
   @override
@@ -82,9 +82,9 @@ class _ChartsState extends State<Charts> {
                     position: LegendPosition.bottom),
                 series: <ChartSeries>[
                     LineSeries<ChartModel, String>(
-                      dataSource: widget.chartDataLIst,
+                      dataSource: widget.chartDataLIst!,
                       name: '${widget.nts} SLA',
-                      xValueMapper: (ChartModel data, _) => data?.type,
+                      xValueMapper: (ChartModel data, _) => data.type,
                       yValueMapper: (ChartModel data, _) => data.actualSLA,
                       dataLabelSettings: DataLabelSettings(
                         isVisible: true,
@@ -93,9 +93,9 @@ class _ChartsState extends State<Charts> {
                       markerSettings: MarkerSettings(isVisible: true),
                     ),
                     LineSeries<ChartModel, String>(
-                      dataSource: widget.chartDataLIst,
+                      dataSource: widget.chartDataLIst!,
                       name: 'Actual SLA',
-                      xValueMapper: (ChartModel data, _) => data?.type,
+                      xValueMapper: (ChartModel data, _) => data.type,
                       yValueMapper: (ChartModel data, _) => data.days,
                       dataLabelSettings: DataLabelSettings(
                           isVisible: true,

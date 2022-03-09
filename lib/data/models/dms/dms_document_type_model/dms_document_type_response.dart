@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 import 'dms_document_type_model.dart';
 
 class DMSDocumentTypeResponse {
-  final List<DMSDocumentTypeModel> data;
-  String error;
+  final List<DMSDocumentTypeModel>? data;
+  String? error;
 
   DMSDocumentTypeResponse({
-    @required this.data,
+    required this.data,
   });
 
   DMSDocumentTypeResponse.fromJson(List response)

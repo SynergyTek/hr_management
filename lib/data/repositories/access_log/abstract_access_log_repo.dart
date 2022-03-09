@@ -11,26 +11,26 @@ abstract class AbstractAccessLogRepository {
 
   Future<AccessLogResponse> getInsertAccessLog({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<AccessLogListDataResponse> getAccessLogsListData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<AccessLogResponse> postAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<AccessLogResponse> putAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<AccessLogResponse> deleteAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

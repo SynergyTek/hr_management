@@ -11,21 +11,21 @@ abstract class AbstractCountsAPIRepository {
 
   Future<CountsAPIResponse> getAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<CountsAPIResponse> postAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<CountsAPIResponse> putAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<CountsAPIResponse> deleteAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

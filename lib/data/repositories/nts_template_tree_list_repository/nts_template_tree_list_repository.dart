@@ -10,21 +10,21 @@ abstract class AbstractNTSTemplateTreeListRepository {
 
   Future<NTSTemplateTreeListResponse> getAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<NTSTemplateTreeListResponse> postAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<NTSTemplateTreeListResponse> putAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<NTSTemplateTreeListResponse> deleteAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

@@ -148,25 +148,25 @@ class DynamicDateBoxWidget extends StatelessWidget {
 
 class DateTimePicker extends StatelessWidget {
   const DateTimePicker(
-      {Key key,
+      {Key? key,
       this.labelText,
       this.selectedDate,
       this.selectDateToModel,
       this.selectDate})
       : super(key: key);
 
-  final String labelText;
-  final DateTime selectedDate;
-  final ValueChanged<DateTime> selectDate;
-  final ValueChanged<DateTime> selectDateToModel;
+  final String? labelText;
+  final DateTime? selectedDate;
+  final ValueChanged<DateTime>? selectDate;
+  final ValueChanged<DateTime>? selectDateToModel;
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? new DateTime.now(),
       firstDate: new DateTime(1970, 8),
       lastDate: new DateTime(2101),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: ColorScheme.dark(
@@ -177,20 +177,20 @@ class DateTimePicker extends StatelessWidget {
             ),
             // dialogBackgroundColor: Colors.white,
           ),
-          child: child,
+          child: child!,
         );
       },
     );
 
     if (picked != null && picked != selectedDate) {
-      selectDate(picked);
-      selectDateToModel(picked);
+      selectDate!(picked);
+      selectDateToModel!(picked);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle valueStyle = Theme.of(context).textTheme.bodyText2;
+    final TextStyle? valueStyle = Theme.of(context).textTheme.bodyText2;
     return new Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -209,7 +209,7 @@ class DateTimePicker extends StatelessWidget {
           child: new _InputDropdown(
             labelText: labelText,
             valueText: selectedDate != null
-                ? new DateFormat.yMMMd().format(selectedDate)
+                ? new DateFormat.yMMMd().format(selectedDate!)
                 : "Select Date",
             valueStyle: valueStyle,
             onPressed: () {
@@ -225,7 +225,7 @@ class DateTimePicker extends StatelessWidget {
 
 class _InputDropdown extends StatelessWidget {
   const _InputDropdown(
-      {Key key,
+      {Key? key,
       this.child,
       this.labelText,
       this.valueText,
@@ -233,11 +233,11 @@ class _InputDropdown extends StatelessWidget {
       this.onPressed})
       : super(key: key);
 
-  final String labelText;
-  final String valueText;
-  final TextStyle valueStyle;
-  final VoidCallback onPressed;
-  final Widget child;
+  final String? labelText;
+  final String? valueText;
+  final TextStyle? valueStyle;
+  final VoidCallback? onPressed;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -253,7 +253,7 @@ class _InputDropdown extends StatelessWidget {
                 labelText: labelText,
               ),
               baseStyle: valueStyle,
-              child: Text(valueText, style: valueStyle),
+              child: Text(valueText!, style: valueStyle),
             ),
           ),
         ],
@@ -263,13 +263,13 @@ class _InputDropdown extends StatelessWidget {
 }
 
 class DynamicDateTimeBox extends StatefulWidget {
-  final String name;
-  final String code;
-  final ValueChanged<DateTime> selectDate;
+  final String? name;
+  final String? code;
+  final ValueChanged<DateTime>? selectDate;
   DynamicDateTimeBox({
     this.name,
     this.code,
-    Key key,
+    Key? key,
     this.selectDate,
   }) : super(key: key);
 
@@ -282,7 +282,7 @@ class DynamicDateTimeBox extends StatefulWidget {
 class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
   // String _value = '';
 
-  DateTime selectedDate;
+  DateTime? selectedDate;
   _DynamicDateTimeBoxState({this.selectedDate});
 
   @override
@@ -290,7 +290,7 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
     super.initState();
 
     setState(() {
-      selectedDate = widget?.code == null ? null : DateTime.parse(widget.code);
+      selectedDate = widget.code == null ? null : DateTime.parse(widget.code!);
     });
   }
 
@@ -332,24 +332,24 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
 }
 
 class DynamicTimeBox extends StatefulWidget {
-  final String name;
-  final String code;
-  final ValueChanged<TimeOfDay> selectTime;
-  DynamicTimeBox({this.name, this.code, Key key, this.selectTime})
+  final String? name;
+  final String? code;
+  final ValueChanged<TimeOfDay>? selectTime;
+  DynamicTimeBox({this.name, this.code, Key? key, this.selectTime})
       : super(key: key);
 
   @override
   _DynamicTimeBoxState createState() => _DynamicTimeBoxState(
       selectedTime: code != null
           ? TimeOfDay(
-              hour: int.parse(code.split(":")[0]),
-              minute: int.parse(code.split(":")[1]))
+              hour: int.parse(code!.split(":")[0]),
+              minute: int.parse(code!.split(":")[1]))
           : null);
 }
 
 class _DynamicTimeBoxState extends State<DynamicTimeBox> {
   // String _value = '';
-  TimeOfDay selectedTime;
+  TimeOfDay? selectedTime;
   _DynamicTimeBoxState({this.selectedTime});
   // Future _selectDate() async {
   //   DateTime picked = await showDatePicker(
@@ -390,32 +390,32 @@ class _DynamicTimeBoxState extends State<DynamicTimeBox> {
 
 class TimePicker extends StatelessWidget {
   const TimePicker(
-      {Key key,
+      {Key? key,
       this.labelText,
       this.selectedTime,
       this.selectTimeToModel,
       this.selectTime})
       : super(key: key);
 
-  final String labelText;
-  final TimeOfDay selectedTime;
-  final ValueChanged<TimeOfDay> selectTime;
-  final ValueChanged<TimeOfDay> selectTimeToModel;
+  final String? labelText;
+  final TimeOfDay? selectedTime;
+  final ValueChanged<TimeOfDay>? selectTime;
+  final ValueChanged<TimeOfDay>? selectTimeToModel;
 
   Future<void> _selectDate(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime ?? TimeOfDay.fromDateTime(DateTime.now()),
     );
     if (picked != null && picked != selectedTime) {
-      selectTime(picked);
-      selectTimeToModel(picked);
+      selectTime!(picked);
+      selectTimeToModel!(picked);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle valueStyle = Theme.of(context).textTheme.bodyText2;
+    final TextStyle? valueStyle = Theme.of(context).textTheme.bodyText2;
     return new Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -440,10 +440,10 @@ class TimePicker extends StatelessWidget {
 }
 
 class DynamicCheckBoxValue extends StatefulWidget {
-  final String name;
-  final String code;
-  final ValueChanged<bool> checkUpdate;
-  DynamicCheckBoxValue({this.name, this.code, Key key, this.checkUpdate})
+  final String? name;
+  final String? code;
+  final ValueChanged<bool?>? checkUpdate;
+  DynamicCheckBoxValue({this.name, this.code, Key? key, this.checkUpdate})
       : super(key: key);
   @override
   _DynamicCheckBoxValueState createState() {
@@ -452,18 +452,18 @@ class DynamicCheckBoxValue extends StatefulWidget {
 }
 
 class _DynamicCheckBoxValueState extends State<DynamicCheckBoxValue> {
-  bool _isChecked = false;
+  bool? _isChecked = false;
   @override
   Widget build(BuildContext context) {
     return new Container(
         child: new CheckboxListTile(
       secondary: Icon(Icons.check),
-      title: new Text(widget.name),
+      title: new Text(widget.name!),
       value: _isChecked,
       onChanged: (val) {
         setState(() {
           _isChecked = val;
-          widget.checkUpdate(val);
+          widget.checkUpdate!(val);
         });
       },
     ));
@@ -472,8 +472,8 @@ class _DynamicCheckBoxValueState extends State<DynamicCheckBoxValue> {
 
 class DynamicLink extends StatelessWidget {
   // NetworkHelper _networkHelper = NetworkHelper();
-  final String name;
-  final String code;
+  final String? name;
+  final String? code;
   DynamicLink({this.name, this.code});
   @override
   Widget build(BuildContext context) {

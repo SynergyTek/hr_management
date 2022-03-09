@@ -263,48 +263,48 @@ class ManageAccrualModel {
   });
 
   dynamic payrollName;
-  DateTime payrollStartDate;
-  DateTime payrollEndDate;
-  DateTime payrollRunDate;
-  int executionStatus;
-  int yearMonth;
-  int payrollStateStart;
-  int payrollStateEnd;
-  int runType;
-  String name;
+  DateTime? payrollStartDate;
+  DateTime? payrollEndDate;
+  DateTime? payrollRunDate;
+  int? executionStatus;
+  int? yearMonth;
+  int? payrollStateStart;
+  int? payrollStateEnd;
+  int? runType;
+  String? name;
   dynamic payRollNo;
   dynamic executionStartDate;
   dynamic executionEndDate;
-  String executedBy;
-  double totalEarning;
-  double totalDeduction;
-  double netAmount;
-  bool isExecuteAllEmployee;
-  int totalProcessed;
-  int totalSucceeded;
-  int executePayrollTotal;
-  int executePayrollError;
-  int payslipTotal;
-  int payslipError;
-  int bankLetterTotal;
-  int bankLetterError;
-  int vacationAccrual;
-  int flightTicketAccrual;
-  int eosAccrual;
-  int loanAccrual;
-  int sickLeaveAccrual;
-  DateTime attendanceStartDate;
-  DateTime attendanceEndDate;
+  String? executedBy;
+  double? totalEarning;
+  double? totalDeduction;
+  double? netAmount;
+  bool? isExecuteAllEmployee;
+  int? totalProcessed;
+  int? totalSucceeded;
+  dynamic executePayrollTotal;
+  dynamic executePayrollError;
+  dynamic payslipTotal;
+  int? payslipError;
+  int? bankLetterTotal;
+  int? bankLetterError;
+  int? vacationAccrual;
+  int? flightTicketAccrual;
+  int? eosAccrual;
+  int? loanAccrual;
+  int? sickLeaveAccrual;
+  DateTime? attendanceStartDate;
+  DateTime? attendanceEndDate;
   dynamic payrollInterval;
   dynamic elementCategory;
-  String payrollId;
-  String payrollBatchId;
+  String? payrollId;
+  String? payrollBatchId;
   dynamic payrollPersonId;
   dynamic personsNotInList;
   dynamic personsInList;
   dynamic payrollGroupName;
   dynamic organizationName;
-  String payrollGroupId;
+  String? payrollGroupId;
   dynamic payrollRunServiceId;
   dynamic elementList;
   dynamic employeeList;
@@ -319,23 +319,23 @@ class ManageAccrualModel {
   dynamic employeeSalaryElementEntryList;
   dynamic runElements;
   dynamic salaryElements;
-  String yearMonthText;
-  String vacationAccrualText;
-  String flightTicketAccrualText;
-  String eosAccrualText;
-  String loanAccrualText;
-  String sickLeaveAccrualText;
-  String vacationAccrualStatusCss;
-  String flightTicketAccrualStatusCss;
-  String eosAccrualStatusCss;
-  String loanAccrualStatusCss;
-  String sickLeaveAccrualStatusCss;
-  bool isVacationAccrual;
-  bool isFlightTicketAccrual;
-  bool isEosAccrual;
-  bool isLoanAccrual;
-  bool isSickLeaveAccrual;
-  bool runAccrual;
+  String? yearMonthText;
+  String? vacationAccrualText;
+  String? flightTicketAccrualText;
+  String? eosAccrualText;
+  String? loanAccrualText;
+  String? sickLeaveAccrualText;
+  String? vacationAccrualStatusCss;
+  String? flightTicketAccrualStatusCss;
+  String? eosAccrualStatusCss;
+  String? loanAccrualStatusCss;
+  String? sickLeaveAccrualStatusCss;
+  bool? isVacationAccrual;
+  bool? isFlightTicketAccrual;
+  bool? isEosAccrual;
+  bool? isLoanAccrual;
+  bool? isSickLeaveAccrual;
+  bool? runAccrual;
   dynamic jsonCopy;
   dynamic json;
   dynamic dataJson;
@@ -343,13 +343,13 @@ class ManageAccrualModel {
   dynamic pageId;
   dynamic recordId;
   dynamic portalName;
-  bool setUdfValue;
+  bool? setUdfValue;
   dynamic prms;
   dynamic udfs;
   dynamic readoOnlyUdfs;
   dynamic templateCode;
   dynamic templateDisplayName;
-  int noteCount;
+  int? noteCount;
   dynamic noteTemplateVm;
   dynamic templateViewModel;
   dynamic noteTable;
@@ -362,10 +362,10 @@ class ManageAccrualModel {
   dynamic startDate;
   dynamic expiryDate;
   dynamic slaSeconds;
-  String actualSla;
+  String? actualSla;
   dynamic reminderDate;
-  String noteStatusBgCss;
-  String noteStatusFontCss;
+  String? noteStatusBgCss;
+  String? noteStatusFontCss;
   dynamic noteStatusId;
   dynamic tableMetadataId;
   dynamic noteStatusCode;
@@ -395,68 +395,68 @@ class ManageAccrualModel {
   dynamic ownerUserEmail;
   dynamic ownerUserPhotoId;
   dynamic noteOwnerTypeId;
-  int activeUserType;
+  int? activeUserType;
   dynamic sharedByUserId;
   dynamic sharedWithUserId;
-  String sharedListText;
+  String? sharedListText;
   dynamic sharedList;
   dynamic assignedToUserEmail;
   dynamic lockStatus;
   dynamic parentNoteId;
-  bool includeReadonlyData;
-  bool isDraftButtonVisible;
-  bool isAcceptButtonVisible;
-  bool isSubmitButtonVisible;
-  bool isExpireButtonVisible;
-  bool isInEditMode;
-  bool isVersioningButtonVisible;
-  bool isReplyButtonVisible;
-  bool isBackButtonVisibile;
-  bool isAddCommentEnabled;
-  bool isAddAttachmentEnabled;
-  bool isSharingEnabled;
-  bool isCompleteButtonVisible;
-  bool isCloseButtonVisible;
-  int sharedCount;
-  int attachmentCount;
-  int notificationCount;
-  int commentCount;
-  bool canChangeOwner;
+  bool? includeReadonlyData;
+  bool? isDraftButtonVisible;
+  bool? isAcceptButtonVisible;
+  bool? isSubmitButtonVisible;
+  bool? isExpireButtonVisible;
+  bool? isInEditMode;
+  bool? isVersioningButtonVisible;
+  bool? isReplyButtonVisible;
+  bool? isBackButtonVisibile;
+  bool? isAddCommentEnabled;
+  bool? isAddAttachmentEnabled;
+  bool? isSharingEnabled;
+  bool? isCompleteButtonVisible;
+  bool? isCloseButtonVisible;
+  int? sharedCount;
+  int? attachmentCount;
+  int? notificationCount;
+  int? commentCount;
+  bool? canChangeOwner;
   dynamic noteSequenceOrder;
   dynamic noteDescription;
   dynamic noteSubject;
-  bool includeSharedList;
+  bool? includeSharedList;
   dynamic customUrl;
   dynamic returnUrl;
   dynamic layoutMode;
   dynamic popupCallbackMethod;
   dynamic noteIndexPageTemplateDetails;
   dynamic notificationTemplate;
-  bool isVersioning;
+  bool? isVersioning;
   dynamic chartItems;
   dynamic resource;
-  bool ignorePermission;
-  bool enableIndexPage;
-  bool enableNoteNumberManual;
-  bool enableSaveAsDraft;
+  bool? ignorePermission;
+  bool? enableIndexPage;
+  bool? enableNoteNumberManual;
+  bool? enableSaveAsDraft;
   dynamic saveAsDraftText;
   dynamic saveAsDraftCss;
   dynamic completeButtonText;
   dynamic completeButtonCss;
-  bool enableBackButton;
+  bool? enableBackButton;
   dynamic backButtonText;
   dynamic backButtonCss;
-  bool enableAttachment;
-  bool enableComment;
-  bool disableVersioning;
+  bool? enableAttachment;
+  bool? enableComment;
+  bool? disableVersioning;
   dynamic saveNewVersionButtonText;
   dynamic saveNewVersionButtonCss;
   dynamic templateId;
   dynamic template;
   dynamic noteIndexPageTemplateId;
   dynamic noteIndexPageTemplate;
-  int createReturnType;
-  int editReturnType;
+  int? createReturnType;
+  int? editReturnType;
   dynamic preScript;
   dynamic postScript;
   dynamic iconFileId;
@@ -465,49 +465,49 @@ class ManageAccrualModel {
   dynamic backgroundFileId;
   dynamic subject;
   dynamic notificationSubject;
-  String description;
+  String? description;
   dynamic subjectText;
   dynamic ownerUserText;
   dynamic requestedByUserText;
   dynamic priorityId;
   dynamic priority;
-  bool enableCancelButton;
-  bool isCancelReasonRequired;
+  bool? enableCancelButton;
+  bool? isCancelReasonRequired;
   dynamic cancelButtonText;
   dynamic cancelButtonCss;
-  bool isUdfTemplate;
-  bool isCompleteReasonRequired;
+  bool? isUdfTemplate;
+  bool? isCompleteReasonRequired;
   dynamic noteNoText;
   dynamic descriptionText;
-  bool hideHeader;
-  bool hideSubject;
-  bool hideDescription;
-  bool hideStartDate;
-  bool hideExpiryDate;
-  bool hidePriority;
-  bool hideOwner;
-  bool isSubjectMandatory;
-  bool isSubjectUnique;
-  bool isDescriptionMandatory;
-  bool hideToolbar;
-  bool hideBanner;
-  bool allowPastStartDate;
-  bool enablePrintButton;
+  bool? hideHeader;
+  bool? hideSubject;
+  bool? hideDescription;
+  bool? hideStartDate;
+  bool? hideExpiryDate;
+  bool? hidePriority;
+  bool? hideOwner;
+  bool? isSubjectMandatory;
+  bool? isSubjectUnique;
+  bool? isDescriptionMandatory;
+  bool? hideToolbar;
+  bool? hideBanner;
+  bool? allowPastStartDate;
+  bool? enablePrintButton;
   dynamic printButtonText;
-  bool enableDataPermission;
+  bool? enableDataPermission;
   dynamic dataPermissionColumnId;
-  String id;
-  DateTime createdDate;
-  String createdBy;
-  DateTime lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
-  int sequenceOrder;
-  String companyId;
-  String legalEntityId;
-  int dataAction;
-  int status;
-  int versionNo;
+  String? id;
+  DateTime? createdDate;
+  String? createdBy;
+  DateTime? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
+  int? sequenceOrder;
+  String? companyId;
+  String? legalEntityId;
+  int? dataAction;
+  int? status;
+  int? versionNo;
   dynamic portalId;
 
   factory ManageAccrualModel.fromJson(Map<String, dynamic> json) =>
@@ -769,9 +769,9 @@ class ManageAccrualModel {
 
   Map<String, dynamic> toJson() => {
         "PayrollName": payrollName,
-        "PayrollStartDate": payrollStartDate.toIso8601String(),
-        "PayrollEndDate": payrollEndDate.toIso8601String(),
-        "PayrollRunDate": payrollRunDate.toIso8601String(),
+        "PayrollStartDate": payrollStartDate!.toIso8601String(),
+        "PayrollEndDate": payrollEndDate!.toIso8601String(),
+        "PayrollRunDate": payrollRunDate!.toIso8601String(),
         "ExecutionStatus": executionStatus,
         "YearMonth": yearMonth == null ? null : yearMonth,
         "PayrollStateStart": payrollStateStart,
@@ -800,8 +800,8 @@ class ManageAccrualModel {
         "EOSAccrual": eosAccrual,
         "LoanAccrual": loanAccrual == null ? null : loanAccrual,
         "SickLeaveAccrual": sickLeaveAccrual == null ? null : sickLeaveAccrual,
-        "AttendanceStartDate": attendanceStartDate.toIso8601String(),
-        "AttendanceEndDate": attendanceEndDate.toIso8601String(),
+        "AttendanceStartDate": attendanceStartDate!.toIso8601String(),
+        "AttendanceEndDate": attendanceEndDate!.toIso8601String(),
         "PayrollInterval": payrollInterval,
         "ElementCategory": elementCategory,
         "PayrollId": payrollId,
@@ -1005,9 +1005,9 @@ class ManageAccrualModel {
         "EnableDataPermission": enableDataPermission,
         "DataPermissionColumnId": dataPermissionColumnId,
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,

@@ -7,7 +7,7 @@ import '../../../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../widget/task_list_tile.dart';
 import '../../../../widgets/empty_list_widget.dart';
 import '../../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../../listizer/listizer.dart';
 
 class AdhocTaskListBody extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class AdhocTaskListBody extends StatefulWidget {
 }
 
 class _AdhocTaskListBodyState extends State<AdhocTaskListBody> {
-  List<TaskListModel> _taskList = [];
+  List<TaskListModel>? _taskList = [];
   List<TaskListModel> _filteredTaskList = [];
 
   @override
@@ -26,10 +26,10 @@ class _AdhocTaskListBodyState extends State<AdhocTaskListBody> {
       ..loadServiceAdhocTaskData(
         queryparams: {
           'userid':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         },
       );
@@ -40,7 +40,7 @@ class _AdhocTaskListBodyState extends State<AdhocTaskListBody> {
     return Column(
       children: [
         Expanded(
-          child: StreamBuilder<TaskListResponseModel>(
+          child: StreamBuilder<TaskListResponseModel?>(
             stream: taskBloc.subjectTaskList.stream,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {

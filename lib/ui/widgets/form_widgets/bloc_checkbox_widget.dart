@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class BlocCheckBoxWidget extends StatelessWidget {
-  final String labelName;
-  final BooleanFieldBloc booleanFieldBloc;
-  final AlignmentGeometry alignment;
+  final String? labelName;
+  final BooleanFieldBloc? booleanFieldBloc;
+  final AlignmentGeometry? alignment;
 
   const BlocCheckBoxWidget({
     this.labelName,
@@ -17,10 +17,10 @@ class BlocCheckBoxWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 0.0),
       child: CheckboxFieldBlocBuilder(
-        booleanFieldBloc: booleanFieldBloc,
+        booleanFieldBloc: booleanFieldBloc!,
         body: Container(
           alignment: alignment ?? Alignment.centerLeft,
-          child: Text(labelName),
+          child: Text(labelName!),
         ),
       ),
     );

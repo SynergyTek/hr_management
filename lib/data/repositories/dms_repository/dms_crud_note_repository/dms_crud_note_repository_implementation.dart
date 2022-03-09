@@ -5,7 +5,7 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
 
   @override
   Future<bool> getArchiveNoteAPIData({
-    @required String id,
+    required String? id,
   }) async {
     try {
       Response response = await _dio.get(
@@ -25,9 +25,9 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
 
   @override
   Future<bool> getCopyNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
-    @required String userId,
+    required String? sourceId,
+    required String? targetId,
+    required String userId,
   }) async {
     try {
       Response response = await _dio.get(
@@ -35,7 +35,7 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
         queryParameters: {
           'sourceId': sourceId ?? '',
           'targetId': targetId ?? '',
-          'userId': userId ?? '',
+          'userId': userId,
         },
       );
 
@@ -50,17 +50,17 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
 
   @override
   Future<bool> getCreateNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
-    @required String userId,
+    required String sourceId,
+    required String targetId,
+    required String userId,
   }) async {
     try {
       Response response = await _dio.get(
         APIEndpointConstants.GET_DMS_CREATE_NOTE_DATA,
         queryParameters: {
-          'sourceId': sourceId ?? '',
-          'targetId': targetId ?? '',
-          'userId': userId ?? '',
+          'sourceId': sourceId,
+          'targetId': targetId,
+          'userId': userId,
         },
       );
 
@@ -74,7 +74,7 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
 
   @override
   Future<bool> getDeleteNoteAPIData({
-    @required String id,
+    required String? id,
   }) async {
     try {
       Response response = await _dio.get(
@@ -94,8 +94,8 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
 
   @override
   Future<bool> getMoveNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
+    required String? sourceId,
+    required String? targetId,
   }) async {
     try {
       Response response = await _dio.get(
@@ -117,7 +117,7 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
 
   @override
   Future<bool> getRenameFilesAPIData({
-    @required DmsPostModel model,
+    required DmsPostModel model,
   }) async {
     try {
       Response response = await _dio.get(
@@ -136,7 +136,7 @@ class DMSCRUDNoteRepository extends AbstractDMSCRUDNoteRepository {
 
   @override
   Future<bool> postSearchFilesAPIData({
-    @required DmsPostModel model,
+    required DmsPostModel model,
   }) async {
     try {
       Response response = await _dio.post(

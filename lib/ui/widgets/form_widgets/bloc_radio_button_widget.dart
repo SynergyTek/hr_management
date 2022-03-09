@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class BlocRadioButtonWidget extends StatelessWidget {
-  final String labelName;
-  final Widget prefixIcon;
-  final SelectFieldBloc selectFieldBloc;
+  final String? labelName;
+  final Widget? prefixIcon;
+  final SelectFieldBloc? selectFieldBloc;
 
   const BlocRadioButtonWidget({
     this.labelName,
@@ -17,7 +17,7 @@ class BlocRadioButtonWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 0.0),
       child: RadioButtonGroupFieldBlocBuilder<String>(
-        selectFieldBloc: selectFieldBloc,
+        selectFieldBloc: selectFieldBloc as SelectFieldBloc<String, dynamic>,
         decoration: InputDecoration(
           labelText: labelName,
           prefixIcon: prefixIcon ?? SizedBox(),

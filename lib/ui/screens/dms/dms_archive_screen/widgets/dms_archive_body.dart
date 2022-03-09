@@ -8,10 +8,11 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/custom_icons.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+
+import '../../../../listizer/listizer.dart';
 
 class DMSArchiveBody extends StatefulWidget {
-  const DMSArchiveBody({Key key}) : super(key: key);
+  const DMSArchiveBody({Key? key}) : super(key: key);
 
   @override
   _DMSArchiveBodyState createState() => _DMSArchiveBodyState();
@@ -34,7 +35,7 @@ class _DMSArchiveBodyState extends State<DMSArchiveBody> {
   _handleQueryParams() {
     return {
       'userId':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 
@@ -50,18 +51,18 @@ class _DMSArchiveBodyState extends State<DMSArchiveBody> {
             builder:
                 (context, AsyncSnapshot<DMSDocumentActionResponse> snapshot) {
               if (snapshot.hasData) {
-                if (snapshot.data.data == null ||
-                    snapshot.data.data.length == 0) {
+                if (snapshot.data!.data == null ||
+                    snapshot.data!.data!.length == 0) {
                   return EmptyListWidget();
                 }
-                _archiveList = snapshot.data.data.reversed.toList();
+                _archiveList = snapshot.data!.data!.reversed.toList();
                 return Listizer(
                   listItems: _archiveList,
                   filteredSearchList: _filteredArchiveList,
                   itemBuilder: (context, index) {
                     var item = _archiveList[index];
                     return ListTile(
-                      title: Text(item.documentName),
+                      title: Text(item.documentName!),
                       leading: Icon(
                         item.templatecode == 'WORKSPACE_GENERAL' ||
                                 item.templatecode == 'GENERAL_FOLDER'

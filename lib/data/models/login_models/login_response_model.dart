@@ -9,44 +9,44 @@ String loginResponseModelToJson(LoginResponseModel data) =>
     json.encode(data.toJson());
 
 class LoginResponseModel {
-  String companyId;
-  String userUniqueId;
-  String companyCode;
-  String jobTitle;
-  String photoId;
-  String userRoleIds;
-  String userPortals;
-  String userRoleCodes;
-  String companyName;
-  bool isSystemAdmin;
-  bool isGuestUser;
+  String? companyId;
+  String? userUniqueId;
+  String? companyCode;
+  String? jobTitle;
+  String? photoId;
+  String? userRoleIds;
+  String? userPortals;
+  String? userRoleCodes;
+  String? companyName;
+  bool? isSystemAdmin;
+  bool? isGuestUser;
   dynamic portalId;
   dynamic portalTheme;
-  List<Claim> claims;
+  List<Claim>? claims;
   dynamic loggedInAsType;
   dynamic loggedInAsByUserId;
   dynamic loggedInAsByUserName;
   dynamic cultureName;
-  String legalEntityId;
-  String legalEntityCode;
-  String personId;
-  String positionId;
-  String departmentId;
-  String id;
-  String userName;
+  String? legalEntityId;
+  String? legalEntityCode;
+  String? personId;
+  String? positionId;
+  String? departmentId;
+  String? id;
+  String? userName;
   dynamic normalizedUserName;
-  String email;
+  String? email;
   dynamic normalizedEmail;
-  bool emailConfirmed;
+  bool? emailConfirmed;
   dynamic passwordHash;
-  String securityStamp;
-  String concurrencyStamp;
+  String? securityStamp;
+  String? concurrencyStamp;
   dynamic phoneNumber;
-  bool phoneNumberConfirmed;
-  bool twoFactorEnabled;
+  bool? phoneNumberConfirmed;
+  bool? twoFactorEnabled;
   dynamic lockoutEnd;
-  bool lockoutEnabled;
-  int accessFailedCount;
+  bool? lockoutEnabled;
+  int? accessFailedCount;
 
   LoginResponseModel({
     this.companyId,
@@ -145,7 +145,7 @@ class LoginResponseModel {
         "IsGuestUser": isGuestUser,
         "PortalId": portalId,
         "PortalTheme": portalTheme,
-        "Claims": List<dynamic>.from(claims.map((x) => x.toJson())),
+        "Claims": List<dynamic>.from(claims!.map((x) => x.toJson())),
         "LoggedInAsType": loggedInAsType,
         "LoggedInAsByUserId": loggedInAsByUserId,
         "LoggedInAsByUserName": loggedInAsByUserName,
@@ -173,44 +173,44 @@ class LoginResponseModel {
       };
 
   LoginResponseModel copyWith({
-    String companyId,
-    String userUniqueId,
-    String companyCode,
-    String jobTitle,
-    String photoId,
-    String userRoleIds,
-    String userPortals,
-    String userRoleCodes,
-    String companyName,
-    bool isSystemAdmin,
-    bool isGuestUser,
+    String? companyId,
+    String? userUniqueId,
+    String? companyCode,
+    String? jobTitle,
+    String? photoId,
+    String? userRoleIds,
+    String? userPortals,
+    String? userRoleCodes,
+    String? companyName,
+    bool? isSystemAdmin,
+    bool? isGuestUser,
     dynamic portalId,
     dynamic portalTheme,
-    List<Claim> claims,
+    List<Claim>? claims,
     dynamic loggedInAsType,
     dynamic loggedInAsByUserId,
     dynamic loggedInAsByUserName,
     dynamic cultureName,
-    String legalEntityId,
-    String legalEntityCode,
-    String personId,
-    String positionId,
-    String departmentId,
-    String id,
-    String userName,
+    String? legalEntityId,
+    String? legalEntityCode,
+    String? personId,
+    String? positionId,
+    String? departmentId,
+    String? id,
+    String? userName,
     dynamic normalizedUserName,
-    String email,
+    String? email,
     dynamic normalizedEmail,
-    bool emailConfirmed,
+    bool? emailConfirmed,
     dynamic passwordHash,
-    String securityStamp,
-    String concurrencyStamp,
+    String? securityStamp,
+    String? concurrencyStamp,
     dynamic phoneNumber,
-    bool phoneNumberConfirmed,
-    bool twoFactorEnabled,
+    bool? phoneNumberConfirmed,
+    bool? twoFactorEnabled,
     dynamic lockoutEnd,
-    bool lockoutEnabled,
-    int accessFailedCount,
+    bool? lockoutEnabled,
+    int? accessFailedCount,
   }) {
     return LoginResponseModel(
       companyId: companyId ?? this.companyId,
@@ -436,13 +436,13 @@ class LoginResponseModel {
 }
 
 class Claim {
-  Issuer issuer;
-  Issuer originalIssuer;
-  Properties properties;
+  Issuer? issuer;
+  Issuer? originalIssuer;
+  Properties? properties;
   dynamic subject;
-  String type;
-  String value;
-  String valueType;
+  String? type;
+  String? value;
+  String? valueType;
 
   Claim({
     this.issuer,
@@ -465,9 +465,9 @@ class Claim {
       );
 
   Map<String, dynamic> toJson() => {
-        "Issuer": issuerValues.reverse[issuer],
-        "OriginalIssuer": issuerValues.reverse[originalIssuer],
-        "Properties": properties.toJson(),
+        "Issuer": issuerValues.reverse![issuer!],
+        "OriginalIssuer": issuerValues.reverse![originalIssuer!],
+        "Properties": properties!.toJson(),
         "Subject": subject,
         "Type": type,
         "Value": value,
@@ -475,13 +475,13 @@ class Claim {
       };
 
   Claim copyWith({
-    Issuer issuer,
-    Issuer originalIssuer,
-    Properties properties,
+    Issuer? issuer,
+    Issuer? originalIssuer,
+    Properties? properties,
     dynamic subject,
-    String type,
-    String value,
-    String valueType,
+    String? type,
+    String? value,
+    String? valueType,
   }) {
     return Claim(
       issuer: issuer ?? this.issuer,
@@ -556,18 +556,18 @@ final issuerValues = EnumValues({"LOCAL AUTHORITY": Issuer.LOCAL_AUTHORITY});
 class Properties {
   Properties();
 
-  factory Properties.fromJson(Map<String, dynamic> json) => Properties();
+  factory Properties.fromJson(Map<String, dynamic>? json) => Properties();
 
   Map<String, dynamic> toJson() => {};
 }
 
 class EnumValues<T> {
   Map<String, T> map;
-  Map<T, String> reverseMap;
+  Map<T, String>? reverseMap;
 
   EnumValues(this.map);
 
-  Map<T, String> get reverse {
+  Map<T, String>? get reverse {
     if (reverseMap == null) {
       reverseMap = map.map((k, v) => new MapEntry(v, k));
     }

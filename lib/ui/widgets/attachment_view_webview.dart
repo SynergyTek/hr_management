@@ -6,7 +6,7 @@ class AttachmentViewWebview extends StatelessWidget {
   final String url;
 
   AttachmentViewWebview({
-    @required this.url,
+    required this.url,
   });
 
   @override

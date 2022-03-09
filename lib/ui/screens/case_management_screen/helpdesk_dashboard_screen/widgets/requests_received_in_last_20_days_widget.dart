@@ -45,7 +45,7 @@ class _RequestsReceivedInLast20DaysWidgetState
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }
@@ -54,12 +54,12 @@ class _RequestsReceivedInLast20DaysWidgetState
     );
   }
 
-  Widget _bodyWidget(List<CaseManagementModel> data) {
+  Widget _bodyWidget(List<CaseManagementModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -73,8 +73,8 @@ class _RequestsReceivedInLast20DaysWidgetState
             width: 0.25,
             color: Colors.orangeAccent,
             dataSource: data ?? [],
-            yValueMapper: (CaseManagementModel model, _) => model?.violated,
-            xValueMapper: (CaseManagementModel model, _) => model?.day,
+            yValueMapper: (CaseManagementModel model, _) => model.violated,
+            xValueMapper: (CaseManagementModel model, _) => model.day,
           ),
         )
         ..add(
@@ -83,8 +83,8 @@ class _RequestsReceivedInLast20DaysWidgetState
             width: 0.25,
             color: Colors.blueAccent,
             dataSource: data ?? [],
-            yValueMapper: (CaseManagementModel model, _) => model?.nonViolated,
-            xValueMapper: (CaseManagementModel model, _) => model?.day,
+            yValueMapper: (CaseManagementModel model, _) => model.nonViolated,
+            xValueMapper: (CaseManagementModel model, _) => model.day,
           ),
         ),
     );

@@ -16,7 +16,7 @@ class DependentAPIBloc {
 
   /// Used to fetch new entries.
   getReadDependantList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     ReadDependnetResponse response =
         await _apiRepository.getReadDependantList(queryparams: queryparams);
@@ -26,7 +26,7 @@ class DependentAPIBloc {
 
   /// Used to fetch new entries.
   getReadDependnetDocReqResponse({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     DependnetDocReqResponse response = await _apiRepository
         .getReadDependantDocumentRequestList(queryparams: queryparams);

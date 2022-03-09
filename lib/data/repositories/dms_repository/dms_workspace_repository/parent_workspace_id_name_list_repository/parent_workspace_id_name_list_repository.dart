@@ -11,7 +11,7 @@ abstract class AbstractParentWorkspaceIdNameListRepository {
   AbstractParentWorkspaceIdNameListRepository();
 
   Future<ParentWorkspaceIdNameListResponse> getAPIData({
-    @required String legalEntity,
-    @required String id,
+    required String legalEntity,
+    required String id,
   });
 }

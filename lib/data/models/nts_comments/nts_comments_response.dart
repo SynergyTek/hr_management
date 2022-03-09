@@ -6,12 +6,12 @@ import 'nts_comments.dart';
 /// list of APIData and error string if our API call gets failed
 /// or returns an error in response.
 class CommentResponse {
-  bool isSuccess;
-  final Comment data;
-  String error;
+  bool? isSuccess;
+  final Comment? data;
+  String? error;
 
   CommentResponse({
-    @required this.data,
+    required this.data,
   });
 
   CommentResponse.fromJson(Map<String, dynamic> response)
@@ -23,12 +23,12 @@ class CommentResponse {
 }
 
 class CommentListResponse {
-  bool isSuccess;
-  List<Comment> list;
-  String error;
+  bool? isSuccess;
+  List<Comment>? list;
+  String? error;
 
   CommentListResponse({
-    @required this.list,
+    required this.list,
   });
 
   CommentListResponse.fromJson(List response)

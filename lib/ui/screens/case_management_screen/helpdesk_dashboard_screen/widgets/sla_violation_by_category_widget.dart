@@ -9,7 +9,7 @@ import '../../../../widgets/progress_indicator.dart';
 import 'case_management_filter_bottom_modal_sheet_widget.dart';
 
 class SLAViolationByCategoryWidget extends StatefulWidget {
-  final String category;
+  final String? category;
 
   SLAViolationByCategoryWidget({
     this.category,
@@ -55,7 +55,7 @@ class _SLAViolationByCategoryWidgetState
       );
   }
 
-  _handleQueryparams({FilterListModel model}) {
+  _handleQueryparams({FilterListModel? model}) {
     if (model == null)
       return {
         'type': 'Category',
@@ -89,12 +89,12 @@ class _SLAViolationByCategoryWidgetState
     );
   }
 
-  Widget _bodyWidget(List<CaseManagementModel> data) {
+  Widget _bodyWidget(List<CaseManagementModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -106,7 +106,7 @@ class _SLAViolationByCategoryWidgetState
         _filterWidget(),
         Expanded(
           child: ListView.builder(
-            itemCount: data?.length ?? 0,
+            itemCount: data.length ?? 0,
             itemBuilder: (BuildContext context, int index) {
               return _eachListTile(
                 data: data.elementAt(index),
@@ -119,13 +119,13 @@ class _SLAViolationByCategoryWidgetState
   }
 
   Widget _eachListTile({
-    @required CaseManagementModel data,
+    required CaseManagementModel data,
   }) {
     return Card(
       child: ListTile(
         title: Container(
           padding: DEFAULT_VERTICAL_PADDING,
-          child: Text(data?.name ?? "-"),
+          child: Text(data.name ?? "-"),
         ),
         subtitle: Column(
           mainAxisSize: MainAxisSize.min,
@@ -145,8 +145,8 @@ class _SLAViolationByCategoryWidgetState
                           ),
                         ),
                         TextSpan(
-                          text: data?.inProgress.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.inProgress.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -165,8 +165,8 @@ class _SLAViolationByCategoryWidgetState
                           ),
                         ),
                         TextSpan(
-                          text: data?.draft.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.draft.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -190,8 +190,8 @@ class _SLAViolationByCategoryWidgetState
                           ),
                         ),
                         TextSpan(
-                          text: data?.overDue.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.overDue.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -210,8 +210,8 @@ class _SLAViolationByCategoryWidgetState
                           ),
                         ),
                         TextSpan(
-                          text: data?.completed.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.completed.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -248,12 +248,12 @@ class _SLAViolationByCategoryWidgetState
           CaseManagementFilterBottomModalSheetWidget(
         data: data,
       ),
-    ).then((List<FilterListModel> value) {
+    ).then((List<FilterListModel>? value) {
       if (value != null) {
         data = value;
       }
 
-      value.forEach((element) {
+      value!.forEach((element) {
         if (element.isChecked == true) {
           helpdeskSLAViolationBloc
             ..getData(

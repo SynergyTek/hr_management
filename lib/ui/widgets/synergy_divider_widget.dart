@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SynergyDividerWidget extends StatelessWidget {
   final double height;
-  final Color color;
+  final Color? color;
 
   const SynergyDividerWidget({
     this.height = 0.75,

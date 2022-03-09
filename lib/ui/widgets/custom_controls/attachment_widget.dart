@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class DynamicAttchmentWidget extends StatelessWidget {
-  final String fileId;
-  final String labelName;
-  final String fieldName;
-  final VoidCallback callBack;
-  final VoidCallback callBack1;
-  final VoidCallback callBack2;
-  final TextEditingController controller;
-  final bool readOnly;
+  final String? fileId;
+  final String? labelName;
+  final String? fieldName;
+  final VoidCallback? callBack;
+  final VoidCallback? callBack1;
+  final VoidCallback? callBack2;
+  final TextEditingController? controller;
+  final bool? readOnly;
 
   const DynamicAttchmentWidget(
       {this.labelName,
@@ -32,7 +32,7 @@ class DynamicAttchmentWidget extends StatelessWidget {
                   new TextFormField(
                       readOnly: readOnly ?? true,
                       style: TextStyle(fontSize: 15),
-                      key: new Key(fieldName),
+                      key: new Key(fieldName ?? ''),
                       controller: controller,
                       textInputAction: TextInputAction.done,
                       cursorColor: Theme.of(context).primaryColor,
@@ -51,7 +51,7 @@ class DynamicAttchmentWidget extends StatelessWidget {
                   color: Colors.green,
                 ),
                 onPressed: () {
-                  callBack1();
+                  callBack1!();
                 },
               ),
             ),
@@ -63,7 +63,7 @@ class DynamicAttchmentWidget extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
-                  callBack();
+                  callBack!();
                 },
               ),
             ),

@@ -16,16 +16,16 @@ abstract class AbstractWorklistDashboardRepository {
 
   Future<PostResponse> postAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<WorklistDashboardResponse> putAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<WorklistDashboardResponse> deleteAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

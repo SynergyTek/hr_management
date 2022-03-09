@@ -7,10 +7,10 @@ import 'nts_template_model.dart';
 /// or returns an error in response.
 class NTSTemplateResponse {
   final List<NTSTemplateModel> data;
-  String error;
+  String? error;
 
   NTSTemplateResponse({
-    @required this.data,
+    required this.data,
   });
 
   NTSTemplateResponse.fromJson(List response)

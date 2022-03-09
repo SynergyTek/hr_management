@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TextCircleAvater extends StatelessWidget {
-  final String text;
-  final BuildContext context;
-  final double radius;
-  final double fontSize;
-  final Color color;
+  final String? text;
+  final BuildContext? context;
+  final double? radius;
+  final double? fontSize;
+  final Color? color;
   const TextCircleAvater(
-      {Key key,
+      {Key? key,
       this.text,
       this.context,
       this.radius,
@@ -29,7 +29,7 @@ class TextCircleAvater extends StatelessWidget {
         ));
   }
 
-  String avatarText(String title) {
+  String avatarText(String? title) {
     String firstLetterString = "";
     try {
       if (title != null) {

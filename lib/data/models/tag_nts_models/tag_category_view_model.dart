@@ -1,21 +1,21 @@
 class TagCategoryViewModel {
-  String tagCategoryType;
-  String tagCategoryCode;
-  String tagCategoryName;
-  String enableAutoTag;
-  String tagSourceId;
-  String textQueryCode;
-  String textQueryFilter;
-  String ntsType;
-  String ntsId;
-  String tagId;
-  String tagCategoryId;
-  String tagName;
-  String name;
-  String createdByName;
-  String lastUpdatedByName;
-  List<TagCategoryViewModel> tags;
-  bool hasChildren;
+  String? tagCategoryType;
+  String? tagCategoryCode;
+  String? tagCategoryName;
+  String? enableAutoTag;
+  String? tagSourceId;
+  String? textQueryCode;
+  String? textQueryFilter;
+  String? ntsType;
+  String? ntsId;
+  String? tagId;
+  String? tagCategoryId;
+  String? tagName;
+  String? name;
+  String? createdByName;
+  String? lastUpdatedByName;
+  List<TagCategoryViewModel>? tags;
+  bool? hasChildren;
 
   TagCategoryViewModel({
     this.tagCategoryType,

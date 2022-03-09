@@ -12,12 +12,12 @@ import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
 
 class AttachmentNTSBodyWidget extends StatefulWidget {
-  final NTSType ntsType;
-  final String ntsId;
+  final NTSType? ntsType;
+  final String? ntsId;
 
   AttachmentNTSBodyWidget({
-    @required this.ntsType,
-    @required this.ntsId,
+    required this.ntsType,
+    required this.ntsId,
   });
 
   @override
@@ -32,8 +32,8 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
 
     attachmentNTSBloc
       ..getData(
-        ntsId: widget?.ntsId,
-        ntsType: widget?.ntsType,
+        ntsId: widget.ntsId,
+        ntsType: widget.ntsType,
       );
   }
 
@@ -60,19 +60,19 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
     );
   }
 
-  Widget _attachmentListWidget(List<AttachmentNTSModel> data) {
+  Widget _attachmentListWidget(List<AttachmentNTSModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
       );
 
     return ListView.builder(
-      itemCount: data?.length ?? 0,
+      itemCount: data.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
           data: data.elementAt(index),
@@ -82,12 +82,12 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   }
 
   Widget _eachListTile({
-    @required AttachmentNTSModel data,
+    required AttachmentNTSModel data,
   }) {
     return ListTile(
       leading: Icon(Icons.attach_file),
       title: Text(
-        data?.fileName ?? '-',
+        data.fileName ?? '-',
         style: TextStyle(
           color: Theme.of(context).textHeadingColor,
         ),
@@ -96,7 +96,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(data?.createdDateDisplay ?? '-'),
+          Text(data.createdDateDisplay ?? '-'),
         ],
       ),
       trailing: Row(
@@ -123,7 +123,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   }
 
   _deleteDialog({
-    @required AttachmentNTSModel data,
+    required AttachmentNTSModel data,
   }) {
     showDialog(
       context: context,
@@ -152,7 +152,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   }
 
   void _handleDeleteOnPressed({
-    @required AttachmentNTSModel data,
+    required AttachmentNTSModel data,
   }) {
     Navigator.of(context).pop();
     attachmentNTSBloc
@@ -160,13 +160,13 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
         queryparams: {
           'Id': data.id,
         },
-        ntsId: widget?.ntsId ?? '',
-        ntsType: widget?.ntsType ?? NTSType.service,
+        ntsId: widget.ntsId ?? '',
+        ntsType: widget.ntsType ?? NTSType.service,
       );
   }
 
   _handleViewOnPressed({
-    @required data,
+    required data,
   }) async {
     if (data == null)
       ScaffoldMessenger.of(context).showSnackBar(
@@ -200,7 +200,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   // -------------------------------------------------- //
 
   _handleDownloadOnPressed({
-    @required AttachmentNTSModel data,
+    required AttachmentNTSModel data,
   }) {
     NewDownloadHelper().unbindPortToMainIsolate();
 
@@ -212,7 +212,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
       enableDrag: true,
       builder: (BuildContext context) {
         return Downloader(
-          filename: data?.fileName ?? "DEFAULT_FILE_NAME",
+          filename: data.fileName ?? "DEFAULT_FILE_NAME",
           url:
               'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.id ?? ''}',
         );

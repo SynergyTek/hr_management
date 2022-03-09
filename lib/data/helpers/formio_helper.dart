@@ -3,9 +3,9 @@ import 'package:meta/meta.dart';
 
 class FormIOHelper {
   Future<String> fn({
-    String cssText,
-    String jsText,
-    String json,
+    String? cssText,
+    String? jsText,
+    String? json,
   }) async {
     String upperHTML = """ 
   <!doctype html>
@@ -48,7 +48,7 @@ class FormIOHelper {
   }
 
   String generateHTML({
-    @required String json,
+    required String json,
   }) {
     if (json == null || json.isEmpty)
       throw Exception("FormIO Json cannot be null or empty.");

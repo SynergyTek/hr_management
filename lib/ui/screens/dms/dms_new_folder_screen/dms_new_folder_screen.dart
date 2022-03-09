@@ -6,12 +6,12 @@ import '../../../widgets/internet_connectivity_widget.dart';
 import 'widgets/dms_new_folder_body_widget.dart';
 
 class DMSNewFolderScreen extends StatelessWidget {
-  final String parentId;
-  final String folderId;
-  final String folderName;
+  final String? parentId;
+  final String? folderId;
+  final String? folderName;
 
   const DMSNewFolderScreen({
-    @required this.parentId,
+    required this.parentId,
     this.folderId,
     this.folderName,
   });
@@ -21,7 +21,7 @@ class DMSNewFolderScreen extends StatelessWidget {
     return Scaffold(
       drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: folderName == null || folderName.isEmpty
+        title: folderName == null || folderName!.isEmpty
             ? "Create new folder"
             : 'Edit Folder',
       ),

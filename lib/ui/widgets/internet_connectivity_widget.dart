@@ -10,7 +10,7 @@ class InternetConnectivityWidget extends StatelessWidget {
   final Widget child;
 
   const InternetConnectivityWidget({
-    @required this.child,
+    required this.child,
   });
 
   @override

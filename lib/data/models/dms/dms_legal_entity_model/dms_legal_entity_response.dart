@@ -4,11 +4,11 @@ import 'dms_legal_entity_model.dart';
 
 
 class DMSLegalEntityResponse {
-  final List<DMSLegalEntityModel> data;
-  String error;
+  final List<DMSLegalEntityModel>? data;
+  String? error;
 
   DMSLegalEntityResponse({
-    @required this.data,
+    required this.data,
   });
 
   DMSLegalEntityResponse.fromJson(List response)

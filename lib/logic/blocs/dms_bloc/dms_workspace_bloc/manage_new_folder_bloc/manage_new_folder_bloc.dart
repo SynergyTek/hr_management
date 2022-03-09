@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:hr_management/data/models/note/note_model.dart';
-import 'package:meta/meta.dart';
 import 'package:hr_management/data/repositories/dms_repository/dms_workspace_repository/manage_new_folder_repository/manage_new_folder_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -10,18 +11,18 @@ class DMSManageNewFolderBloc {
   final BehaviorSubject _subject = BehaviorSubject();
 
   Future<bool> postAPIData({
-    @required Map<String, dynamic> queryparams,
+    required Map<String, dynamic> queryparams,
   }) async {
-    bool response = await _apiRepository.postAPIData(
+    bool response = await (_apiRepository.postAPIData(
       queryparams: queryparams,
-    );
+    ) as FutureOr<bool>);
 
     _subject.sink.add(response);
     return response;
   }
 
   Future<NoteModel> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     NoteModel response = await _apiRepository.getAPIData(
       queryparams: queryparams,

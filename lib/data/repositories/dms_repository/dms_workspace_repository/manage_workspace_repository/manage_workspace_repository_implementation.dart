@@ -4,7 +4,7 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
   final Dio _dio = Dio();
 
   Future postAPIData({
-    @required Map<String, dynamic> queryparams,
+    required Map<String, dynamic> queryparams,
   }) async {
     try {
       Response response = await _dio.post(
@@ -22,8 +22,8 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
     }
   }
 
-  Future<WorkspaceViewModel> getAPIData({
-    Map<String, dynamic> queryparams,
+  Future<WorkspaceViewModel?> getAPIData({
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -43,7 +43,7 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
   }
 
   Future<WorkspaceViewResponse> getWorkspaceData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -59,12 +59,12 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return err;
+      return Future.error(err);
     }
   }
 
   Future<WorkspaceViewModel> deleteWorkspace({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -73,13 +73,13 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
       );
 
       var result = WorkspaceViewModel.fromJson(response.data);
-      
+
       return result;
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return err;
+      return Future.error(err);
     }
   }
 }

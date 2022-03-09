@@ -8,7 +8,7 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 class DependentList extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class DependentList extends StatefulWidget {
 }
 
 class _DependentListState extends State<DependentList> {
-  List<DependentListModel> _dependentList = [];
+  List<DependentListModel>? _dependentList = [];
   List<DependentListModel> _filteredDependentList = [];
 
   @override
@@ -26,10 +26,10 @@ class _DependentListState extends State<DependentList> {
     queryparams['ntsstatus'] = 'NOTE_STATUS_INPROGRESS';
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
     dependentBloc..getReadDependantList(queryparams: queryparams);
   }
@@ -65,11 +65,11 @@ class _DependentListState extends State<DependentList> {
     );
   }
 
-  _dependentListCard({int index}) {
+  _dependentListCard({required int index}) {
     return Card(
       elevation: 4,
       child: ListTile(
-        title: Text(_dependentList[index].firstName),
+        title: Text(_dependentList![index].firstName!),
         subtitle: Column(
           children: [
             Padding(
@@ -80,7 +80,7 @@ class _DependentListState extends State<DependentList> {
                   Row(
                     children: <Widget>[
                       Text("Relationship type: "),
-                      Text(_dependentList[index].relationshipTypeName),
+                      Text(_dependentList![index].relationshipTypeName!),
                     ],
                   )
                 ],
@@ -94,7 +94,7 @@ class _DependentListState extends State<DependentList> {
                   Row(
                     children: <Widget>[
                       Text("Iqamah Nationality: "),
-                      Text(_dependentList[index].iqamahIdNationalityId),
+                      Text(_dependentList![index].iqamahIdNationalityId!),
                     ],
                   )
                 ],
@@ -108,7 +108,7 @@ class _DependentListState extends State<DependentList> {
                   Row(
                     children: <Widget>[
                       Text("DOB: "),
-                      Text(_dependentList[index]
+                      Text(_dependentList![index]
                           .dateOfBirth
                           .toString()
                           .split(' ')[0]),
@@ -126,7 +126,7 @@ class _DependentListState extends State<DependentList> {
             ADD_EDIT_NOTE_ROUTE,
             arguments: ScreenArguments(
               arg1: '',
-              arg2: _dependentList[index].noteId,
+              arg2: _dependentList![index].noteId,
               arg3: '',
             ),
           );

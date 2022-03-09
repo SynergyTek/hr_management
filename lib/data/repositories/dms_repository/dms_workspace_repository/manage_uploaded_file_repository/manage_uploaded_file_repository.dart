@@ -11,6 +11,6 @@ abstract class AbstractManageUploadedFileRepository {
   AbstractManageUploadedFileRepository();
 
   Future<dynamic> postAPIData({
-    @required NoteModel model,
+    required NoteModel model,
   });
 }

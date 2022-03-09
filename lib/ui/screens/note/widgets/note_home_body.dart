@@ -8,19 +8,19 @@ import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import 'note_list_tile.dart';
 
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class NoteHomeBody extends StatefulWidget {
-  final String mode;
-  final String noteStatus;
-  final String moduleId;
+  final String? mode;
+  final String? noteStatus;
+  final String? moduleId;
 
   const NoteHomeBody({
-    Key key,
+    Key? key,
     this.mode,
     this.noteStatus,
     this.moduleId,
@@ -30,16 +30,16 @@ class NoteHomeBody extends StatefulWidget {
 }
 
 class _NoteHomeBodyState extends State<NoteHomeBody> {
-  List<NoteListModel> _noteList = [];
+  List<NoteListModel>? _noteList = [];
   List<NoteListModel> _filteredNoteList = [];
 
-  FilterListTapCallBack filterData;
+  FilterListTapCallBack? filterData;
 
-  String noteStatus;
-  String text;
-  String userId;
-  String moduleId;
-  String mode;
+  String? noteStatus;
+  String? text;
+  String? userId;
+  String? moduleId;
+  String? mode;
 
   @override
   void initState() {
@@ -53,10 +53,10 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
   apiCall() {
     noteBloc.subjectNoteList.sink.add(null);
 
-    if (widget.noteStatus != null && widget.noteStatus.isNotEmpty)
+    if (widget.noteStatus != null && widget.noteStatus!.isNotEmpty)
       noteStatus = widget.noteStatus;
-    if (widget.mode != null && widget.mode.isNotEmpty) mode = widget.mode;
-    if (widget.moduleId != null && widget.moduleId.isNotEmpty)
+    if (widget.mode != null && widget.mode!.isNotEmpty) mode = widget.mode;
+    if (widget.moduleId != null && widget.moduleId!.isNotEmpty)
       moduleId = widget.moduleId;
     Map<String, dynamic> queryparams = Map();
 
@@ -66,7 +66,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
     if (mode != null) queryparams['mode'] = mode;
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     noteBloc.getNoteList(queryparams: queryparams);
   }
@@ -149,8 +149,8 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
   }
 
   customButton({
-    String buttonText,
-    Function handleOnPressed,
+    required String buttonText,
+    Function? handleOnPressed,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -164,7 +164,7 @@ class _NoteHomeBodyState extends State<NoteHomeBody> {
             ),
           ),
         ),
-        onPressed: () => handleOnPressed(),
+        onPressed: () => handleOnPressed!(),
         child: Text(buttonText),
       ),
     );

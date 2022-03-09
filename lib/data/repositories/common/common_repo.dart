@@ -6,7 +6,7 @@ class CommonRepository extends AbstractCommonRepository {
   final Dio _dio = Dio();
 
   Future<CommonListResponse> getLOVIdNameList(
-      {Map<String, dynamic> queryparams}) async {
+      {Map<String, dynamic>? queryparams}) async {
     final String endpoint = APIEndpointConstants.GET_LOV_ID_NAME_LIST;
 
     try {
@@ -26,7 +26,7 @@ class CommonRepository extends AbstractCommonRepository {
   }
 
   Future<CommonListResponse> getEnumIdNameList(
-      {Map<String, dynamic> queryparams}) async {
+      {Map<String, dynamic>? queryparams}) async {
     final String endpoint = APIEndpointConstants.GET_ENUM_ID_NAME_LIST;
 
     try {
@@ -46,7 +46,7 @@ class CommonRepository extends AbstractCommonRepository {
   }
 
   Future<CommonListResponse> getUserIdNameList(
-      {Map<String, dynamic> queryparams}) async {
+      {Map<String, dynamic>? queryparams}) async {
     final String endpoint = APIEndpointConstants.GET_USER_ID_NAME_LIST;
 
     try {
@@ -66,7 +66,7 @@ class CommonRepository extends AbstractCommonRepository {
   }
 
   Future<OwnerNameListResponse> getOwnerIdNameList(
-      {Map<String, dynamic> queryparams}) async {
+      {Map<String, dynamic>? queryparams}) async {
     final String endpoint = APIEndpointConstants.GET_OWNER_ID_NAME_LIST;
 
     try {
@@ -86,7 +86,7 @@ class CommonRepository extends AbstractCommonRepository {
   }
 
   Future<EnumTreeListResponse> getEnumAsTreeList(
-      {Map<String, dynamic> queryparams}) async {
+      {Map<String, dynamic>? queryparams}) async {
     final String endpoint = APIEndpointConstants.GET_ENUM_AS_TREE_LIST;
 
     try {
@@ -106,7 +106,7 @@ class CommonRepository extends AbstractCommonRepository {
   }
 
   Future<EnumTreeListResponse> getModuleTreeList({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_MODULE_TREE_LIST;
 

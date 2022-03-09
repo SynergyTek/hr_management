@@ -5,9 +5,9 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 
 class FaceDeteWebview extends StatefulWidget {
-  final String url;
-  final String urlModuleName;
-  const FaceDeteWebview({Key key, this.url, this.urlModuleName})
+  final String? url;
+  final String? urlModuleName;
+  const FaceDeteWebview({Key? key, this.url, this.urlModuleName})
       : super(key: key);
 
   @override
@@ -15,9 +15,9 @@ class FaceDeteWebview extends StatefulWidget {
 }
 
 class _FaceDeteWebviewState extends State<FaceDeteWebview> {
-  String _url = '';
+  String? _url = '';
   final key = UniqueKey();
-  InAppWebViewController webViewController;
+  InAppWebViewController? webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
       crossPlatform: InAppWebViewOptions(
         useShouldOverrideUrlLoading: true,
@@ -41,7 +41,7 @@ class _FaceDeteWebviewState extends State<FaceDeteWebview> {
     return Scaffold(
       appBar: AppbarWidget(title: widget.urlModuleName),
       body: InAppWebView(
-          initialUrlRequest: URLRequest(url: Uri.parse(_url)),
+          initialUrlRequest: URLRequest(url: Uri.parse(_url!)),
           initialUserScripts: UnmodifiableListView<UserScript>([]),
           initialOptions: options,
           onWebViewCreated: (InAppWebViewController controller) {

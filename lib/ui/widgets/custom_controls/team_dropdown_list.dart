@@ -3,7 +3,7 @@ import '../../../data/models/user/team_model.dart';
 import '../../../data/models/user/user_response.dart';
 import '../../../logic/blocs/user_bloc/user_bloc.dart';
 import '../../../themes/theme_config.dart';
-import 'package:listizer/listizer.dart';
+import '../../listizer/listizer.dart';
 
 import '../appbar_widget.dart';
 import '../circle_avatar.dart';
@@ -12,16 +12,16 @@ import '../nts_dropdown_select.dart';
 import '../progress_indicator.dart';
 
 class TeamDropdownList extends StatefulWidget {
-  final ListTapPressedCallBack onListTap;
+  final ListTapPressedCallBack? onListTap;
 
-  const TeamDropdownList({Key key, this.onListTap}) : super(key: key);
+  const TeamDropdownList({Key? key, this.onListTap}) : super(key: key);
 
   @override
   _TeamStateDropdownList createState() => _TeamStateDropdownList();
 }
 
 class _TeamStateDropdownList extends State<TeamDropdownList> {
-  List<ReadTeamDataModel> _teamDataList = [];
+  List<ReadTeamDataModel>? _teamDataList = [];
   List<ReadTeamDataModel> _filteredTeamDataList = [];
 
   @override
@@ -42,11 +42,11 @@ class _TeamStateDropdownList extends State<TeamDropdownList> {
           stream: userBLoc.subjectReadTeamData,
           builder: (context, AsyncSnapshot<ReadTeamDataResponse> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.list == null ||
-                  snapshot.data.list.length == 0) {
+              if (snapshot.data!.list == null ||
+                  snapshot.data!.list!.length == 0) {
                 return EmptyListWidget();
               }
-              _teamDataList = snapshot.data.list;
+              _teamDataList = snapshot.data!.list;
               return Listizer(
                 showSearchBar: true,
                 listItems: _teamDataList,
@@ -54,21 +54,21 @@ class _TeamStateDropdownList extends State<TeamDropdownList> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: TextCircleAvater(
-                      text: _teamDataList[index].name,
+                      text: _teamDataList![index].name,
                       context: context,
                       radius: 20,
                       fontSize: 18,
                       color: Theme.of(context).primaryColorLight,
                     ),
                     title: Text(
-                      _teamDataList[index].name != null
-                          ? _teamDataList[index].name
+                      _teamDataList![index].name != null
+                          ? _teamDataList![index].name!
                           : "",
                       maxLines: 2,
                     ),
                     onTap: () {
                       if (widget.onListTap != null) {
-                        widget.onListTap(_teamDataList[index]);
+                        widget.onListTap!(_teamDataList![index]);
                         Navigator.pop(context);
                       }
                     },

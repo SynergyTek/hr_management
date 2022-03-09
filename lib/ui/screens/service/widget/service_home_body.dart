@@ -10,48 +10,48 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/nts_widgets.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import 'service_list_tile.dart';
 
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class ServiceHomeBody extends StatefulWidget {
-  final String serviceStatus;
-  final String moduleId;
-  final String mode;
+  final String? serviceStatus;
+  final String? moduleId;
+  final String? mode;
 
-  const ServiceHomeBody({Key key, this.serviceStatus, this.moduleId, this.mode})
+  const ServiceHomeBody({Key? key, this.serviceStatus, this.moduleId, this.mode})
       : super(key: key);
   @override
   _ServiceHomeBodyState createState() => _ServiceHomeBodyState();
 }
 
 class _ServiceHomeBodyState extends State<ServiceHomeBody> {
-  List<Service> _serviceList = [];
+  List<Service>? _serviceList = [];
   List<Service> _filteredServiceList = [];
 
-  FilterListTapCallBack filterData;
+  FilterListTapCallBack? filterData;
   bool dateFilterVisible = false;
 
-  DateTime startDateValue;
-  DateTime dueDateValue;
+  DateTime? startDateValue;
+  DateTime? dueDateValue;
 
   TextEditingController subjectController = TextEditingController();
 
-  String userId;
-  String text;
-  String templateCategoryCode;
-  String filterUserId;
-  String moduleId;
-  String mode;
-  String serviceNo;
-  String serviceStatus;
-  String subject;
-  DateTime startDate;
-  DateTime dueDate;
-  DateTime completionDate;
-  String templateMasterCode;
+  String? userId;
+  String? text;
+  String? templateCategoryCode;
+  String? filterUserId;
+  String? moduleId;
+  String? mode;
+  String? serviceNo;
+  String? serviceStatus;
+  String? subject;
+  DateTime? startDate;
+  DateTime? dueDate;
+  DateTime? completionDate;
+  String? templateMasterCode;
 
   @override
   void initState() {
@@ -64,18 +64,18 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
 
   apiCall() {
     serviceBloc.subjectServiceList.sink.add(null);
-    if (widget.serviceStatus != null && widget.serviceStatus.isNotEmpty)
+    if (widget.serviceStatus != null && widget.serviceStatus!.isNotEmpty)
       serviceStatus = widget.serviceStatus;
-    if (widget.moduleId != null && widget.moduleId.isNotEmpty)
+    if (widget.moduleId != null && widget.moduleId!.isNotEmpty)
       moduleId = widget.moduleId;
-    if (widget.mode != null && widget.mode.isNotEmpty) mode = widget.mode;
+    if (widget.mode != null && widget.mode!.isNotEmpty) mode = widget.mode;
     Map<String, dynamic> queryparams = Map();
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     if (text != null) {
       queryparams['text'] = text;
@@ -134,7 +134,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
           child: _dateFilterWidget(),
         ),
         Expanded(
-          child: StreamBuilder<ServiceListResponse>(
+          child: StreamBuilder<ServiceListResponse?>(
             stream: serviceBloc.subjectServiceList.stream,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
@@ -342,7 +342,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
       return;
     }
 
-    if (dueDateValue != null && startDateValue.compareTo(dueDateValue) > 0) {
+    if (dueDateValue != null && startDateValue!.compareTo(dueDateValue!) > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Start date cannot be greater than the End date."),
@@ -396,8 +396,8 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
   }
 
   customButton({
-    String buttonText,
-    Function handleOnPressed,
+    required String buttonText,
+    Function? handleOnPressed,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -411,7 +411,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
             ),
           ),
         ),
-        onPressed: () => handleOnPressed(),
+        onPressed: () => handleOnPressed!(),
         child: Text(buttonText),
       ),
     );

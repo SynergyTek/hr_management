@@ -7,7 +7,7 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
 
   Future<LeaveTempResponse> getAllowedTemplateData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       queryparams = {
@@ -33,17 +33,17 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
   }
 
   @override
-  Future<LeaveTempResponse> deleteAPIData({Map<String, dynamic> queryparams}) {
+  Future<LeaveTempResponse> deleteAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<LeaveTempResponse> postAPIData({Map<String, dynamic> queryparams}) {
+  Future<LeaveTempResponse> postAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<LeaveTempResponse> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<LeaveTempResponse> putAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 }

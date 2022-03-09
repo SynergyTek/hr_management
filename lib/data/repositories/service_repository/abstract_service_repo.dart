@@ -17,7 +17,7 @@ abstract class AbstractServiceRepository {
   AbstractServiceRepository();
 
   Future<ServiceResponse> getServiceDetail({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }); //{
   // Optional Params to be added to the request if required.
   //  Map<String, dynamic> queryparams,});
@@ -25,21 +25,19 @@ abstract class AbstractServiceRepository {
   Future<ServiceListResponse> getLeavesDetails();
 
   Future<PostResponse> postAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
+    required Service service,
   });
 
   Future<ServiceResponse> putAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<ServiceResponse> deleteAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<ServiceListResponse> getServiceDashBoardData({
-    Map<String, dynamic> queryparams,
-  }); 
+    Map<String, dynamic>? queryparams,
+  });
 }

@@ -1,9 +1,9 @@
 import 'employee_profile_model.dart';
 
 class EmployeeProfileResponse {
-  bool isSuccess;
-  EmployeeProfileModel data;
-  String error;
+  bool? isSuccess;
+  EmployeeProfileModel? data;
+  String? error;
 
   EmployeeProfileResponse({this.data});
 

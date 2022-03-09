@@ -8,8 +8,8 @@ import 'widget/nts_dashboard_body.dart';
 
 class ServiceDashboard extends StatelessWidget {
   const ServiceDashboard({
-    Key key,
-    @required this.ntsType,
+    Key? key,
+    required this.ntsType,
   }) : super(key: key);
 
   final NTSType ntsType;
@@ -29,8 +29,8 @@ class ServiceDashboard extends StatelessWidget {
     );
   }
 
-  String _ntsTitle() {
-    String title;
+  String? _ntsTitle() {
+    String? title;
     if (ntsType == NTSType.service)
       title = 'Service Home Dashboard';
     else if (ntsType == NTSType.task)

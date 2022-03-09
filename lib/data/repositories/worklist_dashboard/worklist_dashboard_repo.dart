@@ -6,7 +6,7 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
   final Dio _dio = Dio();
 
   Future<WorklistDashboardResponse> getWorklistDashboardCount({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.WORKLIST_DASHBOARD_COUNT;
 
@@ -28,7 +28,7 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
   }
 
   Future<NoteWorklistDashboardResponse> getWorklistDashboardNoteCount({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.WORKLIST_DASHBOARD_NOTE_COUNT;
 
@@ -51,18 +51,18 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
 
   @override
   Future<WorklistDashboardResponse> deleteAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
   Future<WorklistDashboardResponse> putAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<PostResponse> postAPIData({Map<String, dynamic> queryparams}) {
+  Future<PostResponse> postAPIData({Map<String, dynamic>? queryparams}) {
     // TODO: implement postAPIData
     throw UnimplementedError();
   }

@@ -7,7 +7,7 @@ class DocumentRepository extends AbstractDocumentRepository {
 
   Future<DocumentResponse> getAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_PERSON_PROFILE_DATA;
 
@@ -27,21 +27,21 @@ class DocumentRepository extends AbstractDocumentRepository {
 
   @override
   Future<DocumentResponse> deleteAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<DocumentResponse> postAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<DocumentResponse> putAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }

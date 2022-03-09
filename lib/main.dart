@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:location/location.dart' as loc;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,12 +25,16 @@ Future<void> main() async {
     ),
   );
 
-  await FlutterDownloader.initialize(
-      debug: true // optional: set false to disable printing logs to console
-      );
+  loc.PermissionStatus _permissionGranted =
+      await loc.Location().hasPermission();
+  if (_permissionGranted == loc.PermissionStatus.denied) {
+    _permissionGranted = await loc.Location().requestPermission();
+  }
+
+  await FlutterDownloader.initialize(debug: false);
+
   await Permission.camera.request();
   await Permission.microphone.request();
-  // optional: set false to disable printing logs to console
 
   runApp(InitScreen());
 }

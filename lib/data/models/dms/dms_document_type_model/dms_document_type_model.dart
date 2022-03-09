@@ -1,29 +1,29 @@
 class DMSDocumentTypeModel {
   dynamic templateCategoryName;
   dynamic importFileId;
-  int taskType;
+  int? taskType;
   dynamic categoryCode;
   dynamic moduleCodes;
   dynamic iconFileId;
   dynamic templateColor;
   dynamic userId;
   dynamic type;
-  String name;
-  String displayName;
-  String code;
+  String? name;
+  String? displayName;
+  String? code;
   dynamic description;
-  String templateCategoryId;
+  String? templateCategoryId;
   dynamic templateCategory;
-  int templateStatus;
-  int templateType;
-  String tableMetadataId;
+  int? templateStatus;
+  int? templateType;
+  String? tableMetadataId;
   dynamic tableMetadata;
-  int tableSelectionType;
+  int? tableSelectionType;
   dynamic udfTemplateId;
   dynamic udfTemplate;
   dynamic udfTableMetadataId;
   dynamic udfTableMetadata;
-  String json;
+  String? json;
   dynamic printJson;
   dynamic moduleId;
   dynamic module;
@@ -31,26 +31,26 @@ class DMSDocumentTypeModel {
   dynamic domain;
   dynamic subDomainId;
   dynamic subDomain;
-  List<dynamic> allowedTagCategories;
+  List<dynamic>? allowedTagCategories;
   dynamic templateStageId;
   dynamic templateStage;
   dynamic templateStepId;
   dynamic templateStep;
   dynamic workFlowTemplateId;
   dynamic workflowTemplate;
-  String id;
-  String createdDate;
-  String createdBy;
-  String lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
+  String? id;
+  String? createdDate;
+  String? createdBy;
+  String? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
   dynamic sequenceOrder;
-  String companyId;
-  String legalEntityId;
-  int dataAction;
-  int status;
-  int versionNo;
-  String portalId;
+  String? companyId;
+  String? legalEntityId;
+  int? dataAction;
+  int? status;
+  int? versionNo;
+  String? portalId;
 
   DMSDocumentTypeModel({
     this.templateCategoryName,
@@ -143,7 +143,7 @@ class DMSDocumentTypeModel {
     if (map['AllowedTagCategories'] != null) {
       allowedTagCategories = [];
       map['AllowedTagCategories'].forEach((v) {
-        allowedTagCategories.add(v);
+        allowedTagCategories!.add(v);
       });
     }
     templateStageId = map['TemplateStageId'];
@@ -203,7 +203,7 @@ class DMSDocumentTypeModel {
     data['SubDomain'] = this.subDomain;
     if (this.allowedTagCategories != null) {
       data['AllowedTagCategories'] =
-          this.allowedTagCategories.map((v) => v.toJson()).toList();
+          this.allowedTagCategories!.map((v) => v.toJson()).toList();
     }
     data['TemplateStageId'] = this.templateStageId;
     data['TemplateStage'] = this.templateStage;

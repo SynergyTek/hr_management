@@ -4,7 +4,7 @@ class ComponentResultRepository extends AbstractComponentResultRepository {
   final Dio _dio = Dio();
 
   Future<ComponentResultResponse> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     //
     String endpoint = APIEndpointConstants.GET_COMPONENT_RESULT_DATA;
@@ -27,21 +27,21 @@ class ComponentResultRepository extends AbstractComponentResultRepository {
 
   @override
   Future<bool> deleteAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     throw UnimplementedError();
   }
 
   @override
   Future<ComponentResultResponse> postAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<ComponentResultResponse> putAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }

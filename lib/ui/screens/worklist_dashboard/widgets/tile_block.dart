@@ -8,16 +8,16 @@ import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 
 Widget buildTile(
-    {String status,
-    Color bgColor,
-    BuildContext context,
-    String moduleName,
-    String tabName,
-    int value,
-    bool isTile,
-    NTSType ntsType,
-    Image image,
-    String mode}) {
+    {String? status,
+    Color? bgColor,
+    BuildContext? context,
+    String? moduleName,
+    String? tabName,
+    int? value,
+    required bool isTile,
+    NTSType? ntsType,
+    Image? image,
+    String? mode}) {
   return Material(
       elevation: 8,
       borderRadius: BorderRadius.circular(10.0),
@@ -33,18 +33,18 @@ Widget buildTile(
                   context: context,
                   mode: mode,
                   moduleName: moduleName)
-              : worklistHeading(status: status)));
+              : worklistHeading(status: status!)));
 }
 
 Widget worklistTileWidget(
-    {Color bgColor,
-    int value,
-    String status,
-    String moduleName,
-    String mode,
-    NTSType ntsType,
-    BuildContext context,
-    Image image}) {
+    {Color? bgColor,
+    int? value,
+    String? status,
+    String? moduleName,
+    String? mode,
+    NTSType? ntsType,
+    BuildContext? context,
+    Image? image}) {
   return Padding(
     padding: const EdgeInsets.all(24.0),
     child: Column(
@@ -101,7 +101,7 @@ Widget worklistTileWidget(
                 }
 
                 Navigator.pushNamed(
-                  context,
+                  context!,
                   TASK_HOME,
                   arguments: ScreenArguments(
                       arg1: status,
@@ -120,7 +120,7 @@ Widget worklistTileWidget(
                   status = 'SERVICE_STATUS_DRAFT';
                 }
                 Navigator.pushNamed(
-                  context,
+                  context!,
                   SERVICE_HOME,
                   arguments: ScreenArguments(
                       arg1: status,
@@ -143,7 +143,7 @@ Widget worklistTileWidget(
                   status = 'NOTE_STATUS_EXPIRE';
                 }
                 Navigator.pushNamed(
-                  context,
+                  context!,
                   NOTE_HOME,
                   arguments: ScreenArguments(
                       arg1: status,
@@ -155,7 +155,7 @@ Widget worklistTileWidget(
             },
           ),
           SizedBox(height: 0.5.h),
-          Text(status,
+          Text(status!,
               style: TextStyle(
                   color: Colors.black87,
                   fontWeight: FontWeight.w500,
@@ -164,7 +164,7 @@ Widget worklistTileWidget(
   );
 }
 
-Widget worklistHeading({String status}) {
+Widget worklistHeading({required String status}) {
   return Container(
     alignment: Alignment.centerLeft,
     padding: EdgeInsets.symmetric(horizontal: 10),

@@ -7,21 +7,21 @@ import '../../routes/screen_arguments.dart';
 typedef ListTapPressedCallBack = void Function(dynamic key);
 
 class NTSDropDownSelect extends StatelessWidget {
-  final String title;
-  final bool isShowArrow;
-  final bool isUserList;
-  final bool isTeamList;
-  final String hint;
-  final String validationMessage;
-  final TextEditingController controller;
-  final Widget prefixIcon;
-  final FormFieldValidator<String> validator;
-  final String url;
-  final String idKey;
-  final String nameKey;
-  final ListTapPressedCallBack onListTap;
+  final String? title;
+  final bool? isShowArrow;
+  final bool? isUserList;
+  final bool? isTeamList;
+  final String? hint;
+  final String? validationMessage;
+  final TextEditingController? controller;
+  final Widget? prefixIcon;
+  final FormFieldValidator<String>? validator;
+  final String? url;
+  final String? idKey;
+  final String? nameKey;
+  final ListTapPressedCallBack? onListTap;
   NTSDropDownSelect(
-      {Key key,
+      {Key? key,
       this.title,
       this.isShowArrow,
       this.isUserList,
@@ -53,24 +53,24 @@ class NTSDropDownSelect extends StatelessWidget {
                 prefixIcon:
                     prefixIcon != null ? prefixIcon : Icon(Icons.select_all),
                 suffixIcon:
-                    isShowArrow ? Icon(Icons.keyboard_arrow_right) : null,
+                    isShowArrow! ? Icon(Icons.keyboard_arrow_right) : null,
                 // filled: true,
-                labelText: "Select " + title,
-                hintText: "Select " + hint,
+                labelText: "Select " + title!,
+                hintText: "Select " + hint!,
                 errorStyle: TextStyle(fontSize: 11.0)),
             maxLines: 1,
             validator: validator != null
                 ? validator
                 : (val) =>
                     (val == null || val.isEmpty) ? validationMessage : null,
-            onSaved: (String value) {
-              controller.text = value;
+            onSaved: (String? value) {
+              controller!.text = value!;
             },
           ),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              if (isUserList != null && isUserList) {
+              if (isUserList != null && isUserList!) {
                 Navigator.pushNamed(
                   context,
                   NTS_USER_DROPDOWN,
@@ -78,7 +78,7 @@ class NTSDropDownSelect extends StatelessWidget {
                     func: onListTap,
                   ),
                 );
-              } else if (isTeamList != null && isTeamList) {
+              } else if (isTeamList != null && isTeamList!) {
                 Navigator.pushNamed(
                   context,
                   NTS_TEAM_DROPDOWN,

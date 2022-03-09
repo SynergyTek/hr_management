@@ -14,7 +14,7 @@ abstract class InternetEvent extends Equatable {}
 class InternetConnectedEvent extends InternetEvent {
   final ConnectionType connectionType;
   InternetConnectedEvent({
-    @required this.connectionType,
+    required this.connectionType,
   });
 
   @override

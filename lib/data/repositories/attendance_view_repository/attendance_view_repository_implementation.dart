@@ -7,7 +7,7 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
 
   Future<AttendanceViewResponse> getAPIData({
     // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_ATTENDANCE_VIEW_DATA;
 
@@ -29,19 +29,19 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
 
   @override
   Future<AttendanceViewResponse> deleteAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
   Future<AttendanceViewResponse> postAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
   Future<AttendanceViewResponse> putAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 }

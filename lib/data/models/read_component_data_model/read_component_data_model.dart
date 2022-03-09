@@ -54,43 +54,43 @@ class ReadComponentResultDataModel {
     this.portalId,
   });
 
-  String componentStatusName;
-  String assignee;
-  String assigneeId;
+  String? componentStatusName;
+  String? assignee;
+  String? assigneeId;
   dynamic assigneePhotoId;
-  String email;
-  String componentStatusCode;
+  String? email;
+  String? componentStatusCode;
   dynamic stageId;
   dynamic stageName;
-  int componentType;
-  String processDesignResultId;
+  int? componentType;
+  String? processDesignResultId;
   dynamic processDesignResult;
-  String processDesignId;
+  String? processDesignId;
   dynamic processDesign;
-  String componentId;
+  String? componentId;
   dynamic component;
-  String ntsServiceId;
+  String? ntsServiceId;
   dynamic ntsService;
-  String ntsTaskId;
+  String? ntsTaskId;
   dynamic ntsTask;
-  String componentStatusId;
+  String? componentStatusId;
   dynamic componentStatus;
-  DateTime startDate;
-  DateTime endDate;
+  DateTime? startDate;
+  DateTime? endDate;
   dynamic error;
-  String id;
-  DateTime createdDate;
-  String createdBy;
-  DateTime lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
+  String? id;
+  DateTime? createdDate;
+  String? createdBy;
+  DateTime? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
   dynamic sequenceOrder;
-  String companyId;
-  String legalEntityId;
-  int dataAction;
-  int status;
-  int versionNo;
-  String portalId;
+  String? companyId;
+  String? legalEntityId;
+  int? dataAction;
+  int? status;
+  int? versionNo;
+  String? portalId;
 
   factory ReadComponentResultDataModel.fromJson(Map<String, dynamic> json) =>
       ReadComponentResultDataModel(
@@ -158,13 +158,13 @@ class ReadComponentResultDataModel {
         "NtsTask": ntsTask,
         "ComponentStatusId": componentStatusId,
         "ComponentStatus": componentStatus,
-        "StartDate": startDate == null ? null : startDate.toIso8601String(),
-        "EndDate": endDate == null ? null : endDate.toIso8601String(),
+        "StartDate": startDate == null ? null : startDate!.toIso8601String(),
+        "EndDate": endDate == null ? null : endDate!.toIso8601String(),
         "Error": error,
         "Id": id,
-        "CreatedDate": createdDate.toIso8601String(),
+        "CreatedDate": createdDate!.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,

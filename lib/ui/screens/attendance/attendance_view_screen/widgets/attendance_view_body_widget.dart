@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:listizer/listizer.dart';
+
+import '../../../../listizer/listizer.dart';
 
 import '../../../../../data/models/attendance_view_models/attendance_view_models.dart';
 import '../../../../../data/models/attendance_view_models/attendance_view_response.dart';
@@ -21,9 +22,6 @@ class _AttendanceViewBodyWidgetState extends State<AttendanceViewBodyWidget> {
   List<AttendanceViewModel> _attendanceViewList = [];
   List<AttendanceViewModel> _filteredAttendanceViewList = [];
 
-  // DateTime startDate;
-  // DateTime endDate;
-
   @override
   void initState() {
     // Initialising the stream with default data.
@@ -39,11 +37,11 @@ class _AttendanceViewBodyWidgetState extends State<AttendanceViewBodyWidget> {
           stream: attendanceViewBloc.subject.stream,
           builder: (context, AsyncSnapshot<AttendanceViewResponse> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.data == null ||
-                  snapshot.data.data.length == 0) {
+              if (snapshot.data!.data == null ||
+                  snapshot.data!.data.length == 0) {
                 return EmptyListWidget();
               }
-              _attendanceViewList = snapshot.data.data;
+              _attendanceViewList = snapshot.data!.data;
               return Listizer(
                 showSearchBar: true,
                 listItems: _attendanceViewList,

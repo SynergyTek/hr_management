@@ -8,14 +8,14 @@ class NTSTemplateBloc {
   final NTSTemplateRepository _apiRepository = NTSTemplateRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<NTSTemplateResponse> _subject =
-      BehaviorSubject<NTSTemplateResponse>();
+  final BehaviorSubject<NTSTemplateResponse?> _subject =
+      BehaviorSubject<NTSTemplateResponse?>();
 
   /// Used to fetch new entries.
   getData({
-    String userid,
-    String categoryCode,
-    NTSType ntsType,
+    String? userid,
+    String? categoryCode,
+    NTSType? ntsType,
   }) async {
     Map<String, dynamic> queryparams = Map();
 
@@ -23,6 +23,7 @@ class NTSTemplateBloc {
       _subject.sink.add(null);
       queryparams = {
         "templateType": "Service",
+        "categoryCode":"Employee_Service,Leave,CHR,HR_DOCUMENTS,CMS_SEBI_INT,TMSUSERMGMT,Dependent Documents,PersonDocuments,Separation,TimePermission"
       };
     } else if (ntsType == NTSType.task) {
       _subject.sink.add(null);
@@ -74,7 +75,7 @@ class NTSTemplateBloc {
     _subject.close();
   }
 
-  BehaviorSubject<NTSTemplateResponse> get subject => _subject;
+  BehaviorSubject<NTSTemplateResponse?> get subject => _subject;
 }
 
 final ntsTemplateBloc = NTSTemplateBloc();

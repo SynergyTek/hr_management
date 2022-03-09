@@ -12,12 +12,12 @@ import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import "../../../../../themes/theme_config.dart";
 
 class DMSNewFolderBodyWidget extends StatefulWidget {
-  final String parentId;
-  final String folderId;
-  final String folderName;
+  final String? parentId;
+  final String? folderId;
+  final String? folderName;
 
   DMSNewFolderBodyWidget({
-    @required this.parentId,
+    required this.parentId,
     this.folderId,
     this.folderName,
   });
@@ -42,15 +42,15 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
   _handleQueryParams() {
     return ManageNewFolderPayloadModel(
       activeUserId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
-      dataAction: widget?.folderName != null && widget.folderName.isNotEmpty
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
+      dataAction: widget.folderName != null && widget.folderName!.isNotEmpty
           ? "Edit"
           : "Create",
-      noteSubject: _newFolderNameTextEditingController?.text.toString() ?? "",
+      noteSubject: _newFolderNameTextEditingController.text.toString() ?? "",
       ownerUserId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
-      parentNoteId: widget?.parentId ?? "",
-      sequenceOrder: _sequenceOrderTextEditingController?.text.toString() ?? "",
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
+      parentNoteId: widget.parentId ?? "",
+      sequenceOrder: _sequenceOrderTextEditingController.text.toString() ?? "",
       id: widget.folderId ?? "",
     ).toJson();
   }
@@ -58,7 +58,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
   @override
   Widget build(BuildContext context) {
     // Use case: When editing an existing folder.
-    if (widget?.folderName != null && widget.folderName.isNotEmpty) {
+    if (widget.folderName != null && widget.folderName!.isNotEmpty) {
       return Container(
         padding: DEFAULT_PADDING,
         child: FutureBuilder<NoteModel>(
@@ -160,7 +160,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
   }
 
   Widget _textField({
-    @required TextEditingController controller,
+    required TextEditingController controller,
     bool obscureText = false,
     keyboardType = TextInputType.text,
   }) {
@@ -173,7 +173,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
   }
 
   _handleSaveOnPressed() async {
-    if (_newFolderNameTextEditingController?.text == null ||
+    if (_newFolderNameTextEditingController.text == null ||
         _newFolderNameTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("New Folder Name cannot be null or empty.")),
@@ -181,7 +181,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
       return;
     }
 
-    if (_sequenceOrderTextEditingController?.text == null ||
+    if (_sequenceOrderTextEditingController.text == null ||
         _sequenceOrderTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Sequence Order cannot be null or empty.")),
@@ -195,7 +195,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
 
     String message = "Folder couldn't be created, pl try again later.";
     if (response != null && response) {
-      message = widget?.folderName != null && widget.folderName.isNotEmpty
+      message = widget.folderName != null && widget.folderName!.isNotEmpty
           ? "Folder '${_newFolderNameTextEditingController.text}' edited successfully."
           : "Folder '${_newFolderNameTextEditingController.text}' created successfully.";
     }
@@ -223,17 +223,17 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
   }
 
   _handleEditFolder({
-    @required NoteModel dmsFolderMetadata,
+    required NoteModel? dmsFolderMetadata,
   }) {
     print(dmsFolderMetadata);
 
     if (dmsFolderMetadata == null) return;
 
-    if (widget?.folderName != null && widget.folderName.isNotEmpty) {
-      _newFolderNameTextEditingController.text = widget.folderName;
+    if (widget.folderName != null && widget.folderName!.isNotEmpty) {
+      _newFolderNameTextEditingController.text = widget.folderName!;
     }
 
-    if (dmsFolderMetadata?.sequenceOrder != null &&
+    if (dmsFolderMetadata.sequenceOrder != null &&
         dmsFolderMetadata.sequenceOrder.toString().isNotEmpty) {
       _sequenceOrderTextEditingController.text =
           dmsFolderMetadata.sequenceOrder.toString();

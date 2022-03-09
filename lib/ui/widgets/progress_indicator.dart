@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
-  final String loadingText;
+  final String? loadingText;
 
   CustomProgressIndicator({
     this.loadingText,
@@ -24,7 +24,7 @@ class CustomProgressIndicator extends StatelessWidget {
                 ),
                 Text(
                   loadingText ?? "Please Wait...",
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: Theme.of(context).textHeadingColor,
                         fontSize: 16.0,
                       ),

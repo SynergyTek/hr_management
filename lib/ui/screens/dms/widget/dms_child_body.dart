@@ -21,21 +21,21 @@ import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 class DMSChildBody extends StatefulWidget {
-  final Cwd parentModel;
-  final String parentPath;
-  final OnTapPressedCallBack callBack;
-  final List<String> path;
-  final List<String> parentPathList;
-  final List<Cwd> parentModelList;
-  final String parentName;
-  final String sourceId;
-  final bool isCopy;
-  final bool isCut;
+  final Cwd? parentModel;
+  final String? parentPath;
+  final OnTapPressedCallBack? callBack;
+  final List<String?>? path;
+  final List<String>? parentPathList;
+  final List<Cwd>? parentModelList;
+  final String? parentName;
+  final String? sourceId;
+  final bool? isCopy;
+  final bool? isCut;
   const DMSChildBody({
-    Key key,
+    Key? key,
     this.parentModel,
     this.parentPath,
     this.callBack,
@@ -53,15 +53,15 @@ class DMSChildBody extends StatefulWidget {
 }
 
 class _DMSChildBodyState extends State<DMSChildBody> {
-  List<Cwd> childList = [];
+  List<Cwd>? childList = [];
   List<Cwd> filterChildList = [];
-  List<String> childPath = [];
-  List<String> parentPathList = [];
-  List<Cwd> parentModelList = [];
+  List<String?>? childPath = [];
+  List<String>? parentPathList = [];
+  List<Cwd>? parentModelList = [];
   bool isVisible = false;
-  String sourceId;
-  bool isCopy = false;
-  bool isCut = false;
+  String? sourceId;
+  bool? isCopy = false;
+  bool? isCut = false;
 
   @override
   void initState() {
@@ -96,18 +96,18 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       Container(
         height: 90.h,
         padding: EdgeInsets.only(top: 2.h),
-        child: StreamBuilder<DMSFilesResponse>(
+        child: StreamBuilder<DMSFilesResponse?>(
           stream: dmsBloc.subjectDMSGetFilesChildResponse.stream,
-          builder: (context, AsyncSnapshot<DMSFilesResponse> snapshot) {
+          builder: (context, AsyncSnapshot<DMSFilesResponse?> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.error != null &&
-                  snapshot.data.error.length > 0) {
+              if (snapshot.data!.error != null &&
+                  snapshot.data!.error!.length > 0) {
                 return Center(
-                  child: Text(snapshot.data.error),
+                  child: Text(snapshot.data!.error!),
                 );
               }
-              childList = snapshot.data.data.files;
-              if (childList.isEmpty) {
+              childList = snapshot.data!.data!.files;
+              if (childList!.isEmpty) {
                 return Column(
                   children: [
                     _breadCrumb(),
@@ -158,22 +158,22 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ]),
       padding: EdgeInsets.all(8),
       child: BreadCrumb.builder(
-        itemCount: childPath.length,
+        itemCount: childPath!.length,
         builder: (index) {
           print(childPath);
           print('-----------------------------------------------');
           return BreadCrumbItem(
-              content: Text(childPath[index]),
+              content: Text(childPath![index]!),
               borderRadius: BorderRadius.circular(4),
               padding: EdgeInsets.all(4),
               onTap: () {
-                if (childPath[index] == 'Administrator') {
+                if (childPath![index] == 'Administrator') {
                   _preProcess(index);
                   Navigator.pushNamed(
                     context,
                     DMS_PARENT,
                   );
-                } else if (index == childPath.length - 1) {
+                } else if (index == childPath!.length - 1) {
                   print('Same folder');
                 } else {
                   _preProcess(index);
@@ -183,9 +183,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                     arguments: ScreenArguments(
                       list1: childPath,
                       list2: parentPathList,
-                      arg1: childPath[index],
-                      arg2: parentPathList[index - 1],
-                      dmsParentModel: parentModelList[index - 1],
+                      arg1: childPath![index],
+                      arg2: parentPathList![index - 1],
+                      dmsParentModel: parentModelList![index - 1],
                       dmsParentModelList: parentModelList,
                       callBack:
                           (dynamic value, dynamic value2, dynamic value3) {
@@ -213,14 +213,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   }
 
   _preProcess(int index) {
-    for (var i = childPath.length - 2; i > index - 1; i--) {
-      parentPathList.remove(parentPathList[i]);
-      parentModelList.remove(parentModelList[i]);
+    for (var i = childPath!.length - 2; i > index - 1; i--) {
+      parentPathList!.remove(parentPathList![i]);
+      parentModelList!.remove(parentModelList![i]);
       Navigator.pop(context);
     }
 
-    for (var i = childPath.length - 1; i > index; i--) {
-      childPath.remove(childPath[i]);
+    for (var i = childPath!.length - 1; i > index; i--) {
+      childPath!.remove(childPath![i]);
     }
     dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
   }
@@ -249,7 +249,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                         : Colors.cyan,
               ),
               title: Text(
-                filterChildList[index].name,
+                filterChildList[index].name!,
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -264,7 +264,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                       ? CircleAvatar(
                           radius: 11,
                           child: Text(
-                            filterChildList[index].count,
+                            filterChildList[index].count!,
                             style: TextStyle(fontSize: 12),
                           ))
                       : SizedBox(),
@@ -282,12 +282,12 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 //filterChildList[index].templateCode != 'PROJECT_DOCUMENTS')
                 {
                   print(filterChildList[index].id);
-                  childPath.add(filterChildList[index].name);
-                  parentModelList.add(filterChildList[index]);
+                  childPath!.add(filterChildList[index].name);
+                  parentModelList!.add(filterChildList[index]);
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
                   String parentPath =
-                      widget.parentPath + '/' + filterChildList[index].id + '/';
-                  parentPathList.add(parentPath);
+                      widget.parentPath! + '/' + filterChildList[index].id! + '/';
+                  parentPathList!.add(parentPath);
                   Navigator.pushNamed(
                     context,
                     DMS_CHILD,
@@ -478,13 +478,13 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         Visibility(
           visible: BlocProvider.of<CutCopyPasteBloc>(context)
                       .state
-                      ?.cutCopyPasteModel
+                      .cutCopyPasteModel
                       ?.sourceId !=
                   null &&
               BlocProvider.of<CutCopyPasteBloc>(context)
                   .state
-                  .cutCopyPasteModel
-                  .sourceId
+                  .cutCopyPasteModel!
+                  .sourceId!
                   .isNotEmpty,
           child: ListTile(
             leading: Icon(CustomIcons.copy),
@@ -526,7 +526,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  deleteDialog(String id) {
+  deleteDialog(String? id) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -575,7 +575,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  copyDialog(String id) {
+  copyDialog(String? id) {
     Navigator.pop(context);
     setState(() {
       sourceId = id;
@@ -586,9 +586,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   }
 
   cutCopyPasteModelPostRequest(
-    String sourceId,
-    bool isCopy,
-    bool isCut,
+    String? sourceId,
+    bool? isCopy,
+    bool? isCut,
   ) {
     try {
       BlocProvider.of<CutCopyPasteBloc>(context).add(
@@ -605,7 +605,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     }
   }
 
-  cutDialog(String id) {
+  cutDialog(String? id) {
     Navigator.pop(context);
     setState(() {
       sourceId = id;
@@ -615,16 +615,16 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     cutCopyPasteModelPostRequest(sourceId, isCopy, isCut);
   }
 
-  pasteDialog(String id) {
+  pasteDialog(String? id) {
     Navigator.pop(context);
     if (BlocProvider.of<CutCopyPasteBloc>(context)
             .state
-            .cutCopyPasteModel
-            .isCopy ||
+            .cutCopyPasteModel!
+            .isCopy! ||
         BlocProvider.of<CutCopyPasteBloc>(context)
             .state
-            .cutCopyPasteModel
-            .isCopy) {
+            .cutCopyPasteModel!
+            .isCopy!) {
       dmsCrudNoteBloc
         ..getCopyNoteAPIData(
             sourceId: sourceId,
@@ -652,12 +652,12 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       sourceId = '';
     } else if (BlocProvider.of<CutCopyPasteBloc>(context)
             .state
-            .cutCopyPasteModel
-            .isCut ||
+            .cutCopyPasteModel!
+            .isCut! ||
         BlocProvider.of<CutCopyPasteBloc>(context)
             .state
-            .cutCopyPasteModel
-            .isCut) {
+            .cutCopyPasteModel!
+            .isCut!) {
       dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: id);
       if (dmsCrudNoteBloc.moveNoteSubject.stream.hasValue) {
         if (dmsCrudNoteBloc.moveNoteSubject.stream.value) {
@@ -682,7 +682,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     }
   }
 
-  archiveDialog(String id) {
+  archiveDialog(String? id) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -734,7 +734,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  renameDialog(String name) {
+  renameDialog(String? name) {
     TextEditingController _nameController = TextEditingController();
     final form = GlobalKey<FormState>();
     showDialog(
@@ -772,7 +772,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
-                if (form.currentState.validate()) {
+                if (form.currentState!.validate()) {
                   Navigator.of(context).pop();
                   // dmsCrudNoteBloc..getRenameFilesAPIData(model: model);
 
@@ -802,12 +802,12 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           labelText: label,
           hintText: hint,
         ),
-        validator: validator,
+        validator: validator as String? Function(String?)?,
       ),
     );
   }
 
-  showDocumentBottomSheet({@required List<Widget> bottomSheetDataList}) {
+  showDocumentBottomSheet({required List<Widget> bottomSheetDataList}) {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
@@ -815,16 +815,16 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return DocumentBottomSheetWidget(
-          bottomSheetDataList: bottomSheetDataList ?? [],
+          bottomSheetDataList: bottomSheetDataList,
         );
       },
     );
   }
 
   Widget _statisticWidget({
-    @required BuildContext context,
-    String title,
-    String subtitle,
+    required BuildContext context,
+    String? title,
+    String? subtitle,
     bool isHeading = false,
   }) {
     return ListTile(
@@ -908,7 +908,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   }
 
   _handleEditWorkspaceOnTap({
-    @required Cwd data,
+    required Cwd data,
   }) {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,

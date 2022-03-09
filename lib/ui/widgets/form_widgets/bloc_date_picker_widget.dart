@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class BlocDatePickerWidget extends StatelessWidget {
-  final String labelName;
-  final InputFieldBloc inputFieldBloc;
-  final DateTime selectedDate;
-  final Widget prefixIcon;
-  final bool canSelectTime;
-  final bool showClearIcon;
-  final double height;
-  final double width;
+  final String? labelName;
+  final InputFieldBloc? inputFieldBloc;
+  final DateTime? selectedDate;
+  final Widget? prefixIcon;
+  final bool? canSelectTime;
+  final bool? showClearIcon;
+  final double? height;
+  final double? width;
 
   const BlocDatePickerWidget({
     this.labelName,
@@ -31,8 +31,8 @@ class BlocDatePickerWidget extends StatelessWidget {
       child: DateTimeFieldBlocBuilder(
         showClearIcon: showClearIcon ?? false,
         canSelectTime: canSelectTime ?? false,
-        dateTimeFieldBloc: inputFieldBloc,
-        format: DateFormat(canSelectTime ? 'dd-MM-yyyy  hh:mm' : 'dd-MM-yyyy'),
+        dateTimeFieldBloc: inputFieldBloc as InputFieldBloc<DateTime, dynamic>,
+        format: DateFormat(canSelectTime! ? 'dd-MM-yyyy  hh:mm' : 'dd-MM-yyyy'),
         firstDate: DateTime(1900),
         lastDate: DateTime(2100),
         initialDate: selectedDate ?? new DateTime.now(),

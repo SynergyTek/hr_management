@@ -11,12 +11,12 @@ import '../../../../routes/screen_arguments.dart';
 import '../../leaves/widget/grid_widget.dart';
 
 class AnimatedGridViewWidget extends StatefulWidget {
-  final List<NTSTemplateModel> model;
-  final NTSType ntsType;
+  final List<NTSTemplateModel>? model;
+  final NTSType? ntsType;
 
   AnimatedGridViewWidget({
-    @required this.model,
-    @required this.ntsType,
+    required this.model,
+    required this.ntsType,
   });
 
   @override
@@ -35,16 +35,16 @@ class _AnimatedGridViewWidgetState extends State<AnimatedGridViewWidget> {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),
-      itemCount: widget.model.length ?? 0,
+      itemCount: widget.model!.length ?? 0,
       itemBuilder: (context, index) {
-        List.generate(widget.model.length, (index) {
+        List.generate(widget.model!.length, (index) {
           cardKeys.add(GlobalKey<FlipCardState>());
         });
 
         return GridViewFlipWidget(
           index: index,
           cardKeys: cardKeys,
-          response: widget.model[index],
+          response: widget.model![index],
           ntsType: widget.ntsType,
         );
       },
@@ -56,13 +56,13 @@ class GridViewFlipWidget extends StatefulWidget {
   final int index;
   final List<GlobalKey<FlipCardState>> cardKeys;
   final NTSTemplateModel response;
-  final NTSType ntsType;
+  final NTSType? ntsType;
 
   GridViewFlipWidget({
-    @required this.index,
-    @required this.cardKeys,
-    @required this.response,
-    @required this.ntsType,
+    required this.index,
+    required this.cardKeys,
+    required this.response,
+    required this.ntsType,
   });
 
   @override
@@ -77,18 +77,18 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
       direction: FlipDirection.HORIZONTAL,
       front: FlipCardWidget(
         widgets: frontWidgets(
-          templateName: widget?.response?.displayName,
-          templateImageCode: widget?.response?.iconFileId,
-          colorCode: widget?.response?.templateColor,
+          templateName: widget.response.displayName ?? '',
+          templateImageCode: widget.response.iconFileId,
+          colorCode: widget.response.templateColor ?? '#FFFFFF',
           context: context,
         ),
       ),
       back: FlipCardWidget(
-        colorCode: widget?.response?.templateColor,
+        colorCode: widget.response.templateColor,
         widgets: backWidgets(
-          templateCode: widget?.response?.code,
-          templateName: widget?.response?.displayName,
-          colorCode: widget?.response?.templateColor,
+          templateName: widget.response.displayName ?? "",
+          templateCode: widget.response.code,
+          colorCode: widget.response.templateColor ?? '#FFFFFF',
           context: context,
         ),
       ),
@@ -96,9 +96,9 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
   }
 
   List<Widget> frontWidgets({
-    String templateName,
-    String templateImageCode,
-    String colorCode,
+    required String templateName,
+    String? templateImageCode,
+    required String colorCode,
     context,
   }) {
     List<Widget> widgets = [];
@@ -114,7 +114,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
                         '/common/query/GetFile?fileId=' +
                         templateImageCode,
                     errorBuilder: (BuildContext context, Object exception,
-                        StackTrace stackTrace) {
+                        StackTrace? stackTrace) {
                       return Icon(
                         Icons.image,
                         size: MediaQuery.of(context).size.width * 0.28,
@@ -147,10 +147,10 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
   }
 
   List<Widget> backWidgets({
-    String templateCode,
-    String templateName,
-    String colorCode,
-    BuildContext context,
+    String? templateCode,
+    required String templateName,
+    required String colorCode,
+    BuildContext? context,
   }) {
     List<Widget> widgets = [];
     Color cardBackground = hexToColor(colorCode);
@@ -183,7 +183,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
             print("templateCode: $templateCode");
             serviceBloc.subject.sink.add(null);
             Navigator.pushNamed(
-              context,
+              context!,
               widget.ntsType == NTSType.service
                   ? CREATE_SERVICE_ROUTE
                   : widget.ntsType == NTSType.task
@@ -211,8 +211,8 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
     print(widget.cardKeys.length);
     widget.cardKeys.forEach((element) {
       if (element.currentState != null) {
-        if (!element.currentState.isFront) {
-          element.currentState.toggleCard();
+        if (!element.currentState!.isFront) {
+          element.currentState!.toggleCard();
         }
       }
     });

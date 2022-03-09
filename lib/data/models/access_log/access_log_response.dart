@@ -6,12 +6,12 @@ import 'access_log_model.dart';
 /// list of APIData and error string if our API call gets failed
 /// or returns an error in response.
 class AccessLogResponse {
-  final int isSignIn;
-  String error;
+  final int? isSignIn;
+  String? error;
   // List<AccessLog> data;
 
   AccessLogResponse({
-    @required this.isSignIn,
+    required this.isSignIn,
   });
 
   AccessLogResponse.fromJson(String response) : isSignIn = int.parse(response);
@@ -22,11 +22,11 @@ class AccessLogResponse {
 }
 
 class AccessLogListDataResponse {
-  String error;
+  String? error;
   List<AccessLogModel> data;
 
   AccessLogListDataResponse({
-    @required this.data,
+    required this.data,
   });
 
   AccessLogListDataResponse.fromJson(List response)

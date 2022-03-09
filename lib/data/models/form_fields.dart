@@ -15,34 +15,34 @@ enum FieldType {
 
 class FormModel {
   // Specify the field type
-  FieldType fieldType;
+  FieldType? fieldType;
 
   // Common for all fields
-  String labelName;
+  String? labelName;
 
   // For number box and text box
-  String fieldName;
-  bool readOnly;
-  TextFieldBloc textFieldBloc;
+  String? fieldName;
+  bool? readOnly;
+  TextFieldBloc? textFieldBloc;
 
   // For checkbox, date and time picker, dropdown, text and number box, radio button
-  Icon icon;
+  Icon? icon;
 
   //Date Time Picker specific fields
-  bool canSelectTime;
+  bool? canSelectTime;
 
   //For date and time picker
-  InputFieldBloc inputFieldBloc;
+  InputFieldBloc? inputFieldBloc;
 
   //For checkbox group
-  MultiSelectFieldBloc multiSelectFieldBloc;
+  MultiSelectFieldBloc? multiSelectFieldBloc;
 
   //For dropdown and radio button
-  SelectFieldBloc selectFieldBloc;
+  SelectFieldBloc? selectFieldBloc;
 
   //For switch and single checkbox
-  BooleanFieldBloc booleanFieldBloc;
-  AlignmentGeometry alignment;
+  BooleanFieldBloc? booleanFieldBloc;
+  AlignmentGeometry? alignment;
 
   FormModel({
     this.labelName,

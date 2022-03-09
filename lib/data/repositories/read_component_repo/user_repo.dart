@@ -4,7 +4,7 @@ class ReadComponentRepository extends AbstractReadComponentRepository {
   final Dio _dio = Dio();
 
   Future<ReadComponentResponse> readComponentData(
-      {Map<String, dynamic> queryparams}) async {
+      {Map<String, dynamic>? queryparams}) async {
     final String endpoint = APIEndpointConstants.READ_USER_DATA;
 
     try {

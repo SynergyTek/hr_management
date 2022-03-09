@@ -17,7 +17,7 @@ class DMSCrudNoteBloc {
   final BehaviorSubject _searchFileSubject = BehaviorSubject();
 
   getArchiveNoteAPIData({
-    @required String id,
+    required String? id,
   }) async {
     dynamic response = await _apiRepository.getArchiveNoteAPIData(
       id: id,
@@ -27,9 +27,9 @@ class DMSCrudNoteBloc {
   }
 
   getCopyNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
-    @required String userId,
+    required String? sourceId,
+    required String? targetId,
+    required String userId,
   }) async {
     dynamic response = await _apiRepository.getCopyNoteAPIData(
       sourceId: sourceId,
@@ -41,9 +41,9 @@ class DMSCrudNoteBloc {
   }
 
   getCreateNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
-    @required String userId,
+    required String sourceId,
+    required String targetId,
+    required String userId,
   }) async {
     dynamic response = await _apiRepository.getCreateNoteAPIData(
       sourceId: sourceId,
@@ -55,7 +55,7 @@ class DMSCrudNoteBloc {
   }
 
   getDeleteNoteAPIData({
-    @required String id,
+    required String? id,
   }) async {
     dynamic response = await _apiRepository.getDeleteNoteAPIData(
       id: id,
@@ -65,8 +65,8 @@ class DMSCrudNoteBloc {
   }
 
   getMoveNoteAPIData({
-    @required String sourceId,
-    @required String targetId,
+    required String? sourceId,
+    required String? targetId,
   }) async {
     dynamic response = await _apiRepository.getMoveNoteAPIData(
       sourceId: sourceId,
@@ -77,7 +77,7 @@ class DMSCrudNoteBloc {
   }
 
   getRenameFilesAPIData({
-    @required DmsPostModel model,
+    required DmsPostModel model,
   }) async {
     dynamic response = await _apiRepository.getRenameFilesAPIData(
       model: model,
@@ -87,7 +87,7 @@ class DMSCrudNoteBloc {
   }
 
   postSearchFilesAPIData({
-    @required DmsPostModel model,
+    required DmsPostModel model,
   }) async {
     dynamic response = await _apiRepository.postSearchFilesAPIData(
       model: model,

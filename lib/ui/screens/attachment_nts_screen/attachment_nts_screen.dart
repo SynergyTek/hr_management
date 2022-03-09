@@ -8,12 +8,12 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widgets/attachment_nts_body_widget.dart';
 
 class AttachmentNTSScreen extends StatelessWidget {
-  final NTSType ntsType;
-  final String ntsId;
+  final NTSType? ntsType;
+  final String? ntsId;
 
   const AttachmentNTSScreen({
-    @required this.ntsType,
-    @required this.ntsId,
+    required this.ntsType,
+    required this.ntsId,
   });
 
   @override

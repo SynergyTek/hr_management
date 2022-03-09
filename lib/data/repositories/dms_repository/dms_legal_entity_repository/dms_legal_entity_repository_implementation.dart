@@ -6,7 +6,7 @@ class DMSLegalEntityRepository extends AbstractDMSLegalEntityRepository {
   final Dio _dio = Dio();
 
   Future<DMSLegalEntityResponse> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -19,7 +19,7 @@ class DMSLegalEntityRepository extends AbstractDMSLegalEntityRepository {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return DMSLegalEntityResponse.withError(err);
+      return DMSLegalEntityResponse.withError(err.toString());
     }
   }
 }

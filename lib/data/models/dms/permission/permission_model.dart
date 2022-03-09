@@ -1,45 +1,45 @@
 import 'dart:convert';
 
 class Permission {
-  String userPermissionGroup;
-  bool disablePermissionInheritance;
-  String principal;
-  String workspaceId;
-  String parentId;
-  String documentName;
-  bool isDocument;
-  String referenceId;
-  bool isOwner;
-  bool isSelfWorkspace;
-  bool isWorkspaceAdmin;
-  String folderType;
-  bool canManagePermission;
-  int permissionType;
-  int access;
-  int appliesTo;
-  String noteId;
-  String ntsNote;
-  String permittedUserId;
-  String user;
-  String permittedUserGroupId;
-  String userGroup;
-  bool isowner;
-  bool isInherited;
-  bool isInheritedFromChild;
-  String inheritedFrom;
-  String id;
-  String createdDate;
-  String createdBy;
-  String lastUpdatedDate;
-  String lastUpdatedBy;
-  bool isDeleted;
-  int sequenceOrder;
-  String companyId;
-  String legalEntityId;
-  int dataAction;
-  int status;
-  int versionNo;
-  String portalId;
+  String? userPermissionGroup;
+  bool? disablePermissionInheritance;
+  String? principal;
+  String? workspaceId;
+  String? parentId;
+  String? documentName;
+  bool? isDocument;
+  String? referenceId;
+  bool? isOwner;
+  bool? isSelfWorkspace;
+  bool? isWorkspaceAdmin;
+  String? folderType;
+  bool? canManagePermission;
+  int? permissionType;
+  int? access;
+  int? appliesTo;
+  String? noteId;
+  String? ntsNote;
+  String? permittedUserId;
+  String? user;
+  String? permittedUserGroupId;
+  String? userGroup;
+  bool? isowner;
+  bool? isInherited;
+  bool? isInheritedFromChild;
+  String? inheritedFrom;
+  String? id;
+  String? createdDate;
+  String? createdBy;
+  String? lastUpdatedDate;
+  String? lastUpdatedBy;
+  bool? isDeleted;
+  int? sequenceOrder;
+  String? companyId;
+  String? legalEntityId;
+  int? dataAction;
+  int? status;
+  int? versionNo;
+  String? portalId;
 
   Permission(
       {this.userPermissionGroup,
@@ -186,15 +186,15 @@ class PermissionSubmitModel {
         this.dataAction,
     });
 
-    int permissionType;
-    int access;
-    int appliesTo;
-    String noteId;
+    int? permissionType;
+    int? access;
+    int? appliesTo;
+    String? noteId;
     dynamic permittedUserId;
     dynamic permittedUserGroupId;
     dynamic id;
     dynamic legalEntityId;
-    String dataAction;
+    String? dataAction;
 
     factory PermissionSubmitModel.fromJson(Map<String, dynamic> json) => PermissionSubmitModel(
         permissionType: json["PermissionType"],

@@ -20,7 +20,7 @@ import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../../../themes/theme_config.dart';
 
 class DMSManageWorkspaceBodyWidget extends StatefulWidget {
-  final String parentWorkspaceId;
+  final String? parentWorkspaceId;
 
   DMSManageWorkspaceBodyWidget({
     this.parentWorkspaceId,
@@ -34,7 +34,7 @@ class DMSManageWorkspaceBodyWidget extends StatefulWidget {
 class _DMSManageWorkspaceBodyWidgetState
     extends State<DMSManageWorkspaceBodyWidget> {
   //
-  DMSLegalEntityModel _selectedLegalEntityData;
+  DMSLegalEntityModel? _selectedLegalEntityData;
 
   TextEditingController _workspaceNameTextEditingController =
       TextEditingController();
@@ -53,17 +53,17 @@ class _DMSManageWorkspaceBodyWidgetState
     // Use case: Creating a new workspace.
     return WorkspaceViewModel(
       activeUserId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       dataAction: widget.parentWorkspaceId != null ? "Edit" : "Create",
       documentTypeId: _getDocumentTypeIdList(),
       legalEntityId: _selectedLegalEntityData?.id ?? "",
       ownerUserId:
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "",
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       // ! TODO: no data found for parent workspace in the metadata API while editing in use case.
       parentNoteId: _selectedParentWorkspace?.id ?? "",
-      sequenceOrder: _sequenceOrderTextEditingController?.text ?? "",
+      sequenceOrder: _sequenceOrderTextEditingController.text ?? "",
       workspaceName:
-          _workspaceNameTextEditingController?.text ?? "Default Workspace Name",
+          _workspaceNameTextEditingController.text ?? "Default Workspace Name",
 
       id: _workspaceId ?? "",
     ).toJson();
@@ -72,7 +72,7 @@ class _DMSManageWorkspaceBodyWidgetState
   @override
   Widget build(BuildContext context) {
     // Use case: When editing a new workspace
-    if (widget?.parentWorkspaceId != null)
+    if (widget.parentWorkspaceId != null)
       return Container(
         padding: DEFAULT_PADDING,
         child: FutureBuilder(
@@ -103,7 +103,7 @@ class _DMSManageWorkspaceBodyWidgetState
                         },
                       ),
                       builder: (BuildContext context,
-                          AsyncSnapshot<WorkspaceViewModel>
+                          AsyncSnapshot<WorkspaceViewModel?>
                               workspaceViewSnapshot) {
                         if (workspaceViewSnapshot.hasError) {
                           return Center(
@@ -113,9 +113,9 @@ class _DMSManageWorkspaceBodyWidgetState
                         } else if (workspaceViewSnapshot.hasData) {
                           _handleEditWorkspace(
                             dmsLegalEntityMetadata:
-                                legalEntitySnapshot?.data?.data ?? [],
+                                legalEntitySnapshot.data?.data ?? [],
                             dmsDocumentTypeMetadata:
-                                documentTypeSnapshot?.data?.data ?? [],
+                                documentTypeSnapshot.data?.data ?? [],
                             dmsWorkspaceMetadata: workspaceViewSnapshot.data,
                           );
 
@@ -205,7 +205,7 @@ class _DMSManageWorkspaceBodyWidgetState
       title: Text("Legal Entity"),
       trailing: Text(
         _selectedLegalEntityData?.name ?? "Select",
-        style: Theme.of(context).textTheme.headline6.copyWith(
+        style: Theme.of(context).textTheme.headline6!.copyWith(
               color: Theme.of(context).textHeadingColor,
               fontWeight: FontWeight.bold,
               fontSize: 16.0,
@@ -245,12 +245,12 @@ class _DMSManageWorkspaceBodyWidgetState
       ),
       subtitle: _selectedParentWorkspace?.name == null
           ? Container()
-          : Text(_selectedParentWorkspace.name),
+          : Text(_selectedParentWorkspace!.name!),
       onTap: () => _handleParentWorkspaceOnTap(),
     );
   }
 
-  DMSParentWorkspaceIdNameListModel _selectedParentWorkspace =
+  DMSParentWorkspaceIdNameListModel? _selectedParentWorkspace =
       DMSParentWorkspaceIdNameListModel();
   void _handleParentWorkspaceOnTap() async {
     _selectedParentWorkspace = await Navigator.of(context).push(
@@ -291,12 +291,12 @@ class _DMSManageWorkspaceBodyWidgetState
       title: Text("Document Type"),
       subtitle: _handleDocumentTypeChips(),
       trailing: _selectedDocumentTypeMap != null &&
-              _selectedDocumentTypeMap.keys.length > 0
+              _selectedDocumentTypeMap!.keys.length > 0
           ? CircleAvatar(
               backgroundColor: Theme.of(context).textHeadingColor,
               foregroundColor: Colors.white,
               child: Text(
-                _selectedDocumentTypeMap?.keys?.length.toString() ?? '-',
+                _selectedDocumentTypeMap?.keys.length.toString() ?? '-',
               ),
             )
           : Icon(
@@ -309,7 +309,7 @@ class _DMSManageWorkspaceBodyWidgetState
   Widget _handleDocumentTypeChips() {
     // Guard clause
     if (_selectedDocumentTypeMap == null ||
-        _selectedDocumentTypeMap.keys.length == 0) {
+        _selectedDocumentTypeMap!.keys.length == 0) {
       return Container();
     }
 
@@ -322,13 +322,13 @@ class _DMSManageWorkspaceBodyWidgetState
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         children: List.generate(
-          _selectedDocumentTypeMap.keys.length,
+          _selectedDocumentTypeMap!.keys.length,
           (index) => Container(
             padding: const EdgeInsets.only(right: 4.0),
             child: Chip(
               // backgroundColor: Theme.of(context).textHeadingColor,
               label: Text(
-                _selectedDocumentTypeMap.keys.elementAt(index) ?? "",
+                _selectedDocumentTypeMap!.keys.elementAt(index) ?? "",
                 style: TextStyle(
                   fontSize: 12,
                   // color: Colors.white,
@@ -341,7 +341,7 @@ class _DMSManageWorkspaceBodyWidgetState
     );
   }
 
-  Map<String, DMSDocumentTypeModel> _selectedDocumentTypeMap = Map();
+  Map<String?, DMSDocumentTypeModel>? _selectedDocumentTypeMap = Map();
 
   void _handleDocumentTypeOnTap() async {
     _selectedDocumentTypeMap = await Navigator.of(context).push(
@@ -377,7 +377,7 @@ class _DMSManageWorkspaceBodyWidgetState
   }
 
   Widget _textField({
-    @required TextEditingController controller,
+    required TextEditingController controller,
     bool obscureText = false,
     keyboardType = TextInputType.text,
   }) {
@@ -404,7 +404,7 @@ class _DMSManageWorkspaceBodyWidgetState
       return;
     }
 
-    if (_workspaceNameTextEditingController?.text == null ||
+    if (_workspaceNameTextEditingController.text == null ||
         _workspaceNameTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Workspace Name cannot be null or empty.")),
@@ -413,14 +413,14 @@ class _DMSManageWorkspaceBodyWidgetState
     }
 
     if (_selectedDocumentTypeMap == null ||
-        _selectedDocumentTypeMap.keys.isEmpty) {
+        _selectedDocumentTypeMap!.keys.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Document type cannot be null or empty.")),
       );
       return;
     }
 
-    if (_sequenceOrderTextEditingController?.text == null ||
+    if (_sequenceOrderTextEditingController.text == null ||
         _sequenceOrderTextEditingController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Sequence Order cannot be null or empty.")),
@@ -432,7 +432,7 @@ class _DMSManageWorkspaceBodyWidgetState
       queryparams: _handleQueryParams(),
     );
 
-    String message = "Workspace couldn't be created, try again later.";
+    String? message = "Workspace couldn't be created, try again later.";
 
     if (response != null) {
       if (response['success'] == true) {
@@ -445,7 +445,7 @@ class _DMSManageWorkspaceBodyWidgetState
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message!),
       ),
     );
 
@@ -468,13 +468,13 @@ class _DMSManageWorkspaceBodyWidgetState
   }
 
   /// Helper function to handle all document type list for queryparams.
-  List<String> _getDocumentTypeIdList() {
+  List<String?> _getDocumentTypeIdList() {
     if (_selectedDocumentTypeMap == null ||
-        _selectedDocumentTypeMap.values.isEmpty) return [];
+        _selectedDocumentTypeMap!.values.isEmpty) return [];
 
-    List<String> _list = [];
+    List<String?> _list = [];
 
-    _selectedDocumentTypeMap.values.forEach((element) {
+    _selectedDocumentTypeMap!.values.forEach((element) {
       _list.add(element.id);
     });
 
@@ -486,9 +486,9 @@ class _DMSManageWorkspaceBodyWidgetState
   /// * edit mode,
   /// and the UI needs to pre-fill all the existing values.
   void _handleEditWorkspace({
-    List<DMSLegalEntityModel> dmsLegalEntityMetadata,
-    List<DMSDocumentTypeModel> dmsDocumentTypeMetadata,
-    WorkspaceViewModel dmsWorkspaceMetadata,
+    List<DMSLegalEntityModel>? dmsLegalEntityMetadata,
+    List<DMSDocumentTypeModel>? dmsDocumentTypeMetadata,
+    WorkspaceViewModel? dmsWorkspaceMetadata,
   }) {
     if (widget.parentWorkspaceId != null) {
       if (dmsWorkspaceMetadata != null) {
@@ -496,7 +496,7 @@ class _DMSManageWorkspaceBodyWidgetState
         // Legal entity
         if (dmsLegalEntityMetadata != null) {
           dmsLegalEntityMetadata.forEach((element) {
-            if (element.id == dmsWorkspaceMetadata?.legalEntityId) {
+            if (element.id == dmsWorkspaceMetadata.legalEntityId) {
               _selectedLegalEntityData = element;
             }
           });
@@ -510,13 +510,13 @@ class _DMSManageWorkspaceBodyWidgetState
 
         // Document Type:
         if (dmsDocumentTypeMetadata != null &&
-            dmsWorkspaceMetadata?.documentTypeId != null &&
-            dmsWorkspaceMetadata.documentTypeId.isNotEmpty) {
+            dmsWorkspaceMetadata.documentTypeId != null &&
+            dmsWorkspaceMetadata.documentTypeId!.isNotEmpty) {
           dmsDocumentTypeMetadata.forEach((element) {
-            dmsWorkspaceMetadata.documentTypeId
+            dmsWorkspaceMetadata.documentTypeId!
                 .forEach((eachMetadataDocumentId) {
               if (element.id == eachMetadataDocumentId) {
-                _selectedDocumentTypeMap[element.displayName] = element;
+                _selectedDocumentTypeMap![element.displayName] = element;
               }
             });
           });
@@ -524,13 +524,13 @@ class _DMSManageWorkspaceBodyWidgetState
 
         // Workspace name:
         _workspaceNameTextEditingController.text =
-            dmsWorkspaceMetadata?.workspaceName ?? "";
+            dmsWorkspaceMetadata.workspaceName ?? "";
 
         // Sequence Order:
         _sequenceOrderTextEditingController.text =
-            dmsWorkspaceMetadata?.sequenceOrder ?? "";
+            dmsWorkspaceMetadata.sequenceOrder ?? "";
 
-        _workspaceId = dmsWorkspaceMetadata?.id ?? "";
+        _workspaceId = dmsWorkspaceMetadata.id ?? "";
       }
     }
   }

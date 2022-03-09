@@ -1,23 +1,23 @@
 class NTSTemplateTreeListModel {
-  String id;
-  String name;
-  String displayName;
-  String parentId;
-  bool hasChildren;
-  bool expanded;
-  String type;
-  String portalId;
-  String rootId;
-  int itemLevel;
-  bool checked;
-  String url;
-  String userRoleId;
-  String statusCode;
-  String statusCodeStr;
-  String templateType;
-  String templateTypeText;
-  String fieldDataType;
-  List<TreeViewModelChildren> treeViewModelChildren;
+  String? id;
+  String? name;
+  String? displayName;
+  String? parentId;
+  bool? hasChildren;
+  bool? expanded;
+  String? type;
+  String? portalId;
+  String? rootId;
+  int? itemLevel;
+  bool? checked;
+  String? url;
+  String? userRoleId;
+  String? statusCode;
+  String? statusCodeStr;
+  String? templateType;
+  String? templateTypeText;
+  String? fieldDataType;
+  List<TreeViewModelChildren>? treeViewModelChildren;
 
   NTSTemplateTreeListModel({
     this.id,
@@ -63,7 +63,7 @@ class NTSTemplateTreeListModel {
     if (json['treeViewModelChildren'] != null) {
       treeViewModelChildren = [];
       json['treeViewModelChildren'].forEach((v) {
-        treeViewModelChildren.add(new TreeViewModelChildren.fromJson(v));
+        treeViewModelChildren!.add(new TreeViewModelChildren.fromJson(v));
       });
     }
   }
@@ -90,32 +90,32 @@ class NTSTemplateTreeListModel {
     data['FieldDataType'] = this.fieldDataType;
     if (this.treeViewModelChildren != null) {
       data['treeViewModelChildren'] =
-          this.treeViewModelChildren.map((v) => v.toJson()).toList();
+          this.treeViewModelChildren!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class TreeViewModelChildren {
-  String id;
-  String name;
-  String displayName;
-  String parentId;
-  bool hasChildren;
-  bool expanded;
-  String type;
-  String portalId;
-  String rootId;
-  int itemLevel;
-  bool checked;
-  String url;
-  String userRoleId;
-  String statusCode;
-  String statusCodeStr;
-  int templateType;
-  String templateTypeText;
-  String fieldDataType;
-  String treeViewModelChildren;
+  String? id;
+  String? name;
+  String? displayName;
+  String? parentId;
+  bool? hasChildren;
+  bool? expanded;
+  String? type;
+  String? portalId;
+  String? rootId;
+  int? itemLevel;
+  bool? checked;
+  String? url;
+  String? userRoleId;
+  String? statusCode;
+  String? statusCodeStr;
+  int? templateType;
+  String? templateTypeText;
+  String? fieldDataType;
+  String? treeViewModelChildren;
 
   TreeViewModelChildren({
     this.id,

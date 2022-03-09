@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import '../../../../data/models/service_models/service.dart';
 import '../../../../data/models/service_models/service_response.dart';
@@ -15,7 +15,7 @@ import '../../../widgets/progress_indicator.dart';
 import 'widget/leave_details_bottom_sheet_widget.dart';
 
 class DisplayLeavesBody extends StatefulWidget {
-  DisplayLeavesBody({Key key}) : super(key: key);
+  DisplayLeavesBody({Key? key}) : super(key: key);
 
   @override
   _DisplayLeavesBodyState createState() => _DisplayLeavesBodyState();
@@ -30,9 +30,9 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
     serviceBloc
       ..getLeavesDetails(queryparams: {
         'userid':
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         'userId':
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       });
     super.initState();
   }
@@ -41,16 +41,16 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
-      child: StreamBuilder<ServiceListResponse>(
+      child: StreamBuilder<ServiceListResponse?>(
           stream: serviceBloc.subjectServiceList.stream,
-          builder: (context, AsyncSnapshot<ServiceListResponse> snapshot) {
+          builder: (context, AsyncSnapshot<ServiceListResponse?> snapshot) {
             print("Snapshot data: ${snapshot.data}");
             if (snapshot.hasData) {
-              if (snapshot.data.list == null ||
-                  snapshot.data.list.length == 0) {
+              if (snapshot.data!.list == null ||
+                  snapshot.data!.list!.length == 0) {
                 return EmptyListWidget();
               }
-              _serviceList = snapshot.data.list.reversed.toList();
+              _serviceList = snapshot.data!.list!.reversed.toList();
               return Listizer(
                 listItems: _serviceList,
                 filteredSearchList: _filteredServiceList,
@@ -65,7 +65,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                         tileColor: Theme.of(context).notInvertedColor,
                         title: Text(
                           _serviceList[index].serviceSubject != null
-                              ? _serviceList[index].serviceSubject
+                              ? _serviceList[index].serviceSubject!
                               : "",
                           maxLines: 2,
                           style: Theme.of(context).textTheme.headline6,
@@ -81,7 +81,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                     Row(children: <Widget>[
                                       Text("Service No: "),
                                       Text(_serviceList[index].serviceNo != null
-                                          ? _serviceList[index].serviceNo
+                                          ? _serviceList[index].serviceNo!
                                           : "-"),
                                     ])
                                   ]),
@@ -100,7 +100,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                       _serviceList[index].formattedStartDate !=
                                               null
                                           ? _serviceList[index]
-                                              .formattedStartDate
+                                              .formattedStartDate!
                                           : "",
                                       style: TextStyle(color: Colors.blue[700]),
                                     ),
@@ -113,7 +113,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                     Text(
                                       _serviceList[index].formattedEndDate !=
                                               null
-                                          ? _serviceList[index].formattedEndDate
+                                          ? _serviceList[index].formattedEndDate!
                                           : "",
                                       style: TextStyle(color: Colors.blue),
                                     ),

@@ -1,8 +1,8 @@
 import 'help_desk_dashboard_model.dart';
 
 class HelpDeskDashboardResponse {
-  HelpDeskDashboardModel data;
-  String error;
+  HelpDeskDashboardModel? data;
+  String? error;
 
   HelpDeskDashboardResponse({this.data});
 

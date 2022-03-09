@@ -5,7 +5,7 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widget/task_list_body.dart';
 
 class TaskListScreen extends StatelessWidget {
-  const TaskListScreen({Key key}) : super(key: key);
+  const TaskListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

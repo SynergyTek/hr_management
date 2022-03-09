@@ -1,7 +1,7 @@
 class PostResponse {
-  bool isSuccess;
+  bool? isSuccess;
   dynamic item;
-  String messages;
+  String? messages;
   dynamic data;
 
   PostResponse();

@@ -6,7 +6,7 @@ class TaskRepository extends AbstractTaskRepository {
   final Dio _dio = Dio();
 
   Future<TaskListResponseModel> getTaskHomeListData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_TASK_HOME_DATA;
 
@@ -28,7 +28,7 @@ class TaskRepository extends AbstractTaskRepository {
   }
 
   Future<TaskResponseModel> getTaskDetailsData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_TASK_DETAILS;
 
@@ -51,9 +51,9 @@ class TaskRepository extends AbstractTaskRepository {
   }
 
   Future<TaskListResponseModel> getTaskDashBoardData({
-    Map<String, dynamic> queryparams,
-    String taskListStatus,
-    String requestBy,
+    Map<String, dynamic>? queryparams,
+    String? taskListStatus,
+    String? requestBy,
   }) async {
     String endpoint = '';
     if (taskListStatus == 'InProgress') {
@@ -84,7 +84,7 @@ class TaskRepository extends AbstractTaskRepository {
   }
 
   Future<TaskListResponseModel> loadServiceAdhocTaskData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.LOAD_SERVICE_ADHOC_TASK_DATA;
 
@@ -107,21 +107,21 @@ class TaskRepository extends AbstractTaskRepository {
   }
 
   @override
-  Future<TaskResponseModel> deleteAPIData({Map<String, dynamic> queryparams}) {
+  Future<TaskResponseModel> deleteAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
   Future<PostResponse> postAPIData({
-    Map<String, dynamic> queryparams,
-    @required TaskModel taskModel,
+    Map<String, dynamic>? queryparams,
+    required TaskModel taskModel,
   }) async {
     final String endpoint = APIEndpointConstants.MANAGE_TASK;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(taskModel.toJson()) ?? {},
+        data: jsonEncode(taskModel.toJson()) ,
       );
 
       var result = PostResponse.fromJson(
@@ -129,19 +129,19 @@ class TaskRepository extends AbstractTaskRepository {
       );
 
       if (taskModel.taskStatusCode == 'TASK_STATUS_DRAFT')
-        result.isSuccess
+        result.isSuccess!
             ? result.messages = 'Task saved as draft'
             : result.messages = 'Unable to save task';
       else if (taskModel.taskStatusCode == 'TASK_STATUS_INPROGRESS')
-        result.isSuccess
+        result.isSuccess!
             ? result.messages = 'Task submitted successfully'
             : result.messages = 'Unable to submit task';
       else if (taskModel.taskStatusCode == 'TASK_STATUS_COMPLETE')
-        result.isSuccess
+        result.isSuccess!
             ? result.messages = 'Task completed successfully'
             : result.messages = 'Unable to complete task';
       else if (taskModel.taskStatusCode == 'TASK_STATUS_REJECT')
-        result.isSuccess
+        result.isSuccess!
             ? result.messages = 'Task rejected successfully'
             : result.messages = 'Unable to reject task';
 
@@ -156,7 +156,7 @@ class TaskRepository extends AbstractTaskRepository {
   }
 
   @override
-  Future<TaskResponseModel> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<TaskResponseModel> putAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 }

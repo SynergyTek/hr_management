@@ -5,10 +5,10 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class BarChartWidget extends StatelessWidget {
   final List<BarSeries> series;
 
-  final Widget child;
+  final Widget? child;
 
   const BarChartWidget({
-    @required this.series,
+    required this.series,
     this.child,
   }) : assert(series != null);
 

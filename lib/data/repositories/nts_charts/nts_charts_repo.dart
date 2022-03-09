@@ -6,7 +6,7 @@ class NTSChartRepository extends AbstractNTSChartRepository {
   final Dio _dio = Dio();
 
   Future<ChartResponse> getChartByStatus(
-      {Map<String, dynamic> queryparams, NTSType ntsType})
+      {Map<String, dynamic>? queryparams, NTSType? ntsType})
   // Optional Params to be added to the request if required
   async {
     String endpoint = '';
@@ -39,8 +39,8 @@ class NTSChartRepository extends AbstractNTSChartRepository {
 
   @override
   Future<ChartResponse> getChartByUserType({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {
@@ -72,8 +72,8 @@ class NTSChartRepository extends AbstractNTSChartRepository {
 
   @override
   Future<ChartResponse> getDatewiseSLA({
-    Map<String, dynamic> queryparams,
-    NTSType ntsType,
+    Map<String, dynamic>? queryparams,
+    NTSType? ntsType,
   }) async {
     String endpoint = '';
     if (ntsType == NTSType.service) {

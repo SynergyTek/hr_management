@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/api_models/post_response_model.dart';
@@ -12,16 +14,16 @@ import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
 
 class ShareScreenBody extends StatefulWidget {
-  final NTSType ntsType;
-  final String ntsId;
+  final NTSType? ntsType;
+  final String? ntsId;
 
-  const ShareScreenBody({Key key, this.ntsType, this.ntsId}) : super(key: key);
+  const ShareScreenBody({Key? key, this.ntsType, this.ntsId}) : super(key: key);
   @override
   _ShareScreenBodyState createState() => _ShareScreenBodyState();
 }
 
 class _ShareScreenBodyState extends State<ShareScreenBody> {
-  int selectedRadio;
+  int? selectedRadio;
   bool selectUser = false;
   bool selectTeam = false;
   User user = User();
@@ -78,9 +80,9 @@ class _ShareScreenBodyState extends State<ShareScreenBody> {
     );
   }
 
-  String resultMsg = '';
+  String? resultMsg = '';
   shareNTSPostRequest() async {
-    PostResponse response = PostResponse();
+    PostResponse? response = PostResponse();
     setState(() {
       isVisible = true;
     });
@@ -96,10 +98,10 @@ class _ShareScreenBodyState extends State<ShareScreenBody> {
         data.sharedWithUserId = '';
         data.sharedWithTeamId = team.id;
       }
-      response = await shareBloc.postNTSSharedData(
+      response = await (shareBloc.postNTSSharedData(
         serviceData: data,
         ntsType: widget.ntsType,
-      );
+      ) as FutureOr<PostResponse>);
     } else if (widget.ntsType == NTSType.task) {
       TaskSharePostModel data = TaskSharePostModel();
       data.ntsTaskId = widget.ntsId;
@@ -111,10 +113,10 @@ class _ShareScreenBodyState extends State<ShareScreenBody> {
         data.sharedWithUserId = '';
         data.sharedWithTeamId = team.id;
       }
-      response = await shareBloc.postNTSSharedData(
+      response = await (shareBloc.postNTSSharedData(
         taskData: data,
         ntsType: widget.ntsType,
-      );
+      ) as FutureOr<PostResponse>);
     } else if (widget.ntsType == NTSType.note) {
       NoteSharePostModel data = NoteSharePostModel();
       data.ntsNoteId = widget.ntsId;
@@ -126,12 +128,12 @@ class _ShareScreenBodyState extends State<ShareScreenBody> {
         data.sharedWithUserId = '';
         data.sharedWithTeamId = team.id;
       }
-      response = await shareBloc.postNTSSharedData(
+      response = await (shareBloc.postNTSSharedData(
         noteData: data,
         ntsType: widget.ntsType,
-      );
+      ) as FutureOr<PostResponse>);
     }
-    if (response.isSuccess) {
+    if (response.isSuccess!) {
       setState(() {
         isVisible = false;
       });
@@ -143,7 +145,7 @@ class _ShareScreenBodyState extends State<ShareScreenBody> {
       });
       resultMsg = response.messages;
     }
-    displaySnackBar(text: resultMsg, context: context);
+    displaySnackBar(text: resultMsg!, context: context);
   }
 
   _userDropDown() {
@@ -158,7 +160,7 @@ class _ShareScreenBodyState extends State<ShareScreenBody> {
           isShowArrow: true,
           onListTap: (dynamic value) {
             user = value;
-            _userddController.text = user.name;
+            _userddController.text = user.name!;
             setState(() {});
           },
         ),
@@ -178,7 +180,7 @@ class _ShareScreenBodyState extends State<ShareScreenBody> {
           isShowArrow: true,
           onListTap: (dynamic value) {
             team = value;
-            _teamddController.text = team.name;
+            _teamddController.text = team.name!;
             setState(() {});
           },
         ),
@@ -186,13 +188,13 @@ class _ShareScreenBodyState extends State<ShareScreenBody> {
     );
   }
 
-  _listTile({int value, String title}) {
+  _listTile({int? value, required String title}) {
     return ListTile(
       leading: Radio(
         value: value,
         groupValue: selectedRadio,
         activeColor: Colors.blue[600],
-        onChanged: (val) {
+        onChanged: (dynamic val) {
           setState(() {
             selectedRadio = val;
             if (val == 1) {

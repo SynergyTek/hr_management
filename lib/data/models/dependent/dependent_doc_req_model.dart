@@ -27,19 +27,19 @@ class DependentDocReqListModel {
     this.createdDate,
   });
 
-  String documentType;
+  String? documentType;
   dynamic ownerName;
   dynamic expiryDate;
-  DateTime issueDate;
-  String templateCode;
-  String serviceNo;
-  String serviceId;
-  String status;
+  DateTime? issueDate;
+  String? templateCode;
+  String? serviceNo;
+  String? serviceId;
+  String? status;
   dynamic fileId;
   dynamic depNoteId;
   dynamic noteNo;
   dynamic noteId;
-  int documentCount;
+  int? documentCount;
   dynamic noteVersionNo;
   dynamic attachVersionNo;
   dynamic createdDate;
@@ -68,7 +68,7 @@ class DependentDocReqListModel {
         "DocumentType": documentType,
         "OwnerName": ownerName,
         "ExpiryDate": expiryDate,
-        "IssueDate": issueDate.toIso8601String(),
+        "IssueDate": issueDate!.toIso8601String(),
         "TemplateCode": templateCode,
         "ServiceNo": serviceNo,
         "ServiceId": serviceId,

@@ -6,8 +6,8 @@ class TreeView extends InheritedWidget {
   final bool startExpanded;
 
   TreeView({
-    Key key,
-    @required List<Widget> children,
+    Key? key,
+    required List<Widget> children,
     bool startExpanded = false,
   })  : this.children = children,
         this.startExpanded = startExpanded,
@@ -18,7 +18,7 @@ class TreeView extends InheritedWidget {
           ),
         );
 
-  static TreeView of(BuildContext context) {
+  static TreeView? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType();
   }
 
@@ -33,7 +33,7 @@ class TreeView extends InheritedWidget {
 }
 
 class _TreeViewData extends StatelessWidget {
-  final List<Widget> children;
+  final List<Widget>? children;
 
   const _TreeViewData({
     this.children,
@@ -43,26 +43,26 @@ class _TreeViewData extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: children.length,
+      itemCount: children!.length,
       itemBuilder: (context, index) {
-        return children.elementAt(index);
+        return children!.elementAt(index);
       },
     );
   }
 }
 
 class TreeViewChild extends StatefulWidget {
-  final bool startExpanded;
+  final bool? startExpanded;
   final Widget parent;
   final List<Widget> children;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   TreeViewChild({
-    @required this.parent,
-    @required this.children,
+    required this.parent,
+    required this.children,
     this.startExpanded,
     this.onTap,
-    Key key,
+    Key? key,
   }) : super(key: key) {
     assert(parent != null);
     assert(children != null);
@@ -73,10 +73,10 @@ class TreeViewChild extends StatefulWidget {
 
   TreeViewChild copyWith(
     TreeViewChild source, {
-    bool startExpanded,
-    Widget parent,
-    List<Widget> children,
-    VoidCallback onTap,
+    bool? startExpanded,
+    Widget? parent,
+    List<Widget>? children,
+    VoidCallback? onTap,
   }) {
     return TreeViewChild(
       parent: parent ?? source.parent,
@@ -88,7 +88,7 @@ class TreeViewChild extends StatefulWidget {
 }
 
 class TreeViewChildState extends State<TreeViewChild> {
-  bool isExpanded;
+  bool? isExpanded;
 
   @override
   void initState() {
@@ -98,7 +98,7 @@ class TreeViewChildState extends State<TreeViewChild> {
 
   @override
   void didChangeDependencies() {
-    isExpanded = widget.startExpanded ?? TreeView.of(context).startExpanded;
+    isExpanded = widget.startExpanded ?? TreeView.of(context)!.startExpanded;
     super.didChangeDependencies();
   }
 
@@ -113,7 +113,7 @@ class TreeViewChildState extends State<TreeViewChild> {
         ),
         AnimatedContainer(
           duration: Duration(milliseconds: 400),
-          child: isExpanded
+          child: isExpanded!
               ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: widget.children,
@@ -126,7 +126,7 @@ class TreeViewChildState extends State<TreeViewChild> {
 
   void toggleExpanded() {
     setState(() {
-      this.isExpanded = !this.isExpanded;
+      this.isExpanded = !this.isExpanded!;
     });
   }
 }

@@ -1,14 +1,14 @@
 part of 'location_bloc.dart';
 
 abstract class LocationState extends Equatable {
-  final LocationData locationData;
+  final LocationData? locationData;
 
   const LocationState({
     this.locationData,
   });
 
   @override
-  List<Object> get props => [locationData];
+  List<Object?> get props => [locationData!.latitude, locationData!.longitude];
 }
 
 class LocationInitialState extends LocationState {}
@@ -19,7 +19,7 @@ class LocationLoadSuccessState extends LocationState {
   final LocationData locationData;
 
   LocationLoadSuccessState({
-    @required this.locationData,
+    required this.locationData,
   });
 }
 

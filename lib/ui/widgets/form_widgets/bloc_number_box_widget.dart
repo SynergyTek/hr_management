@@ -3,18 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class BlocNumberBoxWidget extends StatelessWidget {
-  final String labelName;
-  final String fieldName;
-  final bool readonly;
-  final TextFieldBloc textFieldBloc;
-  final ValueChanged<String> updateValue;
-  final TextInputType keyboardType;
-  final Widget prefixIcon;
-  final Iterable<String> autofillHints;
-  final SuffixButton suffixButton;
-  final bool decimal;
-  final TextAlign textAlign;
-  final Function onChanged;
+  final String? labelName;
+  final String? fieldName;
+  final bool? readonly;
+  final TextFieldBloc? textFieldBloc;
+  final ValueChanged<String>? updateValue;
+  final TextInputType? keyboardType;
+  final Widget? prefixIcon;
+  final Iterable<String>? autofillHints;
+  final SuffixButton? suffixButton;
+  final bool? decimal;
+  final TextAlign? textAlign;
+  final Function? onChanged;
 
   const BlocNumberBoxWidget(
       {this.labelName,
@@ -35,9 +35,9 @@ class BlocNumberBoxWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 0.0),
       child: TextFieldBlocBuilder(
-        key: Key(fieldName),
-        textFieldBloc: textFieldBloc,
-        readOnly: readonly,
+        key: Key(fieldName!),
+        textFieldBloc: textFieldBloc!,
+        readOnly: readonly!,
         suffixButton: suffixButton,
         textAlign: textAlign ?? TextAlign.left,
         textInputAction: TextInputAction.done,
@@ -63,7 +63,7 @@ class BlocNumberBoxWidget extends StatelessWidget {
               new RegExp('^\$|^(0|([1-9][0-9]{0,}))?\$'))
           // new RegExp('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$'))
         ],
-        onChanged: onChanged,
+        onChanged: onChanged as void Function(String)?,
       ),
     );
   }

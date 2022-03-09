@@ -9,16 +9,16 @@ import '../../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import 'task_list_tile.dart';
 
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskDashboardList extends StatefulWidget {
-  final String taskListStatus;
-  final bool onTap;
-  TaskDashboardList({Key key, this.taskListStatus, this.onTap})
+  final String? taskListStatus;
+  final bool? onTap;
+  TaskDashboardList({Key? key, this.taskListStatus, this.onTap})
       : super(key: key);
 
   @override
@@ -26,16 +26,16 @@ class TaskDashboardList extends StatefulWidget {
 }
 
 class _TaskDashboardListState extends State<TaskDashboardList> {
-  List<TaskListModel> _taskList = [];
+  List<TaskListModel>? _taskList = [];
   List<TaskListModel> _filteredTaskList = [];
   TextEditingController subjectController = TextEditingController();
-  FilterListTapCallBack filterData;
-  String text;
+  FilterListTapCallBack? filterData;
+  String? text;
 
-  String userId;
-  String taskStatusIds;
-  String taskAssigneeIds;
-  String taskOwnerIds;
+  String? userId;
+  String? taskStatusIds;
+  String? taskAssigneeIds;
+  String? taskOwnerIds;
 
   @override
   void initState() {
@@ -49,9 +49,9 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
     Map<String, dynamic> queryparams = Map();
     if (widget.taskListStatus != null) {
       queryparams['userid'] =
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
       queryparams['userId'] =
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
       if (taskStatusIds != null) queryparams['TaskStatusIds'] = taskStatusIds;
       if (taskAssigneeIds != null)
@@ -68,9 +68,9 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
         );
     } else {
       queryparams['userid'] =
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
       queryparams['userId'] =
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
       if (taskStatusIds != null) queryparams['TaskStatusIds'] = taskStatusIds;
       if (taskAssigneeIds != null)
@@ -102,7 +102,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
                 title: _searchField(),
               ),
         Expanded(
-          child: StreamBuilder<TaskListResponseModel>(
+          child: StreamBuilder<TaskListResponseModel?>(
             stream: taskBloc.subjectTaskList.stream,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
@@ -247,8 +247,8 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
   }
 
   customButton({
-    String buttonText,
-    Function handleOnPressed,
+    required String buttonText,
+    Function? handleOnPressed,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -262,7 +262,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
             ),
           ),
         ),
-        onPressed: () => handleOnPressed(),
+        onPressed: () => handleOnPressed!(),
         child: Text(buttonText),
       ),
     );

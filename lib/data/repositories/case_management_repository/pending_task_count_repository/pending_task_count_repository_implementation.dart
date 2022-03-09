@@ -4,7 +4,7 @@ class PendingTaskCountRepository extends AbstractPendingTaskCountRepository {
   final Dio _dio = Dio();
 
   Future<CaseManagementResponse> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     //
     String endpoint = APIEndpointConstants.GET_PENDING_TASK_COUNTS;
@@ -24,21 +24,21 @@ class PendingTaskCountRepository extends AbstractPendingTaskCountRepository {
 
   @override
   Future<bool> deleteAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     throw UnimplementedError();
   }
 
   @override
   Future<CaseManagementResponse> postAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }
 
   @override
   Future<CaseManagementResponse> putAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) {
     throw UnimplementedError();
   }

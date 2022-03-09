@@ -1,26 +1,23 @@
 part of 'attachment_nts_repository.dart';
 
-/// API Repository defines https client object, and our network call methods
-/// which will be used to fetch data from Apis will map the JSON to its model.
 class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
   final Dio _dio = Dio();
 
   Future<AttachmentNTSResponse> getAPIData({
-    @required NTSType ntsType,
-    @required String ntsId,
+    required NTSType? ntsType,
+    required String? ntsId,
   }) async {
-    //
     String endpoint = "";
 
     if (ntsType == NTSType.note) {
-      endpoint = APIEndpointConstants.GET_NOTE_ATTACHMENT + '?noteId=' + ntsId;
+      endpoint = APIEndpointConstants.GET_NOTE_ATTACHMENT + '?noteId=' + ntsId!;
     }
     if (ntsType == NTSType.task) {
-      endpoint = APIEndpointConstants.GET_TASK_ATTACHMENT + '?taskId=' + ntsId;
+      endpoint = APIEndpointConstants.GET_TASK_ATTACHMENT + '?taskId=' + ntsId!;
     }
     if (ntsType == NTSType.service) {
       endpoint =
-          APIEndpointConstants.GET_SERVICE_ATTACHMENT + '?serviceId=' + ntsId;
+          APIEndpointConstants.GET_SERVICE_ATTACHMENT + '?serviceId=' + ntsId!;
     }
 
     try {
@@ -40,8 +37,8 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
   }
 
   @override
-  Future<bool> deleteAPIData({
-    Map<String, dynamic> queryparams,
+  Future<bool?> deleteAPIData({
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.DELETE_NTS_ATTACHMENT;
 
@@ -51,7 +48,7 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
         queryParameters: queryparams,
       );
 
-      return response.data as bool;
+      return response.data as bool?;
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
 
@@ -59,18 +56,17 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
     }
   }
 
-  
   @override
   Future<Response<dynamic>> postAttachmentData({
-    Map<String, dynamic> queryparams,
-    @required Attachment attachmentData,
+    Map<String, dynamic>? queryparams,
+    required Attachment attachmentData,
   }) async {
     final String endpoint = APIEndpointConstants.FILE_UPLOAD_ATTACHMENT;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(attachmentData.toJson()) ?? {},
+        data: jsonEncode(attachmentData.toJson()),
       );
 
       print("response: ${response.data}");
@@ -86,15 +82,7 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return err;
+      return Future.error(err);
     }
-  }
-
-
-  @override
-  Future<AttachmentNTSResponse> putAPIData({
-    Map<String, dynamic> queryparams,
-  }) {
-    throw UnimplementedError();
   }
 }

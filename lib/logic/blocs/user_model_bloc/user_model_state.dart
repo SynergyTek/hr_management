@@ -1,20 +1,20 @@
 part of 'user_model_bloc.dart';
 
 abstract class UserModelState extends Equatable {
-  final LoginResponseModel userModel;
+  final LoginResponseModel? userModel;
 
   const UserModelState({
     this.userModel,
   });
 
   @override
-  List<Object> get props => [userModel];
+  List<Object> get props => [userModel!];
 }
 
 class UserModelUserDefinedState extends UserModelState {
-  final LoginResponseModel userModel;
+  final LoginResponseModel? userModel;
 
   const UserModelUserDefinedState({
-    @required this.userModel,
+    this.userModel,
   });
 }

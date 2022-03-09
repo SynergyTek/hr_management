@@ -7,9 +7,9 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 
 class ParentWorkspaceIdNameListBodyWidget extends StatefulWidget {
-  final DMSParentWorkspaceIdNameListModel data;
+  final DMSParentWorkspaceIdNameListModel? data;
   ParentWorkspaceIdNameListBodyWidget({
-    @required this.data,
+    required this.data,
   });
 
   @override
@@ -43,7 +43,7 @@ class _ParentWorkspaceIdNameListBodyWidgetState
                 );
               }
 
-              return _bodyWidget(snapshot?.data?.data ?? []);
+              return _bodyWidget(snapshot.data?.data ?? []);
             } else {
               return CustomProgressIndicator();
             }
@@ -111,13 +111,13 @@ class _ParentWorkspaceIdNameListBodyWidgetState
   // }
 
   Widget _eachListTile({
-    @required DMSParentWorkspaceIdNameListModel data,
+    required DMSParentWorkspaceIdNameListModel data,
   }) {
     return ListTile(
       leading: Icon(Icons.list_outlined),
-      trailing: (widget?.data?.name != null &&
-              data?.name != null &&
-              widget.data.name == data.name)
+      trailing: (widget.data?.name != null &&
+              data.name != null &&
+              widget.data!.name == data.name)
           ? Icon(
               Icons.check_box,
               color: Theme.of(context).textHeadingColor,
@@ -128,8 +128,8 @@ class _ParentWorkspaceIdNameListBodyWidgetState
               height: 0,
             ),
       title: Text(
-        data.name != null ? data.name : "NA",
-        style: Theme.of(context).textTheme.bodyText1.copyWith(
+        data.name != null ? data.name! : "NA",
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
               color: Colors.black87,
             ),
       ),

@@ -6,7 +6,7 @@ class NTSTemplateRepository extends AbstractNTSTemplateRepository {
   final Dio _dio = Dio();
 
   Future<NTSTemplateResponse> getAPIData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     String endpoint = APIEndpointConstants.GET_ALLOWED_TEMPLATES;
 
@@ -28,19 +28,19 @@ class NTSTemplateRepository extends AbstractNTSTemplateRepository {
 
   @override
   Future<NTSTemplateResponse> deleteAPIData(
-      {Map<String, dynamic> queryparams}) {
+      {Map<String, dynamic>? queryparams}) {
     // TODO: implement deleteAPIData
     throw UnimplementedError();
   }
 
   @override
-  Future<NTSTemplateResponse> postAPIData({Map<String, dynamic> queryparams}) {
+  Future<NTSTemplateResponse> postAPIData({Map<String, dynamic>? queryparams}) {
     // TODO: implement postAPIData
     throw UnimplementedError();
   }
 
   @override
-  Future<NTSTemplateResponse> putAPIData({Map<String, dynamic> queryparams}) {
+  Future<NTSTemplateResponse> putAPIData({Map<String, dynamic>? queryparams}) {
     // TODO: implement putAPIData
     throw UnimplementedError();
   }

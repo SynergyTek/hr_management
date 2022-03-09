@@ -11,17 +11,17 @@ import '../../../widgets/nts_widgets.dart';
 import '../../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 
-import 'package:listizer/listizer.dart';
+import '../../../listizer/listizer.dart';
 
 import 'task_list_tile.dart';
 
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
 class TaskHomeBody extends StatefulWidget {
-  final String mode;
-  final String taskStatus;
-  final String moduleId;
-  TaskHomeBody({Key key, this.mode, this.taskStatus, this.moduleId})
+  final String? mode;
+  final String? taskStatus;
+  final String? moduleId;
+  TaskHomeBody({Key? key, this.mode, this.taskStatus, this.moduleId})
       : super(key: key);
 
   @override
@@ -29,29 +29,29 @@ class TaskHomeBody extends StatefulWidget {
 }
 
 class _TaskHomeBodyState extends State<TaskHomeBody> {
-  List<TaskListModel> _taskList = [];
+  List<TaskListModel>? _taskList = [];
   List<TaskListModel> _filteredTaskList = [];
 
-  FilterListTapCallBack filterData;
+  FilterListTapCallBack? filterData;
   bool dateFilterVisible = false;
 
-  DateTime startDateValue;
-  DateTime dueDateValue;
+  DateTime? startDateValue;
+  DateTime? dueDateValue;
 
   TextEditingController subjectController = TextEditingController();
 
-  String moduleId;
-  String mode;
-  String taskNo;
-  String taskStatus;
-  String taskOwnerIds;
-  String taskAssigneeIds;
-  String subject;
-  DateTime startDate;
-  DateTime dueDate;
-  DateTime completionDate;
-  String templateMasterCode;
-  String text;
+  String? moduleId;
+  String? mode;
+  String? taskNo;
+  String? taskStatus;
+  String? taskOwnerIds;
+  String? taskAssigneeIds;
+  String? subject;
+  DateTime? startDate;
+  DateTime? dueDate;
+  DateTime? completionDate;
+  String? templateMasterCode;
+  String? text;
 
   @override
   void initState() {
@@ -64,10 +64,10 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
 
   apiCall() {
     taskBloc.subjectTaskList.sink.add(null);
-    if (widget.taskStatus != null && widget.taskStatus.isNotEmpty)
+    if (widget.taskStatus != null && widget.taskStatus!.isNotEmpty)
       taskStatus = widget.taskStatus;
-    if (widget.mode != null && widget.mode.isNotEmpty) mode = widget.mode;
-    if (widget.moduleId != null && widget.moduleId.isNotEmpty)
+    if (widget.mode != null && widget.mode!.isNotEmpty) mode = widget.mode;
+    if (widget.moduleId != null && widget.moduleId!.isNotEmpty)
       moduleId = widget.moduleId;
 
     Map<String, dynamic> queryparams = Map();
@@ -90,9 +90,9 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
     if (text != null) queryparams['text'] = text;
 
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     // call bloc with updated query params.
     taskBloc
@@ -118,7 +118,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
           child: _dateFilterWidget(),
         ),
         Expanded(
-          child: StreamBuilder<TaskListResponseModel>(
+          child: StreamBuilder<TaskListResponseModel?>(
             stream: taskBloc.subjectTaskList.stream,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
@@ -225,8 +225,8 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
   }
 
   customButton({
-    String buttonText,
-    Function handleOnPressed,
+    required String buttonText,
+    Function? handleOnPressed,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -240,7 +240,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
             ),
           ),
         ),
-        onPressed: () => handleOnPressed(),
+        onPressed: () => handleOnPressed!(),
         child: Text(buttonText),
       ),
     );
@@ -334,7 +334,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
       return;
     }
 
-    if (dueDateValue != null && startDateValue.compareTo(dueDateValue) > 0) {
+    if (dueDateValue != null && startDateValue!.compareTo(dueDateValue!) > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Start date cannot be greater than the End date."),

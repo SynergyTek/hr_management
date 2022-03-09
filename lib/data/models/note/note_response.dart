@@ -7,12 +7,12 @@ import 'note_model.dart';
 /// list of APIData and error string if our API call gets failed
 /// or returns an error in response.
 class NoteResponse {
-  bool isSuccess;
-  final NoteModel data;
-  String error;
+  bool? isSuccess;
+  final NoteModel? data;
+  String? error;
 
   NoteResponse({
-    @required this.data,
+    required this.data,
   });
 
   NoteResponse.fromJson(Map<String, dynamic> response)
@@ -24,12 +24,12 @@ class NoteResponse {
 }
 
 class NoteListResponse {
-  bool isSuccess;
-  List<NoteListModel> list;
-  String error;
+  bool? isSuccess;
+  List<NoteListModel>? list;
+  String? error;
 
   NoteListResponse({
-    @required this.list,
+    required this.list,
   });
 
   NoteListResponse.fromJson(List response)

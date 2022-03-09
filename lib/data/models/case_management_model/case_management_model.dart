@@ -1,19 +1,19 @@
 class CaseManagementModel {
-  String id;
-  String name;
-  double inProgress;
-  double draft;
-  double overDue;
-  double completed;
-  String templateCode;
-  String templateName;
-  String priority;
-  String categoryCode;
-  double count;
-  String day;
-  double violated;
-  double nonViolated;
-  String dueDate;
+  String? id;
+  String? name;
+  double? inProgress;
+  double? draft;
+  double? overDue;
+  double? completed;
+  String? templateCode;
+  String? templateName;
+  String? priority;
+  String? categoryCode;
+  double? count;
+  String? day;
+  double? violated;
+  double? nonViolated;
+  String? dueDate;
 
   CaseManagementModel({
     this.id,

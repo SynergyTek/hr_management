@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../constants/api_endpoints.dart';
 import '../../models/api_models/post_response_model.dart';
@@ -18,25 +17,23 @@ abstract class AbstractTaskRepository {
   Future<TaskListResponseModel> getTaskHomeListData();
 
   Future<TaskListResponseModel> getTaskDashBoardData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
-  Future loadServiceAdhocTaskData({ //TODO: enter response
-    Map<String, dynamic> queryparams,
+  Future loadServiceAdhocTaskData({
+    Map<String, dynamic>? queryparams,
   });
 
   Future<PostResponse> postAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
+    required TaskModel taskModel,
   });
 
   Future<TaskResponseModel> putAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<TaskResponseModel> deleteAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

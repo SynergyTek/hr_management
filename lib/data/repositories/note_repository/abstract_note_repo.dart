@@ -16,30 +16,23 @@ abstract class AbstractNoteRepository {
   AbstractNoteRepository();
 
   Future<NoteResponse> getNoteDetail({
-    Map<String, dynamic> queryparams,
-  }); //{
-  // Optional Params to be added to the request if required.
-  //  Map<String, dynamic> queryparams,});
+    Map<String, dynamic>? queryparams,
+  });
 
-  Future<NoteListResponse> getNoteList();
+  Future<NoteListResponse> getNoteList({
+    Map<String, dynamic>? queryparams,
+  });
 
   Future<NoteListResponse> getNoteDashBoardData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<PostResponse> postNoteAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
-  });
-
-
-  Future<NoteResponse> putNoteAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    required NoteModel note,
+    Map<String, dynamic>? queryparams,
   });
 
   Future<NoteResponse> deleteNoteAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   });
 }

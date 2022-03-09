@@ -16,12 +16,12 @@ import '../../../../widgets/progress_indicator.dart';
 import 'document_bottom_sheet_widget.dart';
 
 class DocumentListWidget extends StatefulWidget {
-  final String templateId;
-  final String templateName;
+  final String? templateId;
+  final String? templateName;
 
   DocumentListWidget({
-    @required this.templateId,
-    @required this.templateName,
+    required this.templateId,
+    required this.templateName,
   });
 
   @override
@@ -44,10 +44,10 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
   /// Helper function to handle query params for the API
   _handleQueryParams() {
     return {
-      'indexPageTemplateId': widget?.templateId ?? '',
+      'indexPageTemplateId': widget.templateId ?? '',
       'ownerType': 'owner',
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 
@@ -55,7 +55,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
-      child: StreamBuilder<NoteIndexResponse>(
+      child: StreamBuilder<NoteIndexResponse?>(
         stream: noteIndexBloc.subject.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
@@ -76,7 +76,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
     );
   }
 
-  Widget _listviewWidget(List<NoteIndexModel> data) {
+  Widget _listviewWidget(List<NoteIndexModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
@@ -99,7 +99,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             data.elementAt(index),
           ),
           confirmDismiss: (DismissDirection direction) async {
-            final bool res = await showDialog(
+            final bool? res = await showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
@@ -157,20 +157,20 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             children: [
               ListTile(
                 title: Text(
-                  data.noteNo,
+                  data.noteNo!,
                   style: TextStyle(
                     color: Theme.of(context).textHeadingColor,
                   ),
                 ),
                 subtitle: Text(
-                  "Visa Number: ${data?.visaNumber ?? '-'}",
+                  "Visa Number: ${data.visaNumber ?? '-'}",
                 ),
                 trailing: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      data.expireDate?.split(' ')?.elementAt(0) ?? '-',
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      data.expireDate?.split(' ').elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: Colors.black87,
                           ),
                     ),
@@ -250,7 +250,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                       child: _statisticWidget(
                         context: context,
                         title:
-                            data.expireDate?.split(' ')?.elementAt(0) ?? null,
+                            data.expireDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Expire Date',
                       ),
                     ),
@@ -322,13 +322,13 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             children: [
               ListTile(
                 title: Text(
-                  data?.documentName ?? '-',
+                  data.documentName ?? '-',
                   style: TextStyle(
                     color: Theme.of(context).textHeadingColor,
                   ),
                 ),
                 subtitle: Text(
-                  "${data?.noteNo ?? '-'}",
+                  "${data.noteNo ?? '-'}",
                 ),
                 trailing: Icon(
                   Icons.chevron_right,
@@ -394,20 +394,20 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             children: [
               ListTile(
                 title: Text(
-                  data.noteNo,
+                  data.noteNo!,
                   style: TextStyle(
                     color: Theme.of(context).textHeadingColor,
                   ),
                 ),
                 subtitle: Text(
-                  "Employee ID: ${data?.idCardNumber ?? '-'}",
+                  "Employee ID: ${data.idCardNumber ?? '-'}",
                 ),
                 trailing: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      data.documentExpiryDate?.split(' ')?.elementAt(0) ?? '-',
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      data.documentExpiryDate?.split(' ').elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: Colors.black87,
                           ),
                     ),
@@ -470,16 +470,16 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title: data?.issueDate?.split(' ')?.elementAt(0) ?? '-',
+                        title: data.issueDate?.split(' ').elementAt(0) ?? '-',
                         subtitle: 'Issue Date',
                       ),
                     ),
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title: data?.documentExpiryDate
+                        title: data.documentExpiryDate
                                 ?.split(' ')
-                                ?.elementAt(0) ??
+                                .elementAt(0) ??
                             '-',
                         subtitle: 'Expiry Date',
                       ),
@@ -502,20 +502,20 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             children: [
               ListTile(
                 title: Text(
-                  data.noteNo,
+                  data.noteNo!,
                   style: TextStyle(
                     color: Theme.of(context).textHeadingColor,
                   ),
                 ),
                 subtitle: Text(
-                  "Training: ${data?.trainingSubject ?? '-'}",
+                  "Training: ${data.trainingSubject ?? '-'}",
                 ),
                 trailing: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      data?.endDate?.split(' ')?.elementAt(0) ?? '-',
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      data.endDate?.split(' ').elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: Colors.black87,
                           ),
                     ),
@@ -578,7 +578,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title: data?.endDate?.split(' ')?.elementAt(0) ?? null,
+                        title: data.endDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Training Completion Date',
                       ),
                     ),
@@ -600,20 +600,20 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             children: [
               ListTile(
                 title: Text(
-                  data.noteNo,
+                  data.noteNo!,
                   style: TextStyle(
                     color: Theme.of(context).textHeadingColor,
                   ),
                 ),
                 subtitle: Text(
-                  "${data?.employeeIdPersonFullName ?? '-'}",
+                  "${data.employeeIdPersonFullName ?? '-'}",
                 ),
                 trailing: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      data?.endDate?.split(' ')?.elementAt(0) ?? '-',
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      data.endDate?.split(' ').elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: Colors.black87,
                           ),
                     ),
@@ -691,14 +691,14 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                       child: _statisticWidget(
                         context: context,
                         title:
-                            data?.startDate?.split(' ')?.elementAt(0) ?? null,
+                            data.startDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Start Date',
                       ),
                     ),
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title: data.endDate?.split(' ')?.elementAt(0) ?? null,
+                        title: data.endDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'End Date',
                       ),
                     ),
@@ -725,20 +725,20 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             children: [
               ListTile(
                 title: Text(
-                  data.noteNo,
+                  data.noteNo!,
                   style: TextStyle(
                     color: Theme.of(context).textHeadingColor,
                   ),
                 ),
                 subtitle: Text(
-                  "Passport: ${data?.passportNumber ?? '-'}",
+                  "Passport: ${data.passportNumber ?? '-'}",
                 ),
                 trailing: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      data?.expireDate?.split(' ')?.elementAt(0) ?? '-',
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      data.expireDate?.split(' ').elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: Colors.black87,
                           ),
                     ),
@@ -797,7 +797,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                       child: _statisticWidget(
                         context: context,
                         title:
-                            data?.dateOfIssue?.split(' ')?.elementAt(0) ?? null,
+                            data.dateOfIssue?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Issue Date',
                       ),
                     ),
@@ -805,7 +805,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                       child: _statisticWidget(
                         context: context,
                         title:
-                            data?.expireDate?.split(' ')?.elementAt(0) ?? null,
+                            data.expireDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Expire Date',
                       ),
                     ),
@@ -818,7 +818,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                       child: _statisticWidget(
                         context: context,
                         title:
-                            data?.dateOfBirth?.split(' ')?.elementAt(0) ?? null,
+                            data.dateOfBirth?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Date of Birth',
                       ),
                     ),
@@ -866,20 +866,20 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
             children: [
               ListTile(
                 title: Text(
-                  data.noteNo,
+                  data.noteNo!,
                   style: TextStyle(
                     color: Theme.of(context).textHeadingColor,
                   ),
                 ),
                 subtitle: Text(
-                  "Qualification: ${data?.qualificationName ?? '-'}",
+                  "Qualification: ${data.qualificationName ?? '-'}",
                 ),
                 trailing: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      data?.completedDate?.split(' ')?.elementAt(0) ?? '-',
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      data.completedDate?.split(' ').elementAt(0) ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: Colors.black87,
                           ),
                     ),
@@ -937,14 +937,14 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title: data.startDate?.split(' ')?.elementAt(0) ?? null,
+                        title: data.startDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Start Date',
                       ),
                     ),
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title: data?.completedDate?.split(' ')?.elementAt(0) ??
+                        title: data.completedDate?.split(' ').elementAt(0) ??
                             null,
                         subtitle: 'Completed Date',
                       ),
@@ -969,8 +969,8 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
 
   /// Helper function to Format the list tile text according to the key-value format.
   RichText _formatText({
-    String key,
-    String value,
+    String? key,
+    String? value,
   }) {
     if (key == null || key.isEmpty) key = '-';
     if (value == null || value.isEmpty) value = '-';
@@ -982,7 +982,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
         children: <TextSpan>[
           TextSpan(
             text: value,
-            style: Theme.of(context).textTheme.subtitle1.copyWith(
+            style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   fontWeight: FontWeight.w800,
                   fontSize: 16,
                 ),
@@ -1022,7 +1022,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
     );
   }
 
-  showDocumentBottomSheet({@required List<Widget> bottomSheetDataList}) {
+  showDocumentBottomSheet({required List<Widget> bottomSheetDataList}) {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
@@ -1037,9 +1037,9 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
   }
 
   Widget _statisticWidget({
-    @required BuildContext context,
-    String title,
-    String subtitle,
+    required BuildContext context,
+    String? title,
+    String? subtitle,
     bool isHeading = false,
   }) {
     return ListTile(

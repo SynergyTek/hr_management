@@ -4,7 +4,7 @@ class UserRepository extends AbstractUserRepository {
   final Dio _dio = Dio();
 
   Future<UserListResponse> readUserData(
-      {Map<String, dynamic> queryparams}) async {
+      {Map<String, dynamic>? queryparams}) async {
     final String endpoint = APIEndpointConstants.READ_USER_DATA;
 
     try {
@@ -25,7 +25,7 @@ class UserRepository extends AbstractUserRepository {
 
   @override
   Future<ReadTeamDataResponse> readTeamData(
-      {Map<String, dynamic> queryparams}) async {
+      {Map<String, dynamic>? queryparams}) async {
     final String endpoint = APIEndpointConstants.READ_TEAM_DATA;
 
     try {

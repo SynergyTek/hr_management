@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 import 'attachment_nts_model.dart';
 
 class AttachmentNTSResponse {
-  String error;
+  String? error;
   List<AttachmentNTSModel> data;
 
   AttachmentNTSResponse({
-    @required this.data,
+    required this.data,
   });
 
   AttachmentNTSResponse.fromJson(List response)

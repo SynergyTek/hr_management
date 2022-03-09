@@ -36,7 +36,7 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
   _handleQueryParams() {
     return {
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 
@@ -54,7 +54,7 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
               );
             }
 
-            if (snapshot?.data?.data == null)
+            if (snapshot.data?.data == null)
               return Center(
                 child: Text("No data available."),
               );
@@ -73,23 +73,23 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
   Widget _listviewWidget(DocumentModel data) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: data.noteTableRows.length,
+      itemCount: data.noteTableRows!.length,
       itemBuilder: (BuildContext context, int index) {
         return Card(
           child: ListTile(
             leading: Image.asset(
               _handleLeadingIcon(
-                templateName: data.noteTableRows.elementAt(index).templateName,
+                templateName: data.noteTableRows!.elementAt(index).templateName,
               ),
               width: 32.0,
               height: 32.0,
               fit: BoxFit.fitHeight,
             ),
-            title: Text(data.noteTableRows.elementAt(index).templateName),
+            title: Text(data.noteTableRows!.elementAt(index).templateName!),
             trailing: Icon(Icons.chevron_right),
             onTap: () => _handleListTileOnTap(
               context: context,
-              listTileData: data.noteTableRows.elementAt(index),
+              listTileData: data.noteTableRows!.elementAt(index),
             ),
           ),
         );
@@ -98,8 +98,8 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
   }
 
   void _handleListTileOnTap({
-    NoteTableRows listTileData,
-    BuildContext context,
+    NoteTableRows? listTileData,
+    required BuildContext context,
   }) {
     Navigator.push(
       context,
@@ -107,7 +107,7 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
         builder: (BuildContext context) => Scaffold(
           // drawer: drawerWidget(context),
           appBar: AppbarWidget(
-            title: listTileData.templateName ?? "",
+            title: listTileData!.templateName ?? "",
           ),
           body: SafeArea(
             child: InternetConnectivityWidget(
@@ -123,7 +123,7 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
   }
 
   String _handleLeadingIcon({
-    @required String templateName,
+    required String? templateName,
   }) {
     if (templateName == noteIndexTableMap[NoteIndexTableType.employeeVisa])
       return EMPLOYEE_VISA_ICON;

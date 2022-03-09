@@ -8,15 +8,15 @@ import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 
 class DocumentActionScreen extends StatelessWidget {
-  final String action;
-  const DocumentActionScreen({Key key, this.action}) : super(key: key);
+  final String? action;
+  const DocumentActionScreen({Key? key, this.action}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
        drawer: drawerWidget(context),
       appBar: AppbarWidget(
-        title: action+" Document",
+        title: action!+" Document",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(child: selectAction()),

@@ -1,9 +1,9 @@
 class FileOperationModel {
-  String action;
-  String path;
-  bool showHiddenItems;
-  List data;
-  String userId;
+  String? action;
+  String? path;
+  bool? showHiddenItems;
+  List? data;
+  String? userId;
 
   FileOperationModel({
     this.action,
@@ -34,7 +34,7 @@ class FileOperationModel {
     data['path'] = this.path;
     data['showHiddenItems'] = this.showHiddenItems;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['userId'] = this.userId;
     return data;

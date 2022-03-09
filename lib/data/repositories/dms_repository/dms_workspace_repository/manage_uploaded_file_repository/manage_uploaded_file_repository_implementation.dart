@@ -7,7 +7,7 @@ class ManageUploadedFileRepository
   final Dio _dio = Dio();
 
   Future postAPIData({
-    @required NoteModel model,
+    required NoteModel model,
   }) async {
     try {
       Response response = await _dio.post(

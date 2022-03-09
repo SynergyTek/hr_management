@@ -18,10 +18,10 @@ enum PermissionType { User, WorkspaceUserGroup }
 
 class DmsAddEditPermissionBody extends StatefulWidget {
   final bool isCreatePermission;
-  final String noteId;
+  final String? noteId;
   DmsAddEditPermissionBody({
-    @required this.isCreatePermission,
-    @required this.noteId,
+    required this.isCreatePermission,
+    required this.noteId,
   });
 
   @override
@@ -30,9 +30,9 @@ class DmsAddEditPermissionBody extends StatefulWidget {
 }
 
 class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
-  PermissionType _permissionType = PermissionType.User;
+  PermissionType? _permissionType = PermissionType.User;
 
-  DMSLegalEntityModel _selectedLegalEntityData;
+  DMSLegalEntityModel? _selectedLegalEntityData;
 
   PermissionSubmitModel _permissionSubmitModel = PermissionSubmitModel();
 
@@ -42,11 +42,11 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
   TextEditingController _userddController = new TextEditingController();
   TextEditingController _workspaceddController = new TextEditingController();
 
-  String enumType;
+  String? enumType;
 
-  String permissionValue = dmsPermissionType[0];
-  String accessValue = dmsAccessType[0];
-  String appliesToValue = dmsAppliesToType[0];
+  String? permissionValue = dmsPermissionType[0];
+  String? accessValue = dmsAccessType[0];
+  String? appliesToValue = dmsAppliesToType[0];
 
   bool isUser = true;
 
@@ -74,7 +74,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
                   title: const Text('Select Workspace User Group'),
                   value: PermissionType.WorkspaceUserGroup,
                   groupValue: _permissionType,
-                  onChanged: (PermissionType value) {
+                  onChanged: (PermissionType? value) {
                     setState(() {
                       _permissionType = value;
                       isUser = false;
@@ -135,7 +135,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
           handleOnPressed: () {
             _checkMandatoryFields();
             _permissionSubmitModel.legalEntityId =
-                isUser ? _selectedLegalEntityData.id : null;
+                isUser ? _selectedLegalEntityData!.id : null;
             isUser
                 ? _permissionSubmitModel.permittedUserId = user.id
                 : _permissionSubmitModel.permittedUserGroupId = team.id;
@@ -158,17 +158,26 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
 
   _checkMandatoryFields() {
     if (isUser &&
-        (_selectedLegalEntityData.id == null ||
-            _selectedLegalEntityData.id.isEmpty)) {
-      displaySnackBar(text: 'Please select Legal Entity');
+        (_selectedLegalEntityData!.id == null ||
+            _selectedLegalEntityData!.id!.isEmpty)) {
+      displaySnackBar(
+        context: context,
+        text: 'Please select Legal Entity',
+      );
       return;
     }
-    if (isUser && (user.id == null || user.id.isEmpty)) {
-      displaySnackBar(text: 'Please select User');
+    if (isUser && (user.id == null || user.id!.isEmpty)) {
+      displaySnackBar(
+        context: context,
+        text: 'Please select User',
+      );
       return;
     }
-    if (!isUser && (team.id == null || team.id.isEmpty)) {
-      displaySnackBar(text: 'Please select User Group');
+    if (!isUser && (team.id == null || team.id!.isEmpty)) {
+      displaySnackBar(
+        context: context,
+        text: 'Please select User Group',
+      );
       return;
     }
   }
@@ -181,7 +190,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
         title: Text("Legal Entity"),
         trailing: Text(
           _selectedLegalEntityData?.name ?? "Select",
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6!.copyWith(
                 color: Colors.blue,
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,
@@ -225,7 +234,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
             isShowArrow: true,
             onListTap: (dynamic value) {
               user = value;
-              _userddController.text = user.name;
+              _userddController.text = user.name!;
               setState(() {});
             },
           ),
@@ -248,7 +257,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
             isShowArrow: true,
             onListTap: (dynamic value) {
               team = value;
-              _workspaceddController.text = team.name;
+              _workspaceddController.text = team.name!;
               setState(() {});
             },
           ),
@@ -258,10 +267,10 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
   }
 
   optionsRow({
-    String text,
-    String hintText,
-    String dropdownValue,
-    List<String> list,
+    required String text,
+    String? hintText,
+    String? dropdownValue,
+    required List<String?> list,
   }) {
     return InkWell(
       child: Container(
@@ -290,7 +299,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
                 height: 2,
                 color: Colors.blue[700],
               ),
-              onChanged: (String newValue) {
+              onChanged: (String? newValue) {
                 setState(() {
                   dropdownValue = newValue;
                   if (dmsPermissionType.contains(newValue))
@@ -301,10 +310,10 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
                     appliesToValue = newValue;
                 });
               },
-              items: list.map<DropdownMenuItem<String>>((String value) {
+              items: list.map<DropdownMenuItem<String>>((String? value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(value!),
                 );
               }).toList(),
             ),

@@ -4,7 +4,7 @@ class ShareRepository extends AbstractShareRepository {
   final Dio _dio = Dio();
 
   Future<ServiceSharedDataResponse> getServiceSharedData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_SERVICE_SHARED_DATA;
 
@@ -26,7 +26,7 @@ class ShareRepository extends AbstractShareRepository {
   }
 
   Future<TaskSharedDataResponse> getTaskSharedData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_TASK_SHARED_DATA;
 
@@ -48,7 +48,7 @@ class ShareRepository extends AbstractShareRepository {
   }
 
   Future<NoteSharedDataResponse> getNoteSharedData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.GET_NOTE_SHARED_DATA;
 
@@ -70,33 +70,33 @@ class ShareRepository extends AbstractShareRepository {
   }
 
   Future deleteServiceShared({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.DELETE_SERVICE_SHARED;
   }
 
   Future deleteTaskShared({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.DELETE_TASK_SHARED;
   }
 
   Future deleteNoteShared({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.DELETE_NOTE_SHARED;
   }
 
   Future<PostResponse> postShareService({
-    Map<String, dynamic> queryparams,
-    ServiceSharePostModel data,
+    Map<String, dynamic>? queryparams,
+    required ServiceSharePostModel data,
   }) async {
     final String endpoint = APIEndpointConstants.POST_SHARE_SERVICE;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(data.toJson()) ?? {},
+        data: jsonEncode(data.toJson()),
       );
 
       var result = PostResponse.fromJson(
@@ -114,15 +114,15 @@ class ShareRepository extends AbstractShareRepository {
   }
 
   Future<PostResponse> postShareTask({
-    Map<String, dynamic> queryparams,
-    TaskSharePostModel data,
+    Map<String, dynamic>? queryparams,
+    required TaskSharePostModel data,
   }) async {
     final String endpoint = APIEndpointConstants.POST_SHARE_TASK;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(data.toJson()) ?? {},
+        data: jsonEncode(data.toJson()),
       );
 
       var result = PostResponse.fromJson(
@@ -140,15 +140,15 @@ class ShareRepository extends AbstractShareRepository {
   }
 
   Future<PostResponse> postShareNote({
-    Map<String, dynamic> queryparams,
-    NoteSharePostModel data,
+    Map<String, dynamic>? queryparams,
+    required NoteSharePostModel data,
   }) async {
     final String endpoint = APIEndpointConstants.POST_SHARE_NOTE;
     try {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(data.toJson()) ?? {},
+        data: jsonEncode(data.toJson()),
       );
 
       var result = PostResponse.fromJson(

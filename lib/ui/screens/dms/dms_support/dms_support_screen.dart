@@ -18,7 +18,7 @@ class DMSSupport extends StatefulWidget {
 class _DMSSupportState extends State<DMSSupport> {
   int _selectedIndex = 0;
   List<bool> isSelected = [true, false];
-  List<Widget> _widgetOptions = [];
+  List<Widget>? _widgetOptions = [];
   String requestBy = 'RequestedByMe';
   String taskListStatus = 'InProgress';
 
@@ -86,9 +86,9 @@ class _DMSSupportState extends State<DMSSupport> {
     taskBloc.subjectTaskList.sink.add(null);
     Map<String, dynamic> queryparams = Map();
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '';
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
     // queryparams['templateCodes'] = 'DMS_SUPPORT_TICKET';
     // queryparams['categoryCodes'] = 'DMS_TASK';
@@ -146,7 +146,7 @@ class _DMSSupportState extends State<DMSSupport> {
   }
 
   _body() {
-    return _widgetOptions.elementAt(_selectedIndex);
+    return _widgetOptions!.elementAt(_selectedIndex);
   }
 
   _bottomNavigation() {

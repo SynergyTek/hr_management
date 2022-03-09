@@ -5,7 +5,7 @@ class CaseManagementFilterBottomModalSheetWidget extends StatefulWidget {
   final List<FilterListModel> data;
 
   const CaseManagementFilterBottomModalSheetWidget({
-    @required this.data,
+    required this.data,
   }) : assert(data != null);
 
   @override
@@ -15,13 +15,13 @@ class CaseManagementFilterBottomModalSheetWidget extends StatefulWidget {
 
 class _CaseManagementFilterBottomModalSheetWidgetState
     extends State<CaseManagementFilterBottomModalSheetWidget> {
-  List<FilterListModel> data;
+  List<FilterListModel>? data;
 
   @override
   void initState() {
     super.initState();
 
-    data = widget?.data ?? [];
+    data = widget.data ?? [];
   }
 
   @override
@@ -62,7 +62,7 @@ class _CaseManagementFilterBottomModalSheetWidgetState
                 itemCount: data?.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
                   return _eachListTile(
-                    data.elementAt(index),
+                    data!.elementAt(index),
                   );
                 },
               ),
@@ -74,20 +74,20 @@ class _CaseManagementFilterBottomModalSheetWidgetState
   }
 
   Widget _eachListTile(FilterListModel eachData) {
-    if (eachData?.filterDisplayTitle == null) return Container();
+    if (eachData.filterDisplayTitle == null) return Container();
 
     return StatefulBuilder(
       builder: (BuildContext context, innerSetState) {
         return CheckboxListTile(
           title: Text(eachData.filterDisplayTitle ?? ""),
-          value: eachData?.isChecked ?? false,
-          onChanged: (bool hasChanged) {
+          value: eachData.isChecked ?? false,
+          onChanged: (bool? hasChanged) {
             innerSetState(() {
               setState(() {
                 // Updating the value of the checkbox listtile.
                 eachData.isChecked = true;
 
-                data.forEach((element) {
+                data!.forEach((element) {
                   if (element == eachData)
                     element.isChecked = eachData.isChecked;
                   else
@@ -110,8 +110,8 @@ class FilterListModel {
   bool isChecked;
 
   FilterListModel({
-    @required this.filterDisplayTitle,
-    @required this.filterValue,
-    @required this.isChecked,
+    required this.filterDisplayTitle,
+    required this.filterValue,
+    required this.isChecked,
   });
 }

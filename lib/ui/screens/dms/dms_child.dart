@@ -5,18 +5,18 @@ import 'package:hr_management/ui/screens/dms/widget/dms_child_body.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 
 class DMSChild extends StatelessWidget {
-  final String parentName;
-  final Cwd parentModel;
-  final String parentPath;
-  final OnTapPressedCallBack callBack;
-  final List<String> pathList;
-  final List<String> parentPathList;
-  final List<Cwd> parentModelList;
-  final String sourceId;
-  final bool isCopy;
-  final bool isCut;
+  final String? parentName;
+  final Cwd? parentModel;
+  final String? parentPath;
+  final OnTapPressedCallBack? callBack;
+  final List<String?>? pathList;
+  final List<String>? parentPathList;
+  final List<Cwd>? parentModelList;
+  final String? sourceId;
+  final bool? isCopy;
+  final bool? isCut;
   DMSChild({
-    Key key,
+    Key? key,
     this.parentName,
     this.parentModel,
     this.parentPath,
@@ -34,10 +34,10 @@ class DMSChild extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
-        callBack(true, null, null);
-        pathList.removeLast();
-        parentPathList.removeLast();
-        parentModelList.removeLast();
+        callBack!(true, null, null);
+        pathList!.removeLast();
+        parentPathList!.removeLast();
+        parentModelList!.removeLast();
         Navigator.pop(context);
         return false;
       },
@@ -46,14 +46,14 @@ class DMSChild extends StatelessWidget {
             leading: IconButton(
                 onPressed: () {
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
-                  callBack(true, null, null);
-                  pathList.removeLast();
-                  parentPathList.removeLast();
-                  parentModelList.removeLast();
+                  callBack!(true, null, null);
+                  pathList!.removeLast();
+                  parentPathList!.removeLast();
+                  parentModelList!.removeLast();
                   Navigator.pop(context);
                 },
                 icon: Icon(Icons.arrow_back)),
-            title: Text(parentName),
+            title: Text(parentName!),
           ),
           body: DMSChildBody(
             parentModel: parentModel,

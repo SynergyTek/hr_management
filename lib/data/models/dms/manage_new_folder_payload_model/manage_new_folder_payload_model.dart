@@ -1,12 +1,12 @@
 class ManageNewFolderPayloadModel {
-  String dataAction;
-  String noteSubject;
-  String sequenceOrder;
-  String parentNoteId;
-  String activeUserId;
-  String ownerUserId;
+  String? dataAction;
+  String? noteSubject;
+  String? sequenceOrder;
+  String? parentNoteId;
+  String? activeUserId;
+  String? ownerUserId;
 
-  String id;
+  String? id;
 
   ManageNewFolderPayloadModel({
     this.dataAction,

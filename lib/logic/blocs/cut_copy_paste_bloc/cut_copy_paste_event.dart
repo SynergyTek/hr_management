@@ -8,7 +8,7 @@ abstract class CutCopyPasteEvent extends Equatable {
 }
 
 class CutCopyPasteChangeEvent extends CutCopyPasteEvent {
-  final CutCopyPasteModel cutCopyPasteModel;
+  final CutCopyPasteModel? cutCopyPasteModel;
 
   CutCopyPasteChangeEvent({
     this.cutCopyPasteModel,

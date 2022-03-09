@@ -6,11 +6,11 @@ class SplashScreenBodyWidget extends StatelessWidget {
   /// Text to be displayed below the Circular ProgressIndicator.
   /// Default text is "Loading".
   final String titleText;
-  final String subtitleText;
-  final String loadingText;
+  final String? subtitleText;
+  final String? loadingText;
 
   const SplashScreenBodyWidget({
-    @required this.titleText,
+    required this.titleText,
     this.subtitleText,
     this.loadingText,
   });
@@ -24,9 +24,9 @@ class SplashScreenBodyWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              titleText ?? "",
+              titleText ,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5.copyWith(
+              style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,
                     fontWeight: FontWeight.bold,
                   ),
@@ -34,7 +34,7 @@ class SplashScreenBodyWidget extends StatelessWidget {
             Text(
               subtitleText ?? "",
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
+              style: Theme.of(context).textTheme.subtitle1!.copyWith(
                     color: Theme.of(context).accentColor,
                   ),
             ),

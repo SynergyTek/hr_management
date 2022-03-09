@@ -6,7 +6,7 @@ class DMSDocumentActionRepository extends AbstractDMSDocumentActionRepository {
   final Dio _dio = Dio();
 
   Future<DMSDocumentActionResponse> getArchiveDocumentData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -19,12 +19,12 @@ class DMSDocumentActionRepository extends AbstractDMSDocumentActionRepository {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return DMSDocumentActionResponse.withError(err);
+      return DMSDocumentActionResponse.withError(err.toString());
     }
   }
 
   Future<DMSDocumentActionResponse> getBinDocumentData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -37,12 +37,12 @@ class DMSDocumentActionRepository extends AbstractDMSDocumentActionRepository {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return DMSDocumentActionResponse.withError(err);
+      return DMSDocumentActionResponse.withError(err.toString());
     }
   }
 
   Future<DMSDocumentActionResponse> getDocumentHistoryData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -55,12 +55,12 @@ class DMSDocumentActionRepository extends AbstractDMSDocumentActionRepository {
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return DMSDocumentActionResponse.withError(err);
+      return DMSDocumentActionResponse.withError(err.toString());
     }
   }
 
-Future<DMSDocumentActionResponse> getSearchDocumentData({
-    Map<String, dynamic> queryparams,
+  Future<DMSDocumentActionResponse> getSearchDocumentData({
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -73,12 +73,12 @@ Future<DMSDocumentActionResponse> getSearchDocumentData({
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return DMSDocumentActionResponse.withError(err);
+      return DMSDocumentActionResponse.withError(err.toString());
     }
   }
 
-Future<DMSDocumentActionResponse> getViewPermissionData({
-    Map<String, dynamic> queryparams,
+  Future<DMSDocumentActionResponse> getViewPermissionData({
+    Map<String, dynamic>? queryparams,
   }) async {
     try {
       Response response = await _dio.get(
@@ -91,11 +91,7 @@ Future<DMSDocumentActionResponse> getViewPermissionData({
       print("Stacktrace: $stacktrace");
       print("Error: $err");
 
-      return DMSDocumentActionResponse.withError(err);
+      return DMSDocumentActionResponse.withError(err.toString());
     }
   }
-
-  
-  
 }
-

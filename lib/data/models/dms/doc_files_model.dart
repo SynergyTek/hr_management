@@ -17,8 +17,8 @@ class DMSFilesModel {
     this.details,
   });
 
-  Cwd cwd;
-  List<Cwd> files;
+  Cwd? cwd;
+  List<Cwd>? files;
   dynamic error;
   dynamic details;
 
@@ -30,8 +30,8 @@ class DMSFilesModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "cwd": cwd.toJson(),
-        "files": List<dynamic>.from(files.map((x) => x.toJson())),
+        "cwd": cwd!.toJson(),
+        "files": List<dynamic>.from(files!.map((x) => x.toJson())),
         "error": error,
         "details": details,
       };
@@ -92,65 +92,65 @@ class Cwd {
     this.workspaceId,
   });
 
-  String get searchS {
+  String? get searchS {
     return createString();
   }
 
-  String createString() {
+  String? createString() {
     return name;
   }
 
   dynamic data;
-  bool showHiddenItems;
+  bool? showHiddenItems;
   dynamic searchString;
-  bool saseSensitive;
+  bool? saseSensitive;
   dynamic uploadFiles;
   dynamic renameFiles;
   dynamic targetPath;
-  String parentId;
+  String? parentId;
   dynamic filterId;
   dynamic filterPath;
-  String id;
+  String? id;
   dynamic type;
-  bool isFile;
-  bool hasChild;
-  DateTime dateCreated;
-  DateTime dateModified;
+  bool? isFile;
+  bool? hasChild;
+  DateTime? dateCreated;
+  DateTime? dateModified;
   dynamic previousName;
-  int size;
-  String name;
+  int? size;
+  String? name;
   dynamic names;
   dynamic newName;
   dynamic action;
   dynamic path;
   dynamic targetData;
   dynamic permission;
-  int folderType;
-  String templateCode;
-  String count;
-  bool canOpen;
-  bool showMenu;
-  bool canCreateSubFolder;
-  bool canRename;
-  bool canShare;
-  bool canMove;
-  bool canCopy;
-  bool canArchive;
-  bool canDelete;
-  bool canSeeDetail;
-  bool canManagePermission;
-  bool canCreateWorkspace;
-  bool canEditDocument;
+  int? folderType;
+  String? templateCode;
+  String? count;
+  bool? canOpen;
+  bool? showMenu;
+  bool? canCreateSubFolder;
+  bool? canRename;
+  bool? canShare;
+  bool? canMove;
+  bool? canCopy;
+  bool? canArchive;
+  bool? canDelete;
+  bool? canSeeDetail;
+  bool? canManagePermission;
+  bool? canCreateWorkspace;
+  bool? canEditDocument;
   dynamic serviceId;
   dynamic workflowTemplateId;
   dynamic workflowTemplateCode;
   dynamic workflowServiceId;
-  bool canShareDocument;
+  bool? canShareDocument;
   dynamic modifiedStatus;
   dynamic documentApprovalStatusType;
   dynamic statusName;
-  bool canDeleteDocument;
-  String workspaceId;
+  bool? canDeleteDocument;
+  String? workspaceId;
 
   factory Cwd.fromJson(Map<String, dynamic> json) => Cwd(
         data: json["data"],
@@ -222,8 +222,8 @@ class Cwd {
         "type": type,
         "isFile": isFile,
         "hasChild": hasChild,
-        "dateCreated": dateCreated.toIso8601String(),
-        "dateModified": dateModified.toIso8601String(),
+        "dateCreated": dateCreated!.toIso8601String(),
+        "dateModified": dateModified!.toIso8601String(),
         "previousName": previousName,
         "size": size,
         "name": name,

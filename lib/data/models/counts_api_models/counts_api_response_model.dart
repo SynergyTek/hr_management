@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 class CountsAPIModel {
-  int serviceAttachmentCount;
-  int serviceNotificationCount;
-  int serviceCommentsCount;
-  int serviceSharedCount;
+  int? serviceAttachmentCount;
+  int? serviceNotificationCount;
+  int? serviceCommentsCount;
+  int? serviceSharedCount;
 
   CountsAPIModel({
-    @required this.serviceAttachmentCount,
-    @required this.serviceCommentsCount,
-    @required this.serviceNotificationCount,
-    @required this.serviceSharedCount,
+    required this.serviceAttachmentCount,
+    required this.serviceCommentsCount,
+    required this.serviceNotificationCount,
+    required this.serviceSharedCount,
   });
 
   Map<String, dynamic> toMap() {

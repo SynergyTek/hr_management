@@ -11,7 +11,7 @@ class EmployeeProfileBloc {
       BehaviorSubject<EmployeeProfileResponse>();
 
   getEmployeeProfileData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     EmployeeProfileResponse response =
         await _employeeProfileRepository.getEmployeeProfileData(

@@ -16,11 +16,11 @@ class DmsPostModel {
     this.userId,
   });
 
-  String action;
-  String path;
-  bool showHiddenItems;
-  List<Cwd> data;
-  String userId;
+  String? action;
+  String? path;
+  bool? showHiddenItems;
+  List<Cwd?>? data;
+  String? userId;
 
   factory DmsPostModel.fromJson(Map<String, dynamic> json) => DmsPostModel(
         action: json["action"],
@@ -34,7 +34,7 @@ class DmsPostModel {
         "action": action,
         "path": path,
         "showHiddenItems": showHiddenItems,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x!.toJson())),
         "userId": userId,
       };
 }

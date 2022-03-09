@@ -1,20 +1,20 @@
 class DocReqByHrModel {
-  String documentType;
-  String ownerName;
-  String expiryDate;
-  String issueDate;
-  String templateCode;
-  String serviceNo;
-  String serviceId;
-  String status;
-  String fileId;
-  String depNoteId;
-  String noteNo;
-  String noteId;
-  int documentCount;
-  String noteVersionNo;
-  String attachVersionNo;
-  String createdDate;
+  String? documentType;
+  String? ownerName;
+  String? expiryDate;
+  String? issueDate;
+  String? templateCode;
+  String? serviceNo;
+  String? serviceId;
+  String? status;
+  String? fileId;
+  String? depNoteId;
+  String? noteNo;
+  String? noteId;
+  int? documentCount;
+  String? noteVersionNo;
+  String? attachVersionNo;
+  String? createdDate;
 
   DocReqByHrModel({
     this.documentType,

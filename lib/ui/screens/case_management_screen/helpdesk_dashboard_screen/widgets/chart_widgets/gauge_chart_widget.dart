@@ -7,10 +7,10 @@ import 'dart:math' as math;
 class GaugeChartWidget extends StatelessWidget {
   final List<double> gaugeValueList;
 
-  final Widget child;
+  final Widget? child;
 
   const GaugeChartWidget({
-    @required this.gaugeValueList,
+    required this.gaugeValueList,
     this.child,
   });
 

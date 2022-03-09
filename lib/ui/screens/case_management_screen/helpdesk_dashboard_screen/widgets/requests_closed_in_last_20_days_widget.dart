@@ -47,7 +47,7 @@ class _RequestsClosedInLast20DaysWidgetState
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }
@@ -56,12 +56,12 @@ class _RequestsClosedInLast20DaysWidgetState
     );
   }
 
-  Widget _bodyWidget(List<ReadHelpDeskRequestClosedModel> data) {
+  Widget _bodyWidget(List<ReadHelpDeskRequestClosedModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -76,9 +76,9 @@ class _RequestsClosedInLast20DaysWidgetState
             color: Colors.orangeAccent,
             dataSource: data ?? [],
             yValueMapper: (ReadHelpDeskRequestClosedModel model, _) =>
-                model?.violated,
+                model.violated,
             xValueMapper: (ReadHelpDeskRequestClosedModel model, _) =>
-                model?.day,
+                model.day,
           ),
         )
         ..add(
@@ -88,9 +88,9 @@ class _RequestsClosedInLast20DaysWidgetState
             color: Colors.blueAccent,
             dataSource: data ?? [],
             yValueMapper: (ReadHelpDeskRequestClosedModel model, _) =>
-                model?.nonViolated,
+                model.nonViolated,
             xValueMapper: (ReadHelpDeskRequestClosedModel model, _) =>
-                model?.day,
+                model.day,
           ),
         ),
     );

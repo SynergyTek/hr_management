@@ -52,7 +52,7 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
       );
   }
 
-  _handleQueryparams({FilterListModel model}) {
+  _handleQueryparams({FilterListModel? model}) {
     if (model == null)
       return {
         'type': 'thisweek',
@@ -77,7 +77,7 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
               );
             }
 
-            return _bodyWidget(snapshot?.data?.data);
+            return _bodyWidget(snapshot.data?.data);
           } else {
             return CustomProgressIndicator();
           }
@@ -86,12 +86,12 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
     );
   }
 
-  Widget _bodyWidget(List<CaseManagementModel> data) {
+  Widget _bodyWidget(List<CaseManagementModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
@@ -109,8 +109,8 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   name: 'Draft',
                   width: 0.25,
                   dataSource: data ?? [],
-                  yValueMapper: (CaseManagementModel model, _) => model?.draft,
-                  xValueMapper: (CaseManagementModel model, _) => model?.day,
+                  yValueMapper: (CaseManagementModel model, _) => model.draft,
+                  xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
               )
               ..add(
@@ -120,8 +120,8 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   width: 0.25,
                   dataSource: data ?? [],
                   yValueMapper: (CaseManagementModel model, _) =>
-                      model?.inProgress,
-                  xValueMapper: (CaseManagementModel model, _) => model?.day,
+                      model.inProgress,
+                  xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
               )
               ..add(
@@ -131,8 +131,8 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   width: 0.25,
                   dataSource: data ?? [],
                   yValueMapper: (CaseManagementModel model, _) =>
-                      model?.overDue,
-                  xValueMapper: (CaseManagementModel model, _) => model?.day,
+                      model.overDue,
+                  xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
               )
               ..add(
@@ -142,8 +142,8 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   width: 0.25,
                   dataSource: data ?? [],
                   yValueMapper: (CaseManagementModel model, _) =>
-                      model?.completed,
-                  xValueMapper: (CaseManagementModel model, _) => model?.day,
+                      model.completed,
+                  xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
               ),
           ),
@@ -173,12 +173,12 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
           CaseManagementFilterBottomModalSheetWidget(
         data: data,
       ),
-    ).then((List<FilterListModel> value) {
+    ).then((List<FilterListModel>? value) {
       if (value != null) {
         data = value;
       }
 
-      value.forEach((element) {
+      value!.forEach((element) {
         if (element.isChecked == true) {
           helpdeskBox2Bloc
             ..getData(

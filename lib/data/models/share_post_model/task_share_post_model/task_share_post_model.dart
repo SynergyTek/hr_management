@@ -19,10 +19,10 @@ class TaskSharePostModel {
     this.serviceSharedWithTypeId,
   });
 
-  String ntsTaskId;
-  String sharedWithUserId;
-  String sharedWithTeamId;
-  int serviceSharedWithTypeId;
+  String? ntsTaskId;
+  String? sharedWithUserId;
+  String? sharedWithTeamId;
+  int? serviceSharedWithTypeId;
 
   factory TaskSharePostModel.fromJson(Map<String, dynamic> json) =>
       TaskSharePostModel(

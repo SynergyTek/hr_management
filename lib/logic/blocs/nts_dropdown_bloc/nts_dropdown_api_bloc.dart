@@ -8,14 +8,14 @@ class NTSDdAPIBloc {
   final NTSDdRepository _apiRepository = NTSDdRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<NTSDdResponse> _subject =
-      BehaviorSubject<NTSDdResponse>();
+  final BehaviorSubject<NTSDdResponse?> _subject =
+      BehaviorSubject<NTSDdResponse?>();
 
   /// Used to fetch new entries.
   getData({
-    @required String url,
-    @required String idKey,
-    @required String nameKey,
+    required String url,
+    required String? idKey,
+    required String? nameKey,
   }) async {
     NTSDdResponse response = await _apiRepository.getdynamicUrlData(
       url: url,
@@ -50,7 +50,7 @@ class NTSDdAPIBloc {
     _subject.close();
   }
 
-  BehaviorSubject<NTSDdResponse> get subject => _subject;
+  BehaviorSubject<NTSDdResponse?> get subject => _subject;
 }
 
 final ntsDdBloc = NTSDdAPIBloc();

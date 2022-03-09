@@ -50,19 +50,19 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
     );
   }
 
-  Widget _bodyWidget(List<CaseManagementModel> data) {
+  Widget _bodyWidget(List<CaseManagementModel>? data) {
     if (data == null || data.isEmpty)
       return Center(
         child: Text(
           "No data found.",
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context).textHeadingColor,
               ),
         ),
       );
 
     return ListView.builder(
-      itemCount: data?.length ?? 0,
+      itemCount: data.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
           data: data.elementAt(index),
@@ -72,13 +72,13 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
   }
 
   Widget _eachListTile({
-    @required CaseManagementModel data,
+    required CaseManagementModel data,
   }) {
     return Card(
       child: ListTile(
         title: Container(
           padding: DEFAULT_VERTICAL_PADDING,
-          child: Text(data?.name ?? "-"),
+          child: Text(data.name ?? "-"),
         ),
         subtitle: Column(
           mainAxisSize: MainAxisSize.min,
@@ -98,8 +98,8 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.inProgress.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.inProgress.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -118,8 +118,8 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.draft.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.draft.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -143,8 +143,8 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.overDue.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.overDue.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),
@@ -163,8 +163,8 @@ class _TaskSummaryWidgetState extends State<TaskSummaryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data?.completed.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          text: data.completed.toString() ?? "-",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
                         ),

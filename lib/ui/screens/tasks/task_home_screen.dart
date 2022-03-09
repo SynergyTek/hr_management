@@ -9,12 +9,12 @@ import '../../widgets/drawer/nav_drawer_widget.dart';
 import 'widget/task_home_body.dart';
 
 class TaskHomeScreen extends StatelessWidget {
-  final String mode;
-  final String taskStatus;
-  final String moduleId;
-  final bool showBack;
+  final String? mode;
+  final String? taskStatus;
+  final String? moduleId;
+  final bool? showBack;
   const TaskHomeScreen({
-    Key key,
+    Key? key,
     this.taskStatus,
     this.moduleId,
     this.mode,
@@ -24,7 +24,7 @@ class TaskHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: showBack ? null : drawerWidget(context),
+      drawer: showBack! ? null : drawerWidget(context),
       appBar: AppbarWidget(
         title: "Task Home",
       ),

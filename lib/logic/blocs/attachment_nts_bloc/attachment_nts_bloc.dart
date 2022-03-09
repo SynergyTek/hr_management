@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
-import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../data/enums/enums.dart';
@@ -16,9 +17,9 @@ class AttachmentNTSBloc {
 
   /// Used to fetch new entries.
   getData({
-    @required NTSType ntsType,
-    @required String ntsId,
-    String userid,
+    required NTSType? ntsType,
+    required String? ntsId,
+    String? userid,
   }) async {
     AttachmentNTSResponse response = await _apiRepository.getAPIData(
       ntsType: ntsType,
@@ -28,8 +29,8 @@ class AttachmentNTSBloc {
   }
 
   /// Used to create new entries.
-  Future<String> postAttachmentDocumentData({
-    @required Attachment attachmentData,
+  Future<String?> postAttachmentDocumentData({
+    required Attachment attachmentData,
   }) async {
     Response<dynamic> response = await _apiRepository.postAttachmentData(
       attachmentData: attachmentData,
@@ -62,15 +63,13 @@ class AttachmentNTSBloc {
 
   /// Used to delete a particular entry.
   deleteData({
-    Map<String, dynamic> queryparams,
-    @required NTSType ntsType,
-    @required String ntsId,
+    Map<String, dynamic>? queryparams,
+    required NTSType ntsType,
+    required String ntsId,
   }) async {
-    // Delete here
-
-    bool response = await _apiRepository.deleteAPIData(
+    bool response = await (_apiRepository.deleteAPIData(
       queryparams: queryparams,
-    );
+    ) as FutureOr<bool>);
 
     // Update the list (in UI) with the getAPI call.
     if (response)

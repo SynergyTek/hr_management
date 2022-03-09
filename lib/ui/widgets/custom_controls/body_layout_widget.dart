@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
-  final Widget childWidget;
+  final Widget? childWidget;
   // final SettingInheritedWidget settingsInheritedWidget;
   BodyLayout({this.childWidget, 
   // this.settingsInheritedWidget

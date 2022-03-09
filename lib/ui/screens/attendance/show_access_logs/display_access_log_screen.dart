@@ -6,7 +6,7 @@ import '../../../widgets/internet_connectivity_widget.dart';
 import 'widgets/display_access_log_body.dart';
 
 class DisplayAccessLog extends StatelessWidget {
-  const DisplayAccessLog({Key key}) : super(key: key);
+  const DisplayAccessLog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

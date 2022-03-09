@@ -1,9 +1,9 @@
 import 'task_shared_data_model.dart';
 
 class TaskSharedDataResponse {
-  bool isSuccess;
-  List<TaskSharedDataModel> list;
-  String error;
+  bool? isSuccess;
+  List<TaskSharedDataModel>? list;
+  String? error;
 
   TaskSharedDataResponse({this.list});
 

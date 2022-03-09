@@ -3,7 +3,7 @@ import '../../../../logic/blocs/task_bloc/task_bloc.dart';
 import 'task_dashboard_list.dart';
 
 class TaskListBody extends StatefulWidget {
-  const TaskListBody({Key key}) : super(key: key);
+  const TaskListBody({Key? key}) : super(key: key);
 
   @override
   _TaskListBodyState createState() => _TaskListBodyState();
@@ -11,7 +11,7 @@ class TaskListBody extends StatefulWidget {
 
 class _TaskListBodyState extends State<TaskListBody> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = [];
+  List<Widget>? _widgetOptions = [];
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _TaskListBodyState extends State<TaskListBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions!.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

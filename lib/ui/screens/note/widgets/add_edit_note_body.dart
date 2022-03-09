@@ -1,18 +1,12 @@
 import 'dart:convert';
-import 'dart:isolate';
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
 import 'package:hr_management/data/helpers/download_helper/downloader_screen/downloader.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
 import 'package:hr_management/ui/widgets/custom_controls/selection_field_widget.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/user/user.dart';
@@ -44,10 +38,10 @@ import '../../../../themes/theme_config.dart';
 import 'package:sizer/sizer.dart';
 
 class AddEditNoteBody extends StatefulWidget {
-  final String templateCode;
-  final String noteId;
-  final String title;
-  final bool isDependent;
+  final String? templateCode;
+  final String? noteId;
+  final String? title;
+  final bool? isDependent;
 
   AddEditNoteBody({
     this.templateCode,
@@ -65,26 +59,26 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   List<Widget> componentComListWidgets = [];
   List<Widget> udfJsonCompWidgetList = [];
 
-  final Map<String, String> udfJson = {};
-  NoteModel noteModel;
+  final Map<String?, String?> udfJson = {};
+  NoteModel? noteModel;
   NoteModel postNoteModel = NoteModel();
-  UdfJson udfJsonString;
+  UdfJson? udfJsonString;
   List<ColumnComponent> columnComponent = [];
   List<ComponentComponent> componentComList = [];
   List<UdfJsonComponent> udfJsonComponent = [];
   final formReason = GlobalKey<FormState>();
   TextEditingController cancelReason = TextEditingController();
-  DateTime startDate;
-  DateTime dueDate;
+  DateTime? startDate;
+  DateTime? dueDate;
   bool isVisible = false;
-  List<String> selectValue = [];
-  String subjectValue;
-  String descriptionValue;
-  String slaValue;
-  String ownerUserId;
+  List<String?> selectValue = [];
+  String? subjectValue;
+  String? descriptionValue;
+  String? slaValue;
+  String? ownerUserId;
 
-  DateTime leaveStartDate;
-  DateTime leaveEnddate;
+  DateTime? leaveStartDate;
+  DateTime? leaveEnddate;
   bool isTileVisible = true;
   TextEditingController leaveDurationControllerCalendarDays =
       new TextEditingController();
@@ -94,7 +88,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
   void updateLeaveDuration() {
     if (leaveStartDate != null && leaveEnddate != null) {
-      var durationCalendarDays = leaveEnddate.difference(leaveStartDate);
+      var durationCalendarDays = leaveEnddate!.difference(leaveStartDate!);
 
       setState(() {
         leaveDurationControllerCalendarDays.text =
@@ -111,19 +105,19 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     noteBloc
       ..getNoteDetails(
         queryparams: _handleNoteDetailsQueryparams(
-          noteId: widget?.noteId ?? '',
-          templatecode: widget?.templateCode ?? '',
+          noteId: widget.noteId ?? '',
+          templatecode: widget.templateCode ?? '',
           userid:
-              BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ??
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                   '',
         ),
       );
   }
 
   _handleNoteDetailsQueryparams({
-    String templatecode,
-    String noteId,
-    String userid,
+    String? templatecode,
+    String? noteId,
+    String? userid,
   }) {
     return {
       'templatecode': templatecode,
@@ -138,12 +132,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       create: (context) => CreateServiceFormBloc(),
       child: Container(
         padding: DEFAULT_PADDING,
-        child: StreamBuilder<NoteResponse>(
+        child: StreamBuilder<NoteResponse?>(
             stream: noteBloc.subjectNoteDetails.stream,
             builder: (context, AsyncSnapshot snapshot) {
               // print("Snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
-                if (snapshot?.data?.error != null &&
+                if (snapshot.data?.error != null &&
                     snapshot.data.error.length > 0) {
                   return Center(
                     child: Text(snapshot.data.error),
@@ -151,18 +145,18 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 }
                 final createServiceFormBloc =
                     context.read<CreateServiceFormBloc>();
-                noteModel = snapshot?.data?.data;
+                noteModel = snapshot.data?.data;
 
                 parseJsonToUDFModel(
                   createServiceFormBloc,
-                  noteModel.json,
+                  noteModel!.json,
                 );
 
                 return Scaffold(
                   appBar: AppbarWidget(
-                    title: widget.isDependent
+                    title: widget.isDependent!
                         ? "Manage Dependent"
-                        : widget.noteId == null || widget.noteId.isEmpty
+                        : widget.noteId == null || widget.noteId!.isEmpty
                             ? "Create Note" // + widget.templateCode
                             // : widget.title != null
                             //     ? "Edit $widget.title"
@@ -208,15 +202,15 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     if (udfJsonString != null) {
       udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
       for (UdfJsonComponent component in udfJsonString.components) {
-        if (component.columns != null && component.columns.isNotEmpty) {
-          for (Columns column in component.columns) {
-            for (ColumnComponent columnCom in column.components) {
+        if (component.columns != null && component.columns!.isNotEmpty) {
+          for (Columns column in component.columns!) {
+            for (ColumnComponent columnCom in column.components!) {
               columnComponent.add(columnCom);
             }
           }
         }
-        if (component.components != null && component.components.isNotEmpty) {
-          for (ComponentComponent componentComponent in component.components) {
+        if (component.components != null && component.components!.isNotEmpty) {
+          for (ComponentComponent componentComponent in component.components!) {
             componentComList.add(componentComponent);
           }
         }
@@ -225,10 +219,10 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       for (UdfJsonComponent component in udfJsonString.components) {
         if (component.columns == null &&
             (component.components == null ||
-                component.components.length == 0)) {
+                component.components!.length == 0)) {
           udfJsonComponent.add(component);
         } else if (component.components == null &&
-            component.columns.length == 0) {
+            component.columns!.length == 0) {
           udfJsonComponent.add(component);
         }
       }
@@ -254,7 +248,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     CreateServiceFormBloc createServiceFormBloc,
   ) {
     _fromddController.text =
-        noteModel.ownerUserName != null ? noteModel.ownerUserName : "";
+        noteModel!.ownerUserName != null ? noteModel!.ownerUserName! : "";
     return Stack(
       children: [
         ListView(
@@ -262,7 +256,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           children: formFieldsWidgets(
             context,
             createServiceFormBloc,
-            noteModel,
+            noteModel!,
           ),
         ),
         Column(
@@ -272,7 +266,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               height: 50,
               color: Colors.grey[100],
               child: displayFooterWidget(
-                noteModel,
+                noteModel!,
                 createServiceFormBloc,
               ),
             ),
@@ -306,8 +300,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         ],
       ),
     ));
-    if (!widget.isDependent) {
-      if (!noteModel.hideSubject) {
+    if (!widget.isDependent!) {
+      if (!noteModel.hideSubject!) {
         createServiceFormBloc.subject
             .updateInitialValue(subjectValue ?? noteModel.noteSubject ?? "");
         createServiceFormBloc.description
@@ -339,7 +333,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         },
         children: [
           Visibility(
-            visible: !noteModel.hideStartDate,
+            visible: !noteModel.hideStartDate!,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
@@ -354,8 +348,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                           startDate = date;
                           if (dueDate != null && dueDate.toString().isNotEmpty)
                             compareStartEndDate(
-                                startDate: startDate,
-                                enddate: dueDate,
+                                startDate: startDate!,
+                                enddate: dueDate!,
                                 context: context,
                                 updateDuration: false);
                         });
@@ -376,8 +370,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                           if (startDate != null &&
                               startDate.toString().isNotEmpty)
                             compareStartEndDate(
-                                startDate: startDate,
-                                enddate: dueDate,
+                                startDate: startDate!,
+                                enddate: dueDate!,
                                 context: context,
                                 updateDuration: false);
                         });
@@ -424,7 +418,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             ],
           ),
           Visibility(
-            visible: !noteModel.hideDescription,
+            visible: !noteModel.hideDescription!,
             child: BlocTextBoxWidget(
               fieldName: 'Description',
               readonly: false,
@@ -450,7 +444,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           onListTap: (value) {
             userBLoc.subjectUserDataList.sink.add(null);
             User _user = value;
-            _fromddController.text = _user.name;
+            _fromddController.text = _user.name!;
             ownerUserId = _user.id;
           },
         ),
@@ -499,11 +493,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       // print(model[i].label);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final textField$i =
@@ -542,11 +536,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
       } else if (model[i].type == 'textarea') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null && widget.noteId.isNotEmpty)) {
+            (widget.noteId != null && widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         // final textArea$i = new TextFieldBloc();
@@ -567,14 +561,14 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
       } else if (model[i].type == 'number') {
-        String initialValue;
+        String? initialValue;
         // final number$i = new TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           leaveDurationControllerCalendarDays.text = model[i].udfValue;
           initialValue = leaveDurationControllerCalendarDays.text;
@@ -601,11 +595,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final password$i =
@@ -626,18 +620,18 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(new DynamicCheckBoxValue(
           code: udfJson[model[i].key],
           name: model[i].label,
           key: new Key(model[i].type),
-          checkUpdate: (bool check) {
+          checkUpdate: (bool? check) {
             udfJson[model[i].key] = check.toString();
             // model[i].value = check.toString();
           },
@@ -645,13 +639,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       } else if (model[i].type == 'selectboxes') {
         TextEditingController _ddController = new TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          _ddController.text = udfJson[model[i].key];
+          _ddController.text = udfJson[model[i].key]!;
         }
         listDynamic.add(NTSDropDownSelect(
           title: model[i].label,
@@ -664,18 +658,18 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           url: model[i].data,
           onListTap: (dynamic value) {
             NTSDropdownModel _selectedIdNameViewModel = value;
-            _ddController.text = _selectedIdNameViewModel.name;
+            _ddController.text = _selectedIdNameViewModel.name!;
             udfJson[model[i].label] = _selectedIdNameViewModel.id;
             // udfJson[model[i].label] = value.toString();
           },
         ));
       } else if (model[i].type == 'radio') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final radio$i =
@@ -690,7 +684,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       } else if (model[i].type == 'select') {
         TextEditingController _ddController = new TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
@@ -700,11 +694,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         }
 
         if ((selectValue != null && selectValue.isNotEmpty) &&
-            (selectValue[i] != null && selectValue[i].isNotEmpty)) {
-          _ddController.text = selectValue[i];
+            (selectValue[i] != null && selectValue[i]!.isNotEmpty)) {
+          _ddController.text = selectValue[i]!;
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           editNoteDDValue(
               code: udfJson[model[i].key],
@@ -742,7 +736,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             onListTap: (dynamic value) {
               ntsDdBloc.subject.sink.add(null);
               NTSDropdownModel _selectedIdNameViewModel = value;
-              _ddController.text = _selectedIdNameViewModel.name;
+              _ddController.text = _selectedIdNameViewModel.name!;
               selectValue[i] = _selectedIdNameViewModel.name;
               udfJson[model[i].key] = _selectedIdNameViewModel.id;
             },
@@ -751,7 +745,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       } else if (model[i].type == 'file') {
         TextEditingController attchmentController = new TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
@@ -760,19 +754,19 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           }
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           // print(model[i].udfValue);
         }
 
         attchmentController.text =
             // (widget.noteId == null ||widget.noteId.isEmpty)
-            (udfJson[model[i].key] == null || udfJson[model[i].key].isEmpty)
+            (udfJson[model[i].key] == null || udfJson[model[i].key]!.isEmpty)
                 ? " Select File to Attach "
                 : (selectValue != null && selectValue.length > 0)
-                    ? (selectValue[i] == null || selectValue[i].isEmpty)
-                        ? " (1) File Attached: " + udfJson[model[i].key]
-                        : " (1) File Attached: " + selectValue[i]
+                    ? (selectValue[i] == null || selectValue[i]!.isEmpty)
+                        ? " (1) File Attached: " + udfJson[model[i].key]!
+                        : " (1) File Attached: " + selectValue[i]!
                     : "Select File to Attach";
         // : " (1) File Attached " + udfJson[model[i].key];
 
@@ -793,7 +787,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                       model[i].label = value2;
                       udfJson[model[i].key] = value;
                       attchmentController.text =
-                          " (1) File Attached: " + selectValue[i];
+                          " (1) File Attached: " + selectValue[i]!;
                     });
                   }),
             );
@@ -809,28 +803,28 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         ));
       } else if (model[i].type == 'datetime') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           // print(model[i].udfValue);
         }
         listDynamic.add(new DynamicDateTimeBox(
-          code: udfJson[model[i].key].isNotEmpty
+          code: udfJson[model[i].key]!.isNotEmpty
               ? model[i]
                       .udfValue
                       .toString()
                       .split(' ')[0]
                       .contains(new RegExp(r'[a-z]'))
                   ? null
-                  : udfJson[model[i].key].contains('/')
+                  : udfJson[model[i].key]!.contains('/')
                       ? DateFormat("MM/dd/yyyy")
-                          .parse(udfJson[model[i].key])
+                          .parse(udfJson[model[i].key]!)
                           .toString()
                       : DateFormat("yyyy-MM-dd")
-                          .parse(udfJson[model[i].key])
+                          .parse(udfJson[model[i].key]!)
                           .toString()
               : null,
           name: model[i].label,
@@ -850,8 +844,8 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   leaveStartDate != null &&
                   leaveEnddate != null) {
                 compareStartEndDate(
-                    startDate: leaveStartDate,
-                    enddate: leaveEnddate,
+                    startDate: leaveStartDate!,
+                    enddate: leaveEnddate!,
                     context: context,
                     updateDuration: true);
               }
@@ -860,18 +854,18 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         ));
       } else if (model[i].type == 'time') {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(
           new DynamicTimeBox(
-            code: udfJson[model[i].key].isNotEmpty
+            code: udfJson[model[i].key]!.isNotEmpty
                 ? DateFormat("yyyy-MM-dd HH:mm:ss aa")
-                    .parse(udfJson[model[i].key])
+                    .parse(udfJson[model[i].key]!)
                     .toString()
                 : null,
             name: model[i].label,
@@ -886,11 +880,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       } else if (model[i].type == 'hidden') {
         //Hidden Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final hidden$i = new TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -912,11 +906,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       } else if (model[i].type == 'phoneNumber') {
         //Phone Number Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final phoneNumber$i =
@@ -937,11 +931,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       } else if (model[i].type == 'email') {
         //Email Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final email$i = new TextFieldBloc(
@@ -963,11 +957,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId.isEmpty)) {
+            (widget.noteId == null || widget.noteId!.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId.isNotEmpty)) {
+            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final textField$i =
@@ -1050,7 +1044,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               Visibility(
-                visible: noteModel.isCompleteButtonVisible,
+                visible: noteModel.isCompleteButtonVisible!,
                 child: PrimaryButton(
                   backgroundColor: Colors.green,
                   buttonText: 'Complete',
@@ -1077,7 +1071,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
               //   ),
               // ),
               Visibility(
-                visible: noteModel.isCloseButtonVisible,
+                visible: noteModel.isCloseButtonVisible!,
                 child: PrimaryButton(
                   backgroundColor: Colors.grey,
                   buttonText: 'Close',
@@ -1086,7 +1080,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 ),
               ),
               Visibility(
-                visible: noteModel.isDraftButtonVisible,
+                visible: noteModel.isDraftButtonVisible!,
                 child: PrimaryButton(
                   backgroundColor: Colors.greenAccent,
                   buttonText: 'Draft',
@@ -1101,7 +1095,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 ),
               ),
               Visibility(
-                visible: noteModel.isExpireButtonVisible,
+                visible: noteModel.isExpireButtonVisible!,
                 child: PrimaryButton(
                   backgroundColor: Colors.red,
                   buttonText: 'Expiry',
@@ -1116,17 +1110,17 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                 ),
               ),
               Visibility(
-                visible: noteModel.isSubmitButtonVisible,
+                visible: noteModel.isSubmitButtonVisible!,
                 child: PrimaryButton(
                   buttonText: 'Submit',
                   handleOnPressed: () {
                     bool isValid = false;
                     for (var i = 0; i < columnComponent.length; i++) {
-                      if (columnComponent[i]?.validate?.required != null &&
-                          columnComponent[i].validate.required == true &&
+                      if (columnComponent[i].validate?.required != null &&
+                          columnComponent[i].validate!.required == true &&
                           udfJson.containsKey(columnComponent[i].key) &&
                           (udfJson[columnComponent[i].key] == null ||
-                              udfJson[columnComponent[i].key].isEmpty)) {
+                              udfJson[columnComponent[i].key]!.isEmpty)) {
                         displaySnackBar(
                             text: 'Please enter ${columnComponent[i].label}',
                             context: context);
@@ -1134,11 +1128,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                       }
                     }
                     for (var i = 0; i < componentComList.length; i++) {
-                      if (componentComList[i]?.validate?.required != null &&
-                          componentComList[i].validate.required == true &&
+                      if (componentComList[i].validate?.required != null &&
+                          componentComList[i].validate!.required == true &&
                           udfJson.containsKey(componentComList[i].key) &&
                           (udfJson[componentComList[i].key] == null ||
-                              udfJson[componentComList[i].key].isEmpty)) {
+                              udfJson[componentComList[i].key]!.isEmpty)) {
                         displaySnackBar(
                             text: 'Please enter ${componentComList[i].label}',
                             context: context);
@@ -1146,11 +1140,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                       }
                     }
                     for (var i = 0; i < udfJsonComponent.length; i++) {
-                      if (udfJsonComponent[i]?.validate?.required != null &&
-                          udfJsonComponent[i].validate.required == true &&
+                      if (udfJsonComponent[i].validate?.required != null &&
+                          udfJsonComponent[i].validate!.required == true &&
                           udfJson.containsKey(udfJsonComponent[i].key) &&
                           (udfJson[udfJsonComponent[i].key] == null ||
-                              udfJson[udfJsonComponent[i].key].isEmpty)) {
+                              udfJson[udfJsonComponent[i].key]!.isEmpty)) {
                         displaySnackBar(
                             text: 'Please enter ${udfJsonComponent[i].label}',
                             context: context);
@@ -1175,22 +1169,22 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
 
   requiredFieldValidations() {
     for (var i = 0; i < columnComponent.length; i++) {
-      if (columnComponent[i]?.validate?.required != null &&
-          columnComponent[i].validate.required == true &&
+      if (columnComponent[i].validate?.required != null &&
+          columnComponent[i].validate!.required == true &&
           udfJson.containsKey(columnComponent[i].key) &&
           (udfJson[columnComponent[i].key] == null ||
-              udfJson[columnComponent[i].key].isEmpty)) {
+              udfJson[columnComponent[i].key]!.isEmpty)) {
         displaySnackBar(
             text: 'Please enter ${columnComponent[i].label}', context: context);
         return;
       }
     }
     for (var i = 0; i < componentComList.length; i++) {
-      if (componentComList[i]?.validate?.required != null &&
-          componentComList[i].validate.required == true &&
+      if (componentComList[i].validate?.required != null &&
+          componentComList[i].validate!.required == true &&
           udfJson.containsKey(componentComList[i].key) &&
           (udfJson[componentComList[i].key] == null ||
-              udfJson[componentComList[i].key].isEmpty)) {
+              udfJson[componentComList[i].key]!.isEmpty)) {
         displaySnackBar(
             text: 'Please enter ${componentComList[i].label}',
             context: context);
@@ -1198,11 +1192,11 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       }
     }
     for (var i = 0; i < udfJsonComponent.length; i++) {
-      if (udfJsonComponent[i]?.validate?.required != null &&
-          udfJsonComponent[i].validate.required == true &&
+      if (udfJsonComponent[i].validate?.required != null &&
+          udfJsonComponent[i].validate!.required == true &&
           udfJson.containsKey(udfJsonComponent[i].key) &&
           (udfJson[udfJsonComponent[i].key] == null ||
-              udfJson[udfJsonComponent[i].key].isEmpty)) {
+              udfJson[udfJsonComponent[i].key]!.isEmpty)) {
         displaySnackBar(
             text: 'Please enter ${udfJsonComponent[i].label}',
             context: context);
@@ -1258,7 +1252,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   PrimaryButton(
                     buttonText: 'Save',
                     handleOnPressed: () {
-                      if (formReason.currentState.validate()) {}
+                      if (formReason.currentState!.validate()) {}
                       Navigator.of(context)
                           .pop(); //TODO:add appropriate save action
                     },
@@ -1274,13 +1268,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   }
 
   void compareStartEndDate(
-      {DateTime startDate,
-      DateTime enddate,
-      BuildContext context,
-      bool updateDuration}) {
+      {required DateTime startDate,
+      required DateTime enddate,
+      BuildContext? context,
+      bool? updateDuration}) {
     if (enddate.isBefore(startDate))
       _showMyDialog();
-    else if (updateDuration) updateLeaveDuration();
+    else if (updateDuration!) updateLeaveDuration();
   }
 
   Future<void> _showMyDialog() async {
@@ -1308,13 +1302,14 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     );
   }
 
-  String resultMsg = '';
+  String? resultMsg = '';
   noteViewModelPostRequest(
     int postDataAction,
     String noteStatusCode,
     CreateServiceFormBloc createServiceFormBloc,
   ) async {
-    String userId = BlocProvider.of<UserModelBloc>(context).state.userModel.id;
+    String? userId =
+        BlocProvider.of<UserModelBloc>(context).state.userModel!.id;
     String stringModel = jsonEncode(noteModel);
     var jsonModel = jsonDecode(stringModel);
     postNoteModel = NoteModel.fromJson(jsonModel);
@@ -1323,7 +1318,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     postNoteModel.requestedByUserId = userId;
     postNoteModel.subject = createServiceFormBloc.subject.value;
     postNoteModel.noteDescription = createServiceFormBloc.description.value;
-    postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
+    postNoteModel.dataAction = widget.noteId!.isEmpty ? 1 : 2;
     // postDataAction;
     postNoteModel.noteStatusCode = noteStatusCode;
     postNoteModel.json = jsonEncode(udfJson);
@@ -1336,14 +1331,14 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     PostResponse result = await noteBloc.postNoteData(
       noteModel: postNoteModel,
       queryparams: _handleNoteDetailsQueryparams(
-        noteId: widget?.noteId ?? '',
-        templatecode: widget?.templateCode ?? '',
+        noteId: widget.noteId ?? '',
+        templatecode: widget.templateCode ?? '',
         userid:
-            BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       ),
     );
     // print(result);
-    if (result.isSuccess) {
+    if (result.isSuccess!) {
       setState(() {
         isVisible = false;
       });
@@ -1355,15 +1350,15 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       });
       resultMsg = result.messages;
     }
-    displaySnackBar(text: resultMsg, context: context);
+    displaySnackBar(text: resultMsg!, context: context);
   }
 
   editNoteDDValue({
-    String idKey,
-    String nameKey,
-    String url,
-    String code,
-    TextEditingController ddController,
+    String? idKey,
+    String? nameKey,
+    required String url,
+    String? code,
+    required TextEditingController ddController,
   }) async {
     NTSDdRepository ntsDdRepository = NTSDdRepository();
     String completeUrl = url + "&filterKey=$idKey&filterValue=$code";
@@ -1373,7 +1368,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       url: completeUrl,
     );
 
-    ddController.text = ntsDdResponse?.data?.elementAt(0)?.name ?? '';
+    ddController.text = ntsDdResponse.data.elementAt(0).name ?? '';
     // return ntsDdResponse?.data?.elementAt(0)?.name;
   }
 
@@ -1386,16 +1381,16 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         curve: Curves.bounceInOut,
         children: [
           SpeedDialChild(
-            visible: noteModel.isAddCommentEnabled &&
+            visible: noteModel!.isAddCommentEnabled! &&
                 widget.noteId != null &&
-                widget.noteId.isNotEmpty,
+                widget.noteId!.isNotEmpty,
             child: Icon(Icons.comment, color: Colors.white),
             backgroundColor: Colors.blue,
             onTap: () {
               Navigator.pushNamed(context, COMMENT_ROUTE,
                   arguments: ScreenArguments(
                     ntstype: NTSType.note,
-                    arg1: noteModel.noteId,
+                    arg1: noteModel!.noteId,
                   ));
             },
             label: 'Comment',
@@ -1419,14 +1414,14 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           ),
 
           SpeedDialChild(
-            visible: widget?.noteId != null && widget.noteId.isNotEmpty,
+            visible: widget.noteId != null && widget.noteId!.isNotEmpty,
             child: Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
             // onTap: () => print('Pressed Code for NOte'),
             onTap: () => Navigator.pushNamed(context, NTS_SHARE,
                 arguments: ScreenArguments(
                   ntstype: NTSType.note,
-                  arg1: noteModel.id,
+                  arg1: noteModel!.id,
                 )),
             label: 'Share',
             labelStyle:
@@ -1481,7 +1476,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
       ATTACHMENT_NTS_ROUTE,
       arguments: ScreenArguments(
         ntstype: NTSType.note,
-        arg1: noteModel.noteId,
+        arg1: noteModel!.noteId,
       ),
     );
   }
@@ -1491,7 +1486,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
   // -------------------------------------------------- //
 
   _handleDownloadOnPressed({
-    @required data,
+    required data,
   }) async {
     if (data == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -1513,13 +1508,13 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     );
 
     print(
-      response.headers['content-disposition'][0]
+      response.headers['content-disposition']![0]
           .split(';')[1]
           .split('=')[1]
           .trim(),
     );
 
-    String fileName = response.headers['content-disposition'][0]
+    String fileName = response.headers['content-disposition']![0]
         .split(';')[1]
         .split('=')[1]
         .trim();

@@ -35,7 +35,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
   _handleQueryparams() {
     return {
       'userid':
-          BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? '',
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
   }
 
@@ -54,7 +54,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
               );
             }
 
-            if (snapshot?.data?.data == null)
+            if (snapshot.data?.data == null)
               return Center(
                 child: Text("No data available."),
               );
@@ -71,7 +71,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
   }
 
   Widget _widget({
-    @required EmployeeProfileModel data,
+    required EmployeeProfileModel data,
   }) {
     return Container(
       child: Stack(
@@ -89,7 +89,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
   }
 
   Widget _upperSectionWidget({
-    @required EmployeeProfileModel data,
+    required EmployeeProfileModel data,
   }) {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -97,7 +97,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
         mainAxisSize: MainAxisSize.max,
         children: [
           _profilePicture(
-            profilePicturePath: data.photoName,
+            profilePicturePath: data.photoName!,
           ),
           _profileInformation(
             context: context,
@@ -109,7 +109,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
   }
 
   Widget _lowerSectionWidget({
-    @required EmployeeProfileModel data,
+    required EmployeeProfileModel data,
   }) {
     return Container(
       width: MediaQuery.of(context).size.width,

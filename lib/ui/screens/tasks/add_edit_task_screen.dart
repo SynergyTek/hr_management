@@ -6,10 +6,10 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widget/add_edit_task_body.dart';
 
 class AddEditTaskScreen extends StatelessWidget {
-  final String templateCode;
-  final String taskId;
-  final String title;
-  const AddEditTaskScreen({Key key, this.templateCode, this.taskId, this.title})
+  final String? templateCode;
+  final String? taskId;
+  final String? title;
+  const AddEditTaskScreen({Key? key, this.templateCode, this.taskId, this.title})
       : super(key: key);
 
   @override

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'payslip_model.dart';
 
 class PayslipResponse {
-  bool isSuccess;
-  final List<PayslipModel> data;
-  String error;
+  bool? isSuccess;
+  final List<PayslipModel>? data;
+  String? error;
 
   PayslipResponse({
-    @required this.data,
+    required this.data,
   });
 
   PayslipResponse.fromJson(List response)

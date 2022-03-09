@@ -6,12 +6,12 @@ import 'service.dart';
 /// list of APIData and error string if our API call gets failed
 /// or returns an error in response.
 class ServiceResponse {
-  bool isSuccess;
-  final Service data;
-  String error;
+  bool? isSuccess;
+  final Service? data;
+  String? error;
 
   ServiceResponse({
-    @required this.data,
+    required this.data,
   });
 
   ServiceResponse.fromJson(Map<String, dynamic> response)
@@ -23,12 +23,12 @@ class ServiceResponse {
 }
 
 class ServiceListResponse {
-  bool isSuccess;
-  List<Service> list;
-  String error;
+  bool? isSuccess;
+  List<Service>? list;
+  String? error;
 
   ServiceListResponse({
-    @required this.list,
+    required this.list,
   });
 
   ServiceListResponse.fromJson(List response)

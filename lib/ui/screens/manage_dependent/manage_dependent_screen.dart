@@ -15,7 +15,7 @@ class ManageDependentScreen extends StatefulWidget {
 
 class _ManageDependentScreenState extends State<ManageDependentScreen> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = [];
+  List<Widget>? _widgetOptions = [];
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _ManageDependentScreenState extends State<ManageDependentScreen> {
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: Center(
-            child: _widgetOptions.elementAt(_selectedIndex),
+            child: _widgetOptions!.elementAt(_selectedIndex),
           ),
         ),
       ),

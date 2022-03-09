@@ -6,10 +6,10 @@ import '../../widgets/internet_connectivity_widget.dart';
 import 'widgets/component_result_body_widget.dart';
 
 class ComponentResultScreen extends StatelessWidget {
-  final String serviceId;
+  final String? serviceId;
 
   const ComponentResultScreen({
-    @required this.serviceId,
+    required this.serviceId,
   });
 
   @override

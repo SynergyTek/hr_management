@@ -3,10 +3,10 @@ import 'package:hr_management/data/models/documents_models/doc_req_by_hr/doc_req
 import '../../../../../themes/theme_config.dart';
 
 class DocReqByHrBottomSheetWidget extends StatelessWidget {
-  final DocReqByHrModel data;
+  final DocReqByHrModel? data;
 
   const DocReqByHrBottomSheetWidget({
-    @required this.data,
+    required this.data,
   });
 
   @override
@@ -46,7 +46,7 @@ class DocReqByHrBottomSheetWidget extends StatelessWidget {
                   Text(
                     data?.status ?? '-',
                     style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                      fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                       color: _handleListTileColor(context),
                       fontWeight: FontWeight.bold,
                     ),
@@ -68,11 +68,11 @@ class DocReqByHrBottomSheetWidget extends StatelessWidget {
   /// Helper function to handle color of the status.
   Color _handleListTileColor(BuildContext context) {
     // Guard clause
-    if (data?.status == null || data.status.isEmpty) return Colors.white54;
+    if (data?.status == null || data!.status!.isEmpty) return Colors.white54;
 
-    if (data.status == 'In Progress') return Colors.green;
-    if (data.status == 'Draft') return Colors.orangeAccent;
-    if (data.status == 'Overdue') return Colors.redAccent;
+    if (data!.status == 'In Progress') return Colors.green;
+    if (data!.status == 'Draft') return Colors.orangeAccent;
+    if (data!.status == 'Overdue') return Colors.redAccent;
 
     return Theme.of(context).invertedColor;
   }

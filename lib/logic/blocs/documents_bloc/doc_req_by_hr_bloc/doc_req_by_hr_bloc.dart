@@ -11,7 +11,7 @@ class DocReqByHrBloc {
 
   /// Used to fetch new entries.
   getData({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     DocReqByHrResponse response = await _apiRepository.getAPIData(
       queryparams: queryparams,

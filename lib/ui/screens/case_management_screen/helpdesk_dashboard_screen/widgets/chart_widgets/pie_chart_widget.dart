@@ -5,10 +5,10 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class PieChartWidget extends StatelessWidget {
   final List<PieSeries> series;
 
-  final Widget child;
+  final Widget? child;
 
   const PieChartWidget({
-    @required this.series,
+    required this.series,
     this.child,
   }) : assert(series != null);
 

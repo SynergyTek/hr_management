@@ -9,12 +9,12 @@ import '../appbar_widget.dart';
 import '../internet_connectivity_widget.dart';
 
 class NTSFilterWidget extends StatefulWidget {
-  final FilterListTapCallBack onListTap;
-  final NTSType ntsFilter;
-  final bool isDashboard;
+  final FilterListTapCallBack? onListTap;
+  final NTSType? ntsFilter;
+  final bool? isDashboard;
 
   const NTSFilterWidget({
-    Key key,
+    Key? key,
     this.onListTap,
     this.ntsFilter,
     this.isDashboard,
@@ -34,10 +34,10 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
 
   Map<String, String> filterOptions = Map();
   List<String> filterList = [];
-  FilterType filterType;
+  FilterType? filterType;
 
-  String lovType;
-  String enumType;
+  String? lovType;
+  String? enumType;
 
   @override
   void initState() {
@@ -55,10 +55,10 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     Map<String, dynamic> queryparams = Map();
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
     commonBloc.getModuleTreeList(
       queryparams: queryparams,
@@ -113,10 +113,10 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     Map<String, dynamic> queryparams = Map();
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
     queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state?.userModel?.id ?? "";
+        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
     if (enumType != null) queryparams['enumType'] = enumType;
 
@@ -177,7 +177,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            if (!widget.isDashboard)
+                            if (!widget.isDashboard!)
                               optionsRow(
                                 text: 'Modules',
                                 applied: modulesOptions,
@@ -212,7 +212,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                                 apiCallLOVId();
                               },
                             ),
-                            if (!widget.isDashboard)
+                            if (!widget.isDashboard!)
                               optionsRow(
                                 text: 'Role Filter',
                                 applied: roleFilterOptions,
@@ -231,7 +231,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                                 },
                               ),
                             if (widget.ntsFilter == NTSType.service &&
-                                widget.isDashboard)
+                                widget.isDashboard!)
                               optionsRow(
                                 text: 'Service owned/Requested',
                                 applied: serviceOwnedRequestedOptions,
@@ -251,7 +251,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                                 },
                               ),
                             if (widget.ntsFilter == NTSType.task &&
-                                widget.isDashboard)
+                                widget.isDashboard!)
                               optionsRow(
                                 text: 'Owner',
                                 applied: ownerOptions,
@@ -270,7 +270,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
                                 },
                               ),
                             if (widget.ntsFilter == NTSType.task &&
-                                widget.isDashboard)
+                                widget.isDashboard!)
                               optionsRow(
                                 text: 'Assignee',
                                 applied: assigneeOptions,
@@ -324,7 +324,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     );
   }
 
-  optionsRow({String text, Function onTap, bool applied}) {
+  optionsRow({required String text, Function? onTap, required bool applied}) {
     return InkWell(
       child: Container(
         color: applied ? Colors.blue[300] : null,
@@ -340,7 +340,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
           ],
         ),
       ),
-      onTap: onTap,
+      onTap: onTap as void Function()?,
     );
   }
 
@@ -350,7 +350,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
   }
 
   displayValues() {
-    List<dynamic> dataList = [];
+    List<dynamic>? dataList = [];
     return StreamBuilder(
       stream: (widget.ntsFilter == NTSType.task && ownerOptions)
           ? commonBloc.subjectOwnerNameList.stream
@@ -368,16 +368,16 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
           return ListView.builder(
             // physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: dataList.length,
+            itemCount: dataList!.length,
             itemBuilder: (BuildContext context, int index) {
-              print(dataList.length);
+              print(dataList!.length);
               return ListTile(
                 title: (widget.ntsFilter == NTSType.task && ownerOptions)
-                    ? Text(dataList[index].ownerName != null
-                        ? dataList[index].ownerName
+                    ? Text(dataList![index].ownerName != null
+                        ? dataList![index].ownerName
                         : ' ')
-                    : Text(dataList[index].name != null
-                        ? dataList[index].name
+                    : Text(dataList![index].name != null
+                        ? dataList![index].name
                         : ' '),
                 onTap: () {
                   manageValues(dataList, index);
@@ -414,28 +414,28 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     );
   }
 
-  manageValues(List<dynamic> dataList, int index) {
+  manageValues(List<dynamic>? dataList, int index) {
     // All module filters
     if (filterType == FilterType.module || filterType == FilterType.role)
-      widget.onListTap(dataList[index].id, filterType);
+      widget.onListTap!(dataList![index].id, filterType!);
     // Service Home
-    else if (!widget.isDashboard && widget.ntsFilter == NTSType.service)
-      widget.onListTap(dataList[index].code, filterType);
+    else if (!widget.isDashboard! && widget.ntsFilter == NTSType.service)
+      widget.onListTap!(dataList![index].code, filterType!);
     // Service Home Dashboard
-    else if (widget.isDashboard && widget.ntsFilter == NTSType.service)
-      widget.onListTap(dataList[index].id, filterType);
+    else if (widget.isDashboard! && widget.ntsFilter == NTSType.service)
+      widget.onListTap!(dataList![index].id, filterType!);
     // Task Home
-    else if (!widget.isDashboard && widget.ntsFilter == NTSType.task)
-      widget.onListTap(dataList[index].code, filterType);
+    else if (!widget.isDashboard! && widget.ntsFilter == NTSType.task)
+      widget.onListTap!(dataList![index].code, filterType!);
     // Task Home Dashboard
-    else if (widget.isDashboard && widget.ntsFilter == NTSType.task)
-      widget.onListTap(dataList[index].id, filterType);
+    else if (widget.isDashboard! && widget.ntsFilter == NTSType.task)
+      widget.onListTap!(dataList![index].id, filterType!);
     // Note Home
-    else if (!widget.isDashboard && widget.ntsFilter == NTSType.note)
-      widget.onListTap(dataList[index].code, filterType);
+    else if (!widget.isDashboard! && widget.ntsFilter == NTSType.note)
+      widget.onListTap!(dataList![index].code, filterType!);
     // Note Home Dashboard
-    else if (widget.isDashboard && widget.ntsFilter == NTSType.note)
-      widget.onListTap(dataList[index].id, filterType);
+    else if (widget.isDashboard! && widget.ntsFilter == NTSType.note)
+      widget.onListTap!(dataList![index].id, filterType!);
   }
 
   valueslist() {

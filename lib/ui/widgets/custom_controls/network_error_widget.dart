@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NetworkErrorWidget extends StatelessWidget {
-  const NetworkErrorWidget({Key key, this.errorMsg}) : super(key: key);
-final String errorMsg;
+  const NetworkErrorWidget({Key? key, this.errorMsg}) : super(key: key);
+final String? errorMsg;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,7 +16,7 @@ final String errorMsg;
               color: Theme.of(context).primaryColor,
               size: 60,
             ),
-            Text(errorMsg,
+            Text(errorMsg!,
                 style: TextStyle(fontSize: 18.0, color: Colors.grey[600])),
           ],
         ),

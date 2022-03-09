@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../../../themes/theme_config.dart';
 
 class LeaveDetailsBottomSheetWidget extends StatelessWidget {
-  final String duration;
+  final String? duration;
 
-  const LeaveDetailsBottomSheetWidget({Key key, this.duration})
+  const LeaveDetailsBottomSheetWidget({Key? key, this.duration})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

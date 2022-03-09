@@ -1,7 +1,7 @@
 class CutCopyPasteModel {
-  String sourceId;
-  bool isCopy;
-  bool isCut;
+  String? sourceId;
+  bool? isCopy;
+  bool? isCut;
   CutCopyPasteModel({
     this.sourceId,
     this.isCopy,

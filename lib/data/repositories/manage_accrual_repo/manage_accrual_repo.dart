@@ -4,7 +4,7 @@ class ManageAccrualRepository extends AbstractManageAccrualRepository {
   final Dio _dio = Dio();
 
   Future<ManageAccrualResponse> getManageAccrual({
-    Map<String, dynamic> queryparams,
+    Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.READ_PAYROLL_DATA;
 
