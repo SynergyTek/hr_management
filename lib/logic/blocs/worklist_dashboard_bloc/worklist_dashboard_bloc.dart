@@ -8,9 +8,9 @@ class WorklistDashboardBloc {
       WorklistDashboardRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<WorklistDashboardResponse>
+  final BehaviorSubject<WorkboardResponse>
       _subjectWorklistDashboardList =
-      BehaviorSubject<WorklistDashboardResponse>();
+      BehaviorSubject<WorkboardResponse>();
 
   final BehaviorSubject<NoteWorklistDashboardResponse>
       _subjectWorklistNoteDashboardList =
@@ -20,7 +20,7 @@ class WorklistDashboardBloc {
   getWorklistDashboardData({
     Map<String, dynamic>? queryparams,
   }) async {
-    WorklistDashboardResponse response =
+    WorkboardResponse response =
         await _worklistDashboardRepository.getWorklistDashboardCount(
       queryparams: queryparams,
     );
@@ -60,7 +60,7 @@ class WorklistDashboardBloc {
     _subjectWorklistNoteDashboardList.close();
   }
 
-  BehaviorSubject<WorklistDashboardResponse> get subjectWorklistDashboardList =>
+  BehaviorSubject<WorkboardResponse> get subjectWorklistDashboardList =>
       _subjectWorklistDashboardList;
   BehaviorSubject<NoteWorklistDashboardResponse>
       get subjectWorklistNoteDashboardList => _subjectWorklistNoteDashboardList;

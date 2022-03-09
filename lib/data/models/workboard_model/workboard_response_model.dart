@@ -1,18 +1,17 @@
-
 import 'workboard_model.dart';
 
-class WorkBoardListResponseModel {
+class WorkBoardResponseModel {
   final List<WorkboardModel>? data;
   String? error;
 
-  WorkBoardListResponseModel({
+  WorkBoardResponseModel({
     required this.data,
   });
 
-  WorkBoardListResponseModel.fromJson(List response)
+  WorkBoardResponseModel.fromJson(List response)
       : data = (response).map((i) => new WorkboardModel.fromJson(i)).toList();
 
-  WorkBoardListResponseModel.withError(String errorValue)
+  WorkBoardResponseModel.withError(String errorValue)
       : data = null,
         error = errorValue;
 }

@@ -10,7 +10,7 @@ part 'worklist_dashboard_repo.dart';
 abstract class AbstractWorklistDashboardRepository {
   AbstractWorklistDashboardRepository();
 
-  Future<WorklistDashboardResponse> getWorklistDashboardCount();
+  Future<WorkboardResponse> getWorklistDashboardCount();
 
   Future<NoteWorklistDashboardResponse> getWorklistDashboardNoteCount();
 
@@ -19,12 +19,12 @@ abstract class AbstractWorklistDashboardRepository {
     Map<String, dynamic>? queryparams,
   });
 
-  Future<WorklistDashboardResponse> putAPIData({
+  Future<WorkboardResponse> putAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
 
-  Future<WorklistDashboardResponse> deleteAPIData({
+  Future<WorkboardResponse> deleteAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
