@@ -41,7 +41,7 @@ class _TaskServiceWorklistState extends State<TaskServiceWorklist> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<WorkboardResponse>(
+    return StreamBuilder<WorklistDashboardResponse>(
         stream: worklistDashboardBloc.subjectWorklistDashboardList.stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {

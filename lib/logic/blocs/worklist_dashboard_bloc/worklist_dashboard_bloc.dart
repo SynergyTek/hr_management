@@ -1,3 +1,4 @@
+import '../../../constants/api_endpoints.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../../../data/models/worklist_dashboard/worklist_dashboard_response.dart';
@@ -8,9 +9,9 @@ class WorklistDashboardBloc {
       WorklistDashboardRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<WorkboardResponse>
+  final BehaviorSubject<WorklistDashboardResponse>
       _subjectWorklistDashboardList =
-      BehaviorSubject<WorkboardResponse>();
+      BehaviorSubject<WorklistDashboardResponse>();
 
   final BehaviorSubject<NoteWorklistDashboardResponse>
       _subjectWorklistNoteDashboardList =
@@ -20,7 +21,7 @@ class WorklistDashboardBloc {
   getWorklistDashboardData({
     Map<String, dynamic>? queryparams,
   }) async {
-    WorkboardResponse response =
+    WorklistDashboardResponse response =
         await _worklistDashboardRepository.getWorklistDashboardCount(
       queryparams: queryparams,
     );
@@ -60,7 +61,7 @@ class WorklistDashboardBloc {
     _subjectWorklistNoteDashboardList.close();
   }
 
-  BehaviorSubject<WorkboardResponse> get subjectWorklistDashboardList =>
+  BehaviorSubject<WorklistDashboardResponse> get subjectWorklistDashboardList =>
       _subjectWorklistDashboardList;
   BehaviorSubject<NoteWorklistDashboardResponse>
       get subjectWorklistNoteDashboardList => _subjectWorklistNoteDashboardList;

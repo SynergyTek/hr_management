@@ -5,7 +5,7 @@ part of 'abstract_worklist_dashboard_repo.dart';
 class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
   final Dio _dio = Dio();
 
-  Future<WorkboardResponse> getWorklistDashboardCount({
+  Future<WorklistDashboardResponse> getWorklistDashboardCount({
     Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.WORKLIST_DASHBOARD_COUNT;
@@ -15,7 +15,7 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      return WorkboardResponse.fromJson(
+      return WorklistDashboardResponse.fromJson(
         response.data,
       );
     } catch (err, stacktrace) {
@@ -23,7 +23,7 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return WorkboardResponse.withError("$err");
+      return WorklistDashboardResponse.withError("$err");
     }
   }
 
@@ -50,12 +50,14 @@ class WorklistDashboardRepository extends AbstractWorklistDashboardRepository {
   }
 
   @override
-  Future<WorkboardResponse> deleteAPIData({Map<String, dynamic>? queryparams}) {
+  Future<WorklistDashboardResponse> deleteAPIData(
+      {Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<WorkboardResponse> putAPIData({Map<String, dynamic>? queryparams}) {
+  Future<WorklistDashboardResponse> putAPIData(
+      {Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
 

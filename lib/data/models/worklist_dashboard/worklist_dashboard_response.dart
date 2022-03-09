@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'worklist_dashboard_count.dart';
 
-class WorkboardResponse {
+class WorklistDashboardResponse {
   final WorklistDashboardCount? data;
   String? error;
 
-  WorkboardResponse({
+  WorklistDashboardResponse({
     required this.data,
   });
 
-  WorkboardResponse.fromJson(Map<String, dynamic> response)
+  WorklistDashboardResponse.fromJson(Map<String, dynamic> response)
       : data = WorklistDashboardCount.fromJson(response);
 
-  WorkboardResponse.withError(String errorValue)
+  WorklistDashboardResponse.withError(String errorValue)
       : data = null,
         error = errorValue;
 }
