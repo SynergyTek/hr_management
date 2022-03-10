@@ -433,6 +433,6 @@ class APIEndpointConstants {
   // PERMISSION API Ends:
 
   // workboad api
-  static const GET_WORKBOARD_DASHBOARD_LIST = BASE_URL +
-      'https://webapidev.aitalkx.com/cms/query/GetWorkboardDashboardList?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&status=0';
+  static const GET_WORKBOARD_DASHBOARD_LIST =
+      BASE_URL + '/cms/query/GetWorkboardDashboardList';
 }

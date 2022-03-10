@@ -13,6 +13,7 @@ import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_b
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
+import 'package:hr_management/ui/screens/workboard_screen/workboard_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
@@ -491,6 +492,11 @@ class AppRouter {
                 'https://xtranet.aitalkx.com/TAA/Attendance/FaceDetectionAttendance',
             urlModuleName: 'Mark Attendance',
           ),
+        );
+
+      case WORKBOARD_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => WorkBoardScreen(),
         );
 
       // 404 route.
