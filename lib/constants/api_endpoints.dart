@@ -435,4 +435,6 @@ class APIEndpointConstants {
   // workboad api
   static const GET_WORKBOARD_DASHBOARD_LIST =
       BASE_URL + '/cms/query/GetWorkboardDashboardList';
+
+  static const CREATE_WORKBOARD = BASE_URL + '/cms/query/CreateWorkboard';
 }

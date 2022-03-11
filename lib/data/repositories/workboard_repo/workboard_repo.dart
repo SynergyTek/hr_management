@@ -26,4 +26,26 @@ class WorkboardRepository extends AbstractWorkboardRepository {
       return WorkBoardResponseModel.withError("$err");
     }
   }
+
+   Future<WorkBoardResponseModel> getCreateWorkboardList({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.CREATE_WORKBOARD;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      return WorkBoardResponseModel.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return WorkBoardResponseModel.withError("$err");
+    }
+  }
 }

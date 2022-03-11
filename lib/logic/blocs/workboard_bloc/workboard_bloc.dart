@@ -9,6 +9,9 @@ class WorkboardBloc {
   final BehaviorSubject<WorkBoardResponseModel> _subjectWorkboardList =
       BehaviorSubject<WorkBoardResponseModel>();
 
+  final BehaviorSubject<WorkBoardResponseModel> _subjectCreateWorkboardList =
+      BehaviorSubject<WorkBoardResponseModel>();
+
   /// Used to fetch new entries.
   getWorkboardData({
     Map<String, dynamic>? queryparams,
@@ -20,12 +23,25 @@ class WorkboardBloc {
     _subjectWorkboardList.sink.add(response);
   }
 
+  getCreateWorkboardData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    WorkBoardResponseModel response =
+        await _workboardRepository.getCreateWorkboardList(
+      queryparams: queryparams,
+    );
+    _subjectCreateWorkboardList.sink.add(response);
+  }
+
   dispose() {
     _subjectWorkboardList.close();
+    _subjectCreateWorkboardList.close();
   }
 
   BehaviorSubject<WorkBoardResponseModel> get subjectWorkboardList =>
       _subjectWorkboardList;
+  BehaviorSubject<WorkBoardResponseModel> get subjectCreateWorkboardList =>
+      _subjectCreateWorkboardList;
 }
 
 final workboardBloc = WorkboardBloc();

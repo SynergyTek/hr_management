@@ -13,6 +13,7 @@ import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_b
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
+import 'package:hr_management/ui/screens/workboard_screen/create_workboard.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 
@@ -497,6 +498,11 @@ class AppRouter {
       case WORKBOARD_SCREEN:
         return MaterialPageRoute(
           builder: (_) => WorkBoardScreen(),
+        );
+
+      case CREATE_WORKBOARD_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => CreateWorkBoardScreen(),
         );
 
       // 404 route.
