@@ -48,7 +48,7 @@ class _TeamStateDropdownList extends State<TeamDropdownList> {
               }
               _teamDataList = snapshot.data!.list;
               return Listizer(
-                showSearchBar: true,
+                showSearchBar: !true,
                 listItems: _teamDataList,
                 filteredSearchList: _filteredTeamDataList,
                 itemBuilder: (context, index) {

@@ -272,18 +272,18 @@ Widget drawerWidget(context) {
                       );
                     },
                   ),
-                  ListTile(
-                    title: Text(
-                      'Component Result',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        SERVICE_COMPONENT_RESULT_ROUTE,
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   title: Text(
+                  //     'Component Result',
+                  //     style: TextStyle(fontSize: fontSize, color: fontColor),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.pushNamed(
+                  //       context,
+                  //       SERVICE_COMPONENT_RESULT_ROUTE,
+                  //     );
+                  //   },
+                  // ),
                 ],
               ),
               ExpansionTile(

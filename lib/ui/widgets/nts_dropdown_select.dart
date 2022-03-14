@@ -24,24 +24,25 @@ class NTSDropDownSelect extends StatelessWidget {
   final String? idKey;
   final String? nameKey;
   final ListTapPressedCallBack? onListTap;
-  NTSDropDownSelect(
-      {Key? key,
-      this.title,
-      this.isShowArrow,
-      this.isUserList,
-      this.isTeamList,
-      this.hint,
-      this.validationMessage,
-      this.controller,
-      this.prefixIcon,
-      this.validator,
-      this.onListTap,
-      this.url,
-      this.idKey,
-      this.nameKey,
-      this.isInitial = true,
-      this.isPrefixIcon = true})
-      : super(key: key);
+
+  NTSDropDownSelect({
+    Key? key,
+    this.title,
+    this.isShowArrow,
+    this.isUserList,
+    this.isTeamList,
+    this.hint,
+    this.validationMessage,
+    this.controller,
+    this.prefixIcon,
+    this.validator,
+    this.onListTap,
+    this.url,
+    this.idKey,
+    this.nameKey,
+    this.isInitial = true,
+    this.isPrefixIcon = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

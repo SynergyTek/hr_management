@@ -231,7 +231,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    _fromddController.text = serviceModel!.ownerUserName!;
+    _fromddController.text = serviceModel?.ownerUserName ?? "Select";
     return Stack(
       children: [
         SingleChildScrollView(
@@ -469,8 +469,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
   List<Widget> addDynamic(model, createServiceFormBloc) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      print(model[i].type);
-      print(model[i].label);
       if (model[i].type == 'textfield') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId != null || widget.serviceId!.isNotEmpty)) {
@@ -628,22 +626,24 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           _ddController.text = udfJson[model[i].key]!;
         }
-        listDynamic.add(NTSDropDownSelect(
-          title: model[i].label,
-          controller: _ddController,
-          hint: model[i].label,
-          validationMessage: "Select " + model[i].label,
-          isShowArrow: true,
-          nameKey: model[i].template,
-          idKey: model[i].idPath,
-          url: model[i].data,
-          onListTap: (dynamic value) {
-            NTSDropdownModel _selectedIdNameViewModel = value;
-            _ddController.text = _selectedIdNameViewModel.name!;
-            udfJson[model[i].label] = _selectedIdNameViewModel.id;
-            // udfJson[model[i].label] = value.toString();
-          },
-        ));
+        listDynamic.add(
+          NTSDropDownSelect(
+            title: model[i].label,
+            controller: _ddController,
+            hint: model[i].label,
+            validationMessage: "Select " + model[i].label,
+            isShowArrow: true,
+            nameKey: model[i].template,
+            idKey: model[i].idPath,
+            url: model[i].data,
+            onListTap: (dynamic value) {
+              NTSDropdownModel _selectedIdNameViewModel = value;
+              _ddController.text = _selectedIdNameViewModel.name!;
+              udfJson[model[i].label] = _selectedIdNameViewModel.id;
+              // udfJson[model[i].label] = value.toString();
+            },
+          ),
+        );
       } else if (model[i].type == 'radio') {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.serviceId == null || widget.serviceId!.isEmpty)) {
@@ -904,7 +904,6 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
           controller: attchmentController,
 
           fileId: model[i].udfValue ?? '',
-          
 
           // Callback for Download
           callBack1: () => _handleDownloadOnPressed(
@@ -1390,7 +1389,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     NTSDdResponse ntsDdResponse = await ntsDdRepository.getFilteredDDData(
       idKey: idKey,
       nameKey: nameKey,
-      url: completeUrl, 
+      url: completeUrl,
     );
 
     print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");
