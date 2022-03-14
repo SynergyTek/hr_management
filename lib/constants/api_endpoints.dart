@@ -440,4 +440,9 @@ class APIEndpointConstants {
       BASE_URL + '/cms/query/GetWorkboardDashboardList';
 
   static const CREATE_WORKBOARD = BASE_URL + '/cms/query/CreateWorkboard';
+  static const CHOOSE_TEMPLATE = 'cms/query/ChooseTemplate';
+  static const WORKBOARD_SORTING =
+      'cms/query/GetLOVIdNameList?lovType=WORKBOARD_SORTING';
+  static const WORKBOARD_STATUS =
+      'cms/query/GetEnumIdNameList?enumType=WorkBoardstatusEnum';
 }
