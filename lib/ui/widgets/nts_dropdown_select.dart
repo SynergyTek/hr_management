@@ -7,6 +7,8 @@ import '../../routes/screen_arguments.dart';
 typedef ListTapPressedCallBack = void Function(dynamic key);
 
 class NTSDropDownSelect extends StatelessWidget {
+  final bool? isInitial;
+
   final String? title;
   final bool? isShowArrow;
   final bool? isUserList;
@@ -34,7 +36,8 @@ class NTSDropDownSelect extends StatelessWidget {
       this.onListTap,
       this.url,
       this.idKey,
-      this.nameKey})
+      this.nameKey,
+      this.isInitial = true})
       : super(key: key);
 
   @override
@@ -55,7 +58,9 @@ class NTSDropDownSelect extends StatelessWidget {
                 suffixIcon:
                     isShowArrow! ? Icon(Icons.keyboard_arrow_right) : null,
                 // filled: true,
-                labelText: "Select " + title!,
+                labelText: (isInitial == true)
+                    ? ("Select ") + (title ?? '')
+                    : (title ?? ''),
                 hintText: "Select " + hint!,
                 errorStyle: TextStyle(fontSize: 11.0)),
             maxLines: 1,

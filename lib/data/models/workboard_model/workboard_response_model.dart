@@ -5,11 +5,11 @@ class WorkBoardResponseModel {
   String? error;
 
   WorkBoardResponseModel({
-    required this.data,
+     this.data,
   });
 
   WorkBoardResponseModel.fromJson(List response)
-      : data = (response).map((i) => new WorkboardModel.fromJson(i)).toList();
+      : data = (response).map((i) =>  WorkboardModel.fromJson(i)).toList();
 
   WorkBoardResponseModel.withError(String errorValue)
       : data = null,
