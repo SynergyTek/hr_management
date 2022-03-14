@@ -494,18 +494,18 @@ Widget drawerWidget(context) {
                   ),
                 ],
               ),
-              ListTile(
-                title: Text(
-                  'WORKBOARD TASK LIST',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    WORKBOARD_TASK_LIST,
-                  );
-                },
-              ),
+              // ListTile(
+              //   title: Text(
+              //     'WORKBOARD TASK LIST',
+              //     style: TextStyle(fontSize: fontSize, color: fontColor),
+              //   ),
+              //   onTap: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       WORKBOARD_TASK_LIST,
+              //     );
+              //   },
+              // ),
 
               ListTile(), //Added to avoid the last option to be hidden under "LOG OUT"
             ],
