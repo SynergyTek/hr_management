@@ -1390,7 +1390,7 @@ class _CreateServiceScreenBodyState extends State<CreateServiceScreenBody> {
     NTSDdResponse ntsDdResponse = await ntsDdRepository.getFilteredDDData(
       idKey: idKey,
       nameKey: nameKey,
-      url: completeUrl,
+      url: completeUrl, 
     );
 
     print("ntsDdResponse: ${ntsDdResponse.data.elementAt(0).name}");

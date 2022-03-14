@@ -98,3 +98,4 @@ const String DMS_WORKSPACE_ROUTE = '/dms_workspace';
 const String DMS_ADD_EDIT_PERMISSION_ROUTE = '/dms_add_edit_permission';
 const String REGISTER_FACE_WEB = '/register_face_web';
 const String MARK_ATTENDANCE_WEB = '/mark_attendance_web';
+const String WORKBOARD_TASK_LIST = '/workboard_tasklist';

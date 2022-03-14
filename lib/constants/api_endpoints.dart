@@ -79,6 +79,9 @@ class APIEndpointConstants {
   static const READ_TASK_DATA_COMPLETED =
       '$BASE_URL/nts/query/ReadTaskDataCompleted';
 
+  static const READ_WORKBOARD_TASK_DATA =
+      '$BASE_URL/cms/query/GetWorkboardTaskList';
+
   //Task API Endpoints Block End
 
   //************************************************************************//
