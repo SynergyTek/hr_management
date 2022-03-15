@@ -1,0 +1,43 @@
+name: synergy_nts
+description: A new Flutter package project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  connectivity_plus: ^1.4.0
+  dio: ^4.0.0
+  equatable: ^2.0.0
+  file_picker: ^3.0.3
+  flutter_bloc: ^7.3.0
+  flutter_downloader: ^1.6.1
+  flutter_form_bloc: ^0.20.4
+  flutter_map: ">=0.11.0 <=0.14.0"
+  geocoding: ^2.0.1
+  google_maps_flutter: ^2.0.10
+  image_picker: ^0.8.4+5
+  latlong: ^0.6.1
+  location: ^4.3.0
+  mime_type: ^1.0.0
+  open_file: ^3.2.1
+  path_provider: ^2.0.1
+  permission_handler: ^8.2.2
+  rxdart: ">=0.25.0 <0.27.1"
+  sizer: ^2.0.13
+  video_player: ^2.2.18
+  geolocator: ^8.2.0
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+flutter:
+  assets:
+    - lib/assets/images/
