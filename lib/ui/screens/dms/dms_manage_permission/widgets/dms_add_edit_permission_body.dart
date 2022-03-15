@@ -3,6 +3,7 @@ import 'package:hr_management/data/lists/lists.dart';
 
 import 'package:hr_management/data/models/dms/dms_legal_entity_model/dms_legal_entity_model.dart';
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
+import 'package:hr_management/data/models/dms/permission/permission_response_model.dart';
 import 'package:hr_management/data/models/user/team_model.dart';
 import 'package:hr_management/data/models/user/user.dart';
 import 'package:hr_management/logic/blocs/common_bloc/common_bloc.dart';
@@ -132,7 +133,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
         PrimaryButton(
           backgroundColor: Colors.green,
           buttonText: 'Submit',
-          handleOnPressed: () {
+          handleOnPressed: () async {
             _checkMandatoryFields();
             _permissionSubmitModel.legalEntityId =
                 isUser ? _selectedLegalEntityData!.id : null;
@@ -147,8 +148,14 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
             _permissionSubmitModel.noteId = widget.noteId;
             _permissionSubmitModel.dataAction =
                 widget.isCreatePermission ? 'Create' : 'Edit';
-            permissionBloc
-              ..savePermission(permissionModel: _permissionSubmitModel);
+
+            //
+            SubmitPermissionResponse response =
+                await permissionBloc.savePermission(
+              permissionModel: _permissionSubmitModel,
+            );
+
+            // TODO: if success then navigator pop and a snackbar message.
           },
           width: 100,
         ),
@@ -218,6 +225,8 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
         );
       },
     );
+
+    setState(() {});
   }
 
   _userDropDown() {

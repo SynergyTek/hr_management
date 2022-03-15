@@ -18,7 +18,7 @@ class SearchDocumentBody extends StatefulWidget {
 }
 
 class _SearchDocumentBodyState extends State<SearchDocumentBody> {
-    List<DMSDocumentActionModel> _documentList = [];
+  List<DMSDocumentActionModel> _documentList = [];
   List<DMSDocumentActionModel> _filteredDocumentList = [];
 
   @override
@@ -27,8 +27,7 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
       ..getSearchDocumentData(
         queryparams: {
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
-                  '',
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         },
       );
     super.initState();
@@ -48,7 +47,7 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
                 return EmptyListWidget();
               }
               _documentList = snapshot.data!.data!.reversed.toList();
-                 return Listizer(
+              return Listizer(
                 listItems: _documentList,
                 filteredSearchList: _filteredDocumentList,
                 itemBuilder: (context, index) {
@@ -56,7 +55,9 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(
-                        _filteredDocumentList[index].documentName??'',
+                        _filteredDocumentList[index].documentName ??
+                            _filteredDocumentList[index].documentType ??
+                            '',
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline6,
                       ),
@@ -67,7 +68,8 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
                             child: Row(
                               children: <Widget>[
                                 Text("Parent Name: "),
-                                Text(_filteredDocumentList[index].parentName??''),
+                                Text(_filteredDocumentList[index].parentName ??
+                                    ''),
                               ],
                             ),
                           ),
@@ -76,7 +78,8 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
                               Text("Updated By: "),
                               Flexible(
                                 child: Text(
-                                  _filteredDocumentList[index].updatedByUser??'',
+                                  _filteredDocumentList[index].updatedByUser ??
+                                      '',
                                   style:
                                       TextStyle(color: Colors.deepPurple[900]),
                                   overflow: TextOverflow.ellipsis,
@@ -84,16 +87,26 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Text('Updated On:'),
-                              Text(_filteredDocumentList[index].createdDate!=null?
-                                dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].createdDate!)):'',
-                                style: TextStyle(color: Colors.red[700]),
-                              ),
-                            ],
-                          ),
+                          _filteredDocumentList[index].createdDate != null &&
+                                  _filteredDocumentList[index]
+                                      .createdDate!
+                                      .isNotEmpty
+                              ? Row(
+                                  children: [
+                                    Text('Updated On:'),
+                                    Text(
+                                      _filteredDocumentList[index]
+                                                  .createdDate !=
+                                              null
+                                          ? dateformatter.format(DateTime.parse(
+                                              _filteredDocumentList[index]
+                                                  .createdDate!))
+                                          : '',
+                                      style: TextStyle(color: Colors.red[700]),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
                         ],
                       ),
                       onTap: () {},
@@ -101,7 +114,6 @@ class _SearchDocumentBodyState extends State<SearchDocumentBody> {
                   );
                 },
               );
-         
             } else {
               return Center(
                 child: CustomProgressIndicator(
