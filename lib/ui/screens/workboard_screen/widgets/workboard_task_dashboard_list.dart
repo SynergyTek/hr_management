@@ -93,9 +93,24 @@ class _WorkBoardTaskDashboardListState
         // .length
         widget.completedTask?.toDouble() ?? 0;
 
-    completedCount = 100 * completedCount;
+    // completedCount = 100 * completedCount;
     // } else {}
-    completedCountStr = (completedCount * 10).toString();
+    completedCountStr = widget.completedTask;
+
+    if (completedCount == totalCount) {
+      completedCount = 1;
+      completedCountStr = totalCount;
+    } else {
+      if (widget.completedTask.toString().length > 0) {
+        var cnt = widget.completedTask.toString().length;
+        var hval = "1";
+        for (var i = 1; i <= cnt; i++) {
+          hval += "0";
+        }
+        var value = int.parse(hval);
+        completedCount = completedCount / value;
+      }
+    }
 
     totalCount = widget.totalTask ?? 0; // _taskList?.length ?? 0;
     return Column(

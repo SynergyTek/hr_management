@@ -13,6 +13,7 @@ import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_b
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
+import 'package:hr_management/ui/screens/workboard_screen/duplicate_workboard_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_task_list_screen.dart';
 
 import 'package:hr_management/ui/screens/workboard_screen/create_workboard.dart';
@@ -483,6 +484,11 @@ class AppRouter {
       case WORKBOARD_TASK_LIST:
         return MaterialPageRoute(
           builder: (_) => WorkBoardTaskListScreen(),
+        );
+
+      case DUPLICATE_WORKBOARD_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => DuplicateWorkBoardScreen(),
         );
 
       case REGISTER_FACE_WEB:
