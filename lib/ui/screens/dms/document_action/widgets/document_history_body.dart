@@ -27,8 +27,7 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
       ..getDocumentHistoryData(
         queryparams: {
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
-                  '',
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         },
       );
     super.initState();
@@ -56,7 +55,9 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(
-                        _filteredDocumentList[index].documentName!,
+                        _filteredDocumentList[index].documentName ??
+                            _filteredDocumentList[index].documentType ??
+                            '',
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline6,
                       ),
@@ -67,23 +68,30 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                             child: Row(
                               children: <Widget>[
                                 Text("Document Type: "),
-                                Text(_filteredDocumentList[index].documentType!),
+                                Text(
+                                    _filteredDocumentList[index].documentType!),
                               ],
                             ),
                           ),
-                          Row(
-                            children: [
-                              Text("Updated By: "),
-                              Flexible(
-                                child: Text(
-                                  _filteredDocumentList[index].updatedByUser!,
-                                  style:
-                                      TextStyle(color: Colors.deepPurple[900]),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
+                          _filteredDocumentList[index].updatedByUser != null &&
+                                  _filteredDocumentList[index]
+                                      .updatedByUser!
+                                      .isNotEmpty
+                              ? Row(
+                                  children: [
+                                    Text("Updated By: "),
+                                    Flexible(
+                                      child: Text(
+                                        _filteredDocumentList[index]
+                                            .updatedByUser!,
+                                        style: TextStyle(
+                                            color: Colors.deepPurple[900]),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
                           Row(
                             children: [
                               Text("Status: "),
@@ -95,26 +103,38 @@ class _DocumentHistoryBodyState extends State<DocumentHistoryBody> {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Text('Created On: '),
-                              Text(
-                                dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].createdDate!)),
-                                style: TextStyle(color: Colors.red[700]),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Modified On: '),
-                              Text(
-                                dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].updatedDate!)),
-                                style: TextStyle(color: Colors.red[700]),
-                              ),
-                            ],
-                          ),
+                          _filteredDocumentList[index].createdDate != null &&
+                                  _filteredDocumentList[index]
+                                      .createdDate!
+                                      .isNotEmpty
+                              ? Row(
+                                  children: [
+                                    Text('Created On: '),
+                                    Text(
+                                      dateformatter.format(DateTime.parse(
+                                          _filteredDocumentList[index]
+                                              .createdDate!)),
+                                      style: TextStyle(color: Colors.red[700]),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
+                          _filteredDocumentList[index].updatedDate != null &&
+                                  _filteredDocumentList[index]
+                                      .updatedDate!
+                                      .isNotEmpty
+                              ? Row(
+                                  children: [
+                                    Text('Modified On: '),
+                                    Text(
+                                      dateformatter.format(DateTime.parse(
+                                          _filteredDocumentList[index]
+                                              .updatedDate!)),
+                                      style: TextStyle(color: Colors.red[700]),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
                         ],
                       ),
                       onTap: () {},

@@ -27,8 +27,7 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
       ..getArchiveDocumentData(
         queryparams: {
           'userId':
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
-                  '',
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         },
       );
     super.initState();
@@ -56,7 +55,9 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(
-                        _filteredDocumentList[index].documentName!,
+                        _filteredDocumentList[index].documentName ??
+                            _filteredDocumentList[index].documentType ??
+                            '',
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline6,
                       ),
@@ -67,7 +68,8 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                             child: Row(
                               children: <Widget>[
                                 Text("Document Type: "),
-                                Text(_filteredDocumentList[index].documentType!),
+                                Text(
+                                    _filteredDocumentList[index].documentType!),
                               ],
                             ),
                           ),
@@ -95,27 +97,38 @@ class _ArchiveDocumentBodyState extends State<ArchiveDocumentBody> {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Text('Created On: '),
-                              Text(
-                                dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index]
-                                        .createdDate!)),
-                                style: TextStyle(color: Colors.red[700]),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Modified On: '),
-                              Text(
-                                dateformatter.format(DateTime.parse(
-                                    _filteredDocumentList[index].updatedDate!)),
-                                style: TextStyle(color: Colors.red[700]),
-                              ),
-                            ],
-                          ),
+                          _filteredDocumentList[index].createdDate != null &&
+                                  _filteredDocumentList[index]
+                                      .createdDate!
+                                      .isNotEmpty
+                              ? Row(
+                                  children: [
+                                    Text('Created On: '),
+                                    Text(
+                                      dateformatter.format(DateTime.parse(
+                                          _filteredDocumentList[index]
+                                              .createdDate!)),
+                                      style: TextStyle(color: Colors.red[700]),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
+                          _filteredDocumentList[index].updatedDate != null &&
+                                  _filteredDocumentList[index]
+                                      .updatedDate!
+                                      .isNotEmpty
+                              ? Row(
+                                  children: [
+                                    Text('Modified On: '),
+                                    Text(
+                                      dateformatter.format(DateTime.parse(
+                                          _filteredDocumentList[index]
+                                              .updatedDate!)),
+                                      style: TextStyle(color: Colors.red[700]),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
                         ],
                       ),
                       onTap: () {},
