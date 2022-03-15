@@ -108,8 +108,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
           noteId: widget.noteId ?? '',
           templatecode: widget.templateCode ?? '',
           userid:
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
-                  '',
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         ),
       );
   }
@@ -365,7 +364,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                     key: new Key('Expiry Date'),
                     selectDate: (DateTime date) {
                       if (date != null) {
-                        setState(() async {
+                        setState(() {
                           dueDate = date;
                           if (startDate != null &&
                               startDate.toString().isNotEmpty)
@@ -409,7 +408,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                   key: new Key('Reminder Date'),
                   selectDate: (DateTime date) {
                     if (date != null) {
-                      setState(() async {});
+                      setState(() {});
                       // udfJson[model[i].key] = date.toString();
                     }
                   },

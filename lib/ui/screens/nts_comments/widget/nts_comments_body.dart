@@ -11,6 +11,7 @@ import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
 import '../../../listizer/listizer.dart';
+import 'package:sizer/sizer.dart';
 
 class NTSCommentsBody extends StatefulWidget {
   NTSCommentsBody({Key? key, this.ntsType, this.ntsId}) : super(key: key);
@@ -59,62 +60,50 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                   itemBuilder: (context, index) {
                     // print("Snapshot data: ${snapshot.data.data[index].taskNo}");
                     return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(
-                            left: 14,
-                            right: 14,
-                            top: 10,
-                            bottom: 10,
-                          ),
-                          child: Align(
-                            alignment: //(messages[index].messageType == "receiver"
-                                // ? Alignment.topLeft:
-                                Alignment.topRight, //),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: // (messages[index].messageType == "receiver"
-                                    //? Colors.grey.shade200:
-                                    Colors.blue[200], //),
-                              ),
-                              padding: EdgeInsets.all(16),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    _commentsList![index].comment!,
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.black87),
-                                    textAlign: TextAlign.left,
+                        Flexible(
+                          child: Container(
+                            margin: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.blue[200],
+                            ),
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              children: [
+                                Text(
+                                  _commentsList![index].comment!,
+                                  style: const TextStyle(
+                                      fontSize: 16, color: Colors.black87),
+                                  textAlign: TextAlign.left,
+                                ),
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                Text(
+                                  dateformatter.format(DateTime.parse(
+                                      _commentsList![index].commentedDate!)),
+                                  style: const TextStyle(
+                                    fontSize: 13,
                                   ),
-                                  Text(
-                                    dateformatter.format(DateTime.parse(
-                                        _commentsList![index].commentedDate!)),
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                    textAlign: TextAlign.right,
+                                  textAlign: TextAlign.right,
+                                ),
+                                Text(
+                                  "Commented by: " +
+                                      _commentsList![index]
+                                          .commentedByUserName!,
+                                  style: const TextStyle(
+                                    fontSize: 13,
                                   ),
-                                  Flexible(
-                                    child: Text(
-                                      "Commented by: " +
-                                          _commentsList![index]
-                                              .commentedByUserName!,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                      ),
-                                      textAlign: TextAlign.right,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                  textAlign: TextAlign.right,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
                           ),
                         ),
                         IconButton(
+                          alignment: Alignment.centerRight,
                           onPressed: () => _handleDeleteOnPressed(
                             data: _commentsList!.elementAt(index),
                           ),
@@ -140,101 +129,110 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
         ),
         Align(
           alignment: Alignment.bottomLeft,
-          child: Container(
-            padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
-            height: 60,
-            width: double.infinity,
-            color: Colors.white,
-            child: Row(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.lightBlue,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 20,
+          child: Card(
+            shadowColor: Colors.pink,
+            elevation: 10,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 10, bottom: 10, top: 10, right: 6),
+              child: Row(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: _commentController,
-                    decoration: InputDecoration(
-                        hintText: "Write message...",
-                        hintStyle: TextStyle(color: Colors.black54),
-                        border: InputBorder.none),
+                  const SizedBox(
+                    width: 15,
                   ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                FloatingActionButton(
-                  onPressed: () async {
-                    if (_commentController.text != null &&
-                        _commentController.text.isNotEmpty) {
-                      if (widget.ntsType == NTSType.service)
-                        comment.ntsServiceId = widget.ntsId;
-                      else if (widget.ntsType == NTSType.task)
-                        comment.ntsTaskId = widget.ntsId;
-                      else
-                        comment.ntsNoteId = widget.ntsId;
+                  Flexible(
+                    child: TextField(
+                      minLines: 1,
+                      maxLines: 3,
+                      controller: _commentController,
+                      decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          hintText: "Write message...",
+                          hintStyle: TextStyle(
+                            color: Colors.black54,
+                          ),
+                          border: InputBorder.none),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  FloatingActionButton(
+                    onPressed: () async {
+                      if (_commentController.text != null &&
+                          _commentController.text.isNotEmpty) {
+                        if (widget.ntsType == NTSType.service)
+                          comment.ntsServiceId = widget.ntsId;
+                        else if (widget.ntsType == NTSType.task)
+                          comment.ntsTaskId = widget.ntsId;
+                        else
+                          comment.ntsNoteId = widget.ntsId;
 
-                      comment.comment = _commentController.text;
-                      comment.commentToUserId = null;
-                      // comment.commentedByUserId =
-                      // '45bba746-3309-49b7-9c03-b5793369d73c';
-                      setState(() {
-                        isVisible = true;
-                      });
-                      String? resultMsg = '';
-                      PostResponse result =
-                          await ntsCommentBloc.postCommentData(
-                        ntsType: widget.ntsType,
-                        ntsId: widget.ntsId,
-                        comment: comment,
-                        userid: BlocProvider.of<UserModelBloc>(context)
-                                .state
-                                .userModel
-                                ?.id ??
-                            '',
-                      );
-                      if (result.isSuccess!) {
+                        comment.comment = _commentController.text;
+                        comment.commentToUserId = null;
+
                         setState(() {
-                          isVisible = false;
+                          isVisible = true;
                         });
-                        _commentController.text = "";
-                        FocusScope.of(context).requestFocus(new FocusNode());
-                        resultMsg = result.messages;
-                        // Navigator.pop(context);
+                        String? resultMsg = '';
+                        PostResponse result =
+                            await ntsCommentBloc.postCommentData(
+                          ntsType: widget.ntsType,
+                          ntsId: widget.ntsId,
+                          comment: comment,
+                          userid: BlocProvider.of<UserModelBloc>(context)
+                                  .state
+                                  .userModel
+                                  ?.id ??
+                              '',
+                        );
+                        if (result.isSuccess!) {
+                          setState(() {
+                            isVisible = false;
+                          });
+                          _commentController.text = "";
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          resultMsg = result.messages;
+                        } else {
+                          setState(() {
+                            isVisible = false;
+                          });
+                          resultMsg = result.messages;
+                        }
                       } else {
-                        setState(() {
-                          isVisible = false;
-                        });
-                        resultMsg = result.messages;
+                        displaySnackBar(
+                            text: 'Please enter some message.',
+                            context: context);
                       }
-                    } else
-                      displaySnackBar(
-                          text: 'Please enter some message.', context: context);
-                  },
-                  child: Icon(
-                    Icons.send,
-                    color: Colors.white,
-                    size: 18,
+                    },
+                    child: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                    backgroundColor: Colors.blue,
+                    elevation: 0,
                   ),
-                  backgroundColor: Colors.blue,
-                  elevation: 0,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
