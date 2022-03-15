@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../data/models/workboard_model/workboard_model.dart';
 import '../../../../data/models/workboard_model/workboard_response_model.dart';
+import '../../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../logic/blocs/workboard_bloc/workboard_bloc.dart';
 import '../../../../themes/theme_config.dart';
@@ -54,7 +56,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
           children: [wrappedButtons()],
         ),
         Expanded(
-          child: StreamBuilder<WorkBoardResponseModel>(
+          child: StreamBuilder<WorkBoardResponseModel?>(
               stream: workboardBloc.subjectWorkboardList.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -214,7 +216,9 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
             children: [
               Expanded(
                 child: NTSDropDownSelect(
-                  url: '',
+                  url: APIEndpointConstants.WORKBOARD_SORTING,
+                  idKey: 'Id',
+                  nameKey: 'Name',
                   prefixIcon: Icon(Icons.sort),
                   isInitial: false,
                   isTeamList: false,
@@ -223,18 +227,32 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                   hint: 'Sort By',
                   isShowArrow: true,
                   controller: sortByController,
+                  onListTap: (dynamic value) {
+                    ntsDdBloc.subject.sink.add(null);
+                    NTSDropdownModel _workBoardSortingModel = value;
+                    sortByController.text = _workBoardSortingModel.name!;
+                  },
                 ),
               ),
               Expanded(
                 child: NTSDropDownSelect(
-                  url: '',
+                  url: APIEndpointConstants.WORKBOARD_STATUS,
                   prefixIcon: Icon(Icons.control_point_duplicate_outlined),
+                  idKey: 'Id',
+                  nameKey: 'Name',
                   hint: 'Status',
                   isTeamList: false,
                   isUserList: false,
                   title: 'Status',
                   isShowArrow: true,
                   controller: selectStatusController,
+                  onListTap: (dynamic value) {
+                    ntsDdBloc.subject.sink.add(null);
+
+                    NTSDropdownModel _selectedWorkBoardStatusModel = value;
+                    selectStatusController.text =
+                        _selectedWorkBoardStatusModel.name!;
+                  },
                 ),
               ),
             ],

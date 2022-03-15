@@ -53,18 +53,18 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
-              ListTile(
-                title: Text(
-                  'WORKBOARD',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    WORKBOARD_SCREEN,
-                  );
-                },
-              ),
+              // ListTile(
+              //   title: Text(
+              //     'WORKBOARD',
+              //     style: TextStyle(fontSize: fontSize, color: fontColor),
+              //   ),
+              //   onTap: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       WORKBOARD_SCREEN,
+              //     );
+              //   },
+              // ),
               ListTile(
                 title: Text(
                   'Document',
@@ -272,18 +272,18 @@ Widget drawerWidget(context) {
                       );
                     },
                   ),
-                  ListTile(
-                    title: Text(
-                      'Component Result',
-                      style: TextStyle(fontSize: fontSize, color: fontColor),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        SERVICE_COMPONENT_RESULT_ROUTE,
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   title: Text(
+                  //     'Component Result',
+                  //     style: TextStyle(fontSize: fontSize, color: fontColor),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.pushNamed(
+                  //       context,
+                  //       SERVICE_COMPONENT_RESULT_ROUTE,
+                  //     );
+                  //   },
+                  // ),
                 ],
               ),
               ExpansionTile(
@@ -494,18 +494,18 @@ Widget drawerWidget(context) {
                   ),
                 ],
               ),
-              ListTile(
-                title: Text(
-                  'WORKBOARD TASK LIST',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    WORKBOARD_TASK_LIST,
-                  );
-                },
-              ),
+              // ListTile(
+              //   title: Text(
+              //     'WORKBOARD TASK LIST',
+              //     style: TextStyle(fontSize: fontSize, color: fontColor),
+              //   ),
+              //   onTap: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       WORKBOARD_TASK_LIST,
+              //     );
+              //   },
+              // ),
 
               ListTile(), //Added to avoid the last option to be hidden under "LOG OUT"
             ],

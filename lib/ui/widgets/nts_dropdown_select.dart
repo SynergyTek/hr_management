@@ -11,6 +11,8 @@ class NTSDropDownSelect extends StatelessWidget {
 
   final String? title;
   final bool? isShowArrow;
+  final bool? isPrefixIcon;
+
   final bool? isUserList;
   final bool? isTeamList;
   final String? hint;
@@ -22,23 +24,25 @@ class NTSDropDownSelect extends StatelessWidget {
   final String? idKey;
   final String? nameKey;
   final ListTapPressedCallBack? onListTap;
-  NTSDropDownSelect(
-      {Key? key,
-      this.title,
-      this.isShowArrow,
-      this.isUserList,
-      this.isTeamList,
-      this.hint,
-      this.validationMessage,
-      this.controller,
-      this.prefixIcon,
-      this.validator,
-      this.onListTap,
-      this.url,
-      this.idKey,
-      this.nameKey,
-      this.isInitial = true})
-      : super(key: key);
+
+  NTSDropDownSelect({
+    Key? key,
+    this.title,
+    this.isShowArrow,
+    this.isUserList,
+    this.isTeamList,
+    this.hint,
+    this.validationMessage,
+    this.controller,
+    this.prefixIcon,
+    this.validator,
+    this.onListTap,
+    this.url,
+    this.idKey,
+    this.nameKey,
+    this.isInitial = true,
+    this.isPrefixIcon = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +57,11 @@ class NTSDropDownSelect extends StatelessWidget {
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
                 labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                prefixIcon:
-                    prefixIcon != null ? prefixIcon : Icon(Icons.select_all),
+                prefixIcon: (isPrefixIcon == false)
+                    ? null
+                    : ((prefixIcon != null && isPrefixIcon!)
+                        ? prefixIcon
+                        : Icon(Icons.select_all)),
                 suffixIcon:
                     isShowArrow! ? Icon(Icons.keyboard_arrow_right) : null,
                 // filled: true,

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/logic/blocs/workboard_bloc/workboard_bloc.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
+import '../../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
+import '../../../../routes/route_constants.dart';
 
 class CreateWorkBoardScreenBody extends StatefulWidget {
   CreateWorkBoardScreenBody({Key? key}) : super(key: key);
@@ -14,6 +20,8 @@ class CreateWorkBoardScreenBody extends StatefulWidget {
 
 class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
   TextEditingController? workBoardNameController = TextEditingController();
+  TextEditingController? chooseTemplateController =
+      TextEditingController(text: 'Basic');
 
   int _groupValue = -1;
 
@@ -136,7 +144,22 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => Navigator.of(context).pushNamed(
+                        NTS_DROPDOWN,
+                        arguments: ScreenArguments(
+                          arg1: APIEndpointConstants.CHOOSE_TEMPLATE,
+                          arg2: 'Id',
+                          arg3: 'TemplateTypeName',
+                          arg4: 'Choose Template',
+                          func: (dynamic value) {
+                            ntsDdBloc.subject.sink.add(null);
+                            NTSDropdownModel _chooseTemplateModel = value;
+                            chooseTemplateController?.text =
+                                _chooseTemplateModel.name!;
+                            setState(() {});
+                          },
+                        ),
+                      ),
                       child: Text(
                         'Choose Template',
                         style: Theme.of(context).textTheme.headline6?.copyWith(
@@ -145,7 +168,8 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
                             ),
                       ),
                     ),
-                    Text('Template - Basic WorkBoard'),
+                    Text(
+                        'Template - ${chooseTemplateController?.text} WorkBoard'),
                   ],
                 ),
               ],

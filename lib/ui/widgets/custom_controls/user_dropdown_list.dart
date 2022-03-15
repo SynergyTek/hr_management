@@ -52,7 +52,7 @@ class _UserStateDropDownList extends State<UserDropDownList> {
               }
               _userDataList = snapshot.data!.list;
               return Listizer(
-                showSearchBar: true,
+                showSearchBar: false,
                 listItems: _userDataList,
                 filteredSearchList: _filterUserDataList,
                 itemBuilder: (context, index) {

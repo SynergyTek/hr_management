@@ -31,23 +31,25 @@ class UdfJson {
 }
 
 class UdfJsonComponent {
-  UdfJsonComponent(
-      {this.label,
-      this.columns,
-      this.key,
-      this.type,
-      this.input,
-      this.tableView,
-      this.components,
-      this.title,
-      this.data,
-      this.idPath,
-      this.template,
-      this.inputFormat,
-      this.validate,
-      this.value,
-      this.udfValue,
-      this.disabled});
+  UdfJsonComponent({
+    this.label,
+    this.columns,
+    this.key,
+    this.type,
+    this.input,
+    this.tableView,
+    this.components,
+    this.title,
+    this.data,
+    this.idPath,
+    this.template,
+    this.inputFormat,
+    this.validate,
+    this.value,
+    this.udfValue,
+    this.disabled,
+    this.hidden,
+  });
 
   String? label;
   List<Columns>? columns;
@@ -59,6 +61,7 @@ class UdfJsonComponent {
   List<ComponentComponent>? components;
   String? title;
   bool? disabled;
+  bool? hidden;
   String? idPath;
   String? template;
   String? inputFormat;
@@ -68,30 +71,32 @@ class UdfJsonComponent {
 
   factory UdfJsonComponent.fromJson(Map<String, dynamic> json) =>
       UdfJsonComponent(
-          label: json["label"],
-          columns: json["columns"] == null
-              ? null
-              : List<Columns>.from(
-                  json["columns"].map((x) => Columns.fromJson(x))),
-          key: json["key"],
-          type: json["type"],
-          input: json["input"],
-          tableView: json["tableView"],
-          components: json["components"] == null
-              ? null
-              : List<ComponentComponent>.from(json["components"]
-                  .map((x) => ComponentComponent.fromJson(x))),
-          title: json["title"] == null ? null : json["title"],
-          data: json['data'] != null ? Data.fromJson(json['data']) : null,
-          idPath: json['idPath'],
-          template: json['template'],
-          inputFormat: json['inputFormat'],
-          validate: json['validate'] != null
-              ? Validate.fromJson(json['validate'])
-              : null,
-          value: json['value'],
-          udfValue: json['udfValue'],
-          disabled: json['disabled'] ?? false);
+        label: json["label"],
+        columns: json["columns"] == null
+            ? null
+            : List<Columns>.from(
+                json["columns"].map((x) => Columns.fromJson(x))),
+        key: json["key"],
+        type: json["type"],
+        input: json["input"],
+        tableView: json["tableView"],
+        components: json["components"] == null
+            ? null
+            : List<ComponentComponent>.from(
+                json["components"].map((x) => ComponentComponent.fromJson(x))),
+        title: json["title"] == null ? null : json["title"],
+        data: json['data'] != null ? Data.fromJson(json['data']) : null,
+        idPath: json['idPath'],
+        template: json['template'],
+        inputFormat: json['inputFormat'],
+        validate: json['validate'] != null
+            ? Validate.fromJson(json['validate'])
+            : null,
+        value: json['value'],
+        udfValue: json['udfValue'],
+        disabled: json['disabled'] ?? false,
+        hidden: json['hidden'] ?? false,
+      );
 
   Map<String, dynamic> toJson() => {
         "label": label,
@@ -114,7 +119,8 @@ class UdfJsonComponent {
             this.validate!.toJson() != null ? this.validate!.toJson() : null,
         'value': this.value,
         'udfValue': this.udfValue,
-        'disabled': this.disabled
+        'disabled': this.disabled,
+        'hidden': this.hidden,
       };
 }
 
@@ -417,7 +423,6 @@ class Data {
   List<FileTypeData>? fileValues;
 
   factory Data.fromJson(Map<String, dynamic>? json) => Data(
-    
         values: json?["values"] == null
             ? null
             : List<Value>.from(json?["values"].map((x) => Value.fromJson(x))),
@@ -426,7 +431,7 @@ class Data {
             ? null
             : List<Header>.from(
                 json?["headers"].map((x) => Header.fromJson(x))),
-                fileValues: json?["values"] == null
+        fileValues: json?["values"] == null
             ? null
             : List<FileTypeData>.from(
                 json?["values"].map((x) => FileTypeData.fromJson(x))),
