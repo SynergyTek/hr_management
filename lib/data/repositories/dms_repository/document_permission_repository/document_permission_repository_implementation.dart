@@ -77,13 +77,13 @@ class DocumentPermissionRepository
     }
   }
 
-  Future<SubmitPermissionResponse> savePermission(
-      {PermissionSubmitModel? permissionModel}) async {
+  Future<SubmitPermissionResponse> savePermission({
+    PermissionSubmitModel? permissionModel,
+  }) async {
     try {
       Response response = await _dio.post(
         APIEndpointConstants.SAVE_PERMISSIONS,
-        data: jsonEncode(permissionModel!.toJson()) ?? {},
-        // queryParameters: queryparams ?? {},
+        data: jsonEncode(permissionModel!.toJson()),
       );
 
       return SubmitPermissionResponse.fromJson(

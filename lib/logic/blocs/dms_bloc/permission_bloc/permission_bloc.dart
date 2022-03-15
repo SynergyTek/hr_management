@@ -62,11 +62,15 @@ class PermissionBloc {
     }
   }
 
-  savePermission({required PermissionSubmitModel permissionModel}) async {
+  Future<SubmitPermissionResponse> savePermission({
+    required PermissionSubmitModel permissionModel,
+  }) async {
     SubmitPermissionResponse response = await _apiRepository.savePermission(
       permissionModel: permissionModel,
     );
+
     return response;
+
     // if (response) {
     //   permissionBloc.subject.sink.add(null);
     //   getPermissionDetails(queryparams: {
