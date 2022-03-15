@@ -109,7 +109,7 @@ class _ListizerState extends State<Listizer> {
   }
 
   Widget _searchBarBuilder(BuildContext context) {
-    return (widget.showSearchBar != null)
+    return (widget.showSearchBar != null && widget.showSearchBar == true)
         ? Container(
             height: 55,
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
