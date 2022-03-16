@@ -1266,11 +1266,12 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
     );
   }
 
-  void compareStartEndDate(
-      {required DateTime startDate,
-      required DateTime enddate,
-      BuildContext? context,
-      bool? updateDuration}) {
+  void compareStartEndDate({
+    required DateTime startDate,
+    required DateTime enddate,
+    BuildContext? context,
+    bool? updateDuration,
+  }) {
     if (enddate.isBefore(startDate))
       _showMyDialog();
     else if (updateDuration!) updateLeaveDuration();

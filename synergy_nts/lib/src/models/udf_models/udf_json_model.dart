@@ -59,7 +59,7 @@ class UdfJson {
   Map<String, dynamic> toJson() => {
         "synergyTableMapId": synergyTableMapId,
         "components": List<dynamic>.from(components!.map((x) => x.toJson())),
-        // "components": List<dynamic>.from(columnComponents!.map((x) => x.toJson())), TODO: fix this tojson
+        // "components": List<dynamic>.from(columnComponents!.map((x) => x.toJson())),
       };
 }
 
@@ -969,5 +969,115 @@ class EnumValues<T> {
   Map<T, String> get reverse {
     reverseMap ??= map.map((k, v) => MapEntry(v, k));
     return reverseMap!;
+  }
+}
+
+class ComponentComponent {
+  String? label;
+  bool? tableView;
+  String? ntsType;
+  List<String>? editableContext;
+  List<String>? viewableContext;
+  List<String>? viewableBy;
+  List<String>? editableBy;
+  String? key;
+  String? type;
+  bool? input;
+  bool? disabled;
+  String? columnMetadataId;
+  bool? autoExpand;
+  Validate? validate;
+  String? value;
+  String? udfValue;
+  String? template;
+  String? idPath;
+  Data? data;
+
+  ComponentComponent(
+      {this.label,
+      this.tableView,
+      this.ntsType,
+      this.editableContext,
+      this.viewableContext,
+      this.viewableBy,
+      this.editableBy,
+      this.key,
+      this.type,
+      this.input,
+      this.disabled,
+      this.columnMetadataId,
+      this.autoExpand,
+      this.validate,
+      this.value,
+      this.udfValue,
+      this.template,
+      this.idPath,
+      this.data});
+
+  ComponentComponent.fromJson(Map<String, dynamic> json) {
+    label = json['label'];
+    tableView = json['tableView'];
+    ntsType = json['ntsType'];
+    if (json.containsKey('editableContext')) {
+      editableContext = (json['editableContext'] != null)
+          ? json['editableContext'].cast<String>()
+          : '' as List<String>?;
+    }
+    if (json.containsKey('viewableContext')) {
+      viewableContext = (json['viewableContext'] != null)
+          ? json['viewableContext'].cast<String>()
+          : '' as List<String>?;
+    }
+    if (json.containsKey('viewableBy')) {
+      viewableBy = (json['viewableBy'] != null)
+          ? json['viewableBy'].cast<String>()
+          : '' as List<String>?;
+    }
+    if (json.containsKey('editableBy')) {
+      editableBy = (json['editableBy'] != null)
+          ? json['editableBy'].cast<String>()
+          : '' as List<String>?;
+    }
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    disabled = json['disabled'] ?? false;
+    key = json['key'];
+    type = json['type'];
+    input = json['input'];
+    columnMetadataId = json['columnMetadataId'];
+    autoExpand = json['autoExpand'];
+    validate =
+        json['validate'] != null ? Validate.fromJson(json['validate']) : null;
+    value = json['value'];
+    udfValue = json['udfValue'];
+    template = json['template'];
+    idPath = json['idPath'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['label'] = label;
+    data['tableView'] = tableView;
+    data['ntsType'] = ntsType;
+    data['editableContext'] = editableContext;
+    data['viewableContext'] = viewableContext;
+    data['viewableBy'] = viewableBy;
+    data['editableBy'] = editableBy;
+    data['disabled'] = key;
+    data['key'] = key;
+    data['type'] = type;
+    data['input'] = input;
+    data['columnMetadataId'] = columnMetadataId;
+    data['autoExpand'] = autoExpand;
+    if (validate != null) {
+      data['validate'] = validate!.toJson();
+    }
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['value'] = value;
+    data['udfValue'] = udfValue;
+    data['template'] = template;
+    data['idPath'] = idPath;
+    return data;
   }
 }

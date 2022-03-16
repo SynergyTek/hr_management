@@ -5,7 +5,10 @@ import '../../../logic/blocs/location_bloc/location_bloc.dart';
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
+
+// Service
 import 'package:synergy_nts/synergy_nts.dart';
+import 'package:synergy_nts/src/ui/service_widget.dart';
 
 class CreateServiceScreen extends StatelessWidget {
   final bool? isLeave;
@@ -41,22 +44,12 @@ class CreateServiceScreen extends StatelessWidget {
                   BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                       "",
 
-              // TODO
-              // isEmployeePortal: BlocProvider.of<EmployeeBloc>(context)
-              //     .state
-              //     .employeePortalModel
-              //     .isEmployeePortal,
-
               extraInformationMap: extraInformationMap,
 
               // TODO
               serviceId: serviceId ?? "",
               // TODO
               templateCode: templateCode ?? "",
-              // TODO
-              // categoryCode: categoryCode,
-              // TODO
-              // isEmployeeService: isEmployeeService,
             ),
           ),
         ),

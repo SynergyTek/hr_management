@@ -1,6 +1,5 @@
 library synergy_nts;
 
-export './src/ui/service_widget.dart';
 // export './src/theme/app_colors.dart';
 // export './src/theme/theme_config.dart';
 

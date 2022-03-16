@@ -96,4 +96,24 @@ class APIEndpointConstants {
 
   static const String DELETE_TASK_COMMENT_DATA =
       BASE_URL + '/cms/query/DeleteTaskComment';
+
+// ........................................................... //
+// Note Endpoints
+// ........................................................... //
+
+  static const GET_NOTE_DETAILS = '$BASE_URL/nts/query/GetNoteDetails';
+  static const READ_NOTE_HOME_DATA = '$BASE_URL/nts/query/ReadNoteHomeData';
+  static const READ_NOTE_DASHBOARD_DATA =
+      '$BASE_URL/nts/query/ReadNoteDashBoardGridData';
+  static const MANAGE_NOTE = '$BASE_URL/nts/command/ManageNote';
+
+  // 
+  static const GET_NOTE_CHART_BY_STATUS =
+      '$BASE_URL/nts/query/GetNoteChartByStatus';
+
+  static const GET_NOTE_CHART_BY_USERTYPE =
+      '$BASE_URL/nts/query/GetNoteChartByUserType';
+
+  static const READ_DATEWISE_NOTE_SLA =
+      '$BASE_URL/nts/query/ReadDatewiseServiceSLA';
 }

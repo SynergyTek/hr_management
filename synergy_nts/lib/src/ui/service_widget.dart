@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 
 // Others
 import '../../synergy_nts.dart';
-import '../bloc/common_bloc/abstract_common_bloc.dart';
 import '../bloc/nts_dropdown_bloc/abstract_nts_dropdown_bloc.dart';
 import '../constants/api_endpoints.dart';
 
 // Widgets/UI:
 import '../helpers/multiselectList_helper.dart';
 import '../helpers/validation_helper.dart';
-import '../models/common_model/common_list_model.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../models/udf_models/udf_json_model.dart';
 import '../ui/map_widgets/google_maps_current_location_widget.dart';
