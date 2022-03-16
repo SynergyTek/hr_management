@@ -29,7 +29,9 @@ class StepTaskListScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return StepTaskListCardWidget(
               userId: userId,
-              isEmployeePortal: isEmployeePortal,
+              isEmployeePortal:
+                  true, //TODO: ether remove this field or make appropriate change
+              // isEmployeePortal: isEmployeePortal,
               index: index,
               taskList: stepTasksList!,
               onTap: false,

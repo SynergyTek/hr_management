@@ -8,7 +8,6 @@ import 'package:synergy_nts/src/ui/map_widgets/google_maps_current_location_widg
 import 'package:synergy_nts/src/ui/widgets/form_widgets.dart';
 
 // Constansts:
-import '../../../../bloc/common_bloc/abstract_common_bloc.dart';
 import '../../../../bloc/nts_dropdown_bloc/abstract_nts_dropdown_bloc.dart';
 import '../../../../bloc/task_bloc/abstract_task_bloc.dart';
 import '../../../../bloc/user_bloc/abstract_user_bloc.dart';
@@ -23,7 +22,6 @@ import '../../../../helpers/multiselectList_helper.dart';
 import '../../../../helpers/parse_json_helper.dart';
 import '../../../../helpers/validation_helper.dart';
 import '../../../../models/common_model/common_list_model.dart';
-import '../../../../models/common_model/common_list_response.dart';
 import '../../../../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../../../../models/udf_models/udf_json_model.dart';
 import '../../../../models/user_model/read_hierarchy_model.dart';
@@ -33,7 +31,7 @@ import '../../../widgets/form_widgets/attachment.dart';
 import '../../../widgets/widgets.dart';
 import 'reassign_bottom_sheet_widget.dart';
 
-class AddEditTaskBodyWidget extends StatefulWidget {
+class TaskWidget extends StatefulWidget {
   final String userId;
   final bool isEmployeePortal;
 
@@ -43,7 +41,7 @@ class AddEditTaskBodyWidget extends StatefulWidget {
   final String? serviceTemplateCode;
   final Map<String, dynamic>? extraInformationMap;
 
-  const AddEditTaskBodyWidget({
+  const TaskWidget({
     Key? key,
     //
     required this.userId,
@@ -56,10 +54,10 @@ class AddEditTaskBodyWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AddEditTaskBodyWidget> createState() => _AddEditTaskBodyWidgetState();
+  State<TaskWidget> createState() => _TaskWidgetState();
 }
 
-class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
+class _TaskWidgetState extends State<TaskWidget> {
   // to render UDFs
   List<Widget> columnComponentWidgets = [];
   List<Widget> componentComListWidgets = [];
@@ -98,8 +96,8 @@ class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
   DateTime? leaveStartDate;
   DateTime? leaveEnddate;
 
-  String? ownerUserId;
-  final TextEditingController _fromddController = TextEditingController();
+  // String? ownerUserId;
+  // final TextEditingController _fromddController = TextEditingController();
 
   bool isAttachmentUploaded = false;
 
@@ -199,8 +197,8 @@ class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    _fromddController.text = taskModel.ownerUserName!;
-    ownerUserId = taskModel.ownerUserId!;
+    // _fromddController.text = taskModel.ownerUserName!;
+    // ownerUserId = taskModel.ownerUserId!;
 
     return Stack(
       children: [
