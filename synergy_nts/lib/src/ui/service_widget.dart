@@ -43,10 +43,10 @@ class ServiceWidget extends StatefulWidget {
   const ServiceWidget({
     Key? key,
     required this.userID,
-    required this.isEmployeePortal,
+    this.isEmployeePortal = false,
     required this.serviceId,
     required this.templateCode,
-    this.categoryCode,
+    this.categoryCode = '',
     this.isEmployeeService,
     this.extraInformationMap,
   }) : super(key: key);
