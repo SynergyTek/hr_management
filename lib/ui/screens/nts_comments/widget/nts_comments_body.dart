@@ -33,8 +33,8 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
   }
 
   TextEditingController _commentController = new TextEditingController();
-  PostComment comment = new PostComment();
-  List<Comment>? _commentsList = [];
+  PostComment comment = PostComment();
+  List<Comment>? _commentsList;
   List<Comment> _filteredCommentsList = [];
   bool isVisible = false;
 

@@ -569,8 +569,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.noteId != null || widget.noteId!.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
-          leaveDurationControllerCalendarDays.text =
-              model[i].udfValue.toString();
+          leaveDurationControllerCalendarDays.text = model[i].udfValue ?? '';
           initialValue = leaveDurationControllerCalendarDays.text;
         }
         if (model[i].key == 'LeaveDurationCalendarDays') {

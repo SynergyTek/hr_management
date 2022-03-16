@@ -533,7 +533,8 @@ class _AddEditTaskBodyState extends State<AddEditTaskBody> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
-      } else if (model[i].type == 'number' && model[i].hidden != true) {
+      } else if (model[i].type == 'number' &&
+          (model[i]?.hidden != null && model[i].hidden != true)) {
         String? initialValue;
         // final number$i = new TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key) &&
