@@ -21,10 +21,9 @@ import 'widgets/widgets.dart';
 
 class NoteWidget extends StatefulWidget {
   final String userID;
+  final String noteId;
 
   final String? templateCode;
-  final String? noteId;
-  final String? title;
   final bool? isDependent;
 
   const NoteWidget({
@@ -33,8 +32,7 @@ class NoteWidget extends StatefulWidget {
     //
     required this.userID,
     this.templateCode,
-    this.noteId,
-    this.title,
+    this.noteId = "",
     this.isDependent,
   }) : super(key: key);
 
@@ -181,13 +179,13 @@ class _NoteWidgetState extends State<NoteWidget> {
           udfJsonComponent.add(component);
         }
       }
-      if (columnComponent != null && columnComponent.isNotEmpty) {
+      if (columnComponent.isNotEmpty) {
         columnComponentWidgets = addDynamic(
           columnComponent,
           createServiceFormBloc,
         );
       }
-      if (componentComList != null && componentComList.isNotEmpty) {
+      if (componentComList.isNotEmpty) {
         addDynamicComponentComponent(componentComList, createServiceFormBloc);
       }
       if (udfJsonComponent.isNotEmpty) {
@@ -411,13 +409,13 @@ class _NoteWidgetState extends State<NoteWidget> {
       );
     }
 
-    if (udfJsonCompWidgetList != null && udfJsonCompWidgetList.isNotEmpty) {
+    if (udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
     }
-    if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
+    if (columnComponentWidgets.isNotEmpty) {
       widgets.addAll(columnComponentWidgets);
     }
-    if (componentComListWidgets != null && componentComListWidgets.isNotEmpty) {
+    if (componentComListWidgets.isNotEmpty) {
       widgets.addAll(componentComListWidgets);
     }
 
@@ -535,7 +533,6 @@ class _NoteWidgetState extends State<NoteWidget> {
               child: PrimaryButton(
                 buttonText: 'Submit',
                 handleOnPressed: () {
-                  bool isValid = false;
                   for (var i = 0; i < columnComponent.length; i++) {
                     if (columnComponent[i].validate?.required != null &&
                         columnComponent[i].validate!.required == true &&
@@ -651,7 +648,7 @@ class _NoteWidgetState extends State<NoteWidget> {
     postNoteModel.requestedByUserId = userId;
     postNoteModel.subject = createServiceFormBloc.subject.value;
     postNoteModel.noteDescription = createServiceFormBloc.description.value;
-    postNoteModel.dataAction = widget.noteId!.isEmpty ? 1 : 2;
+    postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
     // postDataAction;
     postNoteModel.noteStatusCode = noteStatusCode;
     postNoteModel.json = jsonEncode(udfJson);
@@ -664,7 +661,7 @@ class _NoteWidgetState extends State<NoteWidget> {
     PostResponse result = await noteBloc.postNoteData(
       noteModel: postNoteModel,
       queryparams: _handleNoteDetailsQueryparams(
-        noteId: widget.noteId ?? '',
+        noteId: widget.noteId,
         templatecode: widget.templateCode ?? '',
         userid: widget.userID,
       ),
@@ -691,12 +688,10 @@ class _NoteWidgetState extends State<NoteWidget> {
       // print(model[i].type);
       // print(model[i].label);
       if (model[i].type == 'textfield') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         final textField$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -735,12 +730,10 @@ class _NoteWidgetState extends State<NoteWidget> {
           //     (String val) {}));
         }
       } else if (model[i].type == 'textarea') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null && widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         // final textArea$i = TextFieldBloc();
@@ -762,12 +755,10 @@ class _NoteWidgetState extends State<NoteWidget> {
       } else if (model[i].type == 'number') {
         String? initialValue;
         // final number$i = TextFieldBloc(initialValue: initialValue);
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           leaveDurationControllerCalendarDays.text = model[i].udfValue ?? '';
           initialValue = leaveDurationControllerCalendarDays.text;
@@ -793,12 +784,10 @@ class _NoteWidgetState extends State<NoteWidget> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -817,12 +806,10 @@ class _NoteWidgetState extends State<NoteWidget> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(DynamicCheckBoxValue(
@@ -836,12 +823,10 @@ class _NoteWidgetState extends State<NoteWidget> {
         ));
       } else if (model[i].type == 'selectboxes') {
         TextEditingController _ddController = TextEditingController();
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           _ddController.text = udfJson[model[i].key]!;
         }
@@ -862,12 +847,10 @@ class _NoteWidgetState extends State<NoteWidget> {
           },
         ));
       } else if (model[i].type == 'radio') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final radio$i = SelectFieldBloc(initialValue: udfJson[model[i].key]);
@@ -880,8 +863,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select') {
         TextEditingController _ddController = TextEditingController();
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
@@ -890,12 +872,11 @@ class _NoteWidgetState extends State<NoteWidget> {
           }
         }
 
-        if ((selectValue != null && selectValue.isNotEmpty) &&
+        if (selectValue.isNotEmpty &&
             (selectValue[i] != null && selectValue[i]!.isNotEmpty)) {
           _ddController.text = selectValue[i]!;
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           editNoteDDValue(
               code: udfJson[model[i].key],
@@ -941,8 +922,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         );
       } else if (model[i].type == 'file') {
         TextEditingController attachmentController = TextEditingController();
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
@@ -950,8 +930,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             }
           }
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           // print(model[i].udfValue);
         }
@@ -960,7 +939,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             // (widget.noteId == null ||widget.noteId.isEmpty)
             (udfJson[model[i].key] == null || udfJson[model[i].key]!.isEmpty)
                 ? " Select File to Attach "
-                : (selectValue != null && selectValue.isNotEmpty)
+                : selectValue.isNotEmpty
                     ? (selectValue[i] == null || selectValue[i]!.isEmpty)
                         ? " (1) File Attached: " + udfJson[model[i].key]!
                         : " (1) File Attached: " + selectValue[i]!
@@ -1002,20 +981,14 @@ class _NoteWidgetState extends State<NoteWidget> {
                 }),
               );
             },
-            readOnly: widget.noteId == null
-                ? false
-                : widget.noteId!.isNotEmpty
-                    ? true
-                    : false,
+            readOnly: widget.noteId.isNotEmpty ? true : false,
           ),
         );
       } else if (model[i].type == 'datetime') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           // print(model[i].udfValue);
         }
@@ -1061,12 +1034,10 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
       } else if (model[i].type == 'time') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(
@@ -1079,20 +1050,16 @@ class _NoteWidgetState extends State<NoteWidget> {
             name: model[i].label,
             key: Key(model[i].label),
             selectTime: (TimeOfDay time) {
-              if (time != null) {
-                udfJson[model[i].key] = time.toString();
-              }
+              udfJson[model[i].key] = time.toString();
             },
           ),
         );
       } else if (model[i].type == 'hidden') {
         //Hidden Field
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -1113,12 +1080,10 @@ class _NoteWidgetState extends State<NoteWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
       } else if (model[i].type == 'phoneNumber') {
         //Phone Number Field
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final phoneNumber$i =
@@ -1138,12 +1103,10 @@ class _NoteWidgetState extends State<NoteWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
       } else if (model[i].type == 'email') {
         //Email Field
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final email$i = TextFieldBloc(
@@ -1164,12 +1127,10 @@ class _NoteWidgetState extends State<NoteWidget> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId == null || widget.noteId!.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.noteId != null || widget.noteId!.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final textField$i = TextFieldBloc(initialValue: udfJson[model[i].key]);

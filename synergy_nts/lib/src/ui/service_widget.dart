@@ -35,7 +35,6 @@ class ServiceWidget extends StatefulWidget {
   final String serviceId;
   final String templateCode;
   final Map<String, dynamic>? extraInformationMap;
-  final bool? isEmployeeService;
   final String? categoryCode;
 
   const ServiceWidget({
@@ -45,7 +44,6 @@ class ServiceWidget extends StatefulWidget {
     required this.serviceId,
     required this.templateCode,
     this.categoryCode = '',
-    this.isEmployeeService,
     this.extraInformationMap,
   }) : super(key: key);
 
@@ -1872,7 +1870,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     });
 
     PostResponse result = await serviceBloc.postServiceData(
-      isEmployeeService: widget.isEmployeeService ?? false,
+      isEmployeeService: widget.isEmployeePortal,
       userId: widget.userID,
       service: postServiceModel,
       categoryCode: widget.categoryCode,
