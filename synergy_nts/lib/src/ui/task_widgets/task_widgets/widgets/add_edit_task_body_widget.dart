@@ -80,7 +80,15 @@ class _TaskWidgetState extends State<TaskWidget> {
   // For Circular Progress Indicator
   bool isVisible = false;
 
+  DateTime? startDate;
+  DateTime? dueDate;
   String? resultMsg = "";
+  String? subjectValue;
+  String? descriptionValue;
+  String? slaValue;
+  bool isTileVisible = true;
+  TextEditingController _fromddController = new TextEditingController();
+  String? ownerUserId;
 
   // Temp variable
   // String? truckLoadTripsTempVariable;
@@ -1228,6 +1236,13 @@ class _TaskWidgetState extends State<TaskWidget> {
       _metadataWidget(context),
     );
 
+    widgets.addAll(
+      _staticFieldsWidget(
+        context,
+        createServiceFormBloc,
+      ),
+    );
+
     if (udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
     }
@@ -1413,6 +1428,166 @@ class _TaskWidgetState extends State<TaskWidget> {
         ],
       ),
     );
+  }
+
+  List<Widget> _staticFieldsWidget(
+    BuildContext context,
+    CreateServiceFormBloc createServiceFormBloc,
+  ) {
+    List<Widget> listDynamic = [];
+
+    _fromddController.text = taskModel.ownerUserName ?? '';
+    ownerUserId = taskModel.ownerUserId;
+
+    if (!taskModel.hideSubject!) {
+      createServiceFormBloc.subject
+          .updateInitialValue(subjectValue ?? taskModel.taskSubject);
+      listDynamic.add(BlocTextBoxWidget(
+        fieldName: 'Subject',
+        readonly: false,
+        maxLines: 1,
+        labelName: 'Subject',
+        textFieldBloc: createServiceFormBloc.subject,
+        prefixIcon: Icon(Icons.note),
+        onChanged: (value) {
+          subjectValue = value.toString();
+        },
+      ));
+    }
+    createServiceFormBloc.sla.updateInitialValue(slaValue ?? taskModel.taskSLA);
+    listDynamic.add(ExpandableField(
+      isTileExpanded: isTileVisible,
+      valueChanged: (dynamic value) {
+        bool isExpand = value;
+        if (isExpand) {
+          isTileVisible = false;
+        } else {
+          isTileVisible = true;
+        }
+      },
+      children: [
+        Visibility(
+          visible: !taskModel.hideStartDate!,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: taskModel.startDate,
+                  name: 'Start Date',
+                  key: new Key('Start Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {
+                        startDate = date;
+                        if (dueDate != null && dueDate.toString().isNotEmpty)
+                          compareStartEndDate(
+                              startDate: startDate!,
+                              enddate: dueDate!,
+                              context: context,
+                              updateDuration: false);
+                      });
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              ),
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: taskModel.dueDate,
+                  name: 'Due Date',
+                  key: const Key('Due Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {
+                        dueDate = date;
+                        if (startDate != null &&
+                            startDate.toString().isNotEmpty)
+                          compareStartEndDate(
+                              startDate: startDate!,
+                              enddate: dueDate!,
+                              context: context,
+                              updateDuration: false);
+                      });
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: Visibility(
+                visible: !taskModel.hideSLA!,
+                child: BlocTextBoxWidget(
+                  fieldName: 'SLA',
+                  readonly: false,
+                  maxLines: 1,
+                  labelName: 'SLA',
+                  textFieldBloc: createServiceFormBloc.sla,
+                  prefixIcon: Icon(Icons.note),
+                  onChanged: (value) {
+                    slaValue = value.toString();
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: DynamicDateTimeBox(
+                code: taskModel.reminderDate,
+                name: 'Reminder Date',
+                key: new Key('Reminder Date'),
+                selectDate: (DateTime date) {
+                  if (date != null) {
+                    setState(() async {});
+                    // udfJson[model[i].key] = date.toString();
+                  }
+                },
+              ),
+            )
+          ],
+        ),
+      ],
+    ));
+
+    if (!taskModel.hideDescription!) {
+      createServiceFormBloc.description
+          .updateInitialValue(descriptionValue ?? taskModel.taskDescription);
+      listDynamic.add(BlocTextBoxWidget(
+        fieldName: 'Description',
+        readonly: false,
+        maxLines: 3,
+        labelName: 'Description',
+        textFieldBloc: createServiceFormBloc.description,
+        prefixIcon: Icon(Icons.note),
+        onChanged: (value) {
+          descriptionValue = value.toString();
+        },
+      ));
+    }
+
+    listDynamic.add(
+      NTSDropDownSelect(
+        isUserList: true,
+        title: 'From',
+        controller: _fromddController,
+        hint: 'From',
+        isShowArrow: true,
+        onListTap: (value) {
+          userBLoc.subjectUserDataList.sink.add(null);
+          User _user = value;
+          _fromddController.text = _user.name!;
+          ownerUserId = _user.id;
+          //     selectValue[i] = _selectedIdNameViewModel.name;
+          //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
+        },
+      ),
+    );
+    return listDynamic;
   }
 
   displayFooterWidget(

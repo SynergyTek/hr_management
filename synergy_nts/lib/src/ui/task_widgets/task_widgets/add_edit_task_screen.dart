@@ -26,7 +26,7 @@ class AddEditTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: AddEditTaskBodyWidget(
+        child: TaskWidget(
           taskTemplateCode: taskTemplateCode,
           serviceTemplateCode: serviceTemplateCode,
           taskId: taskId,

@@ -711,12 +711,15 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
     setState(() {
       selectedDate = widget.code == null || widget.code!.isEmpty
           ? null
-          : DateFormat('yyyy-MM-dd hh:mm:ss').parse(widget.code!);
+          : widget.code!.contains('T')
+              ? DateFormat('yyyy-MM-ddThh:mm:ss').parse(widget.code!)
+              : DateFormat('yyyy-MM-dd hh:mm:ss').parse(widget.code!);
       // : DateFormat('dd MMM yyyy hh:mm a').parse(widget.code!);
       selectedTime = widget.code == null || widget.code!.isEmpty
           ? null
-          : TimeOfDay.fromDateTime(
-              DateFormat('yyyy-MM-dd hh:mm:ss').parse(widget.code!));
+          : TimeOfDay.fromDateTime(widget.code!.contains('T')
+              ? DateFormat('yyyy-MM-ddThh:mm:ss').parse(widget.code!)
+              : DateFormat('yyyy-MM-ddhh:mm:ss').parse(widget.code!));
       // DateFormat('dd MMM yyyy hh:mm a').parse(widget.code!));
     });
   }
