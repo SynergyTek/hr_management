@@ -8,7 +8,6 @@ import 'package:synergy_nts/src/ui/map_widgets/google_maps_current_location_widg
 import 'package:synergy_nts/src/ui/widgets/form_widgets.dart';
 
 // Constansts:
-import '../../../../bloc/common_bloc/abstract_common_bloc.dart';
 import '../../../../bloc/nts_dropdown_bloc/abstract_nts_dropdown_bloc.dart';
 import '../../../../bloc/task_bloc/abstract_task_bloc.dart';
 import '../../../../bloc/user_bloc/abstract_user_bloc.dart';
@@ -23,17 +22,17 @@ import '../../../../helpers/multiselectList_helper.dart';
 import '../../../../helpers/parse_json_helper.dart';
 import '../../../../helpers/validation_helper.dart';
 import '../../../../models/common_model/common_list_model.dart';
-import '../../../../models/common_model/common_list_response.dart';
 import '../../../../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../../../../models/udf_models/udf_json_model.dart';
 import '../../../../models/user_model/read_hierarchy_model.dart';
 import '../../../../models/user_model/team_model.dart';
+import '../../../note_widgets/selection_field_widget.dart';
 import '../../../nts_comments/nts_comments_screen.dart';
 import '../../../widgets/form_widgets/attachment.dart';
 import '../../../widgets/widgets.dart';
 import 'reassign_bottom_sheet_widget.dart';
 
-class AddEditTaskBodyWidget extends StatefulWidget {
+class TaskWidget extends StatefulWidget {
   final String userId;
   final bool isEmployeePortal;
 
@@ -43,7 +42,7 @@ class AddEditTaskBodyWidget extends StatefulWidget {
   final String? serviceTemplateCode;
   final Map<String, dynamic>? extraInformationMap;
 
-  const AddEditTaskBodyWidget({
+  const TaskWidget({
     Key? key,
     //
     required this.userId,
@@ -56,10 +55,10 @@ class AddEditTaskBodyWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AddEditTaskBodyWidget> createState() => _AddEditTaskBodyWidgetState();
+  State<TaskWidget> createState() => _TaskWidgetState();
 }
 
-class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
+class _TaskWidgetState extends State<TaskWidget> {
   // to render UDFs
   List<Widget> columnComponentWidgets = [];
   List<Widget> componentComListWidgets = [];
@@ -82,7 +81,15 @@ class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
   // For Circular Progress Indicator
   bool isVisible = false;
 
+  DateTime? startDate;
+  DateTime? dueDate;
   String? resultMsg = "";
+  String? subjectValue;
+  String? descriptionValue;
+  String? slaValue;
+  bool isTileVisible = true;
+  TextEditingController _fromddController = new TextEditingController();
+  String? ownerUserId;
 
   // Temp variable
   // String? truckLoadTripsTempVariable;
@@ -98,8 +105,8 @@ class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
   DateTime? leaveStartDate;
   DateTime? leaveEnddate;
 
-  String? ownerUserId;
-  final TextEditingController _fromddController = TextEditingController();
+  // String? ownerUserId;
+  // final TextEditingController _fromddController = TextEditingController();
 
   bool isAttachmentUploaded = false;
 
@@ -157,33 +164,15 @@ class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
                   );
                 }
 
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text("Edit Task"),
-                  ),
-                  body: FormBlocListener<CreateServiceFormBloc, String, String>(
-                    onSuccess: (context, state) {},
-                    onFailure: (context, state) {},
-                    child: taskModel.id != null
-                        ? setTaskView(
-                            context,
-                            createServiceFormBloc,
-                          )
-                        : Container(),
-                  ),
-                  floatingActionButton: Visibility(
-                      visible: taskModel.isAddCommentEnabled!,
-                      child: FloatingActionButton(
-                        backgroundColor: Colors.blue,
-                        child: const Icon(Icons.sms),
-                        onPressed: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => NTSCommentsScreen(
-                            userId: widget.userId,
-                            ntsId: taskModel.taskId,
-                          ),
-                        )),
-                      )),
+                return FormBlocListener<CreateServiceFormBloc, String, String>(
+                  onSuccess: (context, state) {},
+                  onFailure: (context, state) {},
+                  child: taskModel.id != null
+                      ? setTaskView(
+                          context,
+                          createServiceFormBloc,
+                        )
+                      : Container(),
                 );
               } else {
                 return const Center(
@@ -199,8 +188,8 @@ class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    _fromddController.text = taskModel.ownerUserName!;
-    ownerUserId = taskModel.ownerUserId!;
+    // _fromddController.text = taskModel.ownerUserName!;
+    // ownerUserId = taskModel.ownerUserId!;
 
     return Stack(
       children: [
@@ -1230,6 +1219,13 @@ class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
       _metadataWidget(context),
     );
 
+    widgets.addAll(
+      _staticFieldsWidget(
+        context,
+        createServiceFormBloc,
+      ),
+    );
+
     if (udfJsonCompWidgetList.isNotEmpty) {
       widgets.addAll(udfJsonCompWidgetList);
     }
@@ -1415,6 +1411,168 @@ class _AddEditTaskBodyWidgetState extends State<AddEditTaskBodyWidget> {
         ],
       ),
     );
+  }
+
+  List<Widget> _staticFieldsWidget(
+    BuildContext context,
+    CreateServiceFormBloc createServiceFormBloc,
+  ) {
+    List<Widget> listDynamic = [];
+
+    _fromddController.text = taskModel.ownerUserName ?? '';
+    ownerUserId = taskModel.ownerUserId;
+
+    if (!taskModel.hideSubject!) {
+      createServiceFormBloc.subject
+          .updateInitialValue(subjectValue ?? taskModel.taskSubject);
+      listDynamic.add(BlocTextBoxWidget(
+        fieldName: 'Subject',
+        readonly: false,
+        maxLines: 1,
+        labelName: 'Subject',
+        textFieldBloc: createServiceFormBloc.subject,
+        prefixIcon: Icon(Icons.note),
+        onChanged: (value) {
+          subjectValue = value.toString();
+        },
+      ));
+    }
+    createServiceFormBloc.sla.updateInitialValue(slaValue ?? taskModel.taskSLA);
+    listDynamic.add(
+      ExpandableField(
+        isTileExpanded: isTileVisible,
+        valueChanged: (dynamic value) {
+          bool isExpand = value;
+          if (isExpand) {
+            isTileVisible = false;
+          } else {
+            isTileVisible = true;
+          }
+        },
+        children: [
+          Visibility(
+            visible: !taskModel.hideStartDate!,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: DynamicDateTimeBox(
+                    code: taskModel.startDate,
+                    name: 'Start Date',
+                    key: new Key('Start Date'),
+                    selectDate: (DateTime date) {
+                      if (date != null) {
+                        setState(() async {
+                          startDate = date;
+                          if (dueDate != null && dueDate.toString().isNotEmpty)
+                            compareStartEndDate(
+                                startDate: startDate!,
+                                enddate: dueDate!,
+                                context: context,
+                                updateDuration: false);
+                        });
+                        // udfJson[model[i].key] = date.toString();
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: DynamicDateTimeBox(
+                    code: taskModel.dueDate,
+                    name: 'Due Date',
+                    key: const Key('Due Date'),
+                    selectDate: (DateTime date) {
+                      if (date != null) {
+                        setState(() async {
+                          dueDate = date;
+                          if (startDate != null &&
+                              startDate.toString().isNotEmpty)
+                            compareStartEndDate(
+                                startDate: startDate!,
+                                enddate: dueDate!,
+                                context: context,
+                                updateDuration: false);
+                        });
+                        // udfJson[model[i].key] = date.toString();
+                      }
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: Visibility(
+                  visible: !taskModel.hideSLA!,
+                  child: BlocTextBoxWidget(
+                    fieldName: 'SLA',
+                    readonly: false,
+                    maxLines: 1,
+                    labelName: 'SLA',
+                    textFieldBloc: createServiceFormBloc.sla,
+                    prefixIcon: Icon(Icons.note),
+                    onChanged: (value) {
+                      slaValue = value.toString();
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: taskModel.reminderDate,
+                  name: 'Reminder Date',
+                  key: new Key('Reminder Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {});
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+
+    if (!taskModel.hideDescription!) {
+      createServiceFormBloc.description
+          .updateInitialValue(descriptionValue ?? taskModel.taskDescription);
+      listDynamic.add(BlocTextBoxWidget(
+        fieldName: 'Description',
+        readonly: false,
+        maxLines: 3,
+        labelName: 'Description',
+        textFieldBloc: createServiceFormBloc.description,
+        prefixIcon: Icon(Icons.note),
+        onChanged: (value) {
+          descriptionValue = value.toString();
+        },
+      ));
+    }
+
+    listDynamic.add(
+      NTSDropDownSelect(
+        isUserList: true,
+        title: 'From',
+        controller: _fromddController,
+        hint: 'From',
+        isShowArrow: true,
+        onListTap: (value) {
+          userBLoc.subjectUserDataList.sink.add(null);
+          User _user = value;
+          _fromddController.text = _user.name!;
+          ownerUserId = _user.id;
+          //     selectValue[i] = _selectedIdNameViewModel.name;
+          //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
+        },
+      ),
+    );
+    return listDynamic;
   }
 
   displayFooterWidget(
