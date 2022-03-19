@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:synergy_nts/src/ui/note_widget.dart';
 import 'package:synergy_nts/src/ui/service_widget.dart';
-import 'package:synergy_nts/src/ui/task_widgets/task_widgets/widgets/add_edit_task_body_widget.dart';
 
 import '../constants/enums.dart';
 
