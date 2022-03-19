@@ -21,10 +21,8 @@ import '../helpers/download_helper/download.dart';
 import '../helpers/multiselectList_helper.dart';
 import '../helpers/parse_json_helper.dart';
 import '../helpers/validation_helper.dart';
-import '../models/common_model/common_list_model.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../models/udf_models/udf_json_model.dart';
-import '../models/user_model/read_hierarchy_model.dart';
 import '../models/user_model/team_model.dart';
 import 'widgets/form_widgets/attachment.dart';
 import 'widgets/widgets.dart';
@@ -1424,60 +1422,96 @@ class _TaskWidgetState extends State<TaskWidget> {
       ));
     }
     createServiceFormBloc.sla.updateInitialValue(slaValue ?? taskModel.taskSLA);
-    listDynamic.add(ExpandableField(
-      isTileExpanded: isTileVisible,
-      valueChanged: (dynamic value) {
-        bool isExpand = value;
-        if (isExpand) {
-          isTileVisible = false;
-        } else {
-          isTileVisible = true;
-        }
-      },
-      children: [
-        Visibility(
-          visible: !taskModel.hideStartDate!,
-          child: Row(
+    listDynamic.add(
+      ExpandableField(
+        isTileExpanded: isTileVisible,
+        valueChanged: (dynamic value) {
+          bool isExpand = value;
+          if (isExpand) {
+            isTileVisible = false;
+          } else {
+            isTileVisible = true;
+          }
+        },
+        children: [
+          Visibility(
+            visible: !taskModel.hideStartDate!,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: DynamicDateTimeBox(
+                    code: taskModel.startDate,
+                    name: 'Start Date',
+                    key: new Key('Start Date'),
+                    selectDate: (DateTime date) {
+                      if (date != null) {
+                        setState(() async {
+                          startDate = date;
+                          if (dueDate != null && dueDate.toString().isNotEmpty)
+                            compareStartEndDate(
+                                startDate: startDate!,
+                                enddate: dueDate!,
+                                context: context,
+                                updateDuration: false);
+                        });
+                        // udfJson[model[i].key] = date.toString();
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: DynamicDateTimeBox(
+                    code: taskModel.dueDate,
+                    name: 'Due Date',
+                    key: const Key('Due Date'),
+                    selectDate: (DateTime date) {
+                      if (date != null) {
+                        setState(() async {
+                          dueDate = date;
+                          if (startDate != null &&
+                              startDate.toString().isNotEmpty)
+                            compareStartEndDate(
+                                startDate: startDate!,
+                                enddate: dueDate!,
+                                context: context,
+                                updateDuration: false);
+                        });
+                        // udfJson[model[i].key] = date.toString();
+                      }
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Expanded(
-                child: DynamicDateTimeBox(
-                  code: taskModel.startDate,
-                  name: 'Start Date',
-                  key: new Key('Start Date'),
-                  selectDate: (DateTime date) {
-                    if (date != null) {
-                      setState(() async {
-                        startDate = date;
-                        if (dueDate != null && dueDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate!,
-                              enddate: dueDate!,
-                              context: context,
-                              updateDuration: false);
-                      });
-                      // udfJson[model[i].key] = date.toString();
-                    }
-                  },
+                child: Visibility(
+                  visible: !taskModel.hideSLA!,
+                  child: BlocTextBoxWidget(
+                    fieldName: 'SLA',
+                    readonly: false,
+                    maxLines: 1,
+                    labelName: 'SLA',
+                    textFieldBloc: createServiceFormBloc.sla,
+                    prefixIcon: Icon(Icons.note),
+                    onChanged: (value) {
+                      slaValue = value.toString();
+                    },
+                  ),
                 ),
               ),
               Expanded(
                 child: DynamicDateTimeBox(
-                  code: taskModel.dueDate,
-                  name: 'Due Date',
-                  key: const Key('Due Date'),
+                  code: taskModel.reminderDate,
+                  name: 'Reminder Date',
+                  key: new Key('Reminder Date'),
                   selectDate: (DateTime date) {
                     if (date != null) {
-                      setState(() async {
-                        dueDate = date;
-                        if (startDate != null &&
-                            startDate.toString().isNotEmpty)
-                          compareStartEndDate(
-                              startDate: startDate!,
-                              enddate: dueDate!,
-                              context: context,
-                              updateDuration: false);
-                      });
+                      setState(() async {});
                       // udfJson[model[i].key] = date.toString();
                     }
                   },
@@ -1485,43 +1519,9 @@ class _TaskWidgetState extends State<TaskWidget> {
               )
             ],
           ),
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: Visibility(
-                visible: !taskModel.hideSLA!,
-                child: BlocTextBoxWidget(
-                  fieldName: 'SLA',
-                  readonly: false,
-                  maxLines: 1,
-                  labelName: 'SLA',
-                  textFieldBloc: createServiceFormBloc.sla,
-                  prefixIcon: Icon(Icons.note),
-                  onChanged: (value) {
-                    slaValue = value.toString();
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-              child: DynamicDateTimeBox(
-                code: taskModel.reminderDate,
-                name: 'Reminder Date',
-                key: new Key('Reminder Date'),
-                selectDate: (DateTime date) {
-                  if (date != null) {
-                    setState(() async {});
-                    // udfJson[model[i].key] = date.toString();
-                  }
-                },
-              ),
-            )
-          ],
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
 
     if (!taskModel.hideDescription!) {
       createServiceFormBloc.description

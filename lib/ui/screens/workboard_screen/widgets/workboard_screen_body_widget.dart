@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../data/models/workboard_model/workboard_model.dart';
@@ -108,11 +109,19 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                 child: Icon(
                                                   Icons.more_vert,
                                                 ),
-                                                onSelected: (v) {},
+                                                onSelected: (v) {
+                                                  if (v == 1) {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      DUPLICATE_WORKBOARD_SCREEN,
+                                                    );
+                                                  }
+                                                },
                                                 itemBuilder:
                                                     (BuildContext context) {
                                                   return [
                                                     PopupMenuItem(
+                                                      value: 0,
                                                       onTap: () {},
                                                       child: IconTextRowWidget(
                                                           iconData: Icons
@@ -120,6 +129,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                           iconText: 'Share'),
                                                     ),
                                                     PopupMenuItem(
+                                                      value: 1,
                                                       onTap: () {},
                                                       child: IconTextRowWidget(
                                                           iconData: Icons
@@ -128,6 +138,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                               'Duplicate Board'),
                                                     ),
                                                     PopupMenuItem(
+                                                      value: 2,
                                                       onTap: () {},
                                                       child: IconTextRowWidget(
                                                           iconData: Icons.edit,
@@ -135,6 +146,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                               'Edit Board'),
                                                     ),
                                                     PopupMenuItem(
+                                                      value: 3,
                                                       onTap: () {},
                                                       child: IconTextRowWidget(
                                                           iconData: Icons.close,
