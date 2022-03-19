@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:synergy_nts/src/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
 
 // Others
 import '../../synergy_nts.dart';
 import '../bloc/nts_dropdown_bloc/abstract_nts_dropdown_bloc.dart';
+import '../bloc/user_bloc/abstract_user_bloc.dart';
 import '../constants/api_endpoints.dart';
 
 // Widgets/UI:
@@ -58,6 +60,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   Service? serviceModel;
   int? noOfConnectionsValue = 1;
   int? truckLoadTrips = 1;
+
+  String? subjectValue;
+  String? descriptionValue;
+  bool isTileVisible = true;
+  TextEditingController _fromddController = new TextEditingController();
+  String? ownerUserId;
 
   @override
   void initState() {
@@ -1689,6 +1697,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       ),
     ));
 
+    widgets.addAll(
+      _staticFieldsWidget(
+        context,
+        createServiceFormBloc,
+      ),
+    );
+
     if (columnComponentWidgets != null && columnComponentWidgets.isNotEmpty) {
       widgets.addAll(columnComponentWidgets);
     }
@@ -1699,6 +1714,167 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       height: 200,
     ));
     return widgets;
+  }
+
+  List<Widget> _staticFieldsWidget(
+    BuildContext context,
+    CreateServiceFormBloc createServiceFormBloc,
+  ) {
+    List<Widget> listDynamic = [];
+
+    if (!serviceModel!.hideSubject!) {
+      createServiceFormBloc.subject
+          .updateInitialValue(subjectValue ?? serviceModel!.serviceSubject);
+      listDynamic.add(
+        Visibility(
+          visible: true,
+          child: BlocTextBoxWidget(
+            fieldName: 'Subject',
+            readonly: false,
+            maxLines: 1,
+            labelName: 'Subject',
+            textFieldBloc: createServiceFormBloc.subject,
+            prefixIcon: Icon(Icons.note),
+            onChanged: (value) {
+              subjectValue = value.toString();
+            },
+          ),
+        ),
+      );
+    }
+    if (widget.serviceId != null && widget.serviceId!.isNotEmpty) {
+      createServiceFormBloc.sla
+          .updateInitialValue(slaValue ?? serviceModel!.serviceSLA);
+      listDynamic.add(ExpandableField(
+        isTileExpanded: isTileVisible,
+        valueChanged: (dynamic value) {
+          bool isExpand = value;
+          if (isExpand) {
+            isTileVisible = false;
+          } else {
+            isTileVisible = true;
+          }
+        },
+        children: [
+          Visibility(
+            visible: !serviceModel!.hideStartDate!,
+            child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: serviceModel!.startDate,
+                  name: 'Start Date',
+                  key: new Key('Start Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {
+                        startDate = date;
+                        if (dueDate == null && serviceModel!.dueDate != null) {
+                          dueDate = DateTime.parse(serviceModel!.dueDate!);
+                        }
+                        if (dueDate != null && dueDate.toString().isNotEmpty)
+                          compareStartEndDate(
+                              startDate: startDate!,
+                              enddate: dueDate!,
+                              context: context,
+                              updateDuration: false);
+                      });
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              ),
+              Expanded(
+                child: DynamicDateTimeBox(
+                  code: serviceModel!.dueDate,
+                  name: 'Due Date',
+                  key: new Key('Due Date'),
+                  selectDate: (DateTime date) {
+                    if (date != null) {
+                      setState(() async {
+                        dueDate = date;
+                        if (startDate == null &&
+                            serviceModel!.startDate != null) {
+                          startDate = DateTime.parse(serviceModel!.startDate!);
+                        }
+                        if (startDate != null &&
+                            startDate.toString().isNotEmpty)
+                          compareStartEndDate(
+                              startDate: startDate!,
+                              enddate: dueDate!,
+                              context: context,
+                              updateDuration: false);
+                      });
+                      // udfJson[model[i].key] = date.toString();
+                    }
+                  },
+                ),
+              ),
+            ]),
+          ),
+          Visibility(
+            visible: serviceModel!.hideSLA!,
+            child: BlocTextBoxWidget(
+              fieldName: 'SLA',
+              readonly: false,
+              maxLines: 1,
+              labelName: 'SLA',
+              textFieldBloc: createServiceFormBloc.sla,
+              prefixIcon: Icon(Icons.note),
+              onChanged: (value) {
+                slaValue = value.toString();
+              },
+            ),
+          ),
+          Visibility(
+            visible: !serviceModel!.hideExpiryDate!,
+            child: BlocDatePickerWidget(
+              labelName: 'Reminder Date',
+              canSelectTime: false,
+              inputFieldBloc: createServiceFormBloc.expiryDate,
+              height: 75.0,
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+        ],
+      ));
+    }
+    if (!serviceModel!.hideDescription!) {
+      createServiceFormBloc.description.updateInitialValue(
+          descriptionValue ?? serviceModel!.serviceDescription);
+      listDynamic.add(Visibility(
+        visible: true,
+        child: BlocTextBoxWidget(
+          fieldName: 'Description',
+          readonly: false,
+          maxLines: 3,
+          labelName: 'Description',
+          textFieldBloc: createServiceFormBloc.description,
+          prefixIcon: Icon(Icons.note),
+          onChanged: (value) {
+            descriptionValue = value.toString();
+          },
+        ),
+      ));
+    }
+
+    listDynamic.add(
+      NTSDropDownSelect(
+        isUserList: true,
+        title: 'From',
+        controller: _fromddController,
+        hint: 'From',
+        isShowArrow: true,
+        onListTap: (value) {
+          userBLoc.subjectUserDataList.sink.add(null);
+          User _user = value;
+          _fromddController.text = _user.name!;
+          ownerUserId = _user.id;
+          //     selectValue[i] = _selectedIdNameViewModel.name;
+          //     udfJson[model[i].key] = _selectedIdNameViewModel.id;
+        },
+      ),
+    );
+    return listDynamic;
   }
 
   _displayFooterWidget(

@@ -10,7 +10,7 @@ export './src/models/attachment_nts_models/attachment_nts_response.dart';
 
 export 'package:geolocator/geolocator.dart';
 
-export './src/ui/task_widgets/task_widgets/widgets/add_edit_task_body_widget.dart';
+export 'src/ui/task_widget.dart';
 
 // export './src/models/common_model/common_list_model.dart';
 // export './src/models/common_model/common_list_response.dart';

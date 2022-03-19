@@ -8,28 +8,27 @@ import 'package:synergy_nts/src/ui/map_widgets/google_maps_current_location_widg
 import 'package:synergy_nts/src/ui/widgets/form_widgets.dart';
 
 // Constansts:
-import '../../../../bloc/nts_dropdown_bloc/abstract_nts_dropdown_bloc.dart';
-import '../../../../bloc/task_bloc/abstract_task_bloc.dart';
-import '../../../../bloc/user_bloc/abstract_user_bloc.dart';
-import '../../../../constants/api_endpoints.dart';
+import '../bloc/nts_dropdown_bloc/abstract_nts_dropdown_bloc.dart';
+import '../bloc/task_bloc/abstract_task_bloc.dart';
+import '../bloc/user_bloc/abstract_user_bloc.dart';
+import '../constants/api_endpoints.dart';
 
 // Widgets/UI
-import '../../../../../synergy_nts.dart';
+import '../../synergy_nts.dart';
 
 // Helpers:
-import '../../../../helpers/download_helper/download.dart';
-import '../../../../helpers/multiselectList_helper.dart';
-import '../../../../helpers/parse_json_helper.dart';
-import '../../../../helpers/validation_helper.dart';
-import '../../../../models/common_model/common_list_model.dart';
-import '../../../../models/nts_dropdown_model/nts_dropdown_model.dart';
-import '../../../../models/udf_models/udf_json_model.dart';
-import '../../../../models/user_model/read_hierarchy_model.dart';
-import '../../../../models/user_model/team_model.dart';
-import '../../../nts_comments/nts_comments_screen.dart';
-import '../../../widgets/form_widgets/attachment.dart';
-import '../../../widgets/widgets.dart';
-import 'reassign_bottom_sheet_widget.dart';
+import '../helpers/download_helper/download.dart';
+import '../helpers/multiselectList_helper.dart';
+import '../helpers/parse_json_helper.dart';
+import '../helpers/validation_helper.dart';
+import '../models/common_model/common_list_model.dart';
+import '../models/nts_dropdown_model/nts_dropdown_model.dart';
+import '../models/udf_models/udf_json_model.dart';
+import '../models/user_model/read_hierarchy_model.dart';
+import '../models/user_model/team_model.dart';
+import 'widgets/form_widgets/attachment.dart';
+import 'widgets/widgets.dart';
+import 'task_widgets/task_widgets/widgets/reassign_bottom_sheet_widget.dart';
 
 class TaskWidget extends StatefulWidget {
   final String userId;
@@ -87,7 +86,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   String? descriptionValue;
   String? slaValue;
   bool isTileVisible = true;
-  TextEditingController _fromddController = new TextEditingController();
+  TextEditingController _fromddController = TextEditingController();
   String? ownerUserId;
 
   // Temp variable
@@ -112,14 +111,6 @@ class _TaskWidgetState extends State<TaskWidget> {
   bool isLocationRequired = false;
 
   ReadTeamDataModel? _selectedModel;
-
-  //Assign data
-  CommonListModel? _selectedAssignToTypeModel;
-  ReadTeamDataModel? _selectedAssignToTeamModel;
-  User? _selectedAssignToTeamUserModel;
-  User? _selectedAssignToHierarchyLevelModel;
-  User? _selectedAssignToUserModel;
-  ReadUserHierarchyModel? _selectedAssignToUserHierarchyModel;
 
   @override
   void initState() {
@@ -163,33 +154,15 @@ class _TaskWidgetState extends State<TaskWidget> {
                   );
                 }
 
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text("Edit Task"),
-                  ),
-                  body: FormBlocListener<CreateServiceFormBloc, String, String>(
-                    onSuccess: (context, state) {},
-                    onFailure: (context, state) {},
-                    child: taskModel.id != null
-                        ? setTaskView(
-                            context,
-                            createServiceFormBloc,
-                          )
-                        : Container(),
-                  ),
-                  floatingActionButton: Visibility(
-                      visible: taskModel.isAddCommentEnabled!,
-                      child: FloatingActionButton(
-                        backgroundColor: Colors.blue,
-                        child: const Icon(Icons.sms),
-                        onPressed: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => NTSCommentsScreen(
-                            userId: widget.userId,
-                            ntsId: taskModel.taskId,
-                          ),
-                        )),
-                      )),
+                return FormBlocListener<CreateServiceFormBloc, String, String>(
+                  onSuccess: (context, state) {},
+                  onFailure: (context, state) {},
+                  child: taskModel.id != null
+                      ? setTaskView(
+                          context,
+                          createServiceFormBloc,
+                        )
+                      : Container(),
                 );
               } else {
                 return const Center(
@@ -205,9 +178,6 @@ class _TaskWidgetState extends State<TaskWidget> {
     BuildContext context,
     CreateServiceFormBloc createServiceFormBloc,
   ) {
-    // _fromddController.text = taskModel.ownerUserName!;
-    // ownerUserId = taskModel.ownerUserId!;
-
     return Stack(
       children: [
         SingleChildScrollView(
@@ -376,7 +346,6 @@ class _TaskWidgetState extends State<TaskWidget> {
           initialValue: model[i].defaultValue ?? udfJson[model[i].key],
         );
 
-        // if (!model[i].disabled) {
         listDynamic.add(
           BlocTextBoxWidget(
             isRequired: model[i].validate?.required,
