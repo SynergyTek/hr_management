@@ -643,13 +643,14 @@ class DatePicker {
       };
 }
 
-enum AbleBy { REQUESTER, OWNER, SHARED_WITH, ALL, ASSIGNEE }
+enum AbleBy { REQUESTER, OWNER, SHARED_WITH, ALL, ASSIGNEE, OWNERORREQUESTER }
 
 final ableByValues = EnumValues({
   "All": AbleBy.ALL,
   "Assignee": AbleBy.ASSIGNEE,
   "Owner": AbleBy.OWNER,
   "Requester": AbleBy.REQUESTER,
+  "OwnerOrRequester": AbleBy.OWNERORREQUESTER,
   "SharedWith": AbleBy.SHARED_WITH,
 });
 

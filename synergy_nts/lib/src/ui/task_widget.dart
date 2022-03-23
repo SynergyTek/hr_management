@@ -30,7 +30,7 @@ import 'task_widgets/task_widgets/widgets/reassign_bottom_sheet_widget.dart';
 
 class TaskWidget extends StatefulWidget {
   final String userId;
-  final bool isEmployeePortal;
+  // final bool isEmployeePortal;
 
   final String? title;
   final String? taskId;
@@ -42,7 +42,7 @@ class TaskWidget extends StatefulWidget {
     Key? key,
     //
     required this.userId,
-    required this.isEmployeePortal,
+    // required this.isEmployeePortal,
     this.title,
     this.taskId,
     this.taskTemplateCode,
@@ -112,6 +112,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   @override
   void initState() {
+    taskBloc.subjectGetTaskDetails.sink.add(null);
     //
     taskBloc.getTaskDetails(
       templateCode: widget.taskTemplateCode,
@@ -313,7 +314,7 @@ class _TaskWidgetState extends State<TaskWidget> {
       conditionalValues,
       widget.taskId,
     );
-    if (columnComponentList != null && columnComponentList.isNotEmpty) {
+    if (columnComponentList.isNotEmpty) {
       columnComponentWidgets = addDynamic(
         columnComponentList,
         createServiceFormBloc,
@@ -413,7 +414,8 @@ class _TaskWidgetState extends State<TaskWidget> {
         // }
 
         String initialValue;
-        String? defaultValue = model[i]?.defaultValue?.toString();
+        // ! hardcoding UNDO
+        // String? defaultValue = model[i]?.defaultValue?.toString();
 
         // final number$i = TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key) &&
@@ -1415,7 +1417,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         maxLines: 1,
         labelName: 'Subject',
         textFieldBloc: createServiceFormBloc.subject,
-        prefixIcon: Icon(Icons.note),
+        prefixIcon: const Icon(Icons.note),
         onChanged: (value) {
           subjectValue = value.toString();
         },
@@ -1443,7 +1445,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                   child: DynamicDateTimeBox(
                     code: taskModel.startDate,
                     name: 'Start Date',
-                    key: new Key('Start Date'),
+                    key: const Key('Start Date'),
                     selectDate: (DateTime date) {
                       if (date != null) {
                         setState(() async {
@@ -1497,7 +1499,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                     maxLines: 1,
                     labelName: 'SLA',
                     textFieldBloc: createServiceFormBloc.sla,
-                    prefixIcon: Icon(Icons.note),
+                    prefixIcon: const Icon(Icons.note),
                     onChanged: (value) {
                       slaValue = value.toString();
                     },
@@ -1508,7 +1510,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 child: DynamicDateTimeBox(
                   code: taskModel.reminderDate,
                   name: 'Reminder Date',
-                  key: new Key('Reminder Date'),
+                  key: const Key('Reminder Date'),
                   selectDate: (DateTime date) {
                     if (date != null) {
                       setState(() async {});
@@ -1532,7 +1534,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         maxLines: 3,
         labelName: 'Description',
         textFieldBloc: createServiceFormBloc.description,
-        prefixIcon: Icon(Icons.note),
+        prefixIcon: const Icon(Icons.note),
         onChanged: (value) {
           descriptionValue = value.toString();
         },
@@ -1873,13 +1875,9 @@ class _TaskWidgetState extends State<TaskWidget> {
     postTaskModel.dataAction = postDataAction;
     postTaskModel.taskStatusCode = taskStatusCode;
 
-    postTaskModel.portalId = !widget.isEmployeePortal
-        ? APIEndpointConstants.EGOV_CUSTOMER_PORTAL_ID
-        : APIEndpointConstants.EGOV_EMPLOYEE_PORTAL_ID;
+    postTaskModel.portalId = APIEndpointConstants.EGOV_CUSTOMER_PORTAL_ID;
 
-    postTaskModel.portalName = !widget.isEmployeePortal
-        ? APIEndpointConstants.EGOV_CUSTOMER_PORTAL_NAME
-        : APIEndpointConstants.EGOV_EMPLOYEE_PORTAL_NAME;
+    postTaskModel.portalName = APIEndpointConstants.EGOV_CUSTOMER_PORTAL_NAME;
 
     postTaskModel.json = jsonEncode(udfJson);
 

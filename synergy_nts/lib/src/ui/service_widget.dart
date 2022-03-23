@@ -311,7 +311,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       conditionalValues,
       widget.serviceId,
     );
-    if (columnComponentList != null && columnComponentList.isNotEmpty) {
+    if (columnComponentList.isNotEmpty) {
       columnComponentWidgets = addDynamic(
         columnComponentList,
         createServiceFormBloc,
@@ -372,12 +372,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
     for (var i = 0; i < model.length; i++) {
       if (model[i].type == 'textfield' && model[i].hidden != true) {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
 
@@ -411,8 +409,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         final textField$i = TextFieldBloc(initialValue: initialValue);
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: BlocTextBoxWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
@@ -437,12 +434,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
       } else if (model[i].type == 'textarea' && model[i].hidden != true) {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null && widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
 
@@ -462,8 +457,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: BlocTextBoxWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
@@ -490,13 +484,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
       } else if (model[i].type == 'number' && model[i].hidden != true) {
         String initialValue;
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
 
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           leaveDurationControllerCalendarDays.text = model[i].udfValue ?? '';
           initialValue = model[i].udfValue ?? '';
@@ -586,8 +578,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         final number$i = TextFieldBloc(initialValue: initialValue);
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: BlocNumberBoxWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
@@ -635,12 +626,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password' && model[i].hidden != true) {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
 
@@ -653,8 +642,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: BlocTextBoxWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
@@ -673,18 +661,15 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox' && model[i].hidden != true) {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: DynamicCheckBoxValue(
               readonly: model[i].disabled,
               code: udfJson[model[i].key],
@@ -702,19 +687,16 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
       } else if (model[i].type == 'selectboxes' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           _ddController.text = udfJson[model[i].key].toString();
         }
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: NTSDropDownSelect(
               title: model[i].label,
               controller: _ddController,
@@ -734,12 +716,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           ),
         );
       } else if (model[i].type == 'radio' && model[i].hidden != true) {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         List radioItemsList = [];
@@ -760,8 +740,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             items: radioItemsList);
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: BlocRadioButtonWidget(
               labelName: model[i].label,
               selectFieldBloc: radio$i,
@@ -781,8 +760,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
         if (selectValue.length < model.length) {
@@ -809,8 +787,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               url: model[i].data.url,
               ddController: _ddController);
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           if (model[i].template == null) {
             List<FileTypeData> _value = model[i].data.values;
@@ -915,8 +892,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: NTSDropDownSelect(
               isRequired: model[i].validate?.required,
               title: model[i].label,
@@ -952,7 +928,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                   : _dropdownModelList,
               multiSelectDropdownValues: (model[i].multiple != null &&
                       model[i].multiple &&
-                      (widget.serviceId == null || widget.serviceId.isEmpty) &&
+                      widget.serviceId.isEmpty &&
                       udfJson[model[i].key].isNotEmpty)
                   ? udfJson[model[i].key]
                   : [],
@@ -1023,12 +999,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       } else if (model[i].type == 'datetime' &&
           model[i].hidden != true &&
           model[i].widget!.enableTime?.toString() != 'true') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         // ! hardcoding UNDO
@@ -1061,8 +1035,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: DynamicDateBox(
               isRequired: model[i].validate?.required,
               // ! hardcoding UNDO
@@ -1147,12 +1120,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       } else if (model[i].type == 'datetime' &&
           model[i].hidden != true &&
           model[i].widget!.enableTime?.toString() == 'true') {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
 
@@ -1163,8 +1134,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: DynamicDateTimeBox(
               isReadonly: widget.serviceId.isNotEmpty,
               isRequired: model[i].validate?.required,
@@ -1201,18 +1171,15 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           ),
         );
       } else if (model[i].type == 'time' && model[i].hidden != true) {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: DynamicTimeBox(
               code: udfJson[model[i].key]!.isNotEmpty
                   ? DateFormat("hh:mm")
@@ -1237,12 +1204,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
       } else if (model[i].type == 'hidden' && model[i].hidden != true) {
         //Hidden Field
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -1266,12 +1231,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
       } else if (model[i].type == 'phoneNumber' && model[i].hidden != true) {
         //Phone Number Field
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
 
@@ -1285,8 +1248,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             TextFieldBloc(initialValue: udfJson[model[i].key]);
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: BlocNumberBoxWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
@@ -1310,12 +1272,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
       } else if (model[i].type == 'email' && model[i].hidden != true) {
         //Email Field
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
 
@@ -1330,8 +1290,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             initialValue: udfJson[model[i].key]);
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal &&
-                (widget.serviceId != null && widget.serviceId.isNotEmpty),
+            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: BlocTextBoxWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
@@ -1357,12 +1316,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else if (model[i].type == 'file' && model[i].hidden != true) {
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
         }
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId != null || widget.serviceId.isNotEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         // final textField$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -1382,8 +1339,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         // createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
 
         TextEditingController attachmentController = TextEditingController();
-        if (!udfJson.containsKey(model[i].key) &&
-            (widget.serviceId == null || widget.serviceId.isEmpty)) {
+        if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
@@ -1740,7 +1696,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         ),
       );
     }
-    if (widget.serviceId != null && widget.serviceId!.isNotEmpty) {
+    if (widget.serviceId.isNotEmpty) {
       createServiceFormBloc.sla
           .updateInitialValue(slaValue ?? serviceModel!.serviceSLA);
       listDynamic.add(ExpandableField(
@@ -1761,7 +1717,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 child: DynamicDateTimeBox(
                   code: serviceModel!.startDate,
                   name: 'Start Date',
-                  key: new Key('Start Date'),
+                  key: const Key('Start Date'),
                   selectDate: (DateTime date) {
                     if (date != null) {
                       setState(() async {
@@ -1769,12 +1725,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                         if (dueDate == null && serviceModel!.dueDate != null) {
                           dueDate = DateTime.parse(serviceModel!.dueDate!);
                         }
-                        if (dueDate != null && dueDate.toString().isNotEmpty)
+                        if (dueDate != null && dueDate.toString().isNotEmpty) {
                           compareStartEndDate(
                               startDate: startDate!,
                               enddate: dueDate!,
                               context: context,
                               updateDuration: false);
+                        }
                       });
                       // udfJson[model[i].key] = date.toString();
                     }
@@ -1785,7 +1742,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 child: DynamicDateTimeBox(
                   code: serviceModel!.dueDate,
                   name: 'Due Date',
-                  key: new Key('Due Date'),
+                  key: const Key('Due Date'),
                   selectDate: (DateTime date) {
                     if (date != null) {
                       setState(() async {
@@ -1795,12 +1752,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                           startDate = DateTime.parse(serviceModel!.startDate!);
                         }
                         if (startDate != null &&
-                            startDate.toString().isNotEmpty)
+                            startDate.toString().isNotEmpty) {
                           compareStartEndDate(
                               startDate: startDate!,
                               enddate: dueDate!,
                               context: context,
                               updateDuration: false);
+                        }
                       });
                       // udfJson[model[i].key] = date.toString();
                     }
@@ -1817,7 +1775,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               maxLines: 1,
               labelName: 'SLA',
               textFieldBloc: createServiceFormBloc.sla,
-              prefixIcon: Icon(Icons.note),
+              prefixIcon: const Icon(Icons.note),
               onChanged: (value) {
                 slaValue = value.toString();
               },
@@ -1847,7 +1805,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           maxLines: 3,
           labelName: 'Description',
           textFieldBloc: createServiceFormBloc.description,
-          prefixIcon: Icon(Icons.note),
+          prefixIcon: const Icon(Icons.note),
           onChanged: (value) {
             descriptionValue = value.toString();
           },

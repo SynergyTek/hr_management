@@ -32,7 +32,7 @@ class AddEditTaskScreen extends StatelessWidget {
           taskId: taskId,
           title: title,
           userId: userId,
-          isEmployeePortal: isEmployeePortal,
+          // isEmployeePortal: isEmployeePortal,
         ),
       ),
     );

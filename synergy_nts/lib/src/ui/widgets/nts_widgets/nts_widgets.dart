@@ -719,7 +719,9 @@ class _DynamicDateTimeBoxState extends State<DynamicDateTimeBox> {
           ? null
           : TimeOfDay.fromDateTime(widget.code!.contains('T')
               ? DateFormat('yyyy-MM-ddThh:mm:ss').parse(widget.code!)
-              : DateFormat('yyyy-MM-ddhh:mm:ss').parse(widget.code!));
+              : widget.code!.contains(' ')
+                  ? DateFormat('yyyy-MM-dd hh:mm:ss').parse(widget.code!)
+                  : DateFormat('yyyy-MM-ddhh:mm:ss').parse(widget.code!));
       // DateFormat('dd MMM yyyy hh:mm a').parse(widget.code!));
     });
   }

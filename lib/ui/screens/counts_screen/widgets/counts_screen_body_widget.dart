@@ -116,7 +116,7 @@ class _CountsScreenBodyWidgetState extends State<CountsScreenBodyWidget> {
                 top: 0.0,
                 left: MediaQuery.of(context).size.width * 0.165,
                 child: Text(
-                  count.toString() ?? "",
+                  count.toString(),
                   style: Theme.of(context).textTheme.headline6!.copyWith(
                         color: Colors.white,
                       ),

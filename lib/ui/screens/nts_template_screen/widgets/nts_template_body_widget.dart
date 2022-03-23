@@ -73,7 +73,8 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
             } else {
               _filteredTemplateModels = templateModels;
             }
-            _filteredTemplateModels!.sort((a, b) => a.displayName!.compareTo(b.displayName!));
+            _filteredTemplateModels!
+                .sort((a, b) => a.displayName!.compareTo(b.displayName!));
 
             return Container(
               child: Center(
@@ -102,8 +103,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
   }
 
   Widget _filterWidget() {
-    if(widget.categoryCode!='Leave'&& widget.categoryCode != 'Adhoc Task')
-    {
+    if (widget.categoryCode != 'Leave' && widget.categoryCode != 'Adhoc Task') {
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -116,11 +116,11 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
             icon: Icon(Icons.filter_list),
             onPressed: () => _handleFilterOnPressed(),
           ),
-      ],
-    );
-  }
-  else{return SizedBox();}
-    
+        ],
+      );
+    } else {
+      return SizedBox();
+    }
   }
 
   _handleFilterChips() {}

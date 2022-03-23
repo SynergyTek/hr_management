@@ -33,7 +33,7 @@ class NoteWidget extends StatefulWidget {
     required this.userID,
     this.templateCode,
     this.noteId = "",
-    this.isDependent,
+    this.isDependent = false,
   }) : super(key: key);
 
   @override
@@ -82,7 +82,7 @@ class _NoteWidgetState extends State<NoteWidget> {
     noteBloc.getNoteDetails(
       queryparams: _handleNoteDetailsQueryparams(
         userid: widget.userID,
-        noteId: widget.noteId ?? '',
+        noteId: widget.noteId,
         templatecode: widget.templateCode ?? '',
       ),
     );
@@ -154,7 +154,7 @@ class _NoteWidgetState extends State<NoteWidget> {
     udfJsonComponent = [];
 
     if (udfJsonString != null) {
-      udfJsonString = UdfJson.fromJson(jsonDecode(udfJsonString));
+      udfJsonString = UdfJsonForNote.fromJson(jsonDecode(udfJsonString));
       for (UdfJsonComponentForNote component in udfJsonString.components) {
         if (component.columns != null && component.columns!.isNotEmpty) {
           for (ColumnsForNote column in component.columns!) {

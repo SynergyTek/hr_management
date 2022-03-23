@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:synergy_nts/synergy_nts.dart';
 
+import '../../widgets/appbar_widget.dart';
+
 class AddEditTaskScreen extends StatelessWidget {
   final String? templateCode;
   final String? taskId;
@@ -15,18 +17,30 @@ class AddEditTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppbarWidget(
+        title: taskId == null || taskId!.isEmpty
+            ? title ?? "Create Task"
+            : "Edit Task",
+      ),
       body: SafeArea(
-        child: TaskWidget(
-          taskTemplateCode: templateCode,
-          // serviceTemplateCode: serviceTemplateCode,
-          taskId: taskId,
-          title: title,
-          userId:
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
-          //TODO
-          isEmployeePortal: true,
-          // isEmployeePortal: isEmployeePortal,
+        child: NTSWrapperWidget(
+          templateCode: templateCode!,
+          ntsID: taskId!,
+          userID:
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+          ntsType: NTSType.task,
         ),
+        // TaskWidget(
+        //   taskTemplateCode: templateCode,
+        //   // serviceTemplateCode: serviceTemplateCode,
+        //   taskId: taskId,
+        //   title: title,
+        //   userId:
+        //       BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
+        //   //TODO
+        //   // isEmployeePortal: true,
+        //   // isEmployeePortal: isEmployeePortal,
+        // ),
       ),
     );
   }

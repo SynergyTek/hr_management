@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:synergy_nts/src/ui/note_widget.dart';
 import 'package:synergy_nts/src/ui/service_widget.dart';
+import 'package:synergy_nts/src/ui/task_widget.dart';
 
 import '../constants/enums.dart';
 
@@ -47,8 +48,12 @@ class NTSWrapperWidget extends StatelessWidget {
         // isEmployeePortal: ,
       );
     } else if (ntsType == NTSType.task) {
-      // TODO:
-      return Container();
+      return TaskWidget(
+        userId: userID,
+        taskId: ntsID,
+        taskTemplateCode: templateCode,
+        extraInformationMap: extraInformationMap,
+      );
     } else if (ntsType == NTSType.note) {
       return NoteWidget(
         userID: userID,

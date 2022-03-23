@@ -8,7 +8,6 @@ import '../../widgets/internet_connectivity_widget.dart';
 
 // Service
 import 'package:synergy_nts/synergy_nts.dart';
-import 'package:synergy_nts/src/ui/service_widget.dart';
 
 class CreateServiceScreen extends StatelessWidget {
   final bool? isLeave;
@@ -39,18 +38,26 @@ class CreateServiceScreen extends StatelessWidget {
         body: SafeArea(
           child: BlocProvider<LocationBloc>.value(
             value: LocationBloc()..add(LocationStartedEvent()),
-            child: ServiceWidget(
+            child: NTSWrapperWidget(
+              templateCode: templateCode ?? '',
+              ntsID: serviceId!,
               userID:
                   BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
-                      "",
-
-              extraInformationMap: extraInformationMap,
-
-              // TODO
-              serviceId: serviceId ?? "",
-              // TODO
-              templateCode: templateCode ?? "",
+                      '',
+              ntsType: NTSType.service,
             ),
+            // ServiceWidget(
+            //   userID:
+            //       BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
+            //           "",
+
+            //   extraInformationMap: extraInformationMap,
+
+            //   // TODO
+            //   serviceId: serviceId ?? "",
+            //   // TODO
+            //   templateCode: templateCode ?? "",
+            // ),
           ),
         ),
       ),

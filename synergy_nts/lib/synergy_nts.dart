@@ -11,6 +11,7 @@ export './src/models/attachment_nts_models/attachment_nts_response.dart';
 export 'package:geolocator/geolocator.dart';
 
 export 'src/ui/task_widget.dart';
+export 'src/ui/nts_wrapper_widget.dart';
 
 // export './src/models/common_model/common_list_model.dart';
 // export './src/models/common_model/common_list_response.dart';
@@ -82,7 +83,7 @@ export './src/ui/widgets/nts_widgets/nts_dropdown_select.dart';
 // export './src/ui/widgets/form_widgets/bloc_radio_button_widget.dart';
 // export './src/ui/widgets/form_widgets/bloc_text_box_widget.dart';
 
-// export './src/constants/enums.dart';
+export './src/constants/enums.dart';
 
 // export './src/helpers/snackbar_helper/snackbar_helper.dart';
 // export './src/helpers/validation_helper.dart';

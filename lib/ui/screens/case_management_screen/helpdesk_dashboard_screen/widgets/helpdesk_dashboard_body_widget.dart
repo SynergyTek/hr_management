@@ -106,7 +106,7 @@ class _CaseManagementHelpdeskDashboardBodyWidgetState
         MaterialPageRoute(
           builder: (BuildContext context) => Scaffold(
             appBar: AppbarWidget(
-              title: title ?? "",
+              title: title,
             ),
             body: child,
           ),

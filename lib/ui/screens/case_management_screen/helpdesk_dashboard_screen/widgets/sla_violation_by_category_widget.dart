@@ -146,9 +146,10 @@ class _SLAViolationByCategoryWidgetState
                         ),
                         TextSpan(
                           text: data.inProgress.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                color: Colors.black87,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Colors.black87,
+                                  ),
                         ),
                       ],
                     ),
@@ -165,10 +166,11 @@ class _SLAViolationByCategoryWidgetState
                           ),
                         ),
                         TextSpan(
-                          text: data.draft.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                color: Colors.black87,
-                              ),
+                          text: data.draft.toString(),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Colors.black87,
+                                  ),
                         ),
                       ],
                     ),
@@ -191,9 +193,10 @@ class _SLAViolationByCategoryWidgetState
                         ),
                         TextSpan(
                           text: data.overDue.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                color: Colors.black87,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Colors.black87,
+                                  ),
                         ),
                       ],
                     ),
@@ -211,9 +214,10 @@ class _SLAViolationByCategoryWidgetState
                         ),
                         TextSpan(
                           text: data.completed.toString() ?? "-",
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                color: Colors.black87,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Colors.black87,
+                                  ),
                         ),
                       ],
                     ),

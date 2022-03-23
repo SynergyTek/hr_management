@@ -70,8 +70,8 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
           builder: (BuildContext context, AsyncSnapshot<NoteModel> snapshot) {
             if (snapshot.hasError) {
               return Center(
-                child:
-                    Text("An error occurred while fetching Workspace metadata."),
+                child: Text(
+                    "An error occurred while fetching Workspace metadata."),
               );
             } else if (snapshot.hasData) {
               _handleEditFolder(

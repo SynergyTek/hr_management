@@ -275,8 +275,7 @@ Widget _jobDetailsWidget({
                 context: context,
                 title: DateFormat.yMMMMd()
                         .format(data.dateOfJoin ?? "" as DateTime)
-                        .toString() ??
-                    'NA',
+                        .toString(),
                 subtitle: "Date of Joining",
                 icon: Icon(
                   Icons.calendar_today_rounded,

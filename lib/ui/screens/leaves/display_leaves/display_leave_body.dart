@@ -113,7 +113,8 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
                                     Text(
                                       _serviceList[index].formattedEndDate !=
                                               null
-                                          ? _serviceList[index].formattedEndDate!
+                                          ? _serviceList[index]
+                                              .formattedEndDate!
                                           : "",
                                       style: TextStyle(color: Colors.blue),
                                     ),
