@@ -102,3 +102,5 @@ const String WORKBOARD_TASK_LIST = '/workboard_tasklist';
 const String WORKBOARD_SCREEN = '/workboard_screen';
 const String CREATE_WORKBOARD_SCREEN = '/create_workboard_screen';
 const String DUPLICATE_WORKBOARD_SCREEN = '/duplicate_workboard_screen';
+const String CREATE_SECTION_WORKBOARD_SCREEN = '/create_section_workboard_screen';
+

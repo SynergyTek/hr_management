@@ -5,7 +5,7 @@ class DuplicateWorkBoardScreen extends StatelessWidget {
   const DuplicateWorkBoardScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DuplicateWorkboardBody(),
