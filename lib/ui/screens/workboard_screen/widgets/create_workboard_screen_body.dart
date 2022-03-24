@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/workboard_model/workboard_model.dart';
 import 'package:hr_management/logic/blocs/workboard_bloc/workboard_bloc.dart';
-import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/themes/theme_config.dart';
+import 'package:hr_management/ui/screens/workboard_screen/choose_template_screen.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../../constants/api_endpoints.dart';
-import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
-import '../../../../routes/route_constants.dart';
+
+typedef ListTapPressedCallBack = void Function(dynamic key);
 
 class CreateWorkBoardScreenBody extends StatefulWidget {
   CreateWorkBoardScreenBody({Key? key}) : super(key: key);
@@ -24,6 +24,8 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
       TextEditingController(text: 'Basic');
 
   int _groupValue = -1;
+
+
 
   @override
   void initState() {
@@ -144,20 +146,17 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.of(context).pushNamed(
-                        NTS_DROPDOWN,
-                        arguments: ScreenArguments(
-                          arg1: APIEndpointConstants.CHOOSE_TEMPLATE,
-                          arg2: 'Id',
-                          arg3: 'TemplateTypeName',
-                          arg4: 'Choose Template',
-                          func: (dynamic value) {
-                            ntsDdBloc.subject.sink.add(null);
-                            NTSDropdownModel _chooseTemplateModel = value;
-                            chooseTemplateController?.text =
-                                _chooseTemplateModel.name!;
-                            setState(() {});
-                          },
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ChooseTempalteScreen(
+                            onListTap: (dynamic value) {
+                              WorkboardModel _chooseTemplateModel = value;
+                              chooseTemplateController?.text =
+                                  _chooseTemplateModel.templateTypeNameString!;
+                              setState(() {});
+                            },
+                          ),
                         ),
                       ),
                       child: Text(

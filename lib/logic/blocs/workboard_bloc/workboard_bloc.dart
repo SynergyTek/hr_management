@@ -10,6 +10,14 @@ class WorkboardBloc {
   final BehaviorSubject<WorkBoardResponseModel?> _subjectWorkboardList =
       BehaviorSubject<WorkBoardResponseModel?>();
 
+  final BehaviorSubject<WorkBoardMapResponseModel?>
+      _subjectManageWorkboardDetailsList =
+      BehaviorSubject<WorkBoardMapResponseModel?>();
+
+  final BehaviorSubject<WorkBoardBoolResponseModel?>
+      _subjectOpenCLoseWorkboard =
+      BehaviorSubject<WorkBoardBoolResponseModel?>();
+
   final BehaviorSubject<TaskListResponseModel?> _subjectWorkboardTaskList =
       BehaviorSubject<TaskListResponseModel?>();
 
@@ -20,6 +28,9 @@ class WorkboardBloc {
       BehaviorSubject<int?>();
 
   final BehaviorSubject<WorkBoardResponseModel> _subjectCreateWorkboardList =
+      BehaviorSubject<WorkBoardResponseModel>();
+
+  final BehaviorSubject<WorkBoardResponseModel> _subjectChooseTemplate =
       BehaviorSubject<WorkBoardResponseModel>();
 
   /// Used to fetch new entries.
@@ -33,6 +44,16 @@ class WorkboardBloc {
     _subjectWorkboardList.sink.add(response);
   }
 
+  getOpenCloseWorkboard({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    WorkBoardBoolResponseModel response =
+        await _workboardRepository.getOpenCloseWorkboard(
+      queryparams: queryparams,
+    );
+    _subjectOpenCLoseWorkboard.sink.add(response);
+  }
+
   getCreateWorkboardData({
     Map<String, dynamic>? queryparams,
   }) async {
@@ -43,17 +64,50 @@ class WorkboardBloc {
     _subjectCreateWorkboardList.sink.add(response);
   }
 
+  getManageWorkBoardDetailsList({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    WorkBoardMapResponseModel response =
+        await _workboardRepository.getManageWorkBoardDetailsList(
+      queryparams: queryparams,
+    );
+    _subjectManageWorkboardDetailsList.sink.add(response);
+  }
+
+  getChooseTemplate({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    WorkBoardResponseModel response =
+        await _workboardRepository.getChooseTemplate(
+      queryparams: queryparams,
+    );
+    _subjectChooseTemplate.sink.add(response);
+  }
+
   dispose() {
     _subjectWorkboardList.close();
     _subjectWorkboardTaskList.close();
     _subjectWorkboardTaskCount.close();
     _subjectWorkboardCompletedTaskCount.close();
     _subjectCreateWorkboardList.close();
+    _subjectChooseTemplate.close();
+    _subjectOpenCLoseWorkboard.close();
+    _subjectManageWorkboardDetailsList.close();
   }
 
   BehaviorSubject<WorkBoardResponseModel?> get subjectWorkboardList =>
       _subjectWorkboardList;
-      
+
+  BehaviorSubject<WorkBoardMapResponseModel?>
+      get subjectManageWorkboardDetailsList =>
+          _subjectManageWorkboardDetailsList;
+
+  BehaviorSubject<WorkBoardBoolResponseModel?> get subjectOpenCloseWorkboard =>
+      _subjectOpenCLoseWorkboard;
+
+  BehaviorSubject<WorkBoardResponseModel?> get subjectChooseTemplate =>
+      _subjectChooseTemplate;
+
   BehaviorSubject<TaskListResponseModel?> get subjectWorkboardTaskList =>
       _subjectWorkboardTaskList;
 
@@ -80,6 +134,7 @@ class WorkboardBloc {
       _subjectWorkboardCompletedTaskCount.add(response.data?.length);
     }
   }
+
   BehaviorSubject<WorkBoardResponseModel> get subjectCreateWorkboardList =>
       _subjectCreateWorkboardList;
 }
