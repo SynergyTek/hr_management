@@ -285,8 +285,10 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                   childPath!.add(filterChildList[index].name);
                   parentModelList!.add(filterChildList[index]);
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
-                  String parentPath =
-                      widget.parentPath! + '/' + filterChildList[index].id! + '/';
+                  String parentPath = widget.parentPath! +
+                      '/' +
+                      filterChildList[index].id! +
+                      '/';
                   parentPathList!.add(parentPath);
                   Navigator.pushNamed(
                     context,

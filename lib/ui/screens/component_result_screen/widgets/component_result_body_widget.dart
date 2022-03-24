@@ -32,7 +32,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
   }
 
   _handleQueryparams() => {
-        'serviceId': widget.serviceId ?? '',
+        'serviceId': widget.serviceId,
       };
 
   @override
@@ -70,7 +70,7 @@ class _ComponentResultBodyWidgetState extends State<ComponentResultBodyWidget> {
       );
 
     return ListView.builder(
-      itemCount: data.length ?? 0,
+      itemCount: data.length,
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
           data: data.elementAt(index),

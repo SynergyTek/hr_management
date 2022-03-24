@@ -35,7 +35,7 @@ class _AnimatedGridViewWidgetState extends State<AnimatedGridViewWidget> {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),
-      itemCount: widget.model!.length ?? 0,
+      itemCount: widget.model!.length,
       itemBuilder: (context, index) {
         List.generate(widget.model!.length, (index) {
           cardKeys.add(GlobalKey<FlipCardState>());

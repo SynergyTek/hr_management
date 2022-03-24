@@ -55,8 +55,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       path: "/",
       showHiddenItems: false,
       data: [],
-      userId:
-          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+      userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     ));
   }
 
@@ -68,7 +67,8 @@ class _DMSParentBodyState extends State<DMSParentBody> {
         stream: dmsBloc.subjectDMSGetFilesResponse.stream,
         builder: (context, AsyncSnapshot<DMSFilesResponse> snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data!.error != null && snapshot.data!.error!.length > 0) {
+            if (snapshot.data!.error != null &&
+                snapshot.data!.error!.length > 0) {
               return Center(
                 child: Text(snapshot.data!.error!),
               );

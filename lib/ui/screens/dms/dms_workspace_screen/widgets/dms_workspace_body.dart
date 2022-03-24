@@ -119,9 +119,10 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                                     Row(
                                       children: <Widget>[
                                         Text("Parent Name: "),
-                                        Text(_itemList![index].parentName != null
-                                            ? _itemList![index].parentName!
-                                            : "-"),
+                                        Text(
+                                            _itemList![index].parentName != null
+                                                ? _itemList![index].parentName!
+                                                : "-"),
                                       ],
                                     )
                                   ],
@@ -136,7 +137,8 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                                     Row(
                                       children: <Widget>[
                                         Text("Legal Entity Name: "),
-                                        Text(_itemList![index].legalEntityName !=
+                                        Text(_itemList![index]
+                                                    .legalEntityName !=
                                                 null
                                             ? _itemList![index].legalEntityName!
                                             : "-"),
@@ -231,7 +233,7 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
               onPressed: () {
                 Navigator.of(context).pop(); //Pop dialog box
                 dmsManageWorkspaceBloc
-                  ..deleteWorkspace(queryparams: {"NoteId": '$id' ?? ""});
+                  ..deleteWorkspace(queryparams: {"NoteId": '$id'});
                 setState(() {
                   isVisible = true;
                 });

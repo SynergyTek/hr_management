@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:hr_management/ui/widgets/synergy_divider_widget.dart';
 
 import '../../../../../data/enums/enums.dart';
 import '../../../../../data/models/documents_models/note_index_models/note_index_model.dart';
@@ -249,8 +247,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title:
-                            data.expireDate?.split(' ').elementAt(0) ?? null,
+                        title: data.expireDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Expire Date',
                       ),
                     ),
@@ -477,10 +474,9 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title: data.documentExpiryDate
-                                ?.split(' ')
-                                .elementAt(0) ??
-                            '-',
+                        title:
+                            data.documentExpiryDate?.split(' ').elementAt(0) ??
+                                '-',
                         subtitle: 'Expiry Date',
                       ),
                     ),
@@ -690,8 +686,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title:
-                            data.startDate?.split(' ').elementAt(0) ?? null,
+                        title: data.startDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Start Date',
                       ),
                     ),
@@ -804,8 +799,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title:
-                            data.expireDate?.split(' ').elementAt(0) ?? null,
+                        title: data.expireDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Expire Date',
                       ),
                     ),
@@ -944,8 +938,8 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
                     Expanded(
                       child: _statisticWidget(
                         context: context,
-                        title: data.completedDate?.split(' ').elementAt(0) ??
-                            null,
+                        title:
+                            data.completedDate?.split(' ').elementAt(0) ?? null,
                         subtitle: 'Completed Date',
                       ),
                     ),

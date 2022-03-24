@@ -24,20 +24,21 @@ class _WorkboardTaskListBodyState extends State<WorkboardTaskListBody> {
       WorkBoardTaskDashboardList(
           taskListStatus: null,
           onTap: true,
-          totalTask: workboardBloc.subjectWorkboardTaskCount.value,
+          totalTask: workboardBloc.subjectWorkboardTaskCount.valueOrNull,
           completedTask:
-              workboardBloc.subjectWorkboardCompletedTaskCount.value),
+              workboardBloc.subjectWorkboardCompletedTaskCount.valueOrNull),
       WorkBoardTaskDashboardList(
           taskListStatus: 'TASK_STATUS_INPROGRESS',
           onTap: true,
-          totalTask: workboardBloc.subjectWorkboardTaskCount.value,
+          totalTask: workboardBloc.subjectWorkboardTaskCount.valueOrNull,
           completedTask:
-              workboardBloc.subjectWorkboardCompletedTaskCount.value),
+              workboardBloc.subjectWorkboardCompletedTaskCount.valueOrNull),
       WorkBoardTaskDashboardList(
           taskListStatus: 'TASK_STATUS_COMPLETED',
           onTap: true,
-          totalTask: workboardBloc.subjectWorkboardTaskCount.value,
-          completedTask: workboardBloc.subjectWorkboardCompletedTaskCount.value)
+          totalTask: workboardBloc.subjectWorkboardTaskCount.valueOrNull,
+          completedTask:
+              workboardBloc.subjectWorkboardCompletedTaskCount.valueOrNull)
     ];
   }
 
