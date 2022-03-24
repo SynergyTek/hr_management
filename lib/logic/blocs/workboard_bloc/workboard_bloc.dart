@@ -96,7 +96,7 @@ class WorkboardBloc {
     _subjectManageWorkboardDetailsList.close();
   }
 
-  BehaviorSubject<WorkBoardResponseModel> get subjectWorkboardList =>
+  BehaviorSubject<WorkBoardResponseModel?> get subjectWorkboardList =>
       _subjectWorkboardList;
 
   BehaviorSubject<WorkBoardMapResponseModel?>
