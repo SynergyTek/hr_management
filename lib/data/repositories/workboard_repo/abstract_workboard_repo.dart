@@ -18,4 +18,20 @@ abstract class AbstractWorkboardRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
+  Future<WorkBoardBoolResponseModel> getOpenCloseWorkboard({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  });
+  Future<WorkBoardMapResponseModel> getManageWorkBoardDetailsList({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  });
+  Future<WorkBoardResponseModel> getChooseTemplate({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  });
+  Future<TaskListResponseModel> getTaskDashBoardData({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  });
 }

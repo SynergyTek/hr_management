@@ -53,18 +53,18 @@ Widget drawerWidget(context) {
                   );
                 },
               ),
-              // ListTile(
-              //   title: Text(
-              //     'WORKBOARD',
-              //     style: TextStyle(fontSize: fontSize, color: fontColor),
-              //   ),
-              //   onTap: () {
-              //     Navigator.pushNamed(
-              //       context,
-              //       WORKBOARD_SCREEN,
-              //     );
-              //   },
-              // ),
+              ListTile(
+                title: Text(
+                  'WORKBOARD',
+                  style: TextStyle(fontSize: fontSize, color: fontColor),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    WORKBOARD_SCREEN,
+                  );
+                },
+              ),
               // ListTile(
               //   title: Text(
               //     'Document',

@@ -249,6 +249,10 @@ class WorkboardModel {
     this.status,
     this.versionNo,
     this.portalId,
+    this.templateDescription,
+    this.sampleContent,
+    this.contentImage,
+    this.templateTypeNameString,
   });
 
   String? workboardId;
@@ -487,6 +491,10 @@ class WorkboardModel {
   int? status;
   int? versionNo;
   dynamic portalId;
+  String? templateDescription;
+  dynamic sampleContent;
+  String? contentImage;
+  String? templateTypeNameString;
 
   factory WorkboardModel.fromJson(Map<String, dynamic> json) => WorkboardModel(
         workboardId: json["WorkboardId"] == null ? null : json["WorkboardId"],
@@ -826,6 +834,13 @@ class WorkboardModel {
         status: json["Status"] == null ? null : json["Status"],
         versionNo: json["VersionNo"] == null ? null : json["VersionNo"],
         portalId: json["PortalId"],
+        templateDescription: json["TemplateDescription"] == null
+            ? null
+            : json["TemplateDescription"],
+        sampleContent: json["SampleContent"],
+        contentImage:
+            json["ContentImage"] == null ? null : json["ContentImage"],
+            templateTypeNameString: json["TemplateTypeName"] == null ? null : json["TemplateTypeName"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -1105,6 +1120,11 @@ class WorkboardModel {
         "Status": status == null ? null : status,
         "VersionNo": versionNo == null ? null : versionNo,
         "PortalId": portalId,
+        "TemplateDescription":
+            templateDescription == null ? null : templateDescription,
+        "SampleContent": sampleContent,
+        "ContentImage": contentImage == null ? null : contentImage,
+       "TemplateTypeName": templateTypeNameString == null ? null : templateTypeNameString,
       };
 }
 

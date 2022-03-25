@@ -27,10 +27,77 @@ class WorkboardRepository extends AbstractWorkboardRepository {
     }
   }
 
+  Future<WorkBoardBoolResponseModel> getOpenCloseWorkboard({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.OPEN_CLOSE_WORKBOARD;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return WorkBoardBoolResponseModel.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return WorkBoardBoolResponseModel.withError("$err");
+    }
+  }
+
   Future<WorkBoardResponseModel> getCreateWorkboardList({
     Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.CREATE_WORKBOARD;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      return WorkBoardResponseModel.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return WorkBoardResponseModel.withError("$err");
+    }
+  }
+
+  Future<WorkBoardMapResponseModel> getManageWorkBoardDetailsList({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.MANAGE_WORKBOARD_DETAILS;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      return WorkBoardMapResponseModel.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return WorkBoardMapResponseModel.withError("$err");
+    }
+  }
+
+  Future<WorkBoardResponseModel> getChooseTemplate({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.CHOOSE_TEMPLATE;
 
     try {
       Response response = await _dio.get(
