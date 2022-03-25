@@ -17,30 +17,41 @@ class _CreateSectionWorkBoardBodyState
     extends State<CreateSectionWorkBoardBody> {
   TextEditingController? digitController = TextEditingController();
   TextEditingController? titleController = TextEditingController();
+  TextEditingController? descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(
+    return Stack(
+      alignment: Alignment.bottomLeft,
+      children: [
+        Container(
+          height: MediaQuery.of(context).size.height,
           margin: DEFAULT_LARGE_HORIZONTAL_PADDING,
+          padding: EdgeInsets.only(bottom: 50),
           child: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ExpansionTile(
+                  tilePadding: EdgeInsets.zero,
+                  title: Text(
+                    'Header Color',
+                    style: Theme.of(context).textTheme.headline6?.copyWith(
+                          fontSize: 18,
+                        ),
+                  ),
                   children: [
-                Text(
-                  'Header Color',
-                  style: Theme.of(context).textTheme.headline6?.copyWith(
-                        fontSize: 18,
-                      ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    MaterialColorPicker(
+                        onColorChange: (Color color) {
+                          // Handle color changes
+                        },
+                        selectedColor: Colors.red),
+                  ],
                 ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                MaterialColorPicker(
-                    onColorChange: (Color color) {
-                      // Handle color changes
-                    },
-                    selectedColor: Colors.red),
                 Text(
                   'Digit',
                   style: Theme.of(context).textTheme.headline6?.copyWith(
@@ -51,7 +62,9 @@ class _CreateSectionWorkBoardBodyState
                   height: 1.h,
                 ),
                 TextField(
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   keyboardType: TextInputType.number,
                   controller: digitController,
                   onChanged: (v) {},
@@ -102,7 +115,7 @@ class _CreateSectionWorkBoardBodyState
                 ),
                 TextField(
                   maxLines: 5,
-                  controller: titleController,
+                  controller: descriptionController,
                   onChanged: (v) {},
                   decoration: InputDecoration(
                     label: Text(
@@ -116,15 +129,19 @@ class _CreateSectionWorkBoardBodyState
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                PrimaryButton(
-                  buttonText: 'Save',
-                  handleOnPressed: () {},
-                  width: 100,
-                ),
-              ])))
-    ]);
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: DEFAULT_HORIZONTAL_PADDING,
+          child: PrimaryButton(
+            buttonText: 'Save',
+            handleOnPressed: () {},
+            width: 14.w,
+          ),
+        ),
+      ],
+    );
   }
 }

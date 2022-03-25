@@ -68,19 +68,6 @@ Widget drawerWidget(context) {
 
               ListTile(
                 title: Text(
-                  'CREATE SECTION SCREEN',
-                  style: TextStyle(fontSize: fontSize, color: fontColor),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    CREATE_SECTION_WORKBOARD_SCREEN,
-                  );
-                },
-              ),
-
-              ListTile(
-                title: Text(
                   'Document',
                   style: TextStyle(fontSize: fontSize, color: fontColor),
                 ),
