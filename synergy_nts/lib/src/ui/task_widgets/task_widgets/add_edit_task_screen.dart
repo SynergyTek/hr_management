@@ -29,7 +29,7 @@ class AddEditTaskScreen extends StatelessWidget {
         child: TaskWidget(
           taskTemplateCode: taskTemplateCode,
           serviceTemplateCode: serviceTemplateCode,
-          taskId: taskId,
+          taskId: taskId ?? "",
           title: title,
           userId: userId,
           // isEmployeePortal: isEmployeePortal,

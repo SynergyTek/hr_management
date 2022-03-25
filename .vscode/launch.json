@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "hr_management",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "hr_management (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "hr_management (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "synergy_nts",
+            "cwd": "synergy_nts",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "synergy_nts (profile mode)",
+            "cwd": "synergy_nts",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "synergy_nts (release mode)",
+            "cwd": "synergy_nts",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
