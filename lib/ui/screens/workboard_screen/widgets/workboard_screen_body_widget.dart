@@ -26,6 +26,12 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
   TextEditingController sortByController = TextEditingController();
   TextEditingController selectStatusController = TextEditingController();
 
+  List<WorkboardModel>? list;
+
+  List<WorkboardModel>? _searchResult;
+
+  List<WorkboardModel>? fullList;
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +39,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
   }
 
   apiCall() {
-    // workboardBloc.subjectWorkboardList.sink.add(null);
+    workboardBloc.subjectWorkboardList.sink.add(null);
     workboardBloc
       ..getWorkboardData(
         queryparams: _handleQueryparams(),
@@ -74,7 +80,13 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                   );
                 }
 
-                List<WorkboardModel>? list = snapshot.data!.data;
+                if (_searchResult != null) {
+                  list = _searchResult;
+                } else if (subjectController.text.isEmpty ||
+                    _searchResult == null) {
+                  list = snapshot.data?.data;
+                  fullList = snapshot.data?.data;
+                }
 
                 if (sortByController.text == "Alphabetical") {
                   list?.sort(
@@ -109,9 +121,9 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                             (list![index].iconFileId != null)
                                 ? Image.network(APIEndpointConstants.BASE_URL +
                                     '/common/query/GetFile?fileId=' +
-                                    list[index].iconFileId!)
+                                    list![index].iconFileId!)
                                 : Container(),
-                            (list[index].workBoardName != null)
+                            (list?[index].workBoardName != null)
                                 ? Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
@@ -121,7 +133,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              list[index]
+                                              list![index]
                                                   .workBoardName
                                                   .toString(),
                                               maxLines: 2,
@@ -146,7 +158,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                             workboardBloc
                                                               ..getOpenCloseWorkboard(
                                                                 queryparams: {
-                                                                  'id': list[
+                                                                  'id': list?[
                                                                           index]
                                                                       .workboardId,
                                                                   'status': 0,
@@ -214,7 +226,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                             workboardBloc
                                                               ..getOpenCloseWorkboard(
                                                                 queryparams: {
-                                                                  'id': list[
+                                                                  'id': list?[
                                                                           index]
                                                                       .workboardId,
                                                                   'status': 1,
@@ -264,7 +276,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                           context,
                           MaterialPageRoute(
                             builder: (_) => ManageWorkBoardDetailsList(
-                              id: list[index].workboardId ?? '',
+                              id: list?[index].workboardId ?? '',
                             ),
                           ),
                         );
@@ -306,7 +318,21 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
               Icons.search,
               color: Colors.blue,
             ),
-            onPressed: () {},
+            onPressed: () {
+              _searchResult = null;
+              if (subjectController.text.isNotEmpty) {
+                list = fullList;
+                _searchResult = list
+                    ?.where((workBoardElement) => workBoardElement.workBoardName
+                        .toString()
+                        .toLowerCase()
+                        .contains(subjectController.text.toLowerCase()))
+                    .toList();
+
+                setState(() {});
+              } else
+                return;
+            },
           ),
         ),
       ),

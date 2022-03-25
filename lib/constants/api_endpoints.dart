@@ -450,5 +450,4 @@ class APIEndpointConstants {
   static const OPEN_CLOSE_WORKBOARD =
       BASE_URL + '/cms/query/OpenCloseWorkboard';
   static const MANAGE_WORKBOARD_DETAILS = BASE_URL + '/cms/query/ManageWorkBoardDetails';
-  //?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&id=
 }
