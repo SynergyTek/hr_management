@@ -153,15 +153,17 @@ class _TaskWidgetState extends State<TaskWidget> {
                   );
                 }
 
-                return FormBlocListener<CreateServiceFormBloc, String, String>(
-                  onSuccess: (context, state) {},
-                  onFailure: (context, state) {},
-                  child: taskModel.id != null
-                      ? setTaskView(
-                          context,
-                          createServiceFormBloc,
-                        )
-                      : Container(),
+                return Scaffold(
+                  body: FormBlocListener<CreateServiceFormBloc, String, String>(
+                    onSuccess: (context, state) {},
+                    onFailure: (context, state) {},
+                    child: taskModel.id != null
+                        ? setTaskView(
+                            context,
+                            createServiceFormBloc,
+                          )
+                        : Container(),
+                  ),
                 );
               } else {
                 return const Center(
