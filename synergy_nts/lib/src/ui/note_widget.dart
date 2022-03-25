@@ -126,13 +126,15 @@ class _NoteWidgetState extends State<NoteWidget> {
                   noteModel!.json,
                 );
 
-                return FormBlocListener<CreateServiceFormBloc, String, String>(
-                  onSubmitting: (context, state) {},
-                  onSuccess: (context, state) {},
-                  onFailure: (context, state) {},
-                  child: setServiceView(
-                    context,
-                    createServiceFormBloc,
+                return Scaffold(
+                  body: FormBlocListener<CreateServiceFormBloc, String, String>(
+                    onSubmitting: (context, state) {},
+                    onSuccess: (context, state) {},
+                    onFailure: (context, state) {},
+                    child: setServiceView(
+                      context,
+                      createServiceFormBloc,
+                    ),
                   ),
                 );
               } else {

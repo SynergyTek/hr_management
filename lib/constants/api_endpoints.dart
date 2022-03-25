@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class APIEndpointConstants {
   /// API Key to be used for accessing the API.
   static const String API_KEY = "2872b6179f2419aea44d59a61ef48f41";
@@ -440,9 +442,13 @@ class APIEndpointConstants {
       BASE_URL + '/cms/query/GetWorkboardDashboardList';
 
   static const CREATE_WORKBOARD = BASE_URL + '/cms/query/CreateWorkboard';
-  static const CHOOSE_TEMPLATE = 'cms/query/ChooseTemplate';
+  static const CHOOSE_TEMPLATE = BASE_URL + '/cms/query/ChooseTemplate';
   static const WORKBOARD_SORTING =
       'cms/query/GetLOVIdNameList?lovType=WORKBOARD_SORTING';
   static const WORKBOARD_STATUS =
       'cms/query/GetEnumIdNameList?enumType=WorkBoardstatusEnum';
+  static const OPEN_CLOSE_WORKBOARD =
+      BASE_URL + '/cms/query/OpenCloseWorkboard';
+  static const MANAGE_WORKBOARD_DETAILS = BASE_URL + '/cms/query/ManageWorkBoardDetails';
+  //?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&id=
 }

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:synergy_nts/src/theme/theme_config.dart';
 import 'package:synergy_nts/src/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
 
 // Others
@@ -26,6 +28,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:sizer/sizer.dart';
 
+import 'attachment_nts_screen/attachment_nts_screen.dart';
 import 'task_widgets/step_task_widgets/step_task_list_screen.dart';
 import 'widgets/form_widgets.dart';
 import 'widgets/form_widgets/attachment.dart';
@@ -114,45 +117,48 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 widget.templateCode,
               );
 
-              return FormBlocListener<CreateServiceFormBloc, String, String>(
-                onSubmitting: (context, state) {},
-                onSuccess: (context, state) {},
-                onFailure: (context, state) {},
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Stack(
-                    children: [
-                      SingleChildScrollView(
-                        physics: const ClampingScrollPhysics(),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: _formFieldsWidgets(
-                            context,
-                            createServiceFormBloc,
-                          ),
-                        ),
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Expanded(child: Container()),
-                          Container(
-                            height: 50,
-                            color: AppThemeColor.backgroundColor,
-                            child: _displayFooterWidget(
+              return Scaffold(
+                body: FormBlocListener<CreateServiceFormBloc, String, String>(
+                  onSubmitting: (context, state) {},
+                  onSuccess: (context, state) {},
+                  onFailure: (context, state) {},
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Stack(
+                      children: [
+                        SingleChildScrollView(
+                          physics: const ClampingScrollPhysics(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: _formFieldsWidgets(
+                              context,
                               createServiceFormBloc,
                             ),
                           ),
-                        ],
-                      ),
-                      Visibility(
-                        visible: isVisible,
-                        child: const Center(
-                          child: CustomProgressIndicator(),
                         ),
-                      ),
-                    ],
+                        Column(
+                          children: <Widget>[
+                            Expanded(child: Container()),
+                            Container(
+                              height: 50,
+                              color: AppThemeColor.backgroundColor,
+                              child: _displayFooterWidget(
+                                createServiceFormBloc,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Visibility(
+                          visible: isVisible,
+                          child: const Center(
+                            child: CustomProgressIndicator(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+                floatingActionButton: buildSpeedDial(),
               );
             } else {
               return const Center(
@@ -160,6 +166,169 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               );
             }
           }),
+    );
+  }
+
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: const IconThemeData(size: 28.0),
+        backgroundColor: Colors.blue[900],
+        visible: true,
+        curve: Curves.bounceInOut,
+        children: [
+          // SpeedDialChild(
+          //   child:
+          //       Icon(Icons.notifications_active_outlined, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Read Later'),
+          //   label: 'Notification',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          SpeedDialChild(
+            visible: serviceModel!.isAddCommentEnabled! &&
+                widget.serviceId.isNotEmpty,
+            child: Icon(Icons.comment, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              // Navigator.pushNamed(
+              //   context,
+              //   COMMENT_ROUTE,
+              //   arguments: ScreenArguments(
+              //     ntstype: NTSType.service,
+              //     arg1: serviceModel!.serviceId,
+              //   ),
+              // );
+            },
+            label: 'Comment',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+
+          SpeedDialChild(
+            child: const Icon(
+              Icons.attachment_outlined,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleAttachmentOnPressed(),
+            label: 'Attachment',
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+            labelBackgroundColor: Colors.black,
+          ),
+
+          // SpeedDialChild(
+          //   child: Icon(
+          //     Icons.tag,
+          //     color: Colors.white,
+          //   ),
+          //   backgroundColor: Theme.of(context).textHeadingColor,
+          //   onTap: () => _handleTagOnPressed(),
+          //   label: 'Tag',
+          //   labelStyle: TextStyle(
+          //     fontWeight: FontWeight.w500,
+          //     color: Colors.white,
+          //   ),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+
+          // SpeedDialChild(
+          //   child: Icon(Icons.account_tree, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Process Design Result',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          SpeedDialChild(
+            visible: widget.serviceId != null && widget.serviceId!.isNotEmpty,
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {},
+            //  => Navigator.pushNamed(context, NTS_SHARE,
+            //     arguments: ScreenArguments(
+            //       ntstype: NTSType.service,
+            //       arg1: serviceModel!.serviceId,
+            //     )),
+            label: 'Share',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            visible: widget.serviceId.isNotEmpty,
+            child: const Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {},
+            //  => Navigator.pushNamed(
+            //   context,
+            //   ADD_ADHOC_TASK,
+            //   // arguments: ScreenArguments(
+            //   //   ntstype: NTSType.task,
+            //   //   arg4: 'ProjectTask',
+            //   // ),
+            // ),
+            label: 'Adhoc Task',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+
+          // SpeedDialChild(
+          //   child: Icon(Icons.border_all, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Adhoc Task',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.attachment, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Attachment',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.tag, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Tags',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.email, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Email',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+        ]);
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return AttachmentNTSScreen(
+          userId: widget.userID,
+          ntsType: NTSType.service,
+          ntsId: widget.serviceId,
+        );
+      }),
     );
   }
 
