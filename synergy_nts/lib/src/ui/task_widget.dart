@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sizer/sizer.dart';
+import 'package:synergy_nts/src/theme/theme_config.dart';
 import 'package:synergy_nts/src/ui/map_widgets/google_maps_current_location_widget.dart';
 import 'package:synergy_nts/src/ui/widgets/form_widgets.dart';
 
@@ -24,6 +26,7 @@ import '../helpers/validation_helper.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../models/udf_models/udf_json_model.dart';
 import '../models/user_model/team_model.dart';
+import 'attachment_nts_screen/attachment_nts_screen.dart';
 import 'widgets/form_widgets/attachment.dart';
 import 'widgets/widgets.dart';
 import 'task_widgets/task_widgets/widgets/reassign_bottom_sheet_widget.dart';
@@ -33,7 +36,7 @@ class TaskWidget extends StatefulWidget {
   // final bool isEmployeePortal;
 
   final String? title;
-  final String? taskId;
+  final String taskId;
   final String? taskTemplateCode;
   final String? serviceTemplateCode;
   final Map<String, dynamic>? extraInformationMap;
@@ -44,7 +47,7 @@ class TaskWidget extends StatefulWidget {
     required this.userId,
     // required this.isEmployeePortal,
     this.title,
-    this.taskId,
+    required this.taskId,
     this.taskTemplateCode,
     this.serviceTemplateCode,
     this.extraInformationMap,
@@ -164,6 +167,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                           )
                         : Container(),
                   ),
+                  floatingActionButton: buildSpeedDial(),
                 );
               } else {
                 return const Center(
@@ -172,6 +176,266 @@ class _TaskWidgetState extends State<TaskWidget> {
               }
             }),
       ),
+    );
+  }
+
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: const IconThemeData(size: 28.0),
+        backgroundColor: Colors.blue[900],
+        visible: true,
+        curve: Curves.bounceInOut,
+        children: [
+          // SpeedDialChild(
+          //   child:
+          //       Icon(Icons.notifications_active_outlined, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Read Later'),
+          //   label: 'Notification',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          SpeedDialChild(
+            visible: taskModel.isAddCommentEnabled! && widget.taskId.isNotEmpty,
+            child: Icon(Icons.comment, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              // Navigator.pushNamed(
+              //   context,
+              //   COMMENT_ROUTE,
+              //   arguments: ScreenArguments(
+              //     ntstype: NTSType.service,
+              //     arg1: serviceModel!.serviceId,
+              //   ),
+              // );
+            },
+            label: 'Comment',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+
+          SpeedDialChild(
+            visible: taskModel.isAddCommentEnabled! && widget.taskId.isNotEmpty,
+            child: Icon(Icons.timelapse, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              // Navigator.pushNamed(
+              //   context,
+              //   COMMENT_ROUTE,
+              //   arguments: ScreenArguments(
+              //     ntstype: NTSType.service,
+              //     arg1: serviceModel!.serviceId,
+              //   ),
+              // );
+            },
+            label: 'Time entries',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            visible: taskModel.isAddCommentEnabled! && widget.taskId.isNotEmpty,
+            child: Icon(Icons.email_sharp, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              // Navigator.pushNamed(
+              //   context,
+              //   COMMENT_ROUTE,
+              //   arguments: ScreenArguments(
+              //     ntstype: NTSType.service,
+              //     arg1: serviceModel!.serviceId,
+              //   ),
+              // );
+            },
+            label: 'Emails',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            visible: taskModel.isAddCommentEnabled! && widget.taskId.isNotEmpty,
+            child: Icon(Icons.tag_sharp, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              // Navigator.pushNamed(
+              //   context,
+              //   COMMENT_ROUTE,
+              //   arguments: ScreenArguments(
+              //     ntstype: NTSType.service,
+              //     arg1: serviceModel!.serviceId,
+              //   ),
+              // );
+            },
+            label: 'Tags',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          SpeedDialChild(
+            visible: taskModel.isAddCommentEnabled! && widget.taskId.isNotEmpty,
+            child: Icon(Icons.info, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              // Navigator.pushNamed(
+              //   context,
+              //   COMMENT_ROUTE,
+              //   arguments: ScreenArguments(
+              //     ntstype: NTSType.service,
+              //     arg1: serviceModel!.serviceId,
+              //   ),
+              // );
+            },
+            label: 'Logs',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+
+          SpeedDialChild(
+            visible:
+                taskModel!.isAddCommentEnabled! && widget.taskId.isNotEmpty,
+            child: Icon(Icons.notifications, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {
+              // Navigator.pushNamed(
+              //   context,
+              //   COMMENT_ROUTE,
+              //   arguments: ScreenArguments(
+              //     ntstype: NTSType.service,
+              //     arg1: serviceModel!.serviceId,
+              //   ),
+              // );
+            },
+            label: 'Notification',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+
+          SpeedDialChild(
+            child: const Icon(
+              Icons.attachment_outlined,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleAttachmentOnPressed(),
+            label: 'Attachment',
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+            labelBackgroundColor: Colors.black,
+          ),
+
+          // SpeedDialChild(
+          //   child: Icon(
+          //     Icons.tag,
+          //     color: Colors.white,
+          //   ),
+          //   backgroundColor: Theme.of(context).textHeadingColor,
+          //   onTap: () => _handleTagOnPressed(),
+          //   label: 'Tag',
+          //   labelStyle: TextStyle(
+          //     fontWeight: FontWeight.w500,
+          //     color: Colors.white,
+          //   ),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+
+          // SpeedDialChild(
+          //   child: Icon(Icons.account_tree, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Process Design Result',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          SpeedDialChild(
+            visible: widget.taskId != null && widget.taskId.isNotEmpty,
+            child: Icon(Icons.share, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () {},
+            //  => Navigator.pushNamed(context, NTS_SHARE,
+            //     arguments: ScreenArguments(
+            //       ntstype: NTSType.service,
+            //       arg1: serviceModel!.serviceId,
+            //     )),
+            label: 'Share',
+            labelStyle:
+                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
+          // SpeedDialChild(
+          //   visible: widget.taskId.isNotEmpty,
+          //   child: const Icon(Icons.share, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () {},
+          //   //  => Navigator.pushNamed(
+          //   //   context,
+          //   //   ADD_ADHOC_TASK,
+          //   //   // arguments: ScreenArguments(
+          //   //   //   ntstype: NTSType.task,
+          //   //   //   arg4: 'ProjectTask',
+          //   //   // ),
+          //   // ),
+          //   label: 'Adhoc Task',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+
+          // SpeedDialChild(
+          //   child: Icon(Icons.border_all, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Adhoc Task',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.attachment, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Attachment',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.tag, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Tags',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+          // SpeedDialChild(
+          //   child: Icon(Icons.email, color: Colors.white),
+          //   backgroundColor: Colors.blue,
+          //   onTap: () => print('Pressed Code'),
+          //   label: 'Email',
+          //   labelStyle:
+          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //   labelBackgroundColor: Colors.black,
+          // ),
+        ]);
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return AttachmentNTSScreen(
+          userId: widget.userId,
+          ntsType: NTSType.task,
+          ntsId: widget.taskId,
+        );
+      }),
     );
   }
 

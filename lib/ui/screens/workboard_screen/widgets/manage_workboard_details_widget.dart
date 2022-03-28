@@ -6,8 +6,10 @@ import '../../../../data/models/workboard_model/json_content_model.dart';
 import '../../../../data/models/workboard_model/workboard_response_model.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../logic/blocs/workboard_bloc/workboard_bloc.dart';
+import '../../../../routes/route_constants.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
+
 
 class ManageWorkBoardDetailsList extends StatefulWidget {
   final String id;
@@ -159,7 +161,10 @@ class _ManageWorkBoardDetailsListState
                                 isIconBeforeText: true,
                                 icon: Icons.add,
                                 buttonText: 'Create Section',
-                                onTap: () {},
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  CREATE_SECTION_WORKBOARD_SCREEN,
+                                ),
                               ),
                               ButtonWidget(
                                 buttonText: 'Save',
