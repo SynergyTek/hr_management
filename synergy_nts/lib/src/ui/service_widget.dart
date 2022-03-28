@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:synergy_nts/src/theme/theme_config.dart';
+import 'package:synergy_nts/src/ui/tag_nts_screen/tag_nts_screen.dart';
 import 'package:synergy_nts/src/ui/widgets/form_widgets/bloc_date_picker_widget.dart';
 
 // Others
@@ -29,6 +30,9 @@ import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:sizer/sizer.dart';
 
 import 'attachment_nts_screen/attachment_nts_screen.dart';
+import 'nts_comments/nts_comments_screen.dart';
+import 'share/share_screen.dart';
+import 'task_widgets/adhoc_task/adhoc_task_list_screen.dart';
 import 'task_widgets/step_task_widgets/step_task_list_screen.dart';
 import 'widgets/form_widgets.dart';
 import 'widgets/form_widgets/attachment.dart';
@@ -190,21 +194,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           SpeedDialChild(
             visible: serviceModel!.isAddCommentEnabled! &&
                 widget.serviceId.isNotEmpty,
-            child: Icon(Icons.comment, color: Colors.white),
+            child: const Icon(Icons.comment, color: Colors.white),
             backgroundColor: Colors.blue,
-            onTap: () {
-              // Navigator.pushNamed(
-              //   context,
-              //   COMMENT_ROUTE,
-              //   arguments: ScreenArguments(
-              //     ntstype: NTSType.service,
-              //     arg1: serviceModel!.serviceId,
-              //   ),
-              // );
-            },
+            onTap: () => _handleCommentOnPressed(),
             label: 'Comment',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
 
@@ -223,20 +218,20 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             labelBackgroundColor: Colors.black,
           ),
 
-          // SpeedDialChild(
-          //   child: Icon(
-          //     Icons.tag,
-          //     color: Colors.white,
-          //   ),
-          //   backgroundColor: Theme.of(context).textHeadingColor,
-          //   onTap: () => _handleTagOnPressed(),
-          //   label: 'Tag',
-          //   labelStyle: TextStyle(
-          //     fontWeight: FontWeight.w500,
-          //     color: Colors.white,
-          //   ),
-          //   labelBackgroundColor: Colors.black,
-          // ),
+          SpeedDialChild(
+            child: const Icon(
+              Icons.tag,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).textHeadingColor,
+            onTap: () => _handleTagOnPressed(),
+            label: 'Tag',
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+            labelBackgroundColor: Colors.black,
+          ),
 
           // SpeedDialChild(
           //   child: Icon(Icons.account_tree, color: Colors.white),
@@ -248,36 +243,23 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           //   labelBackgroundColor: Colors.black,
           // ),
           SpeedDialChild(
-            visible: widget.serviceId != null && widget.serviceId!.isNotEmpty,
-            child: Icon(Icons.share, color: Colors.white),
+            visible: widget.serviceId.isNotEmpty,
+            child: const Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
-            onTap: () {},
-            //  => Navigator.pushNamed(context, NTS_SHARE,
-            //     arguments: ScreenArguments(
-            //       ntstype: NTSType.service,
-            //       arg1: serviceModel!.serviceId,
-            //     )),
+            onTap: () => _handleShareOnPressed(),
             label: 'Share',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
           SpeedDialChild(
             visible: widget.serviceId.isNotEmpty,
             child: const Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
-            onTap: () {},
-            //  => Navigator.pushNamed(
-            //   context,
-            //   ADD_ADHOC_TASK,
-            //   // arguments: ScreenArguments(
-            //   //   ntstype: NTSType.task,
-            //   //   arg4: 'ProjectTask',
-            //   // ),
-            // ),
+            onTap: () => _handleAdhocTaskOnPressed(),
             label: 'Adhoc Task',
-            labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500, color: Colors.white),
             labelBackgroundColor: Colors.black,
           ),
 
@@ -318,6 +300,49 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           //   labelBackgroundColor: Colors.black,
           // ),
         ]);
+  }
+
+  _handleTagOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return TagNTSScreen(
+          ntsId: widget.serviceId,
+          ntsType: NTSType.service,
+        );
+      }),
+    );
+  }
+
+  _handleShareOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return ShareScreen(
+          ntsId: widget.serviceId,
+          ntsType: NTSType.service,
+        );
+      }),
+    );
+  }
+
+  _handleAdhocTaskOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return AdhocTaskListScreen(
+          userId: widget.userID,
+        );
+      }),
+    );
+  }
+
+  _handleCommentOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return NTSCommentsScreen(
+          userId: widget.userID,
+          ntsId: widget.serviceId,
+        );
+      }),
+    );
   }
 
   _handleAttachmentOnPressed() {

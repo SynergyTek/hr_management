@@ -55,6 +55,15 @@ abstract class AbstractTaskBloc {
     // String userId,
   });
 
+  /// loadServiceAdhocTaskData: function to get lockTask data from the API
+  /// @Params:
+  ///   queryparams: It takes a Map of queryparams to fetch the data from API.
+  ///   taskListStatus: It takes a String of taskListStatus to fetch the data.
+  loadServiceAdhocTaskData({
+    Map<String, dynamic>? queryparams,
+    String? taskListStatus,
+  });
+
   /// lockTaskData: function to get lockTask data from the API
   /// @Params:
   ///   queryparams: It takes a Map of queryparams to fetch the data from API.

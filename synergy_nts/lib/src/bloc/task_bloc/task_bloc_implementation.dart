@@ -87,6 +87,18 @@ class TaskBloc extends AbstractTaskBloc {
     return response;
   }
 
+  loadServiceAdhocTaskData({
+    Map<String, dynamic>? queryparams,
+    String? taskListStatus,
+  }) async {
+    TaskListResponseModel response =
+        await _taskRepository!.loadServiceAdhocTaskData(
+      queryparams: queryparams,
+    );
+    _subjectTaskList.sink.add(response);
+  }
+
+
   @override
   Future<String> lockTaskData({
     Map<String, dynamic>? queryparams,

@@ -156,7 +156,8 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
                     (widget.url!.contains('ReadUserTeamData') ||
                         widget.url!.contains('ReadUserData')))
                 ? _idUserList
-                : (widget.url!.contains('ReadHierarchyMasterData'))
+                : (widget.url != null &&
+                        widget.url!.contains('ReadHierarchyMasterData'))
                     ? _idUserHierarchyList
                     : _idNameModelList;
     List _filteredDataList = widget.url != null &&
@@ -169,7 +170,8 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
                     (widget.url!.contains('ReadUserTeamData') ||
                         widget.url!.contains('ReadUserData')))
                 ? _filteredIdUserList
-                : (widget.url!.contains('ReadHierarchyMasterData'))
+                : (widget.url != null &&
+                        widget.url!.contains('ReadHierarchyMasterData'))
                     ? _filteredIdUserHierarchyList
                     : _filteredIdNameModelList;
     return Listizer(
