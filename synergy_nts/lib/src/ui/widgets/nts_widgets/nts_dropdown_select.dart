@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:synergy_nts/src/bloc/user_bloc/abstract_user_bloc.dart';
+import 'package:synergy_nts/src/ui/widgets/form_widgets/team_dropdown_list.dart';
 
 import '../../../bloc/common_bloc/abstract_common_bloc.dart';
 import '../../../bloc/nts_dropdown_bloc/abstract_nts_dropdown_bloc.dart';
@@ -19,6 +20,7 @@ class NTSDropDownSelect extends StatelessWidget {
   final String? title;
   final bool? isShowArrow;
   final bool? isUserList;
+  final bool? isTeamList;
   final bool? isReadonly;
   final bool? isRequired;
   final String? hint;
@@ -44,6 +46,7 @@ class NTSDropDownSelect extends StatelessWidget {
     this.title = "",
     this.isShowArrow,
     this.isUserList,
+    this.isTeamList,
     this.isReadonly,
     this.isRequired,
     this.hint,
@@ -167,6 +170,15 @@ class NTSDropDownSelect extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => UserDropDownList(
+                                onListTap: onListTap,
+                              ),
+                            ),
+                          );
+                        }
+                        if (isTeamList != null && isTeamList!) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => TeamDropdownList(
                                 onListTap: onListTap,
                               ),
                             ),
