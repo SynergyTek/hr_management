@@ -1,3 +1,4 @@
+import 'package:hr_management/data/models/workboard_model/workboard_model.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_response_model.dart';
 import 'package:rxdart/subjects.dart';
 import '../../../data/models/task_models/task_list_resp_model.dart';
@@ -9,29 +10,28 @@ class WorkboardBloc {
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
   final BehaviorSubject<WorkBoardResponseModel?> _subjectWorkboardList =
       BehaviorSubject<WorkBoardResponseModel?>();
-
   final BehaviorSubject<WorkBoardMapResponseModel?>
       _subjectManageWorkboardDetailsList =
       BehaviorSubject<WorkBoardMapResponseModel?>();
-
   final BehaviorSubject<WorkBoardBoolResponseModel?>
       _subjectOpenCLoseWorkboard =
       BehaviorSubject<WorkBoardBoolResponseModel?>();
-
   final BehaviorSubject<TaskListResponseModel?> _subjectWorkboardTaskList =
       BehaviorSubject<TaskListResponseModel?>();
-
   final BehaviorSubject<int?> _subjectWorkboardTaskCount =
       BehaviorSubject<int?>();
-
   final BehaviorSubject<int?> _subjectWorkboardCompletedTaskCount =
       BehaviorSubject<int?>();
-
   final BehaviorSubject<WorkBoardResponseModel?> _subjectCreateWorkboardList =
       BehaviorSubject<WorkBoardResponseModel?>();
-
   final BehaviorSubject<WorkBoardResponseModel?> _subjectChooseTemplate =
       BehaviorSubject<WorkBoardResponseModel?>();
+  final BehaviorSubject<WorkBoardMapResponseModel?>
+      _subjectGetDuplicateWorkBoard =
+      BehaviorSubject<WorkBoardMapResponseModel?>();
+  final BehaviorSubject<WorkBoardMapResponseModel?>
+      _subjectPostDuplicateWorkBoard =
+      BehaviorSubject<WorkBoardMapResponseModel?>();
 
   /// Used to fetch new entries.
   getWorkboardData({
@@ -84,6 +84,27 @@ class WorkboardBloc {
     _subjectChooseTemplate.sink.add(response);
   }
 
+  getDuplicateWorkBoard({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    WorkBoardMapResponseModel response =
+        await _workboardRepository.getDuplicateWorkBoard(
+      queryparams: queryparams,
+    );
+    _subjectGetDuplicateWorkBoard.sink.add(response);
+  }
+
+  postDuplicateWorkBoard({
+    WorkboardModel? workBoardModel,
+  }) async {
+    WorkBoardMapResponseModel response =
+        await _workboardRepository.postDuplicateWorkBoard(
+      workBoardModel: workBoardModel,
+    );
+    _subjectPostDuplicateWorkBoard.sink.add(response);
+    return response;
+  }
+
   getTaskDashBoardData({
     Map<String, dynamic>? queryparams,
     String? taskListStatus,
@@ -116,32 +137,31 @@ class WorkboardBloc {
     _subjectChooseTemplate.close();
     _subjectOpenCLoseWorkboard.close();
     _subjectManageWorkboardDetailsList.close();
+    _subjectPostDuplicateWorkBoard.close();
+    _subjectGetDuplicateWorkBoard.close();
   }
 
   BehaviorSubject<WorkBoardResponseModel?> get subjectWorkboardList =>
       _subjectWorkboardList;
-
   BehaviorSubject<WorkBoardMapResponseModel?>
       get subjectManageWorkboardDetailsList =>
           _subjectManageWorkboardDetailsList;
-
   BehaviorSubject<WorkBoardBoolResponseModel?> get subjectOpenCloseWorkboard =>
       _subjectOpenCLoseWorkboard;
-
   BehaviorSubject<WorkBoardResponseModel?> get subjectChooseTemplate =>
       _subjectChooseTemplate;
-
   BehaviorSubject<TaskListResponseModel?> get subjectWorkboardTaskList =>
       _subjectWorkboardTaskList;
-
   BehaviorSubject<int?> get subjectWorkboardTaskCount =>
       _subjectWorkboardTaskCount;
-
   BehaviorSubject<int?> get subjectWorkboardCompletedTaskCount =>
       _subjectWorkboardCompletedTaskCount;
-
   BehaviorSubject<WorkBoardResponseModel?> get subjectCreateWorkboardList =>
       _subjectCreateWorkboardList;
+  BehaviorSubject<WorkBoardMapResponseModel?>
+      get subjectGetDuplicateWorkBoard => _subjectGetDuplicateWorkBoard;
+  BehaviorSubject<WorkBoardMapResponseModel?>
+      get subjectPostDuplicateWorkBoard => _subjectPostDuplicateWorkBoard;
 }
 
 final workboardBloc = WorkboardBloc();

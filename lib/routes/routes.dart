@@ -488,8 +488,11 @@ class AppRouter {
         );
 
       case DUPLICATE_WORKBOARD_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments?;
+
         return MaterialPageRoute(
-          builder: (_) => DuplicateWorkBoardScreen(),
+          builder: (_) =>
+              DuplicateWorkBoardScreen(workBoardId: args?.arg1 ?? ''),
         );
 
       case CREATE_SECTION_WORKBOARD_SCREEN:

@@ -449,5 +449,11 @@ class APIEndpointConstants {
       'cms/query/GetEnumIdNameList?enumType=WorkBoardstatusEnum';
   static const OPEN_CLOSE_WORKBOARD =
       BASE_URL + '/cms/query/OpenCloseWorkboard';
-  static const MANAGE_WORKBOARD_DETAILS = BASE_URL + '/cms/query/ManageWorkBoardDetails';
+  static const MANAGE_WORKBOARD_DETAILS =
+      BASE_URL + '/cms/query/ManageWorkBoardDetails';
+  static const GET_DUPLICATE_WORKBOARD =
+      BASE_URL + '/cms/query/DuplicateWorkboard';
+
+  static const POST_DUPLICATE_WORKBOARD =
+      BASE_URL + '/cms/query/PostDuplicateWorkboard';
 }
