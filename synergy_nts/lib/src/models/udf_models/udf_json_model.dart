@@ -218,7 +218,7 @@ class ColumnComponent {
     this.ntsType,
     this.editableContext,
     this.viewableContext,
-    this.viewableBy,
+    // this.viewableBy,
     this.editableBy,
     this.validate,
     this.key,
@@ -279,7 +279,7 @@ class ColumnComponent {
   NtsType? ntsType;
   List<EditableContext>? editableContext;
   List<EditableContext>? viewableContext;
-  List<AbleBy>? viewableBy;
+  // List<AbleBy>? viewableBy;
   List<AbleBy>? editableBy;
   Validate? validate;
   String? key;
@@ -352,10 +352,10 @@ class ColumnComponent {
         //     ? List<ViewableContext>.from(json["viewableContext"]
         //         .map((x) => viewableContextValues.map[x]))
         //     : null,
-        viewableBy: json["viewableBy"] != null
-            ? List<AbleBy>.from(
-                json["viewableBy"].map((x) => ableByValues.map[x]))
-            : null,
+        // viewableBy: json["viewableBy"] != null && json["viewableBy"].isNotEmpty
+        //     ? List<AbleBy>.from(
+        //         json["viewableBy"].map((x) => ableByValues.map[x]))
+        //     : null,
         // editableBy: json["editableBy"] != null //TODO: fix the null issue here
         //     ? List<AbleBy>.from(
         //         json["editableBy"].map((x) => ableByValues.map[x]))
@@ -462,8 +462,8 @@ class ColumnComponent {
             editableContext!.map((x) => editableContextValues.reverse[x])),
         "viewableContext": List<dynamic>.from(
             viewableContext!.map((x) => editableContextValues.reverse[x])),
-        "viewableBy":
-            List<dynamic>.from(viewableBy!.map((x) => ableByValues.reverse[x])),
+        // "viewableBy":
+        //     List<dynamic>.from(viewableBy!.map((x) => ableByValues.reverse[x])),
         "editableBy":
             List<dynamic>.from(editableBy!.map((x) => ableByValues.reverse[x])),
         "validate": validate == null ? null : validate!.toJson(),
@@ -815,7 +815,7 @@ class FluffyComponent {
     this.ntsType,
     this.editableContext,
     this.viewableContext,
-    this.viewableBy,
+    // this.viewableBy,
     this.editableBy,
     this.validate,
     this.key,
@@ -835,7 +835,7 @@ class FluffyComponent {
   NtsType? ntsType;
   List<EditableContext>? editableContext;
   List<ViewableContext>? viewableContext;
-  List<AbleBy>? viewableBy;
+  // List<AbleBy>? viewableBy;
   List<AbleBy>? editableBy;
   Validate? validate;
   String? key;
@@ -864,10 +864,10 @@ class FluffyComponent {
             ? List<ViewableContext>.from(json["viewableContext"]
                 .map((x) => viewableContextValues.map[x]))
             : null,
-        viewableBy: json["viewableBy"] != null
-            ? List<AbleBy>.from(
-                json["viewableBy"].map((x) => ableByValues.map[x]))
-            : null,
+        // viewableBy: json["viewableBy"] != null
+        //     ? List<AbleBy>.from(
+        //         json["viewableBy"].map((x) => ableByValues.map[x]))
+        //     : null,
         editableBy: json["editableBy"] != null
             ? List<AbleBy>.from(
                 json["editableBy"].map((x) => ableByValues.map[x]))
@@ -896,8 +896,8 @@ class FluffyComponent {
             editableContext!.map((x) => editableContextValues.reverse[x])),
         "viewableContext": List<dynamic>.from(
             viewableContext!.map((x) => viewableContextValues.reverse[x])),
-        "viewableBy":
-            List<dynamic>.from(viewableBy!.map((x) => ableByValues.reverse[x])),
+        // "viewableBy":
+        //     List<dynamic>.from(viewableBy!.map((x) => ableByValues.reverse[x])),
         "editableBy":
             List<dynamic>.from(editableBy!.map((x) => ableByValues.reverse[x])),
         "validate": validate!.toJson(),
@@ -979,7 +979,7 @@ class ComponentComponent {
   String? ntsType;
   List<String>? editableContext;
   List<String>? viewableContext;
-  List<String>? viewableBy;
+  // List<String>? viewableBy;
   List<String>? editableBy;
   String? key;
   String? type;
@@ -1000,7 +1000,7 @@ class ComponentComponent {
       this.ntsType,
       this.editableContext,
       this.viewableContext,
-      this.viewableBy,
+      // this.viewableBy,
       this.editableBy,
       this.key,
       this.type,
@@ -1029,11 +1029,11 @@ class ComponentComponent {
           ? json['viewableContext'].cast<String>()
           : '' as List<String>?;
     }
-    if (json.containsKey('viewableBy')) {
-      viewableBy = (json['viewableBy'] != null)
-          ? json['viewableBy'].cast<String>()
-          : '' as List<String>?;
-    }
+    // if (json.containsKey('viewableBy')) {
+    //   viewableBy = (json['viewableBy'] != null)
+    //       ? json['viewableBy'].cast<String>()
+    //       : '' as List<String>?;
+    // }
     if (json.containsKey('editableBy')) {
       editableBy = (json['editableBy'] != null)
           ? json['editableBy'].cast<String>()
@@ -1061,7 +1061,7 @@ class ComponentComponent {
     data['ntsType'] = ntsType;
     data['editableContext'] = editableContext;
     data['viewableContext'] = viewableContext;
-    data['viewableBy'] = viewableBy;
+    // data['viewableBy'] = viewableBy;
     data['editableBy'] = editableBy;
     data['disabled'] = key;
     data['key'] = key;

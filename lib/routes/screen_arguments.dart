@@ -13,6 +13,7 @@ class ScreenArguments {
   final bool? showBack;
   final Function? func;
   final NTSType? ntstype;
+  final PortalType? portalType;
   OnTapPressedCallBack? callBack;
   final Cwd? dmsParentModel;
   final List<Cwd>? dmsParentModelList;
@@ -22,6 +23,7 @@ class ScreenArguments {
 
   ScreenArguments({
     this.ntstype,
+    this.portalType,
     this.arg3,
     this.arg4,
     this.func,

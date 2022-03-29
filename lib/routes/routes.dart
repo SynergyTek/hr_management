@@ -134,6 +134,7 @@ class AppRouter {
             serviceId: args.arg2,
             title: args.arg3,
             isLeave: args.val1,
+            // portalType: args.portalType,
           ),
         );
 
@@ -146,6 +147,7 @@ class AppRouter {
             noteId: args.arg2,
             title: args.arg3,
             isDependent: args.val1 ?? false,
+            // portalType: args.portalType!,
           ),
         );
 
@@ -226,6 +228,7 @@ class AppRouter {
             templateCode: args!.arg1,
             taskId: args.arg2,
             title: args.arg3,
+            // portalType: args.portalType!,
           ),
         );
 

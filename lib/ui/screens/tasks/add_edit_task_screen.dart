@@ -10,9 +10,15 @@ class AddEditTaskScreen extends StatelessWidget {
   final String? templateCode;
   final String? taskId;
   final String? title;
-  const AddEditTaskScreen(
-      {Key? key, this.templateCode, this.taskId, this.title})
-      : super(key: key);
+  // final PortalType portalType;
+
+  const AddEditTaskScreen({
+    Key? key,
+    this.templateCode,
+    this.taskId,
+    this.title,
+    // required this.portalType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +32,7 @@ class AddEditTaskScreen extends StatelessWidget {
         child: NTSWrapperWidget(
           templateCode: templateCode!,
           ntsID: taskId!,
+          // portalType: portalType,
           userID:
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
           ntsType: NTSType.task,
@@ -37,7 +44,6 @@ class AddEditTaskScreen extends StatelessWidget {
         //   title: title,
         //   userId:
         //       BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
-        //   //TODO
         //   // isEmployeePortal: true,
         //   // isEmployeePortal: isEmployeePortal,
         // ),

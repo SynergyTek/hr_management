@@ -14,6 +14,7 @@ class CreateServiceScreen extends StatelessWidget {
   final String? templateCode;
   final String? serviceId;
   final String? title;
+  // final PortalType? portalType;
 
   final Map<String, dynamic>? extraInformationMap;
 
@@ -24,6 +25,7 @@ class CreateServiceScreen extends StatelessWidget {
     this.title,
     this.isLeave,
     this.extraInformationMap,
+    // required this.portalType,
   }) : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class CreateServiceScreen extends StatelessWidget {
             child: NTSWrapperWidget(
               templateCode: templateCode ?? '',
               ntsID: serviceId!,
+              // portalType: portalType!,
               userID:
                   BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                       '',

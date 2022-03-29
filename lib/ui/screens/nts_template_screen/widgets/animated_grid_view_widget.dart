@@ -192,6 +192,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
               arguments: ScreenArguments(
                 arg1: templateCode,
                 arg2: '',
+                portalType: PortalType.hr,
               ),
             );
             resetCards();

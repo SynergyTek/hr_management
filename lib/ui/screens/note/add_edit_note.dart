@@ -11,6 +11,7 @@ class AddEditNote extends StatelessWidget {
   final String? noteId;
   final String? title;
   final bool? isDependent;
+  // final PortalType portalType;
 
   const AddEditNote({
     Key? key,
@@ -18,6 +19,7 @@ class AddEditNote extends StatelessWidget {
     this.noteId,
     this.title,
     this.isDependent,
+    // required this.portalType,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class AddEditNote extends StatelessWidget {
           child: NTSWrapperWidget(
             templateCode: templateCode!,
             ntsID: noteId!,
+            // portalType: portalType,
             userID:
                 BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                     '',

@@ -8,6 +8,7 @@ import '../constants/enums.dart';
 class NTSWrapperWidget extends StatelessWidget {
   final String userID;
   final NTSType ntsType;
+  // final PortalType portalType;
 
   /// Can be interchanged with either of the following:
   ///  - NoteID,
@@ -27,6 +28,7 @@ class NTSWrapperWidget extends StatelessWidget {
     //
     required this.userID,
     required this.ntsType,
+    // required this.portalType,
 
     // Optional
     this.ntsID = "",
