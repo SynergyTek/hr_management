@@ -13,7 +13,6 @@ import '../bloc/user_bloc/abstract_user_bloc.dart';
 import '../constants/api_endpoints.dart';
 
 // Widgets/UI:
-import '../constants/enums.dart';
 import '../helpers/multiselectList_helper.dart';
 import '../helpers/validation_helper.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
@@ -308,7 +307,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       MaterialPageRoute(builder: (BuildContext context) {
         return TagNTSScreen(
           ntsId: widget.serviceId,
-          ntsType: NTSType.service, 
+          ntsType: NTSType.service,
         );
       }),
     );
@@ -1547,9 +1546,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 udfJson[model[i].key]!.isEmpty ||
                 udfJson[model[i].key] == '[]')
             ? model[i].label ?? " Select File to Attach "
-            : (selectValue[i] == null || selectValue[i].isEmpty)
-                ? " (1) File Attached: " + udfJson[model[i].key]!
-                : " (1) File Attached: " + selectValue[i];
+            : selectValue.isNotEmpty
+                ? (selectValue[i] == null || selectValue[i].isEmpty)
+                    ? " (1) File Attached: " + udfJson[model[i].key]!
+                    : " (1) File Attached: " + selectValue[i]
+                : " (1) File Attached: " + udfJson[model[i].key]!;
 
         // attchmentController.text = udfJson[model[i].key] == null
         //     ? (widget.serviceId == null || widget.serviceId.isEmpty)
