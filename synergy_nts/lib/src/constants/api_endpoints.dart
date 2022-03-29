@@ -28,7 +28,7 @@ class APIEndpointConstants {
       "$BASE_URL/cms/query/LoadCustomServiceIndexPageGrid?templateId=c39dae94-83bf-4b37-8737-745c2b453e4d";
 
   static const String READ_SERVICE_HOME_DATA =
-      "$BASE_URL/egov/query/GetMyRequestList";
+      "$BASE_URL/nts/query/ReadServiceHomeData";
 
   static const String GET_SERVICE_DETAILS =
       '$BASE_URL/nts/query/GetServiceDetails';

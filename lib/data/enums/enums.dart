@@ -42,3 +42,11 @@ Map<NoteIndexTableType, String> noteIndexTableMap = {
   NoteIndexTableType.employeeEducationalQualification:
       "Employee Education Qualification",
 };
+
+enum PortalType {
+  CMS,
+  DMS,
+  HRMS,
+  InventoryManagement,
+  ProjectManagement,
+}

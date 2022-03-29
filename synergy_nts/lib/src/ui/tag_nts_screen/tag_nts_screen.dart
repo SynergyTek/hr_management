@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:synergy_nts/src/models/udf_models/udf_json_model.dart';
 
 import '../../../synergy_nts.dart';
+import '../widgets/tag.dart';
 import 'widget/tag_nts_body.dart';
 
 class TagNTSScreen extends StatelessWidget {
@@ -31,6 +33,14 @@ class TagNTSScreen extends StatelessWidget {
           size: 32,
         ),
         onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (BuildContext context) {
+              return SelectTag(
+                ntsId: ntsId,
+                ntstype: NTSType.service,
+              );
+            }),
+          );
           // Navigator.pushNamed(
           //   context,
           //   NTS_TAG,
