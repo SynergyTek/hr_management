@@ -16,7 +16,8 @@ class TagListCard extends StatelessWidget {
       elevation: 4,
       child: ListTile(
         title: Text(
-          serviceSubject(index),
+          'Placeholder list for TAGS',
+          // serviceSubject(index),
           maxLines: 2,
           style: Theme.of(context).textTheme.headline6,
         ),
