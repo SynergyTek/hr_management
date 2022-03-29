@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/workboard_screen/widgets/manage_workboard_details_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
@@ -146,7 +148,74 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                               child: Icon(
                                                 Icons.more_vert,
                                               ),
-                                              onSelected: (v) {},
+                                              onSelected: (result) {
+                                                if (result == 0) {}
+                                                if (result == 1) {
+                                                  Navigator.pushNamed(context,
+                                                      DUPLICATE_WORKBOARD_SCREEN,
+                                                      arguments: ScreenArguments(
+                                                          arg1: list?[index]
+                                                              .workboardId));
+                                                }
+
+                                                if (result == 2) {}
+                                                if (result == 3) {
+                                                  workboardBloc
+                                                    ..getOpenCloseWorkboard(
+                                                      queryparams: {
+                                                        'id': list?[index]
+                                                            .workboardId,
+                                                        'status': 1,
+                                                      },
+                                                    );
+                                                  if (workboardBloc
+                                                      .subjectOpenCloseWorkboard
+                                                      .hasValue) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          (workboardBloc
+                                                                      .subjectOpenCloseWorkboard
+                                                                      .value
+                                                                      ?.booldata ==
+                                                                  true)
+                                                              ? 'Successful'
+                                                              : 'Please Try Again Later',
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                }
+                                                if (result == 4) {
+                                                  workboardBloc
+                                                    ..getOpenCloseWorkboard(
+                                                      queryparams: {
+                                                        'id': list?[index]
+                                                            .workboardId,
+                                                        'status': 0,
+                                                      },
+                                                    );
+                                                  if (workboardBloc
+                                                      .subjectOpenCloseWorkboard
+                                                      .hasValue) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text((workboardBloc
+                                                                    .subjectOpenCloseWorkboard
+                                                                    .value
+                                                                    ?.booldata ==
+                                                                true)
+                                                            ? 'Successful'
+                                                            : 'Please Try Again Later'),
+                                                      ),
+                                                    );
+                                                  }
+                                                }
+                                              },
                                               itemBuilder:
                                                   (BuildContext context) {
                                                 return (selectStatusController
@@ -154,34 +223,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                         'Closed')
                                                     ? [
                                                         PopupMenuItem(
-                                                          onTap: () {
-                                                            workboardBloc
-                                                              ..getOpenCloseWorkboard(
-                                                                queryparams: {
-                                                                  'id': list?[
-                                                                          index]
-                                                                      .workboardId,
-                                                                  'status': 0,
-                                                                },
-                                                              );
-                                                            if (workboardBloc
-                                                                .subjectOpenCloseWorkboard
-                                                                .hasValue) {
-                                                              ScaffoldMessenger
-                                                                      .of(context)
-                                                                  .showSnackBar(
-                                                                SnackBar(
-                                                                  content: Text((workboardBloc
-                                                                              .subjectOpenCloseWorkboard
-                                                                              .value
-                                                                              ?.booldata ==
-                                                                          true)
-                                                                      ? 'Successful'
-                                                                      : 'Please Try Again Later'),
-                                                                ),
-                                                              );
-                                                            }
-                                                          },
+                                                          value: 4,
                                                           child:
                                                               IconTextRowWidget(
                                                             iconData: Icons
@@ -193,7 +235,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                       ]
                                                     : [
                                                         PopupMenuItem(
-                                                          onTap: () {},
+                                                          value: 0,
                                                           child:
                                                               IconTextRowWidget(
                                                             iconData: Icons
@@ -202,7 +244,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                           ),
                                                         ),
                                                         PopupMenuItem(
-                                                          onTap: () {},
+                                                          value: 1,
                                                           child:
                                                               IconTextRowWidget(
                                                             iconData: Icons
@@ -212,7 +254,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                           ),
                                                         ),
                                                         PopupMenuItem(
-                                                          onTap: () {},
+                                                          value: 2,
                                                           child:
                                                               IconTextRowWidget(
                                                             iconData:
@@ -222,33 +264,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                           ),
                                                         ),
                                                         PopupMenuItem(
-                                                          onTap: () {
-                                                            workboardBloc
-                                                              ..getOpenCloseWorkboard(
-                                                                queryparams: {
-                                                                  'id': list?[
-                                                                          index]
-                                                                      .workboardId,
-                                                                  'status': 1,
-                                                                },
-                                                              );
-                                                            if (workboardBloc
-                                                                .subjectOpenCloseWorkboard
-                                                                .hasValue) {
-                                                              ScaffoldMessenger
-                                                                      .of(context)
-                                                                  .showSnackBar(
-                                                                SnackBar(
-                                                                  content: Text(
-                                                                    (workboardBloc.subjectOpenCloseWorkboard.value?.booldata ==
-                                                                            true)
-                                                                        ? 'Successful'
-                                                                        : 'Please Try Again Later',
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }
-                                                          },
+                                                          value: 3,
                                                           child:
                                                               IconTextRowWidget(
                                                             iconData:

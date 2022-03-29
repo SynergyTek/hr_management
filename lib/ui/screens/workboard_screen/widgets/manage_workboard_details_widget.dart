@@ -10,7 +10,6 @@ import '../../../../routes/route_constants.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 
-
 class ManageWorkBoardDetailsList extends StatefulWidget {
   final String id;
 
@@ -216,30 +215,31 @@ class ButtonWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(16)),
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
-          margin: DEFAULT_PADDING * 0.5,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              isIconBeforeText
-                  ? Icon(
-                      icon,
-                      size: 20,
-                      color: Colors.white,
-                    )
-                  : SizedBox(),
-              Text(
-                buttonText,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.sp,
-                ),
+        decoration: BoxDecoration(
+            color: Colors.blue, borderRadius: BorderRadius.circular(16)),
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
+        margin: DEFAULT_PADDING * 0.5,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            isIconBeforeText
+                ? Icon(
+                    icon,
+                    size: 20,
+                    color: Colors.white,
+                  )
+                : SizedBox(),
+            Text(
+              buttonText,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14.sp,
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

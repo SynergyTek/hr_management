@@ -7,6 +7,9 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sizer/sizer.dart';
 import 'package:synergy_nts/src/theme/theme_config.dart';
 import 'package:synergy_nts/src/ui/map_widgets/google_maps_current_location_widget.dart';
+import 'package:synergy_nts/src/ui/nts_comments/nts_comments_screen.dart';
+import 'package:synergy_nts/src/ui/share/share_screen.dart';
+import 'package:synergy_nts/src/ui/tag_nts_screen/tag_nts_screen.dart';
 import 'package:synergy_nts/src/ui/widgets/form_widgets.dart';
 
 // Constansts:
@@ -201,16 +204,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             visible: taskModel.isAddCommentEnabled! && widget.taskId.isNotEmpty,
             child: Icon(Icons.comment, color: Colors.white),
             backgroundColor: Colors.blue,
-            onTap: () {
-              // Navigator.pushNamed(
-              //   context,
-              //   COMMENT_ROUTE,
-              //   arguments: ScreenArguments(
-              //     ntstype: NTSType.service,
-              //     arg1: serviceModel!.serviceId,
-              //   ),
-              // );
-            },
+            onTap: () => _handleCommentOnPressed(),
             label: 'Comment',
             labelStyle:
                 TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
@@ -259,16 +253,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             visible: taskModel.isAddCommentEnabled! && widget.taskId.isNotEmpty,
             child: Icon(Icons.tag_sharp, color: Colors.white),
             backgroundColor: Colors.blue,
-            onTap: () {
-              // Navigator.pushNamed(
-              //   context,
-              //   COMMENT_ROUTE,
-              //   arguments: ScreenArguments(
-              //     ntstype: NTSType.service,
-              //     arg1: serviceModel!.serviceId,
-              //   ),
-              // );
-            },
+            onTap: () => _handleTagOnPressed(),
             label: 'Tags',
             labelStyle:
                 TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
@@ -358,7 +343,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             visible: widget.taskId != null && widget.taskId.isNotEmpty,
             child: Icon(Icons.share, color: Colors.white),
             backgroundColor: Colors.blue,
-            onTap: () {},
+            onTap: () => _handleShareOnPressed(),
             //  => Navigator.pushNamed(context, NTS_SHARE,
             //     arguments: ScreenArguments(
             //       ntstype: NTSType.service,
@@ -425,6 +410,39 @@ class _TaskWidgetState extends State<TaskWidget> {
           //   labelBackgroundColor: Colors.black,
           // ),
         ]);
+  }
+
+  _handleShareOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return ShareScreen(
+          ntsId: widget.taskId,
+          ntsType: NTSType.service,
+        );
+      }),
+    );
+  }
+
+  _handleTagOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return TagNTSScreen(
+          ntsId: widget.taskId,
+          ntsType: NTSType.service,
+        );
+      }),
+    );
+  }
+
+  _handleCommentOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return NTSCommentsScreen(
+          userId: widget.userId,
+          ntsId: widget.taskId,
+        );
+      }),
+    );
   }
 
   _handleAttachmentOnPressed() {
