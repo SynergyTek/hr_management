@@ -307,7 +307,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       MaterialPageRoute(builder: (BuildContext context) {
         return TagNTSScreen(
           ntsId: widget.serviceId,
-          ntsType: NTSType.service,
+          ntsType: NTSType.service, 
         );
       }),
     );

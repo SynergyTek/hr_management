@@ -354,7 +354,7 @@ class Service {
   String? returnUrl;
   dynamic layoutMode;
   dynamic popupCallbackMethod;
-  String? viewType;
+  int? viewType;
   dynamic viewMode;
   dynamic serviceIndexPageTemplateDetails;
   dynamic notificationTemplate;
