@@ -11,6 +11,7 @@ import '../bloc/note_bloc/note_bloc.dart';
 import '../bloc/user_bloc/abstract_user_bloc.dart';
 import '../constants/api_endpoints.dart';
 import '../helpers/download_helper/download.dart';
+import '../helpers/parse_json_helper.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../models/udf_models/udf_json_model.dart';
 import '../models/udf_models/udf_json_model_for_note.dart';
@@ -46,10 +47,12 @@ class _NoteWidgetState extends State<NoteWidget> {
   late UdfJsonForNote? udfJsonString;
 
   NoteModel postNoteModel = NoteModel();
-
-  List<ColumnComponentForNote> columnComponent = [];
-  List<ComponentComponentForNote> componentComList = [];
-  List<UdfJsonComponentForNote> udfJsonComponent = [];
+//TODO
+  // List<ColumnComponentForNote> columnComponent = [];
+  // List<ComponentComponentForNote> componentComList = [];
+  // List<UdfJsonComponentForNote> udfJsonComponent = [];
+  List<ColumnComponent> columnComponentList = [];
+  Map<String, String> conditionalValues = {};
 
   List<Widget> columnComponentWidgets = [];
   List<Widget> componentComListWidgets = [];
@@ -151,51 +154,67 @@ class _NoteWidgetState extends State<NoteWidget> {
     CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
   ) {
-    columnComponent = [];
-    componentComList = [];
-    udfJsonComponent = [];
+//TODO
+    // columnComponent = [];
+    // componentComList = [];
+    // udfJsonComponent = [];
+    ParseJsonHelper _parseJsonHelper = ParseJsonHelper();
+    columnComponentList = [];
 
-    if (udfJsonString != null) {
-      udfJsonString = UdfJsonForNote.fromJson(jsonDecode(udfJsonString));
-      for (UdfJsonComponentForNote component in udfJsonString.components) {
-        if (component.columns != null && component.columns!.isNotEmpty) {
-          for (ColumnsForNote column in component.columns!) {
-            for (ColumnComponentForNote columnCom in column.components!) {
-              columnComponent.add(columnCom);
-            }
-          }
-        }
-        if (component.components != null && component.components!.isNotEmpty) {
-          for (ComponentComponentForNote componentComponent
-              in component.components!) {
-            componentComList.add(componentComponent);
-          }
-        }
-      }
-
-      for (UdfJsonComponentForNote component in udfJsonString.components) {
-        if (component.columns == null &&
-            (component.components == null || component.components!.isEmpty)) {
-          udfJsonComponent.add(component);
-        } else if (component.components == null && component.columns!.isEmpty) {
-          udfJsonComponent.add(component);
-        }
-      }
-      if (columnComponent.isNotEmpty) {
-        columnComponentWidgets = addDynamic(
-          columnComponent,
-          createServiceFormBloc,
-        );
-      }
-      if (componentComList.isNotEmpty) {
-        addDynamicComponentComponent(componentComList, createServiceFormBloc);
-      }
-      if (udfJsonComponent.isNotEmpty) {
-        // udfJsonComponent.addAll(udfJsonString.components);
-        udfJsonCompWidgetList =
-            addDynamic(udfJsonComponent, createServiceFormBloc);
-      }
+    columnComponentList = _parseJsonHelper.parseGenericUDFs(
+      udfJsonString,
+      conditionalValues,
+      widget.noteId,
+    );
+    if (columnComponentList.isNotEmpty) {
+      columnComponentWidgets = addDynamic(
+        columnComponentList,
+        createServiceFormBloc,
+      );
     }
+
+//TODO
+    // if (udfJsonString != null) {
+    //   udfJsonString = UdfJsonForNote.fromJson(jsonDecode(udfJsonString));
+    //   for (UdfJsonComponentForNote component in udfJsonString.components) {
+    //     if (component.columns != null && component.columns!.isNotEmpty) {
+    //       for (ColumnsForNote column in component.columns!) {
+    //         for (ColumnComponentForNote columnCom in column.components!) {
+    //           columnComponent.add(columnCom);
+    //         }
+    //       }
+    //     }
+    //     if (component.components != null && component.components!.isNotEmpty) {
+    //       for (ComponentComponentForNote componentComponent
+    //           in component.components!) {
+    //         componentComList.add(componentComponent);
+    //       }
+    //     }
+    //   }
+
+    //   for (UdfJsonComponentForNote component in udfJsonString.components) {
+    //     if (component.columns == null &&
+    //         (component.components == null || component.components!.isEmpty)) {
+    //       udfJsonComponent.add(component);
+    //     } else if (component.components == null && component.columns!.isEmpty) {
+    //       udfJsonComponent.add(component);
+    //     }
+    //   }
+    //   if (columnComponent.isNotEmpty) {
+    //     columnComponentWidgets = addDynamic(
+    //       columnComponent,
+    //       createServiceFormBloc,
+    //     );
+    //   }
+    //   if (componentComList.isNotEmpty) {
+    //     addDynamicComponentComponent(componentComList, createServiceFormBloc);
+    //   }
+    //   if (udfJsonComponent.isNotEmpty) {
+    //     // udfJsonComponent.addAll(udfJsonString.components);
+    //     udfJsonCompWidgetList =
+    //         addDynamic(udfJsonComponent, createServiceFormBloc);
+    //   }
+    // }
   }
 
   Widget setServiceView(
@@ -535,42 +554,55 @@ class _NoteWidgetState extends State<NoteWidget> {
               child: PrimaryButton(
                 buttonText: 'Submit',
                 handleOnPressed: () {
-                  for (var i = 0; i < columnComponent.length; i++) {
-                    if (columnComponent[i].validate?.required != null &&
-                        columnComponent[i].validate!.required == true &&
-                        udfJson.containsKey(columnComponent[i].key) &&
-                        (udfJson[columnComponent[i].key] == null ||
-                            udfJson[columnComponent[i].key]!.isEmpty)) {
-                      displaySnackBar(
-                          text: 'Please enter ${columnComponent[i].label}',
-                          context: context);
-                      return;
-                    }
-                  }
-                  for (var i = 0; i < componentComList.length; i++) {
-                    if (componentComList[i].validate?.required != null &&
-                        componentComList[i].validate!.required == true &&
-                        udfJson.containsKey(componentComList[i].key) &&
-                        (udfJson[componentComList[i].key] == null ||
-                            udfJson[componentComList[i].key]!.isEmpty)) {
-                      displaySnackBar(
-                          text: 'Please enter ${componentComList[i].label}',
-                          context: context);
-                      return;
-                    }
-                  }
-                  for (var i = 0; i < udfJsonComponent.length; i++) {
-                    if (udfJsonComponent[i].validate?.required != null &&
-                        udfJsonComponent[i].validate!.required == true &&
-                        udfJson.containsKey(udfJsonComponent[i].key) &&
-                        (udfJson[udfJsonComponent[i].key] == null ||
-                            udfJson[udfJsonComponent[i].key]!.isEmpty)) {
-                      displaySnackBar(
-                          text: 'Please enter ${udfJsonComponent[i].label}',
-                          context: context);
-                      return;
-                    }
-                  }
+                  //   for (var i = 0; i < columnComponent.length; i++) {
+                  //   if (columnComponent[i].validate?.required != null &&
+                  //       columnComponent[i].validate!.required == true &&
+                  //       udfJson.containsKey(columnComponent[i].key) &&
+                  //       (udfJson[columnComponent[i].key] == null ||
+                  //           udfJson[columnComponent[i].key]!.isEmpty)) {
+                  //     displaySnackBar(
+                  //         text: 'Please enter ${columnComponent[i].label}',
+                  //         context: context);
+                  //     return;
+                  //   }
+                  // }
+
+                  // for (var i = 0; i < columnComponent.length; i++) {
+                  //   if (columnComponent[i].validate?.required != null &&
+                  //       columnComponent[i].validate!.required == true &&
+                  //       udfJson.containsKey(columnComponent[i].key) &&
+                  //       (udfJson[columnComponent[i].key] == null ||
+                  //           udfJson[columnComponent[i].key]!.isEmpty)) {
+                  //     displaySnackBar(
+                  //         text: 'Please enter ${columnComponent[i].label}',
+                  //         context: context);
+                  //     return;
+                  //   }
+                  // }
+                  // for (var i = 0; i < componentComList.length; i++) {
+                  //   if (componentComList[i].validate?.required != null &&
+                  //       componentComList[i].validate!.required == true &&
+                  //       udfJson.containsKey(componentComList[i].key) &&
+                  //       (udfJson[componentComList[i].key] == null ||
+                  //           udfJson[componentComList[i].key]!.isEmpty)) {
+                  //     displaySnackBar(
+                  //         text: 'Please enter ${componentComList[i].label}',
+                  //         context: context);
+                  //     return;
+                  //   }
+                  // }
+                  // for (var i = 0; i < udfJsonComponent.length; i++) {
+                  //   if (udfJsonComponent[i].validate?.required != null &&
+                  //       udfJsonComponent[i].validate!.required == true &&
+                  //       udfJson.containsKey(udfJsonComponent[i].key) &&
+                  //       (udfJson[udfJsonComponent[i].key] == null ||
+                  //           udfJson[udfJsonComponent[i].key]!.isEmpty)) {
+                  //     displaySnackBar(
+                  //         text: 'Please enter ${udfJsonComponent[i].label}',
+                  //         context: context);
+                  //     return;
+                  //   }
+                  // }
                   noteViewModelPostRequest(
                     1,
                     'NOTE_STATUS_INPROGRESS',
