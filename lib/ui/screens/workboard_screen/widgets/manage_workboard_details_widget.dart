@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
 import '../../../../data/models/workboard_model/json_content_model.dart';
@@ -25,6 +26,10 @@ class ManageWorkBoardDetailsList extends StatefulWidget {
 
 class _ManageWorkBoardDetailsListState
     extends State<ManageWorkBoardDetailsList> {
+  List<JsonContentModel> jsonContentList = [];
+
+  WorkBoardMapResponseModel? list;
+
   @override
   void initState() {
     super.initState();
@@ -47,22 +52,32 @@ class _ManageWorkBoardDetailsListState
         builder: (BuildContext context,
             AsyncSnapshot<WorkBoardMapResponseModel?> snapshot) {
           if (snapshot.hasData) {
-            WorkBoardMapResponseModel? list = snapshot.data;
+            if (snapshot.data?.mapdata != null) {
+              list = snapshot.data;
+              final jsonContentModel =
+                  jsonContentModelFromJson(snapshot.data?.mapdata?.jsonContent);
 
-            final jsonContentModel =
-                jsonContentModelFromJson(snapshot.data?.mapdata?.jsonContent);
-
-            List<JsonContentModel>? jsonContentList = jsonContentModel;
+              jsonContentList = jsonContentModel;
+            }
 
             return Scaffold(
+              floatingActionButton: buildSpeedDial(),
               appBar: AppBar(
-                title: Text(
-                  (list!.mapdata!.workBoardName != null)
-                      ? list.mapdata!.workBoardName!
-                      : '',
-                  maxLines: 2,
-                ),
-              ),
+                  title: Text(
+                    (list?.mapdata?.workBoardName != null)
+                        ? list!.mapdata!.workBoardName!
+                        : '',
+                    maxLines: 2,
+                  ),
+                  actions:
+                      (jsonContentList.isNotEmpty && jsonContentList != null)
+                          ? [
+                              ButtonWidget(
+                                buttonText: 'Save',
+                                onTap: () {},
+                              ),
+                            ]
+                          : []),
               body: (jsonContentList.isNotEmpty && jsonContentList != null)
                   ? Stack(
                       alignment: Alignment.bottomCenter,
@@ -151,31 +166,7 @@ class _ManageWorkBoardDetailsListState
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ButtonWidget(
-                                buttonText: 'Collaboration',
-                                onTap: () {},
-                              ),
-                              ButtonWidget(
-                                isIconBeforeText: true,
-                                icon: Icons.add,
-                                buttonText: 'Create Section',
-                                onTap: () => Navigator.pushNamed(
-                                  context,
-                                  CREATE_SECTION_WORKBOARD_SCREEN,
-                                ),
-                              ),
-                              ButtonWidget(
-                                buttonText: 'Save',
-                                onTap: () {},
-                              ),
-                              ButtonWidget(
-                                buttonText: 'Back',
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
+                            children: [],
                           ),
                         ),
                       ],
@@ -193,14 +184,55 @@ class _ManageWorkBoardDetailsListState
       ),
     );
   }
+
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: IconThemeData(size: 28.0),
+      backgroundColor: Colors.blue[900],
+      visible: true,
+      curve: Curves.bounceInOut,
+      children: [
+        SpeedDialChild(
+          onTap: () {},
+          label: 'Collaboration',
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+          backgroundColor: Colors.blue,
+          labelBackgroundColor: Colors.black,
+          child: Icon(
+            Icons.collections_bookmark,
+          ),
+        ),
+        SpeedDialChild(
+          onTap: () => Navigator.pushNamed(
+            context,
+            CREATE_SECTION_WORKBOARD_SCREEN,
+          ),
+          label: 'Create Section',
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+          backgroundColor: Colors.blue,
+          labelBackgroundColor: Colors.black,
+          child: Icon(
+            Icons.add,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class ButtonWidget extends StatelessWidget {
   final Function() onTap;
   final String buttonText;
   final bool isIconBeforeText;
-
   final IconData? icon;
+  final double? iconSize;
 
   const ButtonWidget({
     Key? key,
@@ -208,6 +240,7 @@ class ButtonWidget extends StatelessWidget {
     required this.buttonText,
     this.isIconBeforeText = false,
     this.icon,
+    this.iconSize,
   }) : super(key: key);
 
   @override
@@ -216,8 +249,10 @@ class ButtonWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.blue, borderRadius: BorderRadius.circular(16)),
-        padding: EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: DEFAULT_HORIZONTAL_PADDING,
         margin: DEFAULT_PADDING * 0.5,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -225,16 +260,15 @@ class ButtonWidget extends StatelessWidget {
             isIconBeforeText
                 ? Icon(
                     icon,
-                    size: 20,
+                    size: iconSize ?? 20,
                     color: Colors.white,
                   )
                 : SizedBox(),
             Text(
               buttonText,
-              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 14.sp,
+                fontSize: 12.sp,
               ),
             ),
           ],
