@@ -280,7 +280,7 @@ class WorkboardModel {
   dynamic workBoardTeams;
   dynamic ownerType;
   dynamic workBoardContributionType;
-  int? workBoardType;
+  dynamic workBoardType;
   dynamic jsonCopy;
   dynamic json;
   dynamic dataJson;

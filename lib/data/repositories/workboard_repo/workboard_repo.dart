@@ -50,7 +50,7 @@ class WorkboardRepository extends AbstractWorkboardRepository {
     }
   }
 
-  Future<WorkBoardResponseModel> getCreateWorkboardList({
+  Future<WorkBoardMapResponseModel> getCreateWorkboardList({
     Map<String, dynamic>? queryparams,
   }) async {
     final String endpoint = APIEndpointConstants.CREATE_WORKBOARD;
@@ -60,7 +60,7 @@ class WorkboardRepository extends AbstractWorkboardRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      return WorkBoardResponseModel.fromJson(
+      return WorkBoardMapResponseModel.fromJson(
         response.data,
       );
     } catch (err, stacktrace) {
@@ -68,7 +68,7 @@ class WorkboardRepository extends AbstractWorkboardRepository {
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return WorkBoardResponseModel.withError("$err");
+      return WorkBoardMapResponseModel.withError("$err");
     }
   }
 
@@ -139,7 +139,7 @@ class WorkboardRepository extends AbstractWorkboardRepository {
     }
   }
 
-  Future<WorkBoardMapResponseModel> postDuplicateWorkBoard({
+  Future<WorkBoardPostResponse> postDuplicateWorkBoard({
     WorkboardModel? workBoardModel,
   }) async {
     final String endpoint = APIEndpointConstants.POST_DUPLICATE_WORKBOARD;
@@ -150,17 +150,38 @@ class WorkboardRepository extends AbstractWorkboardRepository {
         data: jsonEncode(workBoardModel?.toJson()),
       );
       print("response: ${response.data}");
-      var result = WorkBoardMapResponseModel.fromJson(
+      return WorkBoardPostResponse.fromJson(
         response.data,
       );
-
-      return result;
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return WorkBoardMapResponseModel.withError("$err");
+      return WorkBoardPostResponse.withError("$err");
+    }
+  }
+
+  Future<WorkBoardPostResponse> postManageWorkBoard({
+    WorkboardModel? workBoardModel,
+  }) async {
+    final String endpoint = APIEndpointConstants.POST_MANAGE_WORKBOARD;
+
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        data: jsonEncode(workBoardModel?.toJson()),
+      );
+      print("response: ${response.data}");
+      return WorkBoardPostResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return WorkBoardPostResponse.withError("$err");
     }
   }
 

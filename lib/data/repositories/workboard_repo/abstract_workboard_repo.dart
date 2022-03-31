@@ -17,7 +17,7 @@ abstract class AbstractWorkboardRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
-  Future<WorkBoardResponseModel> getCreateWorkboardList({
+  Future<WorkBoardMapResponseModel> getCreateWorkboardList({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
@@ -37,7 +37,12 @@ abstract class AbstractWorkboardRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
-  Future<WorkBoardMapResponseModel> postDuplicateWorkBoard({
+  Future<WorkBoardPostResponse> postDuplicateWorkBoard({
+    // Optional Params to be added to the request if required.
+    WorkboardModel? workBoardModel,
+  });
+
+  Future<WorkBoardPostResponse> postManageWorkBoard({
     // Optional Params to be added to the request if required.
     WorkboardModel? workBoardModel,
   });

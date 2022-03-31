@@ -46,3 +46,21 @@ class WorkBoardMapResponseModel {
       : mapdata = null,
         error = errorValue;
 }
+
+class WorkBoardPostResponse {
+  bool? isSuccess;
+  dynamic item;
+  WorkboardModel? data;
+
+  WorkBoardPostResponse();
+
+  WorkBoardPostResponse.fromJson(Map<String, dynamic> jsonResponse) {
+    isSuccess = jsonResponse['success'];
+    item = jsonResponse['Item'];
+    data = WorkboardModel.fromJson(jsonResponse);
+  }
+
+  WorkBoardPostResponse.withError(String errorValue)
+      : item = null,
+        isSuccess = false;
+}

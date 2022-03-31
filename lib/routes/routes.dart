@@ -526,8 +526,12 @@ class AppRouter {
         );
 
       case CREATE_WORKBOARD_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments?;
         return MaterialPageRoute(
-          builder: (_) => CreateWorkBoardScreen(),
+          builder: (_) => CreateWorkBoardScreen(
+            isEdit: args?.val1,
+            workBoardId: args?.arg1,
+          ),
         );
 
       // 404 route.

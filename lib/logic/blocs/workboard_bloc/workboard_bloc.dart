@@ -22,16 +22,19 @@ class WorkboardBloc {
       BehaviorSubject<int?>();
   final BehaviorSubject<int?> _subjectWorkboardCompletedTaskCount =
       BehaviorSubject<int?>();
-  final BehaviorSubject<WorkBoardResponseModel?> _subjectCreateWorkboardList =
-      BehaviorSubject<WorkBoardResponseModel?>();
+  final BehaviorSubject<WorkBoardMapResponseModel?>
+      _subjectCreateWorkboardList =
+      BehaviorSubject<WorkBoardMapResponseModel?>();
   final BehaviorSubject<WorkBoardResponseModel?> _subjectChooseTemplate =
       BehaviorSubject<WorkBoardResponseModel?>();
   final BehaviorSubject<WorkBoardMapResponseModel?>
       _subjectGetDuplicateWorkBoard =
       BehaviorSubject<WorkBoardMapResponseModel?>();
-  final BehaviorSubject<WorkBoardMapResponseModel?>
+  final BehaviorSubject<WorkBoardPostResponse?>
       _subjectPostDuplicateWorkBoard =
-      BehaviorSubject<WorkBoardMapResponseModel?>();
+      BehaviorSubject<WorkBoardPostResponse?>();
+  final BehaviorSubject<WorkBoardPostResponse?> _subjectPostManageWorkBoard =
+      BehaviorSubject<WorkBoardPostResponse?>();
 
   /// Used to fetch new entries.
   getWorkboardData({
@@ -57,7 +60,7 @@ class WorkboardBloc {
   getCreateWorkboardData({
     Map<String, dynamic>? queryparams,
   }) async {
-    WorkBoardResponseModel response =
+    WorkBoardMapResponseModel response =
         await _workboardRepository.getCreateWorkboardList(
       queryparams: queryparams,
     );
@@ -97,11 +100,22 @@ class WorkboardBloc {
   postDuplicateWorkBoard({
     WorkboardModel? workBoardModel,
   }) async {
-    WorkBoardMapResponseModel response =
+    WorkBoardPostResponse response =
         await _workboardRepository.postDuplicateWorkBoard(
       workBoardModel: workBoardModel,
     );
     _subjectPostDuplicateWorkBoard.sink.add(response);
+    return response;
+  }
+
+  postManageWorkBoard({
+    WorkboardModel? workBoardModel,
+  }) async {
+    WorkBoardPostResponse response =
+        await _workboardRepository.postManageWorkBoard(
+      workBoardModel: workBoardModel,
+    );
+    _subjectPostManageWorkBoard.sink.add(response);
     return response;
   }
 
@@ -139,6 +153,7 @@ class WorkboardBloc {
     _subjectManageWorkboardDetailsList.close();
     _subjectPostDuplicateWorkBoard.close();
     _subjectGetDuplicateWorkBoard.close();
+    _subjectPostManageWorkBoard.close();
   }
 
   BehaviorSubject<WorkBoardResponseModel?> get subjectWorkboardList =>
@@ -156,12 +171,14 @@ class WorkboardBloc {
       _subjectWorkboardTaskCount;
   BehaviorSubject<int?> get subjectWorkboardCompletedTaskCount =>
       _subjectWorkboardCompletedTaskCount;
-  BehaviorSubject<WorkBoardResponseModel?> get subjectCreateWorkboardList =>
+  BehaviorSubject<WorkBoardMapResponseModel?> get subjectCreateWorkboardList =>
       _subjectCreateWorkboardList;
   BehaviorSubject<WorkBoardMapResponseModel?>
       get subjectGetDuplicateWorkBoard => _subjectGetDuplicateWorkBoard;
-  BehaviorSubject<WorkBoardMapResponseModel?>
+  BehaviorSubject<WorkBoardPostResponse?>
       get subjectPostDuplicateWorkBoard => _subjectPostDuplicateWorkBoard;
+  BehaviorSubject<WorkBoardPostResponse?> get subjectPostManageWorkBoard =>
+      _subjectPostManageWorkBoard;
 }
 
 final workboardBloc = WorkboardBloc();

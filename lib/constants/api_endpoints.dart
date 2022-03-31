@@ -456,4 +456,6 @@ class APIEndpointConstants {
 
   static const POST_DUPLICATE_WORKBOARD =
       BASE_URL + '/cms/query/PostDuplicateWorkboard';
+
+  static const POST_MANAGE_WORKBOARD = BASE_URL + '/cms/query/ManageWorkBoard';
 }

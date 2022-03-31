@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_model.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_response_model.dart';
@@ -7,6 +6,7 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../widgets/primary_button.dart';
+import '../../../widgets/snack_bar.dart';
 
 class DuplicateWorkboardBody extends StatefulWidget {
   final String workBoardId;
@@ -162,8 +162,13 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
                     ),
                     PrimaryButton(
                       buttonText: 'Duplicate',
-                      handleOnPressed: () {
-                        workBoardModel?.id = widget.workBoardId;
+                      handleOnPressed: () async {
+                        workboardBloc.subjectPostDuplicateWorkBoard.sink
+                            .add(null);
+                        workBoardModel?.portalName = "HR";
+                        workBoardModel?.requestedByUserId =
+                            "45bba746-3309-49b7-9c03-b5793369d73c";
+                        workBoardModel?.workboardId = widget.workBoardId;
                         workBoardModel?.isTasks = (isTasks != null)
                             ? isTasks
                             : workBoardModel?.isTasks;
@@ -179,9 +184,22 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
                         workBoardModel?.workBoardName =
                             workBoardNameController?.text;
 
-                        workboardBloc.postDuplicateWorkBoard(
+                        await workboardBloc.postDuplicateWorkBoard(
                           workBoardModel: workBoardModel,
                         );
+
+                        if (workboardBloc
+                            .subjectPostDuplicateWorkBoard.hasValue) {
+                          if (workboardBloc.subjectPostDuplicateWorkBoard.value
+                                  ?.isSuccess ==
+                              true) {
+                            await displaySnackBar(
+                                text:
+                                    'Duplicate ${workBoardNameController?.text} WorkBoard Created Successfully',
+                                context: context);
+                          }
+                        }
+                        Navigator.of(context).pop();
                       },
                       width: 100,
                     ),

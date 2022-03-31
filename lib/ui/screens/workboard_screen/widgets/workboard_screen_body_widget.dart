@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/screens/workboard_screen/widgets/manage_workboard_details_widget.dart';
+import '../../workboard_screen/widgets/manage_workboard_details_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../data/models/workboard_model/workboard_model.dart';
@@ -29,9 +29,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
   TextEditingController selectStatusController = TextEditingController();
 
   List<WorkboardModel>? list;
-
   List<WorkboardModel>? _searchResult;
-
   List<WorkboardModel>? fullList;
 
   @override
@@ -148,26 +146,35 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                               child: Icon(
                                                 Icons.more_vert,
                                               ),
-                                              onSelected: (result) {
+                                              onSelected: (result) async {
                                                 if (result == 0) {}
                                                 if (result == 1) {
+                                                  Navigator.pushNamed(
+                                                    context,
+                                                    DUPLICATE_WORKBOARD_SCREEN,
+                                                    arguments: ScreenArguments(
+                                                        arg1: list?[index]
+                                                            .workboardId),
+                                                  );
+                                                }
+
+                                                if (result == 2) {
                                                   Navigator.pushNamed(context,
-                                                      DUPLICATE_WORKBOARD_SCREEN,
+                                                      CREATE_WORKBOARD_SCREEN,
                                                       arguments: ScreenArguments(
+                                                          val1: true,
                                                           arg1: list?[index]
                                                               .workboardId));
                                                 }
-
-                                                if (result == 2) {}
                                                 if (result == 3) {
-                                                  workboardBloc
-                                                    ..getOpenCloseWorkboard(
-                                                      queryparams: {
-                                                        'id': list?[index]
-                                                            .workboardId,
-                                                        'status': 1,
-                                                      },
-                                                    );
+                                                  await workboardBloc
+                                                      .getOpenCloseWorkboard(
+                                                    queryparams: {
+                                                      'id': list?[index]
+                                                          .workboardId,
+                                                      'status': 1,
+                                                    },
+                                                  );
                                                   if (workboardBloc
                                                       .subjectOpenCloseWorkboard
                                                       .hasValue) {
@@ -189,14 +196,14 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                   }
                                                 }
                                                 if (result == 4) {
-                                                  workboardBloc
-                                                    ..getOpenCloseWorkboard(
-                                                      queryparams: {
-                                                        'id': list?[index]
-                                                            .workboardId,
-                                                        'status': 0,
-                                                      },
-                                                    );
+                                                  await workboardBloc
+                                                      .getOpenCloseWorkboard(
+                                                    queryparams: {
+                                                      'id': list?[index]
+                                                          .workboardId,
+                                                      'status': 0,
+                                                    },
+                                                  );
                                                   if (workboardBloc
                                                       .subjectOpenCloseWorkboard
                                                       .hasValue) {
