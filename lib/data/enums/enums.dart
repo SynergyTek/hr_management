@@ -51,18 +51,42 @@ enum PortalType {
   projectManagement,
 }
 
-Map<PortalType, String> portalTypeName = {
-  PortalType.cms: 'CMS',
-  PortalType.dms: 'DMS',
-  PortalType.hr: 'HR',
-  PortalType.inventoryManagement: 'InventoryManagement',
-  PortalType.projectManagement: 'ProjectManagement',
-};
+class PortalData {
+  final String id;
+  final String name;
+  final PortalType portal;
 
-Map<PortalType, String> portalTypeId = {
-  PortalType.cms: 'af817f46-f64b-47f8-b632-caa267c5a575',
-  PortalType.dms: '6ea64b17-6959-4cb8-a5d2-33728aebbbac',
-  PortalType.hr: '8edc86b3-9934-46e3-95de-d76c816404b4',
-  PortalType.inventoryManagement: '1985e68d-369f-4eef-9bf4-3356a1edd595',
-  PortalType.projectManagement: '7a233584-d207-408e-a43b-0d7b67c6e5fd',
+  PortalData({
+    required this.id,
+    required this.name,
+    required this.portal,
+  });
+}
+
+Map<String, PortalData> portalMap = {
+  "cms": PortalData(
+    id: 'af817f46-f64b-47f8-b632-caa267c5a575',
+    name: 'CMS',
+    portal: PortalType.cms,
+  ),
+  "dms": PortalData(
+    id: '6ea64b17-6959-4cb8-a5d2-33728aebbbac',
+    name: 'DMS',
+    portal: PortalType.dms,
+  ),
+  "hr": PortalData(
+    id: '8edc86b3-9934-46e3-95de-d76c816404b4',
+    name: 'HR',
+    portal: PortalType.hr,
+  ),
+  "inventoryManagement": PortalData(
+    id: '1985e68d-369f-4eef-9bf4-3356a1edd595',
+    name: 'InventoryManagement',
+    portal: PortalType.inventoryManagement,
+  ),
+  "projectManagement": PortalData(
+    id: '7a233584-d207-408e-a43b-0d7b67c6e5fd',
+    name: 'ProjectManagement',
+    portal: PortalType.projectManagement,
+  ),
 };

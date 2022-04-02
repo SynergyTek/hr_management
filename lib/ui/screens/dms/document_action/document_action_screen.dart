@@ -14,9 +14,9 @@ class DocumentActionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       appBar: AppbarWidget(
-        title: action!+" Document",
+        title: action! + " Document",
       ),
       body: SafeArea(
         child: InternetConnectivityWidget(child: selectAction()),

@@ -19,7 +19,7 @@ class ServiceHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: showBack! ? null : drawerWidget(context),
+      drawer: showBack! ? null : DrawerWidget(),
       appBar: AppbarWidget(
         title: "Service Home",
       ),

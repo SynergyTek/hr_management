@@ -14,7 +14,7 @@ class ManageAccrualScreen extends StatelessWidget {
       appBar: AppbarWidget(
         title: "Manage Accrual",
       ),
-      drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: ManageAccrualBody(),

@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
 import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
-import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/screens/portal_screen/portal_screen.dart';
 import '../../../../data/models/login_models/login_response_model.dart';
-import '../../../widgets/snack_bar.dart';
 import '../../../../data/models/login_models/login_request_model.dart';
 import '../../../../data/models/login_models/login_response.dart';
 
 import '../../../../logic/blocs/login_bloc/login_bloc.dart';
-import '../../../../routes/route_constants.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/form_widgets/bloc_text_box_widget.dart';
 import '../../../widgets/primary_button.dart';
@@ -192,31 +190,22 @@ class _LoginBodyState extends State<LoginBody> {
     print(password);
 
     try {
-      LoginResponseModel data = await loginBloc.postData(
+      LoginResponseModel? data = await loginBloc.postData(
         queryparams: queryparams,
       );
       if (data != null) {
-        // SharedPreferences prefs = await SharedPreferences.getInstance();
-
-        // prefs.clear();
-
-        // prefs.setString('username', data.userName);
-        // prefs.setString('id', data.id);
-
-        BlocProvider.of<UserModelBloc>(context).add(
-          UserModelChangeEvent(
-            userModel: data,
-          ),
-        );
-
         setState(() {
           showCPI = false;
         });
 
-        displaySnackBar(text: 'Login Successful!', context: context);
-        Navigator.pushReplacementNamed(
+        //
+        Navigator.pushReplacement(
           context,
-          WORKLIST_DASHBOARD,
+          MaterialPageRoute(
+            builder: (_) => PortalScreen(
+              user: data,
+            ),
+          ),
         );
       } else {
         setState(() {

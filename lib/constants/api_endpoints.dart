@@ -434,6 +434,13 @@ class APIEndpointConstants {
 
   static const SAVE_PERMISSIONS = BASE_URL + '/api/command/SavePermission';
 
+  /// https://webapidev.aitalkx.com/cms/user/ReadUserPermissionData?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=DMS
+  /// Method: GET
+  /// Params:
+  ///   - userId
+  ///   - portalName
+  static const GET_READ_USER_PERMISSION_DATA_ENDPOINT =
+      BASE_URL + '/cms/user/ReadUserPermissionData';
   //************************************************************************//
   // PERMISSION API Ends:
 

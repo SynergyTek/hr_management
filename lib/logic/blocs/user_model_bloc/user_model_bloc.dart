@@ -5,6 +5,8 @@ import 'package:equatable/equatable.dart';
 
 import 'package:hr_management/data/models/login_models/login_response_model.dart';
 
+import '../../../data/models/login_models/extra_user_information_model.dart';
+
 part 'user_model_event.dart';
 part 'user_model_state.dart';
 
@@ -14,6 +16,7 @@ class UserModelBloc extends Bloc<UserModelEvent, UserModelState>
       : super(
           UserModelUserDefinedState(
             userModel: LoginResponseModel(),
+            extraUserInformation: ExtraUserInformationModel(),
           ),
         ) {
     hydrate();
@@ -39,8 +42,6 @@ class UserModelBloc extends Bloc<UserModelEvent, UserModelState>
           isGuestUser: event.userModel?.isGuestUser ?? null,
           portalId: event.userModel?.portalId ?? null,
           portalTheme: event.userModel?.portalTheme ?? null,
-          // TODO
-          // claims: event.userModel?.claims ?? null,
           loggedInAsType: event.userModel?.loggedInAsType ?? null,
           loggedInAsByUserId: event.userModel?.loggedInAsByUserId ?? null,
           loggedInAsByUserName: event.userModel?.loggedInAsByUserName ?? null,
@@ -66,19 +67,29 @@ class UserModelBloc extends Bloc<UserModelEvent, UserModelState>
           lockoutEnabled: event.userModel?.lockoutEnabled ?? null,
           accessFailedCount: event.userModel?.accessFailedCount ?? null,
         ),
+        extraUserInformation: ExtraUserInformationModel(
+          isSignedIn: event.extraUserInformation?.isSignedIn ?? false,
+          portalType: event.extraUserInformation?.portalType,
+        ),
       );
     }
   }
 
   @override
   UserModelState fromJson(Map<String, dynamic> json) {
+    print(json);
+
     return UserModelUserDefinedState(
       userModel: LoginResponseModel.fromMap(json),
+      extraUserInformation: ExtraUserInformationModel.fromMap(json),
     );
   }
 
   @override
   Map<String, dynamic> toJson(UserModelState state) {
-    return state.userModel?.toMap() ?? {};
+    Map<String, dynamic> _map = state.userModel?.toMap() ?? {};
+    _map["isSignedIn"] = state.extraUserInformation?.isSignedIn;
+    _map["portalType"] = state.extraUserInformation?.portalType;
+    return _map;
   }
 }

@@ -17,7 +17,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       appBar: AppbarWidget(
         backgroundColor: Theme.of(context).textHeadingColor,
         foregroundColor: Colors.white,

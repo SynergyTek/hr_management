@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'read_component_data_model.dart';
 
 class ReadComponentResponse {

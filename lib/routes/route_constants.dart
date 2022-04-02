@@ -5,6 +5,8 @@
 // ---------------------------//
 //Login Screen Route
 const String LOGIN_ROUTE = "/login";
+const String PORTAL_SELECTION_ROUTE = "/portal";
+
 // Splash Screen Route
 // * Important: The first route should not contain the forward slash (/).
 const String SPLASH_ROUTE = "splash";
@@ -102,5 +104,5 @@ const String WORKBOARD_TASK_LIST = '/workboard_tasklist';
 const String WORKBOARD_SCREEN = '/workboard_screen';
 const String CREATE_WORKBOARD_SCREEN = '/create_workboard_screen';
 const String DUPLICATE_WORKBOARD_SCREEN = '/duplicate_workboard_screen';
-const String CREATE_SECTION_WORKBOARD_SCREEN = '/create_section_workboard_screen';
-
+const String CREATE_SECTION_WORKBOARD_SCREEN =
+    '/create_section_workboard_screen';

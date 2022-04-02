@@ -12,6 +12,7 @@ import 'package:hr_management/ui/screens/face_detection_web/face_detection_webvi
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
+import 'package:hr_management/ui/screens/portal_screen/portal_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/duplicate_workboard_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_create_section_screen.dart';

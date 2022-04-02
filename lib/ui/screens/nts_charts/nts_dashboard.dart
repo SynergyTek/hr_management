@@ -18,7 +18,7 @@ class ServiceDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarWidget(title: _ntsTitle()),
-      drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: NTSDashboardBody(
