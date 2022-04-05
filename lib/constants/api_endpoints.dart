@@ -92,6 +92,9 @@ class APIEndpointConstants {
 
   static const MANAGE_LOGIN = '$BASE_URL/api/Authenticate/AuthenticateLogin';
 
+  static const PORTAL_LIST_BY_EMAIL =
+      '$BASE_URL/api/Authenticate/GetPortalListByEmail';
+
   static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
   static const LEAVE_DETAILS = '$BASE_URL/taa/query/leavedetail';
