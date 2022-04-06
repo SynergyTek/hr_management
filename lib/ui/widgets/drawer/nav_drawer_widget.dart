@@ -190,9 +190,9 @@ class DrawerWidget extends StatelessWidget {
             DrawerListTileWidget(
               title: '\t\t\t\t\t Documents',
               listTileOnTap: () {
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
                   context,
-                  "",
+                  DMS_PARENT,
                 );
               },
             ),
@@ -538,7 +538,7 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 
-  // Widget drawerListWidget(
+  // Widget _drawerListWidget(
   //   BuildContext context,
   //   List<UserPermissionModel?> data,
   // ) {
@@ -559,16 +559,16 @@ class DrawerWidget extends StatelessWidget {
   //         },
   //       ),
 
-  // //
-  // DrawerListTileWidget(
-  //   title: 'Workboard',
-  //   listTileOnTap: () {
-  //     Navigator.pushNamed(
-  //       context,
-  //       WORKBOARD_SCREEN,
-  //     );
-  //   },
-  // ),
+  //       //
+  //       DrawerListTileWidget(
+  //         title: 'Workboard',
+  //         listTileOnTap: () {
+  //           Navigator.pushNamed(
+  //             context,
+  //             WORKBOARD_SCREEN,
+  //           );
+  //         },
+  //       ),
 
   //       //
   //       DrawerListTileWidget(
@@ -735,15 +735,15 @@ class DrawerWidget extends StatelessWidget {
   //           //
   //           DrawerListTileWidget(
   //             title: '\t\t\t\t\t Note Home Dashboard',
-  // listTileOnTap: () {
-  //   ntsChartBloc.subjectChartByStatus.sink.add(null);
-  //   ntsChartBloc.subjectChartByUserType.sink.add(null);
-  //   ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-  //   Navigator.pushNamed(
-  //     context,
-  //     NOTE_DASHBOARD,
-  //   );
-  // },
+  //             listTileOnTap: () {
+  //               ntsChartBloc.subjectChartByStatus.sink.add(null);
+  //               ntsChartBloc.subjectChartByUserType.sink.add(null);
+  //               ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 NOTE_DASHBOARD,
+  //               );
+  //             },
   //           ),
 
   //           //
@@ -773,16 +773,16 @@ class DrawerWidget extends StatelessWidget {
   //         children: [
   //           DrawerListTileWidget(
   //             title: '\t\t\t\t\t Task Home Dashboard',
-  //   listTileOnTap: () {
-  //     ntsChartBloc.subjectChartByStatus.sink.add(null);
-  //     ntsChartBloc.subjectChartByUserType.sink.add(null);
-  //     ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-  //     Navigator.pushNamed(
-  //       context,
-  //       TASK_DASHBOARD,
-  //     );
-  //   },
-  // ),
+  //             listTileOnTap: () {
+  //               ntsChartBloc.subjectChartByStatus.sink.add(null);
+  //               ntsChartBloc.subjectChartByUserType.sink.add(null);
+  //               ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 TASK_DASHBOARD,
+  //               );
+  //             },
+  //           ),
   //           DrawerListTileWidget(
   //             title: '\t\t\t\t\t Task List',
   //             listTileOnTap: () {
@@ -820,14 +820,14 @@ class DrawerWidget extends StatelessWidget {
   //           DrawerListTileWidget(
   //             title: '\t\t\t\t\t Service Home Dashboard',
   //             listTileOnTap: () {
-  //   ntsChartBloc.subjectChartByStatus.sink.add(null);
-  //   ntsChartBloc.subjectChartByUserType.sink.add(null);
-  //   ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-  //   Navigator.pushNamed(
-  //     context,
-  //     SERVICE_DASHBOARD,
-  //   );
-  // },
+  //               ntsChartBloc.subjectChartByStatus.sink.add(null);
+  //               ntsChartBloc.subjectChartByUserType.sink.add(null);
+  //               ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 SERVICE_DASHBOARD,
+  //               );
+  //             },
   //           ),
 
   //           //
