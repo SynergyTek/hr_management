@@ -152,7 +152,7 @@ class _LoginBodyState extends State<LoginBody> {
                                           .toList()
                                           .map((item) =>
                                               DropdownMenuItem<String>(
-                                                value: item.id,
+                                                value: item.name,
                                                 child: Text(
                                                   item.name ?? "-",
                                                   style: const TextStyle(

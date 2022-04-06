@@ -662,11 +662,10 @@ class DrawerWidget extends StatelessWidget {
         await UserPermissionBloc().getUserPermission(
       queryparams: {
         "userId": BlocProvider.of<UserModelBloc>(context).state.userModel?.id,
-        "portalName": portalMap[BlocProvider.of<UserModelBloc>(context)
-                .state
-                .extraUserInformation
-                ?.portalType]
-            ?.name,
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+            .state
+            .extraUserInformation
+            ?.portalType,
       },
     );
 
