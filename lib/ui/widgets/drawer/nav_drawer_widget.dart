@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/widgets/drawer/widgets/expansion_list_tile_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
@@ -101,12 +101,14 @@ class DrawerWidget extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(16),
                               child: Text(
-                                  "An error occurred, please try again later."),
+                                "An error occurred, please try again later.",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           );
                         }
 
-                        return drawerListWidget(
+                        return _drawerListWidget(
                           context,
                           snapshot.data!.data,
                         );
@@ -124,18 +126,6 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: 'Profile',
-              icon: Icons.person,
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  MYPROFILE,
-                );
-              },
             ),
 
             //
@@ -162,32 +152,19 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 
-  Widget drawerListWidget(
+  Widget _drawerListWidget(
     BuildContext context,
     List<UserPermissionModel?> data,
   ) {
-    // print(data);
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         //
         DrawerListTileWidget(
-          title: 'Case Management',
-          icon: Icons.manage_accounts,
-          listTileOnTap: () {
-            Navigator.pushNamed(
-              context,
-              CASE_MANAGEMENT_ROUTE,
-            );
-          },
-        ),
-
-        //
-        DrawerListTileWidget(
           title: 'Workboard',
+          icon: Icons.home,
           listTileOnTap: () {
-            Navigator.pushNamed(
+            Navigator.pushReplacementNamed(
               context,
               WORKBOARD_SCREEN,
             );
@@ -195,430 +172,14 @@ class DrawerWidget extends StatelessWidget {
         ),
 
         //
-        DrawerListTileWidget(
-          title: 'Document',
-          listTileOnTap: () {
-            Navigator.pushNamed(
-              context,
-              DMS_PARENT,
-            );
-          },
-        ),
-
-        //
-        DrawerListTileWidget(
-          title: 'Document Workspace',
-          listTileOnTap: () {
-            Navigator.pushNamed(
-              context,
-              DMS_WORKSPACE_ROUTE,
-            );
-          },
-        ),
-
-        //
-        ExpansionTile(
-          title: Text(
-            'Time & Attendance',
-            style: TextStyle(
-              fontSize: 10.0.sp,
-              color: const Color(0xFF757575),
-              fontWeight: FontWeight.normal,
-              letterSpacing: 1.2,
-            ),
-          ),
-          children: [
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tRemote Attendance',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  MARK_ATTENDANCE_ROUTE,
-                );
-              },
-            ),
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tAccess Logs',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  DISPLAY_ACCESS_LOG,
-                );
-              },
-            ),
-          ],
-        ),
-
-        //
-        ExpansionTile(
-          title: Text(
-            'Time & Attendance (Web)',
-            style: TextStyle(
-              fontSize: 10.0.sp,
-              color: const Color(0xFF757575),
-              fontWeight: FontWeight.normal,
-              letterSpacing: 1.2,
-            ),
-          ),
-          children: [
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tRegister Face',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  REGISTER_FACE_WEB,
-                );
-              },
-            ),
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tMark Attendance',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  MARK_ATTENDANCE_WEB,
-                );
-              },
-            ),
-          ],
-        ),
-
-        //
-        DrawerListTileWidget(
-          title: 'Worklist Dashboard',
-          listTileOnTap: () {
-            Navigator.pushNamed(
-              context,
-              WORKLIST_DASHBOARD,
-            );
-          },
-        ),
-
-        //
-        DrawerListTileWidget(
-          title: 'Requested Leaves',
-          icon: Icons.hotel,
-          listTileOnTap: () {
-            Navigator.pushNamed(
-              context,
-              DISPLAY_LEAVES,
-            );
-          },
-        ),
-
-        //
-        ExpansionTile(
-          title: Text(
-            'Payroll',
-            style: TextStyle(
-              fontSize: 10.0.sp,
-              color: const Color(0xFF757575),
-              fontWeight: FontWeight.normal,
-              letterSpacing: 1.2,
-            ),
-          ),
+        ExpansionListTileWidget(
+          title: "Document Management",
           children: [
             //
             DrawerListTileWidget(
-              title: '\t\t\t\t\tManage Accrual',
+              title: '\t\t\t\t\t Workspace',
               listTileOnTap: () {
-                ntsChartBloc.subjectChartByStatus.sink.add(null);
-                ntsChartBloc.subjectChartByUserType.sink.add(null);
-                ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-                Navigator.pushNamed(
-                  context,
-                  MANAGE_ACCRUAL,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tPayslip',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  PAYSLIP,
-                );
-              },
-            ),
-          ],
-        ),
-
-        //
-        ExpansionTile(
-          title: Text(
-            'Note',
-            style: TextStyle(
-              fontSize: 10.0.sp,
-              color: const Color(0xFF757575),
-              fontWeight: FontWeight.normal,
-              letterSpacing: 1.2,
-            ),
-          ),
-          children: [
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tNote Home Dashboard',
-              listTileOnTap: () {
-                ntsChartBloc.subjectChartByStatus.sink.add(null);
-                ntsChartBloc.subjectChartByUserType.sink.add(null);
-                ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-                Navigator.pushNamed(
-                  context,
-                  NOTE_DASHBOARD,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tNote Home',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  NOTE_HOME,
-                );
-              },
-            ),
-          ],
-        ),
-
-        //
-        ExpansionTile(
-          title: Text(
-            'Task',
-            style: TextStyle(
-              fontSize: 10.0.sp,
-              color: const Color(0xFF757575),
-              fontWeight: FontWeight.normal,
-              letterSpacing: 1.2,
-            ),
-          ),
-          children: [
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tTask Home Dashboard',
-              listTileOnTap: () {
-                ntsChartBloc.subjectChartByStatus.sink.add(null);
-                ntsChartBloc.subjectChartByUserType.sink.add(null);
-                ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-                Navigator.pushNamed(
-                  context,
-                  TASK_DASHBOARD,
-                );
-              },
-            ),
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tTask List',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TASKLIST,
-                );
-              },
-            ),
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tTask Home',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TASK_HOME,
-                );
-              },
-            ),
-          ],
-        ),
-
-        //
-        ExpansionTile(
-          title: Text(
-            'Service',
-            style: TextStyle(
-              fontSize: 10.0.sp,
-              color: const Color(0xFF757575),
-              fontWeight: FontWeight.normal,
-              letterSpacing: 1.2,
-            ),
-          ),
-          children: [
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tService Home Dashboard',
-              listTileOnTap: () {
-                ntsChartBloc.subjectChartByStatus.sink.add(null);
-                ntsChartBloc.subjectChartByUserType.sink.add(null);
-                ntsChartBloc.subjectDatewiseSLA.sink.add(null);
-                Navigator.pushNamed(
-                  context,
-                  SERVICE_DASHBOARD,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tService Home',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  SERVICE_HOME,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tComponent Result',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  SERVICE_COMPONENT_RESULT_ROUTE,
-                );
-              },
-            ),
-          ],
-        ),
-
-        //
-        ExpansionTile(
-          title: Text(
-            "Documents",
-            style: TextStyle(
-              fontSize: 10.0.sp,
-              color: const Color(0xFF757575),
-              fontWeight: FontWeight.normal,
-              letterSpacing: 1.2,
-            ),
-          ),
-          children: [
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tRequested By HR',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  PERSON_DOCUMENTS_ROUTE,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tManage Documents',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  PERSON_PROFILE_ROUTE,
-                );
-              },
-            ),
-          ],
-        ),
-
-        //
-        DrawerListTileWidget(
-          title: 'Manage Dependents',
-          listTileOnTap: () {
-            Navigator.pushNamed(
-              context,
-              MANAGE_DEPENDENTS,
-            );
-          },
-        ),
-
-        //
-        DrawerListTileWidget(
-          title: 'Workboard Task List',
-          listTileOnTap: () {
-            Navigator.pushNamed(
-              context,
-              WORKBOARD_TASK_LIST,
-            );
-          },
-        ),
-
-        //
-        ExpansionTile(
-          title: Text(
-            'DMS',
-            style: TextStyle(
-              fontSize: 10.0.sp,
-              color: const Color(0xFF757575),
-              fontWeight: FontWeight.normal,
-              letterSpacing: 1.2,
-            ),
-          ),
-          children: [
-            //
-            // DrawerListTileWidget(
-            //   title: 'Document',
-            //   listTileOnTap: () {
-            //     Navigator.pushNamed(
-            //       context,
-            //       DMS_PARENT,
-            //     );
-            //   },
-            // ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tDocumeny Search',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  DMS_SEARCH_ROUTE,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tDocument History',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  DMS_HISTORY_ROUTE,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tDocument Bin',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  DMS_BIN_ROUTE,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tDocument Archive',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  DMS_ARCHIVE_ROUTE,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tDMS Support',
-              listTileOnTap: () {
-                Navigator.pushNamed(
-                  context,
-                  DMS_SUPPORT,
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\tDocument Workspace',
-              listTileOnTap: () {
-                Navigator.pushNamed(
+                Navigator.pushReplacementNamed(
                   context,
                   DMS_WORKSPACE_ROUTE,
                 );
@@ -627,11 +188,347 @@ class DrawerWidget extends StatelessWidget {
 
             //
             DrawerListTileWidget(
-              title: '\t\t\t\t\tDocument Permission',
+              title: '\t\t\t\t\t Documents',
               listTileOnTap: () {
-                Navigator.pushNamed(
+                Navigator.pushReplacementNamed(
                   context,
-                  DMS_ADD_EDIT_PERMISSION_ROUTE,
+                  "",
+                );
+              },
+            ),
+          ],
+        ),
+
+        //
+        ExpansionListTileWidget(
+          title: "HR",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Home',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Employee Dashboard',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Employee Profile',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  MYPROFILE,
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t HR Direct',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Work Structure',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Reports',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Master Data',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+          ],
+        ),
+
+        //
+        ExpansionListTileWidget(
+          title: "Hierarchy Chart",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Position Hierarchy',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Department Hierarchy',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Business Hierarchy',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Approval Hierarchy',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+          ],
+        ),
+
+        //
+        ExpansionListTileWidget(
+          title: "Leave",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Leave Details',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  DISPLAY_LEAVES,
+                );
+              },
+            ),
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Business Trip',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Time Permission',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+          ],
+        ),
+        //
+        ExpansionListTileWidget(
+          title: "Payroll",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Salary Info',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Payslip',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  PAYSLIP,
+                );
+              },
+            ),
+          ],
+        ),
+        //
+        ExpansionListTileWidget(
+          title: "Attendance",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Remote Signin/Signout Request',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  MARK_ATTENDANCE_ROUTE,
+                );
+              },
+            ),
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Attendance Details',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Access Logs',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  DISPLAY_ACCESS_LOG,
+                );
+              },
+            ),
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Roster Schedule',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+          ],
+        ),
+        //
+        ExpansionListTileWidget(
+          title: "Worklist",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Dashboard',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  WORKLIST_DASHBOARD,
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t My Services',
+              listTileOnTap: () {
+                ntsChartBloc.subjectChartByStatus.sink.add(null);
+                ntsChartBloc.subjectChartByUserType.sink.add(null);
+                ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+                Navigator.pushReplacementNamed(
+                  context,
+                  SERVICE_DASHBOARD,
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t My Tasks',
+              listTileOnTap: () {
+                ntsChartBloc.subjectChartByStatus.sink.add(null);
+                ntsChartBloc.subjectChartByUserType.sink.add(null);
+                ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+                Navigator.pushReplacementNamed(
+                  context,
+                  TASK_DASHBOARD,
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t My Notes',
+              listTileOnTap: () {
+                ntsChartBloc.subjectChartByStatus.sink.add(null);
+                ntsChartBloc.subjectChartByUserType.sink.add(null);
+                ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+                Navigator.pushReplacementNamed(
+                  context,
+                  NOTE_DASHBOARD,
+                );
+              },
+            ),
+          ],
+        ),
+        //
+        ExpansionListTileWidget(
+          title: "Help-desk",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Helpdesk Dashbaord',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE,
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t My Requests',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  SERVICE_HOME,
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t My Tasks',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  TASK_HOME,
                 );
               },
             ),
@@ -640,6 +537,485 @@ class DrawerWidget extends StatelessWidget {
       ],
     );
   }
+
+  // Widget drawerListWidget(
+  //   BuildContext context,
+  //   List<UserPermissionModel?> data,
+  // ) {
+  //   // print(data);
+
+  //   return Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [
+  //       //
+  //       DrawerListTileWidget(
+  //         title: 'Case Management',
+  //         icon: Icons.manage_accounts,
+  //         listTileOnTap: () {
+  //           Navigator.pushNamed(
+  //             context,
+  //             CASE_MANAGEMENT_ROUTE,
+  //           );
+  //         },
+  //       ),
+
+  // //
+  // DrawerListTileWidget(
+  //   title: 'Workboard',
+  //   listTileOnTap: () {
+  //     Navigator.pushNamed(
+  //       context,
+  //       WORKBOARD_SCREEN,
+  //     );
+  //   },
+  // ),
+
+  //       //
+  //       DrawerListTileWidget(
+  //         title: 'Document',
+  //         listTileOnTap: () {
+  //           Navigator.pushNamed(
+  //             context,
+  //             DMS_PARENT,
+  //           );
+  //         },
+  //       ),
+
+  //       //
+  //       DrawerListTileWidget(
+  //         title: 'Document Workspace',
+  //         listTileOnTap: () {
+  //           Navigator.pushNamed(
+  //             context,
+  //             DMS_WORKSPACE_ROUTE,
+  //           );
+  //         },
+  //       ),
+
+  //       //
+  //       ExpansionTile(
+  //         title: Text(
+  //           'Time & Attendance',
+  //           style: TextStyle(
+  //             fontSize: 10.0.sp,
+  //             color: const Color(0xFF757575),
+  //             fontWeight: FontWeight.normal,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         children: [
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Remote Attendance',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 MARK_ATTENDANCE_ROUTE,
+  //               );
+  //             },
+  //           ),
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Access Logs',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 DISPLAY_ACCESS_LOG,
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+
+  //       //
+  //       ExpansionTile(
+  //         title: Text(
+  //           'Time & Attendance (Web)',
+  //           style: TextStyle(
+  //             fontSize: 10.0.sp,
+  //             color: const Color(0xFF757575),
+  //             fontWeight: FontWeight.normal,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         children: [
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Register Face',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 REGISTER_FACE_WEB,
+  //               );
+  //             },
+  //           ),
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Mark Attendance',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 MARK_ATTENDANCE_WEB,
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+
+  //       //
+  //       DrawerListTileWidget(
+  //         title: 'Worklist Dashboard',
+  //         listTileOnTap: () {
+  //           Navigator.pushNamed(
+  //             context,
+  //             WORKLIST_DASHBOARD,
+  //           );
+  //         },
+  //       ),
+
+  //       //
+  //       DrawerListTileWidget(
+  //         title: 'Requested Leaves',
+  //         icon: Icons.hotel,
+  //         listTileOnTap: () {
+  //           Navigator.pushNamed(
+  //             context,
+  //             DISPLAY_LEAVES,
+  //           );
+  //         },
+  //       ),
+
+  //       //
+  //       ExpansionTile(
+  //         title: Text(
+  //           'Payroll',
+  //           style: TextStyle(
+  //             fontSize: 10.0.sp,
+  //             color: const Color(0xFF757575),
+  //             fontWeight: FontWeight.normal,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         children: [
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Manage Accrual',
+  //             listTileOnTap: () {
+  //               ntsChartBloc.subjectChartByStatus.sink.add(null);
+  //               ntsChartBloc.subjectChartByUserType.sink.add(null);
+  //               ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 MANAGE_ACCRUAL,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Payslip',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 PAYSLIP,
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+
+  //       //
+  //       ExpansionTile(
+  //         title: Text(
+  //           'Note',
+  //           style: TextStyle(
+  //             fontSize: 10.0.sp,
+  //             color: const Color(0xFF757575),
+  //             fontWeight: FontWeight.normal,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         children: [
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Note Home Dashboard',
+  // listTileOnTap: () {
+  //   ntsChartBloc.subjectChartByStatus.sink.add(null);
+  //   ntsChartBloc.subjectChartByUserType.sink.add(null);
+  //   ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+  //   Navigator.pushNamed(
+  //     context,
+  //     NOTE_DASHBOARD,
+  //   );
+  // },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Note Home',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 NOTE_HOME,
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+
+  //       //
+  //       ExpansionTile(
+  //         title: Text(
+  //           'Task',
+  //           style: TextStyle(
+  //             fontSize: 10.0.sp,
+  //             color: const Color(0xFF757575),
+  //             fontWeight: FontWeight.normal,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         children: [
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Task Home Dashboard',
+  //   listTileOnTap: () {
+  //     ntsChartBloc.subjectChartByStatus.sink.add(null);
+  //     ntsChartBloc.subjectChartByUserType.sink.add(null);
+  //     ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+  //     Navigator.pushNamed(
+  //       context,
+  //       TASK_DASHBOARD,
+  //     );
+  //   },
+  // ),
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Task List',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 TASKLIST,
+  //               );
+  //             },
+  //           ),
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Task Home',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 TASK_HOME,
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+
+  //       //
+  //       ExpansionTile(
+  //         title: Text(
+  //           'Service',
+  //           style: TextStyle(
+  //             fontSize: 10.0.sp,
+  //             color: const Color(0xFF757575),
+  //             fontWeight: FontWeight.normal,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         children: [
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Service Home Dashboard',
+  //             listTileOnTap: () {
+  //   ntsChartBloc.subjectChartByStatus.sink.add(null);
+  //   ntsChartBloc.subjectChartByUserType.sink.add(null);
+  //   ntsChartBloc.subjectDatewiseSLA.sink.add(null);
+  //   Navigator.pushNamed(
+  //     context,
+  //     SERVICE_DASHBOARD,
+  //   );
+  // },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Service Home',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 SERVICE_HOME,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Component Result',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 SERVICE_COMPONENT_RESULT_ROUTE,
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+
+  //       //
+  //       ExpansionTile(
+  //         title: Text(
+  //           "Documents",
+  //           style: TextStyle(
+  //             fontSize: 10.0.sp,
+  //             color: const Color(0xFF757575),
+  //             fontWeight: FontWeight.normal,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         children: [
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Requested By HR',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 PERSON_DOCUMENTS_ROUTE,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Manage Documents',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 PERSON_PROFILE_ROUTE,
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+
+  //       //
+  //       DrawerListTileWidget(
+  //         title: 'Manage Dependents',
+  //         listTileOnTap: () {
+  //           Navigator.pushNamed(
+  //             context,
+  //             MANAGE_DEPENDENTS,
+  //           );
+  //         },
+  //       ),
+
+  //       //
+  //       DrawerListTileWidget(
+  //         title: 'Workboard Task List',
+  //         listTileOnTap: () {
+  //           Navigator.pushNamed(
+  //             context,
+  //             WORKBOARD_TASK_LIST,
+  //           );
+  //         },
+  //       ),
+
+  //       //
+  //       ExpansionTile(
+  //         title: Text(
+  //           'DMS',
+  //           style: TextStyle(
+  //             fontSize: 10.0.sp,
+  //             color: const Color(0xFF757575),
+  //             fontWeight: FontWeight.normal,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         children: [
+  //           //
+  //           // DrawerListTileWidget(
+  //           //   title: 'Document',
+  //           //   listTileOnTap: () {
+  //           //     Navigator.pushNamed(
+  //           //       context,
+  //           //       DMS_PARENT,
+  //           //     );
+  //           //   },
+  //           // ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Documeny Search',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 DMS_SEARCH_ROUTE,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Document History',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 DMS_HISTORY_ROUTE,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Document Bin',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 DMS_BIN_ROUTE,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Document Archive',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 DMS_ARCHIVE_ROUTE,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t DMS Support',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 DMS_SUPPORT,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Document Workspace',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 DMS_WORKSPACE_ROUTE,
+  //               );
+  //             },
+  //           ),
+
+  //           //
+  //           DrawerListTileWidget(
+  //             title: '\t\t\t\t\t Document Permission',
+  //             listTileOnTap: () {
+  //               Navigator.pushNamed(
+  //                 context,
+  //                 DMS_ADD_EDIT_PERMISSION_ROUTE,
+  //               );
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   void _handleLogoutOnPressed(context) {
     BlocProvider.of<UserModelBloc>(context).add(

@@ -140,7 +140,7 @@ class _PortalScreenState extends State<PortalScreen> {
     // Redirect to Home screen.
     Navigator.pushReplacementNamed(
       context,
-      WORKLIST_DASHBOARD,
+      WORKBOARD_SCREEN,
     );
   }
 

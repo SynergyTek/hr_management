@@ -64,7 +64,7 @@ class SplashScreen extends StatelessWidget {
     if (username == null) {
       Navigator.pushReplacementNamed(
         context, LOGIN_ROUTE,
-        // WORKLIST_DASHBOARD,
+        // WORKBOARD_SCREEN,
       );
     } else {
 
@@ -85,7 +85,7 @@ class SplashScreen extends StatelessWidget {
       // user is already logged in, use this function to send device token to the backend.
       Navigator.pushReplacementNamed(
         context,
-        WORKLIST_DASHBOARD,
+        WORKBOARD_SCREEN,
       );
     }
   }
