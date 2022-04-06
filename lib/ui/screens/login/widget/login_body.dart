@@ -178,7 +178,7 @@ class _LoginBodyState extends State<LoginBody> {
 
                             const Padding(padding: EdgeInsets.all(12)),
                             Visibility(
-                              visible: isUsernameVisible,
+                              visible: !isPasswordVisible,
                               child: PrimaryButton(
                                 buttonText: 'Login',
                                 handleOnPressed: () {
@@ -191,7 +191,7 @@ class _LoginBodyState extends State<LoginBody> {
                                       isPasswordVisible = true;
                                       getPortalListByEmail(
                                           createLoginFormBloc.email.value);
-                                      isUsernameVisible = false;
+                                      isUsernameVisible = true;
                                     });
                                   }
                                 },
