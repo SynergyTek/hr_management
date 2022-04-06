@@ -25,6 +25,9 @@ class AddEditTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Step Task"),
+      ),
       body: SafeArea(
         child: TaskWidget(
           taskTemplateCode: taskTemplateCode,

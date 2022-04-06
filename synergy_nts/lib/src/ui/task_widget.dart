@@ -1131,9 +1131,11 @@ class _TaskWidgetState extends State<TaskWidget> {
                 udfJson[model[i].key]!.isEmpty ||
                 udfJson[model[i].key] == '[]')
             ? model[i].label ?? " Select File to Attach "
-            : (selectValue[i] == null || selectValue[i].isEmpty)
-                ? " (1) File Attached: " + udfJson[model[i].key]!
-                : " (1) File Attached: " + selectValue[i];
+            : selectValue.isNotEmpty
+                ? (selectValue[i] == null || selectValue[i].isEmpty)
+                    ? " (1) File Attached: " + udfJson[model[i].key]!
+                    : " (1) File Attached: " + selectValue[i]
+                : " (1) File Attached: " + udfJson[model[i].key]!;
 
         listDynamic.add(
           DynamicAttachmentWidget(

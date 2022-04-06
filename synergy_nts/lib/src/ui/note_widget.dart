@@ -15,7 +15,6 @@ import '../helpers/parse_json_helper.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../models/udf_models/udf_json_model.dart';
 import '../models/udf_models/udf_json_model_for_note.dart';
-import 'note_widgets/selection_field_widget.dart';
 import 'widgets/form_widgets.dart';
 import 'widgets/form_widgets/attachment.dart';
 import 'widgets/widgets.dart';
@@ -729,40 +728,67 @@ class _NoteWidgetState extends State<NoteWidget> {
           udfJson[model[i].key] = '';
         }
         final textField$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
-        if (!model[i].disabled) {
-          listDynamic.add(
-            BlocTextBoxWidget(
+        listDynamic.add(
+          AbsorbPointer(
+            // absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
+            child: BlocTextBoxWidget(
+              isRequired: model[i].validate?.required,
               labelName: model[i].label,
               fieldName: model[i].label,
-              readonly: model[i].disabled,
+              readonly: (model[i].defaultValue != null &&
+                          model[i].defaultValue.isNotEmpty) ||
+                      model[i].disabled.toString() == 'true' ||
+                      widget.noteId.isNotEmpty
+                  ? true
+                  : false,
               textFieldBloc: textField$i,
-              prefixIcon: const Icon(Icons.note),
+              prefixIcon: const Icon(
+                Icons.note_outlined,
+                color: AppThemeColor.iconColor,
+              ),
               maxLines: 1,
-              onChanged: (value) {
-                udfJson[model[i].key] = value.toString();
+              onChanged: (String value) {
+                udfJson[model[i].key] = value;
               },
             ),
-          );
-          createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
-        } else {
-          listDynamic.add(
-            StaticField(
-              // initialValue: difference.toString(),
-              width: MediaQuery.of(context).size.width,
-              hint: model[i].label,
-              icon: const Icon(Icons.circle_outlined),
-              style: TextStyle(color: Colors.grey[600]),
-              // controller: _slaController,
-              // isShowArrow: true,
-            ),
-          );
-          // listDynamic.add(DynamicTextBoxWidget(
-          //     model[i].label,
-          //     model[i].label,
-          //     TextEditingController(),
-          //     true,
-          //     (String val) {}));
-        }
+          ),
+        );
+        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+
+        // if (model[i].disabled != null && !model[i].disabled) {
+        //   listDynamic.add(
+        //     BlocTextBoxWidget(
+        //       labelName: model[i].label,
+        //       fieldName: model[i].label,
+        //       readonly: model[i].disabled,
+        //       textFieldBloc: textField$i,
+        //       prefixIcon: const Icon(Icons.note),
+        //       maxLines: 1,
+        //       onChanged: (value) {
+        //         udfJson[model[i].key] = value.toString();
+        //       },
+        //     ),
+        //   );
+        //   createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        // } else {
+        //   listDynamic.add(
+        //     StaticField(
+        //       // initialValue: difference.toString(),
+        //       width: MediaQuery.of(context).size.width,
+        //       hint: model[i].label,
+        //       icon: const Icon(Icons.circle_outlined),
+        //       style: TextStyle(color: Colors.grey[600]),
+        //       // controller: _slaController,
+        //       // isShowArrow: true,
+        //     ),
+        //   );
+        //   // listDynamic.add(DynamicTextBoxWidget(
+        //   //     model[i].label,
+        //   //     model[i].label,
+        //   //     TextEditingController(),
+        //   //     true,
+        //   //     (String val) {}));
+        // }
       } else if (model[i].type == 'textarea') {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
