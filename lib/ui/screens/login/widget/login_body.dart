@@ -242,9 +242,6 @@ class _LoginBodyState extends State<LoginBody> {
 
     if (email != null) queryparams['email'] = email;
 
-    print("Login Params: ");
-    print(email);
-
     try {
       var data = await loginBloc.getPortalListByEmail(
         queryparams: queryparams,
@@ -319,10 +316,6 @@ class _LoginBodyState extends State<LoginBody> {
 
     if (email != null) queryparams['username'] = email;
     if (password != null) queryparams['password'] = password;
-
-    print("Login Params: ");
-    print(email);
-    print(password);
 
     try {
       LoginResponseModel? data = await loginBloc.postData(
