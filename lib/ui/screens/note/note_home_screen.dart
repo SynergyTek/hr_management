@@ -23,7 +23,7 @@ class NoteHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: showBack! ? null : drawerWidget(context),
+      drawer: showBack! ? null : DrawerWidget(),
       appBar: AppbarWidget(
         title: "Note Home",
       ),

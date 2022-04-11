@@ -100,7 +100,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            drawer: drawerWidget(context),
+            drawer: DrawerWidget(),
             appBar: AppBar(title: Text('Registration')),
             body: FormBlocListener<RegistrationFormBloc, String, String>(
               onSubmitting: (context, state) {},

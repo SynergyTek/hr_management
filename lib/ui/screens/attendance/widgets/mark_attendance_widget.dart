@@ -48,8 +48,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     bool result = false;
     final double radius = 0.25;
 
-    var officeLatitude = 23.201535;
-    var officeLongitude = 77.4149217;
+    var officeLatitude = 34.09934;
+    var officeLongitude = 74.8139167;
+    // var officeLatitude = 23.201535;
+    // var officeLongitude = 77.4149217;
 
     final double distance = Geolocator.distanceBetween(
       BlocProvider.of<LocationBloc>(context).state.locationData?.latitude ??
@@ -429,6 +431,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       setState(() {
         isVisible = true;
       });
+
       await accessLogBloc.getInsertAccessLog(
         isSignIn: false,
         userId:

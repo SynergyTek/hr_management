@@ -98,6 +98,9 @@ class APIEndpointConstants {
 
   static const MANAGE_LOGIN = '$BASE_URL/api/Authenticate/AuthenticateLogin';
 
+  static const PORTAL_LIST_BY_EMAIL =
+      '$BASE_URL/api/Authenticate/GetPortalListByEmail';
+
   static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
   static const LEAVE_DETAILS = '$BASE_URL/taa/query/leavedetail';
@@ -440,6 +443,13 @@ class APIEndpointConstants {
 
   static const SAVE_PERMISSIONS = BASE_URL + '/api/command/SavePermission';
 
+  /// https://webapidev.aitalkx.com/cms/user/ReadUserPermissionData?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=DMS
+  /// Method: GET
+  /// Params:
+  ///   - userId
+  ///   - portalName
+  static const GET_READ_USER_PERMISSION_DATA_ENDPOINT =
+      BASE_URL + '/cms/user/ReadUserPermissionData';
   //************************************************************************//
   // PERMISSION API Ends:
 

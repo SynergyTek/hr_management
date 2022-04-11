@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/ui/screens/attendance/widgets/ma_widget.dart';
+import 'package:hr_management/ui/screens/attendance/widgets/mark_attendance_widget.dart';
 
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 import '../../widgets/location_connectivity_widget.dart';
-import 'widgets/mark_attendance_widget.dart';
 
 class MarkAttendance extends StatelessWidget {
   const MarkAttendance();
@@ -12,7 +13,7 @@ class MarkAttendance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       appBar: AppbarWidget(
         title: "Attendance",
         actions: [],
@@ -20,7 +21,8 @@ class MarkAttendance extends StatelessWidget {
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: LocationConnectivityWidget(
-            child: MarkAttendanceWidget(),
+            child: MAWidget(),
+            // child: MarkAttendanceWidget(),
           ),
         ),
       ),

@@ -30,4 +30,28 @@ class LoginRepository extends AbstractLoginRepository {
       return LoginAPIResponse.withError("$err");
     }
   }
+
+  Future<PortalViewResponse> getPortalList({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.PORTAL_LIST_BY_EMAIL;
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        // data: jsonEncode(loginResponseModel.toJson()) ?? {},
+      );
+
+      // TODO: response parsing
+      return PortalViewResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return PortalViewResponse.withError("$err");
+    }
+  }
 }

@@ -211,6 +211,9 @@ class LoginResponseModel {
     dynamic lockoutEnd,
     bool? lockoutEnabled,
     int? accessFailedCount,
+
+    // For mark attendance widget
+    bool? isSignedIn,
   }) {
     return LoginResponseModel(
       companyId: companyId ?? this.companyId,

@@ -20,6 +20,7 @@ import 'package:hr_management/ui/screens/workboard_screen/workboard_task_list_sc
 import 'package:hr_management/ui/screens/workboard_screen/create_edit_workboard.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
+import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 import '../ui/screens/login/login_screen.dart';
@@ -544,7 +545,10 @@ class AppRouter {
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              title: Text("Error 404"),
+            ),
+            drawer: DrawerWidget(),
             body: Center(
               child: Text(
                 "Error 404: No route defined with this name: ${routeSettings.name}.",

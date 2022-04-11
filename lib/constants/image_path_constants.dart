@@ -30,3 +30,5 @@ const String CASE_MANAGEMENT_TASK_LIST =
     'assets/images/case_management_task_list.jpg';
 const String CASE_MANAGEMENT_SERVICE_REPORT =
     'assets/images/case_management_service_report.jpg';
+
+const String SYNERGY_LOGO = 'assets/images/synergy_logo.jpg';

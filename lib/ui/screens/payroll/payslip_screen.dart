@@ -14,7 +14,7 @@ class PayslipScreen extends StatelessWidget {
       appBar: AppbarWidget(
         title: "Payslip",
       ),
-      drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: PayslipBody(),

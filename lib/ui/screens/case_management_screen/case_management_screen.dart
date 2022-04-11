@@ -12,7 +12,7 @@ class CaseManagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       appBar: AppbarWidget(
         title: "Case Management",
       ),

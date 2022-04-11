@@ -64,13 +64,28 @@ class SplashScreen extends StatelessWidget {
     if (username == null) {
       Navigator.pushReplacementNamed(
         context, LOGIN_ROUTE,
-        // WORKLIST_DASHBOARD,
+        // WORKBOARD_SCREEN,
       );
     } else {
+
+      print(
+        BlocProvider.of<UserModelBloc>(context)
+            .state
+            .extraUserInformation
+            ?.isSignedIn,
+      );
+
+      print(
+        BlocProvider.of<UserModelBloc>(context)
+            .state
+            .extraUserInformation
+            ?.portalType,
+      );
+
       // user is already logged in, use this function to send device token to the backend.
       Navigator.pushReplacementNamed(
         context,
-        WORKLIST_DASHBOARD,
+        WORKBOARD_SCREEN,
       );
     }
   }

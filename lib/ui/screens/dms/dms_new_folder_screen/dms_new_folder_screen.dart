@@ -19,7 +19,7 @@ class DMSNewFolderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       appBar: AppbarWidget(
         title: folderName == null || folderName!.isEmpty
             ? "Create new folder"

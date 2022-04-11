@@ -1,6 +1,8 @@
+
 import '../../../data/models/login_models/login_request_model.dart';
 import '../../../data/models/login_models/login_response.dart';
 
+import '../../../data/models/login_models/portal_response_view_model.dart';
 import '../../../data/repositories/login_repository/login_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -23,6 +25,19 @@ class LoginBloc {
 
     // print("Hulululu: ${response.token} ${response.error}");
     return response.data;
+  }
+
+  getPortalListByEmail({
+    Map<String, dynamic>? queryparams,
+    PortalViewResponse? portalResponseModel,
+  }) async {
+PortalViewResponse response = await _loginRepository.getPortalList(
+      queryparams: queryparams,
+    );
+
+    // print("Hulululu: ${response.token} ${response.error}");
+    return response.data;
+
   }
 
   dispose() {

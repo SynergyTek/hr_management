@@ -45,7 +45,7 @@ class _DMSSupportState extends State<DMSSupport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawerWidget(context),
+      drawer: DrawerWidget(),
       appBar: AppbarWidget(
         title: "DMS Support",
       ),

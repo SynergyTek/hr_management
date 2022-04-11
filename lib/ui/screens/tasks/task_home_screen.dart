@@ -24,7 +24,7 @@ class TaskHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: showBack! ? null : drawerWidget(context),
+      drawer: showBack! ? null : DrawerWidget(),
       appBar: AppbarWidget(
         title: "Task Home",
       ),
@@ -49,7 +49,7 @@ class TaskHomeScreen extends StatelessWidget {
             NTS_TEMPLATE_REQUEST,
             arguments: ScreenArguments(
               ntstype: NTSType.task,
-              arg4: '',//'STEP_TASK_CATEGORY',
+              arg4: '', //'STEP_TASK_CATEGORY',
             ),
           );
           // Navigator.pushNamed(
