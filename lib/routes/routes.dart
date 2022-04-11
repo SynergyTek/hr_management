@@ -12,7 +12,6 @@ import 'package:hr_management/ui/screens/face_detection_web/face_detection_webvi
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
-import 'package:hr_management/ui/screens/portal_screen/portal_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/duplicate_workboard_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_create_section_screen.dart';
@@ -21,6 +20,7 @@ import 'package:hr_management/ui/screens/workboard_screen/workboard_task_list_sc
 import 'package:hr_management/ui/screens/workboard_screen/create_workboard.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
+import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 import '../ui/screens/login/login_screen.dart';
@@ -539,7 +539,10 @@ class AppRouter {
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              title: Text("Error 404"),
+            ),
+            drawer: DrawerWidget(),
             body: Center(
               child: Text(
                 "Error 404: No route defined with this name: ${routeSettings.name}.",

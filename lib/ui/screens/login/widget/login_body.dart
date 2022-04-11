@@ -2,25 +2,23 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/constants/image_path_constants.dart';
-import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
-import 'package:hr_management/data/models/login_models/portal_response_view_model.dart';
 import 'package:hr_management/data/models/login_models/portal_view_model.dart';
 import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
-import 'package:hr_management/ui/screens/portal_screen/portal_screen.dart';
+import 'package:hr_management/ui/widgets/snack_bar.dart';
 import '../../../../data/models/login_models/extra_user_information_model.dart';
 import '../../../../data/models/login_models/login_response_model.dart';
 import '../../../../data/models/login_models/login_request_model.dart';
 import '../../../../data/models/login_models/login_response.dart';
 
 import '../../../../logic/blocs/login_bloc/login_bloc.dart';
+import '../../../../logic/blocs/permission_bloc/user_permission_bloc/user_permission_bloc.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/form_widgets/bloc_text_box_widget.dart';
 import '../../../widgets/primary_button.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:animated_widgets/animated_widgets.dart';
 
 import '../login_form_bloc.dart';
 
@@ -262,23 +260,53 @@ class _LoginBodyState extends State<LoginBody> {
 
     _formKey.currentState!.save();
 
-    // Setting up the portal type and
-    // saving up the saved portal to the hydrated bloc.
-    BlocProvider.of<UserModelBloc>(context).add(
-      UserModelChangeEvent(
-        userModel: user,
-        extraUserInformation: ExtraUserInformationModel(
-          isSignedIn: false,
-          portalType: selectedPortal,
+    try {
+      // Get user permissions
+      UserPermissionResponse? response = await _handleUserPermissions();
+      if (response == null) {
+        displaySnackBar(
+          context: context,
+          text:
+              "Unable to fetch user permissions metadata. Please try again later.",
+        );
+        return;
+      }
+
+      // Setting up the portal type and
+      // saving up the saved portal to the hydrated bloc.
+      BlocProvider.of<UserModelBloc>(context).add(
+        UserModelChangeEvent(
+          userModel: user,
+          extraUserInformation: ExtraUserInformationModel(
+            isSignedIn: false,
+            portalType: selectedPortal,
+            userPermissionResponse: response,
+          ),
         ),
-      ),
+      );
+
+      // Redirect to Home screen.
+      Navigator.pushReplacementNamed(
+        context,
+        WORKBOARD_SCREEN,
+      );
+    } catch (e, s) {
+      print(e);
+      print(s);
+    }
+  }
+
+  //
+  Future<UserPermissionResponse?> _handleUserPermissions() async {
+    UserPermissionResponse? response =
+        await UserPermissionBloc().getUserPermission(
+      queryparams: {
+        "userId": user.id,
+        "portalName": selectedPortal,
+      },
     );
 
-    // Redirect to Home screen.
-    Navigator.pushReplacementNamed(
-      context,
-      WORKBOARD_SCREEN,
-    );
+    return response;
   }
 
   Future<void> _showMyDialog() async {
@@ -330,16 +358,6 @@ class _LoginBodyState extends State<LoginBody> {
           user = data;
           onPortalSelect();
         });
-
-        //
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (_) => PortalScreen(
-        //       user: data,
-        //     ),
-        //   ),
-        // );
       } else {
         setState(() {
           showCPI = false;

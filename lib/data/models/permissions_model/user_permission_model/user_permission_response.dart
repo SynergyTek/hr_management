@@ -15,4 +15,22 @@ class UserPermissionResponse {
   UserPermissionResponse.withError(String errorValue)
       : data = [],
         error = errorValue;
+
+  factory UserPermissionResponse.fromMap(Map<String, dynamic> map) {
+    return UserPermissionResponse(
+      data: List<UserPermissionModel?>.from(
+        map['userpermissionresp']?.map(
+              (x) => UserPermissionModel.fromMap(x),
+            ) ??
+            [],
+      ),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'userpermissionresp':
+          data.map((eachElement) => eachElement?.toMap()).toList(),
+    };
+  }
 }

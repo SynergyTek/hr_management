@@ -82,47 +82,14 @@ class DrawerWidget extends StatelessWidget {
                   const DottedDividerWidget(),
 
                   //
-                  FutureBuilder<UserPermissionResponse?>(
-                    future: _handleUserPermissions(context),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<UserPermissionResponse?> snapshot) {
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text(
-                            "An error occurred while fetching user permissions metadata.",
-                          ),
-                        );
-                      } else if (snapshot.hasData) {
-                        print(snapshot.data);
-
-                        if (snapshot.data?.data == null ||
-                            snapshot.data!.data.isEmpty) {
-                          return Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Text(
-                                "An error occurred, please try again later.",
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          );
-                        }
-
-                        return _drawerListWidget(
-                          context,
-                          snapshot.data!.data,
-                        );
-                      }
-
-                      return Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: MediaQuery.of(context).size.height * 0.25,
-                          ),
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    },
+                  _drawerListWidget(
+                    context,
+                    BlocProvider.of<UserModelBloc>(context)
+                            .state
+                            .extraUserInformation
+                            ?.userPermissionResponse
+                            ?.data ??
+                        [],
                   ),
                 ],
               ),
@@ -156,6 +123,7 @@ class DrawerWidget extends StatelessWidget {
     BuildContext context,
     List<UserPermissionModel?> data,
   ) {
+    print(data);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1030,21 +998,5 @@ class DrawerWidget extends StatelessWidget {
       LOGIN_ROUTE,
       ModalRoute.withName('/login'),
     );
-  }
-
-  Future<UserPermissionResponse?> _handleUserPermissions(
-      BuildContext context) async {
-    UserPermissionResponse? response =
-        await UserPermissionBloc().getUserPermission(
-      queryparams: {
-        "userId": BlocProvider.of<UserModelBloc>(context).state.userModel?.id,
-        "portalName": BlocProvider.of<UserModelBloc>(context)
-            .state
-            .extraUserInformation
-            ?.portalType,
-      },
-    );
-
-    return response;
   }
 }
