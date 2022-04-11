@@ -28,7 +28,8 @@ class NtsCommentBloc {
       queryparams["noteId"] = ntsId ?? '';
     } else if (ntsType == NTSType.task) {
       queryparams["taskId"] = ntsId ?? '';
-    }
+    }else if (ntsType == NTSType.workboard) {
+      queryparams["noteId"] = ntsId ?? '';}
 
     CommentListResponse response = await _ntsRepository.getCommentsData(
         queryparams: queryparams, ntsType: ntsType);

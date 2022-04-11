@@ -1,3 +1,6 @@
+import 'package:hr_management/data/models/workboard_model/add_workboard_content_model.dart';
+import 'package:hr_management/data/models/workboard_model/workboard_section_model.dart';
+
 import 'workboard_model.dart';
 
 class WorkBoardResponseModel {
@@ -47,6 +50,39 @@ class WorkBoardMapResponseModel {
         error = errorValue;
 }
 
+class AddContentWorkBoardMapResponseModel {
+  final AddContentWorkBoardModel? mapdata;
+  String? error;
+
+  AddContentWorkBoardMapResponseModel({
+    this.mapdata,
+  });
+
+  AddContentWorkBoardMapResponseModel.fromJson(Map<String, dynamic> response)
+      : mapdata = AddContentWorkBoardModel.fromJson(response);
+
+  AddContentWorkBoardMapResponseModel.withError(String errorValue)
+      : mapdata = null,
+        error = errorValue;
+}
+
+
+class WorkBoardSectionMapResponseModel {
+  final WorkBoardSectionModel? mapdata;
+  String? error;
+
+  WorkBoardSectionMapResponseModel({
+    this.mapdata,
+  });
+
+  WorkBoardSectionMapResponseModel.fromJson(Map<String, dynamic> response)
+      : mapdata = WorkBoardSectionModel.fromJson(response);
+
+  WorkBoardSectionMapResponseModel.withError(String errorValue)
+      : mapdata = null,
+        error = errorValue;
+}
+
 class WorkBoardPostResponse {
   bool? isSuccess;
   dynamic item;
@@ -61,6 +97,40 @@ class WorkBoardPostResponse {
   }
 
   WorkBoardPostResponse.withError(String errorValue)
+      : item = null,
+        isSuccess = false;
+}
+class WorkBoardPostResponseSection {
+  bool? isSuccess;
+  dynamic item;
+  WorkBoardSectionModel? data;
+
+  WorkBoardPostResponseSection();
+
+  WorkBoardPostResponseSection.fromJson(Map<String, dynamic> jsonResponse) {
+    isSuccess = jsonResponse['success'];
+    item = jsonResponse['Item'];
+    data = WorkBoardSectionModel.fromJson(jsonResponse);
+  }
+
+  WorkBoardPostResponseSection.withError(String errorValue)
+      : item = null,
+        isSuccess = false;
+}
+class WorkBoardPostResponseContent {
+  bool? isSuccess;
+  dynamic item;
+  AddContentWorkBoardModel? data;
+
+  WorkBoardPostResponseContent();
+
+  WorkBoardPostResponseContent.fromJson(Map<String, dynamic> jsonResponse) {
+    isSuccess = jsonResponse['success'];
+    item = jsonResponse['Item'];
+    data = AddContentWorkBoardModel.fromJson(jsonResponse);
+  }
+
+  WorkBoardPostResponseContent.withError(String errorValue)
       : item = null,
         isSuccess = false;
 }

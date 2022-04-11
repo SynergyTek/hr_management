@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_model.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_response_model.dart';
 import 'package:hr_management/logic/blocs/workboard_bloc/workboard_bloc.dart';
@@ -8,27 +9,29 @@ import 'package:hr_management/ui/widgets/primary_button.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/snack_bar.dart';
 
 typedef ListTapPressedCallBack = void Function(dynamic key);
 
-class CreateWorkBoardScreenBody extends StatefulWidget {
-  final bool? isEdit;
+class CreateEditWorkBoardScreenBody extends StatefulWidget {
+  final bool isEdit;
   final String? workBoardId;
 
-  CreateWorkBoardScreenBody({
+  CreateEditWorkBoardScreenBody({
     Key? key,
-    this.isEdit,
+    required this.isEdit,
     this.workBoardId,
   }) : super(key: key);
 
   @override
-  State<CreateWorkBoardScreenBody> createState() =>
-      _CreateWorkBoardScreenBodyState();
+  State<CreateEditWorkBoardScreenBody> createState() =>
+      _CreateEditWorkBoardScreenBodyState();
 }
 
-class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
+class _CreateEditWorkBoardScreenBodyState
+    extends State<CreateEditWorkBoardScreenBody> {
   TextEditingController? workBoardNameController = TextEditingController();
   TextEditingController? chooseTemplateController = TextEditingController();
 
@@ -40,9 +43,7 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
   void initState() {
     super.initState();
     api();
-    if (widget.isEdit == true) {
-      refresh();
-    } else {
+    if (widget.isEdit == false) {
       chooseTemplateController?.text = "Basic";
     }
   }
@@ -56,10 +57,6 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
     } else {
       await workboardBloc.getCreateWorkboardData();
     }
-  }
-
-  refresh() {
-    setState(() {});
   }
 
   @override
@@ -78,7 +75,11 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
 
                 if (snapshot.data?.mapdata != null) {
                   workBoardModel = snapshot.data?.mapdata;
-                  if (widget.isEdit == true) {
+                  if ((widget.isEdit == true &&
+                          workBoardModel?.workBoardName != null &&
+                          workBoardNameController?.text ==
+                              workBoardModel?.workBoardName) ||
+                      workBoardNameController!.text.isEmpty) {
                     workBoardNameController?.text =
                         workBoardModel?.workBoardName ?? '';
                     print(workBoardModel?.workBoardName);
@@ -155,7 +156,8 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
                               });
                             },
                             activeColor: Colors.blue,
-                            selected: (widget.isEdit == true)
+                            selected: (widget.isEdit == true &&
+                                    workBoardModel?.workBoardType != null)
                                 ? ((workBoardModel?.workBoardType == 0)
                                     ? true
                                     : false)
@@ -238,7 +240,7 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
                                 ? Text(
                                     'Template Selected -  ${workBoardModel?.templateCode ?? "No Data"} WorkBoard')
                                 : Text(
-                                    'Template Selected -  ${chooseTemplateController?.text ?? 'Basic'} WorkBoard'),
+                                    'Template Selected -  ${chooseTemplateController?.text.toString()} WorkBoard'),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -284,7 +286,11 @@ class _CreateWorkBoardScreenBodyState extends State<CreateWorkBoardScreenBody> {
 
                     workBoardModel?.portalName = "HR";
                     workBoardModel?.requestedByUserId =
-                        "45bba746-3309-49b7-9c03-b5793369d73c";
+                        BlocProvider.of<UserModelBloc>(context)
+                                .state
+                                .userModel
+                                ?.id ??
+                            '';
                     workBoardModel?.workBoardName =
                         workBoardNameController?.text;
                     if (_groupValue == 0) {

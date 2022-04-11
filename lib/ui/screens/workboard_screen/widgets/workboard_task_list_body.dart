@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/workboard_bloc/workboard_bloc.dart';
 import 'package:hr_management/ui/screens/workboard_screen/widgets/workboard_task_dashboard_list.dart';
-import '../../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
-import '../../tasks/widget/task_dashboard_list.dart';
 
 class WorkboardTaskListBody extends StatefulWidget {
   const WorkboardTaskListBody({Key? key}) : super(key: key);

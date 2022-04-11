@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/workboard_screen/widgets/workboard_screen_body_widget.dart';
 
 class WorkBoardScreen extends StatelessWidget {
@@ -11,7 +12,8 @@ class WorkBoardScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
         onPressed: () {
-          Navigator.pushNamed(context, CREATE_WORKBOARD_SCREEN);
+          Navigator.pushNamed(context, CREATE_WORKBOARD_SCREEN,
+              arguments: ScreenArguments(val1: false));
         },
         child: Icon(Icons.add),
       ),
