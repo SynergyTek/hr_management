@@ -55,9 +55,6 @@ dependencies:
     path: ./synergy_nts
   video_player: ^2.1.12
   webview_flutter: ^2.0.10
-  geocoding: ^2.0.2
-  percent_indicator: ^4.0.0
-  flutter_material_color_picker: ^1.1.0+2
   image_painter: ^0.4.5
 
 dev_dependencies:
