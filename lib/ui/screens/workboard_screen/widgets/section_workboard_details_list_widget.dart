@@ -21,12 +21,10 @@ import 'package:sizer/sizer.dart';
 class SectionWorkBoardDetailsList extends StatefulWidget {
   final AddContentWorkBoardModel? addContentWorkBoardModel;
   final String id;
-  final bool? isCopyMove;
 
   SectionWorkBoardDetailsList({
     Key? key,
     required this.id,
-    this.isCopyMove,
     this.addContentWorkBoardModel,
   }) : super(key: key);
 
@@ -43,11 +41,11 @@ class _SectionWorkBoardDetailsListState
 
   ScrollController scrollController = ScrollController();
 
-  var workBoardSectionsList;
+  List? workBoardSectionsList;
 
-  var itemList;
+  List? itemList;
 
-  var itemContent;
+  List? itemContent;
 
   @override
   void initState() {
@@ -92,371 +90,257 @@ class _SectionWorkBoardDetailsListState
                         : '',
                     maxLines: 2,
                   ),
-                  actions: (workBoardSectionsList!.isNotEmpty &&
-                          workBoardSectionsList != null)
+                  actions: (workBoardSectionsList != null)
                       ? [
-                          (widget.isCopyMove == false)
-                              ? ButtonWidget(
-                                  buttonText: 'Save',
-                                  onTap: () {},
-                                )
-                              : SizedBox(),
+                          ButtonWidget(
+                            buttonText: 'Save',
+                            onTap: () {},
+                          )
                         ]
                       : []),
-              body:
-                  (workBoardSectionsList!.isNotEmpty &&
-                          workBoardSectionsList != null)
-                      ? Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Container(
-                              margin: DEFAULT_PADDING,
-                              height: MediaQuery.of(context).size.height,
-                              child: Column(
-                                children: [
-                                  (widget.isCopyMove == true)
-                                      ? SizedBox(
-                                          height: 3.h,
-                                        )
-                                      : SizedBox(),
-                                  Flexible(
-                                    flex: 10,
-                                    child: GridView.builder(
-                                      controller: scrollController,
-                                      padding: DEFAULT_PADDING * 0.5,
-                                      shrinkWrap: true,
-                                      itemCount: workBoardSectionsList?.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        jsonIndex = index;
-                                        return Card(
-                                          color: (widget.isCopyMove == true)
-                                              ? (workBoardSectionsList?[index]
+              body: (workBoardSectionsList != null)
+                  ? Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Container(
+                          margin: DEFAULT_PADDING,
+                          height: MediaQuery.of(context).size.height,
+                          child: Column(
+                            children: [
+                              Flexible(
+                                flex: 10,
+                                child: GridView.builder(
+                                  controller: scrollController,
+                                  padding: DEFAULT_PADDING * 0.5,
+                                  shrinkWrap: true,
+                                  itemCount: workBoardSectionsList?.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    jsonIndex = index;
+                                    return Card(
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16)),
+                                      elevation: 6,
+                                      margin: EdgeInsets.only(
+                                          bottom: 16, left: 4, right: 4),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            padding: DEFAULT_PADDING,
+                                            decoration: BoxDecoration(
+                                              color: (workBoardSectionsList?[
+                                                              index]
                                                           ['HeaderColor'] !=
                                                       null)
-                                                  ?
-                                                  // Colors.grey.shade100
-                                                  hexToColor(
+                                                  ? hexToColor(
+                                                      workBoardSectionsList?[
+                                                          index]['HeaderColor'])
+                                                  : Colors.blueGrey,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(16),
+                                                topRight: Radius.circular(16),
+                                              ),
+                                            ),
+                                            child: Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Flexible(
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
                                                           workBoardSectionsList?[
-                                                                  index]
-                                                              ['HeaderColor'])
-                                                      .withOpacity(0.2)
-                                                  : Colors.grey.shade100
-                                              : null,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16)),
-                                          elevation: 6,
-                                          margin: EdgeInsets.only(
-                                              bottom: 16, left: 4, right: 4),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                padding: DEFAULT_PADDING,
-                                                decoration: BoxDecoration(
-                                                  color: (workBoardSectionsList?[
-                                                                  index]
-                                                              ['HeaderColor'] !=
-                                                          null)
-                                                      ? hexToColor(
-                                                          workBoardSectionsList?[
-                                                                  index]
-                                                              ['HeaderColor'])
-                                                      : Colors.blueGrey,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(16),
-                                                    topRight:
-                                                        Radius.circular(16),
+                                                                          index]
+                                                                      [
+                                                                      'SectionDigit']
+                                                                  .toString() ??
+                                                              '',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                        Text(
+                                                          '.',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            workBoardSectionsList?[
+                                                                        index][
+                                                                    'SectionName'] ??
+                                                                '',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.topCenter,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                  Row(
                                                     children: [
-                                                      Flexible(
-                                                        child: Row(
-                                                          children: [
-                                                            Text(
-                                                              workBoardSectionsList?[
-                                                                              index]
-                                                                          [
-                                                                          'SectionDigit']
-                                                                      .toString() ??
-                                                                  '',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                            Text(
-                                                              '.',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                            Flexible(
-                                                              child: Text(
-                                                                workBoardSectionsList?[
+                                                      GestureDetector(
+                                                        child: Icon(
+                                                          Icons.add,
+                                                        ),
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (_) =>
+                                                                  WorkBoardContentScreen(
+                                                                isEdit: false,
+                                                                id: '',
+                                                                parentId: '',
+                                                                workBoardId:
+                                                                    widget.id,
+                                                                workBoardSectionId:
+                                                                    workBoardSectionsList?[
                                                                             index]
-                                                                        [
-                                                                        'SectionName'] ??
-                                                                    '',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white),
+                                                                        ['Id'],
                                                               ),
                                                             ),
-                                                          ],
-                                                        ),
+                                                          ).then((value) =>
+                                                              apiCall());
+                                                          print('add');
+                                                        },
                                                       ),
-                                                      Row(
-                                                        children: [
-                                                          (widget.isCopyMove ==
-                                                                  false)
-                                                              ? GestureDetector(
-                                                                  child: Icon(
-                                                                    Icons.add,
-                                                                  ),
-                                                                  onTap: () {
-                                                                    Navigator
-                                                                        .push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder:
-                                                                            (_) =>
-                                                                                WorkBoardContentScreen(
-                                                                          isEdit:
-                                                                              false,
-                                                                          id: '',
-                                                                          parentId:
-                                                                              '',
-                                                                          workBoardId:
-                                                                              widget.id,
-                                                                          workBoardSectionId:
-                                                                              workBoardSectionsList?[index]['Id'],
-                                                                        ),
-                                                                      ),
-                                                                    ).then((value) =>
-                                                                        apiCall());
-                                                                    print(
-                                                                        'add');
-                                                                  },
-                                                                )
-                                                              : ButtonWidget(
-                                                                  textColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  height: 5.h,
-                                                                  color: Colors
-                                                                      .black54,
-                                                                  onTap: () {
-                                                                    workboardBloc
-                                                                        .postSharingMoveCopy(
-                                                                            queryparams: {
-                                                                          "portalName":
-                                                                              "HR",
-                                                                          "secId":
-                                                                              workBoardSectionsList?[index]['Id'],
-                                                                          "workboardId":
-                                                                              workBoardSectionsList?[index]["WorkBoardId"],
-                                                                          "userId":
-                                                                              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-                                                                          "postAction":
-                                                                              "Move",
-                                                                          "workboardItemId": widget
-                                                                              .addContentWorkBoardModel
-                                                                              ?.workBoardItemId,
-                                                                        });
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
-                                                                  },
-                                                                  buttonText:
-                                                                      'Move'),
-                                                          (widget.isCopyMove ==
-                                                                  false)
-                                                              ? GestureDetector(
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .edit),
-                                                                  onTap: () {
-                                                                    print(
-                                                                        'edit');
-                                                                    Navigator
-                                                                        .pushNamed(
-                                                                      context,
-                                                                      CREATE_EDIT_SECTION_WORKBOARD_SCREEN,
-                                                                      arguments:
-                                                                          ScreenArguments(
-                                                                        arg1: workBoardSectionsList?[index]
-                                                                            [
-                                                                            'Id'],
-                                                                        arg2: workBoardMapResponseModel
-                                                                            ?.mapdata
-                                                                            ?.id,
-                                                                        val1:
-                                                                            true,
-                                                                      ),
-                                                                    ).then((value) =>
-                                                                        apiCall());
-                                                                  },
-                                                                )
-                                                              : ButtonWidget(
-                                                                  textColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  height: 5.h,
-                                                                  color: Colors
-                                                                      .black54,
-                                                                  onTap: () {
-                                                                    workboardBloc
-                                                                        .postSharingMoveCopy(
-                                                                            queryparams: {
-                                                                          "portalName":
-                                                                              "HR",
-                                                                          "secId":
-                                                                              workBoardSectionsList?[index]['Id'],
-                                                                          "workboardId":
-                                                                              workBoardSectionsList?[index]["WorkBoardId"],
-                                                                          "userId":
-                                                                              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-                                                                          "postAction":
-                                                                              "Copy",
-                                                                          "workboardItemId": widget
-                                                                              .addContentWorkBoardModel
-                                                                              ?.workBoardItemId,
-                                                                        });
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
-                                                                  },
-                                                                  buttonText:
-                                                                      'Copy'),
-                                                        ],
+                                                      GestureDetector(
+                                                        child: Icon(Icons.edit),
+                                                        onTap: () {
+                                                          workboardBloc
+                                                              .subjectCreateSectionWorkboardList
+                                                              .sink
+                                                              .add(null);
+                                                          print('edit');
+                                                          Navigator.pushNamed(
+                                                            context,
+                                                            CREATE_EDIT_SECTION_WORKBOARD_SCREEN,
+                                                            arguments:
+                                                                ScreenArguments(
+                                                              arg1:
+                                                                  workBoardSectionsList?[
+                                                                          index]
+                                                                      ['Id'],
+                                                              arg2:
+                                                                  workBoardMapResponseModel
+                                                                      ?.mapdata
+                                                                      ?.id,
+                                                              val1: true,
+                                                            ),
+                                                          ).then((value) =>
+                                                              apiCall());
+                                                        },
                                                       )
                                                     ],
-                                                  ),
-                                                ),
+                                                  )
+                                                ],
                                               ),
-                                              (widget.isCopyMove == false)
-                                                  ? Expanded(
-                                                      child: Container(
-                                                        child: ListView.builder(
-                                                          controller:
-                                                              scrollController,
-                                                          itemCount:
-                                                              workBoardSectionsList?[
-                                                                          index]
-                                                                      ['item']
-                                                                  ?.length,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int index2) {
-                                                            itemList =
-                                                                workBoardSectionsList?[
-                                                                        index]
-                                                                    ['item'];
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              child: ListView.builder(
+                                                controller: scrollController,
+                                                itemCount:
+                                                    workBoardSectionsList?[
+                                                            index]['item']
+                                                        ?.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index2) {
+                                                  itemList =
+                                                      workBoardSectionsList?[
+                                                          index]['item'];
 
-                                                            return Column(
-                                                              children: [
-                                                                ItemWidget(
-                                                                  context:
-                                                                      context,
-                                                                  id: widget.id,
-                                                                  isSquare: (itemList[index2]['WorkBoardItemShape'] ==
-                                                                              0 &&
-                                                                          itemList[index2]['WorkBoardItemSize'] ==
-                                                                              2)
-                                                                      ? true
-                                                                      : false,
-                                                                  ntsNoteId: itemList[
-                                                                          index2]
-                                                                      [
-                                                                      'NtsNoteId'],
-                                                                  workBoardId:
-                                                                      workBoardMapResponseModel
-                                                                          ?.mapdata
-                                                                          ?.id,
-                                                                  sectionId:
-                                                                      itemList[
-                                                                              index2]
-                                                                          [
-                                                                          'Id'],
-                                                                  itemfileId: itemList[
-                                                                          index2]
-                                                                      [
-                                                                      'ItemFileId'],
-                                                                  itemType: itemList[
-                                                                          index2]
-                                                                      [
-                                                                      'ItemType'],
-                                                                  color: (itemList?[index2]
-                                                                              [
-                                                                              'ColorCode'] !=
-                                                                          null)
-                                                                      ? hexToColor(
-                                                                          itemList?[index2]
-                                                                              [
-                                                                              'ColorCode'],
-                                                                        )
-                                                                      : null,
-                                                                  itemName:
-                                                                      itemList?[index2]
-                                                                              [
-                                                                              'ItemName'] ??
-                                                                          '',
-                                                                  itemContent:
-                                                                      (itemList?[index2]
-                                                                              [
-                                                                              'ItemContent'] ??
-                                                                          ''),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        ),
+                                                  return Column(
+                                                    children: [
+                                                      ItemWidget(
+                                                        context: context,
+                                                        id: widget.id,
+                                                        isSquare: (itemList?[
+                                                                            index2]
+                                                                        [
+                                                                        'WorkBoardItemShape'] ==
+                                                                    0 &&
+                                                                itemList?[index2]
+                                                                        [
+                                                                        'WorkBoardItemSize'] ==
+                                                                    2)
+                                                            ? true
+                                                            : false,
+                                                        ntsNoteId:
+                                                            itemList?[index2]
+                                                                ['NtsNoteId'],
+                                                        workBoardId:
+                                                            workBoardMapResponseModel
+                                                                ?.mapdata?.id,
+                                                        sectionId:
+                                                            itemList?[index2]
+                                                                ['Id'],
+                                                        itemfileId:
+                                                            itemList?[index2]
+                                                                ['ItemFileId'],
+                                                        itemType:
+                                                            itemList?[index2]
+                                                                ['ItemType'],
+                                                        color: (itemList?[
+                                                                        index2][
+                                                                    'ColorCode'] !=
+                                                                null)
+                                                            ? hexToColor(
+                                                                itemList?[
+                                                                        index2][
+                                                                    'ColorCode'],
+                                                              )
+                                                            : null,
+                                                        itemName: itemList?[
+                                                                    index2]
+                                                                ['ItemName'] ??
+                                                            '',
+                                                        itemContent: (itemList?[
+                                                                    index2][
+                                                                'ItemContent'] ??
+                                                            ''),
                                                       ),
-                                                    )
-                                                  : SizedBox(),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio:
-                                            (widget.isCopyMove == false)
-                                                ? 0.6
-                                                : 4.2,
-                                        crossAxisCount:
-                                            (widget.isCopyMove == false)
-                                                ? 2
-                                                : 1,
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                    ),
+                                    );
+                                  },
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 0.6,
+                                    crossAxisCount: 2,
                                   ),
-                                  (widget.isCopyMove == false)
-                                      ? Flexible(
-                                          child: SizedBox(
-                                            height: 2.h,
-                                          ),
-                                        )
-                                      : SizedBox(),
-                                ],
+                                ),
                               ),
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: Text('NO Data Found'),
+                              Flexible(
+                                child: SizedBox(
+                                  height: 2.h,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
+                      ],
+                    )
+                  : Center(
+                      child: Text('NO Data Found'),
+                    ),
             );
           } else {
             return Center(
@@ -490,13 +374,16 @@ class _SectionWorkBoardDetailsListState
           ),
         ),
         SpeedDialChild(
-          onTap: () =>
-              Navigator.pushNamed(context, CREATE_EDIT_SECTION_WORKBOARD_SCREEN,
-                  arguments: ScreenArguments(
-                    arg1: workBoardSectionsList?[jsonIndex]['Id'],
-                    arg2: workBoardMapResponseModel?.mapdata?.id,
-                    val1: false,
-                  )).then((value) => apiCall()),
+          onTap: () {
+            workboardBloc.subjectCreateSectionWorkboardList.sink.add(null);
+
+            Navigator.pushNamed(context, CREATE_EDIT_SECTION_WORKBOARD_SCREEN,
+                arguments: ScreenArguments(
+                  arg1: workBoardSectionsList?[jsonIndex!]['Id'],
+                  arg2: workBoardMapResponseModel?.mapdata?.id,
+                  val1: false,
+                )).then((value) => apiCall());
+          },
           label: 'Create Section',
           labelStyle: TextStyle(
             fontWeight: FontWeight.w500,
@@ -652,7 +539,7 @@ class ItemWidget extends StatelessWidget {
                                                           .value
                                                           ?.mapdata
                                                       : null,
-                                            ))).then((value) => apiCall());
+                                            )));
                               }
                               if (result == 3) {
                                 await workboardBloc

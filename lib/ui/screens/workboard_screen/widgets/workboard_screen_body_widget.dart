@@ -167,11 +167,15 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
 
                                                 if (result == 2) {
                                                   Navigator.pushNamed(context,
-                                                      CREATE_WORKBOARD_SCREEN,
-                                                      arguments: ScreenArguments(
-                                                          val1: true,
-                                                          arg1: list?[index]
-                                                              .workboardId)).then((value) => apiCall());
+                                                          CREATE_WORKBOARD_SCREEN,
+                                                          arguments:
+                                                              ScreenArguments(
+                                                                  val1: true,
+                                                                  arg1: list?[
+                                                                          index]
+                                                                      .workboardId))
+                                                      .then(
+                                                          (value) => apiCall());
                                                 }
                                                 if (result == 3) {
                                                   await workboardBloc
@@ -299,7 +303,6 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                           context,
                           MaterialPageRoute(
                             builder: (_) => SectionWorkBoardDetailsList(
-                              isCopyMove: false,
                               id: list?[index].workboardId ?? '',
                             ),
                           ),

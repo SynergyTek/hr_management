@@ -45,13 +45,16 @@ class _CreateEditSectionWorkBoardBodyState
   @override
   void initState() {
     super.initState();
+    apiCall();
+  }
+
+  apiCall() {
     workboardBloc.getCreateSectionWorkboardData(
       queryparams: {
         "sectionId": widget.sectionId,
         "workboardId": widget.workboardId,
       },
     );
-    if (widget.isEdit == true) {}
   }
 
   @override
@@ -70,32 +73,25 @@ class _CreateEditSectionWorkBoardBodyState
                     print(workBoardSectionModel);
                     if ((widget.isEdit == true &&
                         workBoardSectionModel?.sectionDigit != null &&
-                        digitController?.text !=
-                            workBoardSectionModel?.sectionDigit.toString())) {
+                        value == null)) {
                       digitController?.text =
                           workBoardSectionModel?.sectionDigit.toString() ?? '';
                       print(workBoardSectionModel?.sectionDigit);
-                    } else
-                      digitController?.clear();
+                    }
                     if ((widget.isEdit == true &&
                         workBoardSectionModel?.sectionDescription != null &&
-                        descriptionController?.text !=
-                            workBoardSectionModel?.sectionDescription)) {
+                        value == null)) {
                       descriptionController?.text =
                           workBoardSectionModel?.sectionDescription ?? '';
                       print(workBoardSectionModel?.sectionDescription);
-                    } else {
-                      descriptionController?.clear();
                     }
+
                     if ((widget.isEdit == true &&
                         workBoardSectionModel?.sectionName != null &&
-                        titleController?.text !=
-                            workBoardSectionModel?.sectionName)) {
+                        value == null)) {
                       titleController?.text =
                           workBoardSectionModel?.sectionName ?? '';
                       print(workBoardSectionModel?.sectionName);
-                    } else {
-                      titleController?.clear();
                     }
                   }
 
@@ -126,9 +122,15 @@ class _CreateEditSectionWorkBoardBodyState
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(32),
-                                    color: (headerColor != null)
-                                        ? hexToColor(headerColor ?? '')
-                                        : Colors.black,
+                                    color: (workBoardSectionModel
+                                                    ?.headerColor !=
+                                                null &&
+                                            value != true)
+                                        ? hexToColor(
+                                            workBoardSectionModel?.headerColor)
+                                        : (value == true)
+                                            ? displayHeaderColor
+                                            : Colors.black,
                                   ),
                                   margin: DEFAULT_PADDING,
                                   height: 3.h,
@@ -144,12 +146,14 @@ class _CreateEditSectionWorkBoardBodyState
                                 shrinkWrap: true,
                                 onColorChange: (Color color) {
                                   // Handle color changes
-                                  headerColor =
-                                      '#${color.value.toRadixString(16).substring(2)}';
-                                  print(headerColor);
-                                  setState(() {});
-                                  displayHeaderColor = color;
-                                  value = true;
+
+                                  setState(() {
+                                    headerColor =
+                                        '#${color.value.toRadixString(16).substring(2)}';
+                                    print(headerColor);
+                                    displayHeaderColor = color;
+                                    value = true;
+                                  });
                                 },
                                 selectedColor: (widget.isEdit == true &&
                                         workBoardSectionModel?.headerColor !=
