@@ -14,6 +14,12 @@ class APIEndpointConstants {
 
   //Note API Endpoints Block Start
 
+  //workboard comment
+  static const POST_WORKBOARD_NOTE_COMMENT =
+      BASE_URL + "/cms/Workboard/PostNoteComment";
+  static const GET_WORKBOARD_NOTE_COMMENT =
+      BASE_URL + "/cms/workboard/ReadNoteCommentDataList";
+
   static const POST_NOTE_COMMENT = '$BASE_URL/nts/command/PostNoteComment';
 
   static const GET_NOTE_COMMENT_DATA =
@@ -451,23 +457,38 @@ class APIEndpointConstants {
 
   // workboad api
   static const GET_WORKBOARD_DASHBOARD_LIST =
-      BASE_URL + '/cms/query/GetWorkboardDashboardList';
+      BASE_URL + '/cms/workboard/GetWorkboardDashboardList';
 
-  static const CREATE_WORKBOARD = BASE_URL + '/cms/query/CreateWorkboard';
-  static const CHOOSE_TEMPLATE = BASE_URL + '/cms/query/ChooseTemplate';
+  static const CREATE_WORKBOARD = BASE_URL + '/cms/workboard/CreateWorkboard';
+  static const CHOOSE_TEMPLATE = BASE_URL + '/cms/workboard/ChooseTemplate';
   static const WORKBOARD_SORTING =
       'cms/query/GetLOVIdNameList?lovType=WORKBOARD_SORTING';
   static const WORKBOARD_STATUS =
       'cms/query/GetEnumIdNameList?enumType=WorkBoardstatusEnum';
   static const OPEN_CLOSE_WORKBOARD =
-      BASE_URL + '/cms/query/OpenCloseWorkboard';
+      BASE_URL + '/cms/workboard/OpenCloseWorkboard';
   static const MANAGE_WORKBOARD_DETAILS =
-      BASE_URL + '/cms/query/ManageWorkBoardDetails';
+      BASE_URL + '/cms/workboard/ManageWorkBoardDetails';
   static const GET_DUPLICATE_WORKBOARD =
-      BASE_URL + '/cms/query/DuplicateWorkboard';
+      BASE_URL + '/cms/workboard/DuplicateWorkboard';
 
   static const POST_DUPLICATE_WORKBOARD =
-      BASE_URL + '/cms/query/PostDuplicateWorkboard';
+      BASE_URL + '/cms/workboard/PostDuplicateWorkboard';
 
-  static const POST_MANAGE_WORKBOARD = BASE_URL + '/cms/query/ManageWorkBoard';
+  static const POST_MANAGE_WORKBOARD =
+      BASE_URL + '/cms/workboard/ManageWorkBoard';
+  static const GET_WORKBOARD_SECTION =
+      BASE_URL + '/cms/workboard/WorkBoardSection';
+  //?
+  static const POST_MANAGE_WORKBOARD_SECTION =
+      BASE_URL + '/cms/workboard/ManageWorkBoardSection';
+  static const GET_ADD_WORKBOARD_CONTENT =
+      BASE_URL + "/cms/workboard/AddWorkBoardContent";
+  static const POST_WORKBOARD_CONTENT =
+      BASE_URL + "/cms/workboard/ManageWorkBoardContent";
+  static const GET_COPY_MOVE_ITEMS = BASE_URL + "/cms/workboard/CopyMoveItems";
+  static const POST_MANAGE_ITEM_SHARING_COPY_MOVE =
+      BASE_URL + "/cms/workboard/ManageItemSharing";
+  static const POST_DUPLICATE_ITEM = BASE_URL + "/cms/workboard/DuplicateItems";
+  
 }

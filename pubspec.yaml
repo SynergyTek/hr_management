@@ -55,6 +55,7 @@ dependencies:
     path: ./synergy_nts
   video_player: ^2.1.12
   webview_flutter: ^2.0.10
+  image_painter: ^0.4.5
 
 dev_dependencies:
   flutter_lints: ^1.0.0

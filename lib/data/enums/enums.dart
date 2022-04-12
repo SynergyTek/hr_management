@@ -9,6 +9,7 @@ enum NTSType {
   service,
   task,
   note,
+  workboard
 }
 
 enum FilterType {

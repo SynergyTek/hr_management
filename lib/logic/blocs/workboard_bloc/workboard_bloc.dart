@@ -1,5 +1,7 @@
+import 'package:hr_management/data/models/workboard_model/add_workboard_content_model.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_model.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_response_model.dart';
+import 'package:hr_management/data/models/workboard_model/workboard_section_model.dart';
 import 'package:rxdart/subjects.dart';
 import '../../../data/models/task_models/task_list_resp_model.dart';
 import '../../../data/repositories/workboard_repo/abstract_workboard_repo.dart';
@@ -30,11 +32,31 @@ class WorkboardBloc {
   final BehaviorSubject<WorkBoardMapResponseModel?>
       _subjectGetDuplicateWorkBoard =
       BehaviorSubject<WorkBoardMapResponseModel?>();
-  final BehaviorSubject<WorkBoardPostResponse?>
-      _subjectPostDuplicateWorkBoard =
+  final BehaviorSubject<WorkBoardPostResponse?> _subjectPostDuplicateWorkBoard =
       BehaviorSubject<WorkBoardPostResponse?>();
   final BehaviorSubject<WorkBoardPostResponse?> _subjectPostManageWorkBoard =
       BehaviorSubject<WorkBoardPostResponse?>();
+  final BehaviorSubject<WorkBoardPostResponseSection?>
+      _subjectPostManageWorkBoardSection =
+      BehaviorSubject<WorkBoardPostResponseSection?>();
+  final BehaviorSubject<WorkBoardSectionMapResponseModel?>
+      _subjectCreateSectionWorkboardList =
+      BehaviorSubject<WorkBoardSectionMapResponseModel?>();
+  final BehaviorSubject<AddContentWorkBoardMapResponseModel?>
+      _subjectGetItemWorkBoardContent =
+      BehaviorSubject<AddContentWorkBoardMapResponseModel?>();
+  final BehaviorSubject<AddContentWorkBoardMapResponseModel?>
+      _subjectGetCopyMoveItems =
+      BehaviorSubject<AddContentWorkBoardMapResponseModel?>();
+  final BehaviorSubject<WorkBoardPostResponseContent?>
+      _subjectPostItemWorkBoardContent =
+      BehaviorSubject<WorkBoardPostResponseContent?>();
+  final BehaviorSubject<WorkBoardPostResponseContent?>
+      _subjectpostSharingMoveCopy =
+      BehaviorSubject<WorkBoardPostResponseContent?>();
+  final BehaviorSubject<WorkBoardPostResponseContent?>
+      _subjectpostDuplicateItem =
+      BehaviorSubject<WorkBoardPostResponseContent?>();
 
   /// Used to fetch new entries.
   getWorkboardData({
@@ -67,6 +89,16 @@ class WorkboardBloc {
     _subjectCreateWorkboardList.sink.add(response);
   }
 
+  getCreateSectionWorkboardData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    WorkBoardSectionMapResponseModel response =
+        await _workboardRepository.getCreateSectionList(
+      queryparams: queryparams,
+    );
+    _subjectCreateSectionWorkboardList.sink.add(response);
+  }
+
   getManageWorkBoardDetailsList({
     Map<String, dynamic>? queryparams,
   }) async {
@@ -97,6 +129,26 @@ class WorkboardBloc {
     _subjectGetDuplicateWorkBoard.sink.add(response);
   }
 
+  getItemWorkBoardContent({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    AddContentWorkBoardMapResponseModel response =
+        await _workboardRepository.getItemWorkBoardContent(
+      queryparams: queryparams,
+    );
+    _subjectGetItemWorkBoardContent.sink.add(response);
+  }
+
+  getCopyMoveItems({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    AddContentWorkBoardMapResponseModel response =
+        await _workboardRepository.getCopyMoveItems(
+      queryparams: queryparams,
+    );
+    _subjectGetCopyMoveItems.sink.add(response);
+  }
+
   postDuplicateWorkBoard({
     WorkboardModel? workBoardModel,
   }) async {
@@ -108,6 +160,40 @@ class WorkboardBloc {
     return response;
   }
 
+  //
+  postItemWorkBoardContent({
+    AddContentWorkBoardModel? addContentWorkBoardModel,
+  }) async {
+    WorkBoardPostResponseContent response =
+        await _workboardRepository.postWorkBoardContent(
+      addContentWorkBoardModel: addContentWorkBoardModel,
+    );
+    _subjectPostItemWorkBoardContent.sink.add(response);
+    return response;
+  }
+
+  postDuplicateItem({
+    Map<String,dynamic>? queryParams,
+  }) async {
+    WorkBoardPostResponseContent response =
+        await _workboardRepository.postDuplicateItem(
+      queryParams: queryParams,
+    );
+    _subjectpostDuplicateItem.sink.add(response);
+    return response;
+  }
+
+  postSharingMoveCopy({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    WorkBoardPostResponseContent response =
+        await _workboardRepository.postSharingMoveCopy(
+      queryparams: queryparams,
+    );
+    _subjectpostSharingMoveCopy.sink.add(response);
+    return response;
+  }
+
   postManageWorkBoard({
     WorkboardModel? workBoardModel,
   }) async {
@@ -116,6 +202,17 @@ class WorkboardBloc {
       workBoardModel: workBoardModel,
     );
     _subjectPostManageWorkBoard.sink.add(response);
+    return response;
+  }
+
+  postManageWorkBoardSection({
+    WorkBoardSectionModel? workBoardSectionModel,
+  }) async {
+    WorkBoardPostResponseSection response =
+        await _workboardRepository.postManageWorkBoardSection(
+      workBoardSectionModel: workBoardSectionModel,
+    );
+    _subjectPostManageWorkBoardSection.sink.add(response);
     return response;
   }
 
@@ -154,6 +251,13 @@ class WorkboardBloc {
     _subjectPostDuplicateWorkBoard.close();
     _subjectGetDuplicateWorkBoard.close();
     _subjectPostManageWorkBoard.close();
+    _subjectPostManageWorkBoardSection.close();
+    _subjectCreateSectionWorkboardList.close();
+    _subjectGetItemWorkBoardContent.close();
+    _subjectPostItemWorkBoardContent.close();
+    _subjectGetCopyMoveItems.close();
+    _subjectpostSharingMoveCopy.close();
+    _subjectpostDuplicateItem.close();
   }
 
   BehaviorSubject<WorkBoardResponseModel?> get subjectWorkboardList =>
@@ -175,10 +279,26 @@ class WorkboardBloc {
       _subjectCreateWorkboardList;
   BehaviorSubject<WorkBoardMapResponseModel?>
       get subjectGetDuplicateWorkBoard => _subjectGetDuplicateWorkBoard;
-  BehaviorSubject<WorkBoardPostResponse?>
-      get subjectPostDuplicateWorkBoard => _subjectPostDuplicateWorkBoard;
+  BehaviorSubject<WorkBoardPostResponse?> get subjectPostDuplicateWorkBoard =>
+      _subjectPostDuplicateWorkBoard;
   BehaviorSubject<WorkBoardPostResponse?> get subjectPostManageWorkBoard =>
       _subjectPostManageWorkBoard;
+  BehaviorSubject<WorkBoardPostResponseSection?>
+      get subjectPostManageWorkBoardSection =>
+          _subjectPostManageWorkBoardSection;
+  BehaviorSubject<WorkBoardSectionMapResponseModel?>
+      get subjectCreateSectionWorkboardList =>
+          _subjectCreateSectionWorkboardList;
+  BehaviorSubject<AddContentWorkBoardMapResponseModel?>
+      get subjectGetItemWorkBoardContent => _subjectGetItemWorkBoardContent;
+  BehaviorSubject<AddContentWorkBoardMapResponseModel?>
+      get subjectGetCopyMoveItems => _subjectGetCopyMoveItems;
+  BehaviorSubject<WorkBoardPostResponseContent?>
+      get subjectPostItemWorkBoardContent => _subjectPostItemWorkBoardContent;
+  BehaviorSubject<WorkBoardPostResponseContent?>
+      get subjectpostSharingMoveCopy => _subjectpostSharingMoveCopy;
+  BehaviorSubject<WorkBoardPostResponseContent?> get subjectpostDuplicateItem =>
+      _subjectpostDuplicateItem;
 }
 
 final workboardBloc = WorkboardBloc();

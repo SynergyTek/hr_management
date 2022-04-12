@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
-import '../../workboard_screen/widgets/manage_workboard_details_widget.dart';
+import 'package:hr_management/ui/widgets/snack_bar.dart';
+import 'section_workboard_details_list_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../data/models/workboard_model/workboard_model.dart';
@@ -84,8 +85,14 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                   list = _searchResult;
                 } else if (subjectController.text.isEmpty ||
                     _searchResult == null) {
-                  list = snapshot.data?.data;
-                  fullList = snapshot.data?.data;
+                  list = snapshot.data?.data
+                      ?.where((WorkboardModel element) =>
+                          element.iconFileId != null)
+                      .toList();
+                  fullList = snapshot.data?.data
+                      ?.where((WorkboardModel element) =>
+                          element.iconFileId != null)
+                      .toList();
                 }
 
                 if (sortByController.text == "Alphabetical") {
@@ -155,7 +162,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                     arguments: ScreenArguments(
                                                         arg1: list?[index]
                                                             .workboardId),
-                                                  );
+                                                  ).then((value) => apiCall());
                                                 }
 
                                                 if (result == 2) {
@@ -164,7 +171,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                       arguments: ScreenArguments(
                                                           val1: true,
                                                           arg1: list?[index]
-                                                              .workboardId));
+                                                              .workboardId)).then((value) => apiCall());
                                                 }
                                                 if (result == 3) {
                                                   await workboardBloc
@@ -178,22 +185,17 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                   if (workboardBloc
                                                       .subjectOpenCloseWorkboard
                                                       .hasValue) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          (workboardBloc
-                                                                      .subjectOpenCloseWorkboard
-                                                                      .value
-                                                                      ?.booldata ==
-                                                                  true)
-                                                              ? 'Successful'
-                                                              : 'Please Try Again Later',
-                                                        ),
-                                                      ),
-                                                    );
+                                                    displaySnackBar(
+                                                        context: context,
+                                                        text: (workboardBloc
+                                                                    .subjectOpenCloseWorkboard
+                                                                    .value
+                                                                    ?.booldata ==
+                                                                true)
+                                                            ? 'Successful'
+                                                            : 'Please Try Again Later');
                                                   }
+                                                  apiCall();
                                                 }
                                                 if (result == 4) {
                                                   await workboardBloc
@@ -207,20 +209,17 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                   if (workboardBloc
                                                       .subjectOpenCloseWorkboard
                                                       .hasValue) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text((workboardBloc
+                                                    displaySnackBar(
+                                                        context: context,
+                                                        text: (workboardBloc
                                                                     .subjectOpenCloseWorkboard
                                                                     .value
                                                                     ?.booldata ==
                                                                 true)
                                                             ? 'Successful'
-                                                            : 'Please Try Again Later'),
-                                                      ),
-                                                    );
+                                                            : 'Please Try Again Later');
                                                   }
+                                                  apiCall();
                                                 }
                                               },
                                               itemBuilder:
@@ -295,10 +294,12 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                       onTap: () {
                         workboardBloc.subjectManageWorkboardDetailsList.sink
                             .add(null);
+                        print(list?[index].workboardId ?? '');
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => ManageWorkBoardDetailsList(
+                            builder: (_) => SectionWorkBoardDetailsList(
+                              isCopyMove: false,
                               id: list?[index].workboardId ?? '',
                             ),
                           ),

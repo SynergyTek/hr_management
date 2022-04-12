@@ -36,7 +36,8 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
   @override
   void initState() {
     ntsDdBloc
-      ..getData(url: widget.url!, idKey: widget.idKey, nameKey: widget.nameKey);
+      ..getData(
+          url: widget.url ?? '', idKey: widget.idKey, nameKey: widget.nameKey);
     super.initState();
   }
 

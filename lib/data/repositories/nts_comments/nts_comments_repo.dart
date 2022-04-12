@@ -16,6 +16,8 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       endpoint = APIEndpointConstants.GET_NOTE_COMMENT_DATA;
     } else if (ntsType == NTSType.task) {
       endpoint = APIEndpointConstants.GET_TASK_COMMENT_DATA;
+    } else if (ntsType == NTSType.workboard) {
+      endpoint = APIEndpointConstants.GET_WORKBOARD_NOTE_COMMENT;
     }
 
     try {
@@ -50,6 +52,8 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
       endpoint = APIEndpointConstants.POST_NOTE_COMMENT;
     } else if (ntsType == NTSType.task) {
       endpoint = APIEndpointConstants.POST_TASK_COMMENT;
+    }else if (ntsType == NTSType.workboard) {
+      endpoint = APIEndpointConstants.POST_WORKBOARD_NOTE_COMMENT;
     }
 
     comment!.commentedByUserId = userid;

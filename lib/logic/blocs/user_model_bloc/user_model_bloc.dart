@@ -70,6 +70,8 @@ class UserModelBloc extends Bloc<UserModelEvent, UserModelState>
         extraUserInformation: ExtraUserInformationModel(
           isSignedIn: event.extraUserInformation?.isSignedIn ?? false,
           portalType: event.extraUserInformation?.portalType,
+          userPermissionResponse:
+              event.extraUserInformation?.userPermissionResponse,
         ),
       );
     }
@@ -90,6 +92,8 @@ class UserModelBloc extends Bloc<UserModelEvent, UserModelState>
     Map<String, dynamic> _map = state.userModel?.toMap() ?? {};
     _map["isSignedIn"] = state.extraUserInformation?.isSignedIn;
     _map["portalType"] = state.extraUserInformation?.portalType;
+    _map["userPermissionResponse"] =
+        state.extraUserInformation?.userPermissionResponse?.toMap() ?? {};
     return _map;
   }
 }

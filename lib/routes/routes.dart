@@ -12,15 +12,15 @@ import 'package:hr_management/ui/screens/face_detection_web/face_detection_webvi
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
-import 'package:hr_management/ui/screens/portal_screen/portal_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/duplicate_workboard_screen.dart';
-import 'package:hr_management/ui/screens/workboard_screen/workboard_create_section_screen.dart';
+import 'package:hr_management/ui/screens/workboard_screen/workboard_create_edit_section_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_task_list_screen.dart';
 
-import 'package:hr_management/ui/screens/workboard_screen/create_workboard.dart';
+import 'package:hr_management/ui/screens/workboard_screen/create_edit_workboard.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
+import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 import '../ui/screens/login/login_screen.dart';
@@ -499,9 +499,15 @@ class AppRouter {
               DuplicateWorkBoardScreen(workBoardId: args?.arg1 ?? ''),
         );
 
-      case CREATE_SECTION_WORKBOARD_SCREEN:
+      case CREATE_EDIT_SECTION_WORKBOARD_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments?;
+
         return MaterialPageRoute(
-          builder: (_) => CreateSectionWorkBoardScreen(),
+          builder: (_) => CreateEditSectionWorkBoardScreen(
+            isEdit: args?.val1,
+            sectionId: args?.arg1 ?? '',
+            workboardId: args?.arg2 ?? '',
+          ),
         );
 
       case REGISTER_FACE_WEB:
@@ -527,11 +533,11 @@ class AppRouter {
         );
 
       case CREATE_WORKBOARD_SCREEN:
-        final args = routeSettings.arguments as ScreenArguments?;
+        final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
-          builder: (_) => CreateWorkBoardScreen(
-            isEdit: args?.val1,
-            workBoardId: args?.arg1,
+          builder: (_) => CreateEditWorkBoardScreen(
+            isEdit: args.val1!,
+            workBoardId: args.arg1,
           ),
         );
 
@@ -539,7 +545,10 @@ class AppRouter {
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              title: Text("Error 404"),
+            ),
+            drawer: DrawerWidget(),
             body: Center(
               child: Text(
                 "Error 404: No route defined with this name: ${routeSettings.name}.",
