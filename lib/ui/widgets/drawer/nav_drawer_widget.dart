@@ -237,15 +237,15 @@ class DrawerWidget extends StatelessWidget {
             ),
 
             //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\t HR Direct',
-              listTileOnTap: () {
-                Navigator.pushReplacementNamed(
-                  context,
-                  "",
-                );
-              },
-            ),
+            // DrawerListTileWidget(
+            //   title: '\t\t\t\t\t HR Direct',
+            //   listTileOnTap: () {
+            //     Navigator.pushReplacementNamed(
+            //       context,
+            //       "",
+            //     );
+            //   },
+            // ),
 
             //
             DrawerListTileWidget(
@@ -272,6 +272,28 @@ class DrawerWidget extends StatelessWidget {
             //
             DrawerListTileWidget(
               title: '\t\t\t\t\t Master Data',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Reimbursement',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  "",
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Policy Documents',
               listTileOnTap: () {
                 Navigator.pushReplacementNamed(
                   context,

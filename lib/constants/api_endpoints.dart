@@ -412,6 +412,8 @@ class APIEndpointConstants {
   static const GET_LEGAL_ENTITY_DATA =
       BASE_URL + '/cms/query/GetLegalEntityNameList';
 
+  static const GET_SOURCE_FOLDERS = '$BASE_URL/dms/query/GetSourceFolders';
+
   //************************************************************************//
   //  DMS USER API Starts:
 
