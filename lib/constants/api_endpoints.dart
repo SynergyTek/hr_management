@@ -104,8 +104,6 @@ class APIEndpointConstants {
   static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
   static const LEAVE_DETAILS = '$BASE_URL/taa/query/leavedetail';
-  static const BUSINESS_TRIP_DETAILS =
-      '$BASE_URL/chr/leave/GetBusinessTripData';
 
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
@@ -456,6 +454,24 @@ class APIEndpointConstants {
       BASE_URL + '/cms/user/ReadUserPermissionData';
   //************************************************************************//
   // PERMISSION API Ends:
+
+  //LEAVES
+  static const GET_BUSINESS_TRIP_DATA =
+      '$BASE_URL/chr/leave/GetBusinessTripData';
+  static const READ_LEAVE_DETAIL_DATA =
+      '$BASE_URL/chr/leave/ReadLeaveDetailData';
+  static const GET_TIME_PERMISSION_DATA =
+      '$BASE_URL/chr/leave/GetTimePermissionData';
+  static const GET_TRAVEL_REIMBURSEMENT_DATA =
+      '$BASE_URL/chr/leave/GetTravelReimbursementData';
+  static const GET_MEDICAL_REIMBURSEMENT_DATA =
+      '$BASE_URL/chr/leave/GetMedicalReimbursementData';
+  static const GET_EDUCATIONAL_REIMBURSEMENT_DATA =
+      '$BASE_URL/chr/leave/GetEducationalReimbursementData';
+  static const GET_OTHER_REIMBURSEMENT_DATA =
+      '$BASE_URL/chr/leave/GetOtherReimbursementData';
+
+  //END LEAVES
 
   // workboad api
   static const GET_WORKBOARD_DASHBOARD_LIST =
