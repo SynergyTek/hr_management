@@ -1,10 +1,10 @@
-import 'package:hr_management/data/models/leave_models/business_trip_response_model.dart';
+import 'package:hr_management/data/models/business_trip_model/business_trip_response_model.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../data/repositories/leave_temp_repo/leave_temp_repo.dart';
+import '../../data/repositories/leave/abstract_leave_repo.dart';
 
 class LeaveBloc {
-  final LeaveTempRepository _leaveRepository = LeaveTempRepository();
+  final LeaveRepository _leaveRepository = LeaveRepository();
 
   final BehaviorSubject<BusinessTripResponse> _subjectBusinessTripList =
       BehaviorSubject<BusinessTripResponse>();
