@@ -9,6 +9,7 @@ import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/dms_view
 import 'package:hr_management/ui/screens/dms/dms_workspace_screen/dms_workspace_screen.dart';
 import 'package:hr_management/ui/screens/dms/document_action/document_action_screen.dart';
 import 'package:hr_management/ui/screens/face_detection_web/face_detection_webview.dart';
+import 'package:hr_management/ui/screens/leaves/business_trip/business_trip_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
@@ -539,6 +540,11 @@ class AppRouter {
             isEdit: args.val1!,
             workBoardId: args.arg1,
           ),
+        );
+
+      case BUSINESS_TRIP_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => BusinessTripScreen(),
         );
 
       // 404 route.

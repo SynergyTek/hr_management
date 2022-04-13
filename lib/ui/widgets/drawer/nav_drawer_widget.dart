@@ -339,7 +339,7 @@ class DrawerWidget extends StatelessWidget {
               listTileOnTap: () {
                 Navigator.pushReplacementNamed(
                   context,
-                  "",
+                  BUSINESS_TRIP_SCREEN,
                 );
               },
             ),

@@ -46,4 +46,25 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
   Future<LeaveTempResponse> putAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
   }
+
+  Future<BusinessTripResponse> getBusinessTripDetails({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.BUSINESS_TRIP_DETAILS;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return BusinessTripResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return BusinessTripResponse.withError("$err");
+    }
+  }
 }

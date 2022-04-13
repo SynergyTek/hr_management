@@ -104,6 +104,8 @@ class APIEndpointConstants {
   static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
   static const LEAVE_DETAILS = '$BASE_URL/taa/query/leavedetail';
+  static const BUSINESS_TRIP_DETAILS =
+      '$BASE_URL/chr/leave/GetBusinessTripData';
 
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
@@ -490,5 +492,4 @@ class APIEndpointConstants {
   static const POST_MANAGE_ITEM_SHARING_COPY_MOVE =
       BASE_URL + "/cms/workboard/ManageItemSharing";
   static const POST_DUPLICATE_ITEM = BASE_URL + "/cms/workboard/DuplicateItems";
-  
 }
