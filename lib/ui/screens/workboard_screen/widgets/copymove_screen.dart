@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../data/helpers/hex_colot_convert.dart';
 import '../../../../data/models/workboard_model/add_workboard_content_model.dart';
+import '../../../../themes/theme_config.dart';
 import 'section_workboard_details_list_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
@@ -32,6 +34,16 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
   List<WorkboardModel>? _searchResult;
   List<WorkboardModel>? fullList;
 
+  WorkBoardMapResponseModel? workBoardMapResponseModel;
+
+  List? workBoardSectionsList;
+
+  int? jsonIndex;
+
+  int? index1 = 0;
+
+  var tappedIndex;
+
   @override
   void initState() {
     super.initState();
@@ -44,6 +56,18 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
       ..getWorkboardData(
         queryparams: _handleQueryparams(),
       );
+  }
+
+  apiCall2() {
+    workboardBloc.subjectManageWorkboardDetailsList.sink.add(null);
+    workboardBloc.getManageWorkBoardDetailsList(
+      queryparams: {
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": "HR",
+        "id": list?[index1! - 1].workboardId ?? '',
+      },
+    );
   }
 
   _handleQueryparams() {
@@ -59,7 +83,7 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Copy To'),
+        title: Text('Copy/Move To'),
       ),
       body: Column(
         children: [
@@ -73,7 +97,7 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
             ],
           ),
           Container(
-            height: 200,
+            height: 30.h,
             child: StreamBuilder<WorkBoardResponseModel?>(
               stream: workboardBloc.subjectWorkboardList.stream,
               builder: (context, snapshot) {
@@ -111,26 +135,48 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                   }
 
                   return ListView.builder(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: list?.length,
                     itemBuilder: (BuildContext context, int index) {
+                      index1 = index;
                       return GestureDetector(
                         child: Card(
+                          margin: DEFAULT_PADDING,
+                          elevation: 6,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          color: tappedIndex == index
+                              ? Colors.lightBlueAccent
+                              : null,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               (list![index].iconFileId != null)
-                                  ? Image.network(
-                                      APIEndpointConstants.BASE_URL +
-                                          '/common/query/GetFile?fileId=' +
-                                          list![index].iconFileId!,
-                                      height: 20.h,
+                                  ? Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(32),
+                                        color: tappedIndex == index
+                                            ? Colors.blue
+                                            : null,
+                                      ),
+                                      child: Image.network(
+                                        APIEndpointConstants.BASE_URL +
+                                            '/common/query/GetFile?fileId=' +
+                                            list![index].iconFileId!,
+                                        height: 20.h,
+                                      ),
                                     )
                                   : Container(),
                               (list?[index].workBoardName != null)
-                                  ? Text(
-                                      list![index].workBoardName.toString(),
-                                    )
+                                  ? Text(list![index].workBoardName.toString(),
+                                      style: TextStyle(
+                                        color: tappedIndex == index
+                                            ? Colors.white
+                                            : null,
+                                      ))
                                   : Container(),
                             ],
                           ),
@@ -151,17 +197,9 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                             },
                           );
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => SectionWorkBoardDetailsList(
-                                addContentWorkBoardModel:
-                                    widget.addContentWorkBoardModel,
-                                isCopyMove: true,
-                                id: list?[index].workboardId ?? '',
-                              ),
-                            ),
-                          );
+                          setState(() {
+                            tappedIndex = index;
+                          });
                         },
                       );
                     },
@@ -172,6 +210,213 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                   );
                 }
               },
+            ),
+          ),
+          Flexible(
+            flex: 2,
+            child: Container(
+              child: StreamBuilder<WorkBoardMapResponseModel?>(
+                stream: workboardBloc.subjectManageWorkboardDetailsList.stream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<WorkBoardMapResponseModel?> snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data?.mapdata != null) {
+                      workBoardMapResponseModel = snapshot.data;
+
+                      workBoardSectionsList =
+                          workBoardMapResponseModel?.mapdata?.workBoardSections;
+                    }
+
+                    return (workBoardSectionsList != null)
+                        ? Container(
+                            margin: DEFAULT_PADDING,
+                            child: ListView.builder(
+                              padding: DEFAULT_PADDING * 0.5,
+                              shrinkWrap: true,
+                              itemCount: workBoardSectionsList?.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                jsonIndex = index;
+                                return Card(
+                                  color: (workBoardSectionsList?[index]
+                                              ['HeaderColor'] !=
+                                          null)
+                                      ?
+                                      // Colors.grey.shade100
+                                      hexToColor(workBoardSectionsList?[index]
+                                              ['HeaderColor'])
+                                          .withOpacity(0.2)
+                                      : Colors.grey.shade100,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16)),
+                                  elevation: 6,
+                                  margin: EdgeInsets.only(
+                                      bottom: 16, left: 4, right: 4),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        padding: DEFAULT_PADDING,
+                                        decoration: BoxDecoration(
+                                          color: (workBoardSectionsList?[index]
+                                                      ['HeaderColor'] !=
+                                                  null)
+                                              ? hexToColor(
+                                                  workBoardSectionsList?[index]
+                                                      ['HeaderColor'])
+                                              : Colors.blueGrey,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  workBoardSectionsList?[index]
+                                                              ['SectionDigit']
+                                                          .toString() ??
+                                                      '',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                Text(
+                                                  '.',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                Text(
+                                                  workBoardSectionsList?[index]
+                                                          ['SectionName'] ??
+                                                      '',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                ButtonWidget(
+                                                    textColor: Colors.white,
+                                                    height: 5.h,
+                                                    color: Colors.black54,
+                                                    onTap: () {
+                                                      workboardBloc
+                                                          .postSharingMoveCopy(
+                                                              queryparams: {
+                                                            "portalName": "HR",
+                                                            "secId":
+                                                                workBoardSectionsList?[
+                                                                        index]
+                                                                    ['Id'],
+                                                            "workboardId":
+                                                                workBoardSectionsList?[
+                                                                        index][
+                                                                    "WorkBoardId"],
+                                                            "userId": BlocProvider.of<
+                                                                            UserModelBloc>(
+                                                                        context)
+                                                                    .state
+                                                                    .userModel
+                                                                    ?.id ??
+                                                                '',
+                                                            "postAction":
+                                                                "Move",
+                                                            "workboardItemId": widget
+                                                                .addContentWorkBoardModel
+                                                                ?.workBoardItemId,
+                                                          });
+                                                      apiCall2();
+                                                      Navigator.of(context)
+                                                          .pop();
+
+                                                      // Navigator.of(context)
+                                                      //     .popUntil((route) =>
+                                                      //         route.isFirst);
+                                                      // Navigator.push(
+                                                      //     context,
+                                                      //     MaterialPageRoute(
+                                                      //         builder: (_) =>
+                                                      //             SectionWorkBoardDetailsList(
+                                                      //               id: list?[index]
+                                                      //                       .workboardId ??
+                                                      //                   '',
+                                                      //               isCopyMove:
+                                                      //                   false,
+                                                      //             )));
+                                                    },
+                                                    buttonText: 'Move'),
+                                                ButtonWidget(
+                                                    textColor: Colors.white,
+                                                    height: 5.h,
+                                                    color: Colors.black54,
+                                                    onTap: () {
+                                                      workboardBloc
+                                                          .postSharingMoveCopy(
+                                                              queryparams: {
+                                                            "portalName": "HR",
+                                                            "secId":
+                                                                workBoardSectionsList?[
+                                                                        index]
+                                                                    ['Id'],
+                                                            "workboardId":
+                                                                workBoardSectionsList?[
+                                                                        index][
+                                                                    "WorkBoardId"],
+                                                            "userId": BlocProvider.of<
+                                                                            UserModelBloc>(
+                                                                        context)
+                                                                    .state
+                                                                    .userModel
+                                                                    ?.id ??
+                                                                '',
+                                                            "postAction":
+                                                                "Copy",
+                                                            "workboardItemId": widget
+                                                                .addContentWorkBoardModel
+                                                                ?.workBoardItemId,
+                                                          });
+                                                      apiCall2();
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      // Navigator.of(context)
+                                                      //     .popUntil((route) =>
+                                                      //         route.isFirst);
+                                                      // Navigator.push(
+                                                      //     context,
+                                                      //     MaterialPageRoute(
+                                                      //         builder: (_) =>
+                                                      //             SectionWorkBoardDetailsList(
+                                                      //               id: list?[index]
+                                                      //                       .workboardId ??
+                                                      //                   '',
+                                                      //               isCopyMove:
+                                                      //                   false,
+                                                      //             )));
+                                                    },
+                                                    buttonText: 'Copy'),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        : Center(
+                            child: Text('NO Data Found'),
+                          );
+                  } else {
+                    return Center(
+                      child: CustomProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ],
@@ -282,5 +527,3 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
     );
   }
 }
-
-

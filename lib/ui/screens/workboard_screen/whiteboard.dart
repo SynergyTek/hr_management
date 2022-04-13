@@ -62,13 +62,13 @@ class _WhiteBoardWidgetState extends State<WhiteBoardWidget> {
             icon: const Icon(Icons.save_alt),
             onPressed: saveImage,
           ),
-          IconButton(
-            key: UniqueKey(),
-            icon: const Icon(Icons.phonelink_erase_rounded),
-            onPressed: () => setState(() {
-              eraser = true;
-            }),
-          ),
+          // IconButton(
+          //   key: UniqueKey(),
+          //   icon: const Icon(Icons.phonelink_erase_rounded),
+          //   onPressed: () => setState(() {
+          //     eraser = true;
+          //   }),
+          // ),
         ],
       ),
       body:

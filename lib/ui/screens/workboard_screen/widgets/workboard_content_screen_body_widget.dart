@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
-import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/workboard_model/add_workboard_content_model.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_response_model.dart';
 import 'package:hr_management/logic/blocs/workboard_bloc/workboard_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/screens/workboard_screen/widgets/section_workboard_details_list_widget.dart';
-import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment_widget.dart';
 import 'package:hr_management/ui/widgets/custom_icons.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
@@ -84,7 +82,7 @@ class _WorkBoardContentScreenBodyWidgetState
           stream: workboardBloc.subjectGetItemWorkBoardContent.stream,
           builder: (BuildContext context,
               AsyncSnapshot<AddContentWorkBoardMapResponseModel?> snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data?.mapdata != null) {
               addContentWorkBoardModel = snapshot.data?.mapdata;
               print(addContentWorkBoardModel);
               if (widget.isEdit == true && widget.itemType == 0) {
@@ -289,18 +287,16 @@ class _WorkBoardContentScreenBodyWidgetState
   }
 
   _afterLayout(BuildContext context) {
-    // Image image = (APIEndpointConstants.BASE_URL +
-    //     '/common/query/GetFile?fileId=' +
-    //     addContentWorkBoardModel?.itemFileId);
-
     // TODO
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => WhiteBoardWidget(
-          imageString: APIEndpointConstants.BASE_URL +
-              '/common/query/GetFile?fileId=' +
-              addContentWorkBoardModel?.itemFileId,
+          imageString: (addContentWorkBoardModel?.itemFileId != null)
+              ? APIEndpointConstants.BASE_URL +
+                  '/common/query/GetFile?fileId=' +
+                  addContentWorkBoardModel?.itemFileId
+              : '',
         ),
       ),
     );
