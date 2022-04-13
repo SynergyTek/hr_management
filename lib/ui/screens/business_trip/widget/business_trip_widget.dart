@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/data/models/leave_models/business_trip_model.dart';
-import 'package:hr_management/data/models/leave_models/business_trip_response_model.dart';
+import 'package:hr_management/data/models/business_trip_model/business_trip_model.dart';
+import 'package:hr_management/data/models/business_trip_model/business_trip_response_model.dart';
 import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-
-import '../../../../../constants/api_endpoints.dart';
 import '../../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 class BusinessTripBody extends StatefulWidget {

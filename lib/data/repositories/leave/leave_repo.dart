@@ -5,23 +5,24 @@ part of 'abstract_leave_repo.dart';
 class LeaveRepository extends AbstractLeaveRepository {
   final Dio _dio = Dio();
 
-  @override
-  Future<LeaveTempResponse> getAPi({Map<String, dynamic>? queryparams}) {
-    throw UnimplementedError();
-  }
+  Future<BusinessTripResponse> getBusinessTripDetails({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.BUSINESS_TRIP_DETAILS;
 
-  @override
-  Future<LeaveTempResponse> deleteAPIData({Map<String, dynamic>? queryparams}) {
-    throw UnimplementedError();
-  }
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
 
-  @override
-  Future<LeaveTempResponse> postAPIData({Map<String, dynamic>? queryparams}) {
-    throw UnimplementedError();
-  }
+      return BusinessTripResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
 
-  @override
-  Future<LeaveTempResponse> putAPIData({Map<String, dynamic>? queryparams}) {
-    throw UnimplementedError();
+      return BusinessTripResponse.withError("$err");
+    }
   }
 }
