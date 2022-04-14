@@ -1,30 +1,134 @@
-import 'package:hr_management/data/models/hr_policy_document_model/hr_policy_abstract_model.dart';
-import 'package:hr_management/data/repositories/leave_temp_repo/leave_temp_repo.dart';
+import 'package:hr_management/data/models/business_trip_model/business_trip_response_model.dart';
 import 'package:rxdart/rxdart.dart';
+import '../../data/models/hr_policy_document_model/hr_policy_abstract_model.dart';
+import '../../data/models/reimbursement_model/reimbursement_response.dart';
+import '../../data/models/service_models/service_response.dart';
+import '../../data/models/time_permission_model/time_permission_response.dart';
+import '../../data/repositories/leave/abstract_leave_repo.dart';
 
 class LeaveBloc {
-  final LeaveTempRepository _leaveTempRepository = LeaveTempRepository();
+  final LeaveRepository _leaveRepository = LeaveRepository();
 
-  // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<HrPolicyDocumentResponse?> _subjectHrPolicyDocument =
+  final BehaviorSubject<BusinessTripResponse> _subjectBusinessTripList =
+      BehaviorSubject<BusinessTripResponse>();
+
+        final BehaviorSubject<HrPolicyDocumentResponse?> _subjectHrPolicyDocument =
       BehaviorSubject<HrPolicyDocumentResponse?>();
+
+  final BehaviorSubject<ServiceListResponse> _subjectServiceList =
+      BehaviorSubject<ServiceListResponse>();
+
+  final BehaviorSubject<TimePermissionResponse> _subjectTimePermissionList =
+      BehaviorSubject<TimePermissionResponse>();
+
+  final BehaviorSubject<ReimbursementResponse> _subjectReimbursementList =
+      BehaviorSubject<ReimbursementResponse>();
+
+  getBusinessTripDetails({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    BusinessTripResponse response =
+        await _leaveRepository.getBusinessTripDetails(
+      queryparams: queryparams,
+    );
+
+    _subjectBusinessTripList.sink.add(response);
+  }
 
   getHrPolicyDocument({
     Map<String, dynamic>? queryparams,
   }) async {
     HrPolicyDocumentResponse response =
-        await _leaveTempRepository.getHrPolicyDocuments(
+        await _leaveRepository.getHrPolicyDocuments(
       queryparams: queryparams,
     );
     _subjectHrPolicyDocument.sink.add(response);
   }
 
-  dispose() {
-    _subjectHrPolicyDocument.close();
+  readLeaveDetailData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceListResponse response;
+    response = await _leaveRepository.readLeaveDetailData(
+      queryparams: queryparams,
+    );
+
+    _subjectServiceList.sink.add(response);
   }
 
-  BehaviorSubject<HrPolicyDocumentResponse?> get subjectHrPolicyDocument =>
+  getTimePermissionData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    TimePermissionResponse response =
+        await _leaveRepository.getTimePermissionData(
+      queryparams: queryparams,
+    );
+
+    _subjectTimePermissionList.sink.add(response);
+  }
+
+  getTravelReimbursementData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ReimbursementResponse response =
+        await _leaveRepository.getTravelReimbursementData(
+      queryparams: queryparams,
+    );
+
+    _subjectReimbursementList.sink.add(response);
+  }
+
+  getMedicalReimbursementData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ReimbursementResponse response =
+        await _leaveRepository.getMedicalReimbursementData(
+      queryparams: queryparams,
+    );
+
+    _subjectReimbursementList.sink.add(response);
+  }
+
+  getEducationalReimbursementData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ReimbursementResponse response =
+        await _leaveRepository.getEducationalReimbursementData(
+      queryparams: queryparams,
+    );
+
+    _subjectReimbursementList.sink.add(response);
+  }
+
+  getOtherReimbursementData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ReimbursementResponse response =
+        await _leaveRepository.getOtherReimbursementData(
+      queryparams: queryparams,
+    );
+
+    _subjectReimbursementList.sink.add(response);
+  }
+
+  dispose() {
+    _subjectBusinessTripList.close();
+    _subjectHrPolicyDocument.close();
+    _subjectServiceList.close();
+    _subjectTimePermissionList.close();
+    _subjectReimbursementList.close();
+  }
+
+  BehaviorSubject<BusinessTripResponse> get subjectBusinessTripList =>
+      _subjectBusinessTripList;
+       BehaviorSubject<HrPolicyDocumentResponse?> get subjectHrPolicyDocument =>
       _subjectHrPolicyDocument;
+  BehaviorSubject<ServiceListResponse> get subjectServiceList =>
+      _subjectServiceList;
+  BehaviorSubject<TimePermissionResponse> get subjectTimePermissionList =>
+      _subjectTimePermissionList;
+  BehaviorSubject<ReimbursementResponse> get subjectReimbursementList =>
+      _subjectReimbursementList;
 }
 
 final leaveBloc = LeaveBloc();
