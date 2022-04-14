@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/leaves/get_policy_documents_screen.dart';
+import 'package:hr_management/ui/screens/reimbursement_screens/reimbursement_screen.dart';
 import 'package:hr_management/ui/widgets/drawer/widgets/expansion_list_tile_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -124,10 +125,22 @@ class DrawerWidget extends StatelessWidget {
     BuildContext context,
     List<UserPermissionModel?> data,
   ) {
-    print(data);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        //
+        DrawerListTileWidget(
+          title: 'Test',
+          listTileOnTap: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (BuildContext context) => ReimbursementScreen(),
+                // builder: (BuildContext context) => TestScreenWidget(),
+              ),
+            );
+          },
+        ),
+
         //
         DrawerListTileWidget(
           title: 'Workboard',

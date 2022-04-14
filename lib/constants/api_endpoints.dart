@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 class APIEndpointConstants {
-  /// API Key to be used for accessing the API.
-  static const String API_KEY = "2872b6179f2419aea44d59a61ef48f41";
-
   /// Base URL.
-  static const BASE_URL = 'https://webapidev.aitalkx.com';
+  static const BASE_URL = 'http://95.111.235.64:85';
+  // static const BASE_URL = 'https://webapidev.aitalkx.com';
 
   static const PROFILE_PICTURE_ENDPOINT =
       BASE_URL + '/common/query/GetFile?fileId=';

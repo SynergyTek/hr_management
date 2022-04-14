@@ -1,5 +1,5 @@
-class Reimbursement {
-  Reimbursement({
+class ReimbursementModel {
+  ReimbursementModel({
     this.eventDate,
     this.duration,
     this.location,
@@ -30,7 +30,7 @@ class Reimbursement {
   String? startDate;
   String? userName;
 
-  Reimbursement.fromJson(Map<String, dynamic> json) {
+  ReimbursementModel.fromJson(Map<String, dynamic> json) {
     eventDate = json['EventDate'];
     duration = json['Duration'];
     location = null;
