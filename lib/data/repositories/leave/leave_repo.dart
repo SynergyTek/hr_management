@@ -41,7 +41,7 @@ class LeaveRepository extends AbstractLeaveRepository {
       return HrPolicyDocumentResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_ALLOWED_TEMPLATES}.");
+          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_HR_POLICY_DOCUMENTS}.");
 
       print("Stack: \n\n\n $stacktrace");
       print("Err: \n\n\n $err");
