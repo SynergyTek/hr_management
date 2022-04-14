@@ -490,5 +490,10 @@ class APIEndpointConstants {
   static const POST_MANAGE_ITEM_SHARING_COPY_MOVE =
       BASE_URL + "/cms/workboard/ManageItemSharing";
   static const POST_DUPLICATE_ITEM = BASE_URL + "/cms/workboard/DuplicateItems";
-  
+
+  //  HrPolicy Api
+  static const GET_HR_POLICY_DOCUMENTS =
+      BASE_URL + "/chr/leave/GetPolicyDocuments";
+  // ?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR
+
 }

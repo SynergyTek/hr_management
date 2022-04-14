@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/screens/leaves/get_policy_documents_screen.dart';
 import 'package:hr_management/ui/widgets/drawer/widgets/expansion_list_tile_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -165,6 +166,15 @@ class DrawerWidget extends StatelessWidget {
               },
             ),
           ],
+        ),
+        DrawerListTileWidget(
+          title: 'Hr Policy',
+          listTileOnTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => HrPolicyDocumentScreen()),
+            );
+          },
         ),
 
         //

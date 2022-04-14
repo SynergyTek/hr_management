@@ -32,6 +32,30 @@ class LeaveTempRepository extends AbstractLeaveTempRepository {
     }
   }
 
+  Future<HrPolicyDocumentResponse> getHrPolicyDocuments({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  }) async {
+    try {
+      queryparams = queryparams;
+
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_HR_POLICY_DOCUMENTS,
+        queryParameters: queryparams ?? {},
+      );
+      print("DIO Response: ${response.data} ${response.data.runtimeType}");
+      return HrPolicyDocumentResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_ALLOWED_TEMPLATES}.");
+
+      print("Stack: \n\n\n $stacktrace");
+      print("Err: \n\n\n $err");
+
+      return HrPolicyDocumentResponse.withError("$err");
+    }
+  }
+
   @override
   Future<LeaveTempResponse> deleteAPIData({Map<String, dynamic>? queryparams}) {
     throw UnimplementedError();
