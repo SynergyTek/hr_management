@@ -18,21 +18,8 @@ class HrDirectChart extends StatefulWidget {
 }
 
 class _HrDirectChartState extends State<HrDirectChart> {
-  List<dynamic>? chartByStatus;
-  List<dynamic>? chartUserType;
-  String chartTitle = '';
-  DateTime fromDate = DateTime(
-      DateTime.now().year, DateTime.now().month - 1, DateTime.now().day);
-  DateTime toDate = DateTime.now();
-
   @override
   void initState() {
-    chartTitle = widget.ntsType == NTSType.service
-        ? 'Service'
-        : widget.ntsType == NTSType.note
-            ? 'Note'
-            : 'Task';
-
     serviceBloc
       ..getServiceSummary(
         queryparams: {
@@ -98,9 +85,8 @@ class _HrDirectChartState extends State<HrDirectChart> {
                           );
                           print(list);
 
-                          chartByStatus = list;
                           return Charts(
-                            chartDataLIst: chartByStatus,
+                            chartDataLIst: list,
                             chartType: 'donut',
                           );
                         } else {

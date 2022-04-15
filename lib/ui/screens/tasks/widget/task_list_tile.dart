@@ -95,26 +95,26 @@ class TaskListCard extends StatelessWidget {
   }
 
   String taskSubject(int index) {
-    return taskList![index].taskSubject ?? "-";
+    return taskList?[index].serviceName ?? "-";
   }
 
   String taskNoValue(int index) {
-    return taskList![index].taskNo ?? "-";
+    return taskList?[index].taskNo ?? "-";
   }
 
   String ownerUserName(int index) {
-    return taskList![index].ownerUserName ?? "-";
+    return taskList?[index].ownerUserName ?? "-";
   }
 
   String assigneeDisplayName(int index) {
-    return taskList![index].assigneeDisplayName ?? "-";
+    return taskList?[index].assigneeDisplayName ?? "-";
   }
 
   String taskStatusName(int index) {
-    return taskList![index].taskStatusName ?? "-";
+    return taskList?[index].taskStatusName ?? "-";
   }
 
   String dueDateDisplay(int index) {
-    return taskList![index].dueDateDisplay ?? "-";
+    return taskList?[index].dueDateDisplay ?? "-";
   }
 }

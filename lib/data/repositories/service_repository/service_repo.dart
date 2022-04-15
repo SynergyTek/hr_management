@@ -92,6 +92,52 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
+  Future<ServiceListResponse> getReadServiceData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_READ_SERVICE_DATA;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return ServiceListResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceListResponse.withError("$err");
+    }
+  }
+
+  Future<ServiceMapResponse> getReadServiceListCount({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_READ_SERVICE_LIST_COUNT;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return ServiceMapResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceMapResponse.withError("$err");
+    }
+  }
+
   Future<ServiceListResponse> getServiceDashBoardData({
     Map<String, dynamic>? queryparams,
   }) async {

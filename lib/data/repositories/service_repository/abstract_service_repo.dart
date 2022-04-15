@@ -44,4 +44,10 @@ abstract class AbstractServiceRepository {
   Future<ServiceSummaryResponse> getServiceSummaryData({
     Map<String, dynamic>? queryparams,
   });
+  Future<ServiceListResponse> getReadServiceData({
+    Map<String, dynamic>? queryparams,
+  });
+  Future<ServiceMapResponse> getReadServiceListCount({
+    Map<String, dynamic>? queryparams,
+  });
 }

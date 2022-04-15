@@ -1,4 +1,3 @@
-
 import 'task_list_model.dart';
 
 class TaskListResponseModel {
@@ -13,6 +12,22 @@ class TaskListResponseModel {
       : data = (response).map((i) => new TaskListModel.fromJson(i)).toList();
 
   TaskListResponseModel.withError(String errorValue)
+      : data = null,
+        error = errorValue;
+}
+
+class TaskListDynamicResponse {
+  bool? isSuccess;
+  List<dynamic>? data;
+  String? error;
+
+  TaskListDynamicResponse({
+    required this.data,
+  });
+
+  TaskListDynamicResponse.fromJson(List<dynamic> response) : data = response;
+
+  TaskListDynamicResponse.withError(String errorValue)
       : data = null,
         error = errorValue;
 }

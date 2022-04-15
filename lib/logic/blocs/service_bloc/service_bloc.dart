@@ -15,6 +15,11 @@ class ServiceBloc {
 
   final BehaviorSubject<ServiceListResponse?> _subjectServiceList =
       BehaviorSubject<ServiceListResponse?>();
+  final BehaviorSubject<ServiceMapResponse?> _subjectReadServiceListCount =
+      BehaviorSubject<ServiceMapResponse?>();
+  final BehaviorSubject<ServiceListResponse?> _subjectReadServiceData =
+      BehaviorSubject<ServiceListResponse?>();
+
   final BehaviorSubject<ServiceSummaryResponse?> _subjectServiceSummaryList =
       BehaviorSubject<ServiceSummaryResponse?>();
 
@@ -35,6 +40,25 @@ class ServiceBloc {
       queryparams: queryparams,
     );
     _subjectServiceSummaryList.sink.add(response);
+  }
+
+  getReadServiceListCount({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceMapResponse response =
+        await _serviceRepository.getReadServiceListCount(
+      queryparams: queryparams,
+    );
+    _subjectReadServiceListCount.sink.add(response);
+  }
+
+  getReadServiceData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceListResponse response = await _serviceRepository.getReadServiceData(
+      queryparams: queryparams,
+    );
+    _subjectReadServiceData.sink.add(response);
   }
 
   getLeavesDetails({
@@ -114,11 +138,17 @@ class ServiceBloc {
     _subject.close();
     _subjectServiceList.close();
     _subjectServiceSummaryList.close();
+    _subjectReadServiceListCount.close();
+    _subjectReadServiceData.close();
   }
 
   BehaviorSubject<ServiceResponse?> get subject => _subject;
   BehaviorSubject<ServiceListResponse?> get subjectServiceList =>
       _subjectServiceList;
+  BehaviorSubject<ServiceMapResponse?> get subjectReadServiceListCount =>
+      _subjectReadServiceListCount;
+  BehaviorSubject<ServiceListResponse?> get subjectReadServiceData =>
+      _subjectReadServiceData;
   BehaviorSubject<ServiceSummaryResponse?> get subjectServiceSummaryList =>
       _subjectServiceSummaryList;
 }
