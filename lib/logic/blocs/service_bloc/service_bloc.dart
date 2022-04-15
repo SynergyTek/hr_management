@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import '../../../data/models/api_models/post_response_model.dart';
 import '../../../data/models/service_models/service.dart';
 
@@ -25,16 +24,6 @@ class ServiceBloc {
     _subject.sink.add(response);
   }
 
-  getLeavesDetails({
-    Map<String, dynamic>? queryparams,
-  }) async {
-    ServiceListResponse response = await _serviceRepository.getLeavesDetails(
-      queryparams: queryparams,
-    );
-
-    _subjectServiceList.sink.add(response);
-  }
-
   getServiceDashBoardData({
     Map<String, dynamic>? queryparams,
   }) async {
@@ -58,8 +47,9 @@ class ServiceBloc {
     if (userId != null && userId.isNotEmpty) queryparams["userId"] = userId;
     if (isLeaves != null && response.isSuccess!) {
       if (isLeaves) {
-        subjectServiceList.sink.add(null);
-        getLeavesDetails(queryparams: queryparams);
+        //TODO: add the correct bloc for leave
+        // subjectServiceList.sink.add(null);
+        // getLeavesDetails(queryparams: queryparams);
       } else {
         subjectServiceList.sink.add(null);
         getServiceHomeListData(queryparams: queryparams);

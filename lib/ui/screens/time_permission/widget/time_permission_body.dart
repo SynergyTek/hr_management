@@ -1,39 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/models/time_permission_model/time_permission_model.dart';
 import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/screens/time_permission/widget/time_permission_list_tile_widget.dart';
 
-import '../../../../data/models/service_models/service.dart';
 import '../../../widgets/empty_list_widget.dart';
-import 'widget/leave_list_tile_widget.dart';
 
-class DisplayLeavesBody extends StatefulWidget {
-  DisplayLeavesBody({Key? key}) : super(key: key);
+class TimePermissionListViewWidget extends StatefulWidget {
+  const TimePermissionListViewWidget({
+    Key? key,
+
+    //
+  }) : super(key: key);
 
   @override
-  _DisplayLeavesBodyState createState() => _DisplayLeavesBodyState();
+  State<TimePermissionListViewWidget> createState() =>
+      _TimePermissionListViewWidgetState();
 }
 
-class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
+class _TimePermissionListViewWidgetState
+    extends State<TimePermissionListViewWidget> {
   @override
   void initState() {
+    //
     _handleAPI();
+
     super.initState();
   }
 
   Future<void> _handleAPI() async {
-    leaveBloc.readLeaveDetailData(queryparams: {
-      'userid':
-          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-    });
+    // Travel
+    await leaveBloc.getTimePermissionData(
+      queryparams: {
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": "HR",
+      },
+    );
+
+    return;
   }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _handleAPI,
-      child: StreamBuilder<ServiceListResponse?>(
-        stream: leaveBloc.subjectServiceList.stream,
+      child: StreamBuilder<TimePermissionResponse?>(
+        stream: leaveBloc.subjectTimePermissionList.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.error != null && snapshot.data.error.length > 0) {
@@ -43,7 +57,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
             }
 
             return _listViewBuilderWidget(
-              data: snapshot.data?.list,
+              data: snapshot.data?.data,
             );
           } else {
             return Center(
@@ -56,7 +70,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
   }
 
   Widget _listViewBuilderWidget({
-    List<Service> data = const <Service>[],
+    List<TimePermission> data = const <TimePermission>[],
   }) {
     if (data.isEmpty) {
       return EmptyListWidget();
@@ -67,24 +81,10 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
       padding: const EdgeInsets.all(8.0),
       itemCount: data.length,
       itemBuilder: (context, index) {
-        return LeaveListTileWidget(
+        return TimePermissionListTileWidget(
           data: data.elementAt(index),
         );
       },
     );
   }
-
-  // void _handleListTileOnTap(int index, BuildContext context) {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     enableDrag: true,
-  //     isScrollControlled: true,
-  //     backgroundColor: Colors.transparent,
-  //     builder: (BuildContext context) {
-  //       return LeaveDetailsBottomSheetWidget(
-  //         duration: _serviceList[index].duration,
-  //       );
-  //     },
-  //   );
-  // }
 }

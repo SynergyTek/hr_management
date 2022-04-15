@@ -99,8 +99,6 @@ class APIEndpointConstants {
 
   static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
-  static const LEAVE_DETAILS = '$BASE_URL/taa/query/leavedetail';
-
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
   static const POST_SERVICE_COMMENT =

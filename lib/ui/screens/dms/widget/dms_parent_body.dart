@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/dms/dms_files_response.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
+import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
+import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_response.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
+import 'package:hr_management/logic/blocs/dms_bloc/dms_source_folders_bloc/dms_source_folders_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
@@ -14,6 +17,8 @@ import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
+import '../../../../data/models/dms/permission/permission_model.dart';
+import '../../../../logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
 
 class DMSParentBody extends StatefulWidget {
   final String? sourceId;
@@ -28,16 +33,20 @@ class DMSParentBody extends StatefulWidget {
 }
 
 class _DMSParentBodyState extends State<DMSParentBody> {
-  List<Cwd>? childList = [];
-  List<Cwd> filterChildList = [];
+  List<DMSSourceFolderModel>? childList = [];
+  List<DMSSourceFolderModel> filterChildList = [];
+  // List<Cwd>? childList = [];
+  // List<Cwd> filterChildList = [];
   TextEditingController searchWorkspaceTextController = TextEditingController();
   bool isSearch = false;
   List<String?> pathList = [];
   List<String> parentPathList = [];
-  List<Cwd> parentModelList = [];
+  List<DMSSourceFolderModel> parentModelList = [];
+  // List<Cwd> parentModelList = [];
   String? sourceId;
   bool? isCopy = false;
   bool? isCut = false;
+  List<String?>? childPath = [];
 
   @override
   void initState() {
@@ -49,23 +58,33 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   }
 
   apiCall() {
-    dmsBloc.postGetDMSFilesData(
-        dmsPostModel: DmsPostModel(
-      action: "read",
-      path: "/",
-      showHiddenItems: false,
-      data: [],
-      userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-    ));
+    dmsSourceFolderBloc.getDMSSourceFolderData(
+      queryparams: {
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": "HR",
+      },
+    );
+    // dmsBloc.postGetDMSFilesData(
+    //     dmsPostModel: DmsPostModel(
+    //   action: "read",
+    //   path: "/",
+    //   showHiddenItems: false,
+    //   data: [],
+    //   userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+    // ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 2.h),
-      child: StreamBuilder<DMSFilesResponse>(
-        stream: dmsBloc.subjectDMSGetFilesResponse.stream,
-        builder: (context, AsyncSnapshot<DMSFilesResponse> snapshot) {
+      // child: StreamBuilder<DMSFilesResponse>(
+      // stream: dmsBloc.subjectDMSGetFilesResponse.stream,
+      // builder: (context, AsyncSnapshot<DMSFilesResponse> snapshot) {
+      child: StreamBuilder<DMSSourceFolderResponse?>(
+        stream: dmsSourceFolderBloc.subject.stream,
+        builder: (context, AsyncSnapshot<DMSSourceFolderResponse?> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!.error != null &&
                 snapshot.data!.error!.length > 0) {
@@ -73,7 +92,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                 child: Text(snapshot.data!.error!),
               );
             }
-            childList = snapshot.data!.data!.files;
+            childList = snapshot.data!.list;
             if (!isSearch) {
               filterChildList.clear();
               filterChildList.addAll(childList!);
@@ -103,7 +122,8 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                     color: Colors.blue,
                                   ),
                                   title: Text(
-                                    filterChildList[index].name!,
+                                    filterChildList[index].title!,
+                                    // filterChildList[index].name!,
                                   ),
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -117,11 +137,16 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                               ))
                                           : SizedBox(),
                                       IconButton(
+                                        // onPressed: () {},
                                         onPressed: () => bottomSheet(
-                                          filterChildList[index].name,
-                                          filterChildList[index].id,
-                                          snapshot.data!.data!.cwd!.id,
+                                          filterChildList[index].title,
+                                          filterChildList[index].workspaceId,
                                           data: filterChildList[index],
+                                          // snapshot.data!.list[0].fileId,
+                                          // filterChildList[index].name,
+                                          // filterChildList[index].id,
+                                          // snapshot.data!.data!.cwd!.id,
+                                          // data: filterChildList[index],
                                         ),
                                         icon: Icon(Icons.more_vert_rounded),
                                       )
@@ -131,24 +156,24 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                     pathList
                                       ..clear()
                                       ..add('Administrator')
-                                      ..add(filterChildList[index].name);
+                                      ..add(filterChildList[index].title);
 
                                     parentModelList
                                       ..clear()
                                       ..add(filterChildList[index]);
 
-                                    String parentPath =
-                                        snapshot.data!.data!.cwd!.id! +
-                                            '/' +
-                                            filterChildList[index].id! +
-                                            '/';
+                                    String parentPath = snapshot
+                                            .data!.list![index].workspaceId! +
+                                        '/' +
+                                        filterChildList[index].workspaceId! +
+                                        '/';
 
                                     parentPathList
                                       ..clear()
                                       ..add(parentPath);
 
-                                    dmsBloc.subjectDMSGetFilesChildResponse.sink
-                                        .add(null);
+                                    dmsSourceFolderBloc.subject.sink.add(null);
+
                                     Navigator.pushNamed(
                                       context,
                                       DMS_CHILD,
@@ -156,7 +181,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           dmsParentModelList: parentModelList,
                                           list1: pathList,
                                           list2: parentPathList,
-                                          arg1: filterChildList[index].name,
+                                          arg1: filterChildList[index].title,
                                           arg2: parentPath,
                                           dmsParentModel:
                                               filterChildList[index],
@@ -168,6 +193,47 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                                 .add(null);
                                           }),
                                     );
+
+                                    // pathList
+                                    //   ..clear()
+                                    //   ..add('Administrator')
+                                    //   ..add(filterChildList[index].name);
+
+                                    // parentModelList
+                                    //   ..clear()
+                                    //   ..add(filterChildList[index]);
+
+                                    // String parentPath =
+                                    //     snapshot.data!.data!.cwd!.id! +
+                                    //         '/' +
+                                    //         filterChildList[index].id! +
+                                    //         '/';
+
+                                    // parentPathList
+                                    //   ..clear()
+                                    //   ..add(parentPath);
+
+                                    // dmsBloc.subjectDMSGetFilesChildResponse.sink
+                                    //     .add(null);
+                                    // Navigator.pushNamed(
+                                    //   context,
+                                    //   DMS_CHILD,
+                                    //   arguments: ScreenArguments(
+                                    //       dmsParentModelList: parentModelList,
+                                    //       list1: pathList,
+                                    //       list2: parentPathList,
+                                    //       arg1: filterChildList[index].name,
+                                    //       arg2: parentPath,
+                                    //       dmsParentModel:
+                                    //           filterChildList[index],
+                                    //       callBack: (dynamic value,
+                                    //           dynamic value2, dynamic value3) {
+                                    //         dmsBloc
+                                    //             .subjectDMSGetFilesChildResponse
+                                    //             .sink
+                                    //             .add(null);
+                                    //       }),
+                                    // );
                                   },
                                 ),
                               );
@@ -190,12 +256,10 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     );
   }
 
-  bottomSheet(
-    String? title,
-    String? id,
-    String? path, {
-    Cwd? data,
-  }) {
+  bottomSheet(String? title, String? id,
+      // String? path,
+      {DMSSourceFolderModel? data}) {
+    print(data);
     showDocumentBottomSheet(
       bottomSheetDataList: [
         Row(
@@ -211,78 +275,186 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             )
           ],
         ),
-        ListTile(
-          leading: Icon(
-            CustomIcons.folder,
-            color: Colors.blue,
-          ),
-          title: Text('Create Workspace'),
-          onTap: () => _handleCreateWorkspaceOnTap(),
-        ),
-        ListTile(
-          leading: Icon(
-            CustomIcons.folder,
-            color: Colors.blue,
-          ),
-          title: Text('Edit Workspace'),
-          onTap: () => _handleEditWorkspaceOnTap(
-            id,
-            data: data!,
+        Visibility(
+          visible: data?.canCreateWorkspace ?? false,
+          child: ListTile(
+            leading: Icon(
+              CustomIcons.folder,
+              color: Colors.blue,
+            ),
+            title: Text('Create Workspace'),
+            onTap: () => _handleCreateWorkspaceOnTap(),
           ),
         ),
-        ListTile(
-          leading: Icon(
-            CustomIcons.folder,
-            color: Colors.yellow,
+        Visibility(
+          visible: false, //TODO: figure out the boolean
+          // visible: data?.isSelfWorkspace ?? false,
+          child: ListTile(
+            leading: Icon(
+              CustomIcons.folder,
+              color: Colors.blue,
+            ),
+            title: Text('Edit Workspace'),
+            onTap: () => _handleEditWorkspaceOnTap(
+              id,
+              data: data!,
+            ),
           ),
-          title: Text('Create Folder'),
-          onTap: () => _handleCreateNewFolderOnTap(id),
         ),
-        ListTile(
-          leading: Icon(CustomIcons.folder_upload),
-          title: Text('Upload Folder'),
-          // onTap: () => deleteDialog(id),
+        Visibility(
+          visible: data?.canCreateSubFolder ?? false,
+          child: ListTile(
+            leading: Icon(
+              CustomIcons.folder,
+              color: Colors.yellow,
+            ),
+            title: Text('Create Folder'),
+            onTap: () => _handleCreateNewFolderOnTap(id),
+          ),
         ),
-
-        // ListTile(
-        //   leading: Icon(CustomIcons.trash),
-        //   title: Text('Delete'),
-        //   onTap: () => deleteDialog(id),
+        Visibility(
+          visible: false, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(
+              CustomIcons.folder,
+              color: Colors.yellow,
+            ),
+            title: Text('Edit Folder'),
+            onTap: () => _handleEditFolderOnTap(data!),
+          ),
+        ),
+        Visibility(
+          visible: true, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('Upload Folder'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: false, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('Upload Files'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: data?.canCreateDocument ?? false,
+          // visible: false, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('Create Document'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: data?.canEditDocument ?? false,
+          child: ListTile(
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('Edit Document'),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: data?.canManagePermission ?? false,
+          child: ListTile(
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('Manage Permission'),
+            onTap: () => _handleManagePermissionOnTap(data!),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: true, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('VIew Permission'),
+            onTap: () => _handleViewPermissionOnTap(data!),
+            // onTap: () => deleteDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: false, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.copy),
+            title: Text('Cut'),
+            // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+          ),
+        ),
+        Visibility(
+          visible: data?.canCopy ?? false,
+          child: ListTile(
+            leading: Icon(CustomIcons.copy),
+            title: Text('Copy'),
+            // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+          ),
+        ),
+        Visibility(
+          visible: false, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.copy),
+            title: Text('Paste'),
+            // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+          ),
+        ),
+        Visibility(
+          visible: data?.canDelete ?? false,
+          child: ListTile(
+            leading: Icon(CustomIcons.trash),
+            title: Text('Delete'),
+            onTap: () => deleteDialog(id!),
+          ),
+        ),
+        // Visibility(
+        //   visible: data?.canMove ?? false,
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.expand_arrows),
+        //     title: Text('Move'),
+        //     // onTap: () => dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: targetId),
+        //   ),
         // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.copy),
-        //   title: Text('Copy'),
-        //   // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+        Visibility(
+          visible: data?.canArchive ?? false,
+          child: ListTile(
+            leading: Icon(CustomIcons.archive),
+            title: Text('Archive'),
+            // onTap: () => archiveDialog(id),
+          ),
+        ),
+        // Visibility(
+        //   visible: data?.canRename ?? false,
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.edit),
+        //     title: Text('Rename'),
+        //     // onTap: () => renameDialog(title),
+        //   ),
         // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.expand_arrows),
-        //   title: Text('Move'),
-        //   // onTap: () => dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: targetId),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.archive),
-        //   title: Text('Archive'),
-        //   onTap: () => archiveDialog(id),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.edit),
-        //   title: Text('Rename'),
-        //   onTap: () => renameDialog(title),
-        // ),
-        ListTile(
-          leading: Icon(CustomIcons.sticky_note),
-          title: Text('View Details'),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              ADD_EDIT_NOTE_ROUTE,
-              arguments: ScreenArguments(
-                arg1: '',
-                arg2: id,
-                // arg3: filterChildList[index].noteSubject
-              ),
-            );
-          },
+        Visibility(
+          visible: true, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.archive),
+            title: Text('Download All'),
+            // onTap: () => archiveDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: true, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.sticky_note),
+            title: Text('View Details'),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                ADD_EDIT_NOTE_ROUTE,
+                arguments: ScreenArguments(
+                  arg1: '',
+                  arg2: id,
+                  // arg3: filterChildList[index].noteSubject
+                ),
+              );
+            },
+          ),
         ),
       ],
     );
@@ -563,7 +735,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
       child: TextField(
         onChanged: (value) {
-          filterSearchResults(value);
+          // filterSearchResults(value);
         },
         controller: searchWorkspaceTextController,
         decoration: InputDecoration(
@@ -596,8 +768,10 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       if (searchText.isNotEmpty) {
         isSearch = true;
         childList!.forEach((item) {
-          if (item.searchS != null &&
-              item.searchS!.toLowerCase().contains(searchText.toLowerCase())) {
+          // if (item.searchS != null &&
+          //     item.searchS!.toLowerCase().contains(searchText.toLowerCase())) {
+          if (item.title != null &&
+              item.title!.toLowerCase().contains(searchText.toLowerCase())) {
             filterChildList.add(item);
           }
         });
@@ -626,6 +800,20 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     );
   }
 
+  _handleEditFolderOnTap(DMSSourceFolderModel item) {
+    Navigator.of(context).pushNamed(
+      DMS_NEW_FOLDER_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.workspaceId, // Parent id
+        arg2: item.workspaceId, // Folder id
+        arg3: item.title, // Folder Name
+        // arg1: item.id, // Parent id
+        // arg2: item.id, // Folder id
+        // arg3: item.name, // Folder Name
+      ),
+    );
+  }
+
   _handleCreateWorkspaceOnTap() {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
@@ -634,12 +822,60 @@ class _DMSParentBodyState extends State<DMSParentBody> {
 
   _handleEditWorkspaceOnTap(
     String? id, {
-    required Cwd data,
+    required DMSSourceFolderModel data,
+    // required Cwd data,
   }) {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
       arguments: ScreenArguments(
-        arg1: data.id ?? "",
+        arg1: data.workspaceId ?? "",
+        // arg1: data.id ?? "",
+      ),
+    );
+  }
+
+  _handleManagePermissionOnTap(DMSSourceFolderModel item) async {
+    Permission _permission =
+        await permissionBloc.getViewPermissionData(queryparams: {
+      "NoteId": "${item.workspaceId}", //TODO: figure out the right id
+      // "NoteId": "${item.id}",
+      "WorkspaceId": "${item.workspaceId}",
+      "ParentId": "${item.parentId}",
+    });
+
+    Navigator.of(context).pushNamed(
+      DMS_VIEW_PERMISSION_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.workspaceId, //TODO: figure out the right id
+        // arg1: item.id,
+        arg2: item.parentId,
+        arg3: item.workspaceId,
+        arg4: _permission.disablePermissionInheritance.toString(),
+        val1: true,
+        list1: childPath,
+      ),
+    );
+  }
+
+  _handleViewPermissionOnTap(DMSSourceFolderModel item) async {
+    Permission _permission =
+        await permissionBloc.getViewPermissionData(queryparams: {
+      "NoteId": "${item.workspaceId}", //TODO: figure out the right id
+      // "NoteId": "${item.id}",
+      "WorkspaceId": "${item.workspaceId}",
+      "ParentId": "${item.parentId}",
+    });
+
+    Navigator.of(context).pushNamed(
+      DMS_VIEW_PERMISSION_ROUTE,
+      arguments: ScreenArguments(
+        arg1: item.workspaceId, //TODO: figure out the right id
+        // arg1: item.id,
+        arg2: item.parentId,
+        arg3: item.workspaceId,
+        arg4: _permission.disablePermissionInheritance.toString(),
+        val1: false,
+        list1: childPath,
       ),
     );
   }

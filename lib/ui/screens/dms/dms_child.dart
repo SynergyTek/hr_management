@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/ui/screens/dms/widget/dms_child_body.dart';
@@ -6,12 +7,14 @@ import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 
 class DMSChild extends StatelessWidget {
   final String? parentName;
-  final Cwd? parentModel;
+  final DMSSourceFolderModel? parentModel;
+  // final Cwd? parentModel;
   final String? parentPath;
   final OnTapPressedCallBack? callBack;
   final List<String?>? pathList;
   final List<String>? parentPathList;
-  final List<Cwd>? parentModelList;
+  final List<DMSSourceFolderModel>? parentModelList;
+  // final List<Cwd>? parentModelList;
   final String? sourceId;
   final bool? isCopy;
   final bool? isCut;

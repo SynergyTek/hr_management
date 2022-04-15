@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
 
 DmsPostModel dmsPostModelFromJson(String str) =>
@@ -19,14 +20,16 @@ class DmsPostModel {
   String? action;
   String? path;
   bool? showHiddenItems;
-  List<Cwd?>? data;
+  List<DMSSourceFolderModel?>? data;
+  // List<Cwd?>? data;
   String? userId;
 
   factory DmsPostModel.fromJson(Map<String, dynamic> json) => DmsPostModel(
         action: json["action"],
         path: json["path"],
         showHiddenItems: json["showHiddenItems"],
-        data: List<Cwd>.from(json["data"].map((x) => Cwd.fromJson(x))),
+        data: List<DMSSourceFolderModel>.from(json["data"].map((x) => DMSSourceFolderModel.fromJson(x))),
+        // data: List<Cwd>.from(json["data"].map((x) => Cwd.fromJson(x))),
         userId: json["userId"],
       );
 

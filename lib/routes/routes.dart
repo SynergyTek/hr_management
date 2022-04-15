@@ -35,6 +35,7 @@ import '../ui/screens/tasks/adhoc_task/adhoc_task_list_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 
 import '../ui/screens/tasks/task_list_screen.dart';
+import '../ui/screens/time_permission/time_permission_screen.dart';
 import '../ui/widgets/custom_controls/team_dropdown_list.dart';
 import '../ui/widgets/custom_controls/user_dropdown_list.dart';
 
@@ -537,6 +538,11 @@ class AppRouter {
       case REIMBURSEMENT_SCREEN:
         return MaterialPageRoute(
           builder: (_) => ReimbursementScreen(),
+        );
+
+      case TIME_PERMISSION_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => TimePermissionScreen(),
         );
 
       case CREATE_WORKBOARD_SCREEN:

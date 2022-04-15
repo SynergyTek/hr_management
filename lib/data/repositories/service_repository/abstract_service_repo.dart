@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 // import 'dart:html';
 
-import 'package:flutter/widgets.dart';
-
 import '../../../constants/api_endpoints.dart';
 import '../../models/api_models/post_response_model.dart';
 import '../../models/service_models/service.dart';
@@ -21,8 +19,6 @@ abstract class AbstractServiceRepository {
   }); //{
   // Optional Params to be added to the request if required.
   //  Map<String, dynamic> queryparams,});
-
-  Future<ServiceListResponse> getLeavesDetails();
 
   Future<PostResponse> postAPIData({
     Map<String, dynamic>? queryparams,

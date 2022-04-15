@@ -348,7 +348,7 @@ class DrawerWidget extends StatelessWidget {
               listTileOnTap: () {
                 Navigator.pushReplacementNamed(
                   context,
-                  "",
+                  TIME_PERMISSION_SCREEN,
                 );
               },
             ),

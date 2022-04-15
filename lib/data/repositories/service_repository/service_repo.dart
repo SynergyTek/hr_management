@@ -48,27 +48,6 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
-  Future<ServiceListResponse> getLeavesDetails({
-    Map<String, dynamic>? queryparams,
-  }) async {
-    final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
-
-    try {
-      Response response = await _dio.get(
-        endpoint,
-        queryParameters: queryparams ?? {},
-      );
-
-      return ServiceListResponse.fromJson(
-        response.data,
-      );
-    } catch (err, stacktrace) {
-      print("Stacktrace: $stacktrace \nError: $err");
-
-      return ServiceListResponse.withError("$err");
-    }
-  }
-
   Future<ServiceListResponse> getServiceDashBoardData({
     Map<String, dynamic>? queryparams,
   }) async {
