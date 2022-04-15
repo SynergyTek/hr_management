@@ -5,7 +5,8 @@ class APIEndpointConstants {
   static const String API_KEY = "2872b6179f2419aea44d59a61ef48f41";
 
   /// Base URL.
-  static const BASE_URL = 'https://webapidev.aitalkx.com';
+  static const BASE_URL = "http://95.111.235.64:85";
+  // 'https://webapidev.aitalkx.com';
 
   static const PROFILE_PICTURE_ENDPOINT =
       BASE_URL + '/common/query/GetFile?fileId=';
@@ -510,4 +511,10 @@ class APIEndpointConstants {
   static const POST_MANAGE_ITEM_SHARING_COPY_MOVE =
       BASE_URL + "/cms/workboard/ManageItemSharing";
   static const POST_DUPLICATE_ITEM = BASE_URL + "/cms/workboard/DuplicateItems";
+  // workboard api end
+
+  // summary api
+  static const GET_TASK_SUMMARY = BASE_URL + "/cms/task/GetTaskSummary";
+  static const GET_SERVICE_SUMMARY =
+      BASE_URL + "/cms/service/GetServiceSummary";
 }

@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 // import 'dart:html';
 
-import 'package:flutter/widgets.dart';
 
 import '../../../constants/api_endpoints.dart';
 import '../../models/api_models/post_response_model.dart';
 import '../../models/service_models/service.dart';
 import '../../models/service_models/service_response.dart';
+import '../../models/service_models/service_summary_response_model.dart';
 
 part 'service_repo.dart';
 
@@ -38,6 +38,10 @@ abstract class AbstractServiceRepository {
   });
 
   Future<ServiceListResponse> getServiceDashBoardData({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<ServiceSummaryResponse> getServiceSummaryData({
     Map<String, dynamic>? queryparams,
   });
 }

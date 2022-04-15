@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import '../../../data/models/api_models/post_response_model.dart';
 import '../../../data/models/service_models/service.dart';
 
 import '../../../data/models/service_models/service_response.dart';
+import '../../../data/models/service_models/service_summary_response_model.dart';
 import '../../../data/repositories/service_repository/abstract_service_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -15,6 +15,8 @@ class ServiceBloc {
 
   final BehaviorSubject<ServiceListResponse?> _subjectServiceList =
       BehaviorSubject<ServiceListResponse?>();
+  final BehaviorSubject<ServiceSummaryResponse?> _subjectServiceSummaryList =
+      BehaviorSubject<ServiceSummaryResponse?>();
 
   getServiceDetail({
     Map<String, dynamic>? queryparams,
@@ -23,6 +25,16 @@ class ServiceBloc {
       queryparams: queryparams,
     );
     _subject.sink.add(response);
+  }
+
+  getServiceSummary({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceSummaryResponse response =
+        await _serviceRepository.getServiceSummaryData(
+      queryparams: queryparams,
+    );
+    _subjectServiceSummaryList.sink.add(response);
   }
 
   getLeavesDetails({
@@ -101,11 +113,14 @@ class ServiceBloc {
   dispose() {
     _subject.close();
     _subjectServiceList.close();
+    _subjectServiceSummaryList.close();
   }
 
   BehaviorSubject<ServiceResponse?> get subject => _subject;
   BehaviorSubject<ServiceListResponse?> get subjectServiceList =>
       _subjectServiceList;
+  BehaviorSubject<ServiceSummaryResponse?> get subjectServiceSummaryList =>
+      _subjectServiceSummaryList;
 }
 
 final serviceBloc = ServiceBloc();

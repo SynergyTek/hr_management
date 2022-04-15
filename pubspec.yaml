@@ -56,8 +56,10 @@ dependencies:
   video_player: ^2.1.12
   webview_flutter: ^2.0.10
   image_painter: ^0.4.5
-  # flutter_pdfview: ^1.2.2
-  syncfusion_flutter_pdfviewer: 
+  url_launcher: ^6.0.20
+
+
+  
 
 dev_dependencies:
   flutter_lints: ^1.0.0
