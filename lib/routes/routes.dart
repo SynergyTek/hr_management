@@ -13,6 +13,7 @@ import 'package:hr_management/ui/screens/business_trip/business_trip_screen.dart
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
+import 'package:hr_management/ui/screens/reimbursement_screens/reimbursement_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/duplicate_workboard_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_create_edit_section_screen.dart';
@@ -531,6 +532,11 @@ class AppRouter {
       case WORKBOARD_SCREEN:
         return MaterialPageRoute(
           builder: (_) => WorkBoardScreen(),
+        );
+
+      case REIMBURSEMENT_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => ReimbursementScreen(),
         );
 
       case CREATE_WORKBOARD_SCREEN:

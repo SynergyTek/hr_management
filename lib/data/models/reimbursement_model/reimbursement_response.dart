@@ -1,7 +1,9 @@
 import 'reimbursement_model.dart';
 
+export 'reimbursement_model.dart';
+
 class ReimbursementResponse {
-  final List<Reimbursement> data;
+  final List<ReimbursementModel> data;
   String? error;
 
   ReimbursementResponse({
@@ -9,12 +11,11 @@ class ReimbursementResponse {
   });
 
   ReimbursementResponse.fromJson(List response)
-      : data = (response).map((i) => new Reimbursement.fromJson(i)).toList();
-
-// LeaveTempResponse.fromJson(Map<String, dynamic> json)
-//       : data = (json["Data"] as List)
-//             .map((i) => new LeaveTemplateModel.fromJson(i))
-  // .toList();
+      : data = (response)
+            .map(
+              (i) => ReimbursementModel.fromJson(i),
+            )
+            .toList();
 
   ReimbursementResponse.withError(String errorValue)
       : data = [],

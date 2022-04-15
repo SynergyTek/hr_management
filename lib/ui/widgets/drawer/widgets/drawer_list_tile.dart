@@ -37,7 +37,7 @@ class DrawerListTileWidget extends StatelessWidget {
               title!,
               style: TextStyle(
                 fontSize: 10.0.sp,
-                color: const Color(0xFF757575),
+                color: const Color(0xFF444444),
                 fontWeight: FontWeight.normal,
                 letterSpacing: 1,
               ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/hr_direct_chart/hr_direct_chart.dart';
 import 'package:hr_management/ui/screens/leaves/get_policy_documents_screen.dart';
+import 'package:hr_management/ui/screens/reimbursement_screens/reimbursement_screen.dart';
 import 'package:hr_management/ui/widgets/drawer/widgets/expansion_list_tile_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -125,7 +126,6 @@ class DrawerWidget extends StatelessWidget {
     BuildContext context,
     List<UserPermissionModel?> data,
   ) {
-    print(data);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -169,7 +169,7 @@ class DrawerWidget extends StatelessWidget {
           ],
         ),
         DrawerListTileWidget(
-          title: 'Hr Policy',
+          title: 'HR Policy',
           listTileOnTap: () {
             Navigator.push(
               context,
@@ -260,17 +260,6 @@ class DrawerWidget extends StatelessWidget {
             //
             DrawerListTileWidget(
               title: '\t\t\t\t\t Master Data',
-              listTileOnTap: () {
-                Navigator.pushReplacementNamed(
-                  context,
-                  "",
-                );
-              },
-            ),
-
-            //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\t Reimbursement',
               listTileOnTap: () {
                 Navigator.pushReplacementNamed(
                   context,
@@ -375,6 +364,18 @@ class DrawerWidget extends StatelessWidget {
             ),
           ],
         ),
+
+        //
+        DrawerListTileWidget(
+          title: 'Reimbursement',
+          listTileOnTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              REIMBURSEMENT_SCREEN,
+            );
+          },
+        ),
+
         //
         ExpansionListTileWidget(
           title: "Payroll",
