@@ -504,4 +504,10 @@ class APIEndpointConstants {
   static const POST_MANAGE_ITEM_SHARING_COPY_MOVE =
       BASE_URL + "/cms/workboard/ManageItemSharing";
   static const POST_DUPLICATE_ITEM = BASE_URL + "/cms/workboard/DuplicateItems";
+  // workboard api end
+
+  // summary api
+  static const GET_TASK_SUMMARY = BASE_URL + "/cms/task/GetTaskSummary";
+  static const GET_SERVICE_SUMMARY =
+      BASE_URL + "/cms/service/GetServiceSummary";
 }

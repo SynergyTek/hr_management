@@ -50,6 +50,29 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
+  Future<TaskSummaryResponse> getTaskSummaryData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_TASK_SUMMARY;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      //print(response.data);
+      return TaskSummaryResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return TaskSummaryResponse.withError("$err");
+    }
+  }
+
   Future<TaskListResponseModel> getTaskDashBoardData({
     Map<String, dynamic>? queryparams,
     String? taskListStatus,
@@ -121,7 +144,7 @@ class TaskRepository extends AbstractTaskRepository {
       Response response = await _dio.post(
         endpoint,
         queryParameters: queryparams ?? {},
-        data: jsonEncode(taskModel.toJson()) ,
+        data: jsonEncode(taskModel.toJson()),
       );
 
       var result = PostResponse.fromJson(

@@ -11,6 +11,11 @@ enum NTSType {
   note,
   workboard
 }
+enum ChartType {
+  pie,
+  doughnut,
+  
+}
 
 enum FilterType {
   module,

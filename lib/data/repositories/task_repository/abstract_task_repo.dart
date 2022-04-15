@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/task_models/task_summary_response_model.dart';
 
 import '../../../constants/api_endpoints.dart';
 import '../../models/api_models/post_response_model.dart';
@@ -17,6 +18,9 @@ abstract class AbstractTaskRepository {
   Future<TaskListResponseModel> getTaskHomeListData();
 
   Future<TaskListResponseModel> getTaskDashBoardData({
+    Map<String, dynamic>? queryparams,
+  });
+  Future<TaskSummaryResponse> getTaskSummaryData({
     Map<String, dynamic>? queryparams,
   });
 

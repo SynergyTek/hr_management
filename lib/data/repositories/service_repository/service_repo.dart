@@ -48,6 +48,50 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
+  // Future<ServiceListResponse> getLeavesDetails({
+  //   Map<String, dynamic>? queryparams,
+  // }) async {
+  //   final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
+
+  //   try {
+  //     Response response = await _dio.get(
+  //       endpoint,
+  //       queryParameters: queryparams ?? {},
+  //     );
+
+  //     return ServiceListResponse.fromJson(
+  //       response.data,
+  //     );
+  //   } catch (err, stacktrace) {
+  //     print("Stacktrace: $stacktrace \nError: $err");
+
+  //     return ServiceListResponse.withError("$err");
+  //   }
+  // }
+
+  Future<ServiceSummaryResponse> getServiceSummaryData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_SERVICE_SUMMARY;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      //print(response.data);
+      return ServiceSummaryResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceSummaryResponse.withError("$err");
+    }
+  }
+
   Future<ServiceListResponse> getServiceDashBoardData({
     Map<String, dynamic>? queryparams,
   }) async {

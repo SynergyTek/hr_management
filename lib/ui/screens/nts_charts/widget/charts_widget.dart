@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../data/models/nts_charts/chart_model.dart';
 
 class Charts extends StatefulWidget {
-  final List<ChartModel>? chartDataLIst;
+  final List? chartDataLIst;
   final String? chartType;
   final String? nts;
 
@@ -31,7 +30,7 @@ class _ChartsState extends State<Charts> {
                 position: LegendPosition.bottom),
             tooltipBehavior: _tooltipBehavior,
             series: <CircularSeries>[
-                DoughnutSeries<ChartModel, String>(
+                DoughnutSeries<dynamic, String>(
                   dataLabelSettings: DataLabelSettings(
                       isVisible: true,
                       labelAlignment: ChartDataLabelAlignment.top,
@@ -41,10 +40,10 @@ class _ChartsState extends State<Charts> {
                   radius: '100',
                   explodeIndex: 1,
                   dataSource: widget.chartDataLIst,
-                  xValueMapper: (ChartModel data, _) => data.type,
-                  yValueMapper: (ChartModel data, _) => data.value,
+                  xValueMapper: (dynamic data, _) => data.type,
+                  yValueMapper: (dynamic data, _) => data.value,
                   // enableSmartLabels: true,/// TODO Commented due to package incompatability issues
-                  dataLabelMapper: (ChartModel data, _) => '${data.value}',
+                  dataLabelMapper: (dynamic data, _) => '${data.value}',
                 )
               ])
         : widget.chartType == 'pie'
@@ -55,7 +54,7 @@ class _ChartsState extends State<Charts> {
                     overflowMode: LegendItemOverflowMode.wrap,
                     position: LegendPosition.bottom),
                 series: <CircularSeries>[
-                    PieSeries<ChartModel, String>(
+                    PieSeries<dynamic, String>(
                       dataLabelSettings: DataLabelSettings(
                           isVisible: true,
                           labelAlignment: ChartDataLabelAlignment.top,
@@ -65,10 +64,10 @@ class _ChartsState extends State<Charts> {
                       radius: '100',
                       explodeIndex: 1,
                       dataSource: widget.chartDataLIst,
-                      xValueMapper: (ChartModel data, _) => data.type,
-                      yValueMapper: (ChartModel data, _) => data.value,
-                      // enableSmartLabels: true, /// TODO Commented due to package incompatability issues 
-                      dataLabelMapper: (ChartModel data, _) => '${data.value}',
+                      xValueMapper: (dynamic data, _) => data.type,
+                      yValueMapper: (dynamic data, _) => data.value,
+                      // enableSmartLabels: true, /// TODO Commented due to package incompatability issues
+                      dataLabelMapper: (dynamic data, _) => '${data.value}',
                     )
                   ])
             : SfCartesianChart(
@@ -81,22 +80,22 @@ class _ChartsState extends State<Charts> {
                     overflowMode: LegendItemOverflowMode.wrap,
                     position: LegendPosition.bottom),
                 series: <ChartSeries>[
-                    LineSeries<ChartModel, String>(
+                    LineSeries<dynamic, String>(
                       dataSource: widget.chartDataLIst!,
                       name: '${widget.nts} SLA',
-                      xValueMapper: (ChartModel data, _) => data.type,
-                      yValueMapper: (ChartModel data, _) => data.actualSLA,
+                      xValueMapper: (dynamic data, _) => data.type,
+                      yValueMapper: (dynamic data, _) => data.actualSLA,
                       dataLabelSettings: DataLabelSettings(
                         isVisible: true,
                       ),
                       enableTooltip: true,
                       markerSettings: MarkerSettings(isVisible: true),
                     ),
-                    LineSeries<ChartModel, String>(
+                    LineSeries<dynamic, String>(
                       dataSource: widget.chartDataLIst!,
                       name: 'Actual SLA',
-                      xValueMapper: (ChartModel data, _) => data.type,
-                      yValueMapper: (ChartModel data, _) => data.days,
+                      xValueMapper: (dynamic data, _) => data.type,
+                      yValueMapper: (dynamic data, _) => data.days,
                       dataLabelSettings: DataLabelSettings(
                           isVisible: true,
                           labelAlignment: ChartDataLabelAlignment.top,
