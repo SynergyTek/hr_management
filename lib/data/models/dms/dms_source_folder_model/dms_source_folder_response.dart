@@ -1,22 +1,21 @@
-import 'dart:convert';
-
 import 'dms_source_folder_model.dart';
 
 class DMSSourceFolderResponse {
-  final DMSSourceFolderModel? data;
-  // final List<DMSSourceFolderModel>? data;
+  final List<DMSSourceFolderModel>? list;
   String? error;
 
   DMSSourceFolderResponse({
-    required this.data,
+    required this.list,
   });
 
-  DMSSourceFolderResponse.fromJson(Map<String, dynamic> response)
-      // : data = List<DMSSourceFolderModel>.from(json["files"].map((x) => DMSSourceFolderModel.fromJson(x)));
-      : data = DMSSourceFolderModel.fromJson(response);
-  // files: List<Cwd>.from(json["files"].map((x) => Cwd.fromJson(x))),
+  // DMSSourceFolderResponse.fromJson(Map<String, dynamic> response)
+  DMSSourceFolderResponse.fromJson(List response)
+      : list = (response)
+            .map((i) => new DMSSourceFolderModel.fromJson(i))
+            .toList();
+  // : data = DMSSourceFolderModel.fromJson(response);
 
   DMSSourceFolderResponse.withError(String errorValue)
-      : data = null,
+      : list = null,
         error = errorValue;
 }

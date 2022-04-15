@@ -14,7 +14,7 @@ class DMSSourceFolderRepository extends AbstractDMSSourceFolderRepository {
         queryParameters: queryparams ?? {},
       );
 
-      return DMSSourceFolderResponse.fromJson(response.data);
+      return DMSSourceFolderResponse.fromJson(jsonDecode(response.data));
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace");
       print("Error: $err");

@@ -22,8 +22,6 @@ abstract class AbstractServiceRepository {
   // Optional Params to be added to the request if required.
   //  Map<String, dynamic> queryparams,});
 
-  Future<ServiceListResponse> getLeavesDetails();
-
   Future<PostResponse> postAPIData({
     Map<String, dynamic>? queryparams,
     required Service service,

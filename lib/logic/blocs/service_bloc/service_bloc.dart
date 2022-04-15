@@ -42,6 +42,15 @@ class ServiceBloc {
     _subjectServiceSummaryList.sink.add(response);
   }
 
+  // getLeavesDetails({
+  //   Map<String, dynamic>? queryparams,
+  // }) async {
+  //   ServiceListResponse response = await _serviceRepository.getLeavesDetails(
+  //     queryparams: queryparams,
+  //   );
+
+  //   _subjectServiceList.sink.add(response);
+  // }
   getReadServiceListCount({
     Map<String, dynamic>? queryparams,
   }) async {
@@ -59,16 +68,6 @@ class ServiceBloc {
       queryparams: queryparams,
     );
     _subjectReadServiceData.sink.add(response);
-  }
-
-  getLeavesDetails({
-    Map<String, dynamic>? queryparams,
-  }) async {
-    ServiceListResponse response = await _serviceRepository.getLeavesDetails(
-      queryparams: queryparams,
-    );
-
-    _subjectServiceList.sink.add(response);
   }
 
   getServiceDashBoardData({
@@ -94,8 +93,9 @@ class ServiceBloc {
     if (userId != null && userId.isNotEmpty) queryparams["userId"] = userId;
     if (isLeaves != null && response.isSuccess!) {
       if (isLeaves) {
-        subjectServiceList.sink.add(null);
-        getLeavesDetails(queryparams: queryparams);
+        //TODO: add the correct bloc for leave
+        // subjectServiceList.sink.add(null);
+        // getLeavesDetails(queryparams: queryparams);
       } else {
         subjectServiceList.sink.add(null);
         getServiceHomeListData(queryparams: queryparams);

@@ -5,7 +5,8 @@ import 'package:rxdart/rxdart.dart';
 class DMSSourceFolderBloc {
   final DMSSourceFolderRepository _apiRepository = DMSSourceFolderRepository();
 
-  final BehaviorSubject<DMSSourceFolderResponse> _subject = BehaviorSubject();
+  final BehaviorSubject<DMSSourceFolderResponse?> _subject =
+      BehaviorSubject<DMSSourceFolderResponse?>();
 
   Future<DMSSourceFolderResponse> getDMSSourceFolderData({
     Map<String, dynamic>? queryparams,
@@ -24,7 +25,7 @@ class DMSSourceFolderBloc {
     _subject.close();
   }
 
-  BehaviorSubject<DMSSourceFolderResponse> get subject => _subject;
+  BehaviorSubject<DMSSourceFolderResponse?> get subject => _subject;
 }
 
 final dmsSourceFolderBloc = DMSSourceFolderBloc();
