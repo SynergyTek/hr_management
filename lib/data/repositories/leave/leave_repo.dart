@@ -32,8 +32,6 @@ class LeaveRepository extends AbstractLeaveRepository {
   }) async {
     final String endpoint = APIEndpointConstants.GET_HR_POLICY_DOCUMENTS;
     try {
-      queryparams = queryparams;
-
       Response response = await _dio.get(
         endpoint,
         queryParameters: queryparams ?? {},
@@ -57,8 +55,6 @@ class LeaveRepository extends AbstractLeaveRepository {
   }) async {
     final String endpoint = APIEndpointConstants.GET_EMPLOYEE_ATTENDANCE_LIST;
     try {
-      queryparams = queryparams;
-
       Response response = await _dio.get(
         endpoint,
         queryParameters: queryparams ?? {},
