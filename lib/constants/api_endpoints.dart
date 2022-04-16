@@ -1,7 +1,7 @@
 class APIEndpointConstants {
   /// Base URL.
-  static const BASE_URL = 'http://95.111.235.64:85';
-  // static const BASE_URL = 'https://webapidev.aitalkx.com';
+  // static const BASE_URL = 'http://95.111.235.64:85';
+  static const BASE_URL = 'https://webapidev.aitalkx.com';
 
   static const PROFILE_PICTURE_ENDPOINT =
       BASE_URL + '/common/query/GetFile?fileId=';
@@ -407,7 +407,7 @@ class APIEndpointConstants {
   // DMS API:
 
   static const GET_ATTACHMENT_VIEW_WEBVIEW_URL =
-      'https://webapidev.aitalkx.com/CHR/query/ViewAttachment?fileId=';
+      BASE_URL + '/CHR/query/ViewAttachment?fileId=';
 
   static const GET_LEGAL_ENTITY_DATA =
       BASE_URL + '/cms/query/GetLegalEntityNameList';
@@ -520,7 +520,12 @@ class APIEndpointConstants {
   //read Task api
   static const GET_READ_TASK_LIST_COUNT =
       BASE_URL + '/cms/task/ReadTaskListCount';
-  //?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&categoryCodes=
   static const GET_READ_TASK_DATA = BASE_URL + '/cms/task/ReadTaskData';
-  // ?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&categoryCodes=
+// attendance api
+  static const GET_EMPLOYEE_ATTENDANCE_LIST =
+      BASE_URL + "/taa/attendance/GetEmployeeAtendanceList";
+  // ?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&searchStart=&searchEnd=&searchMonth=&searchType=
+//Hr Direct Contract api
+  static const GET_HRDIRECT_CONTRACT = 'https://webapidev.aitalkx.com/chr/hrdirect/Contract';
+  //?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&personId=129b167b-c1e9-4876-874b-015605071a8d
 }

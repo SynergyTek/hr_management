@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/hr_policy_document_model/hr_policy_abstract_model.dart';
+import 'package:hr_management/data/models/hr_policy_document_model/hr_policy_response_model.dart';
 import 'package:hr_management/data/models/hr_policy_document_model/hr_policy_document_model.dart';
 import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../constants/api_endpoints.dart';
+import '../../widgets/attachment_view_webview.dart';
 
 class HrPolicyDocumentScreen extends StatefulWidget {
   const HrPolicyDocumentScreen({Key? key}) : super(key: key);
@@ -85,8 +86,8 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
                                     child: Icon(Icons.remove_red_eye),
                                     onTap: () {
                                       print('object');
-                                      _url = APIEndpointConstants.BASE_URL +
-                                          '/chr/query/ViewAttachment?fileId=' +
+                                      _url = APIEndpointConstants
+                                              .GET_ATTACHMENT_VIEW_WEBVIEW_URL +
                                           list![index].policyDocument!;
                                       _launchURL();
                                     }),

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../models/business_trip_model/business_trip_response_model.dart';
 import '../../../constants/api_endpoints.dart';
-import '../../models/hr_policy_document_model/hr_policy_abstract_model.dart';
+import '../../models/hr_policy_document_model/hr_policy_response_model.dart';
 import '../../models/reimbursement_model/reimbursement_response.dart';
 import '../../models/service_models/service_response.dart';
 import '../../models/time_permission_model/time_permission_response.dart';
@@ -52,4 +52,10 @@ abstract class AbstractLeaveRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
+
+  Future<ServiceListResponse> getEmployeeAttendanceList({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  });
+  
 }
