@@ -30,23 +30,49 @@ class LeaveRepository extends AbstractLeaveRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   }) async {
+    final String endpoint = APIEndpointConstants.GET_HR_POLICY_DOCUMENTS;
     try {
       queryparams = queryparams;
 
       Response response = await _dio.get(
-        APIEndpointConstants.GET_HR_POLICY_DOCUMENTS,
+        endpoint,
         queryParameters: queryparams ?? {},
       );
       print("DIO Response: ${response.data} ${response.data.runtimeType}");
       return HrPolicyDocumentResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print(
-          "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_HR_POLICY_DOCUMENTS}.");
+          "[Exception]: Error occured while fetching the API Response for endpoint: ${endpoint}.");
 
       print("Stack: \n\n\n $stacktrace");
       print("Err: \n\n\n $err");
 
       return HrPolicyDocumentResponse.withError("$err");
+    }
+  }
+
+  Future<ServiceListResponse> getEmployeeAttendanceList({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_EMPLOYEE_ATTENDANCE_LIST;
+    try {
+      queryparams = queryparams;
+
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      print("DIO Response: ${response.data} ${response.data.runtimeType}");
+      return ServiceListResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: ${endpoint}.");
+
+      print("Stack: \n\n\n $stacktrace");
+      print("Err: \n\n\n $err");
+
+      return ServiceListResponse.withError("$err");
     }
   }
 

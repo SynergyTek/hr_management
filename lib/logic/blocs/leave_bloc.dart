@@ -1,12 +1,12 @@
 import 'package:hr_management/data/models/business_trip_model/business_trip_response_model.dart';
 import 'package:rxdart/rxdart.dart';
-import '../../data/models/hr_policy_document_model/hr_policy_abstract_model.dart';
+import '../../data/models/hr_policy_document_model/hr_policy_response_model.dart';
 import '../../data/models/reimbursement_model/reimbursement_response.dart';
 import '../../data/models/service_models/service_response.dart';
 import '../../data/models/time_permission_model/time_permission_response.dart';
 import '../../data/repositories/leave/abstract_leave_repo.dart';
 
-export '../../data/models/hr_policy_document_model/hr_policy_abstract_model.dart';
+export '../../data/models/hr_policy_document_model/hr_policy_response_model.dart';
 export '../../data/models/reimbursement_model/reimbursement_response.dart';
 export '../../data/models/service_models/service_response.dart';
 export '../../data/models/time_permission_model/time_permission_response.dart';
@@ -22,6 +22,9 @@ class LeaveBloc {
       BehaviorSubject<HrPolicyDocumentResponse?>();
 
   final BehaviorSubject<ServiceListResponse> _subjectServiceList =
+      BehaviorSubject<ServiceListResponse>();
+
+  final BehaviorSubject<ServiceListResponse> _subjectGetEmployeeAttendanceList =
       BehaviorSubject<ServiceListResponse>();
 
   final BehaviorSubject<TimePermissionResponse> _subjectTimePermissionList =
@@ -49,6 +52,16 @@ class LeaveBloc {
       queryparams: queryparams,
     );
     _subjectHrPolicyDocument.sink.add(response);
+  }
+
+  getEmployeeAttendanceList({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceListResponse response =
+        await _leaveRepository.getEmployeeAttendanceList(
+      queryparams: queryparams,
+    );
+    _subjectGetEmployeeAttendanceList.sink.add(response);
   }
 
   readLeaveDetailData({
@@ -131,6 +144,7 @@ class LeaveBloc {
     _subjectServiceList.close();
     _subjectTimePermissionList.close();
     _subjectReimbursementList.close();
+    _subjectGetEmployeeAttendanceList.close();
   }
 
   BehaviorSubject<BusinessTripResponse> get subjectBusinessTripList =>
@@ -143,6 +157,8 @@ class LeaveBloc {
       _subjectTimePermissionList;
   BehaviorSubject<ReimbursementResponse?> get subjectReimbursementList =>
       _subjectReimbursementList;
+  BehaviorSubject<ServiceListResponse?> get subjectGetEmployeeAttendanceList =>
+      _subjectGetEmployeeAttendanceList;
 }
 
 final leaveBloc = LeaveBloc();
