@@ -1,5 +1,5 @@
-import 'package:hr_management/data/models/hr_direct_contract_model/hr_direct_contract_response_model.dart';
-import 'package:hr_management/data/repositories/resignation_termination_repo/abstract_resignation_termination_repo.dart';
+import '../../../data/models/hr_direct_contract_model/hr_direct_contract_response_model.dart';
+import '../../../data/repositories/resignation_termination_repo/abstract_resignation_termination_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ResignationTerminationBloc {

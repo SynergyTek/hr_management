@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../logic/blocs/permission_bloc/user_permission_bloc/user_permission_bloc.dart';
 import '../../../routes/route_constants.dart';
+import '../../screens/leaves/employee_attendance_list_screen.dart';
 import '../dotted_divider_widget.dart';
 import 'widgets/drawer_list_tile.dart';
 
@@ -208,6 +209,18 @@ class DrawerWidget extends StatelessWidget {
               MaterialPageRoute(
                   builder: (_) => WorkListMyServiceScreenCount(
                         ntsType: NTSType.task,
+                      )),
+            );
+          },
+        ),
+         DrawerListTileWidget(
+          title: 'Employee Attendance List',
+          listTileOnTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => EmployeeAttendanceListScreen(
+                        
                       )),
             );
           },
@@ -1069,3 +1082,5 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 }
+
+
