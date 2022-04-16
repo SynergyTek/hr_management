@@ -114,3 +114,7 @@ const String BUSINESS_TRIP_SCREEN = '/business_trip_screen';
 
 const String REIMBURSEMENT_SCREEN = "/reimbursement_screen";
 const String TIME_PERMISSION_SCREEN = "/time_permission_screen";
+
+const String RESIGNATION_SCREEN = "/resign_screen";
+const String TERMINATION_SCREEN = "/terminate_screen";
+const String MISCONDUCT_SCREEN = "/misconduct_screen";

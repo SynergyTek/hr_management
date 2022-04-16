@@ -14,7 +14,9 @@ import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_b
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
 import 'package:hr_management/ui/screens/reimbursement_screens/reimbursement_screen.dart';
+import 'package:hr_management/ui/screens/resignation_screen/resignation_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
+import 'package:hr_management/ui/screens/termination_screen/termination_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/duplicate_workboard_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_create_edit_section_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_task_list_screen.dart';
@@ -27,6 +29,7 @@ import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
+import '../ui/screens/misconduct_screen/misconduct_screen.dart';
 import '../ui/screens/my_profile/my_profile_screen.dart';
 
 import '../ui/screens/share/share_screen.dart';
@@ -538,6 +541,21 @@ class AppRouter {
       case REIMBURSEMENT_SCREEN:
         return MaterialPageRoute(
           builder: (_) => ReimbursementScreen(),
+        );
+
+      case RESIGNATION_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => ResignationScreen(),
+        );
+
+      case TERMINATION_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => TerminationScreen(),
+        );
+
+      case MISCONDUCT_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => MisconductScreen(),
         );
 
       case TIME_PERMISSION_SCREEN:

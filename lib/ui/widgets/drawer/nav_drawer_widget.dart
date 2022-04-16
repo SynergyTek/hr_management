@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../logic/blocs/permission_bloc/user_permission_bloc/user_permission_bloc.dart';
 import '../../../routes/route_constants.dart';
+import '../../screens/leaves/employee_attendance_list_screen.dart';
 import '../dotted_divider_widget.dart';
 import 'widgets/drawer_list_tile.dart';
 
@@ -199,11 +200,23 @@ class DrawerWidget extends StatelessWidget {
           },
         ),
         DrawerListTileWidget(
-          title: 'Hr Direct Chart',
+          title: 'HR Direct Chart',
           listTileOnTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => HrDirectChart()),
+              MaterialPageRoute(
+                builder: (_) => HrDirectChart(),
+              ),
+            );
+          },
+        ),
+
+        DrawerListTileWidget(
+          title: 'Employee Attendance List',
+          listTileOnTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => EmployeeAttendanceListScreen()),
             );
           },
         ),
@@ -302,6 +315,51 @@ class DrawerWidget extends StatelessWidget {
           ],
         ),
 
+        //HR ONLY
+        ExpansionListTileWidget(
+          title: "HR Only",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Termination',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  TERMINATION_SCREEN,
+                );
+              },
+            ),
+          ],
+        ),
+
+        //SELF SERVICE
+        ExpansionListTileWidget(
+          title: "Self-service",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Resignation',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  RESIGNATION_SCREEN,
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Misconduct',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  MISCONDUCT_SCREEN,
+                );
+              },
+            ),
+          ],
+        ),
+
         //LEAVE
         ExpansionListTileWidget(
           title: "Leave",
@@ -350,7 +408,7 @@ class DrawerWidget extends StatelessWidget {
           },
         ),
 
-        //
+        //PAYROLL
         ExpansionListTileWidget(
           title: "Payroll",
           children: [
