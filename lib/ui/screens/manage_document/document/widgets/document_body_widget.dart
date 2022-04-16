@@ -27,7 +27,7 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
     super.initState();
 
     documentBloc
-      ..getData(
+      ..getPersonProfileData(
         queryparams: _handleQueryParams(),
       );
   }

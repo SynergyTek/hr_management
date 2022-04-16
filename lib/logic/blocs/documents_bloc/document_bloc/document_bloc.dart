@@ -10,34 +10,13 @@ class DocumentBloc {
       BehaviorSubject<DocumentResponse>();
 
   /// Used to fetch new entries.
-  getData({
+  getPersonProfileData({
     Map<String, dynamic>? queryparams,
   }) async {
-    DocumentResponse response = await _apiRepository.getAPIData(
+    DocumentResponse response = await _apiRepository.getPersonProfileData(
       queryparams: queryparams,
     );
     _subject.sink.add(response);
-  }
-
-  /// Used to create new entries.
-  postData() async {}
-
-  /// Used to update an existing entry.
-  putData() async {
-    // Update here
-    // ...
-
-    // Update the list (in UI) with the getAPI call.
-    getData();
-  }
-
-  /// Used to delete a particular entry.
-  deleteData() async {
-    // Delete here
-    // ...
-
-    // Update the list (in UI) with the getAPI call.
-    getData();
   }
 
   dispose() {

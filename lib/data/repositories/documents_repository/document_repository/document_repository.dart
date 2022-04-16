@@ -9,22 +9,7 @@ part 'document_repository_implementation.dart';
 abstract class AbstractDocumentRepository {
   AbstractDocumentRepository();
 
-  Future<DocumentResponse> getAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic>? queryparams,
-  });
-
-  Future<DocumentResponse> postAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic>? queryparams,
-  });
-
-  Future<DocumentResponse> putAPIData({
-    // Optional Params to be added to the request if required.
-    Map<String, dynamic>? queryparams,
-  });
-
-  Future<DocumentResponse> deleteAPIData({
+  Future<DocumentResponse> getPersonProfileData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });

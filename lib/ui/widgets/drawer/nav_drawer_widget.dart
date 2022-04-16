@@ -165,6 +165,25 @@ class DrawerWidget extends StatelessWidget {
                 );
               },
             ),
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Manage Documents',
+              listTileOnTap: () {
+                Navigator.pushNamed(
+                  context,
+                  PERSON_PROFILE_ROUTE,
+                );
+              },
+            ),
+
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Manage Dependents',
+              listTileOnTap: () {
+                Navigator.pushNamed(
+                  context,
+                  MANAGE_DEPENDENTS,
+                );
+              },
+            ),
           ],
         ),
         DrawerListTileWidget(
