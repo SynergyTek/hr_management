@@ -4,12 +4,9 @@ import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/hr_direct_chart/hr_direct_chart.dart';
 import 'package:hr_management/ui/screens/leaves/get_policy_documents_screen.dart';
-import 'package:hr_management/ui/screens/reimbursement_screens/reimbursement_screen.dart';
 import 'package:hr_management/ui/screens/worklist_my_service/worklist_my_service.dart';
 import 'package:hr_management/ui/widgets/drawer/widgets/expansion_list_tile_widget.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../logic/blocs/permission_bloc/user_permission_bloc/user_permission_bloc.dart';
 import '../../../routes/route_constants.dart';
 import '../../screens/leaves/employee_attendance_list_screen.dart';
@@ -144,7 +141,7 @@ class DrawerWidget extends StatelessWidget {
           },
         ),
 
-        //
+        //DMS
         ExpansionListTileWidget(
           title: "Document Management",
           children: [
@@ -190,36 +187,6 @@ class DrawerWidget extends StatelessWidget {
             ),
           ],
         ),
-        DrawerListTileWidget(
-          title: 'HR Policy',
-          listTileOnTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => HrPolicyDocumentScreen()),
-            );
-          },
-        ),
-        DrawerListTileWidget(
-          title: 'HR Direct Chart',
-          listTileOnTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => HrDirectChart(),
-              ),
-            );
-          },
-        ),
-
-        DrawerListTileWidget(
-          title: 'Employee Attendance List',
-          listTileOnTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => EmployeeAttendanceListScreen()),
-            );
-          },
-        ),
 
         //
         ExpansionListTileWidget(
@@ -240,9 +207,11 @@ class DrawerWidget extends StatelessWidget {
             DrawerListTileWidget(
               title: '\t\t\t\t\t Employee Dashboard',
               listTileOnTap: () {
-                Navigator.pushReplacementNamed(
+                Navigator.push(
                   context,
-                  "",
+                  MaterialPageRoute(
+                    builder: (_) => HrDirectChart(),
+                  ),
                 );
               },
             ),
@@ -302,13 +271,13 @@ class DrawerWidget extends StatelessWidget {
             //   },
             // ),
 
-            //
+            //POLICY DOCUMENT
             DrawerListTileWidget(
               title: '\t\t\t\t\t Policy Documents',
               listTileOnTap: () {
-                Navigator.pushReplacementNamed(
+                Navigator.push(
                   context,
-                  "",
+                  MaterialPageRoute(builder: (_) => HrPolicyDocumentScreen()),
                 );
               },
             ),
@@ -454,9 +423,10 @@ class DrawerWidget extends StatelessWidget {
             DrawerListTileWidget(
               title: '\t\t\t\t\t Attendance Details',
               listTileOnTap: () {
-                Navigator.pushReplacementNamed(
+                Navigator.push(
                   context,
-                  "",
+                  MaterialPageRoute(
+                      builder: (_) => EmployeeAttendanceListScreen()),
                 );
               },
             ),
