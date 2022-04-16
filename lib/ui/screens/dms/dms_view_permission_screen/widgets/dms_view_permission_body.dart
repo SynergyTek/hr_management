@@ -57,7 +57,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
             if (snapshot.data == null || snapshot.data!.data!.length == 0) {
               return Column(
                 children: [
-                  _breadCrumb(),
+                  // _breadCrumb(),
                   Expanded(child: EmptyListWidget()),
                 ],
               );
@@ -65,7 +65,7 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
             _permission = snapshot.data!.data;
             return Column(
               children: [
-                _breadCrumb(),
+                // _breadCrumb(),
                 Expanded(
                   child: Listizer(
                     listItems: _permission,
@@ -140,7 +140,8 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
                     Row(children: <Widget>[
                       Text("Type: "),
                       Text(_permission![index].permissionType != null
-                          ? dmsPermissionType[_permission![index].permissionType!]!
+                          ? dmsPermissionType[
+                              _permission![index].permissionType!]!
                           : "-"),
                     ])
                   ]),

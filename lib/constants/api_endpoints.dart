@@ -1,7 +1,7 @@
 class APIEndpointConstants {
   /// Base URL.
-  static const BASE_URL = 'http://95.111.235.64:85';
-  // static const BASE_URL = 'https://webapidev.aitalkx.com';
+  // static const BASE_URL = 'http://95.111.235.64:85';
+  static const BASE_URL = 'https://webapidev.aitalkx.com';
 
   static const PROFILE_PICTURE_ENDPOINT =
       BASE_URL + '/common/query/GetFile?fileId=';
@@ -375,9 +375,9 @@ class APIEndpointConstants {
   static const GET_CREATE_WORKSPACE_DATA =
       BASE_URL + '/api/command/CreateWorkspace';
 
-  static const GET_WORKSPACE_DATA = BASE_URL + '/dms/query/ReadWorkspaceData';
+  static const GET_WORKSPACE_DATA = BASE_URL + '/dms/workspace/ReadDataGrid';
 
-  static const DELETE_WORKSPACE = BASE_URL + '/dms/query/DeleteWorkspace';
+  static const DELETE_WORKSPACE = BASE_URL + '/dms/workspace/DeleteWorkspace';
 
   static const POST_MANAGE_NEW_FOLDER_DATA =
       BASE_URL + '/api/command/ManageNewFolder';
@@ -387,10 +387,10 @@ class APIEndpointConstants {
   static const POST_MANAGE_UPLOADED_FILE_DATA = BASE_URL + '/dms/query/';
 
   static const GET_PARENT_WORKSPACE_ID_NAME_LIST_DATA =
-      BASE_URL + '/dms/query/ReadParentWorkspaceIdNameList';
+      BASE_URL + '/dms/workspace/GetParentWorkspace';
 
   static const GET_DOCUMENT_TEMPLATE_ID_NAME_LIST_BY_USER_DATA = BASE_URL +
-      '/dms/query/GetDocumentTemplateIdNameListByUser?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+      '/dms/workspace/GetDocumentTemplateIdNameListByUser?userId=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const GET_DOCUMENT_ARCHIVE_DATA =
       BASE_URL + '/dms/query/GetArchivedDocumentData';

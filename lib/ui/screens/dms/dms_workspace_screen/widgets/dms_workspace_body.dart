@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_model.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_response.dart';
@@ -9,7 +10,11 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../../../data/enums/enums.dart';
+import '../../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../listizer/listizer.dart';
+import '../../../../widgets/custom_icons.dart';
+import '../../../manage_document/document/widgets/document_bottom_sheet_widget.dart';
 
 class DMSWorkspaceBody extends StatefulWidget {
   @override
@@ -29,7 +34,14 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
   }
 
   apiCall() {
-    dmsManageWorkspaceBloc..getWorkspaceData(queryparams: {});
+    dmsManageWorkspaceBloc
+      ..getWorkspaceData(
+        queryparams: {
+          'userid':
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+          "portalName": "HR"
+        },
+      );
   }
 
   @override
@@ -53,124 +65,131 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                   listItems: _itemList,
                   filteredSearchList: _filteredItemList,
                   itemBuilder: (context, index) {
-                    return Slidable(
-                      actionPane: SlidableStrechActionPane(),
-                      key: Key(_itemList![index].workspaceName!),
-                      controller: _slidableController,
-                      direction: Axis.horizontal,
-                      actionExtentRatio: 0.20,
-                      actions: <Widget>[
-                        IconSlideAction(
-                          caption: 'Permission',
-                          color: Colors.blue,
-                          icon: Icons.share,
-                          onTap: () => permissionScreen(),
+                    return
+                        // Slidable(
+                        //   actionPane: SlidableStrechActionPane(),
+                        //   key: Key(_itemList![index].workspaceName!),
+                        //   controller: _slidableController,
+                        //   direction: Axis.horizontal,
+                        //   actionExtentRatio: 0.20,
+                        //   actions: <Widget>[
+                        //     IconSlideAction(
+                        //       caption: 'Permission',
+                        //       color: Colors.blue,
+                        //       icon: Icons.share,
+                        //       onTap: () => permissionScreen(),
+                        //     ),
+                        //     IconSlideAction(
+                        //         caption: 'Delete',
+                        //         color: Colors.red[300],
+                        //         icon: Icons.delete,
+                        //         onTap: () {
+                        //           deleteDialog(_itemList![index].noteId);
+                        //           if (dmsManageWorkspaceBloc
+                        //               .getAPISubject.stream.hasValue) {
+                        //             if (dmsManageWorkspaceBloc
+                        //                 .getAPISubject.stream.value) {
+                        //               displaySnackBar(
+                        //                   text: 'File deleted successfully',
+                        //                   context: context);
+                        //               dmsManageWorkspaceBloc
+                        //                   .getWorkspaceSubject.sink
+                        //                   .add(null);
+                        //               apiCall();
+                        //               setState(() {
+                        //                 isVisible = false;
+                        //               });
+                        //             } else {
+                        //               displaySnackBar(
+                        //                   text: 'Unable to delete file',
+                        //                   context: context);
+                        //               setState(() {
+                        //                 isVisible = false;
+                        //               });
+                        //             }
+                        //           }
+                        //         }),
+                        //   ],
+                        //   child:
+                        Card(
+                      elevation: 4,
+                      child: ListTile(
+                        tileColor: Theme.of(context).notInvertedColor,
+                        title: Text(
+                          _itemList![index].workspaceName != null
+                              ? _itemList![index].workspaceName!
+                              : "-",
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.headline6,
                         ),
-                        IconSlideAction(
-                            caption: 'Delete',
-                            color: Colors.red[300],
-                            icon: Icons.delete,
-                            onTap: () {
-                              deleteDialog(_itemList![index].noteId);
-                              if (dmsManageWorkspaceBloc
-                                  .getAPISubject.stream.hasValue) {
-                                if (dmsManageWorkspaceBloc
-                                    .getAPISubject.stream.value) {
-                                  displaySnackBar(
-                                      text: 'File deleted successfully',
-                                      context: context);
-                                  dmsManageWorkspaceBloc
-                                      .getWorkspaceSubject.sink
-                                      .add(null);
-                                  apiCall();
-                                  setState(() {
-                                    isVisible = false;
-                                  });
-                                } else {
-                                  displaySnackBar(
-                                      text: 'Unable to delete file',
-                                      context: context);
-                                  setState(() {
-                                    isVisible = false;
-                                  });
-                                }
-                              }
-                            }),
-                      ],
-                      child: Card(
-                        elevation: 4,
-                        child: ListTile(
-                          tileColor: Theme.of(context).notInvertedColor,
-                          title: Text(
-                            _itemList![index].workspaceName != null
-                                ? _itemList![index].workspaceName!
-                                : "-",
-                            maxLines: 2,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          subtitle: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Text("Parent Name: "),
-                                        Text(
-                                            _itemList![index].parentName != null
-                                                ? _itemList![index].parentName!
-                                                : "-"),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                        subtitle: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text("Parent Name: "),
+                                      Text(_itemList![index].parentName != null
+                                          ? _itemList![index].parentName!
+                                          : "-"),
+                                    ],
+                                  )
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Text("Legal Entity Name: "),
-                                        Text(_itemList![index]
-                                                    .legalEntityName !=
-                                                null
-                                            ? _itemList![index].legalEntityName!
-                                            : "-"),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text("Legal Entity Name: "),
+                                      Text(_itemList![index].legalEntityName !=
+                                              null
+                                          ? _itemList![index].legalEntityName!
+                                          : "-"),
+                                    ],
+                                  )
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Text("Created By Name: "),
-                                        Text(_itemList![index].createdbyName !=
-                                                null
-                                            ? _itemList![index].createdbyName!
-                                            : "-"),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text("Created By Name: "),
+                                      Text(_itemList![index].createdbyName !=
+                                              null
+                                          ? _itemList![index].createdbyName!
+                                          : "-"),
+                                    ],
+                                  )
+                                ],
                               ),
-                            ],
-                          ),
-                          onTap: () => _handleEditWorkspaceOnTap(
-                              id: _itemList![index].noteId),
+                            ),
+                          ],
                         ),
+                        onTap: () => bottomSheet(_itemList![index]
+                            // _itemList![index].workspaceName,
+                            // _itemList![index].workspaceId
+                            // snapshot.data!.list[0].fileId,
+                            // filterChildList[index].name,
+                            // filterChildList[index].id,
+                            // snapshot.data!.data!.cwd!.id,
+                            // data: filterChildList[index],
+                            ),
                       ),
+                      // ),
                     );
                   },
                 );
@@ -191,6 +210,46 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
     );
   }
 
+  bottomSheet(
+    WorkspaceViewModel? model,
+    // String? path,
+  ) {
+    showDocumentBottomSheet(
+      bottomSheetDataList: [
+        ListTile(
+          leading: Icon(CustomIcons.folder_upload),
+          title: Text('Permission'),
+          onTap: () => permissionScreen(model),
+          // onTap: () => deleteDialog(id),
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.copy),
+          title: Text('Edit'),
+          onTap: () => _handleEditWorkspaceOnTap(id: model?.workspaceId),
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.trash),
+          title: Text('Delete'),
+          onTap: () => deleteDialog(model?.workspaceId),
+        ),
+      ],
+    );
+  }
+
+  showDocumentBottomSheet({required List<Widget> bottomSheetDataList}) {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      isScrollControlled: false,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return DocumentBottomSheetWidget(
+          bottomSheetDataList: bottomSheetDataList,
+        );
+      },
+    );
+  }
+
   _handleEditWorkspaceOnTap({
     String? id,
   }) {
@@ -202,11 +261,17 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
     );
   }
 
-  permissionScreen() {
+  permissionScreen(WorkspaceViewModel? model) {
     print('permission----');
     Navigator.pushNamed(
       context,
-      DMS_ADD_EDIT_PERMISSION_ROUTE,
+      DMS_VIEW_PERMISSION_ROUTE,
+      arguments: ScreenArguments(
+          arg1: model?.noteId,
+          arg2: model?.parentNoteId,
+          arg3: model?.workspaceId,
+          val1: false),
+      // DMS_ADD_EDIT_PERMISSION_ROUTE,
     );
     // return Container();
   }
