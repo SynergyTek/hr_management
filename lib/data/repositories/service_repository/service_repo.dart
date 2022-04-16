@@ -48,10 +48,54 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
-  Future<ServiceListResponse> getLeavesDetails({
+  // Future<ServiceListResponse> getLeavesDetails({
+  //   Map<String, dynamic>? queryparams,
+  // }) async {
+  //   final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
+
+  //   try {
+  //     Response response = await _dio.get(
+  //       endpoint,
+  //       queryParameters: queryparams ?? {},
+  //     );
+
+  //     return ServiceListResponse.fromJson(
+  //       response.data,
+  //     );
+  //   } catch (err, stacktrace) {
+  //     print("Stacktrace: $stacktrace \nError: $err");
+
+  //     return ServiceListResponse.withError("$err");
+  //   }
+  // }
+
+  Future<ServiceSummaryResponse> getServiceSummaryData({
     Map<String, dynamic>? queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.LEAVE_DETAILS;
+    final String endpoint = APIEndpointConstants.GET_SERVICE_SUMMARY;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+      //print(response.data);
+      return ServiceSummaryResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceSummaryResponse.withError("$err");
+    }
+  }
+
+  Future<ServiceListResponse> getReadServiceData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_READ_SERVICE_DATA;
 
     try {
       Response response = await _dio.get(
@@ -63,9 +107,34 @@ class ServiceRepository extends AbstractServiceRepository {
         response.data,
       );
     } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
       return ServiceListResponse.withError("$err");
+    }
+  }
+
+  Future<ServiceMapResponse> getReadServiceListCount({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_READ_SERVICE_LIST_COUNT;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return ServiceMapResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceMapResponse.withError("$err");
     }
   }
 

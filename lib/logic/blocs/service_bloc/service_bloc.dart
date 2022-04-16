@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import '../../../data/models/api_models/post_response_model.dart';
 import '../../../data/models/service_models/service.dart';
 
 import '../../../data/models/service_models/service_response.dart';
+import '../../../data/models/service_models/service_summary_response_model.dart';
 import '../../../data/repositories/service_repository/abstract_service_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -15,6 +15,13 @@ class ServiceBloc {
 
   final BehaviorSubject<ServiceListResponse?> _subjectServiceList =
       BehaviorSubject<ServiceListResponse?>();
+  final BehaviorSubject<ServiceMapResponse?> _subjectReadServiceListCount =
+      BehaviorSubject<ServiceMapResponse?>();
+  final BehaviorSubject<ServiceListResponse?> _subjectReadServiceData =
+      BehaviorSubject<ServiceListResponse?>();
+
+  final BehaviorSubject<ServiceSummaryResponse?> _subjectServiceSummaryList =
+      BehaviorSubject<ServiceSummaryResponse?>();
 
   getServiceDetail({
     Map<String, dynamic>? queryparams,
@@ -25,14 +32,42 @@ class ServiceBloc {
     _subject.sink.add(response);
   }
 
-  getLeavesDetails({
+  getServiceSummary({
     Map<String, dynamic>? queryparams,
   }) async {
-    ServiceListResponse response = await _serviceRepository.getLeavesDetails(
+    ServiceSummaryResponse response =
+        await _serviceRepository.getServiceSummaryData(
       queryparams: queryparams,
     );
+    _subjectServiceSummaryList.sink.add(response);
+  }
 
-    _subjectServiceList.sink.add(response);
+  // getLeavesDetails({
+  //   Map<String, dynamic>? queryparams,
+  // }) async {
+  //   ServiceListResponse response = await _serviceRepository.getLeavesDetails(
+  //     queryparams: queryparams,
+  //   );
+
+  //   _subjectServiceList.sink.add(response);
+  // }
+  getReadServiceListCount({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceMapResponse response =
+        await _serviceRepository.getReadServiceListCount(
+      queryparams: queryparams,
+    );
+    _subjectReadServiceListCount.sink.add(response);
+  }
+
+  getReadServiceData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceListResponse response = await _serviceRepository.getReadServiceData(
+      queryparams: queryparams,
+    );
+    _subjectReadServiceData.sink.add(response);
   }
 
   getServiceDashBoardData({
@@ -58,8 +93,9 @@ class ServiceBloc {
     if (userId != null && userId.isNotEmpty) queryparams["userId"] = userId;
     if (isLeaves != null && response.isSuccess!) {
       if (isLeaves) {
-        subjectServiceList.sink.add(null);
-        getLeavesDetails(queryparams: queryparams);
+        //TODO: add the correct bloc for leave
+        // subjectServiceList.sink.add(null);
+        // getLeavesDetails(queryparams: queryparams);
       } else {
         subjectServiceList.sink.add(null);
         getServiceHomeListData(queryparams: queryparams);
@@ -101,11 +137,20 @@ class ServiceBloc {
   dispose() {
     _subject.close();
     _subjectServiceList.close();
+    _subjectServiceSummaryList.close();
+    _subjectReadServiceListCount.close();
+    _subjectReadServiceData.close();
   }
 
   BehaviorSubject<ServiceResponse?> get subject => _subject;
   BehaviorSubject<ServiceListResponse?> get subjectServiceList =>
       _subjectServiceList;
+  BehaviorSubject<ServiceMapResponse?> get subjectReadServiceListCount =>
+      _subjectReadServiceListCount;
+  BehaviorSubject<ServiceListResponse?> get subjectReadServiceData =>
+      _subjectReadServiceData;
+  BehaviorSubject<ServiceSummaryResponse?> get subjectServiceSummaryList =>
+      _subjectServiceSummaryList;
 }
 
 final serviceBloc = ServiceBloc();

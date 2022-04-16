@@ -1,3 +1,4 @@
+import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 
@@ -15,8 +16,10 @@ class ScreenArguments {
   final NTSType? ntstype;
   final PortalType? portalType;
   OnTapPressedCallBack? callBack;
-  final Cwd? dmsParentModel;
-  final List<Cwd>? dmsParentModelList;
+  final DMSSourceFolderModel? dmsParentModel;
+  final List<DMSSourceFolderModel>? dmsParentModelList;
+  // final Cwd? dmsParentModel;
+  // final List<Cwd>? dmsParentModelList;
   final List<String?>? list1;
   final List<String>? list2;
   final dynamic dynamicArgument;

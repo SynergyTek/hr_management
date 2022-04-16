@@ -42,7 +42,7 @@ class ServiceListCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 6.0, bottom: 6.0),
               child: Row(
                 children: <Widget>[
-                  Text("From: "),
+                  Text("Service Status: "),
                   Flexible(
                     child: Text(
                       ownerUserName(index),
@@ -89,22 +89,22 @@ class ServiceListCard extends StatelessWidget {
   }
 
   String serviceSubject(int index) {
-    return serviceList![index].serviceSubject ?? "-";
+    return serviceList?[index].serviceName ?? "-";
   }
 
   String serviceNoValue(int index) {
-    return serviceList![index].serviceNo ?? "-";
+    return serviceList?[index].serviceNo ?? "-";
   }
 
   String ownerUserName(int index) {
-    return serviceList![index].ownerUserUserName ?? "-";
+    return serviceList?[index].ownerUserUserName ?? "-";
   }
 
   String noteStatusName(int index) {
-    return serviceList![index].serviceStatusName ?? "-";
+    return serviceList?[index].serviceStatusName ?? "-";
   }
 
   String expiryDate(int index) {
-    return serviceList![index].dueDateDisplay ?? "-";
+    return serviceList?[index].dueDateDisplay ?? "-";
   }
 }

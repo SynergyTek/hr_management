@@ -44,8 +44,7 @@ class _NTSChartState extends State<NTSChart> {
       ..getChartByStatus(
         queryparams: {
           'userid':
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
-                  '',
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         },
         ntsType: widget.ntsType,
       );
@@ -54,8 +53,7 @@ class _NTSChartState extends State<NTSChart> {
       ..getChartByUserType(
         queryparams: {
           'userid':
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
-                  '',
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         },
         ntsType: widget.ntsType,
       );

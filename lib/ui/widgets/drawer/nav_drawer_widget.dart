@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/screens/hr_direct_chart/hr_direct_chart.dart';
 import 'package:hr_management/ui/screens/leaves/get_policy_documents_screen.dart';
 import 'package:hr_management/ui/screens/reimbursement_screens/reimbursement_screen.dart';
+import 'package:hr_management/ui/screens/worklist_my_service/worklist_my_service.dart';
 import 'package:hr_management/ui/widgets/drawer/widgets/expansion_list_tile_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -195,6 +198,39 @@ class DrawerWidget extends StatelessWidget {
             );
           },
         ),
+        DrawerListTileWidget(
+          title: 'Hr Direct Chart',
+          listTileOnTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => HrDirectChart()),
+            );
+          },
+        ),
+        DrawerListTileWidget(
+          title: 'WorkList My Service',
+          listTileOnTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => WorkListMyServiceScreenCount(
+                        ntsType: NTSType.service,
+                      )),
+            );
+          },
+        ),
+        DrawerListTileWidget(
+          title: 'WorkList My Task',
+          listTileOnTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => WorkListMyServiceScreenCount(
+                        ntsType: NTSType.task,
+                      )),
+            );
+          },
+        ),
 
         //
         ExpansionListTileWidget(
@@ -367,7 +403,7 @@ class DrawerWidget extends StatelessWidget {
               listTileOnTap: () {
                 Navigator.pushReplacementNamed(
                   context,
-                  "",
+                  TIME_PERMISSION_SCREEN,
                 );
               },
             ),

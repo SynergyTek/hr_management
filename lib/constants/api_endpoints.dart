@@ -99,8 +99,6 @@ class APIEndpointConstants {
 
   static const GET_SERVICE_DETAILS = '$BASE_URL/nts/query/GetServiceDetails';
 
-  static const LEAVE_DETAILS = '$BASE_URL/taa/query/leavedetail';
-
   static const MANAGE_SERVICE = '$BASE_URL/nts/command/ManageService';
 
   static const POST_SERVICE_COMMENT =
@@ -506,4 +504,23 @@ class APIEndpointConstants {
   static const POST_MANAGE_ITEM_SHARING_COPY_MOVE =
       BASE_URL + "/cms/workboard/ManageItemSharing";
   static const POST_DUPLICATE_ITEM = BASE_URL + "/cms/workboard/DuplicateItems";
+  // workboard api end
+
+  // summary api
+  static const GET_TASK_SUMMARY = BASE_URL + "/cms/task/GetTaskSummary";
+  static const GET_SERVICE_SUMMARY =
+      BASE_URL + "/cms/service/GetServiceSummary";
+
+  // read Service Api
+  static const GET_READ_SERVICE_LIST_COUNT =
+      BASE_URL + '/cms/service/ReadServiceListCount';
+  static const GET_READ_SERVICE_DATA =
+      BASE_URL + '/cms/service/ReadServiceData';
+
+  //read Task api
+  static const GET_READ_TASK_LIST_COUNT =
+      BASE_URL + '/cms/task/ReadTaskListCount';
+  //?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&categoryCodes=
+  static const GET_READ_TASK_DATA = BASE_URL + '/cms/task/ReadTaskData';
+  // ?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&categoryCodes=
 }

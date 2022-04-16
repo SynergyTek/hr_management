@@ -113,3 +113,4 @@ const String CREATE_SECTION_WORKBOARD_SCREEN =
 const String BUSINESS_TRIP_SCREEN = '/business_trip_screen';
 
 const String REIMBURSEMENT_SCREEN = "/reimbursement_screen";
+const String TIME_PERMISSION_SCREEN = "/time_permission_screen";

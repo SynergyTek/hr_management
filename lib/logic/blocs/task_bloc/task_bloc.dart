@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/data/models/task_models/task_summary_response_model.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../../../data/models/api_models/post_response_model.dart';
@@ -15,9 +13,14 @@ class TaskBloc {
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
   final BehaviorSubject<TaskListResponseModel?> _subjectTaskList =
       BehaviorSubject<TaskListResponseModel?>();
-
   final BehaviorSubject<TaskResponseModel?> _subjectGetTaskDetails =
       BehaviorSubject<TaskResponseModel?>();
+  final BehaviorSubject<TaskSummaryResponse?> _subjectTaskSummaryList =
+      BehaviorSubject<TaskSummaryResponse?>();
+  final BehaviorSubject<TaskListDynamicResponse?> _subjectReadTaskListCount =
+      BehaviorSubject<TaskListDynamicResponse?>();
+  final BehaviorSubject<TaskListResponseModel?> _subjectReadTaskData =
+      BehaviorSubject<TaskListResponseModel?>();
 
   /// Used to fetch new entries.
   getTaskHomeListData({
@@ -83,6 +86,34 @@ class TaskBloc {
     _subjectTaskList.sink.add(response);
   }
 
+  getTaskSummary({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    TaskSummaryResponse response = await _taskRepository.getTaskSummaryData(
+      queryparams: queryparams,
+    );
+    _subjectTaskSummaryList.sink.add(response);
+  }
+
+  getReadTaskListCount({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    TaskListDynamicResponse response =
+        await _taskRepository.getReadTaskListCount(
+      queryparams: queryparams,
+    );
+    _subjectReadTaskListCount.sink.add(response);
+  }
+
+  getReadTaskData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    TaskListResponseModel response = await _taskRepository.getReadTaskData(
+      queryparams: queryparams,
+    );
+    _subjectReadTaskData.sink.add(response);
+  }
+
   loadServiceAdhocTaskData({
     Map<String, dynamic>? queryparams,
     String? taskListStatus,
@@ -115,12 +146,21 @@ class TaskBloc {
   dispose() {
     _subjectTaskList.close();
     _subjectGetTaskDetails.close();
+    _subjectTaskSummaryList.close();
+    _subjectReadTaskListCount.close();
+    _subjectReadTaskData.close();
   }
 
   BehaviorSubject<TaskListResponseModel?> get subjectTaskList =>
       _subjectTaskList;
   BehaviorSubject<TaskResponseModel?> get subjectGetTaskDetails =>
       _subjectGetTaskDetails;
+  BehaviorSubject<TaskSummaryResponse?> get subjectTaskSummaryList =>
+      _subjectTaskSummaryList;
+  BehaviorSubject<TaskListDynamicResponse?> get subjectReadTaskListCount =>
+      _subjectReadTaskListCount;
+  BehaviorSubject<TaskListResponseModel?> get subjectReadTaskData =>
+      _subjectReadTaskData;
 }
 
 final taskBloc = TaskBloc();
