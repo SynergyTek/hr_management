@@ -199,11 +199,13 @@ class DrawerWidget extends StatelessWidget {
           },
         ),
         DrawerListTileWidget(
-          title: 'Hr Direct Chart',
+          title: 'HR Direct Chart',
           listTileOnTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => HrDirectChart()),
+              MaterialPageRoute(
+                builder: (_) => HrDirectChart(),
+              ),
             );
           },
         ),
@@ -320,6 +322,49 @@ class DrawerWidget extends StatelessWidget {
                 Navigator.pushReplacementNamed(
                   context,
                   "",
+                );
+              },
+            ),
+          ],
+        ),
+
+        ExpansionListTileWidget(
+          title: "HR Only",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Termination',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  TERMINATION_SCREEN,
+                );
+              },
+            ),
+          ],
+        ),
+
+        ExpansionListTileWidget(
+          title: "Self-service",
+          children: [
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Resignation',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  RESIGNATION_SCREEN,
+                );
+              },
+            ),
+
+            //
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t Misconduct',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  MISCONDUCT_SCREEN,
                 );
               },
             ),

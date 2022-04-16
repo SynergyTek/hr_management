@@ -5,6 +5,8 @@ import 'package:hr_management/data/models/task_models/task_summary_response_mode
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/widgets/dotted_divider_widget.dart';
+import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import '../../../data/enums/enums.dart';
 import '../nts_charts/widget/charts_widget.dart';
 import 'package:sizer/sizer.dart';
@@ -44,121 +46,108 @@ class _HrDirectChartState extends State<HrDirectChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('HR Direct Chart')),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            chartCard(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: 4.h,
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    color: Colors.green.shade200,
-                    child: Text(
-                      'My Tasks',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  ),
-                  StreamBuilder<TaskSummaryResponse?>(
-                      stream: taskBloc.subjectTaskSummaryList.stream,
-                      builder: (context,
-                          AsyncSnapshot<TaskSummaryResponse?> snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data == null) {
-                            return Center(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('No Data'),
-                            ));
-                          }
-                          var list = [];
-                          snapshot.data?.data?.forEach(
-                            (k, v) => list.add(
-                              ChartData(
-                                k,
-                                v,
-                              ),
-                            ),
-                          );
-                          print(list);
+      appBar: AppBar(
+        title: Text('HR Direct Chart'),
+      ),
+      drawer: DrawerWidget(),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          Text(
+            'My Tasks',
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
 
-                          return Charts(
-                            chartDataLIst: list,
-                            chartType: 'donut',
-                          );
-                        } else {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      }),
-                ],
-              ),
+          //
+          Expanded(
+            child: StreamBuilder<TaskSummaryResponse?>(
+                stream: taskBloc.subjectTaskSummaryList.stream,
+                builder:
+                    (context, AsyncSnapshot<TaskSummaryResponse?> snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data == null) {
+                      return Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('No Data'),
+                      ));
+                    }
+                    var list = [];
+                    snapshot.data?.data?.forEach(
+                      (k, v) => list.add(
+                        ChartData(
+                          k,
+                          v,
+                        ),
+                      ),
+                    );
+                    print(list);
+
+                    return Charts(
+                      chartDataLIst: list,
+                      chartType: 'donut',
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+          ),
+          //
+          const DottedDividerWidget(),
+
+          //
+          Text(
+            'My Services',
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
             ),
-            chartCard(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: 4.h,
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    color: Colors.blue.shade200,
-                    child: Text(
-                      'My Services',
-                      style: TextStyle(fontSize: 14),
+          ),
+
+          //
+          Expanded(
+            child: StreamBuilder<ServiceSummaryResponse?>(
+              stream: serviceBloc.subjectServiceSummaryList.stream,
+              builder:
+                  (context, AsyncSnapshot<ServiceSummaryResponse?> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.data == null) {
+                    return Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('No Data'),
+                    ));
+                  }
+                  var list = [];
+                  snapshot.data?.data?.forEach(
+                    (k, v) => list.add(
+                      ChartData(
+                        k,
+                        v,
+                      ),
                     ),
-                  ),
-                  StreamBuilder<ServiceSummaryResponse?>(
-                      stream: serviceBloc.subjectServiceSummaryList.stream,
-                      builder: (context,
-                          AsyncSnapshot<ServiceSummaryResponse?> snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data!.data == null) {
-                            return Center(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('No Data'),
-                            ));
-                          }
-                          var list = [];
-                          snapshot.data?.data?.forEach(
-                            (k, v) => list.add(
-                              ChartData(
-                                k,
-                                v,
-                              ),
-                            ),
-                          );
-                          return Charts(
-                            chartDataLIst: list,
-                            chartType: 'pie',
-                          );
-                        } else {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      }),
-                ],
-              ),
+                  );
+                  return Charts(
+                    chartDataLIst: list,
+                    chartType: 'pie',
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
-  }
-
-  Widget chartCard({Widget? child}) {
-    return Container(
-        margin: EdgeInsets.symmetric(vertical: 0.2.h, horizontal: 1.w),
-        child: Card(
-          elevation: 6,
-          child: child,
-        ));
   }
 }
 

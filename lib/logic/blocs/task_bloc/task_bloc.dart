@@ -89,6 +89,8 @@ class TaskBloc {
   getTaskSummary({
     Map<String, dynamic>? queryparams,
   }) async {
+    _subjectTaskSummaryList.sink.add(null);
+
     TaskSummaryResponse response = await _taskRepository.getTaskSummaryData(
       queryparams: queryparams,
     );

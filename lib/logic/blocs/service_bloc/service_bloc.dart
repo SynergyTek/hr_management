@@ -35,6 +35,8 @@ class ServiceBloc {
   getServiceSummary({
     Map<String, dynamic>? queryparams,
   }) async {
+    _subjectServiceSummaryList.sink.add(null);
+
     ServiceSummaryResponse response =
         await _serviceRepository.getServiceSummaryData(
       queryparams: queryparams,
