@@ -5,7 +5,7 @@ part of 'document_repository.dart';
 class DocumentRepository extends AbstractDocumentRepository {
   final Dio _dio = Dio();
 
-  Future<DocumentResponse> getAPIData({
+  Future<DocumentResponse> getPersonProfileData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   }) async {
@@ -23,26 +23,5 @@ class DocumentRepository extends AbstractDocumentRepository {
 
       return DocumentResponse.withError("$err");
     }
-  }
-
-  @override
-  Future<DocumentResponse> deleteAPIData({
-    Map<String, dynamic>? queryparams,
-  }) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DocumentResponse> postAPIData({
-    Map<String, dynamic>? queryparams,
-  }) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DocumentResponse> putAPIData({
-    Map<String, dynamic>? queryparams,
-  }) {
-    throw UnimplementedError();
   }
 }

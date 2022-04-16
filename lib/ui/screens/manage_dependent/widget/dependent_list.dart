@@ -28,9 +28,6 @@ class _DependentListState extends State<DependentList> {
     queryparams['userId'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
-    queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
-
     dependentBloc..getReadDependantList(queryparams: queryparams);
   }
 
