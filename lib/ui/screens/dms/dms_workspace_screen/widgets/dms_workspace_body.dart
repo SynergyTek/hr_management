@@ -225,12 +225,12 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
         ListTile(
           leading: Icon(CustomIcons.copy),
           title: Text('Edit'),
-          onTap: () => _handleEditWorkspaceOnTap(id: model?.workspaceId),
+          onTap: () => _handleEditWorkspaceOnTap(id: model?.noteId),
         ),
         ListTile(
           leading: Icon(CustomIcons.trash),
           title: Text('Delete'),
-          onTap: () => deleteDialog(model?.workspaceId),
+          onTap: () => deleteDialog(model?.noteId),
         ),
       ],
     );
@@ -252,6 +252,7 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
 
   _handleEditWorkspaceOnTap({
     String? id,
+    String? parentNoteId,
   }) {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
@@ -297,14 +298,17 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
               ),
               onPressed: () {
                 Navigator.of(context).pop(); //Pop dialog box
+                Navigator.of(context).pop(); //Pop dialog box
+
                 dmsManageWorkspaceBloc
-                  ..deleteWorkspace(queryparams: {"NoteId": '$id'});
+                  ..deleteWorkspace(queryparams: {"noteId": '$id'});
                 setState(() {
                   isVisible = true;
                 });
 
                 if (dmsManageWorkspaceBloc.getAPISubject.stream.hasValue) {
-                  if (dmsManageWorkspaceBloc.getAPISubject.stream.value) {
+                  if (dmsManageWorkspaceBloc.getAPISubject.stream.value !=
+                      null) {
                     displaySnackBar(
                         text: 'File deleted successfully', context: context);
                     dmsManageWorkspaceBloc.getWorkspaceSubject.sink.add(null);

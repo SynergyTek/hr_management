@@ -42,7 +42,7 @@ class _DMSManageWorkspaceBodyWidgetState
   TextEditingController _sequenceOrderTextEditingController =
       TextEditingController();
 
-  String _workspaceId = "";
+  String? _workspaceId;
 
   @override
   void initState() {
@@ -52,6 +52,8 @@ class _DMSManageWorkspaceBodyWidgetState
   _handleQueryParams() {
     // Use case: Creating a new workspace.
     return WorkspaceViewModel(
+      workspaceId: _workspaceId ?? "",
+      noteId: _workspaceId ?? "",
       activeUserId:
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       dataAction: widget.parentWorkspaceId != null ? "Edit" : "Create",
@@ -504,9 +506,9 @@ class _DMSManageWorkspaceBodyWidgetState
 
         // ! Selected parent workspace data is not available.
         // Parent Workspace
-        // _selectedParentWorkspace = DMSParentWorkspaceIdNameListModel(
-        //   id: widget.parentWorkspaceId,
-        // );
+        _selectedParentWorkspace = DMSParentWorkspaceIdNameListModel(
+          id: dmsWorkspaceMetadata.parentNoteId,
+        );
 
         // Document Type:
         if (dmsDocumentTypeMetadata != null &&

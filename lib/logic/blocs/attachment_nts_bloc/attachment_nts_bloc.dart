@@ -26,10 +26,11 @@ class AttachmentNTSBloc {
       ntsId: ntsId,
     );
     _subject.sink.add(response);
+     return response;
   }
 
   /// Used to create new entries.
-  Future<String?> postAttachmentDocumentData({
+  Future<String> postAttachmentDocumentData({
     required Attachment attachmentData,
   }) async {
     Response<dynamic> response = await _apiRepository.postAttachmentData(

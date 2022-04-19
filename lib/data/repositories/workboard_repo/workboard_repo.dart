@@ -276,6 +276,30 @@ class WorkboardRepository extends AbstractWorkboardRepository {
     }
   }
 
+  Future<WorkBoardPostResponseContent> postUpdateWorkBoardSectionAndItem({
+    AddContentWorkBoardModel? addContentWorkBoardModel,
+  }) async {
+    final String endpoint =
+        APIEndpointConstants.POST_UPDATE_WORKBOARD_SECTIONS_AND_ITEMS;
+
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        data: jsonEncode(addContentWorkBoardModel?.toJson()),
+      );
+      print("response: ${response.data}");
+      return WorkBoardPostResponseContent.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return WorkBoardPostResponseContent.withError("$err");
+    }
+  }
+
   Future<WorkBoardPostResponseContent> postSharingMoveCopy({
     Map<String, dynamic>? queryparams,
   }) async {

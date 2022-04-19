@@ -57,6 +57,9 @@ class WorkboardBloc {
   final BehaviorSubject<WorkBoardPostResponseContent?>
       _subjectpostDuplicateItem =
       BehaviorSubject<WorkBoardPostResponseContent?>();
+  final BehaviorSubject<WorkBoardPostResponseContent?>
+      _subjectPostUpdateWorkBoardSectionAndItem =
+      BehaviorSubject<WorkBoardPostResponseContent?>();
 
   /// Used to fetch new entries.
   getWorkboardData({
@@ -172,8 +175,19 @@ class WorkboardBloc {
     return response;
   }
 
+  postUpdateWorkBoardSectionAndItem({
+    AddContentWorkBoardModel? addContentWorkBoardModel,
+  }) async {
+    WorkBoardPostResponseContent response =
+        await _workboardRepository.postUpdateWorkBoardSectionAndItem(
+      addContentWorkBoardModel: addContentWorkBoardModel,
+    );
+    _subjectPostUpdateWorkBoardSectionAndItem.sink.add(response);
+    return response;
+  }
+
   postDuplicateItem({
-    Map<String,dynamic>? queryParams,
+    Map<String, dynamic>? queryParams,
   }) async {
     WorkBoardPostResponseContent response =
         await _workboardRepository.postDuplicateItem(
@@ -258,6 +272,7 @@ class WorkboardBloc {
     _subjectGetCopyMoveItems.close();
     _subjectpostSharingMoveCopy.close();
     _subjectpostDuplicateItem.close();
+    _subjectPostUpdateWorkBoardSectionAndItem.close();
   }
 
   BehaviorSubject<WorkBoardResponseModel?> get subjectWorkboardList =>
@@ -299,6 +314,9 @@ class WorkboardBloc {
       get subjectpostSharingMoveCopy => _subjectpostSharingMoveCopy;
   BehaviorSubject<WorkBoardPostResponseContent?> get subjectpostDuplicateItem =>
       _subjectpostDuplicateItem;
+  BehaviorSubject<WorkBoardPostResponseContent?>
+      get subjectPostUpdateWorkBoardSectionAndItem =>
+          _subjectPostUpdateWorkBoardSectionAndItem;
 }
 
 final workboardBloc = WorkboardBloc();

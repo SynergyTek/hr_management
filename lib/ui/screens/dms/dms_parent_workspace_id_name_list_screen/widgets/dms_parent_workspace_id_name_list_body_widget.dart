@@ -23,13 +23,14 @@ class _ParentWorkspaceIdNameListBodyWidgetState
   void initState() {
     super.initState();
 
-    dmsParentWorkspaceIdNameListBloc..getAPIData();
+    dmsParentWorkspaceIdNameListBloc
+      ..getAPIData(id: widget.data?.id, legalEntity: widget.data?.name);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => true,
       child: Container(
         padding: DEFAULT_PADDING,
         child: StreamBuilder<ParentWorkspaceIdNameListResponse>(

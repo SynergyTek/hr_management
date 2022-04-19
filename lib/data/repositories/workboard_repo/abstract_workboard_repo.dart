@@ -64,6 +64,11 @@ abstract class AbstractWorkboardRepository {
     // Optional Params to be added to the request if required.
     AddContentWorkBoardModel? addContentWorkBoardModel,
   });
+  Future<WorkBoardPostResponseContent> postUpdateWorkBoardSectionAndItem({
+    // Optional Params to be added to the request if required.
+    AddContentWorkBoardModel? addContentWorkBoardModel,
+  });
+  
 
   Future<WorkBoardPostResponseContent> postSharingMoveCopy({
     // Optional Params to be added to the request if required.
