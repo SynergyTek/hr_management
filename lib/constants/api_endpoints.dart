@@ -530,7 +530,7 @@ class APIEndpointConstants {
   // Hr Direct Contract api
   static const GET_HRDIRECT_CONTRACT =
       'https://webapidev.aitalkx.com/chr/hrdirect/Contract';
-  //?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&personId=129b167b-c1e9-4876-874b-015605071a8d
+  //
 
   /// https://webapidev.aitalkx.com/chr/hrcore/ResignationTermination?UserId=45bba746-3309-49b7-9c03-b5793369d73c
   /// Method: GET

@@ -27,6 +27,7 @@ import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
+import '../ui/screens/hr_direct_contract_screen/hr_direct_contract_screen.dart';
 import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
 import '../ui/screens/misconduct_screen/misconduct_screen.dart';
@@ -576,6 +577,11 @@ class AppRouter {
       case BUSINESS_TRIP_SCREEN:
         return MaterialPageRoute(
           builder: (_) => BusinessTripScreen(),
+        );
+
+         case HR_DIRECT_CONTRACT_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => HRDirectContractScreen(),
         );
 
       // 404 route.

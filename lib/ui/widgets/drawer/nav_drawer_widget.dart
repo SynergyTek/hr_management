@@ -227,16 +227,16 @@ class DrawerWidget extends StatelessWidget {
               },
             ),
 
-            //
-            // DrawerListTileWidget(
-            //   title: '\t\t\t\t\t HR Direct',
-            //   listTileOnTap: () {
-            //     Navigator.pushReplacementNamed(
-            //       context,
-            //       "",
-            //     );
-            //   },
-            // ),
+            
+            DrawerListTileWidget(
+              title: '\t\t\t\t\t HR Direct',
+              listTileOnTap: () {
+                Navigator.pushNamed(
+                  context,
+                  HR_DIRECT_CONTRACT_SCREEN,
+                );
+              },
+            ),
 
             //
             // DrawerListTileWidget(
