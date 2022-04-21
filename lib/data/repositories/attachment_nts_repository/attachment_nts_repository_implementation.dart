@@ -25,8 +25,8 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
         endpoint,
       );
 
-      print(
-          "Attachment response: ${response.data}, $ntsId, $ntsType, $endpoint");
+      // print(
+      //     "Attachment response: ${response.data}, $ntsId, $ntsType, $endpoint");
 
       return AttachmentNTSResponse.fromJson(response.data);
     } catch (err, stacktrace) {
@@ -69,7 +69,7 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
         data: jsonEncode(attachmentData.toJson()),
       );
 
-      print("response: ${response.data}");
+      // print("response: ${response.data}");
 
       return response;
 

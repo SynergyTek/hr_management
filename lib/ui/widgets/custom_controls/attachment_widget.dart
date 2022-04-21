@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DynamicAttchmentWidget extends StatelessWidget {
+class DynamicAttachmentWidget extends StatelessWidget {
   final String? fileId;
   final String? labelName;
   final String? fieldName;
@@ -10,7 +10,7 @@ class DynamicAttchmentWidget extends StatelessWidget {
   final TextEditingController? controller;
   final bool? readOnly;
 
-  const DynamicAttchmentWidget(
+  const DynamicAttachmentWidget(
       {this.labelName,
       this.fieldName,
       this.controller,

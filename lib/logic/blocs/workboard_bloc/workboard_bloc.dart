@@ -12,9 +12,9 @@ class WorkboardBloc {
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
   final BehaviorSubject<WorkBoardResponseModel?> _subjectWorkboardList =
       BehaviorSubject<WorkBoardResponseModel?>();
-  final BehaviorSubject<WorkBoardMapResponseModel?>
+  final BehaviorSubject<WorkBoardSectionMapResponseModel?>
       _subjectManageWorkboardDetailsList =
-      BehaviorSubject<WorkBoardMapResponseModel?>();
+      BehaviorSubject<WorkBoardSectionMapResponseModel?>();
   final BehaviorSubject<WorkBoardBoolResponseModel?>
       _subjectOpenCLoseWorkboard =
       BehaviorSubject<WorkBoardBoolResponseModel?>();
@@ -56,6 +56,9 @@ class WorkboardBloc {
       BehaviorSubject<WorkBoardPostResponseContent?>();
   final BehaviorSubject<WorkBoardPostResponseContent?>
       _subjectpostDuplicateItem =
+      BehaviorSubject<WorkBoardPostResponseContent?>();
+  final BehaviorSubject<WorkBoardPostResponseContent?>
+      _subjectPostUpdateWorkBoardSectionAndItem =
       BehaviorSubject<WorkBoardPostResponseContent?>();
 
   /// Used to fetch new entries.
@@ -102,7 +105,7 @@ class WorkboardBloc {
   getManageWorkBoardDetailsList({
     Map<String, dynamic>? queryparams,
   }) async {
-    WorkBoardMapResponseModel response =
+    WorkBoardSectionMapResponseModel response =
         await _workboardRepository.getManageWorkBoardDetailsList(
       queryparams: queryparams,
     );
@@ -172,8 +175,19 @@ class WorkboardBloc {
     return response;
   }
 
+  postUpdateWorkBoardSectionAndItem({
+    WorkBoardSectionModel? workBoardSectionModel,
+  }) async {
+    WorkBoardPostResponseContent response =
+        await _workboardRepository.postUpdateWorkBoardSectionAndItem(
+      workBoardSectionModel: workBoardSectionModel,
+    );
+    _subjectPostUpdateWorkBoardSectionAndItem.sink.add(response);
+    return response;
+  }
+
   postDuplicateItem({
-    Map<String,dynamic>? queryParams,
+    Map<String, dynamic>? queryParams,
   }) async {
     WorkBoardPostResponseContent response =
         await _workboardRepository.postDuplicateItem(
@@ -258,11 +272,12 @@ class WorkboardBloc {
     _subjectGetCopyMoveItems.close();
     _subjectpostSharingMoveCopy.close();
     _subjectpostDuplicateItem.close();
+    _subjectPostUpdateWorkBoardSectionAndItem.close();
   }
 
   BehaviorSubject<WorkBoardResponseModel?> get subjectWorkboardList =>
       _subjectWorkboardList;
-  BehaviorSubject<WorkBoardMapResponseModel?>
+  BehaviorSubject<WorkBoardSectionMapResponseModel?>
       get subjectManageWorkboardDetailsList =>
           _subjectManageWorkboardDetailsList;
   BehaviorSubject<WorkBoardBoolResponseModel?> get subjectOpenCloseWorkboard =>
@@ -299,6 +314,9 @@ class WorkboardBloc {
       get subjectpostSharingMoveCopy => _subjectpostSharingMoveCopy;
   BehaviorSubject<WorkBoardPostResponseContent?> get subjectpostDuplicateItem =>
       _subjectpostDuplicateItem;
+  BehaviorSubject<WorkBoardPostResponseContent?>
+      get subjectPostUpdateWorkBoardSectionAndItem =>
+          _subjectPostUpdateWorkBoardSectionAndItem;
 }
 
 final workboardBloc = WorkboardBloc();

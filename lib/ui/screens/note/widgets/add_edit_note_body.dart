@@ -769,7 +769,7 @@ class _AddEditNoteBodyState extends State<AddEditNoteBody> {
                     : "Select File to Attach";
         // : " (1) File Attached " + udfJson[model[i].key];
 
-        listDynamic.add(DynamicAttchmentWidget(
+        listDynamic.add(DynamicAttachmentWidget(
           labelName: model[i].label,
           controller: attchmentController,
 

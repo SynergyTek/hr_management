@@ -127,7 +127,7 @@ class _CreateEditSectionWorkBoardBodyState
                                                 null &&
                                             value != true)
                                         ? hexToColor(
-                                            workBoardSectionModel?.headerColor)
+                                            workBoardSectionModel?.headerColor ?? '')
                                         : (value == true)
                                             ? displayHeaderColor
                                             : Colors.black,
@@ -160,7 +160,7 @@ class _CreateEditSectionWorkBoardBodyState
                                             null &&
                                         displayHeaderColor == null)
                                     ? hexToColor(
-                                        workBoardSectionModel?.headerColor)
+                                        workBoardSectionModel?.headerColor ?? '')
                                     : displayHeaderColor,
                               ),
                             ],

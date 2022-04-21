@@ -386,8 +386,8 @@ class APIEndpointConstants {
 
   static const POST_MANAGE_UPLOADED_FILE_DATA = BASE_URL + '/dms/query/';
 
-  static const GET_PARENT_WORKSPACE_ID_NAME_LIST_DATA =
-      BASE_URL + '/dms/workspace/GetParentWorkspace';
+  static const GET_PARENT_WORKSPACE_ID_NAME_LIST_DATA = BASE_URL +
+      '/dms/workspace/GetParentWorkspace?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&legalEntity=&id=';
 
   static const GET_DOCUMENT_TEMPLATE_DATA = BASE_URL +
       '/dms/workspace/GetDocumentTemplate?userId=45bba746-3309-49b7-9c03-b5793369d73c';
@@ -509,6 +509,8 @@ class APIEndpointConstants {
   static const POST_MANAGE_ITEM_SHARING_COPY_MOVE =
       BASE_URL + "/cms/workboard/ManageItemSharing";
   static const POST_DUPLICATE_ITEM = BASE_URL + "/cms/workboard/DuplicateItems";
+  static const POST_UPDATE_WORKBOARD_SECTIONS_AND_ITEMS =
+      BASE_URL + "/cms/workboard/UpdateWorkBoardSectionAndItemSequence";
   // workboard api end
 
   // summary api
@@ -534,7 +536,7 @@ class APIEndpointConstants {
   // Hr Direct Contract api
   static const GET_HRDIRECT_CONTRACT =
       'https://webapidev.aitalkx.com/chr/hrdirect/Contract';
-  //?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&personId=129b167b-c1e9-4876-874b-015605071a8d
+  //
 
   /// https://webapidev.aitalkx.com/chr/hrcore/ResignationTermination?UserId=45bba746-3309-49b7-9c03-b5793369d73c
   /// Method: GET

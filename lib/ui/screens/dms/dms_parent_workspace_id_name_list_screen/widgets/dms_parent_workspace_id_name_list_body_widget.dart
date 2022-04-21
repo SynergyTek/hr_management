@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hr_management/data/models/dms/parent_workspace_id_name_list_model/parent_workspace_id_name_list_model.dart';
 import 'package:hr_management/data/models/dms/parent_workspace_id_name_list_model/parent_workspace_id_name_list_response.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/parent_workspace_id_name_list_bloc/parent_workspace_id_name_list_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-
-import '../../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 class ParentWorkspaceIdNameListBodyWidget extends StatefulWidget {
   final DMSParentWorkspaceIdNameListModel? data;
@@ -27,18 +24,21 @@ class _ParentWorkspaceIdNameListBodyWidgetState
     super.initState();
 
     dmsParentWorkspaceIdNameListBloc.getParentWorkspace(
-      queryparams: {
-        "userId":
-            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-        "portalName": "HR",
-      },
+      id: widget.data?.id, legalEntity: widget.data?.name,
+      // queryparams: {
+      //   "userId":
+      //       BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+      //   "portalName": "HR",
+      // },
     );
+    // dmsParentWorkspaceIdNameListBloc
+    //   ..getAPIData(id: widget.data?.id, legalEntity: widget.data?.name);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => true,
       child: Container(
         padding: DEFAULT_PADDING,
         child: StreamBuilder<ParentWorkspaceIdNameListResponse>(

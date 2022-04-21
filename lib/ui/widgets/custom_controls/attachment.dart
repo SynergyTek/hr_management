@@ -314,9 +314,9 @@ class _SelectAttachmentState extends State<SelectAttachment> {
         createPostModel(post, mediaFileByte!);
       }
 
-      String result = await (attachmentNTSBloc.postAttachmentDocumentData(
+      String result = await attachmentNTSBloc.postAttachmentDocumentData(
         attachmentData: post,
-      ) as FutureOr<String>);
+      ) ;
 
       print(result);
       if (result.isNotEmpty) {

@@ -58,7 +58,11 @@ class ManageWorkspaceBloc {
 
     _getAPISubject.sink.add(response);
     getWorkspaceSubject.sink.add(null);
-    getWorkspaceData(queryparams: {});
+    getWorkspaceData(queryparams: {
+      "portalName": "HR",
+      'userid': "45bba746-3309-49b7-9c03-b5793369d73c",
+    });
+
     return response;
   }
 

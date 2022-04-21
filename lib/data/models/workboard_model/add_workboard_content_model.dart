@@ -255,8 +255,8 @@ class AddContentWorkBoardModel {
   dynamic workBoardId;
   dynamic parentId;
   dynamic colorCode;
-  int? workBoardItemShape;
-  int? workBoardItemSize;
+  dynamic workBoardItemShape;
+  dynamic workBoardItemSize;
   String? colorName;
   dynamic workBoardSectionId;
   dynamic workBoardItemId;

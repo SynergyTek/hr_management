@@ -12,6 +12,7 @@ import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../constants/api_endpoints.dart';
+import '../../../widgets/custom_controls/attachment.dart';
 import '../whiteboard.dart';
 
 class WorkBoardContentScreenBodyWidget extends StatefulWidget {
@@ -49,6 +50,10 @@ class _WorkBoardContentScreenBodyWidgetState
   bool? value;
 
   TextEditingController textcontroller = TextEditingController();
+  TextEditingController fileItemIdId = TextEditingController();
+  TextEditingController imageItemIdId = TextEditingController();
+  TextEditingController videoItemIdId = TextEditingController();
+
   TextEditingController imageAttachmentController =
       TextEditingController(text: 'Upload Image');
 
@@ -100,8 +105,14 @@ class _WorkBoardContentScreenBodyWidgetState
                   headerColor = addContentWorkBoardModel?.colorCode;
                 }
 
-                WidgetsBinding.instance
-                    ?.addPostFrameCallback((_) => _afterLayout(context));
+                WidgetsBinding.instance?.addPostFrameCallback(
+                  (_) => _afterLayout(context),
+                );
+              } else if (widget.isEdit == true && widget.itemType == 6) {
+                indexCardController.text = addContentWorkBoardModel?.itemName;
+                if (addContentWorkBoardModel?.colorCode != null) {
+                  headerColor = addContentWorkBoardModel?.colorCode;
+                }
               }
               return Container(
                 child: Column(
@@ -179,6 +190,27 @@ class _WorkBoardContentScreenBodyWidgetState
                                           textcontroller.text;
                                       addContentWorkBoardModel?.itemType =
                                           "Text";
+                                    }
+                                    if (fileAttachmentController
+                                        .text.isNotEmpty) {
+                                      addContentWorkBoardModel?.itemFileFileId =
+                                          fileItemIdId.text;
+                                      addContentWorkBoardModel?.itemType =
+                                          "File";
+                                    }
+                                    if (imageAttachmentController
+                                        .text.isNotEmpty) {
+                                      addContentWorkBoardModel?.itemFileFileId =
+                                          imageItemIdId.text;
+                                      addContentWorkBoardModel?.itemType =
+                                          "Image";
+                                    }
+                                    if (videoAttachmentController
+                                        .text.isNotEmpty) {
+                                      addContentWorkBoardModel?.itemFileFileId =
+                                          videoItemIdId.text;
+                                      addContentWorkBoardModel?.itemType =
+                                          "Video";
                                     }
 
                                     await workboardBloc
@@ -262,12 +294,15 @@ class _WorkBoardContentScreenBodyWidgetState
                               indexCardController: indexCardController),
                           WhiteBoardTab(),
                           ImageTab(
+                              imageItemIdId: imageItemIdId,
                               imageAttachmentController:
                                   imageAttachmentController),
-                          VideoTab(
-                              videoAttachmentController:
-                                  videoAttachmentController),
+                          Container(),
+                          // VideoTab(videoItemIdId: videoItemIdId,
+                          //     videoAttachmentController:
+                          //         videoAttachmentController),
                           FileTab(
+                              fileItemIdId: fileItemIdId,
                               fileAttachmentController:
                                   fileAttachmentController),
                         ],
@@ -359,79 +394,162 @@ class WhiteBoardTab extends StatelessWidget {
   }
 }
 
-class ImageTab extends StatelessWidget {
+class ImageTab extends StatefulWidget {
   final TextEditingController imageAttachmentController;
+
+  final TextEditingController imageItemIdId;
 
   const ImageTab({
     Key? key,
     required this.imageAttachmentController,
+    required this.imageItemIdId,
   }) : super(key: key);
 
   @override
+  State<ImageTab> createState() => _ImageTabState();
+}
+
+class _ImageTabState extends State<ImageTab> {
+  @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.topCenter,
       padding: DEFAULT_LARGE_PADDING,
       margin: DEFAULT_LARGE_PADDING,
-      child: Column(
-        children: [
-          DynamicAttchmentWidget(
-            callBack: () {},
-            fieldName: 'Image',
-            controller: imageAttachmentController,
-          ),
-        ],
+      child: DynamicAttachmentWidget(
+        labelName: 'label',
+        fieldName: 'label',
+        controller: widget.imageAttachmentController,
+        callBack: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return SelectAttachment(
+                  ntsId: 'Note',
+                  onListTap: (
+                    dynamic value,
+                    dynamic value2,
+                    dynamic value3,
+                  ) {
+                    setState(() {
+                      // isAttachmentUploaded = true;
+                      widget.imageItemIdId.text = value;
+                      widget.imageAttachmentController.text =
+                          " (1) File Attached: " + value2;
+                    });
+                  },
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
 }
 
-class VideoTab extends StatelessWidget {
+class VideoTab extends StatefulWidget {
   final TextEditingController videoAttachmentController;
+
+  final TextEditingController videoItemIdId;
 
   const VideoTab({
     Key? key,
     required this.videoAttachmentController,
+    required this.videoItemIdId,
   }) : super(key: key);
 
   @override
+  State<VideoTab> createState() => _VideoTabState();
+}
+
+class _VideoTabState extends State<VideoTab> {
+  @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.topCenter,
       padding: DEFAULT_LARGE_PADDING,
       margin: DEFAULT_LARGE_PADDING,
-      child: Column(
-        children: [
-          DynamicAttchmentWidget(
-            callBack: () {},
-            fieldName: 'Video',
-            controller: videoAttachmentController,
-          ),
-        ],
+      child: DynamicAttachmentWidget(
+        labelName: 'label',
+        fieldName: 'label',
+        controller: widget.videoAttachmentController,
+        callBack: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return SelectAttachment(
+                  ntsId: 'Note',
+                  onListTap: (
+                    dynamic value,
+                    dynamic value2,
+                    dynamic value3,
+                  ) {
+                    setState(() {
+                      // isAttachmentUploaded = true;
+                      widget.videoItemIdId.text = value;
+                      widget.videoAttachmentController.text =
+                          " (1) File Attached: " + value2;
+                    });
+                  },
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
 }
 
-class FileTab extends StatelessWidget {
+class FileTab extends StatefulWidget {
   final TextEditingController fileAttachmentController;
+  final TextEditingController fileItemIdId;
 
   const FileTab({
     Key? key,
     required this.fileAttachmentController,
+    required this.fileItemIdId,
   }) : super(key: key);
 
   @override
+  State<FileTab> createState() => _FileTabState();
+}
+
+class _FileTabState extends State<FileTab> {
+  @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.topCenter,
       padding: DEFAULT_LARGE_PADDING,
       margin: DEFAULT_LARGE_PADDING,
-      child: Column(
-        children: [
-          DynamicAttchmentWidget(
-            callBack: () {},
-            fieldName: 'File',
-            controller: fileAttachmentController,
-          ),
-        ],
+      child: DynamicAttachmentWidget(
+        labelName: 'label',
+        fieldName: 'label',
+        controller: widget.fileAttachmentController,
+        callBack: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return SelectAttachment(
+                  ntsId: 'Note',
+                  onListTap: (
+                    dynamic value,
+                    dynamic value2,
+                    dynamic value3,
+                  ) {
+                    setState(() {
+                      // isAttachmentUploaded = true;
+                      widget.fileItemIdId.text = value;
+                      widget.fileAttachmentController.text =
+                          " (1) File Attached: " + value2;
+                    });
+                  },
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

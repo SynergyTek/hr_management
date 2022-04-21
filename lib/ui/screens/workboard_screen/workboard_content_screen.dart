@@ -21,16 +21,17 @@ class WorkBoardContentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('WorkBoard Content'),
-        ),
-        body: WorkBoardContentScreenBodyWidget(
-          isEdit: isEdit,
-          id: id,
-          parentId: parentId,
-          workBoardId: workBoardId,
-          workBoardSectionId: workBoardSectionId,
-          itemType: itemType,
-        ));
+      appBar: AppBar(
+        title: Text('WorkBoard Content'),
+      ),
+      body: WorkBoardContentScreenBodyWidget(
+        isEdit: isEdit,
+        id: id,
+        parentId: parentId,
+        workBoardId: workBoardId,
+        workBoardSectionId: workBoardSectionId,
+        itemType: itemType,
+      ),
+    );
   }
 }
