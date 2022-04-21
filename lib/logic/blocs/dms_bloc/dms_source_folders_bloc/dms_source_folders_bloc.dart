@@ -8,6 +8,9 @@ class DMSSourceFolderBloc {
   final BehaviorSubject<DMSSourceFolderResponse?> _subject =
       BehaviorSubject<DMSSourceFolderResponse?>();
 
+  final BehaviorSubject<DMSSourceFolderResponse?> _subjectChildData =
+      BehaviorSubject<DMSSourceFolderResponse?>();
+
   Future<DMSSourceFolderResponse> getDMSSourceFolderData({
     Map<String, dynamic>? queryparams,
   }) async {
@@ -21,11 +24,39 @@ class DMSSourceFolderBloc {
     return response;
   }
 
+  Future<DMSSourceFolderResponse> getDMSChildFolderData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    DMSSourceFolderResponse response =
+        await _apiRepository.getDMSChildFolderData(
+      queryparams: queryparams,
+    );
+
+    _subjectChildData.sink.add(response);
+
+    return response;
+  }
+
+  Future<DMSSourceFolderResponse> getDMSChildFolderAndDocumentsData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    DMSSourceFolderResponse response =
+        await _apiRepository.getDMSChildFolderAndDocumentsData(
+      queryparams: queryparams,
+    );
+
+    _subjectChildData.sink.add(response);
+
+    return response;
+  }
+
   dispose() {
     _subject.close();
+    _subjectChildData.close();
   }
 
   BehaviorSubject<DMSSourceFolderResponse?> get subject => _subject;
+  BehaviorSubject<DMSSourceFolderResponse?> get subjectChildData => _subjectChildData;
 }
 
 final dmsSourceFolderBloc = DMSSourceFolderBloc();

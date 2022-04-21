@@ -21,7 +21,7 @@ class DMSDocumentActionModel {
   dynamic tableMetadataId;
   dynamic maxNumber;
   String? folderCode;
-  Null workspaceId;
+  String? workspaceId;
   bool? isSelfWorkspace;
   bool? isWorkspaceAdmin;
   bool? isAssignedWorkspace;

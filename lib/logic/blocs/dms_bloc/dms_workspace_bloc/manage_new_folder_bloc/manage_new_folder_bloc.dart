@@ -10,10 +10,10 @@ class DMSManageNewFolderBloc {
 
   final BehaviorSubject _subject = BehaviorSubject();
 
-  Future<bool> postAPIData({
+  Future<bool> postManageNewFolder({
     required Map<String, dynamic> queryparams,
   }) async {
-    bool response = await (_apiRepository.postAPIData(
+    bool response = await (_apiRepository.postManageNewFolder(
       queryparams: queryparams,
     ) as FutureOr<bool>);
 
@@ -21,10 +21,10 @@ class DMSManageNewFolderBloc {
     return response;
   }
 
-  Future<NoteModel> getAPIData({
+  Future<NoteModel> getCreateFolder({
     Map<String, dynamic>? queryparams,
   }) async {
-    NoteModel response = await _apiRepository.getAPIData(
+    NoteModel response = await _apiRepository.getCreateFolder(
       queryparams: queryparams,
     );
 

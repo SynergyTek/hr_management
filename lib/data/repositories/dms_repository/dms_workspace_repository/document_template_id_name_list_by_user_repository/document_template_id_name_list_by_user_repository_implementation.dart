@@ -4,10 +4,10 @@ class DocumentTemplateIdNameListByUserRepository
     extends AbstractDocumentTemplateIdNameListByUserRepository {
   final Dio _dio = Dio();
 
-  Future<DMSDocumentTypeResponse> getAPIData() async {
+  Future<DMSDocumentTypeResponse> getDocumentTemplate() async {
     try {
       Response response = await _dio.get(
-        APIEndpointConstants.GET_DOCUMENT_TEMPLATE_ID_NAME_LIST_BY_USER_DATA,
+        APIEndpointConstants.GET_DOCUMENT_TEMPLATE_DATA,
         queryParameters: {},
       );
       return DMSDocumentTypeResponse.fromJson(response.data);

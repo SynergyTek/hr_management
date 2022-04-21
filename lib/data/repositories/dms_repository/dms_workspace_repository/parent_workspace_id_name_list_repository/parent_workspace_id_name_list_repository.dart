@@ -10,7 +10,8 @@ part 'parent_workspace_id_name_list_repository_implementation.dart';
 abstract class AbstractParentWorkspaceIdNameListRepository {
   AbstractParentWorkspaceIdNameListRepository();
 
-  Future<ParentWorkspaceIdNameListResponse> getAPIData({
+  Future<ParentWorkspaceIdNameListResponse> getParentWorkspace({
+    Map<String, dynamic>? queryparams,
     required String legalEntity,
     required String id,
   });

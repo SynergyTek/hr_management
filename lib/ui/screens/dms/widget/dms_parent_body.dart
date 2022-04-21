@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/data/models/dms/dms_files_response.dart';
-import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_response.dart';
-import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_source_folders_bloc/dms_source_folders_bloc.dart';
@@ -153,6 +150,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                     ],
                                   ),
                                   onTap: () {
+                                    print(filterChildList[index].key);
                                     pathList
                                       ..clear()
                                       ..add('Administrator')
@@ -172,7 +170,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                       ..clear()
                                       ..add(parentPath);
 
-                                    dmsSourceFolderBloc.subject.sink.add(null);
+                                    // dmsSourceFolderBloc.subject.sink.add(null);
 
                                     Navigator.pushNamed(
                                       context,
@@ -187,10 +185,10 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                               filterChildList[index],
                                           callBack: (dynamic value,
                                               dynamic value2, dynamic value3) {
-                                            dmsBloc
-                                                .subjectDMSGetFilesChildResponse
-                                                .sink
-                                                .add(null);
+                                            // dmsBloc
+                                            //     .subjectDMSGetFilesChildResponse
+                                            //     .sink
+                                            //     .add(null);
                                           }),
                                     );
 
@@ -287,8 +285,9 @@ class _DMSParentBodyState extends State<DMSParentBody> {
           ),
         ),
         Visibility(
-          visible: false, //TODO: figure out the boolean
+          // visible: false, //TODO: figure out the boolean
           // visible: data?.isSelfWorkspace ?? false,
+          visible: data?.key != data?.workspaceId,
           child: ListTile(
             leading: Icon(
               CustomIcons.folder,
@@ -374,38 +373,39 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             // onTap: () => deleteDialog(id),
           ),
         ),
-        Visibility(
-          visible: false, //TODO: figure out the boolean
-          child: ListTile(
-            leading: Icon(CustomIcons.copy),
-            title: Text('Cut'),
-            // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
-          ),
-        ),
-        Visibility(
-          visible: data?.canCopy ?? false,
-          child: ListTile(
-            leading: Icon(CustomIcons.copy),
-            title: Text('Copy'),
-            // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
-          ),
-        ),
-        Visibility(
-          visible: false, //TODO: figure out the boolean
-          child: ListTile(
-            leading: Icon(CustomIcons.copy),
-            title: Text('Paste'),
-            // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
-          ),
-        ),
-        Visibility(
-          visible: data?.canDelete ?? false,
-          child: ListTile(
-            leading: Icon(CustomIcons.trash),
-            title: Text('Delete'),
-            onTap: () => deleteDialog(id!),
-          ),
-        ),
+        // Visibility(
+        //   visible: false, //TODO: figure out the boolean
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.copy),
+        //     title: Text('Cut'),
+        //     // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+        //   ),
+        // ),
+        // Visibility(
+        //   visible: data?.canCopy ?? false,
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.copy),
+        //     title: Text('Copy'),
+        //     // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+        //   ),
+        // ),
+        //TODO: add CutCopyPasteBloc if needed for pasting
+        // Visibility(
+        //   visible: false, //TODO: figure out the boolean
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.copy),
+        //     title: Text('Paste'),
+        //     // onTap: () => dmsCrudNoteBloc..getCopyNoteAPIData(sourceId: sourceId, targetId: targetId, userId: userId),
+        //   ),
+        // ),
+        // Visibility(
+        //   visible: data?.canDelete ?? false,
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.trash),
+        //     title: Text('Delete'),
+        //     onTap: () => deleteDialog(id!),
+        //   ),
+        // ),
         // Visibility(
         //   visible: data?.canMove ?? false,
         //   child: ListTile(
@@ -414,14 +414,14 @@ class _DMSParentBodyState extends State<DMSParentBody> {
         //     // onTap: () => dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: targetId),
         //   ),
         // ),
-        Visibility(
-          visible: data?.canArchive ?? false,
-          child: ListTile(
-            leading: Icon(CustomIcons.archive),
-            title: Text('Archive'),
-            // onTap: () => archiveDialog(id),
-          ),
-        ),
+        // Visibility(
+        //   visible: data?.canArchive ?? false,
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.archive),
+        //     title: Text('Archive'),
+        //     // onTap: () => archiveDialog(id),
+        //   ),
+        // ),
         // Visibility(
         //   visible: data?.canRename ?? false,
         //   child: ListTile(

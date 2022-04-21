@@ -86,7 +86,8 @@ class _DMSManageWorkspaceBodyWidgetState
               );
             } else if (legalEntitySnapshot.hasData) {
               return FutureBuilder(
-                future: dmsDocumentTemplateIdNameListByUserBloc.getAPIData(),
+                future: dmsDocumentTemplateIdNameListByUserBloc
+                    .getDocumentTemplate(),
                 builder: (BuildContext context,
                     AsyncSnapshot<DMSDocumentTypeResponse>
                         documentTypeSnapshot) {
@@ -352,7 +353,8 @@ class _DMSManageWorkspaceBodyWidgetState
               title: Text("Document Type"),
             ),
             body: MultiSelectFormWidget<DMSDocumentTypeModel>(
-              initCallback: dmsDocumentTemplateIdNameListByUserBloc.getAPIData,
+              initCallback:
+                  dmsDocumentTemplateIdNameListByUserBloc.getDocumentTemplate,
               stream: dmsDocumentTemplateIdNameListByUserBloc.subject.stream,
               titleKey: 'DisplayName',
               selectedDataMap: _selectedDocumentTypeMap,

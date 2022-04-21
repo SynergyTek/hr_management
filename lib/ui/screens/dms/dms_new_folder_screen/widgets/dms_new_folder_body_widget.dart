@@ -62,7 +62,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
       return Container(
         padding: DEFAULT_PADDING,
         child: FutureBuilder<NoteModel>(
-          future: dmsManageNewFolderBloc.getAPIData(
+          future: dmsManageNewFolderBloc.getCreateFolder(
             queryparams: {
               "id": widget.folderId ?? "",
             },
@@ -189,7 +189,7 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
       return;
     }
 
-    bool response = await dmsManageNewFolderBloc.postAPIData(
+    bool response = await dmsManageNewFolderBloc.postManageNewFolder(
       queryparams: _handleQueryParams(),
     );
 

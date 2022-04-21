@@ -4,7 +4,8 @@ class ParentWorkspaceIdNameListRepository
     extends AbstractParentWorkspaceIdNameListRepository {
   final Dio _dio = Dio();
 
-  Future<ParentWorkspaceIdNameListResponse> getAPIData({
+  Future<ParentWorkspaceIdNameListResponse> getParentWorkspace({
+    Map<String, dynamic>? queryparams,
     String? legalEntity,
     String? id,
   }) async {
@@ -15,7 +16,7 @@ class ParentWorkspaceIdNameListRepository
                 legalEntity.isEmpty ||
                 id == null ||
                 id.isEmpty)
-            ? {}
+            ? queryparams
             : {
                 'legalEntity': legalEntity,
                 'id': id,

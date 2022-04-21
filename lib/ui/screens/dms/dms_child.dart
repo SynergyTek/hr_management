@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
-import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/ui/screens/dms/widget/dms_child_body.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
+
+import '../../../logic/blocs/dms_bloc/dms_source_folders_bloc/dms_source_folders_bloc.dart';
+import '../../../routes/route_constants.dart';
+import '../../../routes/screen_arguments.dart';
 
 class DMSChild extends StatelessWidget {
   final String? parentName;
@@ -48,12 +51,33 @@ class DMSChild extends StatelessWidget {
           appBar: AppBar(
             leading: IconButton(
                 onPressed: () {
-                  dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+                  dmsSourceFolderBloc.subjectChildData.sink.add(null);
                   callBack!(true, null, null);
                   pathList!.removeLast();
                   parentPathList!.removeLast();
                   parentModelList!.removeLast();
-                  Navigator.pop(context);
+                  if (pathList != null &&
+                      pathList!.isNotEmpty &&
+                      pathList!.length > 1) {
+                    Navigator.pushNamed(
+                      context,
+                      DMS_CHILD,
+                      arguments: ScreenArguments(
+                          dmsParentModelList: parentModelList,
+                          list1: pathList,
+                          list2: parentPathList,
+                          arg1: pathList!.last,
+                          arg2: parentPathList!.last,
+                          dmsParentModel: parentModelList!.last,
+                          callBack: (dynamic value, dynamic value2,
+                              dynamic value3) {}),
+                    );
+                  } else {
+                    Navigator.pushNamed(
+                      context,
+                      DMS_PARENT,
+                    );
+                  }
                 },
                 icon: Icon(Icons.arrow_back)),
             title: Text(parentName!),

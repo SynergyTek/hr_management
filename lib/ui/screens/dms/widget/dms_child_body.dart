@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_model.dart';
-import 'package:hr_management/data/models/dms/dms_files_response.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
 import 'package:hr_management/data/models/dms/doc_files_model.dart';
@@ -88,11 +87,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   }
 
   apiCall() {
-    dmsSourceFolderBloc.getDMSSourceFolderData(
+    dmsSourceFolderBloc.subjectChildData.sink.add(null);
+    // dmsSourceFolderBloc.getDMSChildFolderData(
+    dmsSourceFolderBloc.getDMSChildFolderAndDocumentsData(
       queryparams: {
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         "portalName": "HR",
+        "key": widget.parentModel?.key ?? '',
       },
     );
 
@@ -117,7 +119,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         //   stream: dmsBloc.subjectDMSGetFilesChildResponse.stream,
         //   builder: (context, AsyncSnapshot<DMSFilesResponse?> snapshot) {
         child: StreamBuilder<DMSSourceFolderResponse?>(
-          stream: dmsSourceFolderBloc.subject.stream,
+          stream: dmsSourceFolderBloc.subjectChildData.stream,
           builder: (context, AsyncSnapshot<DMSSourceFolderResponse?> snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data!.error != null &&
@@ -144,7 +146,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
-                    // _breadCrumb(),
+                    _breadCrumb(),
                     _itemList(),
                   ],
                 ),
@@ -166,85 +168,83 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     ]);
   }
 
-  // _breadCrumb() {
-  //   return Container(
-  //     margin: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-  //     width: double.infinity,
-  //     decoration: BoxDecoration(
-  //         borderRadius: BorderRadius.circular(4),
-  //         color: Colors.white,
-  //         boxShadow: [
-  //           BoxShadow(
-  //               offset: Offset(0, 1), blurRadius: 3, color: Colors.black26)
-  //         ]),
-  //     padding: EdgeInsets.all(8),
-  //     child: BreadCrumb.builder(
-  //       itemCount: childPath!.length,
-  //       builder: (index) {
-  //         print(childPath);
-  //         print('-----------------------------------------------');
-  //         return BreadCrumbItem(
-  //             content: Text(childPath![index]!),
-  //             borderRadius: BorderRadius.circular(4),
-  //             padding: EdgeInsets.all(4),
-  //             onTap: () {
-  //               if (childPath![index] == 'Administrator') {
-  //                 _preProcess(index);
-  //                 Navigator.pushNamed(
-  //                   context,
-  //                   DMS_PARENT,
-  //                 );
-  //               } else if (index == childPath!.length - 1) {
-  //                 print('Same folder');
-  //               } else {
-  //                 _preProcess(index);
-  //                 Navigator.pushNamed(
-  //                   context,
-  //                   DMS_CHILD,
-  //                   arguments: ScreenArguments(
-  //                     list1: childPath,
-  //                     list2: parentPathList,
-  //                     arg1: childPath![index],
-  //                     arg2: parentPathList![index - 1],
-  //                     dmsParentModel: parentModelList![index - 1],
-  //                     dmsParentModelList: parentModelList,
-  //                     callBack:
-  //                         (dynamic value, dynamic value2, dynamic value3) {
-  //                       dmsBloc.postGetDMSFilesChildData(
-  //                           dmsPostModel: DmsPostModel(
-  //                         action: "read",
-  //                         path: "${widget.parentPath}",
-  //                         showHiddenItems: false,
-  //                         data: [widget.parentModel],
-  //                         userId: "45bba746-3309-49b7-9c03-b5793369d73c",
-  //                       ));
-  //                     },
-  //                   ),
-  //                 );
-  //               }
-  //             });
-  //       },
-  //       divider: Icon(
-  //         Icons.chevron_right,
-  //         color: Colors.black,
-  //       ),
-  //       overflow: ScrollableOverflow(),
-  //     ),
-  //   );
-  // }
+  _breadCrumb() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0, 1), blurRadius: 3, color: Colors.black26)
+          ]),
+      padding: EdgeInsets.all(8),
+      child: BreadCrumb.builder(
+        itemCount: childPath!.length,
+        builder: (index) {
+          return BreadCrumbItem(
+              content: Text(childPath![index]!),
+              borderRadius: BorderRadius.circular(4),
+              padding: EdgeInsets.all(4),
+              onTap: () {
+                if (childPath![index] == 'Administrator') {
+                  _preProcess(index);
+                  Navigator.pushNamed(
+                    context,
+                    DMS_PARENT,
+                  );
+                } else if (index == childPath!.length - 1) {
+                  print('Same folder');
+                } else {
+                  _preProcess(index);
+                  Navigator.pushNamed(
+                    context,
+                    DMS_CHILD,
+                    arguments: ScreenArguments(
+                      list1: childPath,
+                      list2: parentPathList,
+                      arg1: childPath![index],
+                      arg2: parentPathList![index - 1],
+                      dmsParentModel: parentModelList![index - 1],
+                      dmsParentModelList: parentModelList,
+                      callBack:
+                          (dynamic value, dynamic value2, dynamic value3) {
+                        dmsBloc.postGetDMSFilesChildData(
+                            dmsPostModel: DmsPostModel(
+                          action: "read",
+                          path: "${widget.parentPath}",
+                          showHiddenItems: false,
+                          data: [widget.parentModel],
+                          userId: "45bba746-3309-49b7-9c03-b5793369d73c",
+                        ));
+                      },
+                    ),
+                  );
+                }
+              });
+        },
+        divider: Icon(
+          Icons.chevron_right,
+          color: Colors.black,
+        ),
+        overflow: ScrollableOverflow(),
+      ),
+    );
+  }
 
-  // _preProcess(int index) {
-  //   for (var i = childPath!.length - 2; i > index - 1; i--) {
-  //     parentPathList!.remove(parentPathList![i]);
-  //     parentModelList!.remove(parentModelList![i]);
-  //     Navigator.pop(context);
-  //   }
+  _preProcess(int index) {
+    for (var i = childPath!.length - 2; i > index - 1; i--) {
+      parentPathList!.remove(parentPathList![i]);
+      parentModelList!.remove(parentModelList![i]);
+      Navigator.pop(context);
+    }
 
-  //   for (var i = childPath!.length - 1; i > index; i--) {
-  //     childPath!.remove(childPath![i]);
-  //   }
-  //   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
-  // }
+    for (var i = childPath!.length - 1; i > index; i--) {
+      childPath!.remove(childPath![i]);
+    }
+    dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+  }
 
   _itemList() {
     return Container(
@@ -270,7 +270,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                         : Colors.cyan,
               ),
               title: Text(
-                filterChildList[index].title!,
+                filterChildList[index].title ?? '',
                 // filterChildList[index].name!,
               ),
               trailing: Row(
@@ -299,55 +299,72 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 ],
               ),
               onTap: () {
-                // if (filterChildList[index].templateCode != 'FILE') // &&
-                // //filterChildList[index].templateCode != 'GENERAL_DOCUMENT' &&
-                // //filterChildList[index].templateCode != 'PROJECT_DOCUMENTS')
-                // {
-                //   // print(filterChildList[index].id);
-                //   childPath!.add(filterChildList[index].title);
-                //   // childPath!.add(filterChildList[index].name);
-                //   parentModelList!.add(filterChildList[index]);
-                //   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
-                //   String parentPath = widget.parentPath! +
-                //       '/' +
-                //       filterChildList[index].workspaceId! +
-                //       // filterChildList[index].id! +
-                //       '/';
-                //   parentPathList!.add(parentPath);
-                //   Navigator.pushNamed(
-                //     context,
-                //     DMS_CHILD,
-                //     arguments: ScreenArguments(
-                //         list1: childPath,
-                //         list2: parentPathList,
-                //         arg1: filterChildList[index].title,
-                //         // arg1: filterChildList[index].name,
-                //         arg2: parentPath,
-                //         dmsParentModel: filterChildList[index],
-                //         dmsParentModelList: parentModelList,
-                //         callBack:
-                //             (dynamic value, dynamic value2, dynamic value3) {
-                //           dmsSourceFolderBloc.getDMSSourceFolderData(
-                //             queryparams: {
-                //               "userId": BlocProvider.of<UserModelBloc>(context)
-                //                       .state
-                //                       .userModel
-                //                       ?.id ??
-                //                   '',
-                //               "portalName": "HR",
-                //             },
-                //           );
-                //           // dmsBloc.postGetDMSFilesChildData(
-                //           //     dmsPostModel: DmsPostModel(
-                //           //   action: "read",
-                //           //   path: "${widget.parentPath}",
-                //           //   showHiddenItems: false,
-                //           //   data: [widget.parentModel],
-                //           //   userId: "45bba746-3309-49b7-9c03-b5793369d73c",
-                //           // ));
-                //         }),
-                //   );
-                // }
+                String? userId =
+                    BlocProvider.of<UserModelBloc>(context).state.userModel?.id;
+                int _index = index;
+                print(filterChildList[index].key);
+                if (filterChildList[index].templateCode != 'FILE') // &&
+                //filterChildList[index].templateCode != 'GENERAL_DOCUMENT' &&
+                //filterChildList[index].templateCode != 'PROJECT_DOCUMENTS')
+                {
+                  // print(filterChildList[index].id);
+                  childPath!.add(filterChildList[index].title);
+                  // childPath!.add(filterChildList[index].name);
+                  parentModelList!.add(filterChildList[index]);
+                  dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+                  String parentPath = widget.parentPath! +
+                      '/' +
+                      filterChildList[index].workspaceId! +
+                      // filterChildList[index].id! +
+                      '/';
+                  parentPathList!.add(parentPath);
+                  Navigator.pushNamed(
+                    context,
+                    DMS_CHILD,
+                    arguments: ScreenArguments(
+                        list1: childPath,
+                        list2: parentPathList,
+                        arg1: filterChildList[index].title,
+                        // arg1: filterChildList[index].name,
+                        arg2: parentPath,
+                        dmsParentModel: filterChildList[index],
+                        dmsParentModelList: parentModelList,
+                        callBack:
+                            (dynamic value, dynamic value2, dynamic value3) {
+                          dmsSourceFolderBloc.getDMSChildFolderAndDocumentsData(
+                            queryparams: {
+                              "userId": userId,
+                              // "userId": BlocProvider.of<UserModelBloc>(context)
+                              //         .state
+                              //         .userModel
+                              //         ?.id ??
+                              //     '',
+                              "portalName": "HR",
+                              "key": filterChildList[_index].key ?? '',
+                            },
+                          );
+                          // dmsSourceFolderBloc.getDMSSourceFolderData(
+                          //   queryparams: {
+                          //     "userId": BlocProvider.of<UserModelBloc>(context)
+                          //             .state
+                          //             .userModel
+                          //             ?.id ??
+                          //         '',
+                          //     "portalName": "HR",
+                          //     "key": filterChildList[index].key ?? '',
+                          //   },
+                          // );
+                          // dmsBloc.postGetDMSFilesChildData(
+                          //     dmsPostModel: DmsPostModel(
+                          //   action: "read",
+                          //   path: "${widget.parentPath}",
+                          //   showHiddenItems: false,
+                          //   data: [widget.parentModel],
+                          //   userId: "45bba746-3309-49b7-9c03-b5793369d73c",
+                          // ));
+                        }),
+                  );
+                }
               },
             ),
           );

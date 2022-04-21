@@ -14,4 +14,12 @@ abstract class AbstractDMSSourceFolderRepository {
   Future<DMSSourceFolderResponse> getDMSSourceFolderData({
     Map<String, dynamic>? queryparams,
   });
+
+  Future<DMSSourceFolderResponse> getDMSChildFolderData({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<DMSSourceFolderResponse> getDMSChildFolderAndDocumentsData({
+    Map<String, dynamic>? queryparams,
+  });
 }

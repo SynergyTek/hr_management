@@ -389,8 +389,8 @@ class APIEndpointConstants {
   static const GET_PARENT_WORKSPACE_ID_NAME_LIST_DATA =
       BASE_URL + '/dms/workspace/GetParentWorkspace';
 
-  static const GET_DOCUMENT_TEMPLATE_ID_NAME_LIST_BY_USER_DATA = BASE_URL +
-      '/dms/workspace/GetDocumentTemplateIdNameListByUser?userId=45bba746-3309-49b7-9c03-b5793369d73c';
+  static const GET_DOCUMENT_TEMPLATE_DATA = BASE_URL +
+      '/dms/workspace/GetDocumentTemplate?userId=45bba746-3309-49b7-9c03-b5793369d73c';
 
   static const GET_DOCUMENT_ARCHIVE_DATA =
       BASE_URL + '/dms/query/GetArchivedDocumentData';
@@ -413,6 +413,11 @@ class APIEndpointConstants {
       BASE_URL + '/cms/query/GetLegalEntityNameList';
 
   static const GET_SOURCE_FOLDERS = '$BASE_URL/dms/query/GetSourceFolders';
+
+  static const GET_CHILD_FOLDERS = '$BASE_URL/dms/query/GetChildFolders';
+
+  static const GET_CHILD_FOLDERS_AND_DOCUMENTS =
+      '$BASE_URL/dms/query/GetChildFoldersAndDocuments';
 
   //************************************************************************//
   //  DMS USER API Starts:

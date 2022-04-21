@@ -22,4 +22,40 @@ class DMSSourceFolderRepository extends AbstractDMSSourceFolderRepository {
       return DMSSourceFolderResponse.withError(err.toString());
     }
   }
+
+  Future<DMSSourceFolderResponse> getDMSChildFolderData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_CHILD_FOLDERS,
+        queryParameters: queryparams ?? {},
+      );
+
+      return DMSSourceFolderResponse.fromJson(jsonDecode(response.data));
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return DMSSourceFolderResponse.withError(err.toString());
+    }
+  }
+
+  Future<DMSSourceFolderResponse> getDMSChildFolderAndDocumentsData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        APIEndpointConstants.GET_CHILD_FOLDERS_AND_DOCUMENTS,
+        queryParameters: queryparams ?? {},
+      );
+
+      return DMSSourceFolderResponse.fromJson(jsonDecode(response.data));
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace");
+      print("Error: $err");
+
+      return DMSSourceFolderResponse.withError(err.toString());
+    }
+  }
 }
