@@ -105,8 +105,14 @@ class _WorkBoardContentScreenBodyWidgetState
                   headerColor = addContentWorkBoardModel?.colorCode;
                 }
 
-                WidgetsBinding.instance
-                    ?.addPostFrameCallback((_) => _afterLayout(context));
+                WidgetsBinding.instance?.addPostFrameCallback(
+                  (_) => _afterLayout(context),
+                );
+              } else if (widget.isEdit == true && widget.itemType == 6) {
+                indexCardController.text = addContentWorkBoardModel?.itemName;
+                if (addContentWorkBoardModel?.colorCode != null) {
+                  headerColor = addContentWorkBoardModel?.colorCode;
+                }
               }
               return Container(
                 child: Column(

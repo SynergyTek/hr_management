@@ -12,9 +12,9 @@ class WorkboardBloc {
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
   final BehaviorSubject<WorkBoardResponseModel?> _subjectWorkboardList =
       BehaviorSubject<WorkBoardResponseModel?>();
-  final BehaviorSubject<WorkBoardMapResponseModel?>
+  final BehaviorSubject<WorkBoardSectionMapResponseModel?>
       _subjectManageWorkboardDetailsList =
-      BehaviorSubject<WorkBoardMapResponseModel?>();
+      BehaviorSubject<WorkBoardSectionMapResponseModel?>();
   final BehaviorSubject<WorkBoardBoolResponseModel?>
       _subjectOpenCLoseWorkboard =
       BehaviorSubject<WorkBoardBoolResponseModel?>();
@@ -105,7 +105,7 @@ class WorkboardBloc {
   getManageWorkBoardDetailsList({
     Map<String, dynamic>? queryparams,
   }) async {
-    WorkBoardMapResponseModel response =
+    WorkBoardSectionMapResponseModel response =
         await _workboardRepository.getManageWorkBoardDetailsList(
       queryparams: queryparams,
     );
@@ -176,11 +176,11 @@ class WorkboardBloc {
   }
 
   postUpdateWorkBoardSectionAndItem({
-    AddContentWorkBoardModel? addContentWorkBoardModel,
+    WorkBoardSectionModel? workBoardSectionModel,
   }) async {
     WorkBoardPostResponseContent response =
         await _workboardRepository.postUpdateWorkBoardSectionAndItem(
-      addContentWorkBoardModel: addContentWorkBoardModel,
+      workBoardSectionModel: workBoardSectionModel,
     );
     _subjectPostUpdateWorkBoardSectionAndItem.sink.add(response);
     return response;
@@ -277,7 +277,7 @@ class WorkboardBloc {
 
   BehaviorSubject<WorkBoardResponseModel?> get subjectWorkboardList =>
       _subjectWorkboardList;
-  BehaviorSubject<WorkBoardMapResponseModel?>
+  BehaviorSubject<WorkBoardSectionMapResponseModel?>
       get subjectManageWorkboardDetailsList =>
           _subjectManageWorkboardDetailsList;
   BehaviorSubject<WorkBoardBoolResponseModel?> get subjectOpenCloseWorkboard =>

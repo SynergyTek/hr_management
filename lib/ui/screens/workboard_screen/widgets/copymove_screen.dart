@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/models/workboard_model/workboard_section_model.dart';
 import '../../../../data/helpers/hex_colot_convert.dart';
 import '../../../../data/models/workboard_model/add_workboard_content_model.dart';
 import '../../../../themes/theme_config.dart';
@@ -34,9 +35,9 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
   List<WorkboardModel>? _searchResult;
   List<WorkboardModel>? fullList;
 
-  WorkBoardMapResponseModel? workBoardMapResponseModel;
+  WorkBoardSectionMapResponseModel? workBoardMapResponseModel;
 
-  List? workBoardSectionsList;
+  List<WorkBoardSectionModel>? workBoardSectionsList;
 
   int? jsonIndex;
 
@@ -215,10 +216,10 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
           Flexible(
             flex: 2,
             child: Container(
-              child: StreamBuilder<WorkBoardMapResponseModel?>(
+              child: StreamBuilder<WorkBoardSectionMapResponseModel?>(
                 stream: workboardBloc.subjectManageWorkboardDetailsList.stream,
                 builder: (BuildContext context,
-                    AsyncSnapshot<WorkBoardMapResponseModel?> snapshot) {
+                    AsyncSnapshot<WorkBoardSectionMapResponseModel?> snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data?.mapdata != null) {
                       workBoardMapResponseModel = snapshot.data;
@@ -238,12 +239,13 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                 jsonIndex = index;
                                 return Card(
                                   color: (workBoardSectionsList?[index]
-                                              ['HeaderColor'] !=
+                                              .headerColor !=
                                           null)
                                       ?
                                       // Colors.grey.shade100
                                       hexToColor(workBoardSectionsList?[index]
-                                              ['HeaderColor'])
+                                                  .headerColor ??
+                                              '')
                                           .withOpacity(0.2)
                                       : Colors.grey.shade100,
                                   shape: RoundedRectangleBorder(
@@ -258,11 +260,12 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                         padding: DEFAULT_PADDING,
                                         decoration: BoxDecoration(
                                           color: (workBoardSectionsList?[index]
-                                                      ['HeaderColor'] !=
+                                                      .headerColor !=
                                                   null)
                                               ? hexToColor(
                                                   workBoardSectionsList?[index]
-                                                      ['HeaderColor'])
+                                                          .headerColor ??
+                                                      '')
                                               : Colors.blueGrey,
                                           borderRadius:
                                               BorderRadius.circular(20),
@@ -275,7 +278,7 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                               children: [
                                                 Text(
                                                   workBoardSectionsList?[index]
-                                                              ['SectionDigit']
+                                                          .sectionDigit
                                                           .toString() ??
                                                       '',
                                                   style: TextStyle(
@@ -288,7 +291,7 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                                 ),
                                                 Text(
                                                   workBoardSectionsList?[index]
-                                                          ['SectionName'] ??
+                                                          .sectionName ??
                                                       '',
                                                   style: TextStyle(
                                                       color: Colors.white),
@@ -309,11 +312,11 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                                             "secId":
                                                                 workBoardSectionsList?[
                                                                         index]
-                                                                    ['Id'],
+                                                                    .id,
                                                             "workboardId":
                                                                 workBoardSectionsList?[
-                                                                        index][
-                                                                    "WorkBoardId"],
+                                                                        index]
+                                                                    .workboardId,
                                                             "userId": BlocProvider.of<
                                                                             UserModelBloc>(
                                                                         context)
@@ -359,11 +362,11 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                                             "secId":
                                                                 workBoardSectionsList?[
                                                                         index]
-                                                                    ['Id'],
+                                                                    .id,
                                                             "workboardId":
                                                                 workBoardSectionsList?[
-                                                                        index][
-                                                                    "WorkBoardId"],
+                                                                        index]
+                                                                    .workBoardId,
                                                             "userId": BlocProvider.of<
                                                                             UserModelBloc>(
                                                                         context)

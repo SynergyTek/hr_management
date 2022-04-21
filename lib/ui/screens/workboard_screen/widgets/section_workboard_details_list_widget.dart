@@ -5,9 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/data/helpers/hex_colot_convert.dart';
-import 'package:hr_management/data/models/udf_json_model/udf_json_model.dart';
 import 'package:hr_management/data/models/workboard_model/add_workboard_content_model.dart';
-import 'package:hr_management/data/models/workboard_model/workboard_model.dart';
+import 'package:hr_management/data/models/workboard_model/json_content_model.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/screens/workboard_screen/widgets/copymove_screen.dart';
@@ -17,6 +16,7 @@ import 'package:hr_management/ui/widgets/snack_bar.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/enums/enums.dart';
 import '../../../../data/models/workboard_model/workboard_response_model.dart';
+import '../../../../data/models/workboard_model/workboard_section_model.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../logic/blocs/workboard_bloc/workboard_bloc.dart';
 import '../../../../routes/route_constants.dart';
@@ -40,19 +40,25 @@ class SectionWorkBoardDetailsList extends StatefulWidget {
 
 class _SectionWorkBoardDetailsListState
     extends State<SectionWorkBoardDetailsList> {
-  WorkBoardMapResponseModel? workBoardMapResponseModel;
+  WorkBoardSectionMapResponseModel? workBoardMapResponseModel;
 
   int? jsonIndex;
 
   ScrollController scrollController = ScrollController();
 
-  List? workBoardSectionsList;
+  List<WorkBoardSectionModel>? workBoardSectionsList;
 
-  List? itemList;
+  List<WorkBoardSectionModel>? itemList;
 
   List? itemContent;
 
-  AddContentWorkBoardModel? addContentWorkBoardModel;
+  int? index02;
+
+  WorkBoardSectionModel? workBoardSectionModel;
+
+  String? jsonContentString;
+
+  List<JsonContentModel>? jsonContentList;
 
   @override
   void initState() {
@@ -76,16 +82,24 @@ class _SectionWorkBoardDetailsListState
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: StreamBuilder<WorkBoardMapResponseModel?>(
+      child: StreamBuilder<WorkBoardSectionMapResponseModel?>(
         stream: workboardBloc.subjectManageWorkboardDetailsList.stream,
         builder: (BuildContext context,
-            AsyncSnapshot<WorkBoardMapResponseModel?> snapshot) {
+            AsyncSnapshot<WorkBoardSectionMapResponseModel?> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data?.mapdata != null) {
               workBoardMapResponseModel = snapshot.data;
 
               workBoardSectionsList =
                   workBoardMapResponseModel?.mapdata?.workBoardSections;
+
+              if (workBoardMapResponseModel?.mapdata?.jsonContent != null) {
+                jsonContentString =
+                    workBoardMapResponseModel?.mapdata?.jsonContent;
+                jsonContentList = jsonContentModelFromJson(jsonContentString!);
+              }
+
+              print(jsonContentList);
             }
 
             return Scaffold(
@@ -123,6 +137,21 @@ class _SectionWorkBoardDetailsListState
                                   itemCount: workBoardSectionsList?.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
+                                    if (jsonContentList != null &&
+                                        jsonContentList!.isNotEmpty &&
+                                        jsonContentList!.length < index + 1) {
+                                      jsonContentList
+                                          ?.add(jsonContentList![0]); //TODO
+                                      jsonContentList?[index].id =
+                                          workBoardSectionsList?[index].id;
+                                      jsonContentList?[index].title =
+                                          workBoardSectionsList?[index].title;
+                                      jsonContentList?[index].sectionDigit =
+                                          workBoardSectionsList?[index]
+                                              .sectionDigit;
+                                    }
+                                    jsonContentList?[index].item?.add(
+                                        workBoardSectionsList?[index].item);
                                     jsonIndex = index;
                                     return Card(
                                       color: Colors.white,
@@ -140,11 +169,13 @@ class _SectionWorkBoardDetailsListState
                                             decoration: BoxDecoration(
                                               color: (workBoardSectionsList?[
                                                               index]
-                                                          ['HeaderColor'] !=
+                                                          .headerColor !=
                                                       null)
                                                   ? hexToColor(
                                                       workBoardSectionsList?[
-                                                          index]['HeaderColor'])
+                                                                  index]
+                                                              .headerColor ??
+                                                          '')
                                                   : Colors.blueGrey,
                                               borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(16),
@@ -163,9 +194,8 @@ class _SectionWorkBoardDetailsListState
                                                       children: [
                                                         Text(
                                                           workBoardSectionsList?[
-                                                                          index]
-                                                                      [
-                                                                      'SectionDigit']
+                                                                      index]
+                                                                  .sectionDigit
                                                                   .toString() ??
                                                               '',
                                                           style: TextStyle(
@@ -181,8 +211,8 @@ class _SectionWorkBoardDetailsListState
                                                         Flexible(
                                                           child: Text(
                                                             workBoardSectionsList?[
-                                                                        index][
-                                                                    'SectionName'] ??
+                                                                        index]
+                                                                    .sectionName ??
                                                                 '',
                                                             style: TextStyle(
                                                                 color: Colors
@@ -210,9 +240,9 @@ class _SectionWorkBoardDetailsListState
                                                                 workBoardId:
                                                                     widget.id,
                                                                 workBoardSectionId:
-                                                                    workBoardSectionsList?[
-                                                                            index]
-                                                                        ['Id'],
+                                                                    workBoardSectionsList?[index]
+                                                                            .id ??
+                                                                        '',
                                                               ),
                                                             ),
                                                           ).then((value) =>
@@ -236,7 +266,7 @@ class _SectionWorkBoardDetailsListState
                                                               arg1:
                                                                   workBoardSectionsList?[
                                                                           index]
-                                                                      ['Id'],
+                                                                      .id,
                                                               arg2:
                                                                   workBoardMapResponseModel
                                                                       ?.mapdata
@@ -259,76 +289,76 @@ class _SectionWorkBoardDetailsListState
                                                 controller: scrollController,
                                                 itemCount:
                                                     workBoardSectionsList?[
-                                                            index]['item']
+                                                            index]
+                                                        .item
                                                         ?.length,
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index2) {
+                                                  index02 = index2;
                                                   itemList =
                                                       workBoardSectionsList?[
-                                                          index]['item'];
-                                                  addContentWorkBoardModel =
-                                                      addWorkBoardContentModelFromJson(
-                                                          jsonEncode(itemList?[
-                                                              index2]));
-                                                  // addContentWorkBoardModel =
-                                                  //     itemList?[index2] ;
+                                                              index]
+                                                          .item;
+
+                                                  workBoardSectionModel =
+                                                      workBoardSectionsList?[
+                                                          index];
 
                                                   return Column(
                                                     children: [
                                                       ItemWidget(
-                                                        addContentWorkBoardModel:
-                                                            addContentWorkBoardModel,
+                                                        index2: index02,
+                                                        workBoardSectionModel:
+                                                            workBoardSectionModel,
                                                         context: context,
                                                         id: widget.id,
                                                         isSquare: (itemList?[
                                                                             index2]
-                                                                        [
-                                                                        'WorkBoardItemShape'] ==
+                                                                        .workBoardItemShape ==
                                                                     0 &&
                                                                 itemList?[index2]
-                                                                        [
-                                                                        'WorkBoardItemSize'] ==
+                                                                        .workBoardItemSize ==
                                                                     2)
                                                             ? true
                                                             : false,
                                                         ntsNoteId:
                                                             itemList?[index2]
-                                                                ['NtsNoteId'],
+                                                                .ntsNoteId,
                                                         workBoardId:
                                                             workBoardMapResponseModel
                                                                 ?.mapdata?.id,
                                                         sectionId:
                                                             itemList?[index2]
-                                                                ['Id'],
+                                                                .id,
                                                         itemfileId:
                                                             itemList?[index2]
-                                                                ['ItemFileId'],
+                                                                .itemFileId,
                                                         itemType:
                                                             itemList?[index2]
-                                                                ['ItemType'],
+                                                                .itemType,
                                                         color: (itemList?[index2]
-                                                                        [
-                                                                        'ColorCode'] !=
+                                                                        .colorCode !=
                                                                     null &&
                                                                 itemList?[index2]
-                                                                        [
-                                                                        'ColorCode'] !=
+                                                                        .colorCode !=
                                                                     "")
                                                             ? hexToColor(
-                                                                itemList?[
-                                                                        index2][
-                                                                    'ColorCode'],
+                                                                itemList?[index2]
+                                                                        .colorCode ??
+                                                                    '',
                                                               )
                                                             : null,
-                                                        itemName: itemList?[
-                                                                    index2]
-                                                                ['ItemName'] ??
-                                                            '',
+                                                        itemName:
+                                                            itemList?[index2]
+                                                                    .itemName ??
+                                                                '',
                                                         itemContent: (itemList?[
-                                                                    index2][
-                                                                'ItemContent'] ??
+                                                                    index2]
+                                                                .itemContent ??
                                                             ''),
+                                                        jsonContentList:
+                                                            jsonContentList,
                                                       ),
                                                     ],
                                                   );
@@ -398,7 +428,7 @@ class _SectionWorkBoardDetailsListState
 
             Navigator.pushNamed(context, CREATE_EDIT_SECTION_WORKBOARD_SCREEN,
                 arguments: ScreenArguments(
-                  arg1: workBoardSectionsList?[jsonIndex!]['Id'],
+                  arg1: workBoardSectionsList?[jsonIndex!].id,
                   arg2: workBoardMapResponseModel?.mapdata?.id,
                   val1: false,
                 )).then((value) => apiCall());
@@ -433,7 +463,9 @@ class ItemWidget extends StatefulWidget {
   final String? workBoardId;
   final String? sectionId;
   final String? ntsNoteId;
-  final AddContentWorkBoardModel? addContentWorkBoardModel;
+  final WorkBoardSectionModel? workBoardSectionModel;
+  final int? index2;
+  final List<JsonContentModel>? jsonContentList;
 
   const ItemWidget({
     Key? key,
@@ -448,7 +480,9 @@ class ItemWidget extends StatefulWidget {
     this.ntsNoteId,
     required this.context,
     required this.id,
-    this.addContentWorkBoardModel,
+    this.workBoardSectionModel,
+    this.index2,
+    this.jsonContentList,
   }) : super(key: key);
 
   @override
@@ -459,6 +493,8 @@ class _ItemWidgetState extends State<ItemWidget> {
   String? headerColor;
 
   Color? displayHeaderColor;
+
+  WorkBoardSectionModel? itemdata;
 
   apiCall() {
     workboardBloc.subjectManageWorkboardDetailsList.sink.add(null);
@@ -670,40 +706,49 @@ class _ItemWidgetState extends State<ItemWidget> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      // GestureDetector(
-                                      //   child: Text('Size'),
-                                      //   onTap: () {
-                                      //     print('size');
-                                      //   },
-                                      // ),
                                       PopupMenuButton(
                                         child: Text('Size'),
                                         onSelected: (result) async {
                                           if (result == 1) {
-                                            widget.addContentWorkBoardModel
-                                                ?.workBoardItemSize = 0;
-                                            widget.addContentWorkBoardModel
-                                                    ?.workBoardItemId =
-                                                widget.addContentWorkBoardModel
-                                                    ?.ntsNoteId;
+                                            itemdata = widget
+                                                .workBoardSectionModel
+                                                ?.item?[widget.index2!];
+
+                                            // ?.boards?[widget.index2!]
+                                            // .item?[widget.index2!];
+                                            itemdata?.workBoardItemSize =
+                                                "Standard";
+                                            itemdata?.workBoardItemShape =
+                                                "Square";
+                                            widget.workBoardSectionModel
+                                                    ?.boards =
+                                                jsonEncode(
+                                                    widget.jsonContentList);
+
                                             workboardBloc
                                                 .postUpdateWorkBoardSectionAndItem(
-                                                    addContentWorkBoardModel: widget
-                                                        .addContentWorkBoardModel);
+                                                    workBoardSectionModel: widget
+                                                        .workBoardSectionModel);
                                             Navigator.of(context).pop();
                                             apiCall();
                                           }
                                           if (result == 2) {
-                                            widget.addContentWorkBoardModel
-                                                ?.workBoardItemSize = 1;
-                                            widget.addContentWorkBoardModel
-                                                    ?.workBoardItemId =
-                                                widget.addContentWorkBoardModel
-                                                    ?.ntsNoteId;
+                                            itemdata = widget
+                                                .workBoardSectionModel
+                                                ?.item?[widget.index2!];
+
+                                            itemdata?.workBoardItemSize =
+                                                "Wide";
+                                            itemdata?.workBoardItemShape =
+                                                "Square";
+                                            widget.workBoardSectionModel
+                                                    ?.boards =
+                                                jsonEncode(
+                                                    widget.jsonContentList);
                                             workboardBloc
                                                 .postUpdateWorkBoardSectionAndItem(
-                                                    addContentWorkBoardModel: widget
-                                                        .addContentWorkBoardModel);
+                                                    workBoardSectionModel: widget
+                                                        .workBoardSectionModel);
                                             Navigator.of(context).pop();
                                             apiCall();
                                           }
@@ -759,34 +804,42 @@ class _ItemWidgetState extends State<ItemWidget> {
                                                 onColorChange:
                                                     (Color color) async {
                                                   // Handle color changes
-                                                  headerColor =
-                                                      '#${color.value.toRadixString(16).substring(2)}';
-                                                  print(headerColor);
 
-                                                  displayHeaderColor = color;
+                                                  setState(() {
+                                                    headerColor =
+                                                        '#${color.value.toRadixString(16).substring(2)}';
+                                                    print(headerColor);
 
-                                                  widget
-                                                      .addContentWorkBoardModel
-                                                      ?.colorCode = headerColor;
-                                                  widget.addContentWorkBoardModel
-                                                          ?.workBoardItemId =
-                                                      widget
-                                                          .addContentWorkBoardModel
-                                                          ?.ntsNoteId;
+                                                    displayHeaderColor = color;
+                                                  });
+                                                  Navigator.of(context).pop();
+
+                                                  itemdata = widget
+                                                      .workBoardSectionModel
+                                                      ?.item?[widget.index2!];
+                                                  itemdata?.colorCode =
+                                                      headerColor;
+
+                                                  print(widget.jsonContentList);
+
+                                                  widget.workBoardSectionModel
+                                                          ?.boards =
+                                                      jsonEncode(widget
+                                                          .jsonContentList);
+
                                                   await workboardBloc
                                                       .postUpdateWorkBoardSectionAndItem(
-                                                          addContentWorkBoardModel:
+                                                          workBoardSectionModel:
                                                               widget
-                                                                  .addContentWorkBoardModel);
-                                                  setState(() {});
-                                                  Navigator.of(context).pop();
+                                                                  .workBoardSectionModel);
+
                                                   Navigator.of(context).pop();
                                                   apiCall();
                                                 },
                                                 selectedColor:
                                                     displayHeaderColor,
                                               ),
-                                            )
+                                            ),
                                           ];
                                         },
                                       ),
@@ -798,7 +851,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
