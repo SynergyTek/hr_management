@@ -118,3 +118,5 @@ const String TIME_PERMISSION_SCREEN = "/time_permission_screen";
 const String RESIGNATION_SCREEN = "/resign_screen";
 const String TERMINATION_SCREEN = "/terminate_screen";
 const String MISCONDUCT_SCREEN = "/misconduct_screen";
+const String HR_DIRECT_CONTRACT_SCREEN = "/hr_direct_contract_screen";
+
