@@ -10,7 +10,6 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
-import '../../../../../data/enums/enums.dart';
 import '../../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../listizer/listizer.dart';
 import '../../../../widgets/custom_icons.dart';

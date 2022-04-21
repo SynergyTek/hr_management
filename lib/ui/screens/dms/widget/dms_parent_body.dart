@@ -828,8 +828,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
       arguments: ScreenArguments(
-        arg1: data.workspaceId ?? "",
-        // arg1: data.id ?? "",
+        arg1: data.key ?? "",
       ),
     );
   }

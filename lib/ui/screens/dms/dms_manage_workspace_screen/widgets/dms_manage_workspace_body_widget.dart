@@ -100,7 +100,7 @@ class _DMSManageWorkspaceBodyWidgetState
                     );
                   } else if (documentTypeSnapshot.hasData) {
                     return FutureBuilder(
-                      future: dmsManageWorkspaceBloc.getAPIData(
+                      future: dmsManageWorkspaceBloc.getCreateWorkspace(
                         queryparams: {
                           "workspaceId": widget.parentWorkspaceId ?? "",
                         },

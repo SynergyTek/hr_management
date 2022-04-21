@@ -15,7 +15,7 @@ abstract class AbstractManageWorkspaceRepository {
     required Map<String, dynamic> queryparams,
   });
 
-  Future<WorkspaceViewModel?> getAPIData({
+  Future<WorkspaceViewModel?> getCreateWorkspace({
     required Map<String, dynamic> queryparams,
   });
 

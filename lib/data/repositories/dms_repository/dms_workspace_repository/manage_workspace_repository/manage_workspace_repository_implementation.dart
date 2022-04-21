@@ -22,7 +22,7 @@ class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
     }
   }
 
-  Future<WorkspaceViewModel?> getAPIData({
+  Future<WorkspaceViewModel?> getCreateWorkspace({
     Map<String, dynamic>? queryparams,
   }) async {
     try {

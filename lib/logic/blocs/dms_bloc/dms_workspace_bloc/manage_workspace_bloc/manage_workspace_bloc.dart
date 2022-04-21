@@ -25,10 +25,10 @@ class ManageWorkspaceBloc {
     return response;
   }
 
-  Future<WorkspaceViewModel?> getAPIData({
+  Future<WorkspaceViewModel?> getCreateWorkspace({
     required Map<String, dynamic> queryparams,
   }) async {
-    WorkspaceViewModel? response = await _apiRepository.getAPIData(
+    WorkspaceViewModel? response = await _apiRepository.getCreateWorkspace(
       queryparams: queryparams,
     );
 
