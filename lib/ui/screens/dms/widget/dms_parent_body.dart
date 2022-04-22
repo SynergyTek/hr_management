@@ -16,6 +16,8 @@ import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
 import '../../../../data/models/dms/permission/permission_model.dart';
 import '../../../../logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
+import '../../../widgets/custom_controls/attachment.dart';
+import '../../../widgets/custom_controls/attachment_widget.dart';
 
 class DMSParentBody extends StatefulWidget {
   final String? sourceId;
@@ -44,6 +46,9 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   bool? isCopy = false;
   bool? isCut = false;
   List<String?>? childPath = [];
+
+  TextEditingController fileAttachmentController = TextEditingController();
+  TextEditingController fileItemIdId = TextEditingController();
 
   @override
   void initState() {
@@ -165,6 +170,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                         '/' +
                                         filterChildList[index].workspaceId! +
                                         '/';
+                                    print(parentPath);
 
                                     parentPathList
                                       ..clear()
@@ -330,14 +336,14 @@ class _DMSParentBodyState extends State<DMSParentBody> {
         //     // onTap: () => deleteDialog(id),
         //   ),
         // ),
-        // Visibility(
-        //   visible: false, //TODO: figure out the boolean
-        //   child: ListTile(
-        //     leading: Icon(CustomIcons.folder_upload),
-        //     title: Text('Upload Files'),
-        //     // onTap: () => deleteDialog(id),
-        //   ),
-        // ),
+        Visibility(
+          visible: true, //TODO: figure out the boolean
+          child: ListTile(
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('Upload Files'),
+            onTap: () => _handleUploadFilesOnTap(),
+          ),
+        ),
         Visibility(
           visible: data?.canCreateDocument ?? false,
           // visible: false, //TODO: figure out the boolean
@@ -875,6 +881,29 @@ class _DMSParentBodyState extends State<DMSParentBody> {
         arg4: _permission.disablePermissionInheritance.toString(),
         val1: false,
         list1: childPath,
+      ),
+    );
+  }
+
+  _handleUploadFilesOnTap() {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return SelectAttachment(
+            ntsId: 'Note',
+            onListTap: (
+              dynamic value,
+              dynamic value2,
+              dynamic value3,
+            ) {
+              setState(() {
+                // isAttachmentUploaded = true;
+                fileItemIdId.text = value;
+                fileAttachmentController.text = " (1) File Attached: " + value2;
+              });
+            },
+          );
+        },
       ),
     );
   }
