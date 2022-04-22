@@ -15,6 +15,7 @@ import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
 import '../../../../data/models/dms/permission/permission_model.dart';
+import '../../../../logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
 import '../../../../logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
 
 class DMSParentBody extends StatefulWidget {
@@ -371,6 +372,23 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             leading: Icon(CustomIcons.folder_upload),
             title: Text('View Permission'),
             onTap: () => _handleViewPermissionOnTap(data!),
+          ),
+        ),
+        Visibility(
+          visible: BlocProvider.of<CutCopyPasteBloc>(context)
+                      .state
+                      .cutCopyPasteModel
+                      ?.sourceId !=
+                  null &&
+              BlocProvider.of<CutCopyPasteBloc>(context)
+                  .state
+                  .cutCopyPasteModel!
+                  .sourceId!
+                  .isNotEmpty,
+          child: ListTile(
+            leading: Icon(CustomIcons.copy),
+            title: Text('Paste'),
+            onTap: () => pasteDialog(data?.key ?? ''),
           ),
         ),
         // Visibility(

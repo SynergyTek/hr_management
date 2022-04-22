@@ -486,31 +486,85 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ),
         ),
         Visibility(
-          visible: item.templateCode == 'GENERAL_DOCUMENT',
+          visible: item.canManagePermission ?? false,
           child: ListTile(
-            leading: Icon(
-              CustomIcons.file_word,
-            ),
-            title: Text('View Workflow'),
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('Manage Permission'),
+            onTap: () => _handleManagePermissionOnTap(item),
             // onTap: () => deleteDialog(id),
           ),
         ),
         Visibility(
-          visible: item.templateCode == 'GENERAL_DOCUMENT',
+          visible: true, //TODO: figure out the boolean
           child: ListTile(
-            leading: Icon(CustomIcons.arrow_alt_from_top),
-            title: Text('Raise Approval Request'),
-            // onTap: () => deleteDialog(id),
+            leading: Icon(CustomIcons.folder_upload),
+            title: Text('View Permission'),
+            onTap: () => _handleViewPermissionOnTap(item),
           ),
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.expand_arrows),
+          title: Text('Cut'),
+          onTap: () => cutDialog(item.key),
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.copy),
+          title: Text('Copy'),
+          onTap: () => copyDialog(item.key),
         ),
         Visibility(
-          visible: item.templateCode == 'GENERAL_DOCUMENT',
+          visible: BlocProvider.of<CutCopyPasteBloc>(context)
+                      .state
+                      .cutCopyPasteModel
+                      ?.sourceId !=
+                  null &&
+              BlocProvider.of<CutCopyPasteBloc>(context)
+                  .state
+                  .cutCopyPasteModel!
+                  .sourceId!
+                  .isNotEmpty,
           child: ListTile(
-            leading: Icon(CustomIcons.arrows),
-            title: Text('View Approval Request'),
-            // onTap: () => deleteDialog(id),
+            leading: Icon(CustomIcons.copy),
+            title: Text('Paste'),
+            onTap: () => pasteDialog(item.key),
           ),
         ),
+        ListTile(
+          leading: Icon(CustomIcons.trash),
+          title: Text('Delete'),
+          onTap: () => deleteDialog(item.key),
+        ),
+        ListTile(
+          leading: Icon(CustomIcons.archive),
+          title: Text('Archive'),
+          onTap: () => archiveDialog(item.key),
+        ),
+        // Visibility(
+        //   visible: item.templateCode == 'GENERAL_DOCUMENT',
+        //   child: ListTile(
+        //     leading: Icon(
+        //       CustomIcons.file_word,
+        //     ),
+        //     title: Text('View Workflow'),
+        //     // onTap: () => deleteDialog(id),
+        //   ),
+        // ),
+        // Visibility(
+        //   visible: item.templateCode == 'GENERAL_DOCUMENT',
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.arrow_alt_from_top),
+        //     title: Text('Raise Approval Request'),
+        //     // onTap: () => deleteDialog(id),
+        //   ),
+        // ),
+        // Visibility(
+        //   visible: item.templateCode == 'GENERAL_DOCUMENT',
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.arrows),
+        //     title: Text('View Approval Request'),
+        //     // onTap: () => deleteDialog(id),
+        //   ),
+        // ),
         // ListTile(
         //   leading: Icon(CustomIcons.bags_shopping),
         //   title: Text('Manage Permission'),
@@ -895,10 +949,11 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  _handleManagePermissionOnTap(Cwd item) async {
+  _handleManagePermissionOnTap(DMSSourceFolderModel item) async {
     Permission _permission =
         await permissionBloc.getViewPermissionData(queryparams: {
-      "NoteId": "${item.id}",
+      "NoteId": "${item.key}",
+      // "NoteId": "${item.id}",
       "WorkspaceId": "${item.workspaceId}",
       "ParentId": "${item.parentId}",
     });
@@ -906,7 +961,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     Navigator.of(context).pushNamed(
       DMS_VIEW_PERMISSION_ROUTE,
       arguments: ScreenArguments(
-        arg1: item.id,
+        arg1: item.key,
+        // arg1: item.id,
         arg2: item.parentId,
         arg3: item.workspaceId,
         arg4: _permission.disablePermissionInheritance.toString(),
@@ -916,10 +972,11 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  _handleViewPermissionOnTap(Cwd item) async {
+  _handleViewPermissionOnTap(DMSSourceFolderModel item) async {
     Permission _permission =
         await permissionBloc.getViewPermissionData(queryparams: {
-      "NoteId": "${item.id}",
+      "NoteId": "${item.key}",
+      // "NoteId": "${item.id}",
       "WorkspaceId": "${item.workspaceId}",
       "ParentId": "${item.parentId}",
     });
@@ -927,7 +984,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     Navigator.of(context).pushNamed(
       DMS_VIEW_PERMISSION_ROUTE,
       arguments: ScreenArguments(
-        arg1: item.id,
+        arg1: item.key,
+        // arg1: item.id,
         arg2: item.parentId,
         arg3: item.workspaceId,
         arg4: _permission.disablePermissionInheritance.toString(),
