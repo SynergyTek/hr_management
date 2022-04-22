@@ -176,11 +176,11 @@ class WorkboardBloc {
   }
 
   postUpdateWorkBoardSectionAndItem({
-    WorkBoardSectionModel? workBoardSectionModel,
+    WorkboardModel? workboardModel,
   }) async {
     WorkBoardPostResponseContent response =
         await _workboardRepository.postUpdateWorkBoardSectionAndItem(
-      workBoardSectionModel: workBoardSectionModel,
+      workboardModel: workboardModel,
     );
     _subjectPostUpdateWorkBoardSectionAndItem.sink.add(response);
     return response;

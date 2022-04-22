@@ -303,7 +303,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                           context,
                           MaterialPageRoute(
                             builder: (_) => SectionWorkBoardDetailsList(
-                              id: list?[index].workboardId ?? '',
+                              workboardModel: list?[index],
                             ),
                           ),
                         );

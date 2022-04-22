@@ -17,7 +17,6 @@ class _WhiteBoardWidgetState extends State<WhiteBoardWidget> {
   final _imageKey = GlobalKey<ImagePainterState>();
   final _key = GlobalKey<ScaffoldState>();
 
-  bool? eraser = false;
 
   void saveImage() async {
     final image = await _imageKey.currentState?.exportImage();
@@ -83,8 +82,8 @@ class _WhiteBoardWidgetState extends State<WhiteBoardWidget> {
                   colorIcon: null,
                   key: _imageKey,
                   scalable: true,
-                  colors: (eraser == true) ? [Colors.white] : [Colors.black],
-                  initialColor: (eraser == true) ? Colors.white : Colors.black,
+                  colors: [Colors.black],
+                  initialColor:  Colors.black,
                   initialPaintMode: PaintMode.freeStyle,
                 ),
     );
