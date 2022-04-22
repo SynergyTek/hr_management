@@ -138,6 +138,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                         onPressed: () => bottomSheet(
                                           filterChildList[index].title,
                                           filterChildList[index].workspaceId,
+                                          filterChildList[index].key,
                                           data: filterChildList[index],
                                           // snapshot.data!.list[0].fileId,
                                           // filterChildList[index].name,
@@ -254,7 +255,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     );
   }
 
-  bottomSheet(String? title, String? id,
+  bottomSheet(String? title, String? id, String? noteId,
       // String? path,
       {DMSSourceFolderModel? data}) {
     print(data);
@@ -368,9 +369,8 @@ class _DMSParentBodyState extends State<DMSParentBody> {
           visible: true, //TODO: figure out the boolean
           child: ListTile(
             leading: Icon(CustomIcons.folder_upload),
-            title: Text('VIew Permission'),
+            title: Text('View Permission'),
             onTap: () => _handleViewPermissionOnTap(data!),
-            // onTap: () => deleteDialog(id),
           ),
         ),
         // Visibility(
@@ -449,7 +449,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                 ADD_EDIT_NOTE_ROUTE,
                 arguments: ScreenArguments(
                   arg1: '',
-                  arg2: id,
+                  arg2: noteId,
                   // arg3: filterChildList[index].noteSubject
                 ),
               );
