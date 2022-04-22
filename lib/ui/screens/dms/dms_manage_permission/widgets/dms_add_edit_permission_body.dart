@@ -15,6 +15,8 @@ import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 
+import '../../../../widgets/progress_indicator.dart';
+
 enum PermissionType { User, WorkspaceUserGroup }
 
 class DmsAddEditPermissionBody extends StatefulWidget {
@@ -50,6 +52,7 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
   String? appliesToValue = dmsAppliesToType[0];
 
   bool isUser = true;
+  bool showCPI = false;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +118,12 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
               _buttonsRow(),
             ],
           ),
+          Visibility(
+            visible: showCPI,
+            child: Center(
+              child: CustomProgressIndicator(),
+            ),
+          ),
         ],
       ),
     );
@@ -149,13 +158,38 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
             _permissionSubmitModel.dataAction =
                 widget.isCreatePermission ? 'Create' : 'Edit';
 
+            setState(() {
+              showCPI = true;
+            });
+
             //
             SubmitPermissionResponse response =
                 await permissionBloc.savePermission(
               permissionModel: _permissionSubmitModel,
             );
 
-            // TODO: if success then navigator pop and a snackbar message.
+            if (response.isSuccess!) {
+              setState(() {
+                showCPI = false;
+              });
+
+              permissionBloc.subject.sink.add(null);
+              permissionBloc
+                ..getPermissionDetails(queryparams: {
+                  'NoteId': widget.noteId,
+                });
+
+              Navigator.pop(context);
+            } else {
+              setState(() {
+                showCPI = false;
+              });
+            }
+
+            displaySnackBar(
+              text: response.messages ?? '',
+              context: context,
+            );
           },
           width: 100,
         ),

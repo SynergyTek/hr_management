@@ -105,11 +105,13 @@ class DMSViewPermissionScreen extends StatelessWidget {
             color: Colors.white,
           ),
           backgroundColor: Colors.blue,
-          onTap: () =>
-              Navigator.pushNamed(context, DMS_ADD_EDIT_PERMISSION_ROUTE,
-                  arguments: ScreenArguments(
-                    arg1: noteId,
-                  )),
+          onTap: () => Navigator.pushNamed(
+            context,
+            DMS_ADD_EDIT_PERMISSION_ROUTE,
+            arguments: ScreenArguments(
+              arg1: noteId,
+            ),
+          ),
           label: 'Add Permission',
           labelStyle: TextStyle(
             fontWeight: FontWeight.w500,

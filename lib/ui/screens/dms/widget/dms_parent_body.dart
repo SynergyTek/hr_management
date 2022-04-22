@@ -322,22 +322,22 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             onTap: () => _handleEditFolderOnTap(data!),
           ),
         ),
-        Visibility(
-          visible: true, //TODO: figure out the boolean
-          child: ListTile(
-            leading: Icon(CustomIcons.folder_upload),
-            title: Text('Upload Folder'),
-            // onTap: () => deleteDialog(id),
-          ),
-        ),
-        Visibility(
-          visible: false, //TODO: figure out the boolean
-          child: ListTile(
-            leading: Icon(CustomIcons.folder_upload),
-            title: Text('Upload Files'),
-            // onTap: () => deleteDialog(id),
-          ),
-        ),
+        // Visibility(
+        //   visible: true, //TODO: figure out the boolean
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.folder_upload),
+        //     title: Text('Upload Folder'),
+        //     // onTap: () => deleteDialog(id),
+        //   ),
+        // ),
+        // Visibility(
+        //   visible: false, //TODO: figure out the boolean
+        //   child: ListTile(
+        //     leading: Icon(CustomIcons.folder_upload),
+        //     title: Text('Upload Files'),
+        //     // onTap: () => deleteDialog(id),
+        //   ),
+        // ),
         Visibility(
           visible: data?.canCreateDocument ?? false,
           // visible: false, //TODO: figure out the boolean
@@ -804,7 +804,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     Navigator.of(context).pushNamed(
       DMS_NEW_FOLDER_ROUTE,
       arguments: ScreenArguments(
-        arg1: item.workspaceId, // Parent id
+        arg1: item.parentId, // Parent id
         arg2: item.workspaceId, // Folder id
         arg3: item.title, // Folder Name
         // arg1: item.id, // Parent id
@@ -836,7 +836,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   _handleManagePermissionOnTap(DMSSourceFolderModel item) async {
     Permission _permission =
         await permissionBloc.getViewPermissionData(queryparams: {
-      "NoteId": "${item.workspaceId}", //TODO: figure out the right id
+      "NoteId": "${item.key}",
       // "NoteId": "${item.id}",
       "WorkspaceId": "${item.workspaceId}",
       "ParentId": "${item.parentId}",
@@ -845,7 +845,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     Navigator.of(context).pushNamed(
       DMS_VIEW_PERMISSION_ROUTE,
       arguments: ScreenArguments(
-        arg1: item.workspaceId, //TODO: figure out the right id
+        arg1: item.key,
         // arg1: item.id,
         arg2: item.parentId,
         arg3: item.workspaceId,
@@ -859,7 +859,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   _handleViewPermissionOnTap(DMSSourceFolderModel item) async {
     Permission _permission =
         await permissionBloc.getViewPermissionData(queryparams: {
-      "NoteId": "${item.workspaceId}", //TODO: figure out the right id
+      "NoteId": "${item.key}",
       // "NoteId": "${item.id}",
       "WorkspaceId": "${item.workspaceId}",
       "ParentId": "${item.parentId}",
@@ -868,7 +868,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     Navigator.of(context).pushNamed(
       DMS_VIEW_PERMISSION_ROUTE,
       arguments: ScreenArguments(
-        arg1: item.workspaceId, //TODO: figure out the right id
+        arg1: item.key,
         // arg1: item.id,
         arg2: item.parentId,
         arg3: item.workspaceId,
