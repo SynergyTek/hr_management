@@ -36,15 +36,21 @@ class ViewPermissionResponse {
 }
 
 class SubmitPermissionResponse {
-  final PermissionSubmitModel? data;
+  PermissionSubmitModel? data;
   String? error;
+  bool? isSuccess;
+  String? messages;
 
   SubmitPermissionResponse({
     required this.data,
+    this.isSuccess,
   });
 
-  SubmitPermissionResponse.fromJson(Map<String, dynamic> response)
-      : data = PermissionSubmitModel.fromJson(response);
+  SubmitPermissionResponse.fromJson(Map<String, dynamic> response) {
+    data = PermissionSubmitModel.fromJson(response);
+    isSuccess = response["success"] ?? false;
+    messages = response["error"] ?? 'Permission added successfully';
+  }
 
   SubmitPermissionResponse.withError(dynamic errorValue)
       : data = null,
