@@ -66,7 +66,7 @@ abstract class AbstractWorkboardRepository {
   });
   Future<WorkBoardPostResponseContent> postUpdateWorkBoardSectionAndItem({
     // Optional Params to be added to the request if required.
-    WorkBoardSectionModel? workBoardSectionModel,
+    WorkboardModel? workboardModel,
   });
   
 

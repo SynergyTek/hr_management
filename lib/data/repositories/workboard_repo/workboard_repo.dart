@@ -277,7 +277,7 @@ class WorkboardRepository extends AbstractWorkboardRepository {
   }
 
   Future<WorkBoardPostResponseContent> postUpdateWorkBoardSectionAndItem({
-    WorkBoardSectionModel? workBoardSectionModel,
+    WorkboardModel? workboardModel,
   }) async {
     final String endpoint =
         APIEndpointConstants.POST_UPDATE_WORKBOARD_SECTIONS_AND_ITEMS;
@@ -285,7 +285,7 @@ class WorkboardRepository extends AbstractWorkboardRepository {
     try {
       Response response = await _dio.post(
         endpoint,
-        data: jsonEncode(workBoardSectionModel?.toJson()),
+        data: jsonEncode(workboardModel?.toJson()),
       );
       print("response: ${response.data}");
       return WorkBoardPostResponseContent.fromJson(
