@@ -131,45 +131,42 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
           ],
         ),
         subtitle: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 6.0),
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <
+                  Widget>[
+                Text("Type: "),
+                Text(_permission![index].permissionType != null
+                    ? dmsPermissionType[_permission![index].permissionType!]!
+                    : "-")
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 6.0),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Row(children: <Widget>[
-                      Text("Type: "),
-                      Text(_permission![index].permissionType != null
-                          ? dmsPermissionType[
-                              _permission![index].permissionType!]!
-                          : "-"),
-                    ])
+                    Text("Access: "),
+                    Text(_permission![index].access != null
+                        ? dmsAccessType[_permission![index].access!]!
+                        : "-")
                   ]),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 6.0),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Row(children: <Widget>[
-                      Text("Access: "),
-                      Text(_permission![index].access != null
-                          ? dmsAccessType[_permission![index].access!]!
-                          : "-"),
-                    ])
-                  ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(children: <Widget>[
-                      Text("Applies To: "),
-                      Text(_permission![index].appliesTo != null
+                    Text("Applies To: "),
+                    Flexible(
+                      child: Text(_permission![index].appliesTo != null
                           ? dmsAppliesToType[_permission![index].appliesTo!]!
                           : "-"),
-                    ])
+                    )
                   ]),
             ),
           ],
