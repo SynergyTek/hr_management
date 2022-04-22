@@ -13,10 +13,10 @@ class ManageWorkspaceBloc {
   final BehaviorSubject<WorkspaceViewResponse?> _getWorkspaceSubject =
       BehaviorSubject<WorkspaceViewResponse?>();
 
-  Future postAPIData({
+  Future postManageWorkspace({
     required Map<String, dynamic> queryparams,
   }) async {
-    dynamic response = await _apiRepository.postAPIData(
+    dynamic response = await _apiRepository.postManageWorkspace(
       queryparams: queryparams,
     );
 
