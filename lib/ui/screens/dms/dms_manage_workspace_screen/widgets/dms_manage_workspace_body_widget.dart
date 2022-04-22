@@ -43,6 +43,7 @@ class _DMSManageWorkspaceBodyWidgetState
       TextEditingController();
 
   String? _workspaceId;
+  bool showCPI = false;
 
   @override
   void initState() {
@@ -160,42 +161,52 @@ class _DMSManageWorkspaceBodyWidgetState
   }
 
   Widget _bodyWidget() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(
       children: [
-        Flexible(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              _legalEntityWidget(),
-              _parentWorkspaceWidget(),
-              _workspaceNameWidget(),
-              _documentTypeWidget(),
-              _sequenceOrderWidget(),
-            ],
-          ),
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  _legalEntityWidget(),
+                  _parentWorkspaceWidget(),
+                  _workspaceNameWidget(),
+                  _documentTypeWidget(),
+                  _sequenceOrderWidget(),
+                ],
+              ),
+            ),
+            Container(
+              // height: 96.0,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: PrimaryButton(
+                      backgroundColor: Colors.white10,
+                      foregroundColor: Colors.black87,
+                      buttonText: "Cancel",
+                      handleOnPressed: () => _handleCancelOnPressed(),
+                    ),
+                  ),
+                  Expanded(
+                    child: PrimaryButton(
+                      buttonText: "Save",
+                      handleOnPressed: () => _handleSaveOnPressed(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        Container(
-          // height: 96.0,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: PrimaryButton(
-                  backgroundColor: Colors.white10,
-                  foregroundColor: Colors.black87,
-                  buttonText: "Cancel",
-                  handleOnPressed: () => _handleCancelOnPressed(),
-                ),
-              ),
-              Expanded(
-                child: PrimaryButton(
-                  buttonText: "Save",
-                  handleOnPressed: () => _handleSaveOnPressed(),
-                ),
-              ),
-            ],
+        Visibility(
+          visible: showCPI,
+          child: Center(
+            child: CustomProgressIndicator(),
           ),
         ),
       ],
@@ -432,9 +443,17 @@ class _DMSManageWorkspaceBodyWidgetState
       return;
     }
 
-    var response = await dmsManageWorkspaceBloc.postAPIData(
+    setState(() {
+      showCPI = true;
+    });
+
+    var response = await dmsManageWorkspaceBloc.postManageWorkspace(
       queryparams: _handleQueryParams(),
     );
+
+    setState(() {
+      showCPI = false;
+    });
 
     String? message = "Workspace couldn't be created, try again later.";
 

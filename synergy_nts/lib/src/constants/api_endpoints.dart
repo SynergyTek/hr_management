@@ -104,7 +104,8 @@ class APIEndpointConstants {
 // Note Endpoints
 // ........................................................... //
 
-  static const GET_NOTE_DETAILS = '$BASE_URL/nts/query/GetNoteDetails';
+  static const GET_NOTE_DETAILS =
+      'https://webapidev.aitalkx.com/nts/query/GetNoteDetails'; // TODO : replace base URL
   static const READ_NOTE_HOME_DATA = '$BASE_URL/nts/query/ReadNoteHomeData';
   static const READ_NOTE_DASHBOARD_DATA =
       '$BASE_URL/nts/query/ReadNoteDashBoardGridData';

@@ -3,7 +3,7 @@ part of 'manage_workspace_repository.dart';
 class DMSManageWorkspaceRepository extends AbstractManageWorkspaceRepository {
   final Dio _dio = Dio();
 
-  Future postAPIData({
+  Future postManageWorkspace({
     required Map<String, dynamic> queryparams,
   }) async {
     try {
