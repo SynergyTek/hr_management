@@ -70,6 +70,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   String? sourceId;
   bool? isCopy = false;
   bool? isCut = false;
+  TextEditingController fileAttachmentController = TextEditingController();
+  TextEditingController fileItemIdId = TextEditingController();
 
   @override
   void initState() {
@@ -456,7 +458,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               CustomIcons.folder_open,
             ),
             title: Text('Upload File'),
-            // onTap: () => deleteDialog(id),
+            onTap: () => _handleUploadFilesOnTap(),
           ),
         ),
         Visibility(
@@ -1086,6 +1088,29 @@ class _DMSChildBodyState extends State<DMSChildBody> {
         arg1: data.key ?? "",
         // arg1: data.workspaceId ?? "",
         // arg1: data.id ?? "",
+      ),
+    );
+  }
+//TODO post api required to upload a file.
+  _handleUploadFilesOnTap() {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return SelectAttachment(
+            ntsId: 'Note',
+            onListTap: (
+              dynamic value,
+              dynamic value2,
+              dynamic value3,
+            ) {
+              setState(() {
+                // isAttachmentUploaded = true;
+                fileItemIdId.text = value;
+                fileAttachmentController.text = " (1) File Attached: " + value2;
+              });
+            },
+          );
+        },
       ),
     );
   }

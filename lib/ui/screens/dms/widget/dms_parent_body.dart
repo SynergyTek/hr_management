@@ -339,7 +339,7 @@ class _DMSParentBodyState extends State<DMSParentBody> {
         //   ),
         // ),
         Visibility(
-          visible: true, //TODO: figure out the boolean
+          visible: false, //TODO: figure out the boolean
           child: ListTile(
             leading: Icon(CustomIcons.folder_upload),
             title: Text('Upload Files'),
