@@ -10,11 +10,11 @@ part 'manage_new_folder_repository_implementation.dart';
 abstract class AbstractManageNewFolderRepository {
   AbstractManageNewFolderRepository();
 
-  Future<dynamic> postManageNewFolder({
+  Future<bool> postManageNewFolder({
     required Map<String, dynamic> queryparams,
   });
 
-   Future<NoteModel> getCreateFolder({
+  Future<NoteModel> getCreateFolder({
     required Map<String, dynamic> queryparams,
   });
 }

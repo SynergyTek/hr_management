@@ -478,7 +478,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ),
         ),
         Visibility(
-          visible: item.templateCode == 'GENERAL_DOCUMENT',
+          visible: (item.document ?? false),
           child: ListTile(
             leading: Icon(
               CustomIcons.pencil,
@@ -504,42 +504,90 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             onTap: () => _handleViewPermissionOnTap(item),
           ),
         ),
-        ListTile(
-          leading: Icon(CustomIcons.expand_arrows),
-          title: Text('Cut'),
-          onTap: () => cutDialog(item.key),
-        ),
-        ListTile(
-          leading: Icon(CustomIcons.copy),
-          title: Text('Copy'),
-          onTap: () => copyDialog(item.key),
+        Visibility(
+          visible: (item.folder ?? false) || (item.document ?? false),
+          child: ListTile(
+            leading: Icon(CustomIcons.expand_arrows),
+            title: Text('Cut'),
+            onTap: () => cutDialog(item.key),
+          ),
         ),
         Visibility(
-          visible: BlocProvider.of<CutCopyPasteBloc>(context)
+          visible: (item.folder ?? false) || (item.document ?? false),
+          child: ListTile(
+            leading: Icon(CustomIcons.copy),
+            title: Text('Copy'),
+            onTap: () => copyDialog(item.key),
+          ),
+        ),
+        Visibility(
+          visible: (BlocProvider.of<CutCopyPasteBloc>(context)
+                          .state
+                          .cutCopyPasteModel
+                          ?.sourceId !=
+                      null &&
+                  BlocProvider.of<CutCopyPasteBloc>(context)
                       .state
-                      .cutCopyPasteModel
-                      ?.sourceId !=
-                  null &&
-              BlocProvider.of<CutCopyPasteBloc>(context)
-                  .state
-                  .cutCopyPasteModel!
-                  .sourceId!
-                  .isNotEmpty,
+                      .cutCopyPasteModel!
+                      .sourceId!
+                      .isNotEmpty) &&
+              ((item.workspace ?? false) || (item.folder ?? false)),
           child: ListTile(
             leading: Icon(CustomIcons.copy),
             title: Text('Paste'),
             onTap: () => pasteDialog(item.key),
           ),
         ),
-        ListTile(
-          leading: Icon(CustomIcons.trash),
-          title: Text('Delete'),
-          onTap: () => deleteDialog(item.key),
+        Visibility(
+          visible: (item.folder ?? false) || (item.document ?? false),
+          child: ListTile(
+            leading: Icon(CustomIcons.trash),
+            title: Text('Delete'),
+            onTap: () => deleteDialog(item.key),
+          ),
         ),
-        ListTile(
-          leading: Icon(CustomIcons.archive),
-          title: Text('Archive'),
-          onTap: () => archiveDialog(item.key),
+        Visibility(
+          visible: (item.folder ?? false) || (item.document ?? false),
+          child: ListTile(
+            leading: Icon(CustomIcons.archive),
+            title: Text('Archive'),
+            onTap: () => archiveDialog(item.key),
+          ),
+        ),
+        Visibility(
+          visible: ((item.workspace ?? false) || (item.folder ?? false)),
+          child: ListTile(
+            leading: Icon(CustomIcons.archive),
+            title: Text('Download All'),
+            // onTap: () => archiveDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: (item.document ?? false) &&
+              (item.fileId != null && item.fileId!.isNotEmpty),
+          child: ListTile(
+            leading: Icon(CustomIcons.archive),
+            title: Text('Download'),
+            // onTap: () => archiveDialog(id),
+          ),
+        ),
+        Visibility(
+          visible: true,
+          child: ListTile(
+            leading: Icon(CustomIcons.sticky_note),
+            title: Text('View Details'),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                ADD_EDIT_NOTE_ROUTE,
+                arguments: ScreenArguments(
+                  arg1: '',
+                  arg2: item.key,
+                  // arg3: filterChildList[index].noteSubject
+                ),
+              );
+            },
+          ),
         ),
         // Visibility(
         //   visible: item.templateCode == 'GENERAL_DOCUMENT',
@@ -1017,7 +1065,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     Navigator.of(context).pushNamed(
       DMS_NEW_FOLDER_ROUTE,
       arguments: ScreenArguments(
-        arg1: item.workspaceId,
+        arg1: item.key,
         // arg1: item.id,
       ),
     );
@@ -1036,7 +1084,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     Navigator.of(context).pushNamed(
       DMS_MANAGE_WORKSPACE_ROUTE,
       arguments: ScreenArguments(
-        arg1: data.workspaceId ?? "",
+        arg1: data.key ?? "",
+        // arg1: data.workspaceId ?? "",
         // arg1: data.id ?? "",
       ),
     );
