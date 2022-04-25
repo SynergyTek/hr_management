@@ -873,6 +873,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(DynamicCheckBoxValue(
+          readonly: model[i].disabled.toString() == 'true',
           code: udfJson[model[i].key],
           name: model[i].label,
           key: Key(model[i].type),
@@ -958,6 +959,7 @@ class _NoteWidgetState extends State<NoteWidget> {
 
         listDynamic.add(
           NTSDropDownSelect(
+            isReadonly: model[i].disabled.toString() == 'true',
             title: model[i].label,
             controller: _ddController,
             hint: model[i].label,

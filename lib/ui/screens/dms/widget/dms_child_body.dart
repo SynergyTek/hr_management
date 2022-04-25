@@ -303,7 +303,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                     BlocProvider.of<UserModelBloc>(context).state.userModel?.id;
                 int _index = index;
                 print(filterChildList[index].key);
-                if (filterChildList[index].templateCode != 'FILE') // &&
+                if (filterChildList[index].document != true)
+                // if (filterChildList[index].templateCode != 'FILE') // &&
                 //filterChildList[index].templateCode != 'GENERAL_DOCUMENT' &&
                 //filterChildList[index].templateCode != 'PROJECT_DOCUMENTS')
                 {
