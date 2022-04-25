@@ -3,7 +3,7 @@ part of 'manage_new_folder_repository.dart';
 class DMSManageNewFolderRepository extends AbstractManageNewFolderRepository {
   final Dio _dio = Dio();
 
-  Future postManageNewFolder({
+  Future<bool> postManageNewFolder({
     required Map<String, dynamic> queryparams,
   }) async {
     try {
