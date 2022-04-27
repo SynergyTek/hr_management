@@ -537,7 +537,7 @@ class _NoteWidgetState extends State<NoteWidget> {
               visible: noteModel.isExpireButtonVisible!,
               child: PrimaryButton(
                 backgroundColor: Colors.red,
-                buttonText: 'Expiry',
+                buttonText: 'Expire',
                 handleOnPressed: () {
                   noteViewModelPostRequest(
                     2,

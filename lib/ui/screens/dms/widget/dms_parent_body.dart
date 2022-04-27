@@ -316,20 +316,20 @@ class _DMSParentBodyState extends State<DMSParentBody> {
               color: Colors.yellow,
             ),
             title: Text('Create Folder'),
-            onTap: () => _handleCreateNewFolderOnTap(id),
+            onTap: () => _handleCreateNewFolderOnTap(noteId),
           ),
         ),
-        Visibility(
-          visible: false, //TODO: figure out the boolean
-          child: ListTile(
-            leading: Icon(
-              CustomIcons.folder,
-              color: Colors.yellow,
-            ),
-            title: Text('Edit Folder'),
-            onTap: () => _handleEditFolderOnTap(data!),
-          ),
-        ),
+        // Visibility(
+        //   visible: false, //TODO: figure out the boolean
+        //   child: ListTile(
+        //     leading: Icon(
+        //       CustomIcons.folder,
+        //       color: Colors.yellow,
+        //     ),
+        //     title: Text('Edit Folder'),
+        //     onTap: () => _handleEditFolderOnTap(data!),
+        //   ),
+        // ),
         // Visibility(
         //   visible: true, //TODO: figure out the boolean
         //   child: ListTile(
@@ -824,19 +824,19 @@ class _DMSParentBodyState extends State<DMSParentBody> {
     );
   }
 
-  _handleEditFolderOnTap(DMSSourceFolderModel item) {
-    Navigator.of(context).pushNamed(
-      DMS_NEW_FOLDER_ROUTE,
-      arguments: ScreenArguments(
-        arg1: item.parentId, // Parent id
-        arg2: item.workspaceId, // Folder id
-        arg3: item.title, // Folder Name
-        // arg1: item.id, // Parent id
-        // arg2: item.id, // Folder id
-        // arg3: item.name, // Folder Name
-      ),
-    );
-  }
+  // _handleEditFolderOnTap(DMSSourceFolderModel item) {
+  //   Navigator.of(context).pushNamed(
+  //     DMS_NEW_FOLDER_ROUTE,
+  //     arguments: ScreenArguments(
+  //       arg1: item.parentId, // Parent id
+  //       arg2: item.workspaceId, // Folder id
+  //       arg3: item.title, // Folder Name
+  //       // arg1: item.id, // Parent id
+  //       // arg2: item.id, // Folder id
+  //       // arg3: item.name, // Folder Name
+  //     ),
+  //   );
+  // }
 
   _handleCreateWorkspaceOnTap() {
     Navigator.of(context).pushNamed(

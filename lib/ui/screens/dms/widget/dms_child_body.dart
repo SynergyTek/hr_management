@@ -5,7 +5,6 @@ import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_model.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
-import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
 import 'package:hr_management/logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
@@ -315,11 +314,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                   // childPath!.add(filterChildList[index].name);
                   parentModelList!.add(filterChildList[index]);
                   dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
-                  String parentPath = widget.parentPath! +
-                      '/' +
-                      filterChildList[index].workspaceId! +
-                      // filterChildList[index].id! +
-                      '/';
+                  String parentPath =
+                      (filterChildList[index].workspaceId != null &&
+                              filterChildList[index].workspaceId!.isNotEmpty)
+                          ? (widget.parentPath! +
+                              '/' +
+                              filterChildList[index].workspaceId! +
+                              '/')
+                          : (widget.parentPath! + '/');
                   parentPathList!.add(parentPath);
                   Navigator.pushNamed(
                     context,
@@ -488,22 +490,15 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             // onTap: () => deleteDialog(id),
           ),
         ),
-        Visibility(
-          visible: item.canManagePermission ?? false,
-          child: ListTile(
-            leading: Icon(CustomIcons.folder_upload),
-            title: Text('Manage Permission'),
-            onTap: () => _handleManagePermissionOnTap(item),
-            // onTap: () => deleteDialog(id),
-          ),
+        ListTile(
+          leading: Icon(CustomIcons.folder_upload),
+          title: Text('Manage Permission'),
+          onTap: () => _handleManagePermissionOnTap(item),
         ),
-        Visibility(
-          visible: true, //TODO: figure out the boolean
-          child: ListTile(
-            leading: Icon(CustomIcons.folder_upload),
-            title: Text('View Permission'),
-            onTap: () => _handleViewPermissionOnTap(item),
-          ),
+        ListTile(
+          leading: Icon(CustomIcons.folder_upload),
+          title: Text('View Permission'),
+          onTap: () => _handleViewPermissionOnTap(item),
         ),
         Visibility(
           visible: (item.folder ?? false) || (item.document ?? false),
@@ -588,6 +583,15 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 ),
               );
             },
+          ),
+        ),
+        Visibility(
+          visible: (item.document ?? false) &&
+              (item.fileId != null && item.fileId!.isNotEmpty),
+          child: ListTile(
+            leading: Icon(CustomIcons.archive),
+            title: Text('Preview Attachment'),
+            onTap: () => _handleDocumentPreviewOnTap(item),
           ),
         ),
         // Visibility(
@@ -1061,7 +1065,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     );
   }
 
-  // _handleEditFolderOnTap(Cwd item) {
+  //TODO: implement preview attachment
+  _handleDocumentPreviewOnTap(DMSSourceFolderModel item) {}
+
   _handleEditFolderOnTap(DMSSourceFolderModel item) {
     Navigator.of(context).pushNamed(
       DMS_NEW_FOLDER_ROUTE,
@@ -1130,4 +1136,87 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       ),
     );
   }
+
+  // filePreview(
+  //   String mediaSrc,
+  //   int fileId,
+  //   String targetScreen,
+  //   BuildContext context,
+  // ) async {
+  //   String mediaType = '';
+  //   String pathPDF;
+  //   var mimeType = mediaSrc != null ? mime(mediaSrc) : "";
+  //   if (mimeType != null && mimeType != "") {
+  //     if (mimeType == "application/pdf") {
+  //       mediaType = 'PDF';
+  //     } else if (mimeType.contains('image')) {
+  //       mediaType = 'PHOTO';
+  //     } else if (mimeType.contains('video') || mimeType.contains('audio')) {
+  //       mediaType = mimeType.contains('video') ? 'VIDEO' : "AUDIO";
+  //     } else {
+  //       mediaType = 'DOCFILES';
+  //     }
+  //   }
+
+  //   try {
+  //     if (mediaSrc != null && mediaSrc != "") {
+  //       if (mediaType == 'PDF') {
+  //         createFileOfPdfUrl(mediaSrc).then((f) {
+  //           pathPDF = f!.path;
+  //           // pathPDF=ApiEnvironment().getDomainUri(GraphQLConfiguration.synergyClient)+"Account/ExternalLogin?email="+settingInheritedWidget.userDetails.email+"&password=!Welcome123"+"&url=/nts/service/ViewAttachment?fileId="+fileId.toString()+"&canEdit=true";
+  //           Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                   builder: (context) => AudioVideoScreen(
+  //                       fromScreen: targetScreen, // "DigitalDocuments",
+  //                       mediaSrc: pathPDF,
+  //                       tag: fileId.toString(),
+  //                       mediaType: mediaType)));
+  //         });
+  //       } else if (mediaType == 'DOCFILES') {
+  //         OpenFile.open(mediaSrc);
+  //       } else {
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //                 builder: (context) => AudioVideoScreen(
+  //                     fromScreen: targetScreen, //"DigitalDocuments",
+  //                     mediaSrc: mediaSrc,
+  //                     tag: fileId.toString(),
+  //                     mediaType: mediaType)));
+  //       }
+  //     }
+  //   } catch (exception) {}
+  // }
+
+  // Future<File?> createFileOfPdfUrl(String url) async {
+  //   try {
+  //     Uint8List? bytes;
+
+  //     await _readFileByte(url).then((bytesData) {
+  //       bytes = bytesData;
+  //     });
+  //     var dir = await getApplicationDocumentsDirectory();
+  //     // final filename = url.substring(url.lastIndexOf("/") + 1);
+  //     File file = File("${dir.path}/filename");
+  //     File urlFile = await file.writeAsBytes(bytes!);
+  //     return urlFile;
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  // Future<Uint8List?> _readFileByte(String filePath) async {
+  //   Uri myUri = Uri.parse(filePath);
+  //   File mediaFile = new File.fromUri(myUri);
+  //   Uint8List bytes;
+  //   await mediaFile.readAsBytes().then((value) {
+  //     bytes = Uint8List.fromList(value);
+  //     // print('reading of bytes is completed');
+  //     return bytes;
+  //   }).catchError((onError) {
+  //     print('Exception Error while reading audio from path:' +
+  //         onError.toString());
+  //   });
+  // }
 }
