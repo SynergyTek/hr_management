@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
@@ -6,10 +8,14 @@ import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_mo
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
+import 'package:hr_management/data/models/note/note_model.dart';
+import 'package:hr_management/data/models/uploaded_content_model/uploaded_content_model.dart';
+import 'package:hr_management/logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
 import 'package:hr_management/logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
+import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/manage_document/document/widgets/document_bottom_sheet_widget.dart';
@@ -22,6 +28,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
 import '../../../../data/models/dms/dms_source_folder_model/dms_source_folder_response.dart';
 import '../../../../logic/blocs/dms_bloc/dms_source_folders_bloc/dms_source_folders_bloc.dart';
+import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../listizer/listizer.dart';
 
@@ -70,7 +77,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   bool? isCopy = false;
   bool? isCut = false;
   TextEditingController fileAttachmentController = TextEditingController();
-  TextEditingController fileItemIdId = TextEditingController();
 
   @override
   void initState() {
@@ -460,7 +466,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               CustomIcons.folder_open,
             ),
             title: Text('Upload File'),
-            onTap: () => _handleUploadFilesOnTap(),
+            onTap: () => _handleUploadFilesOnTap(item),
           ),
         ),
         Visibility(
@@ -1114,8 +1120,11 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   }
 
 //TODO post api required to upload a file.
-  _handleUploadFilesOnTap() {
-    return Navigator.of(context).push(
+  _handleUploadFilesOnTap(DMSSourceFolderModel item) async {
+    UploadedContentModel uploadedContentModel = UploadedContentModel();
+    UploadedContent uploadedContent = UploadedContent();
+
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
           return SelectAttachment(
@@ -1124,12 +1133,24 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               dynamic value,
               dynamic value2,
               dynamic value3,
-            ) {
+            ) async {
               setState(() {
-                // isAttachmentUploaded = true;
-                fileItemIdId.text = value;
                 fileAttachmentController.text = " (1) File Attached: " + value2;
               });
+              // uploadedContent.fileUid = value;
+              uploadedContent.relativePath = '${item.title}/$value2';
+              uploadedContent.fileId = value;
+              uploadedContent.folderName = item.title;
+              // uploadedContent.folders = item.folder;
+              uploadedContent.uploaded = item.canCreateDocument;
+              // uploadedContent.parentFolderName=item.
+
+              uploadedContentModel.parentId = item.key;
+              uploadedContentModel.uploadedContent =
+                  jsonEncode([uploadedContent.toJson()]);
+
+              await attachmentNTSBloc.postManageUploadedFile(
+                  model: uploadedContentModel);
             },
           );
         },
