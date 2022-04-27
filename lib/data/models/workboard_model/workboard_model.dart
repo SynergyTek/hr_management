@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:hr_management/data/models/workboard_model/workboard_section_model.dart';
-
 List<WorkboardModel> workboardModelFromJson(String str) =>
     List<WorkboardModel>.from(
         json.decode(str).map((x) => WorkboardModel.fromJson(x)));
@@ -272,7 +270,7 @@ class WorkboardModel {
   int? workBoardStatus;
   dynamic boards;
   int? kanbanTemplate;
-  List<WorkBoardSectionModel>? workBoardSections;
+  dynamic workBoardSections;
   dynamic workBoardDate;
   String? noteId;
   dynamic indexId;
@@ -524,10 +522,7 @@ class WorkboardModel {
         boards: json["boards"],
         kanbanTemplate:
             json["kanbanTemplate"] == null ? null : json["kanbanTemplate"],
-        workBoardSections: json["WorkBoardSections"] == null
-            ? null
-            : List<WorkBoardSectionModel>.from(json["WorkBoardSections"]
-                .map((x) => WorkBoardSectionModel.fromJson(x))),
+        workBoardSections: json["WorkBoardSections"],
         workBoardDate: json["WorkBoardDate"],
         noteId: json["NoteId"] == null ? null : json["NoteId"],
         indexId: json["IndexId"],
@@ -875,9 +870,7 @@ class WorkboardModel {
         "WorkBoardStatus": workBoardStatus == null ? null : workBoardStatus,
         "boards": boards,
         "kanbanTemplate": kanbanTemplate == null ? null : kanbanTemplate,
-        "WorkBoardSections": workBoardSections == null
-            ? null
-            : List<dynamic>.from(workBoardSections!.map((x) => x.toJson())),
+        "WorkBoardSections": workBoardSections,
         "WorkBoardDate": workBoardDate,
         "NoteId": noteId == null ? null : noteId,
         "IndexId": indexId,

@@ -311,7 +311,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                     BlocProvider.of<UserModelBloc>(context).state.userModel?.id;
                 int _index = index;
                 print(filterChildList[index].key);
-                if (filterChildList[index].templateCode != 'FILE') // &&
+                if (filterChildList[index].document != true)
+                // if (filterChildList[index].templateCode != 'FILE') // &&
                 //filterChildList[index].templateCode != 'GENERAL_DOCUMENT' &&
                 //filterChildList[index].templateCode != 'PROJECT_DOCUMENTS')
                 {
@@ -723,7 +724,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                   if (dmsCrudNoteBloc.deleteNoteSubject.stream.value) {
                     displaySnackBar(
                         text: 'File deleted successfully', context: context);
-                    dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+                    // dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+                    dmsSourceFolderBloc.subjectChildData.sink.add(null);
                     apiCall();
                   } else {
                     displaySnackBar(
@@ -793,9 +795,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             .isCopy!) {
       dmsCrudNoteBloc
         ..getCopyNoteAPIData(
-            sourceId: sourceId,
-            targetId: id,
-            userId: '45bba746-3309-49b7-9c03-b5793369d73c');
+          sourceId: BlocProvider.of<CutCopyPasteBloc>(context)
+              .state
+              .cutCopyPasteModel!
+              .sourceId!,
+          targetId: id,
+          userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+        );
+
       if (dmsCrudNoteBloc.copyNoteSubject.stream.hasValue) {
         if (dmsCrudNoteBloc.copyNoteSubject.stream.value) {
           displaySnackBar(text: 'File copied successfully', context: context);
@@ -824,7 +831,15 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             .state
             .cutCopyPasteModel!
             .isCut!) {
-      dmsCrudNoteBloc..getMoveNoteAPIData(sourceId: sourceId, targetId: id);
+      dmsCrudNoteBloc
+        ..getMoveNoteAPIData(
+          sourceId: BlocProvider.of<CutCopyPasteBloc>(context)
+              .state
+              .cutCopyPasteModel!
+              .sourceId!,
+          targetId: id,
+        );
+
       if (dmsCrudNoteBloc.moveNoteSubject.stream.hasValue) {
         if (dmsCrudNoteBloc.moveNoteSubject.stream.value) {
           displaySnackBar(text: 'File moved successfully', context: context);
@@ -881,7 +896,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                     displaySnackBar(
                         text: 'File saved to archive successfully',
                         context: context);
-                    dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+                    // dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
+                    dmsSourceFolderBloc.subjectChildData.sink.add(null);
                     apiCall();
                   } else {
                     displaySnackBar(
@@ -1057,7 +1073,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
       DMS_NEW_FOLDER_ROUTE,
       arguments: ScreenArguments(
         arg1: item.workspaceId, // Parent id
-        arg2: item.workspaceId, // Folder id
+        arg2: item.key, // Folder id
         arg3: item.title, // Folder Name
         // arg1: item.id, // Parent id
         // arg2: item.id, // Folder id
