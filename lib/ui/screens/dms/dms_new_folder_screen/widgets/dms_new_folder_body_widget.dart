@@ -34,6 +34,8 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
   TextEditingController _sequenceOrderTextEditingController =
       TextEditingController();
 
+  bool showProgressIndicator = false;
+
   @override
   void initState() {
     super.initState();
@@ -92,9 +94,19 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
     }
 
     // Use case: When creating a new folder.
-    return Container(
-      padding: DEFAULT_PADDING,
-      child: _bodyWidget(),
+    return Stack(
+      children: [
+        Container(
+          padding: DEFAULT_PADDING,
+          child: _bodyWidget(),
+        ),
+        Visibility(
+          visible: showProgressIndicator,
+          child: Center(
+            child: CustomProgressIndicator(loadingText: 'Please Wait'),
+          ),
+        ),
+      ],
     );
   }
 
@@ -188,12 +200,18 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
       );
       return;
     }
+    setState(() {
+      showProgressIndicator = true;
+    });
 
     bool response = await dmsManageNewFolderBloc.postManageNewFolder(
       queryparams: _handleQueryParams(),
     );
+    setState(() {
+      showProgressIndicator = false;
+    });
 
-    String message = "Folder couldn't be created, pl try again later.";
+    String message = "Folder couldn't be created, please try again later.";
     if (response != null && response) {
       message = widget.folderName != null && widget.folderName!.isNotEmpty
           ? "Folder '${_newFolderNameTextEditingController.text}' edited successfully."

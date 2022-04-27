@@ -6,6 +6,8 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../../data/models/attachment_nts_models/attachment_nts_response.dart';
+import '../../../data/models/note/note_model.dart';
+import '../../../data/models/uploaded_content_model/uploaded_content_model.dart';
 import '../../../data/repositories/attachment_nts_repository/attachment_nts_repository.dart';
 
 class AttachmentNTSBloc {
@@ -14,6 +16,7 @@ class AttachmentNTSBloc {
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
   final BehaviorSubject<AttachmentNTSResponse> _subject =
       BehaviorSubject<AttachmentNTSResponse>();
+  final BehaviorSubject _subjectPostManageUploadedFile = BehaviorSubject();
 
   /// Used to fetch new entries.
   getData({
@@ -26,7 +29,7 @@ class AttachmentNTSBloc {
       ntsId: ntsId,
     );
     _subject.sink.add(response);
-     return response;
+    return response;
   }
 
   /// Used to create new entries.
@@ -51,6 +54,17 @@ class AttachmentNTSBloc {
     } else {
       return "";
     }
+  }
+
+  Future<bool> postManageUploadedFile({
+    required UploadedContentModel model,
+  }) async {
+    dynamic response = await _apiRepository.postManageUploadedFile(
+      model: model,
+    );
+
+    _subjectPostManageUploadedFile.sink.add(response);
+    return response;
   }
 
   /// Used to update an existing entry.
@@ -83,9 +97,12 @@ class AttachmentNTSBloc {
 
   dispose() {
     _subject.close();
+    _subjectPostManageUploadedFile.close();
   }
 
   BehaviorSubject<AttachmentNTSResponse> get subject => _subject;
+  BehaviorSubject get subjectPostManageUploadedFile =>
+      _subjectPostManageUploadedFile;
 }
 
 final attachmentNTSBloc = AttachmentNTSBloc();

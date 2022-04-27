@@ -85,4 +85,27 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
       return Future.error(err);
     }
   }
+
+  @override
+  Future<bool> postManageUploadedFile({
+    required UploadedContentModel model,
+  }) async {
+    final String endpoint = APIEndpointConstants.POST_MANAGE_UPLOADED_FILE_DATA;
+
+    try {
+      Response response = await _dio.post(
+        endpoint,
+        data: jsonEncode(model.toJson()),
+      );
+
+      if (response.data == null) return false;
+      return true;
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return false;
+    }
+  }
 }
