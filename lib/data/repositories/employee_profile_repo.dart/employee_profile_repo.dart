@@ -15,7 +15,7 @@ class EmployeeProfileRepository extends AbstractEmployeeProfileRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
+      
       return EmployeeProfileResponse.fromJson(
         response.data,
       );

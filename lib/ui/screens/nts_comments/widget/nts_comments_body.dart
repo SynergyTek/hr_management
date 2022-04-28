@@ -58,7 +58,6 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                   listItems: _commentsList,
                   filteredSearchList: _filteredCommentsList,
                   itemBuilder: (context, index) {
-                    // print("Snapshot data: ${snapshot.data.data[index].taskNo}");
                     return Row(
                       children: [
                         Flexible(
@@ -118,11 +117,8 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                 ),
               );
             } else {
-              // return Visibility(
-              //   visible: isVisible,
               return Center(
                 child: CustomProgressIndicator(),
-                // ),
               );
             }
           },

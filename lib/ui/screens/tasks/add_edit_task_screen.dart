@@ -37,29 +37,7 @@ class AddEditTaskScreen extends StatelessWidget {
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
           ntsType: NTSType.task,
         ),
-        // TaskWidget(
-        //   taskTemplateCode: templateCode,
-        //   // serviceTemplateCode: serviceTemplateCode,
-        //   taskId: taskId,
-        //   title: title,
-        //   userId:
-        //       BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
-        //   // isEmployeePortal: true,
-        //   // isEmployeePortal: isEmployeePortal,
-        // ),
       ),
     );
   }
-  // Widget build(BuildContext context) {
-  //   return Material(
-  //     child: SafeArea(
-  //       child: InternetConnectivityWidget(
-  //           child: AddEditTaskBody(
-  //         templateCode: templateCode,
-  //         taskId: taskId,
-  //         title: title,
-  //       )),
-  //     ),
-  //   );
-  // }
 }

@@ -6,7 +6,6 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../../data/models/attachment_nts_models/attachment_nts_response.dart';
-import '../../../data/models/note/note_model.dart';
 import '../../../data/models/uploaded_content_model/uploaded_content_model.dart';
 import '../../../data/repositories/attachment_nts_repository/attachment_nts_repository.dart';
 

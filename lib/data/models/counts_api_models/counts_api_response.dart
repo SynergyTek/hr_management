@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import 'counts_api_response_model.dart';
 
 /// APIResponse is a high-level model class which we will consist of a

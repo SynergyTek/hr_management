@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final hrDirectContractModel = hrDirectContractModelFromJson(jsonString);
-
 import 'dart:convert';
 
 HrDirectContractModel hrDirectContractModelFromJson(String str) => HrDirectContractModel.fromJson(json.decode(str));

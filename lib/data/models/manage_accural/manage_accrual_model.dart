@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final manageAccrualModel = manageAccrualModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<ManageAccrualModel> manageAccrualModelFromJson(String str) =>

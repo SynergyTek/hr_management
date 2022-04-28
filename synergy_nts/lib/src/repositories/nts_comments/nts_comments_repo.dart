@@ -19,7 +19,6 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
         queryParameters: queryparams ?? {},
       );
 
-      //print(response.data);
       return CommentListResponse.fromJson(
         response.data,
       );
@@ -79,8 +78,6 @@ class NTSCommentsRepository extends AbstractNTSCommentsRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-
-      // print("[DIO]: \nDelete API data: ${response.data}");
 
       return response.data as bool?;
     } catch (err, stacktrace) {

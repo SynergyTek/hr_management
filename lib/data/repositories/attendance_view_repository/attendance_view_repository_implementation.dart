@@ -19,8 +19,6 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
 
       return AttendanceViewResponse.fromJson(response.data);
     } catch (err, stacktrace) {
-      // print(
-      //     "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
       return AttendanceViewResponse.withError("$err");

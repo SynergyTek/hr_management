@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final commonListModel = commonListModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<CommonListModel> commonListModelFromJson(String str) => List<CommonListModel>.from(json.decode(str).map((x) => CommonListModel.fromJson(x)));

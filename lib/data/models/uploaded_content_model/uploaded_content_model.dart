@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final uploadedContentModel = uploadedContentModelFromJson(jsonString);
-
 import 'dart:convert';
 
 UploadedContentModel uploadedContentModelFromJson(String str) =>
@@ -30,10 +26,6 @@ class UploadedContentModel {
         "parentId": parentId,
       };
 }
-
-// To parse this JSON data, do
-//
-//     final uploadedContent = uploadedContentFromJson(jsonString);
 
 List<UploadedContent> uploadedContentFromJson(String str) =>
     List<UploadedContent>.from(

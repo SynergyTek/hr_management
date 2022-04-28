@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final summaryModel = summaryModelFromJson(jsonString);
-
 import 'dart:convert';
 
 ServiceSummaryModel summaryModelFromJson(String str) => ServiceSummaryModel.fromJson(json.decode(str));

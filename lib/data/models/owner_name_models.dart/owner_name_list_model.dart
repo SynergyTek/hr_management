@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final ownerNameListModel = ownerNameListModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<OwnerNameListModel> ownerNameListModelFromJson(String str) => List<OwnerNameListModel>.from(json.decode(str).map((x) => OwnerNameListModel.fromJson(x)));

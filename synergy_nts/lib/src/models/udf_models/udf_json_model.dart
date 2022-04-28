@@ -43,17 +43,6 @@ class UdfJson {
             }
           }),
         ),
-        // components: List<UdfJsonComponent>.from(
-        //   json["components"].map(
-        //     (x) => UdfJsonComponent.fromJson(x),
-        //   ),
-        // ),
-        // components: List<UdfJsonComponent>.from(
-        //     json["components"].map((x) => UdfJsonComponent.fromJson(x))),
-
-        // columnComponents: List<ColumnComponent>.from(
-        //     // json["columnComponents"].map((x) => ColumnComponent.fromJson(x))),
-        //     json["components"].map((x) => ColumnComponent.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

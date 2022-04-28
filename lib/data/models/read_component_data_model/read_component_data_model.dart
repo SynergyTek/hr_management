@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final readComponentResultDataModel = readComponentResultDataModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<ReadComponentResultDataModel> readComponentResultDataModelFromJson(

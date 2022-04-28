@@ -107,14 +107,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               final createServiceFormBloc =
                   context.read<CreateServiceFormBloc>();
 
-              //! hardcoding UNDO
-              // if (serviceModel!.json != null) {
-              //   if (snapshot.data?.data?.templateCode ==
-              //       'EGOV_PUBLIC_GRIEVANCE_REGISTRATION') {
-              //     isLocationRequired = true;
-              //   }
-              // }
-
               _parseJsonToUDFModel(
                 createServiceFormBloc,
                 serviceModel?.json,
@@ -363,10 +355,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   List<ColumnComponent> columnComponentList = [];
 
-  // ! hardcoding UNDO
-  // TextFieldBloc? specificLocationTextFieldBloc;
-
-  // Community Hall Booking specific values
   Map<String, String> conditionalValues = {};
 
   final Map<String, dynamic> udfJson = {};
@@ -376,7 +364,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   var radioValue = {};
   int? radioValue1 = 0;
   bool isAttachmentUploaded = false;
-  // bool isLocationRequired = false;
 
   DateTime? leaveStartDate;
   DateTime? leaveEnddate;
@@ -396,110 +383,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   ) {
     ParseJsonHelper _parseJsonHelper = ParseJsonHelper();
     columnComponentList = [];
-
-// ! hardcoding UNDO
-    // if (templateCode == 'GRV_BIRTH AND DEATH CERTIFICATE' ||
-    //     templateCode == "EGOV_BUILDINGS" ||
-    //     templateCode == "CIVIL_WORKS" ||
-    //     templateCode == "GRV_DRAINAGE" ||
-    //     templateCode == "GRV_ENCROACHMENT" ||
-    //     templateCode == "GRV_ENFORCEMENT" ||
-    //     templateCode == "GRV_ESTATE" ||
-    //     templateCode == "GRV_Factories" ||
-    //     templateCode == "GRV_GARDEN_AND_TREES" ||
-    //     templateCode == "GRV_HEALTH" ||
-    //     templateCode == "EGOV_LEGAL" ||
-    //     templateCode == "GRV_LICENSE" ||
-    //     templateCode == "GRV_OTHERS" ||
-    //     templateCode == "EGOV_PEST_CONTROL" ||
-    //     templateCode == "GRV_REVENUE" ||
-    //     templateCode == "GRV_ROADS_AND_TRAFFIC" ||
-    //     templateCode == "GRV_SANITATION" ||
-    //     templateCode == "EGOV_SCHOOL" ||
-    //     templateCode == "GRV_SEWERAGE_OPERATION_CONTROL_RIVER" ||
-    //     templateCode == "EGOV_SHOPS_AND_ESTABLISHMENTS" ||
-    //     templateCode == "GRV_SOLID_WASTE_MANAGEMENT" ||
-    //     templateCode == "GRV_STRAY_DOGS" ||
-    //     templateCode == "GRV_STREET_LIGHTS" ||
-    //     templateCode == "GRV_WATER_SUPPLY") {
-    //   columnComponentList = _parseJsonHelper.grievanceUDFs(udfJsonString);
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       false,
-    //       context,
-    //     );
-    //   }
-    // } else if (templateCode == 'EGOV_PUBLIC_GRIEVANCE_REGISTRATION') {
-    //   columnComponentList =
-    //       _parseJsonHelper.parsePublicGrievanceUDFs(udfJsonString);
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       false,
-    //       context,
-    //     );
-    //   }
-    // } else if (templateCode == 'BIRTH_REGISTRATION' ||
-    //     templateCode == 'DEATH_REGISTRATION' ||
-    //     templateCode == 'STILL_BIRTH_REGISTRATION') {
-    //   //For Birth Registration, Death Registration, Stillbirth Registration service
-    //   columnComponentList =
-    //       _parseJsonHelper.parseBirthDeathRegistrationUDFs(udfJsonString);
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       true,
-    //       context,
-    //     );
-    //   }
-    // } else if (templateCode == 'CommunityHallBooking') {
-    //   columnComponentList = _parseJsonHelper.parseCommunityHallBookingUDFs(
-    //     udfJsonString,
-    //     conditionalValues,
-    //   );
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       false,
-    //       context,
-    //     );
-    //   }
-    // } else if (templateCode == 'NEW_SEWERAGE_CONNECTION_REQUEST' ||
-    //     templateCode == 'ExistingSewerageConnection') {
-    //   String? _connectionForId;
-
-    //   if (templateCode == 'NEW_SEWERAGE_CONNECTION_REQUEST') {
-    //     _connectionForId = widget
-    //         .extraInformationMap!['SewerageConnectionRequiredFor']
-    //         .extraInfo['codeId'];
-    //   } else if (templateCode == 'ExistingSewerageConnection') {
-    //     _connectionForId =
-    //         widget.extraInformationMap!['SewerageConnectionRequiredFor'].id;
-    //   }
-
-    //   columnComponentList = _parseJsonHelper.parseSewerageConnectionUDFs(
-    //     udfJsonString,
-    //     _connectionForId!,
-    //   );
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       false,
-    //       context,
-    //     );
-    //   }
-    // } else {
     columnComponentList = _parseJsonHelper.parseGenericUDFs(
       udfJsonString,
       conditionalValues,
@@ -513,7 +396,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         context,
       );
     }
-    // }
   }
 
   List<Widget> addDynamic(
@@ -573,30 +455,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           udfJson[model[i].key] = '';
         }
 
-        // ! hardcoding UNDO
-        // if (model[i].key == 'AverageCostDifferAsTheRequest' &&
-        //     widget.templateCode != null &&
-        //     widget.templateCode.isNotEmpty &&
-        //     widget.templateCode == 'NEW_SEWERAGE_CONNECTION_REQUEST') {
-        //   udfJson[model[i].key] =
-        //       int.parse(model[i].defaultValue) * noOfConnectionsValue!;
-        // }
-
         if (widget.extraInformationMap != null &&
             widget.extraInformationMap!.containsKey(model[i].key)) {
           model[i].defaultValue = widget.extraInformationMap![model[i].key];
           udfJson[model[i].key] = widget.extraInformationMap![model[i].key];
         }
 
-        // ! hardcoding UNDO
         String initialValue;
-        initialValue = /*(model[i].key == 'AverageCostDifferAsTheRequest' &&
-                widget.templateCode != null &&
-                widget.templateCode.isNotEmpty &&
-                widget.templateCode == 'NEW_SEWERAGE_CONNECTION_REQUEST')
-            ? udfJson[model[i].key].toString()
-            :*/
-            model[i].defaultValue ?? udfJson[model[i].key];
+        initialValue = model[i].defaultValue ?? udfJson[model[i].key];
 
         udfJson[model[i].key] = initialValue;
 
@@ -643,12 +509,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
         final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
 
-        // Specific Location Fix
-        // ! hardcoding UNDO
-        // if (model[i].key == 'specificLocation') {
-        //   specificLocationTextFieldBloc = textArea$i;
-        // }
-
         listDynamic.add(
           AbsorbPointer(
             absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
@@ -667,8 +527,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 Icons.note_outlined,
                 color: AppThemeColor.iconColor,
               ),
-              // ! hardcoding UNDO
-              maxLines: /*model[i].key == 'specificLocation' ? 5 : */ 3,
+              maxLines: 3,
               onChanged: (String value) {
                 udfJson[model[i].key] = value;
               },
@@ -703,15 +562,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         // Setting the default value to the UDF JSON.
         udfJson[model[i].key] = initialValue;
 
-        // ! hardcoding UNDO
-        // if (model[i].key == 'BillAmount' &&
-        //     widget.templateCode != null &&
-        //     widget.templateCode.isNotEmpty &&
-        //     widget.templateCode == "EGOV_SANIT_CONST_WASTE") {
-        //   udfJson[model[i].key] = model[i].defaultValue * truckLoadTrips!;
-        //   initialValue = udfJson[model[i].key].toString();
-        // }
-
         if (widget.extraInformationMap != null &&
             widget.extraInformationMap!.containsKey(model[i].key)) {
           model[i].defaultValue = widget.extraInformationMap![model[i].key];
@@ -719,55 +569,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               widget.extraInformationMap![model[i].key].toString();
           initialValue = widget.extraInformationMap![model[i].key].toString();
         }
-
-        // ! hardcoding UNDO
-        // if (widget.templateCode == 'CommunityHallBooking' &&
-        //     (widget.serviceId == null || widget.serviceId.isEmpty) &&
-        //     model[i].key != 'ContactNo') {
-        //   switch (model[i].key) {
-        //     case 'BaseCharges':
-        //       initialValue = '3000';
-        //       break;
-        //     case 'ACCharges':
-        //       initialValue = '1000';
-        //       break;
-        //     case 'ElectricityCharges':
-        //       initialValue = '500';
-        //       break;
-        //     case 'CleaningCharges':
-        //       initialValue = '500';
-        //       break;
-        //     case 'TotalCharges':
-        //       initialValue =
-        //           widget.extraInformationMap![model[i].key].toString();
-        //       break;
-        //     default:
-        //       break;
-        //   }
-        //   model[i].defaultValue = initialValue;
-        //   udfJson[model[i].key] = initialValue;
-        // }
-
-        // if (widget.templateCode == 'NEW_RENTAL_PROPERTY' &&
-        //     (widget.serviceId == null || widget.serviceId.isEmpty)) {
-        //   switch (model[i].key) {
-        //     case 'MonthlyRent':
-        //       initialValue = '10000';
-        //       break;
-        //     case 'AdvanceDepositAmount':
-        //       initialValue = '200000';
-        //       break;
-        //     case 'Street':
-        //       initialValue =
-        //           widget.extraInformationMap![model[i].key].toString();
-        //       break;
-
-        //     default:
-        //       break;
-        //   }
-        //   model[i].defaultValue = initialValue;
-        //   udfJson[model[i].key] = initialValue;
-        // }
 
         final number$i = TextFieldBloc(initialValue: initialValue);
         listDynamic.add(
@@ -781,39 +582,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       model[i].defaultValue.toString().isNotEmpty) ||
                   model[i].disabled.toString() == 'true' ||
                   widget.serviceId.isNotEmpty,
-              // ? true
-              // : false,
               textFieldBloc: number$i,
               prefixIcon: const Icon(
                 Icons.format_list_numbered,
                 color: AppThemeColor.iconColor,
               ),
-              // ! hardcoding UNDO
-              decimal:
-                  /*model[i].key == 'BirthWeightInKgsIfAvailable' ? true : */ false,
+              decimal: false,
               onChanged: (String value) {
                 udfJson[model[i].key] = value;
-                // ! hardcoding UNDO
-                // if (model[i].key == 'NoOfConnectionsRequired' &&
-                //     widget.templateCode != null &&
-                //     widget.templateCode.isNotEmpty &&
-                //     widget.templateCode == 'NEW_SEWERAGE_CONNECTION_REQUEST') {
-                //   setState(() {
-                //     noOfConnectionsValue = int.parse(value);
-                //   });
-                // }
-                // if (model[i].key == "TruckLoadTrips" &&
-                //     widget.templateCode != null &&
-                //     widget.templateCode.isNotEmpty &&
-                //     widget.templateCode == "EGOV_SANIT_CONST_WASTE") {
-                //   setState(() {
-                //     if (value.isEmpty) {
-                //       truckLoadTrips = 1;
-                //     } else {
-                //       truckLoadTrips = int.parse(value);
-                //     }
-                //   });
-                // }
               },
             ),
           ),
@@ -1048,16 +824,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           _ddController.text = selectValue[i];
         }
 
-        // ! hardcoding UNDO
-        // if ((model[i].key == 'CommunityHallNameId' ||
-        //         model[i].key == 'WardNo') &&
-        //     widget.extraInformationMap != null &&
-        //     widget.extraInformationMap![model[i].key] != null) {
-        //   _ddController.text = widget.extraInformationMap![model[i].key]!.name!;
-        //   udfJson[model[i].key] =
-        //       widget.extraInformationMap![model[i].key]!.id!;
-        // }
-
         if (widget.extraInformationMap != null &&
             widget.extraInformationMap!.containsKey(model[i].key) &&
             widget.extraInformationMap![model[i].key]?.id != null) {
@@ -1096,13 +862,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               isShowArrow: true,
               typeKey: typeKey,
               multiple: model[i].multiple ?? false,
-              // ! hardcoding UNDO
               isReadonly: ((widget.extraInformationMap != null &&
-                          widget.extraInformationMap!.containsKey(model[i]
-                              .key)) /*||
-                          model[i].key == 'CommunityHallNameId' &&
-                              widget.extraInformationMap != null*/
-                      ) ||
+                          widget.extraInformationMap!
+                              .containsKey(model[i].key))) ||
                       model[i].disabled.toString() == 'true' ||
                       widget.serviceId.isNotEmpty
                   ? true
@@ -1129,41 +891,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               onListTap: (dynamic value) {
                 if (value.runtimeType.toString() == 'NTSDropdownModel' ||
                     value.runtimeType.toString() == 'CommonListModel') {
-                  // ! hardcoding UNDO
-                  // if (model[i].key == 'Ward' ||
-                  //     model[i].key == 'WardId' ||
-                  //     model[i].key == 'wardId' ||
-                  //     model[i].key == 'WardNo') {
-                  //   commonBloc.subjectCommonList.sink.add(null);
-                  //   CommonListModel _selectedIdNameViewModel = value;
-                  //   _ddController.text =
-                  //       _selectedIdNameViewModel.name.toString();
-                  //   udfJson[model[i].key] =
-                  //       _selectedIdNameViewModel.id.toString();
-                  // } else {
-                  // ntsDdBloc.subject.sink.add(null);
                   NTSDropdownModel _selectedIdNameViewModel = value;
                   _ddController.text = _selectedIdNameViewModel.name.toString();
                   udfJson[model[i].key] =
                       _selectedIdNameViewModel.id.toString();
-                  // }
                   selectValue[i] = _ddController.text;
-                  //   if (model[i].key == 'ComplaintType') {
-                  //     setState(() {
-                  //       typeKey = value.id;
-                  //     });
-                  //   }
-                  //   if (model[i].key == 'EventTypeId' ||
-                  //       model[i].key == 'ChooseType' ||
-                  //       model[i].key == 'DebrisType' ||
-                  //       model[i].key == 'serviceName') {
-                  //     //'ChooseType' added for 'Meat Waste Clearance Form'
-                  //     //'DebrisType' added for 'Construction and debris waste clearance form'
-                  //     //'serviceName' added for 'Tax Registration for Commercial Users'
-                  //     setState(() {
-                  //       conditionalValues[model[i].key] = value.id;
-                  //     });
-                  //   }
                 } else {
                   List<String> _categoryName = [];
                   List<String> _categoryId = [];
@@ -1199,91 +931,23 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        // ! hardcoding UNDO
-        // this is done for rent module date setting
-        // if (model[i].key == 'AgreementStartDate' &&
-        //     widget.extraInformationMap?['AgreementStartDate'] != null) {
-        //   udfJson[model[i].key] =
-        //       widget.extraInformationMap!['AgreementStartDate'];
-        // }
-        // if (model[i].key == 'AgreementEndDate' &&
-        //     widget.extraInformationMap?['AgreementEndDate'] != null) {
-        //   udfJson[model[i].key] =
-        //       widget.extraInformationMap!['AgreementEndDate'];
-        // }
-
-        // this is done for sanitation tax registration - residential
-        // if (model[i].key == 'BillDueDate' &&
-        //     widget.extraInformationMap?['BillDueDate'] != null) {
-        //   udfJson[model[i].key] = widget.extraInformationMap!['BillDueDate'];
-        // }
-
-        // if (model[i].key == 'BookingFromDate' &&
-        //     widget.extraInformationMap?['startDate'] != null) {
-        //   udfJson[model[i].key] = widget.extraInformationMap!['startDate'];
-        // }
-        // if (model[i].key == 'BookingToDate' &&
-        //     widget.extraInformationMap?['endDate'] != null) {
-        //   udfJson[model[i].key] = widget.extraInformationMap!['endDate'];
-        // }
 
         listDynamic.add(
           AbsorbPointer(
             absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
             child: DynamicDateBox(
               isRequired: model[i].validate?.required,
-              // ! hardcoding UNDO
-              // isReadonly: (model[i].key == 'BookingFromDate' &&
-              //         widget.extraInformationMap != null &&
-              //         widget.extraInformationMap!['startDate'] != null) ||
-              //     (model[i].key == 'AgreementStartDate' &&
-              //         widget.extraInformationMap != null &&
-              //         widget.extraInformationMap!['AgreementStartDate'] !=
-              //             null) ||
-              //     (model[i].key == 'AgreementEndDate' &&
-              //         widget.extraInformationMap != null &&
-              //         widget.extraInformationMap!['AgreementEndDate'] !=
-              //             null) ||
-              //     (model[i].key == 'BookingToDate' &&
-              //         widget.extraInformationMap != null &&
-              //         widget.extraInformationMap!['endDate'] != null) ||
-              //     (model[i].key == 'BillDueDate' &&
-              //         widget.extraInformationMap != null &&
-              //         widget.extraInformationMap!['BillDueDate'] != null) ||
-              //     widget.serviceId.isNotEmpty,
-              code: /*(model[i].key == 'BookingFromDate' &&
-                          widget.extraInformationMap != null &&
-                          widget.extraInformationMap!['startDate'] != null) ||
-                      (model[i].key == 'AgreementEndDate' &&
-                          widget.extraInformationMap != null &&
-                          widget.extraInformationMap!['AgreementEndDate'] !=
-                              null) ||
-                      (model[i].key == 'AgreementStartDate' &&
-                          widget.extraInformationMap != null &&
-                          widget.extraInformationMap!['AgreementStartDate'] !=
-                              null) ||
-                      (model[i].key == 'BookingToDate' &&
-                          widget.extraInformationMap != null &&
-                          widget.extraInformationMap!['endDate'] != null) ||
-                      (model[i].key == 'BillDueDate' &&
-                          widget.extraInformationMap != null &&
-                          widget.extraInformationMap!['BillDueDate'] != null)
-                  // ? DateFormat("dd/MM/yyyy")
-                  ? DateFormat("yyyy-MM-dd")
-                      .parse(udfJson[model[i].key]!)
-                      .toString()
-                  : */
-                  udfJson[model[i].key]!.isNotEmpty
-                      ? model[i]
-                              .udfValue
-                              .toString()
-                              .split(' ')[0]
-                              .contains(RegExp(r'[a-z]'))
-                          ? null
-                          : DateFormat("yyyy-MM-dd")
-                              .parse(udfJson[model[i].key]!)
-                              .toString()
-                      : null,
+              code: udfJson[model[i].key]!.isNotEmpty
+                  ? model[i]
+                          .udfValue
+                          .toString()
+                          .split(' ')[0]
+                          .contains(RegExp(r'[a-z]'))
+                      ? null
+                      : DateFormat("yyyy-MM-dd")
+                          .parse(udfJson[model[i].key]!)
+                          .toString()
+                  : null,
               name: model[i].label,
               key: Key('${model[i].type}+$i'),
               selectDate: (DateTime date) {
@@ -1691,8 +1355,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           DynamicTextDisplay(text: model[i].label),
         );
       } else if (model[i].type == 'map') {
-        // ! hardcoding UNDO
-        // isLocationRequired = true;
         listDynamic.add(
           SizedBox(
             height: 1.h,
@@ -1736,8 +1398,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         // } else if (model[i].label.toString().contains('Page')) {
         // TODO: ?
         // } else if (model[i].key == 'map' && model[i].hidden != true) {
-        //   print(
-        //       '-------------------------------------------------------------------------------------');
       } else {
         // TODO: ?
       }
@@ -1884,7 +1544,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             maxLines: 1,
             labelName: 'Subject',
             textFieldBloc: createServiceFormBloc.subject,
-            prefixIcon: Icon(Icons.note),
+            prefixIcon: const Icon(Icons.note),
             onChanged: (value) {
               subjectValue = value.toString();
             },

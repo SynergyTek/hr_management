@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final workboardSectionModel = workboardSectionModelFromJson(jsonString);
-
 import 'dart:convert';
 
 WorkBoardSectionModel workboardSectionModelFromJson(String str) => WorkBoardSectionModel.fromJson(json.decode(str));

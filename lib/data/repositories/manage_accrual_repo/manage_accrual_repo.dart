@@ -14,7 +14,6 @@ class ManageAccrualRepository extends AbstractManageAccrualRepository {
         queryParameters: queryparams ?? {},
       );
 
-      //print(response.data);
       return ManageAccrualResponse.fromJson(
         response.data,
       );

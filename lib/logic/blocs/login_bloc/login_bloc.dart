@@ -23,7 +23,6 @@ class LoginBloc {
       loginResponseModel: loginResponseModel,
     );
 
-    // print("Hulululu: ${response.token} ${response.error}");
     return response.data;
   }
 
@@ -35,7 +34,6 @@ PortalViewResponse response = await _loginRepository.getPortalList(
       queryparams: queryparams,
     );
 
-    // print("Hulululu: ${response.token} ${response.error}");
     return response.data;
 
   }

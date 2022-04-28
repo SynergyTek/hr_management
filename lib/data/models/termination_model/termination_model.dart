@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final terminationModel = terminationModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<TerminationModel> terminationModelFromJson(String str) =>

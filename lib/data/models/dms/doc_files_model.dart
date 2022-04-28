@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final DMSFilesModel = DMSFilesModelFromJson(jsonString);
-
 import 'dart:convert';
 
 DMSFilesModel dmsFilesModelFromJson(String str) =>

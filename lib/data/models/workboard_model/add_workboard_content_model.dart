@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final addWorkBoardContentModel = addWorkBoardContentModelFromJson(jsonString);
-
 import 'dart:convert';
 
 AddContentWorkBoardModel addWorkBoardContentModelFromJson(String str) =>

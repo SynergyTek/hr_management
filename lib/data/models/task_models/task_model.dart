@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final taskModel = taskModelFromJson(jsonString);
-
 import 'dart:convert';
 
 TaskModel taskModelFromJson(String str) => TaskModel.fromJson(json.decode(str));
