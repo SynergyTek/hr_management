@@ -430,7 +430,6 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSManageWorkspaceScreen(
             parentWorkspaceId: args?.arg1,
-          
           ),
         );
 
@@ -571,6 +570,8 @@ class AppRouter {
           builder: (_) => CreateEditWorkBoardScreen(
             isEdit: args.val1!,
             workBoardId: args.arg1,
+            templateTypeText: args.arg2,
+            workBoardType: (args.val1! == true) ? int.parse(args.arg3!) : 0,
           ),
         );
 
@@ -579,7 +580,7 @@ class AppRouter {
           builder: (_) => BusinessTripScreen(),
         );
 
-         case HR_DIRECT_CONTRACT_SCREEN:
+      case HR_DIRECT_CONTRACT_SCREEN:
         return MaterialPageRoute(
           builder: (_) => HRDirectContractScreen(),
         );

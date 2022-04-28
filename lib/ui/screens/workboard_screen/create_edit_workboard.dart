@@ -4,11 +4,15 @@ import 'widgets/create_edit_workboard_screen_body.dart';
 class CreateEditWorkBoardScreen extends StatelessWidget {
   final bool isEdit;
   final String? workBoardId;
+  final String? templateTypeText;
+  final int? workBoardType;
 
   const CreateEditWorkBoardScreen({
     Key? key,
     required this.isEdit,
     this.workBoardId,
+    this.templateTypeText,
+    this.workBoardType,
   }) : super(key: key);
 
   @override
@@ -16,6 +20,8 @@ class CreateEditWorkBoardScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: CreateEditWorkBoardScreenBody(
+        workBoardType: workBoardType,
+        templateTypeText: templateTypeText,
         isEdit: isEdit,
         workBoardId: workBoardId,
       ),

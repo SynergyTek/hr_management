@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 import '../../widgets/empty_list_widget.dart';
 import '../../widgets/progress_indicator.dart';
 
-typedef ListTapPressedCallBack = void Function(dynamic key);
+typedef ListTapPressedCallBack = void Function(dynamic key,String text);
 
 class ChooseTempalteScreen extends StatefulWidget {
   final ListTapPressedCallBack? onListTap;
@@ -99,8 +99,7 @@ class _ChooseTempalteScreenState extends State<ChooseTempalteScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Image.network(
-                                    APIEndpointConstants.BASE_URL +
-                                        '/common/query/GetFile?fileId=' +
+                                    APIEndpointConstants.PROFILE_PICTURE_ENDPOINT +
                                         chooseTemplateList![index]
                                             .contentImage!,
                                   ),
@@ -170,7 +169,7 @@ class _ChooseTempalteScreenState extends State<ChooseTempalteScreen> {
                                         onTap: () {
                                           if (widget.onListTap != null) {
                                             widget.onListTap!(
-                                                chooseTemplateList?[index]);
+                                                chooseTemplateList?[index].templateId,chooseTemplateList?[index].templateDescription ?? '');
                                             Navigator.pop(context);
                                           }
                                         },

@@ -30,6 +30,8 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
   bool? isTasks;
   bool? isUserData;
 
+  bool showProgressIndicator = false;
+
   @override
   void initState() {
     super.initState();
@@ -185,10 +187,16 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
                               : workBoardModel?.isUserData;
                           workBoardModel?.workBoardName =
                               workBoardNameController?.text;
+                          setState(() {
+                            showProgressIndicator = true;
+                          });
 
                           await workboardBloc.postDuplicateWorkBoard(
                             workBoardModel: workBoardModel,
                           );
+                          setState(() {
+                            showProgressIndicator = false;
+                          });
 
                           if (workboardBloc
                               .subjectPostDuplicateWorkBoard.hasValue) {
@@ -214,6 +222,11 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
             },
           ),
         ),
+        Visibility(
+            visible: showProgressIndicator,
+            child: Center(
+              child: CustomProgressIndicator(loadingText: 'Please Wait'),
+            ))
       ],
     );
   }

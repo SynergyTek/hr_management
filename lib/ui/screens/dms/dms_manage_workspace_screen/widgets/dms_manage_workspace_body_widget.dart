@@ -476,6 +476,7 @@ class _DMSManageWorkspaceBodyWidgetState
     // else do nothing
     if (response != null && response['success'] == true) {
       Navigator.of(context).pop();
+      Navigator.of(context).pop();
     }
   }
 

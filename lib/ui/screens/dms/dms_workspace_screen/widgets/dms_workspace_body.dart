@@ -253,12 +253,14 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
     String? id,
     String? parentNoteId,
   }) {
-    Navigator.of(context).pushNamed(
-      DMS_MANAGE_WORKSPACE_ROUTE,
-      arguments: ScreenArguments(
-        arg1: id ?? "",
-      ),
-    );
+    Navigator.of(context)
+        .pushNamed(
+          DMS_MANAGE_WORKSPACE_ROUTE,
+          arguments: ScreenArguments(
+            arg1: id ?? "",
+          ),
+        )
+        .then((value) => apiCall());
   }
 
   permissionScreen(WorkspaceViewModel? model) {

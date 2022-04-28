@@ -10,6 +10,7 @@ import 'package:hr_management/data/models/workboard_model/workboard_model.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/screens/workboard_screen/widgets/copymove_screen.dart';
+import 'package:hr_management/ui/screens/workboard_screen/widgets/workboard_screen_body_widget.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_content_screen.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 
@@ -41,20 +42,14 @@ class SectionWorkBoardDetailsList extends StatefulWidget {
 class _SectionWorkBoardDetailsListState
     extends State<SectionWorkBoardDetailsList> {
   WorkBoardSectionMapResponseModel? workBoardMapResponseModel;
-
-  int? jsonIndex;
-
-  ScrollController scrollController = ScrollController();
-
-  List<WorkBoardSectionModel>? workBoardSectionsList;
-
-  List<WorkBoardSectionModel>? itemList;
-
-  List? itemContent;
-
-  int? index02;
-
   WorkBoardSectionModel? workBoardSectionModel;
+
+  int? sectionindex;
+  ScrollController scrollController = ScrollController();
+  List<WorkBoardSectionModel>? workBoardSectionsList;
+  List<WorkBoardSectionModel>? itemList;
+  List? itemContent;
+  int? index02;
 
   @override
   void initState() {
@@ -107,7 +102,8 @@ class _SectionWorkBoardDetailsListState
                           )
                         ]
                       : []),
-              body: (workBoardSectionsList != null)
+              body: (workBoardSectionsList != null &&
+                      workBoardSectionsList!.isNotEmpty)
                   ? Stack(
                       alignment: Alignment.bottomCenter,
                       children: [
@@ -117,15 +113,20 @@ class _SectionWorkBoardDetailsListState
                           child: Column(
                             children: [
                               Flexible(
-                                flex: 10,
+                                flex: 40,
                                 child: GridView.builder(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 0.55,
+                                    crossAxisCount: 2,
+                                  ),
                                   controller: scrollController,
                                   padding: DEFAULT_PADDING * 0.5,
                                   shrinkWrap: true,
                                   itemCount: workBoardSectionsList?.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    jsonIndex = index;
+                                    sectionindex = index;
                                     return Card(
                                       color: Colors.white,
                                       shape: RoundedRectangleBorder(
@@ -225,122 +226,158 @@ class _SectionWorkBoardDetailsListState
                                                           print('add');
                                                         },
                                                       ),
-                                                      GestureDetector(
-                                                        child: Icon(Icons.edit),
-                                                        onTap: () {
-                                                          workboardBloc
-                                                              .subjectCreateSectionWorkboardList
-                                                              .sink
-                                                              .add(null);
-                                                          print('edit');
-                                                          Navigator.pushNamed(
-                                                            context,
-                                                            CREATE_EDIT_SECTION_WORKBOARD_SCREEN,
-                                                            arguments:
-                                                                ScreenArguments(
-                                                              arg1:
-                                                                  workBoardSectionsList?[
-                                                                          index]
-                                                                      .id,
-                                                              arg2:
-                                                                  workBoardMapResponseModel
-                                                                      ?.mapdata
-                                                                      ?.id,
-                                                              val1: true,
-                                                            ),
-                                                          ).then((value) =>
-                                                              apiCall());
+                                                      PopupMenuButton(
+                                                        onSelected: (result) {
+                                                          if (result == 0) {
+                                                            workboardBloc
+                                                                .subjectCreateSectionWorkboardList
+                                                                .sink
+                                                                .add(null);
+                                                            print('edit');
+                                                            Navigator.pushNamed(
+                                                              context,
+                                                              CREATE_EDIT_SECTION_WORKBOARD_SCREEN,
+                                                              arguments:
+                                                                  ScreenArguments(
+                                                                arg1: workBoardSectionsList?[
+                                                                        index]
+                                                                    .id,
+                                                                arg2:
+                                                                    workBoardMapResponseModel
+                                                                        ?.mapdata
+                                                                        ?.id,
+                                                                val1: true,
+                                                              ),
+                                                            ).then((value) =>
+                                                                apiCall());
+                                                          }
                                                         },
-                                                      )
+                                                        child: Icon(Icons.edit),
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                context) {
+                                                          return [
+                                                            PopupMenuItem(
+                                                              value: 0,
+                                                              child:
+                                                                  IconTextRowWidget(
+                                                                iconData:
+                                                                    Icons.edit,
+                                                                iconText:
+                                                                    'Edit Section',
+                                                              ),
+                                                            ),
+                                                            PopupMenuItem(
+                                                              value: 1,
+                                                              child:
+                                                                  IconTextRowWidget(
+                                                                iconData: Icons
+                                                                    .delete,
+                                                                iconText:
+                                                                    'Remove Section',
+                                                              ),
+                                                            ),
+                                                          ];
+                                                        },
+                                                      ),
                                                     ],
-                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                           ),
                                           Expanded(
                                             child: Container(
-                                              child: ListView.builder(
-                                                controller: scrollController,
-                                                itemCount:
-                                                    workBoardSectionsList?[
-                                                            index]
-                                                        .item
-                                                        ?.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index2) {
-                                                  index02 = index2;
-                                                  itemList =
+                                              margin:
+                                                  EdgeInsets.only(bottom: 3),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(20),
+                                                    bottomRight:
+                                                        Radius.circular(20)),
+                                                child: ListView.builder(
+                                                  controller: scrollController,
+                                                  itemCount:
                                                       workBoardSectionsList?[
                                                               index]
-                                                          .item;
+                                                          .item
+                                                          ?.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index2) {
+                                                    index02 = index2;
+                                                    itemList =
+                                                        workBoardSectionsList?[
+                                                                index]
+                                                            .item;
 
-                                                  workBoardSectionModel =
-                                                      workBoardSectionsList?[
-                                                          index];
+                                                    workBoardSectionModel =
+                                                        workBoardSectionsList?[
+                                                            index];
 
-                                                  return Column(
-                                                    children: [
-                                                      ItemWidget(
-                                                        workboardModel: widget
-                                                            .workboardModel,
-                                                        index2: index02,
-                                                        workBoardSectionModel:
-                                                            workBoardSectionModel,
-                                                        context: context,
-                                                        id: widget
-                                                                .workboardModel
-                                                                ?.workboardId ??
-                                                            '',
-                                                        isSquare: (itemList?[
-                                                                            index2]
-                                                                        .workBoardItemShape ==
-                                                                    0 &&
-                                                                itemList?[index2]
-                                                                        .workBoardItemSize ==
-                                                                    2)
-                                                            ? true
-                                                            : false,
-                                                        ntsNoteId:
-                                                            itemList?[index2]
-                                                                .ntsNoteId,
-                                                        workBoardId:
-                                                            workBoardMapResponseModel
-                                                                ?.mapdata?.id,
-                                                        sectionId:
-                                                            itemList?[index2]
-                                                                .id,
-                                                        itemfileId:
-                                                            itemList?[index2]
-                                                                .itemFileId,
-                                                        itemType:
-                                                            itemList?[index2]
-                                                                .itemType,
-                                                        color: (itemList?[index2]
-                                                                        .colorCode !=
-                                                                    null &&
-                                                                itemList?[index2]
-                                                                        .colorCode !=
-                                                                    "")
-                                                            ? hexToColor(
-                                                                itemList?[index2]
-                                                                        .colorCode ??
-                                                                    '',
-                                                              )
-                                                            : null,
-                                                        itemName:
-                                                            itemList?[index2]
-                                                                    .itemName ??
-                                                                '',
-                                                        itemContent: (itemList?[
-                                                                    index2]
-                                                                .itemContent ??
-                                                            ''),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
+                                                    return Column(
+                                                      children: [
+                                                        ItemWidget(
+                                                          workboardModel: widget
+                                                              .workboardModel,
+                                                          index2: index02,
+                                                          workBoardSectionModel:
+                                                              workBoardSectionModel,
+                                                          context: context,
+                                                          id: widget
+                                                                  .workboardModel
+                                                                  ?.workboardId ??
+                                                              '',
+                                                          isSquare: (itemList?[
+                                                                              index2]
+                                                                          .workBoardItemShape ==
+                                                                      0 &&
+                                                                  itemList?[index2]
+                                                                          .workBoardItemSize ==
+                                                                      2)
+                                                              ? true
+                                                              : false,
+                                                          ntsNoteId:
+                                                              itemList?[index2]
+                                                                  .ntsNoteId,
+                                                          workBoardId:
+                                                              workBoardMapResponseModel
+                                                                  ?.mapdata?.id,
+                                                          sectionId:
+                                                              itemList?[index2]
+                                                                  .id,
+                                                          itemfileId:
+                                                              itemList?[index2]
+                                                                  .itemFileId,
+                                                          itemType:
+                                                              itemList?[index2]
+                                                                  .itemType,
+                                                          color: (itemList?[index2]
+                                                                          .colorCode !=
+                                                                      null &&
+                                                                  itemList?[index2]
+                                                                          .colorCode !=
+                                                                      "")
+                                                              ? hexToColor(
+                                                                  itemList?[index2]
+                                                                          .colorCode ??
+                                                                      '',
+                                                                )
+                                                              : null,
+                                                          itemName: itemList?[
+                                                                      index2]
+                                                                  .itemName ??
+                                                              '',
+                                                          itemContent: (itemList?[
+                                                                      index2]
+                                                                  .itemContent ??
+                                                              ''),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           )
@@ -348,11 +385,6 @@ class _SectionWorkBoardDetailsListState
                                       ),
                                     );
                                   },
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    childAspectRatio: 0.6,
-                                    crossAxisCount: 2,
-                                  ),
                                 ),
                               ),
                               Flexible(
@@ -406,7 +438,9 @@ class _SectionWorkBoardDetailsListState
 
             Navigator.pushNamed(context, CREATE_EDIT_SECTION_WORKBOARD_SCREEN,
                 arguments: ScreenArguments(
-                  arg1: workBoardSectionsList?[jsonIndex!].id,
+                  arg1: (workBoardSectionsList!.isNotEmpty)
+                      ? (workBoardSectionsList?[sectionindex!].id)
+                      : null,
                   arg2: workBoardMapResponseModel?.mapdata?.id,
                   val1: false,
                 )).then((value) => apiCall());
@@ -503,19 +537,20 @@ class _ItemWidgetState extends State<ItemWidget> {
             : ((widget.color != null)
                 ? widget.color?.withOpacity(0.3)
                 : Colors.blue.shade100),
-        height: (widget.isSquare == true) ? 17.h : 14.h,
+        width: (widget.isSquare == true) ? 17.h : null,
+        height: (widget.isSquare == true) ? 17.h : null,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              padding: DEFAULT_PADDING,
-              decoration: BoxDecoration(
-                color: (widget.color != null) ? widget.color : Colors.blue,
-              ),
-              child: Align(
-                alignment: Alignment.topCenter,
+            Flexible(
+              child: Container(
+                padding: DEFAULT_PADDING,
+                decoration: BoxDecoration(
+                  color: (widget.color != null) ? widget.color : Colors.blue,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Flexible(
                         child: Text(
@@ -546,7 +581,6 @@ class _ItemWidgetState extends State<ItemWidget> {
                         ),
                         Container(
                           width: 15,
-                          alignment: Alignment.topRight,
                           child: PopupMenuButton(
                             onSelected: (result) async {
                               if (result == 0) {
@@ -826,23 +860,20 @@ class _ItemWidgetState extends State<ItemWidget> {
                 ),
               ),
             ),
-            Expanded(
+            Flexible(
               child: Container(
                 padding: DEFAULT_PADDING * 0.5,
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: ((widget.itemType == 3 ||
-                                    widget.itemType == 4 ||
-                                    widget.itemType == 5 ||
-                                    widget.itemType == 6) &&
-                                widget.itemfileId != null)
-                            ? Image.network(APIEndpointConstants.BASE_URL +
-                                '/common/query/GetFile?fileId=' +
-                                widget.itemfileId!)
-                            : Text(widget.itemContent ?? '')),
-                  ],
-                ),
+                child: ((widget.itemType == 3 ||
+                            widget.itemType == 4 ||
+                            widget.itemType == 5 ||
+                            widget.itemType == 6) &&
+                        widget.itemfileId != null)
+                    ? Image.network(
+                        APIEndpointConstants.PROFILE_PICTURE_ENDPOINT +
+                            widget.itemfileId!,
+                        fit: BoxFit.contain,
+                      )
+                    : Text(widget.itemContent ?? ''),
               ),
             ),
           ],
