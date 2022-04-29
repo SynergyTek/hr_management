@@ -31,8 +31,7 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
           elevation: MaterialStateProperty.all(0),
-          backgroundColor: MaterialStateProperty.all(backgroundColor) ??
-              MaterialStateProperty.all(Theme.of(context).textHeadingColor),
+          backgroundColor: MaterialStateProperty.all(backgroundColor),
           // shape: MaterialStateProperty.all(
           //   RoundedRectangleBorder(
           //     borderRadius: BorderRadius.circular(borderRadius ?? 32.0),
@@ -45,7 +44,7 @@ class PrimaryButton extends StatelessWidget {
           height: height ?? 24,
           child: Center(
             child: Text(
-              buttonText ?? "",
+              buttonText,
               style: TextStyle(
                 color: foregroundColor ?? Colors.white,
                 fontWeight: FontWeight.w600,

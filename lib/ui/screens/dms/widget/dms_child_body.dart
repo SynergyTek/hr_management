@@ -10,14 +10,12 @@ import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_mo
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
-import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:hr_management/data/models/uploaded_content_model/uploaded_content_model.dart';
 import 'package:hr_management/logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
 import 'package:hr_management/logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_crud_note_bloc/dms_crud_note_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
-import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/manage_document/document/widgets/document_bottom_sheet_widget.dart';
@@ -25,14 +23,14 @@ import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 import 'package:hr_management/ui/widgets/custom_icons.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
 import '../../../../data/models/dms/dms_source_folder_model/dms_source_folder_response.dart';
 import '../../../../logic/blocs/dms_bloc/dms_source_folders_bloc/dms_source_folders_bloc.dart';
-import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../listizer/listizer.dart';
+import '../../../widgets/custom_controls/archive.dart';
 
 class DMSChildBody extends StatefulWidget {
   final DMSSourceFolderModel? parentModel;
@@ -225,7 +223,11 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                           path: "${widget.parentPath}",
                           showHiddenItems: false,
                           data: [widget.parentModel],
-                          userId: "45bba746-3309-49b7-9c03-b5793369d73c",
+                          userId: BlocProvider.of<UserModelBloc>(context)
+                                  .state
+                                  .userModel
+                                  ?.id ??
+                              '',
                         ));
                       },
                     ),
@@ -563,7 +565,9 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           child: ListTile(
             leading: Icon(CustomIcons.archive),
             title: Text('Download All'),
-            // onTap: () =>
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (_) => ZipCreater())),
+
             //   showModalBottomSheet(
             //     context: context,
             //     isDismissible: true,
@@ -578,7 +582,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             //       );
             //     },
             //   ),
-            
           ),
         ),
         Visibility(
@@ -837,7 +840,8 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               .cutCopyPasteModel!
               .sourceId!,
           targetId: id,
-          userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+          userId:
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         );
 
       if (dmsCrudNoteBloc.copyNoteSubject.stream.hasValue) {

@@ -1024,7 +1024,7 @@ class _DocumentListWidgetState extends State<DocumentListWidget> {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return DocumentBottomSheetWidget(
-          bottomSheetDataList: bottomSheetDataList ?? [],
+          bottomSheetDataList: bottomSheetDataList ,
         );
       },
     );
