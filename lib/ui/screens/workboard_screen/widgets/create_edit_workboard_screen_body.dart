@@ -13,16 +13,18 @@ import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/snack_bar.dart';
 
-typedef ListTapPressedCallBack = void Function(dynamic key);
-
 class CreateEditWorkBoardScreenBody extends StatefulWidget {
   final bool isEdit;
   final String? workBoardId;
+  final String? templateTypeText;
+  final int? workBoardType;
 
   CreateEditWorkBoardScreenBody({
     Key? key,
     required this.isEdit,
     this.workBoardId,
+    this.templateTypeText,
+    this.workBoardType,
   }) : super(key: key);
 
   @override
@@ -39,12 +41,20 @@ class _CreateEditWorkBoardScreenBodyState
 
   WorkboardModel? workBoardModel;
 
+  String? templatetypeid;
+
+  bool showProgressIndicator = false;
+
   @override
   void initState() {
     super.initState();
+
     api();
     if (widget.isEdit == false) {
       chooseTemplateController?.text = "Basic";
+    } else {
+      chooseTemplateController?.text = widget.templateTypeText ?? "Basic";
+      _groupValue = widget.workBoardType ?? 0;
     }
   }
 
@@ -57,6 +67,23 @@ class _CreateEditWorkBoardScreenBodyState
     } else {
       await workboardBloc.getCreateWorkboardData();
     }
+  }
+
+  apiCall() {
+    workboardBloc.subjectWorkboardList.sink.add(null);
+    workboardBloc
+      ..getWorkboardData(
+        queryparams: _handleQueryparams(),
+      );
+  }
+
+  _handleQueryparams() {
+    return {
+      'userId':
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+      'portalName': 'HR',
+      'status': '0',
+    };
   }
 
   @override
@@ -213,13 +240,11 @@ class _CreateEditWorkBoardScreenBodyState
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => ChooseTempalteScreen(
-                                    onListTap: (dynamic value) {
-                                      WorkboardModel _chooseTemplateModel =
-                                          value;
-                                      chooseTemplateController?.text =
-                                          _chooseTemplateModel
-                                              .templateTypeNameString!;
-                                      setState(() {});
+                                    onListTap: (dynamic value, String text) {
+                                      setState(() {
+                                        chooseTemplateController?.text = text;
+                                        templatetypeid = value;
+                                      });
                                     },
                                   ),
                                 ),
@@ -235,12 +260,8 @@ class _CreateEditWorkBoardScreenBodyState
                                     ),
                               ),
                             ),
-                            (widget.isEdit == true &&
-                                    chooseTemplateController!.text.isEmpty)
-                                ? Text(
-                                    'Template Selected -  ${workBoardModel?.templateCode ?? "No Data"} WorkBoard')
-                                : Text(
-                                    'Template Selected -  ${chooseTemplateController?.text.toString()} WorkBoard'),
+                            Text(
+                                'Template Selected -  ${chooseTemplateController?.text.toString()} WorkBoard'),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -283,6 +304,12 @@ class _CreateEditWorkBoardScreenBodyState
                     if (widget.isEdit == true) {
                       workBoardModel?.dataAction = 1;
                     }
+                    if (templatetypeid != null) {
+                      workBoardModel?.templateTypeId = templatetypeid;
+                    } else {
+                      workBoardModel?.templateTypeId =
+                          "3b1cb391-de1b-4df6-b0c1-90df23c273c6";
+                    }
 
                     workBoardModel?.portalName = "HR";
                     workBoardModel?.requestedByUserId =
@@ -301,8 +328,15 @@ class _CreateEditWorkBoardScreenBodyState
                     workBoardModel?.templateCode =
                         chooseTemplateController?.text ?? "Basic";
 
+                    setState(() {
+                      showProgressIndicator = true;
+                    });
+
                     await workboardBloc.postManageWorkBoard(
                         workBoardModel: workBoardModel);
+                    setState(() {
+                      showProgressIndicator = false;
+                    });
 
                     if (workboardBloc.subjectPostManageWorkBoard.hasValue) {
                       if (workboardBloc
@@ -316,6 +350,7 @@ class _CreateEditWorkBoardScreenBodyState
                       }
                     }
                     Navigator.of(context).pop();
+                    apiCall();
                   },
                 ),
               ),
@@ -327,6 +362,12 @@ class _CreateEditWorkBoardScreenBodyState
                 ),
               ),
             ],
+          ),
+        ),
+        Visibility(
+          visible: showProgressIndicator,
+          child: Center(
+            child: CustomProgressIndicator(),
           ),
         ),
       ],

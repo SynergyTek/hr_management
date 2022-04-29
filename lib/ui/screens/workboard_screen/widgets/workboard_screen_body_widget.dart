@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
+import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'section_workboard_details_list_widget.dart';
 import '../../../../constants/api_endpoints.dart';
@@ -81,7 +82,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                   );
                 }
 
-                if (_searchResult != null) {
+                if (_searchResult != null && _searchResult!.length > 0) {
                   list = _searchResult;
                 } else if (subjectController.text.isEmpty ||
                     _searchResult == null) {
@@ -93,6 +94,10 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                       ?.where((WorkboardModel element) =>
                           element.iconFileId != null)
                       .toList();
+                } else {
+                  return Center(
+                    child: Text('No Data Found for ${subjectController.text}'),
+                  );
                 }
 
                 if (sortByController.text == "Alphabetical") {
@@ -126,8 +131,8 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             (list![index].iconFileId != null)
-                                ? Image.network(APIEndpointConstants.BASE_URL +
-                                    '/common/query/GetFile?fileId=' +
+                                ? Image.network(APIEndpointConstants
+                                        .PROFILE_PICTURE_ENDPOINT +
                                     list![index].iconFileId!)
                                 : Container(),
                             (list?[index].workBoardName != null)
@@ -166,16 +171,37 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                                                 }
 
                                                 if (result == 2) {
-                                                  Navigator.pushNamed(context,
-                                                          CREATE_WORKBOARD_SCREEN,
-                                                          arguments:
-                                                              ScreenArguments(
-                                                                  val1: true,
-                                                                  arg1: list?[
-                                                                          index]
-                                                                      .workboardId))
-                                                      .then(
-                                                          (value) => apiCall());
+                                                  String? templateTypeText;
+                                                  if (list?[index]
+                                                          .templateTypeId ==
+                                                      "1255fc6e-0e21-4709-a804-074fed296eb3") {
+                                                    templateTypeText =
+                                                        "Monthly";
+                                                  } else if (list?[index]
+                                                          .templateTypeId ==
+                                                      "ee62b9f9-15dc-45da-a5d1-0bc9ab1fc0e0") {
+                                                    templateTypeText = "Yearly";
+                                                  } else if (list?[index]
+                                                          .templateTypeId ==
+                                                      "5958f94a-38c1-499e-aac1-8c1ef388c2d4") {
+                                                    templateTypeText = "Weekly";
+                                                  } else if (list?[index]
+                                                          .templateTypeId ==
+                                                      "3b1cb391-de1b-4df6-b0c1-90df23c273c6") {
+                                                    templateTypeText = "Basic";
+                                                  }
+                                                  Navigator.pushNamed(
+                                                    context,
+                                                    CREATE_WORKBOARD_SCREEN,
+                                                    arguments: ScreenArguments(
+                                                        arg3: list?[index]
+                                                            .workBoardType
+                                                            .toString(),
+                                                        val1: true,
+                                                        arg1: list?[index]
+                                                            .workboardId,
+                                                        arg2: templateTypeText),
+                                                  ).then((value) => apiCall());
                                                 }
                                                 if (result == 3) {
                                                   await workboardBloc
@@ -333,6 +359,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
         borderRadius: BorderRadius.circular(100),
       ),
       child: TextField(
+        onSubmitted: (v) => _handleOnpressedSearch(),
         controller: subjectController,
         decoration: InputDecoration(
           hintText: 'Search',
@@ -340,30 +367,52 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
-          suffixIcon: IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.blue,
-            ),
-            onPressed: () {
-              _searchResult = null;
-              if (subjectController.text.isNotEmpty) {
-                list = fullList;
-                _searchResult = list
-                    ?.where((workBoardElement) => workBoardElement.workBoardName
-                        .toString()
-                        .toLowerCase()
-                        .contains(subjectController.text.toLowerCase()))
-                    .toList();
-
-                setState(() {});
-              } else
-                return;
-            },
+          suffixIcon: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                child: Icon(
+                  Icons.search,
+                  color: Colors.blue,
+                ),
+                onTap: () => _handleOnpressedSearch(),
+              ),
+              (subjectController.text.isNotEmpty)
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.cancel,
+                        color: Colors.blue,
+                      ),
+                      onPressed: () {
+                        subjectController.clear();
+                        _searchResult?.clear();
+                        apiCall();
+                        setState(() {});
+                      })
+                  : SizedBox(
+                      width: 0,
+                    ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  _handleOnpressedSearch() {
+    _searchResult = null;
+    if (subjectController.text.isNotEmpty) {
+      list = fullList;
+      _searchResult = list
+          ?.where((workBoardElement) => workBoardElement.workBoardName
+              .toString()
+              .toLowerCase()
+              .contains(subjectController.text.toLowerCase()))
+          .toList();
+
+      setState(() {});
+    } else
+      return;
   }
 
   Widget wrappedButtons() {

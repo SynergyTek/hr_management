@@ -36,13 +36,10 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
   List<WorkboardModel>? fullList;
 
   WorkBoardSectionMapResponseModel? workBoardMapResponseModel;
-
   List<WorkBoardSectionModel>? workBoardSectionsList;
 
   int? jsonIndex;
-
-  int? index1 = 0;
-
+  int? index1;
   var tappedIndex;
 
   @override
@@ -66,7 +63,7 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         "portalName": "HR",
-        "id": list?[index1! - 1].workboardId ?? '',
+        "id": list?[tappedIndex].workboardId ?? '',
       },
     );
   }
@@ -141,6 +138,7 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                     itemCount: list?.length,
                     itemBuilder: (BuildContext context, int index) {
                       index1 = index;
+                      print(index1);
                       return GestureDetector(
                         child: Card(
                           margin: DEFAULT_PADDING,
@@ -164,8 +162,8 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                             : null,
                                       ),
                                       child: Image.network(
-                                        APIEndpointConstants.BASE_URL +
-                                            '/common/query/GetFile?fileId=' +
+                                        APIEndpointConstants
+                                                .PROFILE_PICTURE_ENDPOINT +
                                             list![index].iconFileId!,
                                         height: 20.h,
                                       ),
@@ -228,7 +226,9 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                           workBoardMapResponseModel?.mapdata?.workBoardSections;
                     }
 
-                    return (workBoardSectionsList != null)
+                    return (workBoardSectionsList != null &&
+                            workBoardSectionsList!.isNotEmpty &&
+                            tappedIndex != null)
                         ? Container(
                             margin: DEFAULT_PADDING,
                             child: ListView.builder(
@@ -333,21 +333,8 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                                       apiCall2();
                                                       Navigator.of(context)
                                                           .pop();
-
                                                       // Navigator.of(context)
-                                                      //     .popUntil((route) =>
-                                                      //         route.isFirst);
-                                                      // Navigator.push(
-                                                      //     context,
-                                                      //     MaterialPageRoute(
-                                                      //         builder: (_) =>
-                                                      //             SectionWorkBoardDetailsList(
-                                                      //               id: list?[index]
-                                                      //                       .workboardId ??
-                                                      //                   '',
-                                                      //               isCopyMove:
-                                                      //                   false,
-                                                      //             )));
+                                                      //     .pop();
                                                     },
                                                     buttonText: 'Move'),
                                                 ButtonWidget(
@@ -383,24 +370,10 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                                       apiCall2();
                                                       Navigator.of(context)
                                                           .pop();
-                                                      // Navigator.of(context)
-                                                      //     .popUntil((route) =>
-                                                      //         route.isFirst);
-                                                      // Navigator.push(
-                                                      //     context,
-                                                      //     MaterialPageRoute(
-                                                      //         builder: (_) =>
-                                                      //             SectionWorkBoardDetailsList(
-                                                      //               id: list?[index]
-                                                      //                       .workboardId ??
-                                                      //                   '',
-                                                      //               isCopyMove:
-                                                      //                   false,
-                                                      //             )));
                                                     },
                                                     buttonText: 'Copy'),
                                               ],
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -411,7 +384,19 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                             ),
                           )
                         : Center(
-                            child: Text('NO Data Found'),
+                            child: (tappedIndex != null)
+                                ? Text('NO Data Found')
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.blue),
+                                    margin: DEFAULT_LARGE_PADDING,
+                                    padding: DEFAULT_LARGE_PADDING,
+                                    child: Text(
+                                      'Please Select the WorkBoard Above',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    )),
                           );
                   } else {
                     return Center(
