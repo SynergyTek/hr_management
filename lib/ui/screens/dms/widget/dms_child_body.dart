@@ -579,15 +579,22 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             leading: Icon(CustomIcons.sticky_note),
             title: Text('View Details'),
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                ADD_EDIT_NOTE_ROUTE,
-                arguments: ScreenArguments(
-                  arg1: '',
-                  arg2: item.key,
-                  // arg3: filterChildList[index].noteSubject
-                ),
-              );
+              if (!((item.document ?? false) &&
+                  (item.fileId == null || item.fileId!.isEmpty))) {
+                Navigator.pushNamed(
+                  context,
+                  ADD_EDIT_NOTE_ROUTE,
+                  arguments: ScreenArguments(
+                    arg1: '',
+                    arg2: item.key,
+                  ),
+                );
+              } else {
+                // Navigator.pushNamed(context, DMS_WORBOOK_SCREEN,
+                //     arguments: ScreenArguments(
+                //       arg1: item.title ?? '',
+                //     ));
+              }
             },
           ),
         ),

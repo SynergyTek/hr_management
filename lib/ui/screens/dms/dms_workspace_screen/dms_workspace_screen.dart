@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/dms/dms_workspace_screen/widgets/dms_workspace_body.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
@@ -25,6 +26,9 @@ class DMSWorkspaceScreen extends StatelessWidget {
         onPressed: () => Navigator.pushNamed(
           context,
           DMS_MANAGE_WORKSPACE_ROUTE,
+          arguments: ScreenArguments(
+            val1: true,
+          ),
         ),
       ),
     );
