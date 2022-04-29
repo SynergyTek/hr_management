@@ -6,6 +6,7 @@ import 'package:hr_management/data/helpers/download_helper/download_helper_new.d
 import 'package:hr_management/data/models/login_models/portal_view_model.dart';
 import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/themes/light_theme.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 import '../../../../data/models/login_models/extra_user_information_model.dart';
 import '../../../../data/models/login_models/login_response_model.dart';
@@ -77,21 +78,39 @@ class _LoginBodyState extends State<LoginBody> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            SizedBox(height: 100),
                             Container(
                               child: Image.asset(
                                 SYNERGY_LOGO,
-                                height: 250,
-                                width: 250,
                               ),
                             ),
+                            Container(
+                              padding: EdgeInsets.only(
+                                top: 20,
+                              ),
+                              child: Text("Human Capital Management",
+                                  style: TextStyle(
+                                      color: LightTheme()
+                                          .lightThemeData()
+                                          .primaryColor,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                              height: 100,
+                            ),
+
                             Visibility(
-                              visible: isUsernameVisible,
+                              visible: true, // isUsernameVisible,
                               child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 12, right: 12, top: 12),
                                   child: BlocTextBoxWidget(
-                                    prefixIcon: Icon(Icons.person),
-                                    fieldName: 'username',
+                                    prefixIcon: Icon(
+                                      Icons.person,
+                                      color: LightTheme()
+                                          .lightThemeData()
+                                          .primaryColor,
+                                    ),
+                                    fieldName: 'Username',
                                     readonly: false,
                                     labelName: 'Username',
                                     textFieldBloc: createLoginFormBloc.email,
@@ -99,107 +118,115 @@ class _LoginBodyState extends State<LoginBody> {
                             ),
                             // const Padding(padding: EdgeInsets.all(12)),
                             Visibility(
-                              visible: isPasswordVisible,
+                              visible: true, // isPasswordVisible,
                               child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 12, right: 12),
                                   child: BlocTextBoxWidget(
                                     suffixButton: SuffixButton.obscureText,
                                     keyboardType: TextInputType.visiblePassword,
-                                    prefixIcon: Icon(Icons.edit_sharp),
+                                    prefixIcon: Icon(
+                                      Icons.edit_sharp,
+                                      color: LightTheme()
+                                          .lightThemeData()
+                                          .primaryColor,
+                                    ),
                                     // obscureText: true,
-                                    fieldName: 'password',
+                                    fieldName: 'Password',
                                     readonly: false,
                                     labelName: 'Password',
                                     textFieldBloc: createLoginFormBloc.password,
                                   )),
                             ),
-                            Visibility(
-                              visible: isPasswordVisible,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 12, right: 12),
-                                child: Form(
-                                    key: _formKey,
-                                    child: DropdownButtonFormField2(
-                                      decoration: InputDecoration(
-                                        isDense: true,
-                                        contentPadding: EdgeInsets.zero,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                      ),
-                                      isExpanded: true,
-                                      hint: const Text(
-                                        'Select Portal',
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                      icon: const Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Colors.black45,
-                                      ),
-                                      iconSize: 24,
-                                      buttonHeight: 64,
-                                      buttonPadding: const EdgeInsets.only(
-                                          left: 16, right: 8),
-                                      dropdownDecoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      items: portalList
-                                          .toList()
-                                          .map((item) =>
-                                              DropdownMenuItem<String>(
-                                                value: item.name,
-                                                child: Text(
-                                                  item.name ?? "-",
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                  ),
-                                                ),
-                                              ))
-                                          .toList(),
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return 'Please select portal.';
-                                        }
-                                      },
-                                      onChanged: (value) {},
-                                      onSaved: (value) {
-                                        setState(() {
-                                          selectedPortal = value.toString();
-                                        });
-                                      },
-                                    )),
-                              ),
-                            ),
+                            // Visibility(
+                            //   visible: isPasswordVisible,
+                            //   child: Padding(
+                            //     padding:
+                            //         const EdgeInsets.only(left: 12, right: 12),
+                            //     child: Form(
+                            //         key: _formKey,
+                            //         child: DropdownButtonFormField2(
+                            //           decoration: InputDecoration(
+                            //             isDense: true,
+                            //             contentPadding: EdgeInsets.zero,
+                            //             border: OutlineInputBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(15),
+                            //             ),
+                            //           ),
+                            //           isExpanded: true,
+                            //           hint: const Text(
+                            //             'Select Portal',
+                            //             style: TextStyle(fontSize: 14),
+                            //           ),
+                            //           icon: const Icon(
+                            //             Icons.arrow_drop_down,
+                            //             color: Colors.black45,
+                            //           ),
+                            //           iconSize: 24,
+                            //           buttonHeight: 64,
+                            //           buttonPadding: const EdgeInsets.only(
+                            //               left: 16, right: 8),
+                            //           dropdownDecoration: BoxDecoration(
+                            //             borderRadius: BorderRadius.circular(16),
+                            //           ),
+                            //           items: portalList
+                            //               .toList()
+                            //               .map((item) =>
+                            //                   DropdownMenuItem<String>(
+                            //                     value: item.name,
+                            //                     child: Text(
+                            //                       item.name ?? "-",
+                            //                       style: const TextStyle(
+                            //                         fontSize: 14,
+                            //                       ),
+                            //                     ),
+                            //                   ))
+                            //               .toList(),
+                            //           validator: (value) {
+                            //             if (value == null) {
+                            //               return 'Please select portal.';
+                            //             }
+                            //           },
+                            //           onChanged: (value) {},
+                            //           onSaved: (value) {
+                            //             setState(() {
+                            //               selectedPortal = value.toString();
+                            //             });
+                            //           },
+                            //         )),
+                            //   ),
+                            // ),
 
                             const Padding(padding: EdgeInsets.all(12)),
+                            // Visibility(
+                            //   visible: !isPasswordVisible,
+                            //   child: PrimaryButton(
+                            //     buttonText: 'Login',
+                            //     handleOnPressed: () {
+                            //       if (createLoginFormBloc.email.value == "") {
+                            //         _showMyDialog();
+                            //         return false;
+                            //       } else {
+                            //         setState(() {
+                            //           //showCPI = true;
+                            //           isPasswordVisible = true;
+                            //           getPortalListByEmail(
+                            //               createLoginFormBloc.email.value);
+                            //           isUsernameVisible = true;
+                            //         });
+                            //       }
+                            //     },
+                            //     width: 100,
+                            //   ),
+                            // ),
+
                             Visibility(
-                              visible: !isPasswordVisible,
+                              visible: true, //isPasswordVisible,
                               child: PrimaryButton(
-                                buttonText: 'Login',
-                                handleOnPressed: () {
-                                  if (createLoginFormBloc.email.value == "") {
-                                    _showMyDialog();
-                                    return false;
-                                  } else {
-                                    setState(() {
-                                      //showCPI = true;
-                                      isPasswordVisible = true;
-                                      getPortalListByEmail(
-                                          createLoginFormBloc.email.value);
-                                      isUsernameVisible = true;
-                                    });
-                                  }
-                                },
-                                width: 100,
-                              ),
-                            ),
-                            Visibility(
-                              visible: isPasswordVisible,
-                              child: PrimaryButton(
-                                buttonText: 'Verify',
+                                buttonText: 'LOGIN',
+                                backgroundColor:
+                                    LightTheme().lightThemeData().primaryColor,
                                 handleOnPressed: () {
                                   if (createLoginFormBloc.email.value == "" ||
                                       createLoginFormBloc.password.value ==
@@ -256,9 +283,9 @@ class _LoginBodyState extends State<LoginBody> {
   }
 
   void onPortalSelect() async {
-    if (!_formKey.currentState!.validate()) return;
+    // if (!_formKey.currentState!.validate()) return;
 
-    _formKey.currentState!.save();
+    // _formKey.currentState!.save();
 
     try {
       // Get user permissions

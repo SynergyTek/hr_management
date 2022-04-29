@@ -227,7 +227,6 @@ class DrawerWidget extends StatelessWidget {
               },
             ),
 
-            
             DrawerListTileWidget(
               title: '\t\t\t\t\t HR Direct',
               listTileOnTap: () {

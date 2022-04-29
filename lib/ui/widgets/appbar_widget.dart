@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/themes/light_theme.dart';
 
 class AppbarWidget extends StatefulWidget with PreferredSizeWidget {
   final String? title;
@@ -33,7 +34,8 @@ class _AppbarWidgetState extends State<AppbarWidget> {
       backgroundColor: widget.backgroundColor,
       elevation: 0,
       bottom: widget.bottom,
-      title: Text(widget.title!),
+      title: Text(widget.title!,
+          style: TextStyle(color: LightTheme().lightThemeData().primaryColor)),
       actions: []..addAll(widget.actions ?? []),
     );
   }

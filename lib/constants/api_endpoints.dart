@@ -5,6 +5,8 @@ class APIEndpointConstants {
 
   static const PROFILE_PICTURE_ENDPOINT =
       BASE_URL + '/common/query/GetFile?fileId=';
+  static const DOWNLOAD_ATTACHMENT =
+      BASE_URL + 'CHR/query/DownloadAttachment?fileId=';
 
   //************************************************************************//
 

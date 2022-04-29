@@ -414,12 +414,12 @@ class _DMSManageWorkspaceBodyWidgetState
       return;
     }
 
-    if (_selectedParentWorkspace?.id == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Parent Workspace cannot be null or empty.")),
-      );
-      return;
-    }
+    // if (_selectedParentWorkspace?.id == null) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text("Parent Workspace cannot be null or empty.")),
+    //   );
+    //   return;
+    // }
 
     if (_workspaceNameTextEditingController.text == null ||
         _workspaceNameTextEditingController.text.isEmpty) {
@@ -492,6 +492,7 @@ class _DMSManageWorkspaceBodyWidgetState
           );
       }
       Navigator.of(context).pop();
+      dmsManageWorkspaceBloc.getWorkspaceSubject.sink.add(null);
     }
   }
 
