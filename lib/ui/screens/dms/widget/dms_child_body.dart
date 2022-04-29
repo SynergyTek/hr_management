@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
+import 'package:hr_management/constants/api_endpoints.dart';
 import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/data/helpers/download_helper/downloader_screen/downloader.dart';
 import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_model.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
@@ -561,7 +563,22 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           child: ListTile(
             leading: Icon(CustomIcons.archive),
             title: Text('Download All'),
-            // onTap: () => archiveDialog(id),
+            // onTap: () =>
+            //   showModalBottomSheet(
+            //     context: context,
+            //     isDismissible: true,
+            //     isScrollControlled: false,
+            //     backgroundColor: Colors.transparent,
+            //     enableDrag: true,
+            //     builder: (BuildContext context) {
+            //       return Downloader(
+            //         filename: item.title!,
+            //         url: APIEndpointConstants.DOWNLOAD_ATTACHMENT +
+            //             (item.fileId ?? ''),
+            //       );
+            //     },
+            //   ),
+            
           ),
         ),
         Visibility(
@@ -570,7 +587,23 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           child: ListTile(
             leading: Icon(CustomIcons.archive),
             title: Text('Download'),
-            // onTap: () => archiveDialog(id),
+            onTap: () {
+              print('download');
+              showModalBottomSheet(
+                context: context,
+                isDismissible: true,
+                isScrollControlled: false,
+                backgroundColor: Colors.transparent,
+                enableDrag: true,
+                builder: (BuildContext context) {
+                  return Downloader(
+                    filename: item.title!,
+                    url: APIEndpointConstants.DOWNLOAD_ATTACHMENT +
+                        (item.fileId ?? ''),
+                  );
+                },
+              );
+            },
           ),
         ),
         Visibility(
