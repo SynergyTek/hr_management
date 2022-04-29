@@ -514,6 +514,8 @@ class APIEndpointConstants {
   static const POST_DUPLICATE_ITEM = BASE_URL + "/cms/workboard/DuplicateItems";
   static const POST_UPDATE_WORKBOARD_SECTIONS_AND_ITEMS =
       BASE_URL + "/cms/workboard/UpdateWorkBoardSectionAndItemSequence";
+  static const GET_READ_TASK_LIST = BASE_URL + "/cms/task/ReadTaskList";
+
   // workboard api end
 
   // summary api
@@ -537,8 +539,7 @@ class APIEndpointConstants {
   // ?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&searchStart=&searchEnd=&searchMonth=&searchType=
 
   // Hr Direct Contract api
-  static const GET_HRDIRECT_CONTRACT =
-      'https://webapidev.aitalkx.com/chr/hrdirect/Contract';
+  static const GET_HRDIRECT_CONTRACT = BASE_URL + '/chr/hrdirect/Contract';
   //
 
   /// https://webapidev.aitalkx.com/chr/hrcore/ResignationTermination?UserId=45bba746-3309-49b7-9c03-b5793369d73c

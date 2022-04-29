@@ -21,6 +21,8 @@ class TaskBloc {
       BehaviorSubject<TaskListDynamicResponse?>();
   final BehaviorSubject<TaskListResponseModel?> _subjectReadTaskData =
       BehaviorSubject<TaskListResponseModel?>();
+  final BehaviorSubject<TaskListResponseModel?> _subjectReadTaskList =
+      BehaviorSubject<TaskListResponseModel?>();
 
   /// Used to fetch new entries.
   getTaskHomeListData({
@@ -116,6 +118,15 @@ class TaskBloc {
     _subjectReadTaskData.sink.add(response);
   }
 
+  getReadTaskList({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    TaskListResponseModel response = await _taskRepository.getReadTaskList(
+      queryparams: queryparams,
+    );
+    _subjectReadTaskList.sink.add(response);
+  }
+
   loadServiceAdhocTaskData({
     Map<String, dynamic>? queryparams,
     String? taskListStatus,
@@ -151,6 +162,7 @@ class TaskBloc {
     _subjectTaskSummaryList.close();
     _subjectReadTaskListCount.close();
     _subjectReadTaskData.close();
+    _subjectReadTaskList.close();
   }
 
   BehaviorSubject<TaskListResponseModel?> get subjectTaskList =>
@@ -163,6 +175,8 @@ class TaskBloc {
       _subjectReadTaskListCount;
   BehaviorSubject<TaskListResponseModel?> get subjectReadTaskData =>
       _subjectReadTaskData;
+  BehaviorSubject<TaskListResponseModel?> get subjectReadTaskList =>
+      _subjectReadTaskList;
 }
 
 final taskBloc = TaskBloc();
