@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final misconductModel = misconductModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<MisconductModel> misconductModelFromJson(String str) =>

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final serviceSharedDataModel = serviceSharedDataModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<ServiceSharedDataModel> serviceSharedDataModelFromJson(String str) => List<ServiceSharedDataModel>.from(json.decode(str).map((x) => ServiceSharedDataModel.fromJson(x)));

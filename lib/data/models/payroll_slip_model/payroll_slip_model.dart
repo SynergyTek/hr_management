@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final payrollSlipModel = payrollSlipModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<PayrollSlipModel> payrollSlipModelFromJson(String str) =>

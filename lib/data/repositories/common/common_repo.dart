@@ -14,7 +14,6 @@ class CommonRepository extends AbstractCommonRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
       return CommonListResponse.fromJson(
         response.data,
       );
@@ -34,7 +33,6 @@ class CommonRepository extends AbstractCommonRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
       return CommonListResponse.fromJson(
         response.data,
       );
@@ -54,7 +52,6 @@ class CommonRepository extends AbstractCommonRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
       return CommonListResponse.fromJson(
         response.data,
       );
@@ -74,7 +71,6 @@ class CommonRepository extends AbstractCommonRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
       return OwnerNameListResponse.fromJson(
         response.data,
       );
@@ -94,7 +90,6 @@ class CommonRepository extends AbstractCommonRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
       return EnumTreeListResponse.fromJson(
         response.data,
       );
@@ -115,7 +110,6 @@ class CommonRepository extends AbstractCommonRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
       return EnumTreeListResponse.fromJson(
         response.data,
       );

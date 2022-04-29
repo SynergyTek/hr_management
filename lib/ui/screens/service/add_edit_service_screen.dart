@@ -49,33 +49,9 @@ class CreateServiceScreen extends StatelessWidget {
                       '',
               ntsType: NTSType.service,
             ),
-            // ServiceWidget(
-            //   userID:
-            //       BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
-            //           "",
-
-            //   extraInformationMap: extraInformationMap,
-
-            //   // TODO
-            //   serviceId: serviceId ?? "",
-            //   // TODO
-            //   templateCode: templateCode ?? "",
-            // ),
           ),
         ),
       ),
     );
   }
-
-  // Widget build(BuildContext context) {
-  //   return Material(
-  //     child: InternetConnectivityWidget(
-  //         child: CreateServiceScreenBody(
-  //       isLeave: isLeave,
-  //       serviceId: serviceId,
-  //       templateCode: templateCode,
-  //       title: title,
-  //     )),
-  //   );
-  // }
 }

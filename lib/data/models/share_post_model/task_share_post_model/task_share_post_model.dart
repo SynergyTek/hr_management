@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final taskSharePostModel = taskSharePostModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<TaskSharePostModel> taskSharePostModelFromJson(String str) =>

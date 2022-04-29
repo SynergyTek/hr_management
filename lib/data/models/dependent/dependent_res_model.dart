@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import 'dependent_doc_req_model.dart';
 import 'dependent_list_model.dart';
 

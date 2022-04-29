@@ -79,7 +79,7 @@ class ServiceRepository extends AbstractServiceRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
+      
       return ServiceSummaryResponse.fromJson(
         response.data,
       );

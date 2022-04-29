@@ -505,94 +505,6 @@ class _TaskWidgetState extends State<TaskWidget> {
     ParseJsonHelper _parseJsonHelper = ParseJsonHelper();
     columnComponentList = [];
 
-    // ! hardcoding UNDO
-    // if (widget.serviceTemplateCode == 'GRV_BIRTH AND DEATH CERTIFICATE' ||
-    //     widget.serviceTemplateCode == "EGOV_BUILDINGS" ||
-    //     widget.serviceTemplateCode == "CIVIL_WORKS" ||
-    //     widget.serviceTemplateCode == "GRV_DRAINAGE" ||
-    //     widget.serviceTemplateCode == "GRV_ENCROACHMENT" ||
-    //     widget.serviceTemplateCode == "GRV_ENFORCEMENT" ||
-    //     widget.serviceTemplateCode == "GRV_ESTATE" ||
-    //     widget.serviceTemplateCode == "GRV_Factories" ||
-    //     widget.serviceTemplateCode == "GRV_GARDEN_AND_TREES" ||
-    //     widget.serviceTemplateCode == "GRV_HEALTH" ||
-    //     widget.serviceTemplateCode == "EGOV_LEGAL" ||
-    //     widget.serviceTemplateCode == "GRV_LICENSE" ||
-    //     widget.serviceTemplateCode == "GRV_OTHERS" ||
-    //     widget.serviceTemplateCode == "EGOV_PEST_CONTROL" ||
-    //     widget.serviceTemplateCode == "GRV_REVENUE" ||
-    //     widget.serviceTemplateCode == "GRV_ROADS_AND_TRAFFIC" ||
-    //     widget.serviceTemplateCode == "GRV_SANITATION" ||
-    //     widget.serviceTemplateCode == "EGOV_SCHOOL" ||
-    //     widget.serviceTemplateCode == "GRV_SEWERAGE_OPERATION_CONTROL_RIVER" ||
-    //     widget.serviceTemplateCode == "EGOV_SHOPS_AND_ESTABLISHMENTS" ||
-    //     widget.serviceTemplateCode == "GRV_SOLID_WASTE_MANAGEMENT" ||
-    //     widget.serviceTemplateCode == "GRV_STRAY_DOGS" ||
-    //     widget.serviceTemplateCode == "GRV_STREET_LIGHTS" ||
-    //     widget.serviceTemplateCode == "GRV_WATER_SUPPLY") {
-    //   columnComponentList = _parseJsonHelper.grievanceUDFs(udfJsonString);
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       false,
-    //     );
-    //   }
-    // } else if (widget.serviceTemplateCode ==
-    //     'EGOV_PUBLIC_GRIEVANCE_REGISTRATION') {
-    //   columnComponentList =
-    //       _parseJsonHelper.parsePublicGrievanceUDFs(udfJsonString);
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       false,
-    //     );
-    //   }
-    // } else if (widget.serviceTemplateCode == 'BIRTH_REGISTRATION' ||
-    //     widget.serviceTemplateCode == 'DEATH_REGISTRATION' ||
-    //     widget.serviceTemplateCode == 'STILL_BIRTH_REGISTRATION') {
-    //   //For Birth Registration, Death Registration, Stillbirth Registration service
-    //   columnComponentList =
-    //       _parseJsonHelper.parseBirthDeathRegistrationUDFs(udfJsonString);
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       true,
-    //     );
-    //   }
-    // } else if (widget.serviceTemplateCode == 'CommunityHallBooking' ||
-    //     widget.serviceTemplateCode == 'DocumentVerifierCommunityHallBooking') {
-    //   columnComponentList = _parseJsonHelper.parseCommunityHallBookingUDFs(
-    //     udfJsonString,
-    //     conditionalValues,
-    //   );
-
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       false,
-    //     );
-    //   }
-    // } else if (widget.serviceTemplateCode ==
-    //     'NEW_SEWERAGE_CONNECTION_REQUEST') {
-    //   columnComponentList = _parseJsonHelper.parseSewerageConnectionUDFs(
-    //       udfJsonString,
-    //       widget.extraInformationMap!['SewerageConnectionRequiredFor']
-    //           .extraInfo['codeId']);
-    //   if (columnComponentList != null && columnComponentList.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponentList,
-    //       createServiceFormBloc,
-    //       false,
-    //     );
-    //   }
-    // } else {
     columnComponentList = _parseJsonHelper.parseGenericUDFs(
       udfJsonString,
       conditionalValues,
@@ -605,7 +517,6 @@ class _TaskWidgetState extends State<TaskWidget> {
         false,
       );
     }
-    // }
   }
 
   List<Widget> addDynamic(
@@ -693,13 +604,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
       } else if (model[i].type == 'number' && model[i].hidden != true) {
-        // if (model[i].key == 'TruckLoadTrips') {
-        //   truckLoadTripsTempVariable = model[i].udfValue;
-        // }
-
         String initialValue;
-        // ! hardcoding UNDO
-        // String? defaultValue = model[i]?.defaultValue?.toString();
 
         // final number$i = TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key) &&
@@ -716,22 +621,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         }
         if (model[i].key == 'LeaveDurationCalendarDays') {
           initialValue = leaveDurationControllerCalendarDays.text;
-        }
-
-        // Logic for rate
-        // rate's default value * number of trips:
-
-        // ! hardcoding UNDO
-        /*else if (model[i].key == 'BillAmount' &&
-            defaultValue != null &&
-            defaultValue.isNotEmpty &&
-            truckLoadTripsTempVariable != null &&
-            truckLoadTripsTempVariable!.isNotEmpty) {
-          initialValue =
-              (int.parse(defaultValue) * int.parse(truckLoadTripsTempVariable!))
-                  .toString();
-        }*/
-        else {
+        } else {
           initialValue = udfJson[model[i].key]!;
         }
 
@@ -743,7 +633,6 @@ class _TaskWidgetState extends State<TaskWidget> {
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            // readonly: model[i].disabled,
             textFieldBloc: number$i,
             prefixIcon: const Icon(Icons.format_list_numbered,
                 color: AppThemeColor.iconColor),
@@ -769,7 +658,6 @@ class _TaskWidgetState extends State<TaskWidget> {
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            // readonly: model[i].disabled,
             textFieldBloc: password$i,
             prefixIcon: const Icon(Icons.visibility_off_rounded),
             obscureText: true,
@@ -791,7 +679,6 @@ class _TaskWidgetState extends State<TaskWidget> {
         listDynamic.add(
           DynamicCheckBoxValue(
             readonly: true,
-            // readonly: model[i].disabled,
             code: udfJson[model[i].key],
             name: model[i].label,
             key: Key(model[i].label),
@@ -923,9 +810,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         listDynamic.add(
           NTSDropDownSelect(
             isRequired: model[i].validate?.required,
-            // isReadonly: model[i].disabled,
             isReadonly: true,
-            // isReadonly: model[i].disabled,
             title: model[i].label,
             controller: _ddController,
             hint: model[i].label,
@@ -963,7 +848,6 @@ class _TaskWidgetState extends State<TaskWidget> {
         }
         listDynamic.add(DynamicDateBox(
           isReadonly: true,
-          // isReadonly: model[i].disabled,
           code: udfJson[model[i].key]!.isNotEmpty
               ? model[i]
                       .udfValue
@@ -1095,7 +979,6 @@ class _TaskWidgetState extends State<TaskWidget> {
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            // readonly: model[i].disabled,
             textFieldBloc: email$i,
             prefixIcon: const Icon(Icons.email_outlined,
                 color: AppThemeColor.iconColor),
@@ -1219,239 +1102,6 @@ class _TaskWidgetState extends State<TaskWidget> {
         // TODO: ?
       }
     }
-
-    // ! hardcoding UNDO
-    // if (taskModel.assignedToUserName == "Assist Composite Officer" &&
-    //     taskModel.taskStatusCode == 'TASK_STATUS_INPROGRESS') {
-    //   TextEditingController _assignToTypeController = TextEditingController();
-    //   TextEditingController _assignToTeamController = TextEditingController();
-    //   TextEditingController _assignToTeamUserController =
-    //       TextEditingController();
-    //   TextEditingController _assignToHierarchyLevelController =
-    //       TextEditingController();
-    //   TextEditingController _assignToUserController = TextEditingController();
-    //   TextEditingController _assignToUserHierarchyController =
-    //       TextEditingController();
-
-    //   List<ReadTeamDataModel>? _assignToTeamModelList = [];
-    //   List<User>? _assignToTeamUserModelList = [];
-    //   List<User>? _assignToUserModelList = [];
-    //   List<ReadUserHierarchyModel>? _assignToUserHierarchyModelList = [];
-    //   List<User>? _assignToUserHierarchyModelLevelList = [];
-
-    //   if (taskModel.nextTaskAssignedToTypeId != null &&
-    //       taskModel.nextTaskAssignedToTypeId.isNotEmpty) {
-    //     editTaskDDValue(
-    //       nameKey: 'Name',
-    //       idKey: 'Id',
-    //       code: taskModel.nextTaskAssignedToTypeId,
-    //       url: 'cms/query/GetLOVIdNameList?lovType=TASK_ASSIGN_TO_TYPE',
-    //       ddController: _assignToTypeController,
-    //     );
-    //   }
-
-    //   if (taskModel.nextTaskAssignedToTeamId != null &&
-    //       taskModel.nextTaskAssignedToTeamId!.isNotEmpty) {
-    //     userBLoc.readTeamData().then((value) {
-    //       _assignToTeamModelList = value?.list;
-    //       _assignToTeamModelList?.forEach((element) {
-    //         if (element.id == taskModel.nextTaskAssignedToTeamId) {
-    //           _selectedAssignToTeamModel = element;
-    //           _assignToTeamController.text = element.name!;
-    //         }
-    //       });
-    //     });
-    //   }
-
-    //   if (taskModel.nextTaskAssignedToTeamUserId != null &&
-    //       taskModel.nextTaskAssignedToTeamUserId!.isNotEmpty) {
-    //     userBLoc.readTeamUserData(queryparams: {
-    //       'id': taskModel.nextTaskAssignedToTeamId
-    //     }).then((value) {
-    //       _assignToTeamUserModelList = value?.list;
-    //       _assignToTeamUserModelList?.forEach((element) {
-    //         if (element.id == taskModel.nextTaskAssignedToTeamUserId) {
-    //           _selectedAssignToTeamUserModel = element;
-    //           _assignToTeamUserController.text = element.name!;
-    //         }
-    //       });
-    //     });
-    //   }
-
-    //   if (taskModel.nextTaskAssignedToUserId != null &&
-    //       taskModel.nextTaskAssignedToUserId!.isNotEmpty) {
-    //     userBLoc.readUserData().then((value) {
-    //       _assignToUserModelList = value?.list;
-    //       _assignToUserModelList?.forEach((element) {
-    //         if (element.id == taskModel.nextTaskAssignedToUserId) {
-    //           _selectedAssignToUserModel = element;
-    //           _assignToUserController.text = element.name!;
-    //         }
-    //       });
-    //     });
-    //   }
-
-    //   if (taskModel.nextTaskAssignedToHierarchyMasterId != null &&
-    //       taskModel.nextTaskAssignedToHierarchyMasterId!.isNotEmpty) {
-    //     userBLoc.readUserHierarchyData().then((value) {
-    //       _assignToUserHierarchyModelList = value?.list;
-    //       _assignToUserHierarchyModelList?.forEach((element) {
-    //         if (element.id == taskModel.nextTaskAssignedToHierarchyMasterId) {
-    //           _selectedAssignToUserHierarchyModel = element;
-    //           _assignToUserHierarchyController.text = element.name!;
-    //         }
-    //       });
-    //     });
-    //   }
-
-    //   // if (taskModel.nextTaskAssignedToHierarchyMasterLevelId != null &&
-    //   //     taskModel.nextTaskAssignedToHierarchyMasterLevelId!.isNotEmpty) {
-    //   //   userBLoc.readTeamUserData().then((value) {
-    //   //     _assignToUserHierarchyModelLevelList = value?.list;
-    //   //     _assignToUserHierarchyModelLevelList?.forEach((element) {
-    //   //       if (element.id ==
-    //   //           taskModel.nextTaskAssignedToHierarchyMasterLevelId) {
-    //   //         _selectedAssignToHierarchyLevelModel = element;
-    //   //         _assignToHierarchyLevelController.text = element.name!;
-    //   //       }
-    //   //     });
-    //   //   });
-    //   // }
-
-    //   if (_selectedAssignToTypeModel != null) {
-    //     _assignToTypeController.text = _selectedAssignToTypeModel!.name!;
-    //   }
-    //   if (_selectedAssignToTeamModel != null) {
-    //     _assignToTeamController.text = _selectedAssignToTeamModel!.name!;
-    //   }
-    //   if (_selectedAssignToUserHierarchyModel != null) {
-    //     _assignToUserHierarchyController.text =
-    //         _selectedAssignToUserHierarchyModel!.name!;
-    //   }
-
-    //   listDynamic.add(
-    //     _futureBuilderWidget(
-    //       key: 'GetLOVIdNameList',
-    //       future: commonBloc.getLOVIdNameList(queryparams: {
-    //         'lovType': 'TASK_ASSIGN_TO_TYPE',
-    //       }),
-    //       controller: _assignToTypeController,
-    //       title: 'Assign To Type',
-    //       url: 'cms/query/GetLOVIdNameList?lovType=TASK_ASSIGN_TO_TYPE',
-    //       onListTap: (dynamic value) {
-    //         ntsDdBloc.subject.sink.add(null);
-    //         _selectedAssignToTypeModel = value;
-    //         setState(() {
-    //           taskModel.nextTaskAssignedToTypeCode =
-    //               _selectedAssignToTypeModel!.code;
-    //           taskModel.nextTaskAssignedToTypeId =
-    //               _selectedAssignToTypeModel!.id;
-    //           _assignToTypeController.text = _selectedAssignToTypeModel!.name!;
-    //         });
-    //       },
-    //     ),
-    //   );
-
-    //   if (taskModel.nextTaskAssignedToTypeCode == 'TASK_ASSIGN_TO_TEAM') {
-    //     listDynamic.add(
-    //       _futureBuilderWidget(
-    //         key: 'ReadTeamData',
-    //         future: userBLoc.readTeamData(),
-    //         controller: _assignToTeamController,
-    //         title: 'Assign To Team',
-    //         url: 'cms/query/ReadTeamData',
-    //         onListTap: (dynamic value) {
-    //           ntsDdBloc.subject.sink.add(null);
-    //           _selectedAssignToTeamModel = value;
-    //           setState(() {
-    //             taskModel.nextTaskAssignedToTeamId =
-    //                 _selectedAssignToTeamModel?.id;
-    //             _assignToTeamController.text =
-    //                 _selectedAssignToTeamModel!.name!;
-    //           });
-    //         },
-    //       ),
-    //     );
-    //     listDynamic.add(
-    //       _futureBuilderWidget(
-    //         key: 'ReadUserTeamData',
-    //         future: userBLoc.readTeamUserData(
-    //             queryparams: {'id': _selectedAssignToTeamModel?.id ?? ''}),
-    //         controller: _assignToTeamUserController,
-    //         title: 'Assign To team User',
-    //         url: 'cms/query/ReadUserTeamData',
-    //         onListTap: (dynamic value) {
-    //           ntsDdBloc.subject.sink.add(null);
-    //           _selectedAssignToTeamUserModel = value;
-    //           setState(() {
-    //             taskModel.nextTaskAssignedToTeamUserId =
-    //                 _selectedAssignToTeamUserModel?.id;
-    //             _assignToTeamUserController.text =
-    //                 _selectedAssignToTeamUserModel!.name!;
-    //           });
-    //         },
-    //       ),
-    //     );
-    //   } else if (taskModel.nextTaskAssignedToTypeCode ==
-    //       'TASK_ASSIGN_TO_USER') {
-    //     listDynamic.add(
-    //       _futureBuilderWidget(
-    //         key: 'ReadUserData',
-    //         future: userBLoc.readUserData(),
-    //         controller: _assignToUserController,
-    //         title: 'Assign To',
-    //         url: 'cms/query/ReadUserData',
-    //         onListTap: (dynamic value) {
-    //           ntsDdBloc.subject.sink.add(null);
-    //           _selectedAssignToUserModel = value;
-    //           taskModel.nextTaskAssignedToUserId =
-    //               _selectedAssignToUserModel?.id;
-    //           _assignToUserController.text = _selectedAssignToUserModel!.name!;
-    //         },
-    //       ),
-    //     );
-    //   } else if (taskModel.nextTaskAssignedToTypeCode ==
-    //       'TASK_ASSIGN_TO_USER_HIERARCHY') {
-    //     listDynamic.add(
-    //       _futureBuilderWidget(
-    //         key: 'ReadHierarchyMasterData',
-    //         future: userBLoc.readUserHierarchyData(),
-    //         controller: _assignToUserHierarchyController,
-    //         title: 'Assign To Hierarchy',
-    //         url: 'cms/query/ReadHierarchyMasterData',
-    //         onListTap: (dynamic value) {
-    //           ntsDdBloc.subject.sink.add(null);
-    //           _selectedAssignToUserHierarchyModel = value;
-    //           setState(() {
-    //             taskModel.nextTaskAssignedToHierarchyMasterId =
-    //                 _selectedAssignToUserHierarchyModel?.id;
-    //             _assignToUserHierarchyController.text =
-    //                 _selectedAssignToUserHierarchyModel!.name!;
-    //           });
-    //         },
-    //       ),
-    //     );
-    //     listDynamic.add(
-    //       _futureBuilderWidget(
-    //         key: 'ReadUserTeamData',
-    //         future: userBLoc.readTeamUserData(queryparams: {
-    //           'id': _selectedAssignToUserHierarchyModel?.id ?? ''
-    //         }),
-    //         controller: _assignToHierarchyLevelController,
-    //         title: 'Assign To Hierarchy Level',
-    //         url: 'cms/query/ReadUserTeamData',
-    //         onListTap: (dynamic value) {
-    //           ntsDdBloc.subject.sink.add(null);
-    //           _selectedAssignToHierarchyLevelModel = value;
-    //           taskModel.nextTaskAssignedToHierarchyMasterLevelId =
-    //               _selectedAssignToHierarchyLevelModel?.id;
-    //           _assignToHierarchyLevelController.text =
-    //               _selectedAssignToHierarchyLevelModel!.name!;
-    //         },
-    //       ),
-    //     );
-    //   }
-    // }
     return listDynamic;
   }
 

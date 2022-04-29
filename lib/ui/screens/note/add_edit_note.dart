@@ -41,12 +41,6 @@ class AddEditNote extends StatelessWidget {
                     '',
             ntsType: NTSType.note,
           ),
-          // AddEditNoteBody(
-          //   templateCode: templateCode,
-          //   noteId: noteId,
-          //   title: title,
-          //   isDependent: isDependent,
-          // ),
         ),
       ),
     );

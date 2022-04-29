@@ -42,6 +42,8 @@ class _CreateEditSectionWorkBoardBodyState
 
   bool? value;
 
+  bool showProgressIndicator = false;
+
   @override
   void initState() {
     super.initState();
@@ -122,15 +124,16 @@ class _CreateEditSectionWorkBoardBodyState
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(32),
-                                    color: (workBoardSectionModel
-                                                    ?.headerColor !=
-                                                null &&
-                                            value != true)
-                                        ? hexToColor(
-                                            workBoardSectionModel?.headerColor ?? '')
-                                        : (value == true)
-                                            ? displayHeaderColor
-                                            : Colors.black,
+                                    color:
+                                        (workBoardSectionModel?.headerColor !=
+                                                    null &&
+                                                value != true)
+                                            ? hexToColor(workBoardSectionModel
+                                                    ?.headerColor ??
+                                                '')
+                                            : (value == true)
+                                                ? displayHeaderColor
+                                                : Colors.black,
                                   ),
                                   margin: DEFAULT_PADDING,
                                   height: 3.h,
@@ -160,7 +163,8 @@ class _CreateEditSectionWorkBoardBodyState
                                             null &&
                                         displayHeaderColor == null)
                                     ? hexToColor(
-                                        workBoardSectionModel?.headerColor ?? '')
+                                        workBoardSectionModel?.headerColor ??
+                                            '')
                                     : displayHeaderColor,
                               ),
                             ],
@@ -292,8 +296,14 @@ class _CreateEditSectionWorkBoardBodyState
               workBoardSectionModel?.title = titleController?.text;
               workBoardSectionModel?.sectionDescription =
                   descriptionController?.text;
+              setState(() {
+                showProgressIndicator = true;
+              });
               await workboardBloc.postManageWorkBoardSection(
                   workBoardSectionModel: workBoardSectionModel);
+              setState(() {
+                showProgressIndicator = false;
+              });
 
               await displaySnackBar(
                   context: context,
@@ -301,6 +311,12 @@ class _CreateEditSectionWorkBoardBodyState
               Navigator.of(context).pop();
             },
             width: 14.w,
+          ),
+        ),
+        Visibility(
+          visible: showProgressIndicator,
+          child: Center(
+            child: CustomProgressIndicator(loadingText: 'Please Wait'),
           ),
         ),
       ],

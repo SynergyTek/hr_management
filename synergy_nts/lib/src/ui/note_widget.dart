@@ -153,10 +153,6 @@ class _NoteWidgetState extends State<NoteWidget> {
     CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
   ) {
-//TODO
-    // columnComponent = [];
-    // componentComList = [];
-    // udfJsonComponent = [];
     ParseJsonHelper _parseJsonHelper = ParseJsonHelper();
     columnComponentList = [];
 
@@ -171,49 +167,6 @@ class _NoteWidgetState extends State<NoteWidget> {
         createServiceFormBloc,
       );
     }
-
-//TODO
-    // if (udfJsonString != null) {
-    //   udfJsonString = UdfJsonForNote.fromJson(jsonDecode(udfJsonString));
-    //   for (UdfJsonComponentForNote component in udfJsonString.components) {
-    //     if (component.columns != null && component.columns!.isNotEmpty) {
-    //       for (ColumnsForNote column in component.columns!) {
-    //         for (ColumnComponentForNote columnCom in column.components!) {
-    //           columnComponent.add(columnCom);
-    //         }
-    //       }
-    //     }
-    //     if (component.components != null && component.components!.isNotEmpty) {
-    //       for (ComponentComponentForNote componentComponent
-    //           in component.components!) {
-    //         componentComList.add(componentComponent);
-    //       }
-    //     }
-    //   }
-
-    //   for (UdfJsonComponentForNote component in udfJsonString.components) {
-    //     if (component.columns == null &&
-    //         (component.components == null || component.components!.isEmpty)) {
-    //       udfJsonComponent.add(component);
-    //     } else if (component.components == null && component.columns!.isEmpty) {
-    //       udfJsonComponent.add(component);
-    //     }
-    //   }
-    //   if (columnComponent.isNotEmpty) {
-    //     columnComponentWidgets = addDynamic(
-    //       columnComponent,
-    //       createServiceFormBloc,
-    //     );
-    //   }
-    //   if (componentComList.isNotEmpty) {
-    //     addDynamicComponentComponent(componentComList, createServiceFormBloc);
-    //   }
-    //   if (udfJsonComponent.isNotEmpty) {
-    //     // udfJsonComponent.addAll(udfJsonString.components);
-    //     udfJsonCompWidgetList =
-    //         addDynamic(udfJsonComponent, createServiceFormBloc);
-    //   }
-    // }
   }
 
   Widget setServiceView(
@@ -537,7 +490,7 @@ class _NoteWidgetState extends State<NoteWidget> {
               visible: noteModel.isExpireButtonVisible!,
               child: PrimaryButton(
                 backgroundColor: Colors.red,
-                buttonText: 'Expiry',
+                buttonText: 'Expire',
                 handleOnPressed: () {
                   noteViewModelPostRequest(
                     2,

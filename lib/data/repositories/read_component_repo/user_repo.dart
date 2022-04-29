@@ -12,7 +12,7 @@ class ReadComponentRepository extends AbstractReadComponentRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
+      
       return ReadComponentResponse.fromJson(
         response.data,
       );

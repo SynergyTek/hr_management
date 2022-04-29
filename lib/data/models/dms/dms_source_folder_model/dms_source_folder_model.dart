@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final sourceFolderModel = sourceFolderModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<DMSSourceFolderModel> sourceFolderModelFromJson(String str) =>

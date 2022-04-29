@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
+import 'package:hr_management/data/models/uploaded_content_model/uploaded_content_model.dart';
 import '../../../constants/api_endpoints.dart';
 import '../../enums/enums.dart';
 import '../../models/attachment_nts_models/attachment_nts_response.dart';
@@ -25,5 +26,9 @@ abstract class AbstractAttachmentNTSRepository {
   Future<bool?> deleteAPIData({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
+  });
+
+   Future<bool> postManageUploadedFile({
+    required UploadedContentModel model,
   });
 }

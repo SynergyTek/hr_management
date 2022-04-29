@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-
 class CountsAPIModel {
   int? serviceAttachmentCount;
   int? serviceNotificationCount;

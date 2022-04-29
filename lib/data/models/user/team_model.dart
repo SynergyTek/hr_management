@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final readTeamDataModel = readTeamDataModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<ReadTeamDataModel> readTeamDataModelFromJson(String str) =>

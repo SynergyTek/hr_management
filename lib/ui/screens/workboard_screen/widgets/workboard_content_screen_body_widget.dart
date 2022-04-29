@@ -328,8 +328,7 @@ class _WorkBoardContentScreenBodyWidgetState
       MaterialPageRoute(
         builder: (context) => WhiteBoardWidget(
           imageString: (addContentWorkBoardModel?.itemFileId != null)
-              ? APIEndpointConstants.BASE_URL +
-                  '/common/query/GetFile?fileId=' +
+              ? APIEndpointConstants.PROFILE_PICTURE_ENDPOINT +
                   addContentWorkBoardModel?.itemFileId
               : '',
         ),

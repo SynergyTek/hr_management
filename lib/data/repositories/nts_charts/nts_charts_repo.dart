@@ -24,7 +24,6 @@ class NTSChartRepository extends AbstractNTSChartRepository {
         queryParameters: queryparams ?? {},
       );
 
-      //print(response.data);
       return ChartResponse.fromJson(
         response.data,
       );
@@ -57,7 +56,6 @@ class NTSChartRepository extends AbstractNTSChartRepository {
         queryParameters: queryparams ?? {},
       );
 
-      //print(response.data);
       return ChartResponse.fromJson(
         response.data,
       );
@@ -90,7 +88,6 @@ class NTSChartRepository extends AbstractNTSChartRepository {
         queryParameters: queryparams ?? {},
       );
 
-      //print(response.data);
       return ChartResponse.fromJson(
         response.data,
       );

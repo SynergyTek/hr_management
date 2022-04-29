@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final noteSharedDataModel = noteSharedDataModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<NoteSharedDataModel> noteSharedDataModelFromJson(String str) => List<NoteSharedDataModel>.from(json.decode(str).map((x) => NoteSharedDataModel.fromJson(x)));

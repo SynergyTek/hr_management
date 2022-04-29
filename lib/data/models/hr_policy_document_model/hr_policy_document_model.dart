@@ -1,33 +1,33 @@
-// To parse this JSON data, do
-//
-//     final policyDocumentsModel = policyDocumentsModelFromJson(jsonString);
-
 import 'dart:convert';
 
-List<PolicyDocumentsModel> policyDocumentsModelFromJson(String str) => List<PolicyDocumentsModel>.from(json.decode(str).map((x) => PolicyDocumentsModel.fromJson(x)));
+List<PolicyDocumentsModel> policyDocumentsModelFromJson(String str) =>
+    List<PolicyDocumentsModel>.from(
+        json.decode(str).map((x) => PolicyDocumentsModel.fromJson(x)));
 
-String policyDocumentsModelToJson(List<PolicyDocumentsModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String policyDocumentsModelToJson(List<PolicyDocumentsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class PolicyDocumentsModel {
-    PolicyDocumentsModel({
-        this.policyName,
-        this.policyDescription,
-        this.policyDocument,
-        this.startDate,
-        this.ntsNoteId,
-        this.id,
-        this.userId,
-    });
+  PolicyDocumentsModel({
+    this.policyName,
+    this.policyDescription,
+    this.policyDocument,
+    this.startDate,
+    this.ntsNoteId,
+    this.id,
+    this.userId,
+  });
 
-    String? policyName;
-    String? policyDescription;
-    String? policyDocument;
-    DateTime? startDate;
-    String? ntsNoteId;
-    String? id;
-    dynamic? userId;
+  String? policyName;
+  String? policyDescription;
+  String? policyDocument;
+  DateTime? startDate;
+  String? ntsNoteId;
+  String? id;
+  dynamic? userId;
 
-    factory PolicyDocumentsModel.fromJson(Map<String, dynamic> json) => PolicyDocumentsModel(
+  factory PolicyDocumentsModel.fromJson(Map<String, dynamic> json) =>
+      PolicyDocumentsModel(
         policyName: json["PolicyName"],
         policyDescription: json["PolicyDescription"],
         policyDocument: json["PolicyDocument"],
@@ -35,9 +35,9 @@ class PolicyDocumentsModel {
         ntsNoteId: json["NtsNoteId"],
         id: json["Id"],
         userId: json["UserId"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "PolicyName": policyName,
         "PolicyDescription": policyDescription,
         "PolicyDocument": policyDocument,
@@ -45,5 +45,5 @@ class PolicyDocumentsModel {
         "NtsNoteId": ntsNoteId,
         "Id": id,
         "UserId": userId,
-    };
+      };
 }

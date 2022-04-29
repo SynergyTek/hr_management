@@ -43,9 +43,6 @@ class NTSDdRepository extends AbstractNTSDdRepository {
           "DIO Response: ${response.statusCode}, ${response.data} ${response.data.runtimeType}");
       return NTSDdResponse.fromJson(response.data, idKey, nameKey);
     } catch (err, stacktrace) {
-      // print(
-      //     "[Exception]: Error occured while fetching the API Response for endpoint: ${APIEndpointConstants.GET_READSERVICETEMPLATE_URL}.");
-
       print("Stack: \n\n\n $stacktrace");
       print("Err: \n\n\n $err");
 

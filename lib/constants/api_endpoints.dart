@@ -5,6 +5,8 @@ class APIEndpointConstants {
 
   static const PROFILE_PICTURE_ENDPOINT =
       BASE_URL + '/common/query/GetFile?fileId=';
+  static const DOWNLOAD_ATTACHMENT =
+      BASE_URL + 'CHR/query/DownloadAttachment?fileId=';
 
   //************************************************************************//
 
@@ -384,7 +386,8 @@ class APIEndpointConstants {
 
   static const GET_CREATE_FOLDER_DATA = BASE_URL + '/api/command/CreateFolder';
 
-  static const POST_MANAGE_UPLOADED_FILE_DATA = BASE_URL + '/dms/query/';
+  static const POST_MANAGE_UPLOADED_FILE_DATA =
+      BASE_URL + '/api/command/ManageUploadedFile';
 
   static const GET_PARENT_WORKSPACE_ID_NAME_LIST_DATA = BASE_URL +
       '/dms/workspace/GetParentWorkspace?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&legalEntity=&id=';
@@ -569,4 +572,14 @@ class APIEndpointConstants {
   ///   - portalName
   static const GET_MISCONDUCT_DATA_ENDPOINT =
       BASE_URL + '/chr/hrdirect/GetMisconductGridData';
+
+  //Work book endpoints
+  static const GET_WORK_BOOK_COUNT_ENDPOINT =
+      BASE_URL + '/pjm/query/WorkBookCount';
+
+  static const GET_NOTE_BOOK_HTML_ENDPOINT =
+      BASE_URL + '/cms/NtsNote/NoteBookHTML';
+
+  static const GET_NOTE_BOOK_REPORT_ENDPOINT =
+      BASE_URL + '/cms/query/GetNoteBookReport';
 }

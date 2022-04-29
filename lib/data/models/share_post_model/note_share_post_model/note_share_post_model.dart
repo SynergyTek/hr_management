@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final noteSharePostModel = noteSharePostModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<NoteSharePostModel> noteSharePostModelFromJson(String str) =>

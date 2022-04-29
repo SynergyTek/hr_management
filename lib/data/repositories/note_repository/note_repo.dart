@@ -38,7 +38,7 @@ class NoteRepository extends AbstractNoteRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
+      
       return NoteListResponse.fromJson(
         response.data,
       );
@@ -59,7 +59,7 @@ class NoteRepository extends AbstractNoteRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      //print(response.data);
+      
       return NoteListResponse.fromJson(
         response.data,
       );
