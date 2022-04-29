@@ -27,6 +27,7 @@ import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
+import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
 import '../ui/screens/hr_direct_contract_screen/hr_direct_contract_screen.dart';
 import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
@@ -430,6 +431,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSManageWorkspaceScreen(
             parentWorkspaceId: args?.arg1,
+            isWorkspace: args?.val1 ?? false,
           ),
         );
 
@@ -583,6 +585,14 @@ class AppRouter {
       case HR_DIRECT_CONTRACT_SCREEN:
         return MaterialPageRoute(
           builder: (_) => HRDirectContractScreen(),
+        );
+
+      case DMS_WORBOOK_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSWorkbookScreen(
+            workbookName: args.arg1!,
+          ),
         );
 
       // 404 route.
