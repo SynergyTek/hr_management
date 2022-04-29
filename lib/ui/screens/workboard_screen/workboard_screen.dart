@@ -5,6 +5,8 @@ import 'package:hr_management/ui/screens/workboard_screen/widgets/workboard_scre
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
+import '../../../themes/light_theme.dart';
+
 class WorkBoardScreen extends StatelessWidget {
   const WorkBoardScreen({Key? key}) : super(key: key);
 
@@ -12,7 +14,7 @@ class WorkBoardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         onPressed: () {
           Navigator.pushNamed(context, CREATE_WORKBOARD_SCREEN,
               arguments: ScreenArguments(val1: false));

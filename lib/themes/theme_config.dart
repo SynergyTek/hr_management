@@ -17,10 +17,11 @@ const ANIMATION_DURATION = Duration(
 );
 
 extension ThemeExtras on ThemeData {
-  Color get textHeadingColor => Colors.blue;
+  Color get textHeadingColor => Color.fromRGBO(0, 51, 102, 1);
   // Color get textHeadingColor => Color(0xFFFF7643);
-  Color get invertedColor =>
-      this.brightness == Brightness.light ? Color(0xFF757575) : Colors.white;
+  Color get invertedColor => this.brightness == Brightness.light
+      ? Color.fromARGB(255, 88, 82, 82)
+      : Colors.white;
 
   Color get notInvertedColor => this.brightness == Brightness.light
       ? Colors.white

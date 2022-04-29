@@ -3,7 +3,7 @@ import 'package:sizer/sizer.dart';
 
 class LightTheme {
   // static const Color _PRIMARY_COLOR = Colors.blue;
-  static const Color _PRIMARY_COLOR = Color(0xFF006699);
+  static const Color _PRIMARY_COLOR = Color.fromRGBO(0, 51, 102, 1);
 
   static const Color _PRIMARY_LIGHT_COLOR = Colors.lightBlueAccent;
   static const Color _SECONDARY_LIGHT_COLOR = Color(0xFFFFECDF);
