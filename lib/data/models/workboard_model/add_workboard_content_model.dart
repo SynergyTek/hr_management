@@ -1219,7 +1219,7 @@ class BookItem {
         "Subject": subject,
         "Description": description == null ? null : description,
         "TemplateCode": templateCode,
-        "StartDate": startDate!.toIso8601String() ?? '',
+        "StartDate": startDate?.toIso8601String(),
         "ExpiryDate": expiryDate,
         "DueDate": dueDate,
         "ReminderDate": reminderDate,

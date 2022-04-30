@@ -101,7 +101,7 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
         _filterWidget(),
         Expanded(
           child: ListView.builder(
-            itemCount: data.length ?? 0,
+            itemCount: data.length ,
             itemBuilder: (BuildContext context, int index) {
               return _eachListTile(
                 data: data.elementAt(index),
@@ -140,7 +140,7 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data.inProgress.toString() ?? "-",
+                          text: data.inProgress.toString() ,
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
@@ -160,7 +160,7 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data.draft.toString() ?? "-",
+                          text: data.draft.toString() ,
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
@@ -185,7 +185,7 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data.overDue.toString() ?? "-",
+                          text: data.overDue.toString() ,
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),
@@ -205,7 +205,7 @@ class _RequestByCategoryWidgetState extends State<RequestByCategoryWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: data.completed.toString() ?? "-",
+                          text: data.completed.toString() ,
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: Colors.black87,
                               ),

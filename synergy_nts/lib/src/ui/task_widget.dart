@@ -281,7 +281,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
           SpeedDialChild(
             visible:
-                taskModel!.isAddCommentEnabled! && widget.taskId.isNotEmpty,
+                taskModel.isAddCommentEnabled! && widget.taskId.isNotEmpty,
             child: Icon(Icons.notifications, color: Colors.white),
             backgroundColor: Colors.blue,
             onTap: () {
@@ -528,11 +528,11 @@ class _TaskWidgetState extends State<TaskWidget> {
     for (var i = 0; i < model.length; i++) {
       if (model[i].type == 'textfield' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
 
@@ -575,11 +575,11 @@ class _TaskWidgetState extends State<TaskWidget> {
         // }
       } else if (model[i].type == 'textarea' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null && widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null && widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         // final textArea$i = TextFieldBloc();
@@ -608,11 +608,11 @@ class _TaskWidgetState extends State<TaskWidget> {
 
         // final number$i = TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] =
               model[i].udfValue ?? model[i]?.defaultValue?.toString() ?? '';
           leaveDurationControllerCalendarDays.text = udfJson[model[i].key]!;
@@ -644,11 +644,11 @@ class _TaskWidgetState extends State<TaskWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -669,11 +669,11 @@ class _TaskWidgetState extends State<TaskWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(
@@ -692,11 +692,11 @@ class _TaskWidgetState extends State<TaskWidget> {
       } else if (model[i].type == 'selectboxes' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           _ddController.text = udfJson[model[i].key]!;
         }
@@ -720,11 +720,11 @@ class _TaskWidgetState extends State<TaskWidget> {
         ));
       } else if (model[i].type == 'radio' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final radio$i = SelectFieldBloc(initialValue: udfJson[model[i].key]);
@@ -738,7 +738,7 @@ class _TaskWidgetState extends State<TaskWidget> {
       } else if (model[i].type == 'select' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (selectValue.length < model.length) {
@@ -761,7 +761,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         }
 
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           if (model[i].template == null) {
             List<FileTypeData> _value = model[i].data.values;
@@ -839,11 +839,11 @@ class _TaskWidgetState extends State<TaskWidget> {
         );
       } else if (model[i].type == 'datetime' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(DynamicDateBox(
@@ -885,11 +885,11 @@ class _TaskWidgetState extends State<TaskWidget> {
         ));
       } else if (model[i].type == 'time' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         listDynamic.add(
@@ -909,11 +909,11 @@ class _TaskWidgetState extends State<TaskWidget> {
       } else if (model[i].type == 'hidden' && model[i].hidden != true) {
         //Hidden Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
@@ -936,11 +936,11 @@ class _TaskWidgetState extends State<TaskWidget> {
       } else if (model[i].type == 'phoneNumber' && model[i].hidden != true) {
         //Phone Number Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final phoneNumber$i =
@@ -963,11 +963,11 @@ class _TaskWidgetState extends State<TaskWidget> {
       } else if (model[i].type == 'email' && model[i].hidden != true) {
         //Email Field
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final email$i = TextFieldBloc(
@@ -991,17 +991,17 @@ class _TaskWidgetState extends State<TaskWidget> {
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else if (model[i].type == 'file' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId != null || widget.taskId!.isNotEmpty)) {
+            (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
 
         TextEditingController attachmentController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
-            (widget.taskId == null || widget.taskId!.isEmpty)) {
+            (widget.taskId == null || widget.taskId.isEmpty)) {
           udfJson[model[i].key] = '';
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {

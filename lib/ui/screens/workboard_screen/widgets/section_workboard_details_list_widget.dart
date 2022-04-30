@@ -24,6 +24,8 @@ import '../../../../routes/route_constants.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 
+import 'item_task_list_widget.dart';
+
 class SectionWorkBoardDetailsList extends StatefulWidget {
   final AddContentWorkBoardModel? addContentWorkBoardModel;
   final WorkboardModel? workboardModel;
@@ -575,9 +577,12 @@ class _ItemWidgetState extends State<ItemWidget> {
                         ),
                         GestureDetector(
                           child: Icon(Icons.list),
-                          onTap: () {
-                            print('onTap :list');
-                          },
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ItemTaskListScreen(),
+                            ),
+                          ),
                         ),
                         Container(
                           width: 15,

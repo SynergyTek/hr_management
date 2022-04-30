@@ -29,7 +29,7 @@ class _TestScreenBodyWidgetState extends State<TestScreenBodyWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
-      child: StreamBuilder<NTSTemplateTreeListResponse>(
+      child: StreamBuilder<NTSTemplateTreeListResponse?>(
         stream: ntsTemplateTreeListBloc.subject.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {

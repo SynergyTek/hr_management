@@ -116,7 +116,7 @@ class _OpenRequestsByCategoryWidgetState
           child: PieChartWidget(
             series: []..add(
                 PieSeries<PieChartData, String>(
-                    dataSource: pieChartData ?? [],
+                    dataSource: pieChartData ,
                     pointColorMapper: (PieChartData model, _) => model.color,
                     yValueMapper: (PieChartData model, _) => model.y,
                     xValueMapper: (PieChartData model, _) => model.x,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_model.dart';
 import 'package:hr_management/data/models/workboard_model/workboard_response_model.dart';
 import 'package:hr_management/logic/blocs/workboard_bloc/workboard_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/primary_button.dart';
 import '../../../widgets/snack_bar.dart';
 
@@ -171,7 +173,7 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
                               .add(null);
                           workBoardModel?.portalName = "HR";
                           workBoardModel?.requestedByUserId =
-                              "45bba746-3309-49b7-9c03-b5793369d73c";
+                             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
                           workBoardModel?.workboardId = widget.workBoardId;
                           workBoardModel?.isTasks = (isTasks != null)
                               ? isTasks

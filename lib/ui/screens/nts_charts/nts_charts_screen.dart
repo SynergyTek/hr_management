@@ -35,8 +35,8 @@ class _NTSChartState extends State<NTSChart> {
             ? 'Note'
             : 'Task';
 
-    queryparams["startDate"] = dateformatterWithSlash.format(fromDate) ?? '';
-    queryparams["dueDate"] = dateformatterWithSlash.format(toDate) ?? '';
+    queryparams["startDate"] = dateformatterWithSlash.format(fromDate);
+    queryparams["dueDate"] = dateformatterWithSlash.format(toDate);
     queryparams["userid"] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
@@ -171,7 +171,7 @@ class _NTSChartState extends State<NTSChart> {
                   children: [
                     Expanded(
                       child: DynamicDateTimeBox(
-                        code: fromDate.toString() ?? null,
+                        code: fromDate.toString(),
                         name: 'From',
                         key: new Key('Start Date'),
                         selectDate: (DateTime date) {
@@ -185,7 +185,7 @@ class _NTSChartState extends State<NTSChart> {
                     ),
                     Expanded(
                       child: DynamicDateTimeBox(
-                        code: toDate.toString() ?? null,
+                        code: toDate.toString() ,
                         name: 'To',
                         key: new Key('End Date'),
                         selectDate: (DateTime date) {
@@ -204,9 +204,9 @@ class _NTSChartState extends State<NTSChart> {
                       onPressed: () {
                         ntsChartBloc.subjectDatewiseSLA.sink.add(null);
                         queryparams["startDate"] =
-                            dateformatterWithSlash.format(fromDate) ?? '';
+                            dateformatterWithSlash.format(fromDate) ;
                         queryparams["dueDate"] =
-                            dateformatterWithSlash.format(toDate) ?? '';
+                            dateformatterWithSlash.format(toDate) ;
                         queryparams["userid"] =
                             BlocProvider.of<UserModelBloc>(context)
                                     .state

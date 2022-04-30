@@ -8,8 +8,8 @@ class NTSTemplateTreeListBloc {
       NTSTemplateTreeListRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<NTSTemplateTreeListResponse> _subject =
-      BehaviorSubject<NTSTemplateTreeListResponse>();
+  final BehaviorSubject<NTSTemplateTreeListResponse?> _subject =
+      BehaviorSubject<NTSTemplateTreeListResponse?>();
 
   /// Used to fetch new entries.
   getData({
@@ -46,7 +46,7 @@ class NTSTemplateTreeListBloc {
     _subject.close();
   }
 
-  BehaviorSubject<NTSTemplateTreeListResponse> get subject => _subject;
+  BehaviorSubject<NTSTemplateTreeListResponse?> get subject => _subject;
 }
 
 final ntsTemplateTreeListBloc = NTSTemplateTreeListBloc();

@@ -542,7 +542,7 @@ class DrawerWidget extends StatelessWidget {
             DrawerListTileWidget(
               title: '\t\t\t\t\t Helpdesk Dashbaord',
               listTileOnTap: () {
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
                   context,
                   CASE_MANAGEMENT_HELPDESK_DASHBOARD_ROUTE,
                 );
