@@ -1,6 +1,8 @@
 class APIEndpointConstants {
   /// Base URL.
   // static const BASE_URL = 'http://95.111.235.64:85';
+  static const PORTAL_NAME = 'HR';
+
   static const BASE_URL = 'https://webapidev.aitalkx.com';
 
   static const PROFILE_PICTURE_ENDPOINT =
