@@ -52,7 +52,9 @@ Widget _profilePicture({
             image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
           ),
         ),
-        placeholder: (context, url) => CircularProgressIndicator(),
+        placeholder: (context, url) => CircularProgressIndicator(
+          backgroundColor: LightTheme().lightThemeData().primaryColor,
+        ),
         errorWidget: (context, url, error) => Icon(Icons.error),
       ),
     ),
@@ -274,8 +276,8 @@ Widget _jobDetailsWidget({
               child: _statisticWidget(
                 context: context,
                 title: DateFormat.yMMMMd()
-                        .format(data.dateOfJoin ?? "" as DateTime)
-                        .toString(),
+                    .format(data.dateOfJoin ?? "" as DateTime)
+                    .toString(),
                 subtitle: "Date of Joining",
                 icon: Icon(
                   Icons.calendar_today_rounded,

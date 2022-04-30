@@ -3,6 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/ui/screens/dms/widget/dms_parent_body.dart';
 
+import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
@@ -39,7 +40,7 @@ class DMSParent extends StatelessWidget {
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: IconThemeData(size: 28.0),
-      backgroundColor: Colors.blue[900],
+      backgroundColor: LightTheme().lightThemeData().primaryColor,
       visible: true,
       curve: Curves.bounceInOut,
       children: [

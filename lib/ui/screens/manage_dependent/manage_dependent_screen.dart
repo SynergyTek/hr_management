@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../routes/route_constants.dart';
 import '../../../routes/screen_arguments.dart';
+import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
@@ -67,7 +68,7 @@ class _ManageDependentScreenState extends State<ManageDependentScreen> {
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         child: Icon(Icons.add),
         onPressed: () => Navigator.pushNamed(
           context,

@@ -8,6 +8,7 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/dotted_divider_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import '../../../data/enums/enums.dart';
+import '../../../themes/light_theme.dart';
 import '../nts_charts/widget/charts_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -93,7 +94,10 @@ class _HrDirectChartState extends State<HrDirectChart> {
                     );
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        backgroundColor:
+                            LightTheme().lightThemeData().primaryColor,
+                      ),
                     );
                   }
                 }),
@@ -139,7 +143,10 @@ class _HrDirectChartState extends State<HrDirectChart> {
                   );
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      backgroundColor:
+                          LightTheme().lightThemeData().primaryColor,
+                    ),
                   );
                 }
               },

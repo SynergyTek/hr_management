@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../theme/light_theme.dart';
+
 class CustomProgressIndicator extends StatelessWidget {
   final String? loadingText;
 
@@ -19,7 +21,9 @@ class CustomProgressIndicator extends StatelessWidget {
             child: Wrap(
               // mainAxisSize: MainAxisSize.min,
               children: [
-                const CircularProgressIndicator(),
+                CircularProgressIndicator(
+                  backgroundColor: LightTheme().lightThemeData().primaryColor,
+                ),
                 const SizedBox(
                   width: 16,
                 ),

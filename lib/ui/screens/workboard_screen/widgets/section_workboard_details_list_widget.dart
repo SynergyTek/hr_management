@@ -21,6 +21,7 @@ import '../../../../data/models/workboard_model/workboard_section_model.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../logic/blocs/workboard_bloc/workboard_bloc.dart';
 import '../../../../routes/route_constants.dart';
+import '../../../../themes/light_theme.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 
@@ -417,7 +418,7 @@ class _SectionWorkBoardDetailsListState
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: IconThemeData(size: 28.0),
-      backgroundColor: Colors.blue[900],
+      backgroundColor: LightTheme().lightThemeData().primaryColor,
       visible: true,
       curve: Curves.bounceInOut,
       children: [

@@ -4,6 +4,7 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/termination_screen/widgets/termination_list_tile_widget.dart';
 
 import '../../../../logic/blocs/resignation_termination_bloc/resignation_termination_bloc.dart';
+import '../../../../themes/light_theme.dart';
 import '../../../widgets/empty_list_widget.dart';
 
 class TerminationBodyWidget extends StatefulWidget {
@@ -25,8 +26,7 @@ class _TerminationBodyWidgetState extends State<TerminationBodyWidget> {
   }
 
   handleAPI() async {
-    await resignationTerminationBloc
-        .getTerminationData(queryparams: {
+    await resignationTerminationBloc.getTerminationData(queryparams: {
       "userId":
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       "portalName": "HR",
@@ -50,7 +50,9 @@ class _TerminationBodyWidgetState extends State<TerminationBodyWidget> {
           );
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              backgroundColor: LightTheme().lightThemeData().primaryColor,
+            ),
           );
         }
       },
@@ -58,8 +60,7 @@ class _TerminationBodyWidgetState extends State<TerminationBodyWidget> {
   }
 
   Widget _listViewBuilderWidget({
-    List<TerminationModel> data =
-        const <TerminationModel>[],
+    List<TerminationModel> data = const <TerminationModel>[],
   }) {
     if (data.isEmpty) {
       return EmptyListWidget();

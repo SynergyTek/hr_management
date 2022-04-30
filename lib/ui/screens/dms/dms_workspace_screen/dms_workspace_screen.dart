@@ -6,6 +6,7 @@ import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 
 import '../../../../routes/route_constants.dart';
+import '../../../../themes/light_theme.dart';
 
 class DMSWorkspaceScreen extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class DMSWorkspaceScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         child: Icon(Icons.add),
         onPressed: () => Navigator.pushNamed(
           context,
