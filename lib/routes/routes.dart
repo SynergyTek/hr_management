@@ -592,6 +592,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSWorkbookScreen(
             workbookName: args.arg1!,
+            bookId: args.arg2!,
           ),
         );
 
