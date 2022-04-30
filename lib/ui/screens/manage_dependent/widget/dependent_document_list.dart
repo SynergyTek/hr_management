@@ -27,8 +27,7 @@ class _DependentDocumentListState extends State<DependentDocumentList> {
       ..getReadDependnetDocReqResponse(queryparams: {
         'userId':
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
-        'userid':
-            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
+        
       });
   }
 

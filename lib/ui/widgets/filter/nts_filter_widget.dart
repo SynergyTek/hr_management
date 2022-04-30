@@ -57,8 +57,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     queryparams['userId'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
-    queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
+  
 
     commonBloc.getModuleTreeList(
       queryparams: queryparams,
@@ -115,8 +114,7 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     queryparams['userId'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
-    queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
+    
 
     if (enumType != null) queryparams['enumType'] = enumType;
 

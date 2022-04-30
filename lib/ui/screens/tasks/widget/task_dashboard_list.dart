@@ -48,8 +48,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
 
     Map<String, dynamic> queryparams = Map();
     if (widget.taskListStatus != null) {
-      queryparams['userid'] =
-          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
+      
       queryparams['userId'] =
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
@@ -67,8 +66,7 @@ class _TaskDashboardListState extends State<TaskDashboardList> {
           taskListStatus: widget.taskListStatus,
         );
     } else {
-      queryparams['userid'] =
-          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
+      
       queryparams['userId'] =
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 

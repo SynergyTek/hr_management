@@ -51,7 +51,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              StreamBuilder<NTSTemplateTreeListResponse>(
+              StreamBuilder<NTSTemplateTreeListResponse?>(
                 stream: ntsTemplateTreeListBloc.subject.stream,
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {

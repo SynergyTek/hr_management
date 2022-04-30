@@ -89,8 +89,7 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
       queryparams['templateMasterCode'] = templateMasterCode;
     if (text != null) queryparams['text'] = text;
 
-    queryparams['userid'] =
-        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
+    
     queryparams['userId'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 

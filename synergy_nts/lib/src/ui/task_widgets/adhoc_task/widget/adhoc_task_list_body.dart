@@ -28,7 +28,6 @@ class _AdhocTaskListBodyState extends State<AdhocTaskListBody> {
 
     taskBloc.loadServiceAdhocTaskData(
       queryparams: {
-        'userid': widget.userId,
         'userId': widget.userId,
       },
     );

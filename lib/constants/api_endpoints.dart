@@ -50,7 +50,7 @@ class APIEndpointConstants {
 
   //Task API Endpoints Block Start
 
-  static const GET_TASK_HOME_DATA = '$BASE_URL/nts/query/ReadTaskHomeData';
+  static const GET_TASK_HOME_DATA = '$BASE_URL/cms/task/ReadTaskHomeData';
 
   static const GET_TASK_DETAILS = '$BASE_URL/nts/query/GetTaskDetails';
 
@@ -137,7 +137,7 @@ class APIEndpointConstants {
       "http://95.111.235.64:446/cms/GetServiceCommentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667589";
 
   static const READ_SERVICE_HOME_DATA =
-      "$BASE_URL/nts/query/ReadServiceHomeData";
+      "$BASE_URL/cms/service/ReadServiceHomeData";
 
   //Service API Endpoints Block End
 
@@ -209,7 +209,8 @@ class APIEndpointConstants {
 
   static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData';
 
-  static const READ_PAYSLIP_DATA = '$BASE_URL/CHR/query/ReadPaySlipData';
+  static const READ_PAYSLIP_DATA = '$BASE_URL/chr/payrollslip/ReadPaySlipData';
+  
 
   //Payroll API Endpoints Block End
   //************************************************************************//
