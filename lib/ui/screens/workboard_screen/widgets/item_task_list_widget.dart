@@ -28,7 +28,11 @@ class _ItemTaskListScreenState extends State<ItemTaskListScreen> {
     taskBloc.getReadTaskList(
       queryparams: {
         "templateCodes": "WB_TASK",
-        "portalName": "HR",
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         "parentNoteId": "ed11f145-c1ed-4612-a620-81078b611f20",

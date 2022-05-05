@@ -1,8 +1,8 @@
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
-import 'package:hr_management/data/models/dms/doc_files_model.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 
 import '../data/enums/enums.dart';
+import '../data/models/work_book_models/get_note_book_report_model.dart';
 
 class ScreenArguments {
   final String? arg1;
@@ -23,6 +23,7 @@ class ScreenArguments {
   final List<String?>? list1;
   final List<String>? list2;
   final dynamic dynamicArgument;
+  final List<NtsItem>? workbookReferenceList; //For moving workbooks
 
   ScreenArguments({
     this.ntstype,
@@ -41,5 +42,6 @@ class ScreenArguments {
     this.list1,
     this.list2,
     this.dynamicArgument,
+    this.workbookReferenceList,
   });
 }

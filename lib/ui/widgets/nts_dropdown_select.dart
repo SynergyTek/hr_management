@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../data/models/work_book_models/get_note_book_report_model.dart';
 import '../../routes/route_constants.dart';
 import '../../routes/screen_arguments.dart';
 
@@ -24,6 +25,7 @@ class NTSDropDownSelect extends StatelessWidget {
   final String? idKey;
   final String? nameKey;
   final ListTapPressedCallBack? onListTap;
+  final List<NtsItem>? workbookReferenceList;
 
   NTSDropDownSelect({
     Key? key,
@@ -42,6 +44,7 @@ class NTSDropDownSelect extends StatelessWidget {
     this.nameKey,
     this.isInitial = true,
     this.isPrefixIcon = true,
+    this.workbookReferenceList,
   }) : super(key: key);
 
   @override
@@ -103,11 +106,13 @@ class NTSDropDownSelect extends StatelessWidget {
                   context,
                   NTS_DROPDOWN,
                   arguments: ScreenArguments(
-                      arg1: url,
-                      arg2: idKey,
-                      arg3: nameKey,
-                      arg4: title,
-                      func: onListTap),
+                    arg1: url,
+                    arg2: idKey,
+                    arg3: nameKey,
+                    arg4: title,
+                    func: onListTap,
+                    workbookReferenceList: workbookReferenceList ?? [],
+                  ),
                 );
               }
             },

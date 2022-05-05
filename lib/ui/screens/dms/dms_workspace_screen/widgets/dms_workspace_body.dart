@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_model.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_response.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/manage_workspace_bloc/manage_workspace_bloc.dart';
@@ -23,7 +22,6 @@ class DMSWorkspaceBody extends StatefulWidget {
 class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
   List<WorkspaceViewModel>? _itemList = [];
   List<WorkspaceViewModel> _filteredItemList = [];
-  SlidableController? _slidableController;
   bool isVisible = false;
 
   @override
@@ -251,7 +249,6 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
 
   _handleEditWorkspaceOnTap({
     String? id,
-    String? parentNoteId,
   }) {
     Navigator.of(context)
         .pushNamed(
@@ -302,7 +299,10 @@ class _DMSWorkspaceBodyState extends State<DMSWorkspaceBody> {
                 Navigator.of(context).pop(); //Pop dialog box
 
                 dmsManageWorkspaceBloc
-                  ..deleteWorkspace(queryparams: {"noteId": '$id'});
+                  ..deleteWorkspace(
+                    queryparams: {"noteId": '$id'},
+                    context: context,
+                  );
                 setState(() {
                   isVisible = true;
                 });

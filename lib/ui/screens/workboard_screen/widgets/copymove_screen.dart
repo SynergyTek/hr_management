@@ -62,7 +62,11 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
       queryparams: {
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-        "portalName": "HR",
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "id": list?[tappedIndex].workboardId ?? '',
       },
     );
@@ -72,7 +76,11 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
     return {
       'userId':
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      'portalName': 'HR',
+      'portalName': BlocProvider.of<UserModelBloc>(context)
+              .state
+              .extraUserInformation
+              ?.portalType ??
+          'HR',
       'status': (selectStatusController.text == 'Closed') ? '1' : '0',
     };
   }
@@ -191,7 +199,12 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                       .userModel
                                       ?.id ??
                                   '',
-                              "portalName": "HR",
+                              "portalName":
+                                  BlocProvider.of<UserModelBloc>(context)
+                                          .state
+                                          .extraUserInformation
+                                          ?.portalType ??
+                                      "HR",
                               "id": list?[index].workboardId ?? '',
                             },
                           );
@@ -308,7 +321,13 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                                       workboardBloc
                                                           .postSharingMoveCopy(
                                                               queryparams: {
-                                                            "portalName": "HR",
+                                                            "portalName": BlocProvider.of<
+                                                                            UserModelBloc>(
+                                                                        context)
+                                                                    .state
+                                                                    .extraUserInformation
+                                                                    ?.portalType ??
+                                                                "HR",
                                                             "secId":
                                                                 workBoardSectionsList?[
                                                                         index]
@@ -345,7 +364,13 @@ class _CopyMoveScreenState extends State<CopyMoveScreen> {
                                                       workboardBloc
                                                           .postSharingMoveCopy(
                                                               queryparams: {
-                                                            "portalName": "HR",
+                                                            "portalName": BlocProvider.of<
+                                                                            UserModelBloc>(
+                                                                        context)
+                                                                    .state
+                                                                    .extraUserInformation
+                                                                    ?.portalType ??
+                                                                "HR",
                                                             "secId":
                                                                 workBoardSectionsList?[
                                                                         index]

@@ -65,7 +65,11 @@ class _DMSParentBodyState extends State<DMSParentBody> {
       queryparams: {
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-        "portalName": "HR",
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
       },
     );
     // dmsBloc.postGetDMSFilesData(
@@ -562,7 +566,9 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             sourceId: sourceId,
             // sourceId: widget.sourceId,
             targetId: _path,
-            userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '');
+            userId:
+                BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
+                    '');
       if (dmsCrudNoteBloc.copyNoteSubject.stream.hasValue) {
         if (dmsCrudNoteBloc.copyNoteSubject.stream.value) {
           displaySnackBar(text: 'File copied successfully', context: context);

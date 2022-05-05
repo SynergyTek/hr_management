@@ -212,7 +212,6 @@ class APIEndpointConstants {
   static const READ_PAYROLL_DATA = '$BASE_URL/CHR/query/ReadPayrollData';
 
   static const READ_PAYSLIP_DATA = '$BASE_URL/chr/payrollslip/ReadPaySlipData';
-  
 
   //Payroll API Endpoints Block End
   //************************************************************************//
@@ -586,4 +585,12 @@ class APIEndpointConstants {
 
   static const GET_NOTE_BOOK_REPORT_ENDPOINT =
       BASE_URL + '/cms/query/GetNoteBookReport';
+
+  static const GET_ENUM_ID_NAME_LIST_MOVE_TYPE_ENDPOINT =
+      'cms/query/GetEnumIdNameList?enumType=BookMoveTypeEnum';
+
+  static const GET_ENUM_ID_NAME_LIST_MOVE_POSITION_ENDPOINT =
+      'cms/query/GetEnumIdNameList?enumType=MovePostionEnum';
+
+  static const MANAGE_MOVE_TO_PARENT_ENDPOINT = 'cms/query/ManageMoveToParent';
 }

@@ -27,6 +27,7 @@ import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 // import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
+import '../ui/screens/dms/dms_move_workbook_screen/dms_move_workbook_screen.dart';
 import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
 import '../ui/screens/hr_direct_contract_screen/hr_direct_contract_screen.dart';
 import '../ui/screens/login/login_screen.dart';
@@ -169,6 +170,8 @@ class AppRouter {
             nameKey: args.arg3,
             ddName: args.arg4,
             onListTap: args.func as void Function(dynamic)?,
+            workbookReferenceList: args.workbookReferenceList,
+            // stringList: args.list2 ?? [],
           ),
         );
 
@@ -593,6 +596,14 @@ class AppRouter {
           builder: (_) => DMSWorkbookScreen(
             workbookName: args.arg1!,
             bookId: args.arg2!,
+          ),
+        );
+
+      case DMS_MOVE_WORBOOK_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSMoveWorkbookScreen(
+            noteId: args.arg2!,
           ),
         );
 

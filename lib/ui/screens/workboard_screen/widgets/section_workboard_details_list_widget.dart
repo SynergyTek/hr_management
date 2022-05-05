@@ -65,7 +65,11 @@ class _SectionWorkBoardDetailsListState
       queryparams: {
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-        "portalName": "HR",
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "id": widget.workboardModel?.workboardId,
       },
     );
@@ -518,7 +522,11 @@ class _ItemWidgetState extends State<ItemWidget> {
                 .userModel
                 ?.id ??
             '',
-        "portalName": "HR",
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "id": widget.id,
       },
     );
@@ -632,7 +640,12 @@ class _ItemWidgetState extends State<ItemWidget> {
                               if (result == 3) {
                                 await workboardBloc
                                     .postDuplicateItem(queryParams: {
-                                  "portalName": "HR",
+                                  "portalName":
+                                      BlocProvider.of<UserModelBloc>(context)
+                                              .state
+                                              .extraUserInformation
+                                              ?.portalType ??
+                                          "HR",
                                   "workboardId": widget.workBoardId ?? '',
                                   "itemId": widget.ntsNoteId ?? '',
                                   "userId":

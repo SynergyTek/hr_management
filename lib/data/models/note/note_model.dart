@@ -178,6 +178,9 @@ class NoteModel {
     this.status,
     this.versionNo,
     this.portalId,
+    this.moveToParent,
+    this.movePostionEnum,
+    this.bookMoveTypeEnum,
   });
 
   dynamic jsonCopy;
@@ -352,6 +355,9 @@ class NoteModel {
   int? status;
   int? versionNo;
   dynamic portalId;
+  String? moveToParent;
+  String? movePostionEnum;
+  String? bookMoveTypeEnum;
 
   factory NoteModel.fromJson(Map<String, dynamic> json) => NoteModel(
         jsonCopy: json["JsonCopy"],
@@ -370,8 +376,10 @@ class NoteModel {
         noteTemplateVm: json["NoteTemplateVM"],
         templateViewModel: json["TemplateViewModel"],
         noteTable: json["NoteTable"],
-        columnList: json["ColumnList"]!=null?List<ColumnList>.from(
-            json["ColumnList"].map((x) => ColumnList.fromJson(x))):null,
+        columnList: json["ColumnList"] != null
+            ? List<ColumnList>.from(
+                json["ColumnList"].map((x) => ColumnList.fromJson(x)))
+            : null,
         parentTemplateId: json["ParentTemplateId"],
         activeUserId: json["ActiveUserId"],
         noteNo: json["NoteNo"],
@@ -702,6 +710,9 @@ class NoteModel {
         "Status": status,
         "VersionNo": versionNo,
         "PortalId": portalId,
+        "MoveToParent": moveToParent,
+        "MovePostionEnum": movePostionEnum,
+        "BookMoveTypeEnum": bookMoveTypeEnum,
       };
 }
 

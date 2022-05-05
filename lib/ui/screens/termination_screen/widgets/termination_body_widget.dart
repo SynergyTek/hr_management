@@ -25,11 +25,14 @@ class _TerminationBodyWidgetState extends State<TerminationBodyWidget> {
   }
 
   handleAPI() async {
-    await resignationTerminationBloc
-        .getTerminationData(queryparams: {
+    await resignationTerminationBloc.getTerminationData(queryparams: {
       "userId":
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
-      "portalName": "HR",
+      "portalName": BlocProvider.of<UserModelBloc>(context)
+              .state
+              .extraUserInformation
+              ?.portalType ??
+          "HR",
     });
   }
 
@@ -58,8 +61,7 @@ class _TerminationBodyWidgetState extends State<TerminationBodyWidget> {
   }
 
   Widget _listViewBuilderWidget({
-    List<TerminationModel> data =
-        const <TerminationModel>[],
+    List<TerminationModel> data = const <TerminationModel>[],
   }) {
     if (data.isEmpty) {
       return EmptyListWidget();

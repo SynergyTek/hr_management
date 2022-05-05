@@ -190,7 +190,11 @@ class DrawerWidget extends StatelessWidget {
 
         //
         ExpansionListTileWidget(
-          title: "HR",
+          title: BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
           children: [
             //
             DrawerListTileWidget(

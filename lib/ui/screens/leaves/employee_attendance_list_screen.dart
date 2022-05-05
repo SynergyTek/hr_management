@@ -73,8 +73,13 @@ class _EmployeeAttendanceListScreenState
   apiCall() {
     leaveBloc.getEmployeeAttendanceList(
       queryparams: {
-        "userId": BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-        "portalName": "HR",
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "searchStart": "2022-06-01 00:00:00.000", //TODO
         "searchEnd": "2022-07-30 00:00:00.000", //TODO
         "searchMonth": "April 2022", //TODO

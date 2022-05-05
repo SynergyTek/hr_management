@@ -2,11 +2,13 @@ import 'package:hr_management/data/models/work_book_models/work_book_response_mo
 
 import 'package:rxdart/rxdart.dart';
 
+import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/note/note_model.dart';
 import '../../../data/models/workboard_model/workboard_response_model.dart';
 import '../../../data/repositories/work_book_repo/abstract_work_book_repo.dart';
 
 class WorkBookBloc {
-  final WorkBoardRepository _workBoardRepository = WorkBoardRepository();
+  final WorkBookRepository _workBookRepository = WorkBookRepository();
 
   final BehaviorSubject<WorkBookCountResponseModel?> _subjectWorkBookCount =
       BehaviorSubject<WorkBookCountResponseModel?>();
@@ -23,7 +25,7 @@ class WorkBookBloc {
     Map<String, dynamic>? queryparams,
   }) async {
     WorkBookCountResponseModel response =
-        await _workBoardRepository.getWorkBookCount(queryparams: queryparams);
+        await _workBookRepository.getWorkBookCount(queryparams: queryparams);
     _subjectWorkBookCount.sink.add(response);
   }
 
@@ -31,7 +33,7 @@ class WorkBookBloc {
     Map<String, dynamic>? queryparams,
   }) async {
     AddContentWorkBoardMapResponseModel response =
-        await _workBoardRepository.getNoteBookHTML(queryparams: queryparams);
+        await _workBookRepository.getNoteBookHTML(queryparams: queryparams);
     _subjectNoteBookHTML.sink.add(response);
   }
 
@@ -39,8 +41,20 @@ class WorkBookBloc {
     Map<String, dynamic>? queryparams,
   }) async {
     GetNoteBookReportResponseModel response =
-        await _workBoardRepository.getNoteBookReport(queryparams: queryparams);
+        await _workBookRepository.getNoteBookReport(queryparams: queryparams);
     _subjectNoteBookReport.sink.add(response);
+  }
+
+  /// Used to create new entries.
+  Future<PostResponse> postManageMoveToParent({
+    required NoteModel noteModel,
+    Map<String, dynamic>? queryparams,
+  }) async {
+    PostResponse response = await _workBookRepository.postManageMoveToParent(
+      note: noteModel,
+    );
+
+    return response;
   }
 
   BehaviorSubject<WorkBookCountResponseModel?> get subjectWorkBookCount =>

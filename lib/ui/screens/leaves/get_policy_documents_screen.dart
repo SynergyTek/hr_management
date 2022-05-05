@@ -30,7 +30,11 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
     leaveBloc.getHrPolicyDocument(queryparams: {
       "userId":
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      "portalName": "HR",
+      "portalName": BlocProvider.of<UserModelBloc>(context)
+              .state
+              .extraUserInformation
+              ?.portalType ??
+          "HR",
     });
   }
 

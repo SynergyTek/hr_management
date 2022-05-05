@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_model.dart';
 import 'package:hr_management/data/models/dms/workspace_view_model/workspace_view_response.dart';
 import 'package:hr_management/data/repositories/dms_repository/dms_workspace_repository/manage_workspace_repository/manage_workspace_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../user_model_bloc/user_model_bloc.dart';
 
 class ManageWorkspaceBloc {
   final DMSManageWorkspaceRepository _apiRepository =
@@ -51,6 +55,7 @@ class ManageWorkspaceBloc {
 
   Future<WorkspaceViewModel> deleteWorkspace({
     required Map<String, dynamic> queryparams,
+    required BuildContext context,
   }) async {
     WorkspaceViewModel response = await _apiRepository.deleteWorkspace(
       queryparams: queryparams,
@@ -59,8 +64,13 @@ class ManageWorkspaceBloc {
     _getAPISubject.sink.add(response);
     getWorkspaceSubject.sink.add(null);
     getWorkspaceData(queryparams: {
-      "portalName": "HR",
-      'userid': "45bba746-3309-49b7-9c03-b5793369d73c",
+      "portalName": BlocProvider.of<UserModelBloc>(context)
+              .state
+              .extraUserInformation
+              ?.portalType ??
+          "HR",
+      'userid':
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     });
 
     return response;

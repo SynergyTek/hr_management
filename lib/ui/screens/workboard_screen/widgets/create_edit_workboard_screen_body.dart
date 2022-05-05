@@ -81,7 +81,11 @@ class _CreateEditWorkBoardScreenBodyState
     return {
       'userId':
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      'portalName': 'HR',
+      'portalName': BlocProvider.of<UserModelBloc>(context)
+              .state
+              .extraUserInformation
+              ?.portalType ??
+          'HR',
       'status': '0',
     };
   }
