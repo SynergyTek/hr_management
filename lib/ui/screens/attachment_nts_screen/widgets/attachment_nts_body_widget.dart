@@ -72,7 +72,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
       );
 
     return ListView.builder(
-      itemCount: data.length ?? 0,
+      itemCount: data.length ,
       itemBuilder: (BuildContext context, int index) {
         return _eachListTile(
           data: data.elementAt(index),
@@ -214,7 +214,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
         return Downloader(
           filename: data.fileName ?? "DEFAULT_FILE_NAME",
           url:
-              'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data?.id ?? ''}',
+              'https://webapidev.aitalkx.com/CHR/query/DownloadAttachment?fileId=${data.id ?? ''}',
         );
       },
     );

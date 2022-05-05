@@ -15,13 +15,14 @@ class NoteBloc {
       BehaviorSubject<NoteListResponse?>();
 
   /// Used to fetch new entries.
-  getNoteDetails({
+  Future<NoteModel> getNoteDetails({
     Map<String, dynamic>? queryparams,
   }) async {
     NoteResponse response = await _noteRepository.getNoteDetail(
       queryparams: queryparams,
     );
     _subjectNoteDetails.sink.add(response);
+    return response.data ?? NoteModel();
   }
 
   getNoteList({

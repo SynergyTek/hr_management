@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/hr_policy_document_model/hr_policy_document_model.dart';
 import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../constants/api_endpoints.dart';
+import '../../../data/helpers/download_helper/downloader_screen/downloader.dart';
+import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 class HrPolicyDocumentScreen extends StatefulWidget {
   const HrPolicyDocumentScreen({Key? key}) : super(key: key);
@@ -26,8 +28,13 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
 
   apiCall() {
     leaveBloc.getHrPolicyDocument(queryparams: {
-      "userId": "45bba746-3309-49b7-9c03-b5793369d73c",
-      "portalName": "HR",
+      "userId":
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+      "portalName": BlocProvider.of<UserModelBloc>(context)
+              .state
+              .extraUserInformation
+              ?.portalType ??
+          "HR",
     });
   }
 
@@ -87,7 +94,19 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
                                       _url = APIEndpointConstants
                                               .GET_ATTACHMENT_VIEW_WEBVIEW_URL +
                                           list![index].policyDocument!;
-                                      _launchURL();
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isDismissible: true,
+                                        isScrollControlled: false,
+                                        backgroundColor: Colors.transparent,
+                                        enableDrag: true,
+                                        builder: (BuildContext context) {
+                                          return Downloader(
+                                            filename: list![index].policyName!,
+                                            url: _url!,
+                                          );
+                                        },
+                                      );
                                     }),
                               ],
                             ),
@@ -107,9 +126,5 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
         ),
       ),
     );
-  }
-
-  void _launchURL() async {
-    if (!await launch(_url ?? '')) throw 'Could not launch $_url';
   }
 }

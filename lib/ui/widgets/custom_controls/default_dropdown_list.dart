@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../data/models/work_book_models/get_note_book_report_model.dart';
 import '../../listizer/listizer.dart';
 
 import '../../../data/models/nts_dropdown/nts_dd_res_model.dart';
@@ -17,14 +18,16 @@ class DropDownDefaultList extends StatefulWidget {
   final String? ddName;
   final String? idKey;
   final String? nameKey;
-  DropDownDefaultList(
-      {Key? key,
-      this.onListTap,
-      this.ddName,
-      this.idKey,
-      this.nameKey,
-      this.url})
-      : super(key: key);
+  final List<NtsItem>? workbookReferenceList;
+  DropDownDefaultList({
+    Key? key,
+    this.onListTap,
+    this.ddName,
+    this.idKey,
+    this.nameKey,
+    this.url,
+    this.workbookReferenceList,
+  }) : super(key: key);
 
   @override
   _DropDownDefaultListState createState() => _DropDownDefaultListState();
@@ -33,11 +36,20 @@ class DropDownDefaultList extends StatefulWidget {
 class _DropDownDefaultListState extends State<DropDownDefaultList> {
   List<NTSDropdownModel> _idNameModelList = [];
   List<NTSDropdownModel> _filteredIdNameModelList = [];
+  List<NtsItem> _idWorkBookList = [];
+
   @override
   void initState() {
-    ntsDdBloc
-      ..getData(
-          url: widget.url ?? '', idKey: widget.idKey, nameKey: widget.nameKey);
+    if (widget.url != null) {
+      ntsDdBloc
+        ..getData(
+            url: widget.url ?? '',
+            idKey: widget.idKey,
+            nameKey: widget.nameKey);
+    } else if (widget.workbookReferenceList != null &&
+        widget.workbookReferenceList!.isNotEmpty) {
+      _idWorkBookList = widget.workbookReferenceList!;
+    }
     super.initState();
   }
 
@@ -49,55 +61,112 @@ class _DropDownDefaultListState extends State<DropDownDefaultList> {
         ),
         body: Container(
           padding: DEFAULT_LARGE_PADDING,
-          child: StreamBuilder<NTSDdResponse?>(
-              stream: ntsDdBloc.subject.stream,
-              builder: (context, AsyncSnapshot<NTSDdResponse?> snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.data == null ||
-                      snapshot.data!.data.length == 0) {
-                    return EmptyListWidget();
-                  }
-                  _idNameModelList = snapshot.data!.data;
-                  return Listizer(
-                    showSearchBar: true,
-                    listItems: _idNameModelList,
-                    filteredSearchList: _filteredIdNameModelList,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: TextCircleAvater(
-                            text: _filteredIdNameModelList[index].name,
-                            context: context,
-                            radius: 20,
-                            fontSize: 18,
-                            color: Theme.of(context).primaryColorLight),
-                        title: Text(
-                          _filteredIdNameModelList[index].name != null
-                              ? _filteredIdNameModelList[index].name!
-                              : "",
-                          maxLines: 2,
-                        ),
-                        onTap: () {
-                          if (widget.onListTap != null) {
-                            widget.onListTap!(_filteredIdNameModelList[index]);
-                            Navigator.pop(context);
-                          }
-                        },
-                      );
-                    },
-                  );
-                } else {
-                  return Center(
-                    child: CustomProgressIndicator(),
-                  );
-                }
-              }),
+          child: _child(),
         ));
+  }
+
+  Widget _child() {
+    if (widget.workbookReferenceList != null &&
+        widget.workbookReferenceList!.isNotEmpty) {
+      return _workbookReferenceList();
+    } else {
+      return StreamBuilder<NTSDdResponse?>(
+        stream: ntsDdBloc.subject.stream,
+        builder: (context, AsyncSnapshot<NTSDdResponse?> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.data == null ||
+                snapshot.data!.data.length == 0) {
+              return EmptyListWidget();
+            }
+            _idNameModelList = snapshot.data!.data;
+            return _list();
+          } else {
+            return Center(
+              child: CustomProgressIndicator(),
+            );
+          }
+        },
+      );
+    }
+  }
+
+  Widget _list() {
+    return Listizer(
+      showSearchBar: true,
+      listItems: _idNameModelList,
+      filteredSearchList: _filteredIdNameModelList,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: TextCircleAvater(
+            text: _filteredIdNameModelList[index].name,
+            context: context,
+            radius: 20,
+            fontSize: 18,
+            color: Theme.of(context).primaryColorLight,
+          ),
+          title: Text(
+            _filteredIdNameModelList[index].name != null
+                ? _filteredIdNameModelList[index].name!
+                : "",
+            maxLines: 2,
+          ),
+          onTap: () {
+            if (widget.onListTap != null) {
+              widget.onListTap!(_filteredIdNameModelList[index]);
+              Navigator.pop(context);
+            }
+          },
+        );
+      },
+    );
+  }
+
+  Widget _workbookReferenceList() {
+    List _dataList = _idWorkBookList;
+    List _filteredDataList = [];
+    return Listizer(
+      listItems: _dataList,
+      filteredSearchList: _filteredDataList,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: Text(
+            _filteredDataList[index].itemNo,
+            style: TextStyle(
+              fontSize: 18,
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
+          title: Text(
+            _filteredDataList[index].subject != null
+                ? _filteredDataList[index].subject!
+                : "",
+            maxLines: 2,
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              _filteredDataList[index].ntsNo != null
+                  ? _filteredDataList[index].ntsNo!
+                  : "",
+              maxLines: 2,
+            ),
+          ),
+          onTap: () {
+            if (widget.onListTap != null) {
+              widget.onListTap!(_filteredDataList[index]);
+              Navigator.pop(context);
+            }
+          },
+        );
+      },
+    );
   }
 
   @override
   void dispose() {
     _idNameModelList = [];
     _filteredIdNameModelList = [];
+    _idWorkBookList = [];
     super.dispose();
   }
 }

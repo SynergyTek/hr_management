@@ -366,15 +366,15 @@ class _DmsAddEditPermissionBodyState extends State<DmsAddEditPermissionBody> {
     );
   }
 
-  apiCallEnumId() {
-    commonBloc.subjectCommonList.sink.add(null);
-    commonBloc.subjectOwnerNameList.sink.add(null);
-    commonBloc.subjectEnumTreeList.sink.add(null);
+  // apiCallEnumId() {
+  //   commonBloc.subjectCommonList.sink.add(null);
+  //   commonBloc.subjectOwnerNameList.sink.add(null);
+  //   commonBloc.subjectEnumTreeList.sink.add(null);
 
-    Map<String, dynamic> queryparams = Map();
+  //   Map<String, dynamic> queryparams = Map();
 
-    if (enumType != null) queryparams['enumType'] = enumType;
+  //   if (enumType != null) queryparams['enumType'] = enumType;
 
-    commonBloc.getEnumIdNameList(queryparams: queryparams);
-  }
+  //   commonBloc.getEnumIdNameList(queryparams: queryparams);
+  // }
 }

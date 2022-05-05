@@ -40,7 +40,7 @@ class GaugeChartWidget extends StatelessWidget {
                     GaugeAnnotation(
                       widget: Container(
                         child: Text(
-                          "${gaugeValueList ?? '0'}",
+                          "$gaugeValueList ",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -72,7 +72,7 @@ class GaugeChartWidget extends StatelessWidget {
             needleColor: Color(
               (math.Random().nextDouble() * 0xFFFFFF).toInt(),
             ).withOpacity(1.0),
-            value: element ?? 0,
+            value: element ,
           ),
         );
     });

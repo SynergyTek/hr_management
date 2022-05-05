@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/case_management_model/case_management_model.dart';
-import 'package:hr_management/data/models/case_management_model/case_management_response.dart';
 import 'package:hr_management/data/models/help_desk_models/read_help_desk_request_closed_model.dart';
 import 'package:hr_management/data/models/help_desk_models/read_help_desk_request_closed_response.dart';
 import 'package:hr_management/logic/blocs/case_management_bloc/help_desk_bloc/help_desk_bloc.dart';
@@ -74,7 +72,7 @@ class _RequestsClosedInLast20DaysWidgetState
             name: 'Violated',
             width: 0.25,
             color: Colors.orangeAccent,
-            dataSource: data ?? [],
+            dataSource: data ,
             yValueMapper: (ReadHelpDeskRequestClosedModel model, _) =>
                 model.violated,
             xValueMapper: (ReadHelpDeskRequestClosedModel model, _) =>
@@ -86,7 +84,7 @@ class _RequestsClosedInLast20DaysWidgetState
             name: 'Non-violated',
             width: 0.25,
             color: Colors.blueAccent,
-            dataSource: data ?? [],
+            dataSource: data,
             yValueMapper: (ReadHelpDeskRequestClosedModel model, _) =>
                 model.nonViolated,
             xValueMapper: (ReadHelpDeskRequestClosedModel model, _) =>

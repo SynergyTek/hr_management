@@ -10,6 +10,8 @@ import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../themes/light_theme.dart';
+
 class Downloader extends StatefulWidget {
   final String filename;
   final String url;
@@ -117,7 +119,10 @@ class _DownloaderState extends State<Downloader> {
                           width: 64,
                           height: 64,
                           child: Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                              backgroundColor:
+                                  LightTheme().lightThemeData().primaryColor,
+                            ),
                           ),
                         ),
                 ),

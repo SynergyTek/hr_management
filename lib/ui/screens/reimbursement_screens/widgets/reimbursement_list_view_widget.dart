@@ -4,6 +4,7 @@ import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/reimbursement_screens/widgets/reimbursement_list_tile_widget.dart';
 
+import '../../../../themes/light_theme.dart';
 import '../../../widgets/empty_list_widget.dart';
 
 class ReimbursementListViewWidget extends StatefulWidget {
@@ -37,7 +38,11 @@ class _ReimbursementListViewWidgetState
         queryparams: {
           "userId":
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": "HR",
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
         },
       );
     }
@@ -48,7 +53,11 @@ class _ReimbursementListViewWidgetState
         queryparams: {
           "userId":
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": "HR",
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
         },
       );
     }
@@ -59,7 +68,11 @@ class _ReimbursementListViewWidgetState
         queryparams: {
           "userId":
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": "HR",
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
         },
       );
     }
@@ -70,7 +83,11 @@ class _ReimbursementListViewWidgetState
         queryparams: {
           "userId":
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": "HR",
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
         },
       );
     }
@@ -97,7 +114,9 @@ class _ReimbursementListViewWidgetState
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                backgroundColor: LightTheme().lightThemeData().primaryColor,
+              ),
             );
           }
         },

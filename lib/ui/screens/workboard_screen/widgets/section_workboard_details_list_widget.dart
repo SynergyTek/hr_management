@@ -21,8 +21,11 @@ import '../../../../data/models/workboard_model/workboard_section_model.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../logic/blocs/workboard_bloc/workboard_bloc.dart';
 import '../../../../routes/route_constants.dart';
+import '../../../../themes/light_theme.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
+
+import 'item_task_list_widget.dart';
 
 class SectionWorkBoardDetailsList extends StatefulWidget {
   final AddContentWorkBoardModel? addContentWorkBoardModel;
@@ -63,7 +66,11 @@ class _SectionWorkBoardDetailsListState
       queryparams: {
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-        "portalName": "HR",
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "id": widget.workboardModel?.workboardId,
       },
     );
@@ -415,7 +422,7 @@ class _SectionWorkBoardDetailsListState
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: IconThemeData(size: 28.0),
-      backgroundColor: Colors.blue[900],
+      backgroundColor: LightTheme().lightThemeData().primaryColor,
       visible: true,
       curve: Curves.bounceInOut,
       children: [
@@ -516,7 +523,11 @@ class _ItemWidgetState extends State<ItemWidget> {
                 .userModel
                 ?.id ??
             '',
-        "portalName": "HR",
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "id": widget.id,
       },
     );
@@ -575,9 +586,12 @@ class _ItemWidgetState extends State<ItemWidget> {
                         ),
                         GestureDetector(
                           child: Icon(Icons.list),
-                          onTap: () {
-                            print('onTap :list');
-                          },
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ItemTaskListScreen(),
+                            ),
+                          ),
                         ),
                         Container(
                           width: 15,
@@ -627,7 +641,12 @@ class _ItemWidgetState extends State<ItemWidget> {
                               if (result == 3) {
                                 await workboardBloc
                                     .postDuplicateItem(queryParams: {
-                                  "portalName": "HR",
+                                  "portalName":
+                                      BlocProvider.of<UserModelBloc>(context)
+                                              .state
+                                              .extraUserInformation
+                                              ?.portalType ??
+                                          "HR",
                                   "workboardId": widget.workBoardId ?? '',
                                   "itemId": widget.ntsNoteId ?? '',
                                   "userId":

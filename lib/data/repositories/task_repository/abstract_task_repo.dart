@@ -29,6 +29,9 @@ abstract class AbstractTaskRepository {
   Future<TaskListResponseModel> getReadTaskData({
     Map<String, dynamic>? queryparams,
   });
+  Future<TaskListResponseModel> getReadTaskList({
+    Map<String, dynamic>? queryparams,
+  });
   Future loadServiceAdhocTaskData({
     Map<String, dynamic>? queryparams,
   });

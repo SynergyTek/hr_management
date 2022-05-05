@@ -108,7 +108,7 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   color: Colors.blueAccent,
                   name: 'Draft',
                   width: 0.25,
-                  dataSource: data ?? [],
+                  dataSource: data ,
                   yValueMapper: (CaseManagementModel model, _) => model.draft,
                   xValueMapper: (CaseManagementModel model, _) => model.day,
                 ),
@@ -118,7 +118,7 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   color: Colors.orangeAccent,
                   name: 'In Progress',
                   width: 0.25,
-                  dataSource: data ?? [],
+                  dataSource: data ,
                   yValueMapper: (CaseManagementModel model, _) =>
                       model.inProgress,
                   xValueMapper: (CaseManagementModel model, _) => model.day,
@@ -129,7 +129,7 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   color: Colors.red,
                   name: 'Overdue',
                   width: 0.25,
-                  dataSource: data ?? [],
+                  dataSource: data ,
                   yValueMapper: (CaseManagementModel model, _) =>
                       model.overDue,
                   xValueMapper: (CaseManagementModel model, _) => model.day,
@@ -140,7 +140,7 @@ class _RequestsSummaryWidgetState extends State<RequestsSummaryWidget> {
                   color: Colors.greenAccent,
                   name: 'Completed',
                   width: 0.25,
-                  dataSource: data ?? [],
+                  dataSource: data ,
                   yValueMapper: (CaseManagementModel model, _) =>
                       model.completed,
                   xValueMapper: (CaseManagementModel model, _) => model.day,

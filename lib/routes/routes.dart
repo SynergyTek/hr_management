@@ -20,13 +20,15 @@ import 'package:hr_management/ui/screens/termination_screen/termination_screen.d
 import 'package:hr_management/ui/screens/workboard_screen/duplicate_workboard_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_create_edit_section_screen.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_task_list_screen.dart';
-
 import 'package:hr_management/ui/screens/workboard_screen/create_edit_workboard.dart';
 import 'package:hr_management/ui/screens/workboard_screen/workboard_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
+// import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
+import '../ui/screens/dms/dms_move_workbook_screen/dms_move_workbook_screen.dart';
+import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
 import '../ui/screens/hr_direct_contract_screen/hr_direct_contract_screen.dart';
 import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
@@ -158,6 +160,8 @@ class AppRouter {
             nameKey: args.arg3,
             ddName: args.arg4,
             onListTap: args.func as void Function(dynamic)?,
+            workbookReferenceList: args.workbookReferenceList,
+            // stringList: args.list2 ?? [],
           ),
         );
 
@@ -406,6 +410,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSManageWorkspaceScreen(
             parentWorkspaceId: args?.arg1,
+            isWorkspace: args?.val1 ?? false,
           ),
         );
 
@@ -559,6 +564,23 @@ class AppRouter {
       case HR_DIRECT_CONTRACT_SCREEN:
         return MaterialPageRoute(
           builder: (_) => HRDirectContractScreen(),
+        );
+
+      case DMS_WORBOOK_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSWorkbookScreen(
+            workbookName: args.arg1!,
+            bookId: args.arg2!,
+          ),
+        );
+
+      case DMS_MOVE_WORBOOK_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSMoveWorkbookScreen(
+            noteId: args.arg2!,
+          ),
         );
 
       // 404 route.

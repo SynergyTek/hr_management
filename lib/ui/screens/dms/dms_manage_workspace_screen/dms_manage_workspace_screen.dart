@@ -7,10 +7,12 @@ import 'widgets/dms_manage_workspace_body_widget.dart';
 
 class DMSManageWorkspaceScreen extends StatelessWidget {
   final String? parentWorkspaceId;
+  final bool isWorkspace;
   
 
   DMSManageWorkspaceScreen({
     this.parentWorkspaceId,
+    this.isWorkspace = false,
   });
 
   @override
@@ -24,6 +26,7 @@ class DMSManageWorkspaceScreen extends StatelessWidget {
         child: InternetConnectivityWidget(
           child: DMSManageWorkspaceBodyWidget(
             parentWorkspaceId: parentWorkspaceId,
+            isWorkspace: isWorkspace,
           ),
         ),
       ),

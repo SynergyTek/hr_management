@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
-import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
+import '../../../../themes/light_theme.dart';
 import 'section_workboard_details_list_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
@@ -52,7 +53,11 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
     return {
       'userId':
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      'portalName': 'HR',
+      'portalName': BlocProvider.of<UserModelBloc>(context)
+              .state
+              .extraUserInformation
+              ?.portalType ??
+          'HR',
       'status': (selectStatusController.text == 'Closed') ? '1' : '0',
     };
   }
@@ -131,9 +136,16 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             (list![index].iconFileId != null)
-                                ? Image.network(APIEndpointConstants
-                                        .PROFILE_PICTURE_ENDPOINT +
-                                    list![index].iconFileId!)
+                                ? CachedNetworkImage(
+                                    imageUrl: APIEndpointConstants
+                                            .PROFILE_PICTURE_ENDPOINT +
+                                        list![index].iconFileId!,
+                                    placeholder: (context, url) =>
+                                        CircularProgressIndicator(
+                                          backgroundColor: LightTheme()
+                                              .lightThemeData()
+                                              .primaryColor,
+                                        ))
                                 : Container(),
                             (list?[index].workBoardName != null)
                                 ? Expanded(

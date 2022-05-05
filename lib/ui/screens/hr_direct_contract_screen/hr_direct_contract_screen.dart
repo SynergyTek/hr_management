@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/hr_direct_contract_model/hr_direct_contract_model.dart';
 import 'package:hr_management/logic/blocs/resignation_termination_bloc/resignation_termination_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 class HRDirectContractScreen extends StatefulWidget {
   HRDirectContractScreen({Key? key}) : super(key: key);
@@ -24,8 +27,13 @@ class _HRDirectContractScreenState extends State<HRDirectContractScreen> {
   apiCall() {
     resignationTerminationBloc.getHrDirectContractList(
       queryparams: {
-        "userId": "45bba746-3309-49b7-9c03-b5793369d73c",
-        "portalName": "HR",
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "personId": "129b167b-c1e9-4876-874b-015605071a8d",
       },
     );

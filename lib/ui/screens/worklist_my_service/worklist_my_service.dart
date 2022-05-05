@@ -10,6 +10,7 @@ import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/tasks/widget/task_list_tile.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../themes/light_theme.dart';
 import '../nts_charts/widget/charts_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -40,7 +41,11 @@ class _WorkListMyServiceScreenCountState
         queryparams: {
           "userId":
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": "HR",
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
           "categoryCodes": "CHR",
         },
       );
@@ -49,7 +54,11 @@ class _WorkListMyServiceScreenCountState
         queryparams: {
           "userId":
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": "HR",
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
           "categoryCodes": "CHR",
         },
       );
@@ -156,7 +165,10 @@ Widget workListMyServiceScreenChart(NTSType ntsType) {
                   );
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      backgroundColor:
+                          LightTheme().lightThemeData().primaryColor,
+                    ),
                   );
                 }
               },
@@ -196,7 +208,10 @@ Widget workListMyServiceScreenChart(NTSType ntsType) {
                   );
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      backgroundColor:
+                          LightTheme().lightThemeData().primaryColor,
+                    ),
                   );
                 }
               },
@@ -239,7 +254,11 @@ class _WorkListMyServiceScreenDataState
         queryparams: {
           "userId":
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": "HR",
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
           "categoryCodes": "CHR",
         },
       );
@@ -248,7 +267,11 @@ class _WorkListMyServiceScreenDataState
         queryparams: {
           "userId":
               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": "HR",
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
           "categoryCodes": "CHR",
         },
       );

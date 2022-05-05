@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/models/login_models/login_response_model.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
+import '../../../constants/api_endpoints.dart';
+import '../../../data/models/login_models/extra_user_information_model.dart';
 import '../../../routes/route_constants.dart';
 import 'widgets/splash_screen_body_widget.dart';
 
@@ -56,18 +59,28 @@ class SplashScreen extends StatelessWidget {
     // var id = prefs.getString('id');
     // print(id);
 
-    String? username =
-        BlocProvider.of<UserModelBloc>(context).state.userModel?.email;
+    LoginResponseModel? model =
+        BlocProvider.of<UserModelBloc>(context).state.userModel;
 
-    print("Username: $username");
+    // Setting up the portal type and
+    // saving up the saved portal to the hydrated bloc.
+    BlocProvider.of<UserModelBloc>(context).add(
+      UserModelChangeEvent(
+        userModel: model,
+        extraUserInformation: ExtraUserInformationModel(
+          isSignedIn: false,
+          portalType: APIEndpointConstants.PORTAL_NAME,
+          userPermissionResponse: null,
+        ),
+      ),
+    );
 
-    if (username == null) {
+    if (model?.email == null) {
       Navigator.pushReplacementNamed(
         context, LOGIN_ROUTE,
         // WORKBOARD_SCREEN,
       );
     } else {
-
       print(
         BlocProvider.of<UserModelBloc>(context)
             .state

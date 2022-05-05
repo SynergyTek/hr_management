@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../data/enums/enums.dart';
+import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
 
@@ -32,7 +33,7 @@ class AttachmentNTSScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         child: Icon(
           Icons.attach_file,
           size: 32,

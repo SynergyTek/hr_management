@@ -9,6 +9,8 @@ import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 
+import '../../../../themes/light_theme.dart';
+
 class DMSViewPermissionScreen extends StatelessWidget {
   final String? noteId;
   final String? parentId;
@@ -52,7 +54,7 @@ class DMSViewPermissionScreen extends StatelessWidget {
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: IconThemeData(size: 28.0),
-      backgroundColor: Colors.blue[900],
+      backgroundColor: LightTheme().lightThemeData().primaryColor,
       visible: true,
       curve: Curves.bounceInOut,
       children: [

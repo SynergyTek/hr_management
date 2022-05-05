@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/access_log/access_log_response.dart';
 import 'package:hr_management/data/models/login_models/extra_user_information_model.dart';
 import 'package:hr_management/themes/theme_config.dart';
@@ -11,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
+import '../../../../themes/light_theme.dart';
 
 class MAWidget extends StatefulWidget {
   MAWidget({
@@ -55,7 +55,9 @@ class _MAWidgetState extends State<MAWidget> {
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    backgroundColor: LightTheme().lightThemeData().primaryColor,
+                  ),
                 ),
               ),
             ),

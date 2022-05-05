@@ -42,7 +42,7 @@ class AccessLogRepository extends AbstractAccessLogRepository {
     try {
       Response response = await _dio.get(
         APIEndpointConstants.GET_ACCESS_LOG_LIST_DATA,
-        queryParameters: queryparams ?? {},
+        queryParameters: queryparams,
       );
 
       print(

@@ -6,6 +6,7 @@ import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/employee_profile_models/employee_profile_model.dart';
 import '../../../../data/models/employee_profile_models/employee_profile_response.dart';
 import '../../../../logic/blocs/employee_profile_bloc/employee_profile_bloc.dart';
+import '../../../../themes/light_theme.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:intl/intl.dart';

@@ -21,9 +21,11 @@ import '../../../../../themes/theme_config.dart';
 
 class DMSManageWorkspaceBodyWidget extends StatefulWidget {
   final String? parentWorkspaceId;
+  final bool? isWorkspace;
 
   DMSManageWorkspaceBodyWidget({
     this.parentWorkspaceId,
+    this.isWorkspace,
   });
 
   @override
@@ -63,10 +65,9 @@ class _DMSManageWorkspaceBodyWidgetState
       ownerUserId:
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       // ! TODO: no data found for parent workspace in the metadata API while editing in use case.
-      parentNoteId: _selectedParentWorkspace?.id ?? "",
-      sequenceOrder: _sequenceOrderTextEditingController.text ?? "",
-      workspaceName:
-          _workspaceNameTextEditingController.text ?? "Default Workspace Name",
+      parentNoteId: _selectedParentWorkspace?.id ?? null,
+      sequenceOrder: _sequenceOrderTextEditingController.text,
+      workspaceName: _workspaceNameTextEditingController.text,
 
       id: _workspaceId ?? "",
     ).toJson();
@@ -475,7 +476,20 @@ class _DMSManageWorkspaceBodyWidgetState
     // if the folder has been created successfully, pop,
     // else do nothing
     if (response != null && response['success'] == true) {
-      Navigator.of(context).pop();
+      if (!widget.isWorkspace!) {
+        Navigator.of(context).pop();
+      } else if (widget.isWorkspace!) {
+        dmsManageWorkspaceBloc.getWorkspaceSubject.sink.add(null);
+        dmsManageWorkspaceBloc
+          ..getWorkspaceData(
+            queryparams: {
+              'userid':
+                  BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
+                      '',
+              "portalName": "HR"
+            },
+          );
+      }
       Navigator.of(context).pop();
       dmsManageWorkspaceBloc.getWorkspaceSubject.sink.add(null);
     }

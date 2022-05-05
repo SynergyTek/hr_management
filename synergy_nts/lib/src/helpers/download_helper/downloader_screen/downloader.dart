@@ -7,6 +7,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../theme/light_theme.dart';
 import '../download_helper_new.dart';
 
 class Downloader extends StatefulWidget {
@@ -110,11 +111,14 @@ class _DownloaderState extends State<Downloader> {
                     //     ),
                     //     onPressed: () => _openfile(),
                     //   )
-                    : const SizedBox(
+                    : SizedBox(
                         width: 64,
                         height: 64,
                         child: Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            backgroundColor:
+                                LightTheme().lightThemeData().primaryColor,
+                          ),
                         ),
                       ),
               ),
