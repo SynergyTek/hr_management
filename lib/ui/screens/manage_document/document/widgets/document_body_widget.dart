@@ -5,6 +5,7 @@ import 'package:hr_management/data/models/documents_models/document_models/docum
 import 'package:hr_management/data/models/documents_models/document_models/document_response.dart';
 import 'package:hr_management/logic/blocs/documents_bloc/document_bloc/document_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 
 import '../../../../../data/enums/enums.dart';
 import 'document_list_widget.dart';
@@ -71,30 +72,35 @@ class _DocumentBodyWidgetState extends State<DocumentBodyWidget> {
   }
 
   Widget _listviewWidget(DocumentModel data) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: data.noteTableRows!.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Card(
-          child: ListTile(
-            leading: Image.asset(
-              _handleLeadingIcon(
-                templateName: data.noteTableRows!.elementAt(index).templateName,
+    if (data.noteTableRows != null && data.noteTableRows!.length != 0) {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: data.noteTableRows!.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: ListTile(
+              leading: Image.asset(
+                _handleLeadingIcon(
+                  templateName:
+                      data.noteTableRows!.elementAt(index).templateName,
+                ),
+                width: 32.0,
+                height: 32.0,
+                fit: BoxFit.fitHeight,
               ),
-              width: 32.0,
-              height: 32.0,
-              fit: BoxFit.fitHeight,
+              title: Text(data.noteTableRows!.elementAt(index).templateName!),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () => _handleListTileOnTap(
+                context: context,
+                listTileData: data.noteTableRows!.elementAt(index),
+              ),
             ),
-            title: Text(data.noteTableRows!.elementAt(index).templateName!),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () => _handleListTileOnTap(
-              context: context,
-              listTileData: data.noteTableRows!.elementAt(index),
-            ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    } else {
+      return EmptyListWidget();
+    }
   }
 
   void _handleListTileOnTap({

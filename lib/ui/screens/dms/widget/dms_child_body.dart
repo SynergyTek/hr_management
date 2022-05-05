@@ -21,6 +21,8 @@ import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 import 'package:hr_management/ui/widgets/custom_icons.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/helpers/download_helper/downloader_screen/downloader.dart';
 import '../../../widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
@@ -592,7 +594,20 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           child: ListTile(
             leading: Icon(CustomIcons.archive),
             title: Text('Download'),
-            // onTap: () => archiveDialog(id),
+            onTap: () => showModalBottomSheet(
+              context: context,
+              isDismissible: true,
+              isScrollControlled: false,
+              backgroundColor: Colors.transparent,
+              enableDrag: true,
+              builder: (BuildContext context) {
+                return Downloader(
+                  filename: item.title!,
+                  url: APIEndpointConstants.DOWNLOAD_ATTACHMENT +
+                      (item.fileId ?? ''),
+                );
+              },
+            ),
           ),
         ),
         Visibility(
