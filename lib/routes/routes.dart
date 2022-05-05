@@ -26,6 +26,7 @@ import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
 import '../ui/screens/case_management_screen/case_management_screen.dart';
+
 // import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
 import '../ui/screens/dms/dms_move_workbook_screen/dms_move_workbook_screen.dart';
 import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
@@ -34,32 +35,22 @@ import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
 import '../ui/screens/misconduct_screen/misconduct_screen.dart';
 import '../ui/screens/my_profile/my_profile_screen.dart';
-
 import '../ui/screens/share/share_screen.dart';
-import '../ui/screens/tasks/adhoc_task/adhoc_task_list_screen.dart';
-
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
-
 import '../ui/screens/tasks/task_list_screen.dart';
 import '../ui/screens/time_permission/time_permission_screen.dart';
 import '../ui/widgets/custom_controls/team_dropdown_list.dart';
 import '../ui/widgets/custom_controls/user_dropdown_list.dart';
-
 import '../ui/screens/payroll/manage_accrual_screen.dart';
 import '../ui/screens/payroll/payslip_screen.dart';
-
 import '../data/enums/enums.dart';
 import '../ui/screens/counts_screen/counts_screen.dart';
 import '../ui/screens/note/note_home_screen.dart';
-import '../ui/screens/nts_comments/nts_comments_screen.dart';
-
 import 'package:flutter/material.dart';
 import '../ui/screens/component_result_screen/component_result_screen.dart';
 import '../ui/screens/attachment_nts_screen/attachment_nts_screen.dart';
 import '../ui/screens/attendance/attendance_view_screen/attendance_view_screen.dart';
 import '../ui/screens/nts_charts/nts_dashboard.dart';
-// import 'package:hr_management/ui/screens/login/login_screen.dart';
-
 import 'package:hr_management/ui/screens/nts_template_screen/nts_template_screen.dart';
 import 'package:hr_management/ui/screens/service/add_edit_service_screen.dart';
 import 'package:hr_management/ui/screens/service/service_home.dart';
@@ -259,15 +250,6 @@ class AppRouter {
           builder: (_) => AttendanceViewScreen(),
         );
 
-      case COMMENT_ROUTE:
-        final args = routeSettings.arguments as ScreenArguments?;
-        return MaterialPageRoute(
-          builder: (_) => NTSCommentsScreen(
-            ntsType: args!.ntstype,
-            ntsId: args.arg1,
-          ),
-        );
-
       case SERVICE_DASHBOARD:
         return MaterialPageRoute(
             builder: (_) => ServiceDashboard(
@@ -368,11 +350,6 @@ class AppRouter {
       case PERSON_PROFILE_ROUTE:
         return MaterialPageRoute(
           builder: (_) => DocumentScreen(),
-        );
-
-      case ADD_ADHOC_TASK:
-        return MaterialPageRoute(
-          builder: (_) => AdhocTaskListScreen(),
         );
 
       case CASE_MANAGEMENT_ROUTE:
@@ -590,6 +567,13 @@ class AppRouter {
           builder: (_) => HRDirectContractScreen(),
         );
 
+      // case DMS_WORBOOK_SCREEN:
+      //   final args = routeSettings.arguments as ScreenArguments;
+      //   return MaterialPageRoute(
+      //     builder: (_) => DMSWorkbookScreen(
+      //       workbookName: args.arg1!,
+      //     ),
+      //   );
       case DMS_WORBOOK_SCREEN:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
