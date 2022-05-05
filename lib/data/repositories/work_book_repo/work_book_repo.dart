@@ -107,4 +107,54 @@ class WorkBookRepository extends AbstractWorkBookRepository {
       return PostResponse.withError("$err");
     }
   }
+
+  Future<bool> deleteNoteBookItems({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint =
+        APIEndpointConstants.DELETE_NOTE_BOOK_ITEMS_ENDPOINT;
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      if (response.data['success'] == true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return false;
+    }
+  }
+
+  Future<bool> deleteServiceBookItems({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint =
+        APIEndpointConstants.DELETE_SERVICE_BOOK_ITEMS_ENDPOINT;
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      if (response.data['success'] == true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return false;
+    }
+  }
 }

@@ -30,4 +30,12 @@ abstract class AbstractWorkBookRepository {
     required NoteModel note,
     Map<String, dynamic>? queryparams,
   });
+
+  Future<bool> deleteNoteBookItems({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<bool> deleteServiceBookItems({
+    Map<String, dynamic>? queryparams,
+  });
 }

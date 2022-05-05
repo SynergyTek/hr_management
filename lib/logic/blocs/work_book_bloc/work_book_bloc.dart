@@ -57,6 +57,26 @@ class WorkBookBloc {
     return response;
   }
 
+  Future<bool> deleteNoteBookItems({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    bool response = await _workBookRepository.deleteNoteBookItems(
+      queryparams: queryparams ?? {},
+    );
+
+    return response;
+  }
+
+  Future<bool> deleteServiceBookItems({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    bool response = await _workBookRepository.deleteServiceBookItems(
+      queryparams: queryparams ?? {},
+    );
+
+    return response;
+  }
+
   BehaviorSubject<WorkBookCountResponseModel?> get subjectWorkBookCount =>
       _subjectWorkBookCount;
   BehaviorSubject<AddContentWorkBoardMapResponseModel?>
