@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../themes/light_theme.dart';
+
 class FloatingActionWidget extends StatelessWidget {
   final VoidCallback? callBack;
   FloatingActionWidget({Key? key, this.callBack}) : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: LightTheme().lightThemeData().primaryColor,
       onPressed: () {
         onNetworkOnPressEventTap(callBack, context);
       },
@@ -28,4 +30,3 @@ onNetworkOnPressEventTap(Function? callback, context) {
   //   // print(error);
   // });
 }
-

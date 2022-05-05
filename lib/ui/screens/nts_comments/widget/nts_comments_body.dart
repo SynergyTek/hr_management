@@ -7,6 +7,7 @@ import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/nts_comments/nts_comments.dart';
 import '../../../../data/models/nts_comments/nts_comments_response.dart';
 import '../../../../logic/blocs/nts_comments/nts_comments_bloc.dart';
+import '../../../../themes/light_theme.dart';
 import '../../../widgets/empty_list_widget.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
@@ -224,7 +225,7 @@ class _NTSCommentsBodyState extends State<NTSCommentsBody> {
                       color: Colors.white,
                       size: 18,
                     ),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: LightTheme().lightThemeData().primaryColor,
                     elevation: 0,
                   ),
                 ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../themes/light_theme.dart';
 import '../../../../themes/theme_config.dart';
 
 class SplashScreenBodyWidget extends StatelessWidget {
@@ -24,7 +25,7 @@ class SplashScreenBodyWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              titleText ,
+              titleText,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).textHeadingColor,
@@ -52,5 +53,7 @@ class SplashScreenBodyWidget extends StatelessWidget {
     );
   }
 
-  Widget _cirlularProgressIndicator() => CircularProgressIndicator();
+  Widget _cirlularProgressIndicator() => CircularProgressIndicator(
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
+      );
 }

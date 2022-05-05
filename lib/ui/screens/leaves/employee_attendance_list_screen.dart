@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/service_models/service.dart';
 import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
@@ -6,6 +7,8 @@ import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 class EmployeeAttendanceListScreen extends StatefulWidget {
   EmployeeAttendanceListScreen({Key? key}) : super(key: key);
@@ -70,7 +73,7 @@ class _EmployeeAttendanceListScreenState
   apiCall() {
     leaveBloc.getEmployeeAttendanceList(
       queryparams: {
-        "userId": "45bba746-3309-49b7-9c03-b5793369d73c",
+        "userId": BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
         "portalName": "HR",
         "searchStart": "2022-06-01 00:00:00.000", //TODO
         "searchEnd": "2022-07-30 00:00:00.000", //TODO

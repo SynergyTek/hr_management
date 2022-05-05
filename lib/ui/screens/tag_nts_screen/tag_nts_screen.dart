@@ -6,6 +6,8 @@ import 'package:hr_management/ui/screens/tag_nts_screen/widget/tag_nts_body.dart
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 
+import '../../../themes/light_theme.dart';
+
 class TagNTSScreen extends StatelessWidget {
   final NTSType? ntsType;
   final String? ntsId;
@@ -30,7 +32,7 @@ class TagNTSScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         child: Icon(
           Icons.add,
           size: 32,

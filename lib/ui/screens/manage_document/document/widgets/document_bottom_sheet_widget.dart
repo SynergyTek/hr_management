@@ -29,7 +29,7 @@ class DocumentBottomSheetWidget extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: bottomSheetDataList ?? [],
+            children: bottomSheetDataList ,
           ),
         ),
       ),

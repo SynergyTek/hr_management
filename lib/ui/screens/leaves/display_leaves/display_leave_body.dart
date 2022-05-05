@@ -4,6 +4,7 @@ import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../../data/models/service_models/service.dart';
+import '../../../../themes/light_theme.dart';
 import '../../../widgets/empty_list_widget.dart';
 import 'widget/leave_list_tile_widget.dart';
 
@@ -47,7 +48,9 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                backgroundColor: LightTheme().lightThemeData().primaryColor,
+              ),
             );
           }
         },

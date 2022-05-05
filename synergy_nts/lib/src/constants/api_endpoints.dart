@@ -2,7 +2,8 @@
 
 class APIEndpointConstants {
   /// Base URL.
-  static const BASE_URL = 'http://95.111.235.64:85';
+  static const BASE_URL = 'https://webapidev.aitalkx.com';
+  //  'http://95.111.235.64:85';
   static const IMAGE_BASE_URL = 'https://synergydev.aitalkx.com';
 
   /// Portal ID:

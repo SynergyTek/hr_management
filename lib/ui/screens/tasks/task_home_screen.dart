@@ -4,6 +4,7 @@ import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../routes/route_constants.dart';
 import '../../../routes/screen_arguments.dart';
+import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import 'widget/task_home_body.dart';
@@ -37,7 +38,7 @@ class TaskHomeScreen extends StatelessWidget {
       ),
       // ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         child: Icon(
           Icons.add,
           size: 32,

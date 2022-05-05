@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../data/enums/enums.dart';
 import '../../../routes/route_constants.dart';
 import '../../../routes/screen_arguments.dart';
+import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import 'widgets/note_home_body.dart';
@@ -35,7 +36,7 @@ class NoteHomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         child: Icon(Icons.add),
         onPressed: () => Navigator.pushNamed(
           context,

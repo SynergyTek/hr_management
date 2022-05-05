@@ -17,6 +17,7 @@ import '../helpers/multiselectList_helper.dart';
 import '../helpers/validation_helper.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../models/udf_models/udf_json_model.dart';
+import '../theme/light_theme.dart';
 import '../ui/map_widgets/google_maps_current_location_widget.dart';
 
 // Helpers:
@@ -169,7 +170,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     return SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         animatedIconTheme: const IconThemeData(size: 28.0),
-        backgroundColor: Colors.blue[900],
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         visible: true,
         curve: Curves.bounceInOut,
         children: [

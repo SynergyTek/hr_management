@@ -6,6 +6,7 @@ import '../../../data/enums/enums.dart';
 import '../../../data/models/nts_charts/chart_model.dart';
 import '../../../data/models/nts_charts/nts_charts_response.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
+import '../../../themes/light_theme.dart';
 import 'widget/charts_widget.dart';
 import '../../widgets/nts_widgets.dart';
 import 'package:sizer/sizer.dart';
@@ -35,8 +36,8 @@ class _NTSChartState extends State<NTSChart> {
             ? 'Note'
             : 'Task';
 
-    queryparams["startDate"] = dateformatterWithSlash.format(fromDate) ?? '';
-    queryparams["dueDate"] = dateformatterWithSlash.format(toDate) ?? '';
+    queryparams["startDate"] = dateformatterWithSlash.format(fromDate);
+    queryparams["dueDate"] = dateformatterWithSlash.format(toDate);
     queryparams["userid"] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 
@@ -105,7 +106,10 @@ class _NTSChartState extends State<NTSChart> {
                         );
                       } else {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            backgroundColor:
+                                LightTheme().lightThemeData().primaryColor,
+                          ),
                         );
                       }
                     }),
@@ -145,7 +149,10 @@ class _NTSChartState extends State<NTSChart> {
                         );
                       } else {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            backgroundColor:
+                                LightTheme().lightThemeData().primaryColor,
+                          ),
                         );
                       }
                     }),
@@ -171,7 +178,7 @@ class _NTSChartState extends State<NTSChart> {
                   children: [
                     Expanded(
                       child: DynamicDateTimeBox(
-                        code: fromDate.toString() ?? null,
+                        code: fromDate.toString(),
                         name: 'From',
                         key: new Key('Start Date'),
                         selectDate: (DateTime date) {
@@ -185,7 +192,7 @@ class _NTSChartState extends State<NTSChart> {
                     ),
                     Expanded(
                       child: DynamicDateTimeBox(
-                        code: toDate.toString() ?? null,
+                        code: toDate.toString(),
                         name: 'To',
                         key: new Key('End Date'),
                         selectDate: (DateTime date) {
@@ -204,9 +211,9 @@ class _NTSChartState extends State<NTSChart> {
                       onPressed: () {
                         ntsChartBloc.subjectDatewiseSLA.sink.add(null);
                         queryparams["startDate"] =
-                            dateformatterWithSlash.format(fromDate) ?? '';
+                            dateformatterWithSlash.format(fromDate);
                         queryparams["dueDate"] =
-                            dateformatterWithSlash.format(toDate) ?? '';
+                            dateformatterWithSlash.format(toDate);
                         queryparams["userid"] =
                             BlocProvider.of<UserModelBloc>(context)
                                     .state
@@ -245,7 +252,10 @@ class _NTSChartState extends State<NTSChart> {
                         );
                       } else {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            backgroundColor:
+                                LightTheme().lightThemeData().primaryColor,
+                          ),
                         );
                       }
                     }),

@@ -48,11 +48,11 @@ class _DMSNewFolderBodyWidgetState extends State<DMSNewFolderBodyWidget> {
       dataAction: widget.folderName != null && widget.folderName!.isNotEmpty
           ? "Edit"
           : "Create",
-      noteSubject: _newFolderNameTextEditingController.text.toString() ?? "",
+      noteSubject: _newFolderNameTextEditingController.text.toString() ,
       ownerUserId:
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       parentNoteId: widget.parentId ?? "",
-      sequenceOrder: _sequenceOrderTextEditingController.text.toString() ?? "",
+      sequenceOrder: _sequenceOrderTextEditingController.text.toString(),
       id: widget.folderId ?? "",
     ).toJson();
   }

@@ -4,6 +4,7 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/common_bloc/common_bloc.dart';
+import '../../../themes/light_theme.dart';
 import '../../screens/tasks/widget/task_home_body.dart';
 import '../appbar_widget.dart';
 import '../internet_connectivity_widget.dart';
@@ -55,9 +56,6 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     Map<String, dynamic> queryparams = Map();
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
-
-    queryparams['userid'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
     commonBloc.getModuleTreeList(
@@ -113,9 +111,6 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
     Map<String, dynamic> queryparams = Map();
 
     queryparams['userId'] =
-        BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
-
-    queryparams['userid'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "";
 
     if (enumType != null) queryparams['enumType'] = enumType;
@@ -406,7 +401,10 @@ class _NTSFilterWidgetState extends State<NTSFilterWidget> {
               serviceOwnedRequestedOptions ||
               ownerOptions ||
               assigneeOptions)
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(
+              backgroundColor: LightTheme().lightThemeData().primaryColor,
+            ));
           else
             return Container();
         }

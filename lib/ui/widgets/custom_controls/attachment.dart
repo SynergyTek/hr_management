@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/enums/enums.dart';
-import 'package:hr_management/data/models/api_models/post_response_model.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/attacment/video_file.dart';
 import 'package:hr_management/logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
-import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +16,7 @@ import 'package:mime_type/mime_type.dart';
 import 'package:video_player/video_player.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../themes/light_theme.dart';
 import '../custom_icons.dart';
 import '../snack_bar.dart';
 import 'body_layout_widget.dart';
@@ -135,7 +134,11 @@ class _SelectAttachmentState extends State<SelectAttachment> {
                                 child: Padding(
                                     padding:
                                         const EdgeInsets.only(bottom: 10.0),
-                                    child: const CircularProgressIndicator()),
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: LightTheme()
+                                          .lightThemeData()
+                                          .primaryColor,
+                                    )),
                               )
                             : _path != null || _paths != null
                                 ? new Container(
@@ -152,7 +155,8 @@ class _SelectAttachmentState extends State<SelectAttachment> {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         final bool isMultiPath =
-                                            _paths != null && _paths!.isNotEmpty;
+                                            _paths != null &&
+                                                _paths!.isNotEmpty;
                                         final String name = 'File $index: ' +
                                             (isMultiPath
                                                 ? _paths!.toList()[index]!
@@ -316,7 +320,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
 
       String result = await attachmentNTSBloc.postAttachmentDocumentData(
         attachmentData: post,
-      ) ;
+      );
 
       print(result);
       if (result.isNotEmpty) {

@@ -33,8 +33,9 @@ class _PayslipBodyState extends State<PayslipBody> {
       'legalEntityId': '60d2df036755e8de168d8db7',
       'month': '7',
       'year': '2021',
-      'userid':
+      'userId':
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
+      "portalName": "HR"
     };
   }
 
@@ -46,7 +47,8 @@ class _PayslipBodyState extends State<PayslipBody> {
         stream: payslipBloc.subjectPayslip.stream,
         builder: (context, AsyncSnapshot<PayslipResponse> snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data!.error != null && snapshot.data!.error!.length > 0) {
+            if (snapshot.data!.error != null &&
+                snapshot.data!.error!.length > 0) {
               return Center(
                 child: Text(snapshot.data!.error!),
               );
