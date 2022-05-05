@@ -31,6 +31,7 @@ class _DMSWorkbookScreenCountState extends State<DMSWorkbookScreen> {
 
   @override
   void initState() {
+    workBookBloc.subjectWorkBookCount.sink.add(null);
     workBookBloc.getWorkBookCount(queryparams: {
       "userId":
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
@@ -90,6 +91,7 @@ class WorkbookListData extends StatefulWidget {
 class _WorkbookListDataState extends State<WorkbookListData> {
   @override
   void initState() {
+    workBookBloc.subjectNoteBookReport.sink.add(null);
     workBookBloc.getNoteBookReport(queryparams: {
       "noteId": widget.noteId,
     });
@@ -112,15 +114,55 @@ class _WorkbookListDataState extends State<WorkbookListData> {
             ));
           }
           List<NtsItem>? list = snapshot.data?.mapdata?.ntsItems;
-          // return Container();
+
+          //Code block to sort the list into tree view starts here
+          List<NtsItem>? sortedList = [];
+          for (var i = 0; i < list!.length; i++) {
+            bool isPresent = false;
+            if (list[i].level == 0) {
+              sortedList.add(list[i]);
+            } else if (i == list.length - 1) {
+              sortedList.forEach((element) {
+                if (element.id == list[i].id) {
+                  isPresent = true;
+                }
+              });
+              if (!isPresent) sortedList.add(list[i]);
+            } else {
+              for (var j = i + 1; j < list.length; j++) {
+                if (list[j].itemNo!.contains('${list[i].itemNo}')) {
+                  sortedList.forEach((element) {
+                    if (element.id == list[i].id) {
+                      isPresent = true;
+                    }
+                  });
+                  if (!isPresent)
+                    sortedList
+                      ..add(list[i])
+                      ..add(list[j]);
+                  else
+                    sortedList.add(list[j]);
+                } else {
+                  sortedList.forEach((element) {
+                    if (element.id == list[i].id) {
+                      isPresent = true;
+                    }
+                  });
+                  if (!isPresent) sortedList.add(list[i]);
+                }
+              }
+            }
+          }
+          //Code block to sort the list into tree view ends here
+
           return ListView.builder(
-            itemCount: list?.length,
+            itemCount: sortedList.length,
             itemBuilder: (BuildContext context, int index) {
-              // return Container();
               return DmsWorkbookListCard(
                 index: index,
-                workbookList: list,
+                workbookList: sortedList,
                 onTap: false,
+                noteId: widget.noteId,
               );
             },
           );

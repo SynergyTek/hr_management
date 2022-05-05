@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../data/enums/enums.dart';
 import '../../../../../data/models/work_book_models/get_note_book_report_model.dart';
 import '../../../../../routes/route_constants.dart';
 import '../../../../../routes/screen_arguments.dart';
@@ -11,10 +10,12 @@ class DmsWorkbookListCard extends StatelessWidget {
   final bool? onTap;
   final List<NtsItem>? workbookList;
   final int index;
+  final String noteId;
   const DmsWorkbookListCard({
     Key? key,
     required this.workbookList,
     required this.index,
+    required this.noteId,
     this.onTap,
   }) : super(key: key);
 
@@ -24,14 +25,11 @@ class DmsWorkbookListCard extends StatelessWidget {
       margin: const EdgeInsets.all(8.0),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          // bottomLeft: Radius.circular(32.0),
-          topRight: Radius.circular(32.0),
+          bottomLeft: Radius.circular(24.0),
+          topRight: Radius.circular(24.0),
         ),
       ),
-      color: (workbookList![index].parentId != null &&
-              workbookList![index].parentId!.isNotEmpty)
-          ? Colors.blue[50]
-          : Colors.blue[100],
+      color: Colors.blue[tileColor(workbookList![index].level)],
       elevation: 4,
       child: InkWell(
         child: Container(
@@ -66,7 +64,8 @@ class DmsWorkbookListCard extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => _handleMoreOnPressed(context: context),
+                    onPressed: () =>
+                        _handleMoreOnPressed(context: context, noteId: noteId),
                     icon: Icon(Icons.more_vert),
                   ),
                 ],
@@ -142,7 +141,10 @@ class DmsWorkbookListCard extends StatelessWidget {
     );
   }
 
-  _handleMoreOnPressed({required BuildContext context}) {
+  _handleMoreOnPressed({
+    required BuildContext context,
+    required String noteId,
+  }) {
     showModalBottomSheet(
       context: context,
       isDismissible: true,
@@ -154,12 +156,8 @@ class DmsWorkbookListCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(
-                16.0,
-              ),
-              topRight: Radius.circular(
-                16.0,
-              ),
+              topLeft: Radius.circular(16.0),
+              topRight: Radius.circular(16.0),
             ),
           ),
           padding: DEFAULT_LARGE_PADDING,
@@ -203,6 +201,12 @@ class DmsWorkbookListCard extends StatelessWidget {
                       tileColor: Colors.grey[200],
                       leading: Icon(Icons.arrow_downward_sharp),
                       title: Text("Move"),
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        DMS_MOVE_WORBOOK_SCREEN,
+                        arguments:
+                            ScreenArguments(arg2: workbookList![index].id),
+                      ),
                     )
                   : SizedBox(),
               ListTile(
@@ -237,38 +241,51 @@ class DmsWorkbookListCard extends StatelessWidget {
         title: Text(title!),
         onTap: () {
           if (title == 'Note') {
-            Navigator.pushNamed(
-              context!,
-              ADD_EDIT_NOTE_ROUTE,
-              arguments: ScreenArguments(
-                arg1: workbookList![index].templateCode ?? '',
-                arg2: '',
-                portalType: PortalType.hr,
-              ),
-            );
+            // Navigator.pushNamed(
+            //   context!,
+            //   ADD_EDIT_NOTE_ROUTE,
+            //   arguments: ScreenArguments(
+            //     arg1: workbookList![index].templateCode ?? '',
+            //     arg2: '',
+            //     portalType: PortalType.hr,
+            //   ),
+            // );
           } else if (title == 'Task') {
-            Navigator.pushNamed(
-              context!,
-              CREATE_EDIT_TASK_ROUTE,
-              arguments: ScreenArguments(
-                arg1: workbookList![index].templateCode ?? '',
-                arg2: '',
-                portalType: PortalType.hr,
-              ),
-            );
+            // Navigator.pushNamed(
+            //   context!,
+            //   CREATE_EDIT_TASK_ROUTE,
+            //   arguments: ScreenArguments(
+            //     arg1: workbookList![index].templateCode ?? '',
+            //     arg2: '',
+            //     portalType: PortalType.hr,
+            //   ),
+            // );
           } else if (title == 'Service') {
-            Navigator.pushNamed(
-              context!,
-              CREATE_SERVICE_ROUTE,
-              arguments: ScreenArguments(
-                arg1: workbookList![index].templateCode ?? '',
-                arg2: '',
-                portalType: PortalType.hr,
-              ),
-            );
+            // Navigator.pushNamed(
+            //   context!,
+            //   CREATE_SERVICE_ROUTE,
+            //   arguments: ScreenArguments(
+            //     arg1: workbookList![index].templateCode ?? '',
+            //     arg2: '',
+            //     portalType: PortalType.hr,
+            //   ),
+            // );
           } else if (title == 'Email') {}
         },
       ),
     );
+  }
+
+  int tileColor(int? level) {
+    switch (level) {
+      case 0:
+        return 300;
+      case 1:
+        return 200;
+      case 2:
+        return 100;
+      default:
+        return 50;
+    }
   }
 }

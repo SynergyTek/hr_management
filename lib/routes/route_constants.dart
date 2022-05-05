@@ -121,3 +121,4 @@ const String MISCONDUCT_SCREEN = "/misconduct_screen";
 const String HR_DIRECT_CONTRACT_SCREEN = "/hr_direct_contract_screen";
 
 const String DMS_WORBOOK_SCREEN = "/dms_workbook_screen";
+const String DMS_MOVE_WORBOOK_SCREEN = "/dms_move_workbook_screen";

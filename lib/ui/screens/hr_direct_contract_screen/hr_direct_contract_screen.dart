@@ -27,8 +27,13 @@ class _HRDirectContractScreenState extends State<HRDirectContractScreen> {
   apiCall() {
     resignationTerminationBloc.getHrDirectContractList(
       queryparams: {
-        "userId": BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-        "portalName": "HR",
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
         "personId": "129b167b-c1e9-4876-874b-015605071a8d",
       },
     );

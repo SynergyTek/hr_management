@@ -29,7 +29,11 @@ class _TerminationBodyWidgetState extends State<TerminationBodyWidget> {
     await resignationTerminationBloc.getTerminationData(queryparams: {
       "userId":
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
-      "portalName": "HR",
+      "portalName": BlocProvider.of<UserModelBloc>(context)
+              .state
+              .extraUserInformation
+              ?.portalType ??
+          "HR",
     });
   }
 

@@ -351,12 +351,12 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                           dmsSourceFolderBloc.getDMSChildFolderAndDocumentsData(
                             queryparams: {
                               "userId": userId,
-                              // "userId": BlocProvider.of<UserModelBloc>(context)
-                              //         .state
-                              //         .userModel
-                              //         ?.id ??
-                              //     '',
-                              "portalName": "HR",
+                              "portalName":
+                                  BlocProvider.of<UserModelBloc>(context)
+                                          .state
+                                          .extraUserInformation
+                                          ?.portalType ??
+                                      "HR",
                               "key": filterChildList[_index].key ?? '',
                             },
                           );
