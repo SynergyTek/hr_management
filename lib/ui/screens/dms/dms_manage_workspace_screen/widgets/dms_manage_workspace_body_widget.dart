@@ -65,7 +65,7 @@ class _DMSManageWorkspaceBodyWidgetState
       ownerUserId:
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? "",
       // ! TODO: no data found for parent workspace in the metadata API while editing in use case.
-      parentNoteId: _selectedParentWorkspace?.id ?? "",
+      parentNoteId: _selectedParentWorkspace?.id ?? null,
       sequenceOrder: _sequenceOrderTextEditingController.text,
       workspaceName: _workspaceNameTextEditingController.text,
 

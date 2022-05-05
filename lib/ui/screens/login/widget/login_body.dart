@@ -6,6 +6,7 @@ import 'package:hr_management/data/models/login_models/portal_view_model.dart';
 import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/themes/light_theme.dart';
+import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 import '../../../../data/models/login_models/extra_user_information_model.dart';
 import '../../../../data/models/login_models/login_response_model.dart';
@@ -231,8 +232,12 @@ class _LoginBodyState extends State<LoginBody> {
                                       createLoginFormBloc.password.value ==
                                           "") {
                                     _showMyDialog();
+
                                     return false;
                                   } else {
+                                    setState(() {
+                                      showCPI = true;
+                                    });
                                     loginViewModelPostRequest(
                                         createLoginFormBloc.email.value,
                                         createLoginFormBloc.password.value);
@@ -252,7 +257,7 @@ class _LoginBodyState extends State<LoginBody> {
             Visibility(
               visible: showCPI,
               child: Center(
-                child: CircularProgressIndicator(),
+                child: CustomProgressIndicator(loadingText: 'Please Wait'),
               ),
             )
           ],

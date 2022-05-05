@@ -3,6 +3,7 @@ import '../../../data/models/nts_template_tree_list_models/nts_template_tree_lis
 import '../../../data/models/nts_template_tree_list_models/nts_template_tree_list_response.dart';
 import '../../../logic/blocs/nts_template_tree_list_bloc/nts_template_tree_list_bloc.dart';
 import '../../../data/enums/enums.dart';
+import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import 'widgets/note_worklist.dart';
@@ -67,7 +68,10 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
                     return Container();
                     //  _filterWidget(snapshot.data.data);
                   } else {
-                    return CircularProgressIndicator();
+                    return CircularProgressIndicator(
+                      backgroundColor:
+                          LightTheme().lightThemeData().primaryColor,
+                    );
                   }
                 },
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:synergy_nts/src/models/udf_models/udf_json_model.dart';
 
 import '../../../synergy_nts.dart';
+import '../../theme/light_theme.dart';
 import '../widgets/tag.dart';
 import 'widget/tag_nts_body.dart';
 
@@ -27,7 +28,7 @@ class TagNTSScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         child: const Icon(
           Icons.add,
           size: 32,

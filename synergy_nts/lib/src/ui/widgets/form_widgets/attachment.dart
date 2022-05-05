@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import '../../../constants/enums.dart';
 import '../../../helpers/video_file.dart';
+import '../../../theme/light_theme.dart';
 import '../widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
@@ -134,7 +135,11 @@ class _SelectAttachmentState extends State<SelectAttachment> {
                                   child: Container(
                                       padding:
                                           const EdgeInsets.only(bottom: 10.0),
-                                      child: const CircularProgressIndicator()),
+                                      child: CircularProgressIndicator(
+                                        backgroundColor: LightTheme()
+                                            .lightThemeData()
+                                            .primaryColor,
+                                      )),
                                 )
                               : _path != null || _paths != null
                                   ? Container(

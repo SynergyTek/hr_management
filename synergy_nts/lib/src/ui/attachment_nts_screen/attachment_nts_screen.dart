@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/enums.dart';
+import '../../theme/light_theme.dart';
 import '../widgets/form_widgets/attachment.dart';
 import 'widgets/attachment_nts_body_widget.dart';
 
@@ -28,7 +29,7 @@ class AttachmentNTSScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
         child: const Icon(
           Icons.attach_file,
           size: 32,
