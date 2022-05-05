@@ -34,6 +34,11 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
   TextEditingController _referenceController = TextEditingController();
   TextEditingController _typeController = TextEditingController();
   TextEditingController _beforeAfterController = TextEditingController();
+
+  String? moveToParentId;
+  String? moveType;
+  String? movePostionSeq;
+
   NoteModel noteModel = NoteModel();
   String userId = '';
   bool isVisible = false;
@@ -126,6 +131,7 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
                     onListTap: (dynamic value) {
                       NtsItem _model = value;
                       _referenceController.text = _model.subject ?? '';
+                      moveToParentId = _model.id;
                     },
                   ),
                   NTSDropDownSelect(
@@ -145,6 +151,7 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
                       ntsDdBloc.subject.sink.add(null);
                       NTSDropdownModel _model = value;
                       _typeController.text = _model.name!;
+                      moveType = _model.id;
                       setState(() {});
                     },
                   ),
@@ -168,7 +175,8 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
                         ntsDdBloc.subject.sink.add(null);
                         NTSDropdownModel _model = value;
                         _beforeAfterController.text = _model.name!;
-                        setState(() {});
+                        movePostionSeq = _model.id;
+                        // setState(() {});
                       },
                     ),
                   ),
@@ -215,37 +223,34 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
     var jsonModel = jsonDecode(stringModel);
     postNoteModel = NoteModel.fromJson(jsonModel);
 
-    // postNoteModel.ownerUserId = userId;
-    postNoteModel.parentNoteId = 'hjfghf'; //move
-    // postNoteModel.requestedByUserId = userId;
     postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
+
+    postNoteModel.moveToParent = moveToParentId;
+    postNoteModel.bookMoveTypeEnum = moveType;
+    postNoteModel.movePostionEnum = movePostionSeq ?? '';
+    postNoteModel.id = noteModel.parentNoteId;
+    // postNoteModel.
 
     setState(() {
       isVisible = true;
     });
 
-    PostResponse result = await workBookBloc.postManageMoveToParent(
-      noteModel: postNoteModel,
-      // noteModel: postNoteModel,
-      // queryparams: _handleNoteDetailsQueryparams(
-      //   noteId: widget.noteId,
-      //   templatecode: widget.templateCode ?? '',
-      //   userid: widget.userID,
-      // ),
-    );
+    // PostResponse result = await workBookBloc.postManageMoveToParent(
+    //   noteModel: postNoteModel,
+    // );
     // print(result);
-    if (result.isSuccess!) {
-      setState(() {
-        isVisible = false;
-      });
-      // resultMsg = result.messages;
-      Navigator.pop(context);
-    } else {
-      setState(() {
-        isVisible = false;
-      });
-      // resultMsg = result.messages;
-    }
+    // if (result.isSuccess!) {
+    //   setState(() {
+    //     isVisible = false;
+    //   });
+    //   // resultMsg = result.messages;
+    //   Navigator.pop(context);
+    // } else {
+    //   setState(() {
+    //     isVisible = false;
+    //   });
+    //   // resultMsg = result.messages;
+    // }
     // displaySnackBar(text: resultMsg!, context: context);
   }
 }
