@@ -74,17 +74,24 @@ class _BusinessTripBodyState extends State<BusinessTripBody> {
                           );
                         },
                         leading: Icon(Icons.business_center_rounded),
-                        trailing: Text(
-                          model[index].status ?? "-",
-                          style: TextStyle(color: Colors.green, fontSize: 15),
-                        ),
                         title: Container(
                           padding: DEFAULT_VERTICAL_PADDING,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Purpose - " +
-                                  (model[index].purpose ?? "NA")),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text("Purpose - " +
+                                        (model[index].purpose ?? "NA")),
+                                  ),
+                                  Text(
+                                    model[index].status ?? "-",
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 15),
+                                  )
+                                ],
+                              ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
