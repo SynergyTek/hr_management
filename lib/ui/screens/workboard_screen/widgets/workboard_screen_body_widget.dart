@@ -136,9 +136,11 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             (list![index].iconFileId != null)
-                                ? Image.network(APIEndpointConstants
-                                        .PROFILE_PICTURE_ENDPOINT +
-                                    list![index].iconFileId!)
+                                ? Image.network(
+                                    APIEndpointConstants
+                                            .PROFILE_PICTURE_ENDPOINT +
+                                        list![index].iconFileId!)
+                                   
                                 : Container(),
                             (list?[index].workBoardName != null)
                                 ? Expanded(

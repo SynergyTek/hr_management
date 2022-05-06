@@ -181,6 +181,7 @@ class NoteModel {
     this.moveToParent,
     this.movePostionEnum,
     this.bookMoveTypeEnum,
+    this.fileIds,
   });
 
   dynamic jsonCopy;
@@ -351,13 +352,14 @@ class NoteModel {
   int? sequenceOrder;
   String? companyId;
   String? legalEntityId;
-  int? dataAction;
+  dynamic dataAction;
   int? status;
   int? versionNo;
   dynamic portalId;
   String? moveToParent;
   String? movePostionEnum;
   String? bookMoveTypeEnum;
+  dynamic fileIds;
 
   factory NoteModel.fromJson(Map<String, dynamic> json) => NoteModel(
         jsonCopy: json["JsonCopy"],
@@ -535,6 +537,7 @@ class NoteModel {
         status: json["Status"],
         versionNo: json["VersionNo"],
         portalId: json["PortalId"],
+        fileIds: json["FileIds"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -698,9 +701,9 @@ class NoteModel {
         "EnableDataPermission": enableDataPermission,
         "DataPermissionColumnId": dataPermissionColumnId,
         "Id": id,
-        "CreatedDate": createdDate!.toIso8601String(),
+        "CreatedDate": createdDate?.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate?.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,
@@ -713,6 +716,7 @@ class NoteModel {
         "MoveToParent": moveToParent,
         "MovePostionEnum": movePostionEnum,
         "BookMoveTypeEnum": bookMoveTypeEnum,
+        "FileIds": fileIds,
       };
 }
 

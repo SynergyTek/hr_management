@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/attachment_nts_models/attachment_nts_model.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/uploaded_content_model/uploaded_content_model.dart';
 import '../../../constants/api_endpoints.dart';
 import '../../enums/enums.dart';
 import '../../models/attachment_nts_models/attachment_nts_response.dart';
+import '../../models/note/note_model.dart';
 
 part 'attachment_nts_repository_implementation.dart';
 
@@ -30,5 +32,8 @@ abstract class AbstractAttachmentNTSRepository {
 
    Future<bool> postManageUploadedFile({
     required UploadedContentModel model,
+  });
+   Future<bool> postAddUploadedFile({
+    required NoteModel model,
   });
 }
