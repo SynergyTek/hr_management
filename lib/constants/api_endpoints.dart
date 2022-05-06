@@ -593,7 +593,7 @@ class APIEndpointConstants {
       'cms/query/GetEnumIdNameList?enumType=MovePostionEnum';
 
   static const MANAGE_MOVE_TO_PARENT_ENDPOINT =
-      BASE_URL + 'cms/query/ManageMoveToParent';
+      BASE_URL + '/cms/query/ManageMoveToParent';
 
   static const DELETE_SERVICE_BOOK_ITEMS_ENDPOINT =
       BASE_URL + '/api/cms/DeleteServiceBookItems';

@@ -67,7 +67,7 @@ class _BusinessTripBodyState extends State<BusinessTripBody> {
                             CREATE_SERVICE_ROUTE,
                             arguments: ScreenArguments(
                               arg1: "",
-                              arg2: model[index].id,
+                              arg2: model[index].ntsNoteId,
                               arg3: "",
                               val1: false,
                             ),

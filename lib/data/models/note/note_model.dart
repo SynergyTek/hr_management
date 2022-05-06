@@ -181,6 +181,8 @@ class NoteModel {
     this.moveToParent,
     this.movePostionEnum,
     this.bookMoveTypeEnum,
+    this.ntsType,
+    this.ntsId,
   });
 
   dynamic jsonCopy;
@@ -358,6 +360,8 @@ class NoteModel {
   String? moveToParent;
   String? movePostionEnum;
   String? bookMoveTypeEnum;
+  String? ntsType;
+  String? ntsId;
 
   factory NoteModel.fromJson(Map<String, dynamic> json) => NoteModel(
         jsonCopy: json["JsonCopy"],
@@ -713,6 +717,8 @@ class NoteModel {
         "MoveToParent": moveToParent,
         "MovePostionEnum": movePostionEnum,
         "BookMoveTypeEnum": bookMoveTypeEnum,
+        "NtsType": ntsType,
+        "NtsId": ntsId,
       };
 }
 

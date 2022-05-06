@@ -17,6 +17,7 @@ import '../../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../../logic/blocs/work_book_bloc/work_book_bloc.dart';
 import '../../../../widgets/primary_button.dart';
 import '../../../../widgets/progress_indicator.dart';
+import '../../../../widgets/snack_bar.dart';
 
 class DMSMoveWorkbookBodyWidget extends StatefulWidget {
   final String noteId;
@@ -198,8 +199,7 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
                   Expanded(
                     child: PrimaryButton(
                       buttonText: "Save",
-                      handleOnPressed: () {},
-                      // handleOnPressed: () => _handleOnPressedSaveButton(),
+                      handleOnPressed: () => _handleOnPressedSaveButton(),
                     ),
                   ),
                 ],
@@ -218,6 +218,7 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
   }
 
   _handleOnPressedSaveButton() async {
+    String resultMsg;
     NoteModel postNoteModel = NoteModel();
     String stringModel = jsonEncode(noteModel);
     var jsonModel = jsonDecode(stringModel);
@@ -229,28 +230,29 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
     postNoteModel.bookMoveTypeEnum = moveType;
     postNoteModel.movePostionEnum = movePostionSeq ?? '';
     postNoteModel.id = noteModel.parentNoteId;
-    // postNoteModel.
+    postNoteModel.ntsType = 'Note';
+    postNoteModel.ntsId = noteModel.id;
 
     setState(() {
       isVisible = true;
     });
 
-    // PostResponse result = await workBookBloc.postManageMoveToParent(
-    //   noteModel: postNoteModel,
-    // );
-    // print(result);
-    // if (result.isSuccess!) {
-    //   setState(() {
-    //     isVisible = false;
-    //   });
-    //   // resultMsg = result.messages;
-    //   Navigator.pop(context);
-    // } else {
-    //   setState(() {
-    //     isVisible = false;
-    //   });
-    //   // resultMsg = result.messages;
-    // }
-    // displaySnackBar(text: resultMsg!, context: context);
+    PostResponse result = await workBookBloc.postManageMoveToParent(
+      noteModel: postNoteModel,
+    );
+
+    if (result.isSuccess!) {
+      setState(() {
+        isVisible = false;
+      });
+      resultMsg = 'Workbook moved successfully';
+      Navigator.pop(context);
+    } else {
+      setState(() {
+        isVisible = false;
+      });
+      resultMsg = 'Unable to move workbook';
+    }
+    displaySnackBar(text: resultMsg, context: context);
   }
 }

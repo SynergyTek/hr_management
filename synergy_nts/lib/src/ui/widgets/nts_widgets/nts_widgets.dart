@@ -666,7 +666,7 @@ class DynamicTextDisplay extends StatelessWidget {
         text,
         style: const TextStyle(
           color: AppThemeColor.textColorDark,
-          fontSize: 20,
+          fontSize: 16,
         ),
         textAlign: TextAlign.left,
       ),

@@ -1141,29 +1141,26 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
-      } else {
-        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
-          udfJson[model[i].key] = '';
+      } else if (model[i].type == 'htmlelement' && model[i].hidden != true) {
+        String? content = '';
+        if (model[i]?.content != null && model[i]?.content.isNotEmpty) {
+          if (model[i].content.contains('<h4>')) {
+            content = model[i].content.split('<h4>')[1].split('</h4>')[0];
+          }
+          if (model[i].content.contains('<p>')) {
+            content = model[i].content.split('<p>')[1].split('</p>')[0];
+          }
         }
-        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
+
+        // Guard clause.
+        if (content == null || content.isEmpty) {
+          continue;
         }
-        final textField$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+
         listDynamic.add(
-          BlocTextBoxWidget(
-            labelName: model[i].label,
-            fieldName: model[i].label,
-            readonly: model[i].disabled,
-            textFieldBloc: textField$i,
-            prefixIcon: const Icon(Icons.note),
-            maxLines: 1,
-            onChanged: (value) {
-              udfJson[model[i].key] = value.toString();
-            },
-          ),
+          DynamicTextDisplay(text: content),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
-      }
+      } else {}
     }
     return listDynamic;
   }
