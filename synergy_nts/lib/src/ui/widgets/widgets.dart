@@ -308,7 +308,7 @@ class ExpandableField extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(bottom: 1.0),
         child: ExpansionTile(
-            initiallyExpanded: false,
+            initiallyExpanded: true,
             // leading: Icon(Icons.calendar_today_sharp),
             trailing: isTileExpanded!
                 ? Icon(Icons.keyboard_arrow_down)
@@ -317,7 +317,7 @@ class ExpandableField extends StatelessWidget {
               valueChanged!(isexpand);
             },
             title: Text(
-              "Dates Detail",
+              "Other Details",
               style: TextStyle(color: Theme.of(context).primaryColor),
             ),
             children: children!),
