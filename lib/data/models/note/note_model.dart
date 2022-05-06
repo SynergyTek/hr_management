@@ -183,6 +183,7 @@ class NoteModel {
     this.bookMoveTypeEnum,
     this.ntsType,
     this.ntsId,
+    this.fileIds,
   });
 
   dynamic jsonCopy;
@@ -353,7 +354,7 @@ class NoteModel {
   int? sequenceOrder;
   String? companyId;
   String? legalEntityId;
-  int? dataAction;
+  dynamic dataAction;
   int? status;
   int? versionNo;
   dynamic portalId;
@@ -362,6 +363,7 @@ class NoteModel {
   String? bookMoveTypeEnum;
   String? ntsType;
   String? ntsId;
+  dynamic fileIds;
 
   factory NoteModel.fromJson(Map<String, dynamic> json) => NoteModel(
         jsonCopy: json["JsonCopy"],
@@ -539,6 +541,7 @@ class NoteModel {
         status: json["Status"],
         versionNo: json["VersionNo"],
         portalId: json["PortalId"],
+        fileIds: json["FileIds"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -702,9 +705,9 @@ class NoteModel {
         "EnableDataPermission": enableDataPermission,
         "DataPermissionColumnId": dataPermissionColumnId,
         "Id": id,
-        "CreatedDate": createdDate!.toIso8601String(),
+        "CreatedDate": createdDate?.toIso8601String(),
         "CreatedBy": createdBy,
-        "LastUpdatedDate": lastUpdatedDate!.toIso8601String(),
+        "LastUpdatedDate": lastUpdatedDate?.toIso8601String(),
         "LastUpdatedBy": lastUpdatedBy,
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,
@@ -719,6 +722,7 @@ class NoteModel {
         "BookMoveTypeEnum": bookMoveTypeEnum,
         "NtsType": ntsType,
         "NtsId": ntsId,
+        "FileIds": fileIds,
       };
 }
 

@@ -136,16 +136,11 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             (list![index].iconFileId != null)
-                                ? CachedNetworkImage(
-                                    imageUrl: APIEndpointConstants
+                                ? Image.network(
+                                    APIEndpointConstants
                                             .PROFILE_PICTURE_ENDPOINT +
-                                        list![index].iconFileId!,
-                                    placeholder: (context, url) =>
-                                        CircularProgressIndicator(
-                                          backgroundColor: LightTheme()
-                                              .lightThemeData()
-                                              .primaryColor,
-                                        ))
+                                        list![index].iconFileId!)
+                                   
                                 : Container(),
                             (list?[index].workBoardName != null)
                                 ? Expanded(

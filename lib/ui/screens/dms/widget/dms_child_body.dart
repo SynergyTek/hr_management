@@ -8,6 +8,7 @@ import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_mo
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
 import 'package:hr_management/data/models/dms/permission/permission_model.dart';
+import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:hr_management/data/models/uploaded_content_model/uploaded_content_model.dart';
 import 'package:hr_management/logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
 import 'package:hr_management/logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
@@ -21,6 +22,8 @@ import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 import 'package:hr_management/ui/widgets/custom_icons.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import '../../../../constants/api_endpoints.dart';
+import '../../../../data/helpers/download_helper/downloader_screen/downloader.dart';
 import '../../../widgets/snack_bar.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../themes/theme_config.dart';
@@ -592,7 +595,20 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           child: ListTile(
             leading: Icon(CustomIcons.archive),
             title: Text('Download'),
-            // onTap: () => archiveDialog(id),
+            onTap: () => showModalBottomSheet(
+              context: context,
+              isDismissible: true,
+              isScrollControlled: false,
+              backgroundColor: Colors.transparent,
+              enableDrag: true,
+              builder: (BuildContext context) {
+                return Downloader(
+                  filename: item.title!,
+                  url: APIEndpointConstants.DOWNLOAD_ATTACHMENT +
+                      (item.fileId ?? ''),
+                );
+              },
+            ),
           ),
         ),
         Visibility(
@@ -1154,6 +1170,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
   _handleUploadFilesOnTap(DMSSourceFolderModel item) async {
     UploadedContentModel uploadedContentModel = UploadedContentModel();
     UploadedContent uploadedContent = UploadedContent();
+    NoteModel noteModel = NoteModel();
 
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -1169,19 +1186,24 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                 fileAttachmentController.text = " (1) File Attached: " + value2;
               });
               // uploadedContent.fileUid = value;
-              uploadedContent.relativePath = '${item.title}/$value2';
-              uploadedContent.fileId = value;
-              uploadedContent.folderName = item.title;
-              // uploadedContent.folders = item.folder;
-              uploadedContent.uploaded = item.canCreateDocument;
-              // uploadedContent.parentFolderName=item.
+              // uploadedContent.relativePath = '${item.title}/$value2';
+              // uploadedContent.fileId = value;
+              // uploadedContent.fileIds = value;
 
-              uploadedContentModel.parentId = item.key;
-              uploadedContentModel.uploadedContent =
-                  jsonEncode([uploadedContent.toJson()]);
+              // uploadedContent.folderName = item.title;
+              // // uploadedContent.folders = item.folder;
+              // uploadedContent.uploaded = item.canCreateDocument;
+              // // uploadedContent.parentFolderName=item.
+              // uploadedContent.dataAction = "Create";
 
-              await attachmentNTSBloc.postManageUploadedFile(
-                  model: uploadedContentModel);
+              // uploadedContentModel.parentId = item.key;
+              // uploadedContentModel.uploadedContent =
+              //     jsonEncode([uploadedContent.toJson()]);
+              noteModel.fileIds = value;
+              noteModel.dataAction = "Create";
+              noteModel.parentNoteId = item.sourceFolderModelParentId;
+
+              await attachmentNTSBloc.postAddUploadedFile(model: noteModel);
             },
           );
         },

@@ -173,7 +173,11 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
                               .add(null);
                           workBoardModel?.portalName = "HR";
                           workBoardModel?.requestedByUserId =
-                             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
+                              BlocProvider.of<UserModelBloc>(context)
+                                      .state
+                                      .userModel
+                                      ?.id ??
+                                  '';
                           workBoardModel?.workboardId = widget.workBoardId;
                           workBoardModel?.isTasks = (isTasks != null)
                               ? isTasks
@@ -196,9 +200,6 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
                           await workboardBloc.postDuplicateWorkBoard(
                             workBoardModel: workBoardModel,
                           );
-                          setState(() {
-                            showProgressIndicator = false;
-                          });
 
                           if (workboardBloc
                               .subjectPostDuplicateWorkBoard.hasValue) {
@@ -211,6 +212,9 @@ class _DuplicateWorkboardBodyState extends State<DuplicateWorkboardBody> {
                                   context: context);
                             }
                           }
+                          setState(() {
+                            showProgressIndicator = false;
+                          });
                           Navigator.of(context).pop();
                         },
                         width: 100,

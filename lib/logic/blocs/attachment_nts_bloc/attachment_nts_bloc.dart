@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/attachment_nts_models/attachment_nts_model.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
+import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../data/enums/enums.dart';
@@ -16,6 +18,7 @@ class AttachmentNTSBloc {
   final BehaviorSubject<AttachmentNTSResponse> _subject =
       BehaviorSubject<AttachmentNTSResponse>();
   final BehaviorSubject _subjectPostManageUploadedFile = BehaviorSubject();
+  final BehaviorSubject _subjectPostAddUploadedFile = BehaviorSubject();
 
   /// Used to fetch new entries.
   getData({
@@ -66,6 +69,17 @@ class AttachmentNTSBloc {
     return response;
   }
 
+  Future<bool> postAddUploadedFile({
+    required NoteModel model,
+  }) async {
+    dynamic response = await _apiRepository.postAddUploadedFile(
+      model: model,
+    );
+
+    _subjectPostAddUploadedFile.sink.add(response);
+    return response;
+  }
+
   /// Used to update an existing entry.
   putData() async {
     // Update here
@@ -97,11 +111,13 @@ class AttachmentNTSBloc {
   dispose() {
     _subject.close();
     _subjectPostManageUploadedFile.close();
+    _subjectPostAddUploadedFile.close();
   }
 
   BehaviorSubject<AttachmentNTSResponse> get subject => _subject;
   BehaviorSubject get subjectPostManageUploadedFile =>
       _subjectPostManageUploadedFile;
+  BehaviorSubject get subjectPostAddUploadedFile => _subjectPostAddUploadedFile;
 }
 
 final attachmentNTSBloc = AttachmentNTSBloc();
