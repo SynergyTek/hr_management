@@ -9,7 +9,7 @@ class APIEndpointConstants {
       BASE_URL + '/common/query/GetFile?fileId=';
   static const DOWNLOAD_ATTACHMENT =
       BASE_URL + 'CHR/query/DownloadAttachment?fileId=';
-  static const UPLOAD_FILE = BASE_URL + "/chr/query/AddUploadedFile";
+  static const ADD_UPLOAD_FILE = BASE_URL + "/chr/query/AddUploadedFile";
 
   //************************************************************************//
 

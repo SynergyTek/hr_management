@@ -562,7 +562,8 @@ class NoteModel {
         "NoteTemplateVM": noteTemplateVm,
         "TemplateViewModel": templateViewModel,
         "NoteTable": noteTable,
-        "ColumnList": List<dynamic>.from(columnList!.map((x) => x.toJson())),
+        "ColumnList":
+            List<dynamic>.from(columnList?.map((x) => x.toJson()) ?? []),
         "ParentTemplateId": parentTemplateId,
         "ActiveUserId": activeUserId,
         "NoteNo": noteNo,
