@@ -283,6 +283,7 @@ class AppRouter {
             moduleId: args?.arg2,
             mode: args?.arg3,
             showBack: args?.showBack ?? false,
+            templateCode: args?.arg4,
           ),
         );
 
