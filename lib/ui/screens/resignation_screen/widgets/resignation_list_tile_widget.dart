@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../data/models/resignation_models/resignation_termination_response.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/dotted_divider_widget.dart';
 import '../../../widgets/widgets.dart';
 
@@ -26,86 +28,102 @@ class ResignationListTileWidget extends StatelessWidget {
         ),
       ),
       elevation: 4,
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
-              color: statusToColorMap[data.serviceStatus] ?? Colors.transparent,
-              width: 1.5.w,
+      child: InkWell(
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color:
+                    statusToColorMap[data.serviceStatus] ?? Colors.transparent,
+                width: 1.5.w,
+              ),
             ),
           ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: titleWidget(
+                      context: context,
+                      caption: data.serviceNo ?? '',
+                      title: data.subject ?? '-',
+                    ),
+                  ),
+                  subtitleWidget(
+                    context: context,
+                    caption: "Status",
+                    customChild: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          data.serviceStatus ?? '',
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        SizedBox(width: 2.w),
+
+                        //
+                        statusContainerWidget(
+                          statusColor: statusToColorMap[data.serviceStatus] ??
+                              Colors.transparent,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              const DottedDividerWidget(),
+
+              //
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  Expanded(
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Resignation Date",
+                      title:
+                          "${formatDate(date: data.resignationTerminationDate.toString()) ?? "NA"}",
+                    ),
+                  ),
+
+                  //
+                  Expanded(
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Last Working Date",
+                      title:
+                          "${formatDate(date: data.lastWorkingDate.toString()) ?? "NA"}",
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: titleWidget(
-                    context: context,
-                    caption: data.serviceNo ?? '',
-                    title: data.subject ?? '-',
-                  ),
-                ),
-                subtitleWidget(
-                  context: context,
-                  caption: "Status",
-                  customChild: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        data.serviceStatus ?? '',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      SizedBox(width: 2.w),
-
-                      //
-                      statusContainerWidget(
-                        statusColor: statusToColorMap[data.serviceStatus] ??
-                            Colors.transparent,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            CREATE_SERVICE_ROUTE,
+            arguments: ScreenArguments(
+              arg1: '',
+              arg2: data.id,
+              arg3: '',
+              val1: false,
             ),
-
-            const DottedDividerWidget(),
-
-            //
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //
-                Expanded(
-                  child: subtitleWidget(
-                    context: context,
-                    caption: "Resignation Date",
-                    title:
-                        "${formatDate(date: data.resignationTerminationDate.toString()) ?? "NA"}",
-                  ),
-                ),
-
-                //
-                Expanded(
-                  child: subtitleWidget(
-                    context: context,
-                    caption: "Last Working Date",
-                    title:
-                        "${formatDate(date: data.lastWorkingDate.toString()) ?? "NA"}",
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
