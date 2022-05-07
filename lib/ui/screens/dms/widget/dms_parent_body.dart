@@ -18,7 +18,6 @@ import '../../../../data/models/dms/permission/permission_model.dart';
 import '../../../../logic/blocs/cut_copy_paste_bloc/cut_copy_paste_bloc.dart';
 import '../../../../logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
 import '../../../widgets/custom_controls/attachment.dart';
-import '../../../widgets/custom_controls/attachment_widget.dart';
 
 class DMSParentBody extends StatefulWidget {
   final String? sourceId;
@@ -35,14 +34,11 @@ class DMSParentBody extends StatefulWidget {
 class _DMSParentBodyState extends State<DMSParentBody> {
   List<DMSSourceFolderModel>? childList = [];
   List<DMSSourceFolderModel> filterChildList = [];
-  // List<Cwd>? childList = [];
-  // List<Cwd> filterChildList = [];
   TextEditingController searchWorkspaceTextController = TextEditingController();
   bool isSearch = false;
   List<String?> pathList = [];
   List<String> parentPathList = [];
   List<DMSSourceFolderModel> parentModelList = [];
-  // List<Cwd> parentModelList = [];
   String? sourceId;
   bool? isCopy = false;
   bool? isCut = false;
@@ -86,9 +82,6 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 2.h),
-      // child: StreamBuilder<DMSFilesResponse>(
-      // stream: dmsBloc.subjectDMSGetFilesResponse.stream,
-      // builder: (context, AsyncSnapshot<DMSFilesResponse> snapshot) {
       child: StreamBuilder<DMSSourceFolderResponse?>(
         stream: dmsSourceFolderBloc.subject.stream,
         builder: (context, AsyncSnapshot<DMSSourceFolderResponse?> snapshot) {
@@ -130,7 +123,6 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                   ),
                                   title: Text(
                                     filterChildList[index].title!,
-                                    // filterChildList[index].name!,
                                   ),
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -144,17 +136,11 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                               ))
                                           : SizedBox(),
                                       IconButton(
-                                        // onPressed: () {},
                                         onPressed: () => bottomSheet(
                                           filterChildList[index].title,
                                           filterChildList[index].workspaceId,
                                           filterChildList[index].key,
                                           data: filterChildList[index],
-                                          // snapshot.data!.list[0].fileId,
-                                          // filterChildList[index].name,
-                                          // filterChildList[index].id,
-                                          // snapshot.data!.data!.cwd!.id,
-                                          // data: filterChildList[index],
                                         ),
                                         icon: Icon(Icons.more_vert_rounded),
                                       )
@@ -182,8 +168,6 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                       ..clear()
                                       ..add(parentPath);
 
-                                    // dmsSourceFolderBloc.subject.sink.add(null);
-
                                     Navigator.pushNamed(
                                       context,
                                       DMS_CHILD,
@@ -196,54 +180,9 @@ class _DMSParentBodyState extends State<DMSParentBody> {
                                           dmsParentModel:
                                               filterChildList[index],
                                           callBack: (dynamic value,
-                                              dynamic value2, dynamic value3) {
-                                            // dmsBloc
-                                            //     .subjectDMSGetFilesChildResponse
-                                            //     .sink
-                                            //     .add(null);
-                                          }),
+                                              dynamic value2,
+                                              dynamic value3) {}),
                                     );
-
-                                    // pathList
-                                    //   ..clear()
-                                    //   ..add('Administrator')
-                                    //   ..add(filterChildList[index].name);
-
-                                    // parentModelList
-                                    //   ..clear()
-                                    //   ..add(filterChildList[index]);
-
-                                    // String parentPath =
-                                    //     snapshot.data!.data!.cwd!.id! +
-                                    //         '/' +
-                                    //         filterChildList[index].id! +
-                                    //         '/';
-
-                                    // parentPathList
-                                    //   ..clear()
-                                    //   ..add(parentPath);
-
-                                    // dmsBloc.subjectDMSGetFilesChildResponse.sink
-                                    //     .add(null);
-                                    // Navigator.pushNamed(
-                                    //   context,
-                                    //   DMS_CHILD,
-                                    //   arguments: ScreenArguments(
-                                    //       dmsParentModelList: parentModelList,
-                                    //       list1: pathList,
-                                    //       list2: parentPathList,
-                                    //       arg1: filterChildList[index].name,
-                                    //       arg2: parentPath,
-                                    //       dmsParentModel:
-                                    //           filterChildList[index],
-                                    //       callBack: (dynamic value,
-                                    //           dynamic value2, dynamic value3) {
-                                    //         dmsBloc
-                                    //             .subjectDMSGetFilesChildResponse
-                                    //             .sink
-                                    //             .add(null);
-                                    //       }),
-                                    // );
                                   },
                                 ),
                               );
@@ -267,7 +206,6 @@ class _DMSParentBodyState extends State<DMSParentBody> {
   }
 
   bottomSheet(String? title, String? id, String? noteId,
-      // String? path,
       {DMSSourceFolderModel? data}) {
     print(data);
     showDocumentBottomSheet(
@@ -297,8 +235,6 @@ class _DMSParentBodyState extends State<DMSParentBody> {
           ),
         ),
         Visibility(
-          // visible: false, //TODO: figure out the boolean
-          // visible: data?.isSelfWorkspace ?? false,
           visible: data?.key != data?.workspaceId,
           child: ListTile(
             leading: Icon(
@@ -323,48 +259,12 @@ class _DMSParentBodyState extends State<DMSParentBody> {
             onTap: () => _handleCreateNewFolderOnTap(noteId),
           ),
         ),
-        // Visibility(
-        //   visible: false, //TODO: figure out the boolean
-        //   child: ListTile(
-        //     leading: Icon(
-        //       CustomIcons.folder,
-        //       color: Colors.yellow,
-        //     ),
-        //     title: Text('Edit Folder'),
-        //     onTap: () => _handleEditFolderOnTap(data!),
-        //   ),
-        // ),
-        // Visibility(
-        //   visible: true, //TODO: figure out the boolean
-        //   child: ListTile(
-        //     leading: Icon(CustomIcons.folder_upload),
-        //     title: Text('Upload Folder'),
-        //     // onTap: () => deleteDialog(id),
-        //   ),
-        // ),
         Visibility(
-          visible: false, //TODO: figure out the boolean
+          visible: (data?.folder ?? false),
           child: ListTile(
             leading: Icon(CustomIcons.folder_upload),
             title: Text('Upload Files'),
             onTap: () => _handleUploadFilesOnTap(),
-          ),
-        ),
-        Visibility(
-          visible: data?.canCreateDocument ?? false,
-          // visible: false, //TODO: figure out the boolean
-          child: ListTile(
-            leading: Icon(CustomIcons.folder_upload),
-            title: Text('Create Document'),
-            // onTap: () => deleteDialog(id),
-          ),
-        ),
-        Visibility(
-          visible: data?.canEditDocument ?? false,
-          child: ListTile(
-            leading: Icon(CustomIcons.folder_upload),
-            title: Text('Edit Document'),
-            // onTap: () => deleteDialog(id),
           ),
         ),
         Visibility(
