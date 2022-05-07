@@ -1561,9 +1561,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         valueChanged: (dynamic value) {
           bool isExpand = value;
           if (isExpand) {
-            isTileVisible = false;
+            setState(() {
+              isTileVisible = false;
+            });
           } else {
-            isTileVisible = true;
+            setState(() {
+              isTileVisible = true;
+            });
           }
         },
         children: [
@@ -1625,7 +1629,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             ]),
           ),
           Visibility(
-            visible: serviceModel!.hideSLA!,
+            visible: !serviceModel!.hideSLA!,
             child: BlocTextBoxWidget(
               fieldName: 'SLA',
               readonly: false,

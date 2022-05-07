@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/ui/screens/reimbursement_screens/widgets/reimbursement_list_view_widget.dart';
 
+import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/leave_bloc.dart';
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
+import '../../../routes/route_constants.dart';
+import '../../../routes/screen_arguments.dart';
+import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../../widgets/internet_connectivity_widget.dart';
@@ -46,6 +50,20 @@ class _ReimbursementScreenState extends State<ReimbursementScreen> {
         ),
       ),
       bottomNavigationBar: _bottomNavigationWidget(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: LightTheme().lightThemeData().primaryColor,
+        child: Icon(Icons.add),
+        onPressed: () => Navigator.pushNamed(
+          context,
+          CREATE_SERVICE_ROUTE,
+          arguments: ScreenArguments(
+              arg1: "REIMBURSEMENT_REQUEST",
+              arg2: "",
+              val1: false,
+              arg3: "",
+              portalType: PortalType.hr),
+        ),
+      ),
     );
   }
 

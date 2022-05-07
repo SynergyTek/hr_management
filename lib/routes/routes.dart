@@ -131,10 +131,10 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => CreateServiceScreen(
-            templateCode: args!.arg1,
-            serviceId: args.arg2,
-            title: args.arg3,
-            isLeave: args.val1,
+            templateCode: args?.arg1,
+            serviceId: args?.arg2,
+            title: args?.arg3,
+            isLeave: args?.val1,
             // portalType: args.portalType,
           ),
         );
