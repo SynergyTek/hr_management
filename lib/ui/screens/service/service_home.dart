@@ -13,8 +13,14 @@ class ServiceHomeScreen extends StatelessWidget {
   final String? serviceStatus;
   final String? moduleId;
   final bool? showBack;
+  final String? templateCode;
   const ServiceHomeScreen(
-      {Key? key, this.serviceStatus, this.moduleId, this.mode, this.showBack})
+      {Key? key,
+      this.serviceStatus,
+      this.moduleId,
+      this.mode,
+      this.showBack,
+      this.templateCode})
       : super(key: key);
 
   @override
@@ -39,14 +45,25 @@ class ServiceHomeScreen extends StatelessWidget {
           size: 32,
         ),
         onPressed: () {
-          Navigator.pushNamed(
-            context,
-            NTS_TEMPLATE_REQUEST,
-            arguments: ScreenArguments(
-              ntstype: NTSType.service,
-              arg4: '',
-            ),
-          );
+          (templateCode != null && templateCode!.isNotEmpty)
+              ? Navigator.pushNamed(
+                  context,
+                  CREATE_SERVICE_ROUTE,
+                  arguments: ScreenArguments(
+                    arg1: templateCode,
+                    arg2: '',
+                    arg3: '',
+                    val1: false,
+                  ),
+                )
+              : Navigator.pushNamed(
+                  context,
+                  NTS_TEMPLATE_REQUEST,
+                  arguments: ScreenArguments(
+                    ntstype: NTSType.service,
+                    arg4: '',
+                  ),
+                );
         },
       ),
     );

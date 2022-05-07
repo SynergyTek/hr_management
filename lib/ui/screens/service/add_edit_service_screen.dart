@@ -42,7 +42,7 @@ class CreateServiceScreen extends StatelessWidget {
             value: LocationBloc()..add(LocationStartedEvent()),
             child: NTSWrapperWidget(
               templateCode: templateCode ?? '',
-              ntsID: serviceId!,
+              ntsID: serviceId ?? '',
               // portalType: portalType!,
               userID:
                   BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
