@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/models/hr_direct_contract_model/hr_direct_contract_model.dart';
 import 'package:hr_management/logic/blocs/resignation_termination_bloc/resignation_termination_bloc.dart';
+import 'package:hr_management/routes/route_constants.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
@@ -65,8 +67,16 @@ class _HRDirectContractScreenState extends State<HRDirectContractScreen> {
                             fontSize: 12.sp, fontWeight: FontWeight.bold),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Edit'),
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          ADD_EDIT_NOTE_ROUTE,
+                          arguments: ScreenArguments(
+                              arg2: hrDirectContractModel?.noteId,
+                              arg1: "",
+                              arg3: "",
+                              val1: false),
+                        ),
+                        child: Text('Manage Contract'),
                       ),
                     ],
                   ),
