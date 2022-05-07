@@ -71,7 +71,7 @@ class WorkBookRepository extends AbstractWorkBookRepository {
     }
   }
 
-  Future<PostResponse> postManageMoveToParent({
+  Future<bool> postManageMoveToParent({
     required NoteModel note,
     Map<String, dynamic>? queryparams,
   }) async {
@@ -83,28 +83,17 @@ class WorkBookRepository extends AbstractWorkBookRepository {
         data: jsonEncode(note.toJson()),
       );
 
-      print("response: ${response.data}");
-
-      var result = PostResponse.fromJson(
-        response.data,
-      );
-
-      if (result.isSuccess!) {
-        if (note.noteStatusCode == 'NOTE_STATUS_DRAFT')
-          result.messages = 'Note saved as Draft';
-        else if (note.noteStatusCode == 'NOTE_STATUS_INPROGRESS')
-          result.messages = 'Note Saved Successfully';
-        else if (note.noteStatusCode == 'NOTE_STATUS_COMPLETE')
-          result.messages = 'Note Completed successfully';
+      if (response.data['success'] == true) {
+        return true;
+      } else {
+        return false;
       }
-
-      return result;
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return PostResponse.withError("$err");
+      return false;
     }
   }
 

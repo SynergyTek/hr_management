@@ -46,13 +46,19 @@ class WorkBookBloc {
   }
 
   /// Used to create new entries.
-  Future<PostResponse> postManageMoveToParent({
+  Future<bool> postManageMoveToParent({
     required NoteModel noteModel,
     Map<String, dynamic>? queryparams,
   }) async {
-    PostResponse response = await _workBookRepository.postManageMoveToParent(
+    bool response = await _workBookRepository.postManageMoveToParent(
       note: noteModel,
     );
+    // if (response == true) {
+    //   workBookBloc.subjectNoteBookReport.sink.add(null);
+    //   workBookBloc.getNoteBookReport(queryparams: {
+    //     "noteId": noteModel.id,
+    //   });
+    // } else {}
 
     return response;
   }

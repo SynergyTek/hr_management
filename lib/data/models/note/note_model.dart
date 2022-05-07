@@ -179,8 +179,8 @@ class NoteModel {
     this.versionNo,
     this.portalId,
     this.moveToParent,
-    this.movePostionEnum,
-    this.bookMoveTypeEnum,
+    this.movePostionSeq,
+    this.moveType,
     this.ntsType,
     this.ntsId,
     this.fileIds,
@@ -359,9 +359,10 @@ class NoteModel {
   int? versionNo;
   dynamic portalId;
   String? moveToParent;
-  String? movePostionEnum;
-  String? bookMoveTypeEnum;
-  String? ntsType;
+  String? movePostionSeq;
+  String? moveType;
+  int? ntsType;
+  // String? ntsType;
   String? ntsId;
   dynamic fileIds;
 
@@ -718,8 +719,8 @@ class NoteModel {
         "VersionNo": versionNo,
         "PortalId": portalId,
         "MoveToParent": moveToParent,
-        "MovePostionEnum": movePostionEnum,
-        "BookMoveTypeEnum": bookMoveTypeEnum,
+        "MovePostionSeq": movePostionSeq,
+        "MoveType": moveType,
         "NtsType": ntsType,
         "NtsId": ntsId,
         "FileIds": fileIds,
