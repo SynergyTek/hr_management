@@ -227,32 +227,29 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
     postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
 
     postNoteModel.moveToParent = moveToParentId;
-    postNoteModel.bookMoveTypeEnum = moveType;
-    postNoteModel.movePostionEnum = movePostionSeq ?? '';
+    postNoteModel.moveType = moveType;
+    postNoteModel.movePostionSeq = movePostionSeq ?? 'After';
     postNoteModel.id = noteModel.parentNoteId;
-    postNoteModel.ntsType = 'Note';
-    postNoteModel.ntsId = noteModel.id;
+    postNoteModel.ntsType = 0;
+    postNoteModel.ntsId = noteModel.noteId;
 
     setState(() {
       isVisible = true;
     });
 
-    PostResponse result = await workBookBloc.postManageMoveToParent(
+    bool result = await workBookBloc.postManageMoveToParent(
       noteModel: postNoteModel,
     );
 
-    if (result.isSuccess!) {
-      setState(() {
-        isVisible = false;
-      });
+    if (result) {
       resultMsg = 'Workbook moved successfully';
       Navigator.pop(context);
     } else {
-      setState(() {
-        isVisible = false;
-      });
       resultMsg = 'Unable to move workbook';
     }
+    setState(() {
+      isVisible = false;
+    });
     displaySnackBar(text: resultMsg, context: context);
   }
 }

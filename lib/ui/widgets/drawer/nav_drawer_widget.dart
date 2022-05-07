@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/hr_direct_chart/hr_direct_chart.dart';
 import 'package:hr_management/ui/screens/leaves/get_policy_documents_screen.dart';
 import 'package:hr_management/ui/screens/worklist_my_service/worklist_my_service.dart';
@@ -559,7 +560,7 @@ class DrawerWidget extends StatelessWidget {
               listTileOnTap: () {
                 Navigator.pushReplacementNamed(
                   context,
-                  SERVICE_HOME,
+                  SERVICE_HOME,arguments: ScreenArguments(arg4: "TMS_GENERAL")
                 );
               },
             ),

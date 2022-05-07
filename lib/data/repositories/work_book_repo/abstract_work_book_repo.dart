@@ -26,7 +26,7 @@ abstract class AbstractWorkBookRepository {
     Map<String, dynamic>? queryparams,
   });
 
-  Future<PostResponse> postManageMoveToParent({
+  Future<bool> postManageMoveToParent({
     required NoteModel note,
     Map<String, dynamic>? queryparams,
   });
