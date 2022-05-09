@@ -89,7 +89,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
 
   apiCall() {
     dmsSourceFolderBloc.subjectChildData.sink.add(null);
-    // dmsSourceFolderBloc.getDMSChildFolderData(
     dmsSourceFolderBloc.getDMSChildFolderAndDocumentsData(
       queryparams: {
         "userId":
