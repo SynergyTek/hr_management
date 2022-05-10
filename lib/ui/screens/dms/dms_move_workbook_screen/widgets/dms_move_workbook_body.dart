@@ -7,7 +7,6 @@ import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 
 import '../../../../../constants/api_endpoints.dart';
-import '../../../../../data/models/api_models/post_response_model.dart';
 import '../../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
 import '../../../../../data/models/work_book_models/get_note_book_report_model.dart';
 import '../../../../../data/models/work_book_models/work_book_response_model.dart';
@@ -48,9 +47,6 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
   void initState() {
     getNoteDetailsAPICall();
 
-    workBookBloc.getNoteBookReport(queryparams: {
-      "noteId": widget.noteId,
-    });
     super.initState();
   }
 
@@ -177,7 +173,6 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
                         NTSDropdownModel _model = value;
                         _beforeAfterController.text = _model.name!;
                         movePostionSeq = _model.id;
-                        // setState(() {});
                       },
                     ),
                   ),
@@ -227,32 +222,35 @@ class _DMSMoveWorkbookBodyWidgetState extends State<DMSMoveWorkbookBodyWidget> {
     postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
 
     postNoteModel.moveToParent = moveToParentId;
-    postNoteModel.bookMoveTypeEnum = moveType;
-    postNoteModel.movePostionEnum = movePostionSeq ?? '';
+    postNoteModel.moveType = moveType;
+    postNoteModel.movePostionSeq = movePostionSeq ?? 'After';
     postNoteModel.id = noteModel.parentNoteId;
-    postNoteModel.ntsType = 'Note';
-    postNoteModel.ntsId = noteModel.id;
+    postNoteModel.ntsType = 0;
+    postNoteModel.ntsId = noteModel.noteId;
 
     setState(() {
       isVisible = true;
     });
 
-    PostResponse result = await workBookBloc.postManageMoveToParent(
+    bool result = await workBookBloc.postManageMoveToParent(
       noteModel: postNoteModel,
     );
 
-    if (result.isSuccess!) {
-      setState(() {
-        isVisible = false;
+    if (result) {
+      workBookBloc.subjectNoteBookReport.sink.add(null);
+      workBookBloc.getNoteBookReport(queryparams: {
+        "noteId": noteModel.parentNoteId,
       });
       resultMsg = 'Workbook moved successfully';
-      Navigator.pop(context);
+      Navigator.pop(context); //Pop screen
+      Navigator.pop(context); //Pop bottomsheet
     } else {
-      setState(() {
-        isVisible = false;
-      });
       resultMsg = 'Unable to move workbook';
     }
+
+    setState(() {
+      isVisible = false;
+    });
     displaySnackBar(text: resultMsg, context: context);
   }
 }

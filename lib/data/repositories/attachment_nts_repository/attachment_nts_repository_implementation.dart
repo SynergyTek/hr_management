@@ -108,7 +108,7 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
   Future<bool> postAddUploadedFile({
     required NoteModel model,
   }) async {
-    final String endpoint = APIEndpointConstants.UPLOAD_FILE;
+    final String endpoint = APIEndpointConstants.ADD_UPLOAD_FILE;
 
     try {
       Response response = await _dio.post(

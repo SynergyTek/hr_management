@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
@@ -35,13 +33,11 @@ import '../../../widgets/custom_controls/archive.dart';
 
 class DMSChildBody extends StatefulWidget {
   final DMSSourceFolderModel? parentModel;
-  // final Cwd? parentModel;
   final String? parentPath;
   final OnTapPressedCallBack? callBack;
   final List<String?>? path;
   final List<String>? parentPathList;
   final List<DMSSourceFolderModel>? parentModelList;
-  // final List<Cwd>? parentModelList;
   final String? parentName;
   final String? sourceId;
   final bool? isCopy;
@@ -67,12 +63,9 @@ class DMSChildBody extends StatefulWidget {
 class _DMSChildBodyState extends State<DMSChildBody> {
   List<DMSSourceFolderModel>? childList = [];
   List<DMSSourceFolderModel> filterChildList = [];
-  // List<Cwd>? childList = [];
-  // List<Cwd> filterChildList = [];
   List<String?>? childPath = [];
   List<String>? parentPathList = [];
   List<DMSSourceFolderModel>? parentModelList = [];
-  // List<Cwd>? parentModelList = [];
   bool isVisible = false;
   String? sourceId;
   bool? isCopy = false;
@@ -96,7 +89,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
 
   apiCall() {
     dmsSourceFolderBloc.subjectChildData.sink.add(null);
-    // dmsSourceFolderBloc.getDMSChildFolderData(
     dmsSourceFolderBloc.getDMSChildFolderAndDocumentsData(
       queryparams: {
         "userId":
@@ -412,7 +404,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ],
         ),
         Visibility(
-          visible: item.templateCode == "WORKSPACE_GENERAL",
+          visible: (item.workspace ?? false),
           child: ListTile(
             leading: Icon(
               CustomIcons.folder,
@@ -423,7 +415,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ),
         ),
         Visibility(
-          visible: item.templateCode == "WORKSPACE_GENERAL",
+          visible: (item.workspace ?? false),
           child: ListTile(
             leading: Icon(
               CustomIcons.folder,
@@ -436,8 +428,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ),
         ),
         Visibility(
-          visible: item.templateCode == 'GENERAL_FOLDER' ||
-              item.templateCode == "WORKSPACE_GENERAL",
+          visible: (item.folder ?? false) || (item.workspace ?? false),
           child: ListTile(
             leading: Icon(
               CustomIcons.folder,
@@ -448,7 +439,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ),
         ),
         Visibility(
-          visible: item.templateCode == 'GENERAL_FOLDER',
+          visible: (item.folder ?? false),
           child: ListTile(
             leading: Icon(
               CustomIcons.pencil,
@@ -458,18 +449,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ),
         ),
         Visibility(
-          visible: item.templateCode == 'GENERAL_FOLDER' ||
-              item.templateCode == "WORKSPACE_GENERAL",
-          child: ListTile(
-            leading: Icon(
-              CustomIcons.folder_open,
-            ),
-            title: Text('Upload Folder'),
-            // onTap: () => deleteDialog(id),
-          ),
-        ),
-        Visibility(
-          visible: item.templateCode == 'GENERAL_FOLDER',
+          visible: (item.folder ?? false),
           child: ListTile(
             leading: Icon(
               CustomIcons.folder_open,
@@ -479,7 +459,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
           ),
         ),
         Visibility(
-          visible: item.templateCode == 'GENERAL_FOLDER',
+          visible: (item.folder ?? false),
           child: ListTile(
             leading: Icon(
               CustomIcons.plus_square,
@@ -502,6 +482,14 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               CustomIcons.pencil,
             ),
             title: Text('Edit Document'),
+            onTap: () => Navigator.pushNamed(
+              context,
+              ADD_EDIT_NOTE_ROUTE,
+              arguments: ScreenArguments(
+                arg1: '',
+                arg2: item.key,
+              ),
+            ),
             // onTap: () => deleteDialog(id),
           ),
         ),
@@ -611,31 +599,28 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             ),
           ),
         ),
-        Visibility(
-          visible: true,
-          child: ListTile(
-            leading: Icon(CustomIcons.sticky_note),
-            title: Text('View Details'),
-            onTap: () {
-              if (!((item.document ?? false) &&
-                  (item.fileId == null || item.fileId!.isEmpty))) {
-                Navigator.pushNamed(
-                  context,
-                  ADD_EDIT_NOTE_ROUTE,
+        ListTile(
+          leading: Icon(CustomIcons.sticky_note),
+          title: Text('View Details'),
+          onTap: () {
+            if (!((item.document ?? false) &&
+                (item.fileId == null || item.fileId!.isEmpty))) {
+              Navigator.pushNamed(
+                context,
+                ADD_EDIT_NOTE_ROUTE,
+                arguments: ScreenArguments(
+                  arg1: '',
+                  arg2: item.key,
+                ),
+              );
+            } else {
+              Navigator.pushNamed(context, DMS_WORBOOK_SCREEN,
                   arguments: ScreenArguments(
-                    arg1: '',
-                    arg2: item.key,
-                  ),
-                );
-              } else {
-                Navigator.pushNamed(context, DMS_WORBOOK_SCREEN,
-                    arguments: ScreenArguments(
-                      arg1: item.title ?? '',
-                      arg2: item.key ?? '',
-                    ));
-              }
-            },
-          ),
+                    arg1: item.title ?? '',
+                    arg2: item.key ?? '',
+                  ));
+            }
+          },
         ),
         Visibility(
           visible: (item.document ?? false) &&
@@ -646,99 +631,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
             onTap: () => _handleDocumentPreviewOnTap(item),
           ),
         ),
-        // Visibility(
-        //   visible: item.templateCode == 'GENERAL_DOCUMENT',
-        //   child: ListTile(
-        //     leading: Icon(
-        //       CustomIcons.file_word,
-        //     ),
-        //     title: Text('View Workflow'),
-        //     // onTap: () => deleteDialog(id),
-        //   ),
-        // ),
-        // Visibility(
-        //   visible: item.templateCode == 'GENERAL_DOCUMENT',
-        //   child: ListTile(
-        //     leading: Icon(CustomIcons.arrow_alt_from_top),
-        //     title: Text('Raise Approval Request'),
-        //     // onTap: () => deleteDialog(id),
-        //   ),
-        // ),
-        // Visibility(
-        //   visible: item.templateCode == 'GENERAL_DOCUMENT',
-        //   child: ListTile(
-        //     leading: Icon(CustomIcons.arrows),
-        //     title: Text('View Approval Request'),
-        //     // onTap: () => deleteDialog(id),
-        //   ),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.bags_shopping),
-        //   title: Text('Manage Permission'),
-        //   onTap: () => _handleManagePermissionOnTap(item),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.eye),
-        //   title: Text('View Permission'),
-        //   onTap: () => _handleViewPermissionOnTap(item),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.trash),
-        //   title: Text('Delete'),
-        //   onTap: () => deleteDialog(item.id),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.copy),
-        //   title: Text('Copy'),
-        //   onTap: () => copyDialog(item.id),
-        // ),
-        // Visibility(
-        //   visible: BlocProvider.of<CutCopyPasteBloc>(context)
-        //               .state
-        //               .cutCopyPasteModel
-        //               ?.sourceId !=
-        //           null &&
-        //       BlocProvider.of<CutCopyPasteBloc>(context)
-        //           .state
-        //           .cutCopyPasteModel!
-        //           .sourceId!
-        //           .isNotEmpty,
-        //   child: ListTile(
-        //     leading: Icon(CustomIcons.copy),
-        //     title: Text('Paste'),
-        //     onTap: () => pasteDialog(item.id),
-        //   ),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.expand_arrows),
-        //   title: Text('Cut'),
-        //   onTap: () => cutDialog(item.id),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.archive),
-        //   title: Text('Archive'),
-        //   onTap: () => archiveDialog(item.id),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.edit),
-        //   title: Text('Rename'),
-        //   onTap: () => renameDialog(item.name),
-        // ),
-        // ListTile(
-        //   leading: Icon(CustomIcons.sticky_note),
-        //   title: Text('View Details'),
-        //   onTap: () {
-        //     Navigator.pushNamed(
-        //       context,
-        //       ADD_EDIT_NOTE_ROUTE,
-        //       arguments: ScreenArguments(
-        //         arg1: '',
-        //         arg2: item.id,
-        //         // arg3: filterChildList[index].noteSubject
-        //       ),
-        //     );
-        //   },
-        // ),
       ],
     );
   }
@@ -774,7 +666,6 @@ class _DMSChildBodyState extends State<DMSChildBody> {
                   if (dmsCrudNoteBloc.deleteNoteSubject.stream.value) {
                     displaySnackBar(
                         text: 'File deleted successfully', context: context);
-                    // dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
                     dmsSourceFolderBloc.subjectChildData.sink.add(null);
                     apiCall();
                   } else {

@@ -131,6 +131,7 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => CreateServiceScreen(
+            isDelete: args?.val2 ?? false,
             templateCode: args?.arg1,
             serviceId: args?.arg2,
             title: args?.arg3,
@@ -279,10 +280,12 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments?;
         return MaterialPageRoute(
           builder: (_) => ServiceHomeScreen(
+            isDelete: args?.val2 ?? false,
             serviceStatus: args?.arg1,
             moduleId: args?.arg2,
             mode: args?.arg3,
             showBack: args?.showBack ?? false,
+            templateCode: args?.arg4,
           ),
         );
 

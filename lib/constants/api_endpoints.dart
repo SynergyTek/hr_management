@@ -9,7 +9,7 @@ class APIEndpointConstants {
       BASE_URL + '/common/query/GetFile?fileId=';
   static const DOWNLOAD_ATTACHMENT =
       BASE_URL + 'CHR/query/DownloadAttachment?fileId=';
-  static const UPLOAD_FILE = BASE_URL + "/chr/query/AddUploadedFile";
+  static const ADD_UPLOAD_FILE = BASE_URL + "/chr/query/AddUploadedFile";
 
   //************************************************************************//
 
@@ -594,11 +594,15 @@ class APIEndpointConstants {
       'cms/query/GetEnumIdNameList?enumType=MovePostionEnum';
 
   static const MANAGE_MOVE_TO_PARENT_ENDPOINT =
-      BASE_URL + '/cms/query/ManageMoveToParent';
+      BASE_URL + '/cms/ntsnote/ManageMoveToParent';
 
   static const DELETE_SERVICE_BOOK_ITEMS_ENDPOINT =
       BASE_URL + '/api/cms/DeleteServiceBookItems';
 
   static const DELETE_NOTE_BOOK_ITEMS_ENDPOINT =
       BASE_URL + '/api/cms/DeleteNoteBookItems';
+
+  // employee dropdown
+  static const EMPLOYEE_DROPDOWN_LIST =
+      "chr/query/GetPositionHierarchyByUserLoggedInUser?userid=45bba746-3309-49b7-9c03-b5793369d73c";
 }

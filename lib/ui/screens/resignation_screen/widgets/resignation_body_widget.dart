@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/data/models/resignation_models/resignation_termination_response.dart';
 import 'package:hr_management/logic/blocs/resignation_termination_bloc/resignation_termination_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/resignation_screen/widgets/resignation_list_tile_widget.dart';

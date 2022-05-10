@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/hr_direct_chart/hr_direct_chart.dart';
 import 'package:hr_management/ui/screens/leaves/get_policy_documents_screen.dart';
 import 'package:hr_management/ui/screens/worklist_my_service/worklist_my_service.dart';
@@ -197,15 +198,15 @@ class DrawerWidget extends StatelessWidget {
               "HR",
           children: [
             //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\t Home',
-              listTileOnTap: () {
-                Navigator.pushReplacementNamed(
-                  context,
-                  "",
-                );
-              },
-            ),
+            // DrawerListTileWidget(
+            //   title: '\t\t\t\t\t Home',
+            //   listTileOnTap: () {
+            //     Navigator.pushReplacementNamed(
+            //       context,
+            //       "",
+            //     );
+            //   },
+            // ),
 
             //
             DrawerListTileWidget(
@@ -444,15 +445,15 @@ class DrawerWidget extends StatelessWidget {
               },
             ),
             //
-            DrawerListTileWidget(
-              title: '\t\t\t\t\t Roster Schedule',
-              listTileOnTap: () {
-                Navigator.pushReplacementNamed(
-                  context,
-                  "",
-                );
-              },
-            ),
+            // DrawerListTileWidget(
+            //   title: '\t\t\t\t\t Roster Schedule',
+            //   listTileOnTap: () {
+            //     Navigator.pushReplacementNamed(
+            //       context,
+            //       "",
+            //     );
+            //   },
+            // ),
           ],
         ),
 
@@ -492,6 +493,12 @@ class DrawerWidget extends StatelessWidget {
                             ntsType: NTSType.task,
                           )),
                 );
+              },
+            ),
+            DrawerListTileWidget(
+              title: 'WorkList My Notes',
+              listTileOnTap: () {
+                Navigator.pushNamed(context, NOTE_HOME);
               },
             ),
             //
@@ -560,6 +567,10 @@ class DrawerWidget extends StatelessWidget {
                 Navigator.pushReplacementNamed(
                   context,
                   SERVICE_HOME,
+                  arguments: ScreenArguments(
+                    arg4: "TMS_GENERAL",
+                    val2: true,
+                  ),
                 );
               },
             ),

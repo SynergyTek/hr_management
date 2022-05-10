@@ -86,6 +86,7 @@ class EmployeeProfileModel {
     this.dataAction,
     this.status,
     this.versionNo,
+    this.personNoteId,
   });
 
   String? personId;
@@ -166,6 +167,7 @@ class EmployeeProfileModel {
   int? dataAction;
   int? status;
   int? versionNo;
+  String? personNoteId;
 
   factory EmployeeProfileModel.fromJson(Map<String, dynamic> json) =>
       EmployeeProfileModel(
@@ -249,6 +251,7 @@ class EmployeeProfileModel {
         dataAction: json["DataAction"],
         status: json["Status"],
         versionNo: json["VersionNo"],
+        personNoteId: json["PersonNoteId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -330,5 +333,6 @@ class EmployeeProfileModel {
         "DataAction": dataAction,
         "Status": status,
         "VersionNo": versionNo,
+        "PersonNoteId": personNoteId,
       };
 }

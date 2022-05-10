@@ -250,7 +250,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
       }
-
+//TODO: Confirm if "Other Details" is required for note
       widgets.add(
         ExpandableField(
           isTileExpanded: isTileVisible,
@@ -1069,7 +1069,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             },
           ),
         );
-      } else if (model[i].type == 'hidden') {
+      } else if (model[i].type == 'hidden' && model[i].hidden != true) {
         //Hidden Field
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
