@@ -1976,7 +1976,48 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                   style: TextStyle(color: Colors.blue.shade800, fontSize: 14),
                 ),
           isDelete
-              ? const Icon(Icons.delete, color: Colors.red)
+              ? GestureDetector(
+                  onTap: () async {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    await serviceBloc.deleteService(
+                                        queryparams: {
+                                          "serviceId": serviceModel?.serviceId
+                                        });
+                                    if (serviceBloc
+                                        .subjectDeleteService.stream.hasValue) {
+                                      if (serviceBloc.subjectDeleteService
+                                              .stream.value?.success ==
+                                          true) {
+                                        Navigator.of(context).pop();
+                                        await displaySnackBar(
+                                            context: context,
+                                            text: 'Deleted Successfully');
+
+                                        Navigator.of(context).pop();
+                                      }
+                                    }
+                                  },
+                                  child: const Text("Yes")),
+                              ElevatedButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: const Text('No'))
+                            ],
+                            content: const Text(
+                                'Do You Really Want To Delete This Service ?'),
+                          );
+                        });
+                  },
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                )
               : const SizedBox(),
           Text(
             field,

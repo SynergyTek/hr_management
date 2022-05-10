@@ -33,7 +33,7 @@ class APIEndpointConstants {
 
   static const MANAGE_NOTE = '$BASE_URL/nts/command/ManageNote';
 
-  static const READ_NOTE_HOME_DATA = '$BASE_URL/nts/query/ReadNoteHomeData';
+  static const READ_NOTE_HOME_DATA = '$BASE_URL/cms/NtsNote/ReadNoteHomeData';
 
   static const GET_NOTE_CHART_BY_STATUS =
       '$BASE_URL/nts/query/GetNoteChartByStatus';

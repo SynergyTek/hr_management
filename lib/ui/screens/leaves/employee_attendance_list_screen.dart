@@ -30,6 +30,11 @@ class _EmployeeAttendanceListScreenState
   DateTime selectedToDate = DateTime.now();
   DateTime selected = DateTime.now();
 
+  String? selectedMonthString;
+  String? selectedFromDateString;
+  String? selectedToDateString;
+  String? selectedString;
+
   List<Service>? list;
 
   Future<void> _selectDate(BuildContext context) async {
@@ -80,10 +85,10 @@ class _EmployeeAttendanceListScreenState
                 .extraUserInformation
                 ?.portalType ??
             "HR",
-        "searchStart": "2022-06-01 00:00:00.000", //TODO
-        "searchEnd": "2022-07-30 00:00:00.000", //TODO
-        "searchMonth": "April 2022", //TODO
-        "searchType": "Monthly",
+        "searchStart": "01 May 2022", //TODO
+        "searchEnd": "10 May 2022", //TODO
+        "searchMonth": "May 2022", //TODO
+        "searchType": "Monthly", //for period =Manual
       },
     );
   }
@@ -95,6 +100,7 @@ class _EmployeeAttendanceListScreenState
       body: Container(
         padding: DEFAULT_LARGE_PADDING,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,6 +133,7 @@ class _EmployeeAttendanceListScreenState
             ),
             Flexible(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   (_groupValue == 0)
                       ? Row(
@@ -134,27 +141,28 @@ class _EmployeeAttendanceListScreenState
                           children: [
                             Row(
                               children: [
-                                ElevatedButton(
-                                  onPressed: () {
+                                Text('Select Month :'),
+                                SizedBox(
+                                  width: 2.w,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
                                     setState(() {
                                       isMonth = true;
                                     });
                                     _selectDate(context);
                                   },
-                                  child: Text('Select Month'),
-                                ),
-                                SizedBox(
-                                  width: 2.w,
-                                ),
-                                DateUi(
-                                  dateString:
-                                      DateFormat.MMMM().format(selectedMonth),
+                                  child: DateUi(
+                                    dateString:
+                                        DateFormat.yMMM().format(selectedMonth),
+                                  ),
                                 ),
                               ],
                             ),
                             ElevatedButton(
                               onPressed: () {
                                 //TODO
+                                apiCall();
                               },
                               child: Text('Search'),
                             ),
@@ -165,26 +173,30 @@ class _EmployeeAttendanceListScreenState
                           children: [
                             Row(
                               children: [
-                                ElevatedButton(
-                                  onPressed: () {
+                                Text('From date :'),
+                                SizedBox(
+                                  width: 2.w,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
                                     setState(() {
                                       isFromDate = true;
                                     });
                                     _selectDate(context);
                                   },
-                                  child: Text('From date'),
-                                ),
-                                SizedBox(
-                                  width: 2.w,
-                                ),
-                                DateUi(
-                                  dateString: "${selectedFromDate.toLocal()}"
-                                      .split(' ')[0],
+                                  child: DateUi(
+                                    dateString: DateFormat('d MMM yyyy')
+                                        .format(selectedFromDate),
+
+                                    //  "${selectedFromDate.toLocal()}"
+                                    //     .split(' ')[0],
+                                  ),
                                 ),
                               ],
                             ),
                             ElevatedButton(
                               onPressed: () {
+                                apiCall();
                                 //TODO
                               },
                               child: Text('Search'),
@@ -195,21 +207,21 @@ class _EmployeeAttendanceListScreenState
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
+                            Text('To date :\t\t\t\t'),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            GestureDetector(
+                              onTap: () {
                                 setState(() {
                                   isToDate = true;
                                 });
                                 _selectDate(context);
                               },
-                              child: Text('To date'),
-                            ),
-                            SizedBox(
-                              width: 2.w,
-                            ),
-                            DateUi(
-                              dateString:
-                                  "${selectedToDate.toLocal()}".split(' ')[0],
+                              child: DateUi(
+                                dateString: DateFormat('d MMM yyyy')
+                                    .format(selectedToDate),
+                              ),
                             ),
                           ],
                         )
@@ -217,31 +229,34 @@ class _EmployeeAttendanceListScreenState
                 ],
               ),
             ),
-            StreamBuilder<ServiceListResponse?>(
-              stream: leaveBloc.subjectGetEmployeeAttendanceList.stream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<ServiceListResponse?> snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data?.list == null) {
-                    return EmptyListWidget();
-                  }
-                  list = snapshot.data?.list;
+            Flexible(
+              child: StreamBuilder<ServiceListResponse?>(
+                stream: leaveBloc.subjectGetEmployeeAttendanceList.stream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<ServiceListResponse?> snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data?.list == null ||
+                        snapshot.data!.list!.isEmpty) {
+                      return EmptyListWidget();
+                    }
+                    list = snapshot.data?.list;
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: list?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        child: Text('data'),
-                      );
-                    },
-                  );
-                } else {
-                  return Center(
-                    child: CustomProgressIndicator(),
-                  );
-                }
-              },
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: list?.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          child: Text('data'),
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(
+                      child: CustomProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             )
           ],
         ),
@@ -260,6 +275,7 @@ class DateUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(dateString);
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Colors.green, width: 2),

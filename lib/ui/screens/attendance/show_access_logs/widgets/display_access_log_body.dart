@@ -121,10 +121,10 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
                   prefixIcon: Icon(Icons.control_point_duplicate_outlined),
                   idKey: 'Id',
                   nameKey: 'Name',
-                  hint: 'Status',
+                  hint: 'Employee',
                   isTeamList: false,
                   isUserList: false,
-                  title: 'Status',
+                  title: 'Employee',
                   isShowArrow: true,
                   controller: selectEmployeeController,
                   onListTap: (dynamic value) {
