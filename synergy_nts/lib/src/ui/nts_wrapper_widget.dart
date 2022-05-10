@@ -21,6 +21,7 @@ class NTSWrapperWidget extends StatelessWidget {
   final String templateCode;
 
   final Map<String, dynamic>? extraInformationMap;
+  final bool isDelete;
 
   const NTSWrapperWidget({
     Key? key,
@@ -33,13 +34,14 @@ class NTSWrapperWidget extends StatelessWidget {
     // Optional
     this.ntsID = "",
     this.templateCode = "",
-    this.extraInformationMap,
+    this.extraInformationMap, this.isDelete = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (ntsType == NTSType.service) {
       return ServiceWidget(
+        isDelete: isDelete,
         userID: userID,
         serviceId: ntsID,
         templateCode: templateCode,

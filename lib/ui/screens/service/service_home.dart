@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../data/enums/enums.dart';
 import '../../../routes/route_constants.dart';
 import '../../../routes/screen_arguments.dart';
@@ -14,13 +13,15 @@ class ServiceHomeScreen extends StatelessWidget {
   final String? moduleId;
   final bool? showBack;
   final String? templateCode;
+  final bool isDelete;
   const ServiceHomeScreen(
       {Key? key,
       this.serviceStatus,
       this.moduleId,
       this.mode,
       this.showBack,
-      this.templateCode})
+      this.templateCode,
+      this.isDelete = false})
       : super(key: key);
 
   @override
@@ -35,6 +36,7 @@ class ServiceHomeScreen extends StatelessWidget {
           serviceStatus: serviceStatus,
           moduleId: moduleId,
           mode: mode,
+          isDelete: isDelete,
         ),
       ),
       // ),
@@ -54,6 +56,7 @@ class ServiceHomeScreen extends StatelessWidget {
                     arg2: '',
                     arg3: '',
                     val1: false,
+                    val2: isDelete,
                   ),
                 )
               : Navigator.pushNamed(

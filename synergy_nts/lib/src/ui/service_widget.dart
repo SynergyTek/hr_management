@@ -47,6 +47,8 @@ class ServiceWidget extends StatefulWidget {
   final Map<String, dynamic>? extraInformationMap;
   final String? categoryCode;
 
+  final bool isDelete;
+
   const ServiceWidget({
     Key? key,
     required this.userID,
@@ -55,6 +57,7 @@ class ServiceWidget extends StatefulWidget {
     required this.templateCode,
     this.categoryCode = '',
     this.extraInformationMap,
+    this.isDelete = false,
   }) : super(key: key);
 
   @override
@@ -1501,9 +1504,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          rowChild(serviceModel!.serviceNo.toString(), 'Service No', 3),
-          rowChild(serviceModel!.serviceStatusName.toString(), 'Status', 2),
-          rowChild(serviceModel!.versionNo.toString(), 'Version No', 2),
+          rowChild(serviceModel!.serviceNo.toString(), 'Service No', 3, false),
+          widget.isDelete ? rowChild('', 'Delete', 2, true) : Container(),
+          rowChild(
+              serviceModel!.serviceStatusName.toString(), 'Status', 2, false),
+          rowChild(serviceModel!.versionNo.toString(), 'Version No', 2, false),
         ],
       ),
     ));
@@ -1957,17 +1962,22 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     ddController!.text = ntsDdResponse.data?.elementAt(0).name ?? '';
   }
 
-  rowChild(String data, String field, int flex) {
+  rowChild(String data, String field, int flex, bool isDelete) {
     return Expanded(
       flex: flex,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            data,
-            style: TextStyle(color: Colors.blue.shade800, fontSize: 14),
-          ),
+          isDelete
+              ? const SizedBox()
+              : Text(
+                  data,
+                  style: TextStyle(color: Colors.blue.shade800, fontSize: 14),
+                ),
+          isDelete
+              ? const Icon(Icons.delete, color: Colors.red)
+              : const SizedBox(),
           Text(
             field,
             style: const TextStyle(

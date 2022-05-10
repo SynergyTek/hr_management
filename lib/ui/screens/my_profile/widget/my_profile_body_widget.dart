@@ -1,16 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/employee_profile_models/employee_profile_model.dart';
 import '../../../../data/models/employee_profile_models/employee_profile_response.dart';
+import '../../../../data/models/hr_direct_contract_model/hr_direct_contract_model.dart';
+import '../../../../data/models/hr_direct_contract_model/hr_direct_contract_response_model.dart';
 import '../../../../logic/blocs/employee_profile_bloc/employee_profile_bloc.dart';
+import '../../../../logic/blocs/resignation_termination_bloc/resignation_termination_bloc.dart';
+import '../../../../routes/route_constants.dart';
+import '../../../../routes/screen_arguments.dart';
 import '../../../../themes/light_theme.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../hr_direct_contract_screen/hr_direct_contract_screen.dart';
 part './my_profile_helper_widgets.dart';
 
 class MyProfileBodyWidget extends StatefulWidget {
@@ -30,6 +38,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
       ..getEmployeeProfileData(
         queryparams: _handleQueryparams(),
       );
+    apiCall();
   }
 
   /// Helper function to handle queryparams of the API call.
@@ -38,6 +47,21 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
       'userid':
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     };
+  }
+
+  apiCall() {
+    resignationTerminationBloc.getHrDirectContractList(
+      queryparams: {
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
+        "personId": "129b167b-c1e9-4876-874b-015605071a8d",
+      },
+    );
   }
 
   Widget build(BuildContext context) {
@@ -114,7 +138,7 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
   }) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.65,
+      height: 68.h,
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.only(
@@ -126,14 +150,16 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
           ),
         ),
       ),
+      // child: ExpansionTile(
+      //   title: Text("Personal Info"),
       child: ListView(
-        shrinkWrap: true,
+        //   // shrinkWrap: true,
         children: [
           _basicInformationWidget(
             context: context,
             data: data,
           ),
-          _jobDetailsWidget(
+          _personalDetailsWidget(
             context: context,
             data: data,
           ),
@@ -153,8 +179,17 @@ class _MyProfileBodyWidgetState extends State<MyProfileBodyWidget> {
             context: context,
             data: data,
           ),
+          _assignmentWidget(
+            context: context,
+            data: data,
+          ),
+          _hrContactWidget(
+            context: context,
+            // data: data,
+          ),
         ],
       ),
+      // ),
     );
   }
 }

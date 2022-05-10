@@ -601,4 +601,8 @@ class APIEndpointConstants {
 
   static const DELETE_NOTE_BOOK_ITEMS_ENDPOINT =
       BASE_URL + '/api/cms/DeleteNoteBookItems';
+
+  // employee dropdown
+  static const EMPLOYEE_DROPDOWN_LIST =
+      "chr/query/GetPositionHierarchyByUserLoggedInUser?userid=45bba746-3309-49b7-9c03-b5793369d73c";
 }
