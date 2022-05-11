@@ -52,12 +52,12 @@ class _EmailNtsScreenBodyState extends State<EmailNtsScreenBody> {
               builder: (BuildContext context,
                   AsyncSnapshot<EmailResponseModel?> snapshot) {
                 if (snapshot.hasData) {
-                  // if (snapshot.data?.mapdata == null ||
-                  //     snapshot.data!.mapdata!.data!.isEmpty) {
-                  //   return Center(
-                  //     child: EmptyListWidget(),
-                  //   );
-                  // }
+                  if (snapshot.data?.mapdata == null ||
+                      snapshot.data!.mapdata!.data!.isEmpty) {
+                    return Center(
+                      child: EmptyListWidget(),
+                    );
+                  }
                   list = snapshot.data?.mapdata?.data;
                   return ListView.builder(
                     itemCount: list?.length,
