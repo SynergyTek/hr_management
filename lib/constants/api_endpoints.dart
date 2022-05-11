@@ -33,7 +33,7 @@ class APIEndpointConstants {
 
   static const MANAGE_NOTE = '$BASE_URL/nts/command/ManageNote';
 
-  static const READ_NOTE_HOME_DATA = '$BASE_URL/nts/query/ReadNoteHomeData';
+  static const READ_NOTE_HOME_DATA = '$BASE_URL/cms/NtsNote/ReadNoteHomeData';
 
   static const GET_NOTE_CHART_BY_STATUS =
       '$BASE_URL/nts/query/GetNoteChartByStatus';
@@ -607,4 +607,7 @@ class APIEndpointConstants {
 
   static const SAVE_EMAIL_TO_NTS_TYPE_ENDPOINT =
       BASE_URL + '/pjm/query/SaveEmailToNtsType';
+  // employee dropdown
+  static const EMPLOYEE_DROPDOWN_LIST =
+      "chr/query/GetPositionHierarchyByUserLoggedInUser?userid=45bba746-3309-49b7-9c03-b5793369d73c";
 }

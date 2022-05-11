@@ -29,6 +29,12 @@ abstract class AbstractServiceRepository {
     required Service service,
   });
 
+  Future<ServiceResponse> deleteService({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic> queryparams,
+  });
+  
+
   Future<PaginationMyRequestsResponse> getMyRequestList({
     Map<String, dynamic>? queryparams,
   });

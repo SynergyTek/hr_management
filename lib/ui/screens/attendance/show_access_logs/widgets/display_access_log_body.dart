@@ -1,13 +1,18 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import '../../../../../constants/api_endpoints.dart';
+import '../../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
+import '../../../../../logic/blocs/nts_dropdown_bloc/nts_dropdown_api_bloc.dart';
 import '../../../../listizer/listizer.dart';
 import '../../../../../data/models/access_log/access_log_model.dart';
 import '../../../../../data/models/access_log/access_log_response.dart';
 import '../../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../../../themes/theme_config.dart';
 import '../../../../widgets/empty_list_widget.dart';
+import '../../../../widgets/nts_dropdown_select.dart';
 import '../../../../widgets/nts_widgets.dart';
 import '../../../../widgets/progress_indicator.dart';
 import 'access_log_list_tile_widget.dart';
@@ -25,6 +30,8 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
 
   DateTime? startDate;
   DateTime? endDate;
+
+  TextEditingController selectEmployeeController = TextEditingController();
 
   @override
   void initState() {
@@ -108,6 +115,29 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
                   )
                 ],
               ),
+              Container(
+                child: NTSDropDownSelect(
+                  url: APIEndpointConstants.EMPLOYEE_DROPDOWN_LIST,
+                  prefixIcon: Icon(Icons.control_point_duplicate_outlined),
+                  idKey: 'Id',
+                  nameKey: 'Name',
+                  hint: 'Employee',
+                  isTeamList: false,
+                  isUserList: false,
+                  title: 'Employee',
+                  isShowArrow: true,
+                  controller: selectEmployeeController,
+                  onListTap: (dynamic value) {
+                    ntsDdBloc.subject.sink.add(null);
+
+                    NTSDropdownModel _selectedemployeeModel = value;
+                    selectEmployeeController.text =
+                        _selectedemployeeModel.name!;
+                    setState(() {});
+                    // apiCall();
+                  },
+                ),
+              )
             ],
           ),
           Expanded(

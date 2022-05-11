@@ -14,6 +14,8 @@ class CreateServiceScreen extends StatelessWidget {
   final String? templateCode;
   final String? serviceId;
   final String? title;
+  final bool isDelete;
+
   // final PortalType? portalType;
 
   final Map<String, dynamic>? extraInformationMap;
@@ -25,6 +27,7 @@ class CreateServiceScreen extends StatelessWidget {
     this.title,
     this.isLeave,
     this.extraInformationMap,
+    this.isDelete = false,
     // required this.portalType,
   }) : super(key: key);
 
@@ -41,6 +44,7 @@ class CreateServiceScreen extends StatelessWidget {
           child: BlocProvider<LocationBloc>.value(
             value: LocationBloc()..add(LocationStartedEvent()),
             child: NTSWrapperWidget(
+              isDelete: isDelete,
               templateCode: templateCode ?? '',
               ntsID: serviceId ?? '',
               // portalType: portalType!,

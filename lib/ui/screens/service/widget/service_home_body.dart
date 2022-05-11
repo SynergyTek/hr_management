@@ -20,8 +20,14 @@ class ServiceHomeBody extends StatefulWidget {
   final String? serviceStatus;
   final String? moduleId;
   final String? mode;
+  final bool isDelete;
 
-  const ServiceHomeBody({Key? key, this.serviceStatus, this.moduleId, this.mode})
+  const ServiceHomeBody(
+      {Key? key,
+      this.serviceStatus,
+      this.moduleId,
+      this.mode,
+      this.isDelete = false})
       : super(key: key);
   @override
   _ServiceHomeBodyState createState() => _ServiceHomeBodyState();
@@ -73,8 +79,6 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
 
     queryparams['userId'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
-
-   
 
     if (text != null) {
       queryparams['text'] = text;
@@ -154,6 +158,7 @@ class _ServiceHomeBodyState extends State<ServiceHomeBody> {
                   filteredSearchList: _filteredServiceList,
                   itemBuilder: (context, index) {
                     return ServiceListCard(
+                      isDelete: widget.isDelete,
                       index: index,
                       serviceList: _serviceList,
                       onTap: true,
