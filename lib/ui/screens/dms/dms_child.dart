@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
-import 'package:hr_management/logic/blocs/dms_bloc/dms_doc_api_bloc.dart';
 import 'package:hr_management/ui/screens/dms/widget/dms_child_body.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 
@@ -37,59 +36,48 @@ class DMSChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        dmsBloc.subjectDMSGetFilesChildResponse.sink.add(null);
-        callBack!(true, null, null);
-        pathList!.removeLast();
-        parentPathList!.removeLast();
-        parentModelList!.removeLast();
-        Navigator.pop(context);
-        return false;
-      },
-      child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  dmsSourceFolderBloc.subjectChildData.sink.add(null);
-                  callBack!(true, null, null);
-                  pathList!.removeLast();
-                  parentPathList!.removeLast();
-                  parentModelList!.removeLast();
-                  if (pathList != null &&
-                      pathList!.isNotEmpty &&
-                      pathList!.length > 1) {
-                    Navigator.pushNamed(
-                      context,
-                      DMS_CHILD,
-                      arguments: ScreenArguments(
-                          dmsParentModelList: parentModelList,
-                          list1: pathList,
-                          list2: parentPathList,
-                          arg1: pathList!.last,
-                          arg2: parentPathList!.last,
-                          dmsParentModel: parentModelList!.last,
-                          callBack: (dynamic value, dynamic value2,
-                              dynamic value3) {}),
-                    );
-                  } else {
-                    Navigator.pushNamed(
-                      context,
-                      DMS_PARENT,
-                    );
-                  }
-                },
-                icon: Icon(Icons.arrow_back)),
-            title: Text(parentName!),
-          ),
-          body: DMSChildBody(
-            parentModel: parentModel,
-            parentPath: parentPath,
-            path: pathList,
-            parentPathList: parentPathList,
-            parentModelList: parentModelList,
-            parentName: parentName,
-          )),
-    );
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                dmsSourceFolderBloc.subjectChildData.sink.add(null);
+                // callBack!(true, null, null);
+                pathList!.removeLast();
+                parentPathList!.removeLast();
+                parentModelList!.removeLast();
+                if (pathList != null &&
+                    pathList!.isNotEmpty &&
+                    pathList!.length > 1) {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_CHILD,
+                    arguments: ScreenArguments(
+                        dmsParentModelList: parentModelList,
+                        list1: pathList,
+                        list2: parentPathList,
+                        arg1: pathList!.last,
+                        arg2: parentPathList!.last,
+                        dmsParentModel: parentModelList!.last,
+                        callBack:
+                            (dynamic value, dynamic value2, dynamic value3) {}),
+                  );
+                } else {
+                  Navigator.pushNamed(
+                    context,
+                    DMS_PARENT,
+                  );
+                }
+              },
+              icon: Icon(Icons.arrow_back)),
+          title: Text(parentName!),
+        ),
+        body: DMSChildBody(
+          parentModel: parentModel,
+          parentPath: parentPath,
+          path: pathList,
+          parentPathList: parentPathList,
+          parentModelList: parentModelList,
+          parentName: parentName,
+        ));
   }
 }

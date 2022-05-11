@@ -28,6 +28,7 @@ import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 
 // import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
+import '../ui/screens/dms/dms_email_list_screen/dms_email_list_screen.dart';
 import '../ui/screens/dms/dms_move_workbook_screen/dms_move_workbook_screen.dart';
 import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
 import '../ui/screens/hr_direct_contract_screen/hr_direct_contract_screen.dart';
@@ -131,6 +132,7 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => CreateServiceScreen(
+            isDelete: args?.val2 ?? false,
             templateCode: args?.arg1,
             serviceId: args?.arg2,
             title: args?.arg3,
@@ -279,6 +281,7 @@ class AppRouter {
         final args = routeSettings.arguments as ScreenArguments?;
         return MaterialPageRoute(
           builder: (_) => ServiceHomeScreen(
+            isDelete: args?.val2 ?? false,
             serviceStatus: args?.arg1,
             moduleId: args?.arg2,
             mode: args?.arg3,
@@ -589,6 +592,16 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSMoveWorkbookScreen(
             noteId: args.arg2!,
+          ),
+        );
+
+      case DMS_EMAIL_LIST_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSEmailListScreen(
+            workbookList: args.workbookReferenceList,
+            isAddBelow: args.val1,
+            index: args.num!,
           ),
         );
 

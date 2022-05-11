@@ -8,8 +8,13 @@ class ServiceListCard extends StatelessWidget {
   final bool? onTap;
   final List<Service>? serviceList;
   final int index;
+  final bool isDelete;
   const ServiceListCard(
-      {Key? key, required this.serviceList, required this.index, this.onTap})
+      {Key? key,
+      required this.serviceList,
+      required this.index,
+      this.onTap,
+      this.isDelete = false})
       : super(key: key);
 
   @override
@@ -80,6 +85,7 @@ class ServiceListCard extends StatelessWidget {
                     arg2: serviceList![index].id,
                     arg3: serviceList![index].serviceSubject,
                     val1: false,
+                    val2: isDelete,
                   ),
                 );
               }

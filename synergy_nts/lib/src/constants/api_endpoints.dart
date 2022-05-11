@@ -53,6 +53,8 @@ class APIEndpointConstants {
   static const FILE_UPLOAD_ATTACHMENT =
       '$BASE_URL/CHR/query/UploadNtsAttachment';
 
+  static const DELETE_SERVICE = BASE_URL + "/cms/service/DeleteService";
+
   // User repository:
   static const READ_USER_DATA = '$BASE_URL/cms/user/ReadUserData';
 

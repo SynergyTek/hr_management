@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/data/enums/enums.dart';
+import 'package:hr_management/data/models/note/note_list_model.dart';
+import 'package:hr_management/data/models/note/note_response.dart';
 import 'package:hr_management/data/models/service_models/service.dart';
 import 'package:hr_management/data/models/service_models/service_response.dart';
 import 'package:hr_management/data/models/task_models/task_list_model.dart';
 import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
+import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
 import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
+import 'package:hr_management/ui/screens/note/widgets/note_list_tile.dart';
 import 'package:hr_management/ui/screens/tasks/widget/task_list_tile.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../themes/light_theme.dart';
@@ -62,9 +66,24 @@ class _WorkListMyServiceScreenCountState
           "categoryCodes": "CHR",
         },
       );
+    } else {
+      noteBloc.getNoteList(
+        queryparams: {
+          "userId":
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
+          "categoryCodes": "CHR",
+        },
+      );
     }
     _widgetOptions = <Widget?>[
-      workListMyServiceScreenChart(widget.ntsType),
+      (widget.ntsType == NTSType.note)
+          ? Container()
+          : workListMyServiceScreenChart(widget.ntsType),
       WorkListMyServiceScreenData(ntsType: widget.ntsType),
     ];
 
@@ -91,14 +110,16 @@ class _WorkListMyServiceScreenCountState
             label: 'Details',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: (widget.ntsType == NTSType.note) ? 1 : _selectedIndex,
         selectedItemColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
       ),
       appBar: AppBar(
           title: (widget.ntsType == NTSType.service)
               ? Text('WorkList My Services')
-              : Text('WorkList My Task')),
+              : (widget.ntsType == NTSType.task)
+                  ? Text('WorkList My Task')
+                  : Text('WorkList My Note')),
       body: _widgetOptions!.elementAt(_selectedIndex),
     );
   }
@@ -123,7 +144,11 @@ Widget workListMyServiceScreenChart(NTSType ntsType) {
         alignment: Alignment.center,
         color: Colors.blue.shade200,
         child: Text(
-          (ntsType == NTSType.service) ? 'My Services' : 'My Tasks',
+          (ntsType == NTSType.service)
+              ? 'My Services'
+              : (ntsType == NTSType.task)
+                  ? 'My Tasks'
+                  : 'My Note',
           style: TextStyle(fontSize: 14),
         ),
       ),
@@ -173,49 +198,51 @@ Widget workListMyServiceScreenChart(NTSType ntsType) {
                 }
               },
             )
-          : StreamBuilder<TaskListDynamicResponse?>(
-              stream: taskBloc.subjectReadTaskListCount.stream,
-              builder:
-                  (context, AsyncSnapshot<TaskListDynamicResponse?> snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data?.data == null) {
-                    return Center(
-                        child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('No Data'),
-                    ));
-                  }
-                  var list = [];
-                  Map<String, dynamic>? map = snapshot.data?.data?.first;
-                  map?.forEach(
-                    (k, v) {
-                      if (v != null && v is int) {
-                        list.add(
-                          ChartData(
-                            k,
-                            v,
-                          ),
-                        );
+          : (ntsType == NTSType.task)
+              ? StreamBuilder<TaskListDynamicResponse?>(
+                  stream: taskBloc.subjectReadTaskListCount.stream,
+                  builder: (context,
+                      AsyncSnapshot<TaskListDynamicResponse?> snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data?.data == null) {
+                        return Center(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('No Data'),
+                        ));
                       }
-                    },
-                  );
+                      var list = [];
+                      Map<String, dynamic>? map = snapshot.data?.data?.first;
+                      map?.forEach(
+                        (k, v) {
+                          if (v != null && v is int) {
+                            list.add(
+                              ChartData(
+                                k,
+                                v,
+                              ),
+                            );
+                          }
+                        },
+                      );
 
-                  print(list);
+                      print(list);
 
-                  return Charts(
-                    chartDataLIst: list,
-                    chartType: "donut",
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor:
-                          LightTheme().lightThemeData().primaryColor,
-                    ),
-                  );
-                }
-              },
-            ),
+                      return Charts(
+                        chartDataLIst: list,
+                        chartType: "donut",
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor:
+                              LightTheme().lightThemeData().primaryColor,
+                        ),
+                      );
+                    }
+                  },
+                )
+              : SizedBox(),
     ],
   );
 }
@@ -275,6 +302,19 @@ class _WorkListMyServiceScreenDataState
           "categoryCodes": "CHR",
         },
       );
+    } else {
+      noteBloc.getNoteList(
+        queryparams: {
+          "userId":
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+          "portalName": BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.portalType ??
+              "HR",
+          "categoryCodes": "CHR",
+        },
+      );
     }
   }
 
@@ -303,27 +343,49 @@ class _WorkListMyServiceScreenDataState
                 }
               },
             )
-          : StreamBuilder<TaskListResponseModel?>(
-              stream: taskBloc.subjectReadTaskData.stream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<TaskListResponseModel?> snapshot) {
-                if (snapshot.hasData) {
-                  List<TaskListModel>? list = snapshot.data?.data;
-                  return ListView.builder(
-                    itemCount: list?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TaskListCard(
-                        index: index,
-                        taskList: list,
-                        onTap: false,
+          : (widget.ntsType == NTSType.task)
+              ? StreamBuilder<TaskListResponseModel?>(
+                  stream: taskBloc.subjectReadTaskData.stream,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<TaskListResponseModel?> snapshot) {
+                    if (snapshot.hasData) {
+                      List<TaskListModel>? list = snapshot.data?.data;
+                      return ListView.builder(
+                        itemCount: list?.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return TaskListCard(
+                            index: index,
+                            taskList: list,
+                            onTap: false,
+                          );
+                        },
                       );
-                    },
-                  );
-                } else {
-                  return Center(child: CustomProgressIndicator());
-                }
-              },
-            ),
+                    } else {
+                      return Center(child: CustomProgressIndicator());
+                    }
+                  },
+                )
+              : StreamBuilder<NoteListResponse?>(
+                  stream: noteBloc.subjectNoteList.stream,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<NoteListResponse?> snapshot) {
+                    if (snapshot.hasData) {
+                      List<NoteListModel>? list = snapshot.data?.list;
+                      return ListView.builder(
+                        itemCount: list?.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return NoteListCard(
+                            index: index,
+                            noteList: list,
+                            onTap: false,
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(child: CustomProgressIndicator());
+                    }
+                  },
+                ),
     );
   }
 }
