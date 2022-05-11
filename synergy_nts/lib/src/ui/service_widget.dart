@@ -31,6 +31,7 @@ import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:sizer/sizer.dart';
 
 import 'attachment_nts_screen/attachment_nts_screen.dart';
+import 'email_nts_screen/email_nts_screen.dart';
 import 'nts_comments/nts_comments_screen.dart';
 import 'share/share_screen.dart';
 import 'task_widgets/adhoc_task/adhoc_task_list_screen.dart';
@@ -73,7 +74,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   String? subjectValue;
   String? descriptionValue;
   bool isTileVisible = true;
-  TextEditingController _fromddController = new TextEditingController();
+  TextEditingController _fromddController = TextEditingController();
   String? ownerUserId;
 
   @override
@@ -286,15 +287,15 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           //   labelBackgroundColor: Colors.black,
           // ),
-          // SpeedDialChild(
-          //   child: Icon(Icons.email, color: Colors.white),
-          //   backgroundColor: Colors.blue,
-          //   onTap: () => print('Pressed Code'),
-          //   label: 'Email',
-          //   labelStyle:
-          //       TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-          //   labelBackgroundColor: Colors.black,
-          // ),
+          SpeedDialChild(
+            child: const Icon(Icons.email, color: Colors.white),
+            backgroundColor: Colors.blue,
+            onTap: () => _handleEmailOnPressed(),
+            label: 'Email',
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500, color: Colors.white),
+            labelBackgroundColor: Colors.black,
+          ),
         ]);
   }
 
@@ -305,6 +306,17 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           ntsId: widget.serviceId,
           ntsType: NTSType.service,
         );
+      }),
+    );
+  }
+
+  _handleEmailOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return EmailNtsScreen(
+            // ntsId: widget.serviceId,
+            // ntsType: NTSType.service,
+            );
       }),
     );
   }

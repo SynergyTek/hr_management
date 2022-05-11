@@ -13,6 +13,7 @@ import 'package:hr_management/ui/screens/business_trip/business_trip_screen.dart
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
+import 'package:hr_management/ui/screens/payroll/salary_details_screen.dart';
 import 'package:hr_management/ui/screens/reimbursement_screens/reimbursement_screen.dart';
 import 'package:hr_management/ui/screens/resignation_screen/resignation_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
@@ -307,6 +308,9 @@ class AppRouter {
 
       case PAYSLIP:
         return MaterialPageRoute(builder: (_) => PayslipScreen());
+
+         case SALARY_DETAILS:
+        return MaterialPageRoute(builder: (_) => SalaryDetailsScreen());
 
       case TASKLIST:
         return MaterialPageRoute(builder: (_) => TaskListScreen());

@@ -59,6 +59,8 @@ const String WORKLIST_DASHBOARD = "/worklist_dashboard";
 
 const String MANAGE_ACCRUAL = "/manage_accrual";
 const String PAYSLIP = "/payslip";
+const String SALARY_DETAILS = "/salary_details";
+
 const String TASKLIST = "/tasklist";
 
 const String MYPROFILE = "/my_profile";

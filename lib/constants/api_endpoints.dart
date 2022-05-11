@@ -607,7 +607,12 @@ class APIEndpointConstants {
 
   static const SAVE_EMAIL_TO_NTS_TYPE_ENDPOINT =
       BASE_URL + '/pjm/query/SaveEmailToNtsType';
+
   // employee dropdown
   static const EMPLOYEE_DROPDOWN_LIST =
       "chr/query/GetPositionHierarchyByUserLoggedInUser?userid=45bba746-3309-49b7-9c03-b5793369d73c";
+
+  //salary info
+  static const GET_SALARY_INFO =
+      BASE_URL + "/Pay/SalaryInfo/ReadSalaryElementInfoData";
 }
