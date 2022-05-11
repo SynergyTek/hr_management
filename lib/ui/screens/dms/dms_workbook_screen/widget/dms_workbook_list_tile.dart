@@ -29,14 +29,22 @@ class _DmsWorkbookListCardState extends State<DmsWorkbookListCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(8.0),
+      margin: EdgeInsets.only(
+        right: 8.0,
+        left: tilePadding(widget.workbookList![widget.index].level),
+        top: 8.0,
+        bottom: 8.0,
+      ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
+          // bottomRight: Radius.circular(24.0),
           bottomLeft: Radius.circular(24.0),
-          topRight: Radius.circular(24.0),
+          // topRight: Radius.circular(24.0),
+          topLeft: Radius.circular(24.0),
         ),
       ),
-      color: Colors.blue[tileColor(widget.workbookList![widget.index].level)],
+      // color: Colors.transparent,
+      // color: Colors.blue[tileColor(widget.workbookList![widget.index].level)],
       elevation: 4,
       child: InkWell(
         child: Container(
@@ -110,12 +118,15 @@ class _DmsWorkbookListCardState extends State<DmsWorkbookListCard> {
               ),
         ),
         SizedBox(width: 8),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headline6!.copyWith(
-                fontSize: 16,
-                color: Colors.blue,
-              ),
+        Expanded(
+          child: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  fontSize: 16,
+                  color: Colors.blue,
+                ),
+          ),
         ),
       ],
     );
@@ -180,7 +191,7 @@ class _DmsWorkbookListCardState extends State<DmsWorkbookListCard> {
                       backgroundColor: Colors.grey[200],
                       trailing: Icon(Icons.filter_list),
                       title: Text("Add Below"),
-                      children: actionList(context),
+                      children: actionList(context, true),
                     )
                   : SizedBox(),
               ExpansionTile(
@@ -188,7 +199,7 @@ class _DmsWorkbookListCardState extends State<DmsWorkbookListCard> {
                 backgroundColor: Colors.grey[200],
                 trailing: Icon(Icons.filter_list),
                 title: Text("Add Child"),
-                children: actionList(context),
+                children: actionList(context, false),
               ),
               ListTile(
                 tileColor: Colors.grey[200],
@@ -234,18 +245,40 @@ class _DmsWorkbookListCardState extends State<DmsWorkbookListCard> {
     );
   }
 
-  List<Widget> actionList(BuildContext context) {
+  List<Widget> actionList(BuildContext context, bool isAddBelow) {
     return [
-      expansionTileAction(icon: Icons.note, title: 'Note', context: context),
-      expansionTileAction(icon: Icons.task, title: 'Task', context: context),
       expansionTileAction(
-          icon: Icons.design_services, title: 'Service', context: context),
-      expansionTileAction(icon: Icons.email, title: 'Email', context: context),
+        icon: Icons.note,
+        title: 'Note',
+        context: context,
+        isAddBelow: isAddBelow,
+      ),
+      expansionTileAction(
+        icon: Icons.task,
+        title: 'Task',
+        context: context,
+        isAddBelow: isAddBelow,
+      ),
+      expansionTileAction(
+        icon: Icons.design_services,
+        title: 'Service',
+        context: context,
+        isAddBelow: isAddBelow,
+      ),
+      expansionTileAction(
+        icon: Icons.email,
+        title: 'Email',
+        context: context,
+        isAddBelow: isAddBelow,
+      ),
     ];
   }
 
   Widget expansionTileAction(
-      {IconData? icon, String? title, BuildContext? context}) {
+      {IconData? icon,
+      String? title,
+      BuildContext? context,
+      bool? isAddBelow}) {
     return Padding(
       padding: const EdgeInsets.only(left: 8),
       child: ListTile(
@@ -283,22 +316,32 @@ class _DmsWorkbookListCardState extends State<DmsWorkbookListCard> {
             //     portalType: PortalType.hr,
             //   ),
             // );
-          } else if (title == 'Email') {}
+          } else if (title == 'Email') {
+            Navigator.pushNamed(
+              context!,
+              DMS_EMAIL_LIST_SCREEN,
+              arguments: ScreenArguments(
+                workbookReferenceList: widget.workbookList,
+                val1: isAddBelow,
+                num: widget.index,
+              ),
+            );
+          }
         },
       ),
     );
   }
 
-  int tileColor(int? level) {
+  double tilePadding(int? level) {
     switch (level) {
       case 0:
-        return 300;
+        return 8.0;
       case 1:
-        return 200;
+        return 20.0;
       case 2:
-        return 100;
+        return 32.0;
       default:
-        return 50;
+        return 44.0;
     }
   }
 

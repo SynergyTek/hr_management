@@ -482,15 +482,25 @@ class _DMSChildBodyState extends State<DMSChildBody> {
               CustomIcons.pencil,
             ),
             title: Text('Edit Document'),
-            onTap: () => Navigator.pushNamed(
-              context,
-              ADD_EDIT_NOTE_ROUTE,
-              arguments: ScreenArguments(
-                arg1: '',
-                arg2: item.key,
-              ),
-            ),
-            // onTap: () => deleteDialog(id),
+            onTap: () {
+              if (!((item.document ?? false) &&
+                  (item.fileId == null || item.fileId!.isEmpty))) {
+                Navigator.pushNamed(
+                  context,
+                  ADD_EDIT_NOTE_ROUTE,
+                  arguments: ScreenArguments(
+                    arg1: '',
+                    arg2: item.key,
+                  ),
+                );
+              } else {
+                Navigator.pushNamed(context, DMS_WORBOOK_SCREEN,
+                    arguments: ScreenArguments(
+                      arg1: item.title ?? '',
+                      arg2: item.key ?? '',
+                    ));
+              }
+            },
           ),
         ),
         ListTile(

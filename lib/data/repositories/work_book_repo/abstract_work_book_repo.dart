@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 import '../../../constants/api_endpoints.dart';
-import '../../models/api_models/post_response_model.dart';
+import '../../models/email_model/email_response_model.dart';
 import '../../models/note/note_model.dart';
 import '../../models/work_book_models/work_book_response_model.dart';
 import '../../models/workboard_model/workboard_response_model.dart';
@@ -36,6 +36,15 @@ abstract class AbstractWorkBookRepository {
   });
 
   Future<bool> deleteServiceBookItems({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<EmailTasksResponseModel> getReadEmailTasks({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<bool> saveEmailToNtsType({
+    // required Map data,
     Map<String, dynamic>? queryparams,
   });
 }

@@ -601,4 +601,10 @@ class APIEndpointConstants {
 
   static const DELETE_NOTE_BOOK_ITEMS_ENDPOINT =
       BASE_URL + '/api/cms/DeleteNoteBookItems';
+
+  static const READ_EMAIL_TASKS_ENDPOINT =
+      BASE_URL + '/pjm/query/ReadEmailTasks';
+
+  static const SAVE_EMAIL_TO_NTS_TYPE_ENDPOINT =
+      BASE_URL + '/pjm/query/SaveEmailToNtsType';
 }

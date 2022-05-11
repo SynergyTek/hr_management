@@ -101,76 +101,81 @@ class _WorkbookListDataState extends State<WorkbookListData> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          // color: Theme.of(context).dialogBackgroundColor,
+        ),
         child: StreamBuilder<GetNoteBookReportResponseModel?>(
-      stream: workBookBloc.subjectNoteBookReport.stream,
-      builder: (BuildContext context,
-          AsyncSnapshot<GetNoteBookReportResponseModel?> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data?.mapdata?.ntsItems == null) {
-            return Center(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('No Data'),
-            ));
-          }
-          List<NtsItem>? list = snapshot.data?.mapdata?.ntsItems;
+          stream: workBookBloc.subjectNoteBookReport.stream,
+          builder: (BuildContext context,
+              AsyncSnapshot<GetNoteBookReportResponseModel?> snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data?.mapdata?.ntsItems == null) {
+                return Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('No Data'),
+                ));
+              }
+              List<NtsItem>? list = snapshot.data?.mapdata?.ntsItems;
 
-          //Code block to sort the list into tree view starts here
-          List<NtsItem>? sortedList = [];
-          for (var i = 0; i < list!.length; i++) {
-            bool isPresent = false;
-            if (list[i].level == 0) {
-              sortedList.add(list[i]);
-            } else if (i == list.length - 1) {
-              sortedList.forEach((element) {
-                if (element.id == list[i].id) {
-                  isPresent = true;
-                }
-              });
-              if (!isPresent) sortedList.add(list[i]);
-            } else {
-              for (var j = i + 1; j < list.length; j++) {
-                if (list[j].itemNo!.contains('${list[i].itemNo}')) {
-                  sortedList.forEach((element) {
-                    if (element.id == list[i].id) {
-                      isPresent = true;
-                    }
-                  });
-                  if (!isPresent)
-                    sortedList
-                      ..add(list[i])
-                      ..add(list[j]);
-                  else
-                    sortedList.add(list[j]);
-                } else {
+              //Code block to sort the list into tree view starts here
+              // List<NtsItem>? sortedList = list;
+              List<NtsItem>? sortedList = [];
+              for (var i = 0; i < list!.length; i++) {
+                bool isPresent = false;
+                if (list[i].level == 0) {
+                  sortedList.add(list[i]);
+                } else if (i == list.length - 1) {
                   sortedList.forEach((element) {
                     if (element.id == list[i].id) {
                       isPresent = true;
                     }
                   });
                   if (!isPresent) sortedList.add(list[i]);
+                } else {
+                  for (var j = i + 1; j < list.length; j++) {
+                    if (list[j].parentId == list[i].id) {
+                      sortedList.forEach((element) {
+                        if (element.id == list[i].id) {
+                          isPresent = true;
+                        }
+                      });
+                      if (!isPresent)
+                        sortedList
+                          ..add(list[i])
+                          ..add(list[j]);
+                      else
+                        sortedList.add(list[j]);
+                    } else {
+                      sortedList.forEach((element) {
+                        if (element.id == list[i].id) {
+                          isPresent = true;
+                        }
+                      });
+                      if (!isPresent) sortedList.add(list[i]);
+                    }
+                  }
                 }
               }
-            }
-          }
-          //Code block to sort the list into tree view ends here
+              //Code block to sort the list into tree view ends here
 
-          return ListView.builder(
-            itemCount: sortedList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return DmsWorkbookListCard(
-                index: index,
-                workbookList: sortedList,
-                onTap: false,
-                noteId: widget.noteId,
+              return ListView.builder(
+                itemCount: sortedList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return DmsWorkbookListCard(
+                    index: index,
+                    workbookList: sortedList,
+                    onTap: false,
+                    noteId: widget.noteId,
+                  );
+                },
               );
-            },
-          );
-        } else {
-          return Center(child: CustomProgressIndicator());
-        }
-      },
-    ));
+            } else {
+              return Center(child: CustomProgressIndicator());
+            }
+          },
+        ));
   }
 }
 

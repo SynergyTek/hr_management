@@ -146,4 +146,53 @@ class WorkBookRepository extends AbstractWorkBookRepository {
       return false;
     }
   }
+
+  Future<EmailTasksResponseModel> getReadEmailTasks({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.READ_EMAIL_TASKS_ENDPOINT;
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return EmailTasksResponseModel.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return EmailTasksResponseModel.withError("$err");
+    }
+  }
+
+  Future<bool> saveEmailToNtsType({
+    // required Map data,
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint =
+        APIEndpointConstants.SAVE_EMAIL_TO_NTS_TYPE_ENDPOINT;
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+        // data: json.encode(data),
+      );
+
+      if (response.data['success'] == true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return false;
+    }
+  }
 }

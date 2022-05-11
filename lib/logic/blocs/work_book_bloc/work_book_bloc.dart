@@ -2,7 +2,7 @@ import 'package:hr_management/data/models/work_book_models/work_book_response_mo
 
 import 'package:rxdart/rxdart.dart';
 
-import '../../../data/models/api_models/post_response_model.dart';
+import '../../../data/models/email_model/email_response_model.dart';
 import '../../../data/models/note/note_model.dart';
 import '../../../data/models/workboard_model/workboard_response_model.dart';
 import '../../../data/repositories/work_book_repo/abstract_work_book_repo.dart';
@@ -20,6 +20,9 @@ class WorkBookBloc {
   final BehaviorSubject<GetNoteBookReportResponseModel?>
       _subjectNoteBookReport =
       BehaviorSubject<GetNoteBookReportResponseModel?>();
+
+  final BehaviorSubject<EmailTasksResponseModel?> _subjectEmailTaskReport =
+      BehaviorSubject<EmailTasksResponseModel?>();
 
   getWorkBookCount({
     Map<String, dynamic>? queryparams,
@@ -53,12 +56,6 @@ class WorkBookBloc {
     bool response = await _workBookRepository.postManageMoveToParent(
       note: noteModel,
     );
-    // if (response == true) {
-    //   workBookBloc.subjectNoteBookReport.sink.add(null);
-    //   workBookBloc.getNoteBookReport(queryparams: {
-    //     "noteId": noteModel.id,
-    //   });
-    // } else {}
 
     return response;
   }
@@ -83,17 +80,40 @@ class WorkBookBloc {
     return response;
   }
 
+  getReadEmailTasks({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    EmailTasksResponseModel response =
+        await _workBookRepository.getReadEmailTasks(queryparams: queryparams);
+    _subjectEmailTaskReport.sink.add(response);
+  }
+
+  Future<bool> saveEmailToNtsType({
+    // required Map data,
+    Map<String, dynamic>? queryparams,
+  }) async {
+    bool response = await _workBookRepository.saveEmailToNtsType(
+      queryparams: queryparams ?? {},
+      // data: data,
+    );
+
+    return response;
+  }
+
   BehaviorSubject<WorkBookCountResponseModel?> get subjectWorkBookCount =>
       _subjectWorkBookCount;
   BehaviorSubject<AddContentWorkBoardMapResponseModel?>
       get subjectNoteBookHTML => _subjectNoteBookHTML;
   BehaviorSubject<GetNoteBookReportResponseModel?> get subjectNoteBookReport =>
       _subjectNoteBookReport;
+  BehaviorSubject<EmailTasksResponseModel?> get subjectEmailTaskReport =>
+      _subjectEmailTaskReport;
 
   dispose() {
     _subjectWorkBookCount.close();
     _subjectNoteBookHTML.close();
     _subjectNoteBookReport.close();
+    _subjectEmailTaskReport.close();
   }
 }
 
