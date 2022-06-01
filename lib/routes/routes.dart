@@ -594,7 +594,7 @@ class AppRouter {
           ),
         );
 
-      case DMS_MOVE_WORBOOK_SCREEN:
+      case DMS_MOVE_WORBOOK_SCREEN: 
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => DMSMoveWorkbookScreen(
