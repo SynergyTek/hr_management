@@ -4,6 +4,7 @@ import 'service_model.dart';
 
 class ServiceResponse {
   bool? isSuccess;
+  bool? success;
   final Service? data;
   String? error;
 
@@ -12,7 +13,8 @@ class ServiceResponse {
   });
 
   ServiceResponse.fromJson(Map<String, dynamic> response)
-      : data = Service.fromJson(response);
+      : data = Service.fromJson(response),
+        success = response["success"];
 
   ServiceResponse.withError(String? errorValue)
       : data = null,

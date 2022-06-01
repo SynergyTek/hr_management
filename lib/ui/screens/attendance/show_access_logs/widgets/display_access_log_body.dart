@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -121,10 +120,10 @@ class _DisplayAccessLogBodyState extends State<DisplayAccessLogBody> {
                   prefixIcon: Icon(Icons.control_point_duplicate_outlined),
                   idKey: 'Id',
                   nameKey: 'Name',
-                  hint: 'Status',
+                  hint: 'Employee',
                   isTeamList: false,
                   isUserList: false,
-                  title: 'Status',
+                  title: 'Employee',
                   isShowArrow: true,
                   controller: selectEmployeeController,
                   onListTap: (dynamic value) {

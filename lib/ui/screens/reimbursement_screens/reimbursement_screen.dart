@@ -57,7 +57,15 @@ class _ReimbursementScreenState extends State<ReimbursementScreen> {
           context,
           CREATE_SERVICE_ROUTE,
           arguments: ScreenArguments(
-              arg1: "REIMBURSEMENT_REQUEST",
+              arg1: (_selectedIndex == 0)
+                  ? "REIMB_TRAVEL"
+                  : (_selectedIndex == 1)
+                      ? "REIMB_MDECIAL"
+                      : (_selectedIndex == 2)
+                          ? "REIMB_EDUCATIONAL"
+                          : (_selectedIndex == 3)
+                              ? "REIMB_OTHERS"
+                              : null,
               arg2: "",
               val1: false,
               arg3: "",

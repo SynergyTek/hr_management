@@ -29,7 +29,7 @@ class APIEndpointConstants {
       "$BASE_URL/cms/query/LoadCustomServiceIndexPageGrid?templateId=c39dae94-83bf-4b37-8737-745c2b453e4d";
 
   static const String READ_SERVICE_HOME_DATA =
-      "$BASE_URL/nts/query/ReadServiceHomeData";
+      "$BASE_URL/cms/service/ReadServiceHomeData";
 
   static const String GET_SERVICE_DETAILS =
       '$BASE_URL/nts/query/GetServiceDetails';
@@ -52,6 +52,8 @@ class APIEndpointConstants {
 
   static const FILE_UPLOAD_ATTACHMENT =
       '$BASE_URL/CHR/query/UploadNtsAttachment';
+
+  static const DELETE_SERVICE = BASE_URL + "/cms/service/DeleteService";
 
   // User repository:
   static const READ_USER_DATA = '$BASE_URL/cms/user/ReadUserData';
@@ -144,4 +146,8 @@ class APIEndpointConstants {
   static const POST_SHARE_TASK = '$BASE_URL/cms/query/ShareTask';
 
   static const POST_SHARE_NOTE = '$BASE_URL/cms/query/ShareNote';
+
+  //readEmailData
+  static const READ_EMAIL_DATA = BASE_URL + "/api/cms/ReadEmailData";
+  
 }

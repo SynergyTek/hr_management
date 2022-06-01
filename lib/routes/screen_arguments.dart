@@ -9,6 +9,7 @@ class ScreenArguments {
   final String? arg2;
   final String? arg3;
   final String? arg4;
+  final int? num;
   final bool? val1;
   final bool? val2;
   final bool? showBack;
@@ -26,16 +27,17 @@ class ScreenArguments {
   final List<NtsItem>? workbookReferenceList; //For moving workbooks
 
   ScreenArguments({
-    this.ntstype,
-    this.portalType,
-    this.arg3,
-    this.arg4,
-    this.func,
     this.arg1,
     this.arg2,
+    this.arg3,
+    this.arg4,
+    this.num,
     this.val1,
     this.val2,
     this.showBack,
+    this.func,
+    this.ntstype,
+    this.portalType,
     this.callBack,
     this.dmsParentModel,
     this.dmsParentModelList,

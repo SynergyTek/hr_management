@@ -13,6 +13,9 @@ class ServiceBloc extends AbstractServiceBloc {
   final BehaviorSubject<PaginationMyRequestsResponse?> _subjectMyRequestList =
       BehaviorSubject<PaginationMyRequestsResponse?>();
 
+  final BehaviorSubject<ServiceResponse?> _subjectDeleteService =
+      BehaviorSubject<ServiceResponse?>();
+
 //
   @override
   Future<ServiceResponse?> getServiceDetail({
@@ -63,6 +66,17 @@ class ServiceBloc extends AbstractServiceBloc {
     return response;
   }
 
+  @override
+  Future<ServiceResponse?> deleteService({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceResponse? response =
+        await _serviceRepository?.deleteService(queryparams: queryparams);
+    _subjectDeleteService.sink.add(response);
+
+    return response;
+  }
+
   /// Used to fetch new entries.
   @override
   Future<ServiceListResponse?> getServiceHomeListData({
@@ -94,11 +108,14 @@ class ServiceBloc extends AbstractServiceBloc {
     _subject.close();
     _subjectServiceList.close();
     _subjectMyRequestList.close();
+    _subjectDeleteService.close();
   }
 
   BehaviorSubject<ServiceResponse?> get subject => _subject;
   BehaviorSubject<ServiceListResponse?> get subjectServiceList =>
       _subjectServiceList;
+  BehaviorSubject<ServiceResponse?> get subjectDeleteService =>
+      _subjectDeleteService;
   BehaviorSubject<PaginationMyRequestsResponse?> get subjectMyRequestList =>
       _subjectMyRequestList;
 }

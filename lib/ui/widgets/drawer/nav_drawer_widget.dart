@@ -387,11 +387,11 @@ class DrawerWidget extends StatelessWidget {
           children: [
             //
             DrawerListTileWidget(
-              title: '\t\t\t\t\t Salary Info',
+              title: '\t\t\t\t\t Salary Details',
               listTileOnTap: () {
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
                   context,
-                  "",
+                  SALARY_DETAILS,
                 );
               },
             ),
@@ -400,7 +400,7 @@ class DrawerWidget extends StatelessWidget {
             DrawerListTileWidget(
               title: '\t\t\t\t\t Payslip',
               listTileOnTap: () {
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
                   context,
                   PAYSLIP,
                 );

@@ -13,6 +13,7 @@ import 'package:hr_management/ui/screens/business_trip/business_trip_screen.dart
 import 'package:hr_management/ui/screens/manage_document/doc_req_by_hr/doc_req_by_hr_screen.dart';
 import 'package:hr_management/ui/screens/manage_document/document/document_screen.dart';
 import 'package:hr_management/ui/screens/case_management_screen/helpdesk_dashboard_screen/helpdesk_dashboard_screen.dart';
+import 'package:hr_management/ui/screens/payroll/salary_details_screen.dart';
 import 'package:hr_management/ui/screens/reimbursement_screens/reimbursement_screen.dart';
 import 'package:hr_management/ui/screens/resignation_screen/resignation_screen.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/tag_nts_screen.dart';
@@ -28,6 +29,7 @@ import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 
 // import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
+import '../ui/screens/dms/dms_email_list_screen/dms_email_list_screen.dart';
 import '../ui/screens/dms/dms_move_workbook_screen/dms_move_workbook_screen.dart';
 import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
 import '../ui/screens/hr_direct_contract_screen/hr_direct_contract_screen.dart';
@@ -306,6 +308,9 @@ class AppRouter {
 
       case PAYSLIP:
         return MaterialPageRoute(builder: (_) => PayslipScreen());
+
+         case SALARY_DETAILS:
+        return MaterialPageRoute(builder: (_) => SalaryDetailsScreen());
 
       case TASKLIST:
         return MaterialPageRoute(builder: (_) => TaskListScreen());
@@ -591,6 +596,16 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => DMSMoveWorkbookScreen(
             noteId: args.arg2!,
+          ),
+        );
+
+      case DMS_EMAIL_LIST_SCREEN:
+        final args = routeSettings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => DMSEmailListScreen(
+            workbookList: args.workbookReferenceList,
+            isAddBelow: args.val1,
+            index: args.num!,
           ),
         );
 

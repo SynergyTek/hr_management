@@ -81,6 +81,32 @@ class ServiceRepository extends AbstractServiceRepository {
     }
   }
 
+  @override
+  Future<ServiceResponse> deleteService({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    const String endpoint = APIEndpointConstants.DELETE_SERVICE;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      var result = ServiceResponse.fromJson(
+        response.data,
+      );
+
+      return result;
+    } catch (err, stacktrace) {
+      print(
+          "[Exception]: Error occured while fetching the API Response for endpoint: $endpoint.");
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return ServiceResponse.withError("$err");
+    }
+  }
+
   Future<PaginationMyRequestsResponse> getMyRequestList(
       {Map<String, dynamic>? queryparams}) async {
     const String endpoint = APIEndpointConstants.GET_MY_REQUEST_ENDPOINT;

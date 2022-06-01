@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../bloc/service_bloc/abstract_service_bloc.dart';
 import '../../../constants/enums.dart';
-import '../../../models/service_models/service_response.dart';
 import '../../widgets/custom_progress_indicator.dart';
 import '../../widgets/empty_list_widget.dart';
 import '../../widgets/listizer.dart';
@@ -12,10 +11,10 @@ class TagNTSBodyWidget extends StatefulWidget {
   final NTSType? ntsType;
   final String? ntsId;
 
-  TagNTSBodyWidget({
+  const TagNTSBodyWidget({Key? key, 
     required this.ntsType,
     required this.ntsId,
-  });
+  }) : super(key: key);
 
   @override
   TagNTSBodyWidgetState createState() => TagNTSBodyWidgetState();

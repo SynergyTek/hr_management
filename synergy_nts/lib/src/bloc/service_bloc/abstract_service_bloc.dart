@@ -36,6 +36,10 @@ abstract class AbstractServiceBloc {
     required Service? service,
   });
 
+  Future<ServiceResponse?> deleteService({
+    Map<String, dynamic>? queryparams,
+  });
+
   /// getServiceHomeListData: function to get List Service Home data from the API
   /// @Params:
   ///   queryparams: It takes a Map of queryparams to fetch the data from API.
