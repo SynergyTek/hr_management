@@ -8,6 +8,7 @@ import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/themes/light_theme.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../data/models/login_models/extra_user_information_model.dart';
 import '../../../../data/models/login_models/login_response_model.dart';
 import '../../../../data/models/login_models/login_request_model.dart';
@@ -42,7 +43,7 @@ class _LoginBodyState extends State<LoginBody> {
   final _formKey = GlobalKey<FormState>();
   LoginResponseModel user = new LoginResponseModel();
   List<PortalViewModel> portalList = <PortalViewModel>[];
-  String? selectedPortal;
+  String? selectedPortal = "HR";
 
   @override
   void initState() {
@@ -336,7 +337,11 @@ class _LoginBodyState extends State<LoginBody> {
         "portalName": selectedPortal,
       },
     );
-
+    if (response != null) {
+      var per = response.data.join("|");
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setString('UserPermissions', per);
+    }
     return response;
   }
 

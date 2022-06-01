@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../themes/light_theme.dart';
 import 'section_workboard_details_list_widget.dart';
 import '../../../../constants/api_endpoints.dart';
@@ -35,10 +36,13 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
   List<WorkboardModel>? _searchResult;
   List<WorkboardModel>? fullList;
 
+  String _userPermission = "";
+
   @override
   void initState() {
     super.initState();
     apiCall();
+    loadPrefernces();
   }
 
   apiCall() {
@@ -62,10 +66,18 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
     };
   }
 
+  void loadPrefernces() async {
+    var prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userPermission = (prefs.getString('UserPermissions') ?? "");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Text(_userPermission),
         ExpansionTile(
           collapsedBackgroundColor: Colors.grey[200],
           backgroundColor: Colors.grey[200],
@@ -136,11 +148,9 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             (list![index].iconFileId != null)
-                                ? Image.network(
-                                    APIEndpointConstants
-                                            .PROFILE_PICTURE_ENDPOINT +
-                                        list![index].iconFileId!)
-                                   
+                                ? Image.network(APIEndpointConstants
+                                        .PROFILE_PICTURE_ENDPOINT +
+                                    list![index].iconFileId!)
                                 : Container(),
                             (list?[index].workBoardName != null)
                                 ? Expanded(
