@@ -8,17 +8,20 @@ import 'package:hr_management/ui/screens/leaves/get_policy_documents_screen.dart
 import 'package:hr_management/ui/screens/worklist_my_service/worklist_my_service.dart';
 import 'package:hr_management/ui/widgets/drawer/widgets/expansion_list_tile_widget.dart';
 import 'package:sizer/sizer.dart';
+import '../../../data/lists/lists.dart';
 import '../../../logic/blocs/permission_bloc/user_permission_bloc/user_permission_bloc.dart';
 import '../../../routes/route_constants.dart';
 import '../../screens/leaves/employee_attendance_list_screen.dart';
 import '../dotted_divider_widget.dart';
 import 'widgets/drawer_list_tile.dart';
 
+// ignore: must_be_immutable
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({
+  DrawerWidget({
     Key? key,
   }) : super(key: key);
 
+  List<Widget> drawerItemList = [];
   @override
   Widget build(BuildContext context) {
     return drawerWidget(context);
@@ -86,15 +89,17 @@ class DrawerWidget extends StatelessWidget {
                   const DottedDividerWidget(),
 
                   //
-                  _drawerListWidget(
-                    context,
-                    BlocProvider.of<UserModelBloc>(context)
-                            .state
-                            .extraUserInformation
-                            ?.userPermissionResponse
-                            ?.data ??
-                        [],
-                  ),
+                  Column(
+                    children: drawerList(
+                      context: context,
+                      data: BlocProvider.of<UserModelBloc>(context)
+                              .state
+                              .extraUserInformation
+                              ?.userPermissionResponse
+                              ?.data ??
+                          [],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -589,6 +594,59 @@ class DrawerWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  List<Widget> drawerList({
+    required BuildContext context,
+    required List<UserPermissionModel?> data,
+  }) {
+    drawerItemList.clear();
+    if (data.isNotEmpty) {
+      drawerItemList.addAll(getDrawerItemList(data, context));
+    }
+    return drawerItemList;
+  }
+
+  List<Widget> getDrawerItemList(List<UserPermissionModel?> data, context) {
+    List<Widget> list = [];
+    List<Widget> childDraList = [];
+    for (int j = 0; j < navDrawerList.length; j++) {
+      childDraList = [];
+      if (navDrawerList[j].isExpanded == true &&
+          navDrawerList[j].isExpanded != null) {
+        for (int k = 0; k < navDrawerList[j].childList.length; k++) {
+          if (data.any((file) =>
+              file!.pageName == navDrawerList[j].childList[k].pageName)) {
+            childDraList.add(DrawerListTileWidget(
+              title: '\t\t\t\t\t ${navDrawerList[j].childList[k].title}',
+              listTileOnTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  navDrawerList[j].childList[k].route,
+                );
+              },
+            ));
+          }
+        }
+      }
+      if (navDrawerList[j].isExpanded == true &&
+          navDrawerList[j].isExpanded != null) {
+        list.add(ExpansionListTileWidget(
+            title: navDrawerList[j].title, children: childDraList));
+      } else {
+        list.add(DrawerListTileWidget(
+          title: navDrawerList[j].title,
+          icon: navDrawerList[j].icon,
+          listTileOnTap: () {
+            Navigator.pushReplacementNamed(
+              context,
+              navDrawerList[j].route,
+            );
+          },
+        ));
+      }
+    }
+    return list;
   }
 
   // Widget _drawerListWidget(

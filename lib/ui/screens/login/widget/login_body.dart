@@ -42,7 +42,7 @@ class _LoginBodyState extends State<LoginBody> {
   final _formKey = GlobalKey<FormState>();
   LoginResponseModel user = new LoginResponseModel();
   List<PortalViewModel> portalList = <PortalViewModel>[];
-  String? selectedPortal;
+  String? selectedPortal = "HR";
 
   @override
   void initState() {

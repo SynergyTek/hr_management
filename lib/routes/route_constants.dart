@@ -125,3 +125,11 @@ const String HR_DIRECT_CONTRACT_SCREEN = "/hr_direct_contract_screen";
 const String DMS_WORBOOK_SCREEN = "/dms_workbook_screen";
 const String DMS_MOVE_WORBOOK_SCREEN = "/dms_move_workbook_screen";
 const String DMS_EMAIL_LIST_SCREEN = "/dms_email_list_screen";
+
+const String EMPLOYE_DASHBOARD = '/employe_dashboard';
+const String POLICY_DOCUMENT = '/policy_documents';
+const String EMPLOYE_ATTENDANCE_LIST_SCREEN =
+    '/employee_attendance_list_screen';
+const String WORKLIST_BY_SERVICE = '/worklist_by_service';
+const String WORKLIST_BY_TASK = '/worklist_by_task';
+const String SERVICE_HOME_NAV = "/service_home_nav";

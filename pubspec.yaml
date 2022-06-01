@@ -15,7 +15,7 @@ dependencies:
   charts_flutter: ^0.11.0
   connectivity: ^3.0.3
   cupertino_icons: ^1.0.2
-  dio: ^4.0.0
+  dio: ^4.0.6
   dropdown_button2: ^1.2.2
   equatable: ^2.0.3
   file_picker: ^3.0.3
@@ -51,8 +51,6 @@ dependencies:
   sqflite: ^2.0.0+3
   syncfusion_flutter_charts: ^19.2.47+1
   syncfusion_flutter_gauges: ^19.2.51
-  synergy_nts:
-    path: ./synergy_nts
   video_player: ^2.1.12
   webview_flutter: ^3.0.2
   image_painter: ^0.4.5
@@ -63,6 +61,8 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^1.0.0
+  synergy_nts:
+    path: ./synergy_nts
 
   flutter_test:
     sdk: flutter

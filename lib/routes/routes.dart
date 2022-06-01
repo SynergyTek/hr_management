@@ -32,7 +32,10 @@ import '../ui/screens/case_management_screen/case_management_screen.dart';
 import '../ui/screens/dms/dms_email_list_screen/dms_email_list_screen.dart';
 import '../ui/screens/dms/dms_move_workbook_screen/dms_move_workbook_screen.dart';
 import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
+import '../ui/screens/hr_direct_chart/hr_direct_chart.dart';
 import '../ui/screens/hr_direct_contract_screen/hr_direct_contract_screen.dart';
+import '../ui/screens/leaves/employee_attendance_list_screen.dart';
+import '../ui/screens/leaves/get_policy_documents_screen.dart';
 import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
 import '../ui/screens/misconduct_screen/misconduct_screen.dart';
@@ -41,6 +44,7 @@ import '../ui/screens/share/share_screen.dart';
 import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 import '../ui/screens/tasks/task_list_screen.dart';
 import '../ui/screens/time_permission/time_permission_screen.dart';
+import '../ui/screens/worklist_my_service/worklist_my_service.dart';
 import '../ui/widgets/custom_controls/team_dropdown_list.dart';
 import '../ui/widgets/custom_controls/user_dropdown_list.dart';
 import '../ui/screens/payroll/manage_accrual_screen.dart';
@@ -309,7 +313,7 @@ class AppRouter {
       case PAYSLIP:
         return MaterialPageRoute(builder: (_) => PayslipScreen());
 
-         case SALARY_DETAILS:
+      case SALARY_DETAILS:
         return MaterialPageRoute(builder: (_) => SalaryDetailsScreen());
 
       case TASKLIST:
@@ -364,7 +368,6 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => CaseManagementScreen(),
         );
-
       // case CASE_MANAGEMENT_SERVICE_REPORTS_ROUTE:
       //   return MaterialPageRoute(
       //     builder: (_) => CaseManagementServiceReportsScreen(),
@@ -607,6 +610,38 @@ class AppRouter {
             isAddBelow: args.val1,
             index: args.num!,
           ),
+        );
+
+      case EMPLOYE_DASHBOARD:
+        return MaterialPageRoute(
+          builder: (_) => HrDirectChart(),
+        );
+
+      case POLICY_DOCUMENT:
+        return MaterialPageRoute(
+          builder: (_) => HrPolicyDocumentScreen(),
+        );
+
+      case EMPLOYE_ATTENDANCE_LIST_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => EmployeeAttendanceListScreen(),
+        );
+
+      case WORKLIST_BY_SERVICE:
+        return MaterialPageRoute(
+          builder: (_) =>
+              WorkListMyServiceScreenCount(ntsType: NTSType.service),
+        );
+
+      case WORKLIST_BY_TASK:
+        return MaterialPageRoute(
+          builder: (_) => WorkListMyServiceScreenCount(ntsType: NTSType.task),
+        );
+
+      case SERVICE_HOME_NAV:
+        return MaterialPageRoute(
+          builder: (_) =>
+              ServiceHomeScreen(templateCode: 'TMS_GENERAL', isDelete: true),
         );
 
       // 404 route.
