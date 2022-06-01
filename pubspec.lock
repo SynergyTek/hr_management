@@ -1058,7 +1058,7 @@ packages:
     source: hosted
     version: "3.0.0+2"
   synergy_nts:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       path: synergy_nts
       relative: true
