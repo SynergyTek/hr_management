@@ -77,7 +77,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(_userPermission),
+        // Text(_userPermission),
         ExpansionTile(
           collapsedBackgroundColor: Colors.grey[200],
           backgroundColor: Colors.grey[200],
