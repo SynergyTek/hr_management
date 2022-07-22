@@ -653,6 +653,23 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
+<<<<<<< HEAD
+=======
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1+1"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
+>>>>>>> 6485afb327ee4e156325eb7d0964e679aa29c17b
   path_provider:
     dependency: "direct main"
     description:
@@ -1128,5 +1145,10 @@ packages:
     source: hosted
     version: "5.3.1"
 sdks:
+<<<<<<< HEAD
   dart: ">=2.17.0 <3.0.0"
   flutter: ">=3.0.0"
+=======
+  dart: ">=2.17.0-0 <3.0.0"
+  flutter: ">=2.8.0"
+>>>>>>> 6485afb327ee4e156325eb7d0964e679aa29c17b
