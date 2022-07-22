@@ -3,7 +3,7 @@ import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/dms/dms_workspace_screen/widgets/dms_workspace_body.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 import '../../../../routes/route_constants.dart';
 import '../../../../themes/light_theme.dart';

@@ -6,7 +6,7 @@ import 'package:hr_management/routes/screen_arguments.dart';
 
 import 'package:hr_management/ui/screens/dms/dms_view_permission_screen/widgets/dms_view_permission_body.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 
 import '../../../../themes/light_theme.dart';

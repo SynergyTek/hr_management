@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
 import 'package:hr_management/themes/theme_config.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import '../../../../themes/light_theme.dart';
 
 class Downloader extends StatefulWidget {

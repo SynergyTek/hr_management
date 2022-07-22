@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../widgets/appbar_widget.dart';
-import '../../widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:synergy_nts/synergy_nts.dart';

@@ -22,7 +22,9 @@ class BlocRadioButtonWidget extends StatelessWidget {
           labelText: labelName,
           prefixIcon: prefixIcon ?? SizedBox(),
         ),
-        itemBuilder: (context, item) => item,
+        itemBuilder: (context, item) => FieldItem(
+          child: Text(item),
+        ),
       ),
     );
   }

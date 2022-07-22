@@ -91,7 +91,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   String? descriptionValue;
   String? slaValue;
   bool isTileVisible = true;
-  TextEditingController _fromddController = TextEditingController();
+  final TextEditingController _fromddController = TextEditingController();
   String? ownerUserId;
 
   // Temp variable
@@ -583,7 +583,7 @@ class _TaskWidgetState extends State<TaskWidget> {
           udfJson[model[i].key] = '';
         }
         // final textArea$i = TextFieldBloc();
-        final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocTextBoxWidget(
             isRequired: model[i].validate?.required,
@@ -651,7 +651,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocTextBoxWidget(
             isRequired: model[i].validate?.required,
@@ -916,7 +916,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocTextBoxWidget(
             obscureText: true,
@@ -944,7 +944,7 @@ class _TaskWidgetState extends State<TaskWidget> {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final phoneNumber$i =
-            TextFieldBloc(initialValue: udfJson[model[i].key]);
+            TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocNumberBoxWidget(
             labelName: model[i].label,
@@ -972,7 +972,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         }
         final email$i = TextFieldBloc(
             validators: [FieldBlocValidators.email],
-            initialValue: udfJson[model[i].key]);
+            initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocTextBoxWidget(
             isRequired: model[i].validate?.required,
@@ -1346,7 +1346,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
     if (!taskModel.hideSubject!) {
       createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? taskModel.taskSubject);
+          .updateInitialValue((subjectValue ?? taskModel.taskSubject) ?? "");
       listDynamic.add(BlocTextBoxWidget(
         fieldName: 'Subject',
         readonly: false,
@@ -1359,7 +1359,8 @@ class _TaskWidgetState extends State<TaskWidget> {
         },
       ));
     }
-    createServiceFormBloc.sla.updateInitialValue(slaValue ?? taskModel.taskSLA);
+    createServiceFormBloc.sla
+        .updateInitialValue((slaValue ?? taskModel.taskSLA) ?? "");
     listDynamic.add(
       ExpandableField(
         isTileExpanded: isTileVisible,
@@ -1462,8 +1463,8 @@ class _TaskWidgetState extends State<TaskWidget> {
     );
 
     if (!taskModel.hideDescription!) {
-      createServiceFormBloc.description
-          .updateInitialValue(descriptionValue ?? taskModel.taskDescription);
+      createServiceFormBloc.description.updateInitialValue(
+          (descriptionValue ?? taskModel.taskDescription) ?? "");
       listDynamic.add(BlocTextBoxWidget(
         fieldName: 'Description',
         readonly: false,

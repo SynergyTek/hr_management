@@ -9,7 +9,8 @@ class UserBloc extends AbstractUserBloc {
   final BehaviorSubject<ReadTeamDataResponse>? _subjectReadTeamData =
       BehaviorSubject<ReadTeamDataResponse>();
 
-  final BehaviorSubject<ReadUserHierarchyResponse>? _subjectUserHierarchyDataList =
+  final BehaviorSubject<ReadUserHierarchyResponse>?
+      _subjectUserHierarchyDataList =
       BehaviorSubject<ReadUserHierarchyResponse>();
 
   @override
@@ -42,7 +43,6 @@ class UserBloc extends AbstractUserBloc {
     return response;
   }
 
-  @override
   Future<UserListResponse?> readTeamUserData({
     Map<String, dynamic>? queryparams,
   }) async {
@@ -58,8 +58,8 @@ class UserBloc extends AbstractUserBloc {
   BehaviorSubject<ReadTeamDataResponse?> get subjectReadTeamData =>
       _subjectReadTeamData!;
 
-  BehaviorSubject<ReadUserHierarchyResponse?> get subjectUserHierarchyDataList =>
-      _subjectUserHierarchyDataList!;
+  BehaviorSubject<ReadUserHierarchyResponse?>
+      get subjectUserHierarchyDataList => _subjectUserHierarchyDataList!;
 
   dispose() {
     _subjectUserDataList?.close();

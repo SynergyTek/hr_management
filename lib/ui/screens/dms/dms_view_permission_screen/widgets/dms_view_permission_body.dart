@@ -92,19 +92,23 @@ class _DMSViewPermissionBodyState extends State<DMSViewPermissionBody> {
   _slidablePermissionCard(int index) {
     return Slidable(
       key: Key(_permission![index].permittedUserId!),
-      controller: _slidableController,
-      actionPane: SlidableStrechActionPane(),
-      direction: Axis.horizontal,
-      actionExtentRatio: 0.20,
-      actions: <Widget>[
-        IconSlideAction(
-            caption: 'Delete',
-            color: Colors.red[300],
+      startActionPane: ActionPane(
+        // A motion is a widget used to control how the pane animates.
+        motion: ScrollMotion(),
+
+        // All actions are defined in the children parameter.
+        children: [
+          // A SlidableAction can have an icon and/or a label.
+          SlidableAction(
+            onPressed: deleteDialog(index),
+            backgroundColor: Color(0xFFFE4A49),
+            foregroundColor: Colors.white,
             icon: Icons.delete,
-            onTap: () {
-              deleteDialog(index);
-            }),
-      ],
+            label: 'Delete',
+          ),
+        ],
+      ),
+      direction: Axis.horizontal,
       child: _permissionCard(index: index, onTap: () {}),
     );
   }

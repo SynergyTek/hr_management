@@ -158,9 +158,9 @@ class ParseJsonHelper {
                 }
               } else {
                 bool add = true;
-                columnComponentList.forEach((element) {
+                for (var element in columnComponentList) {
                   if (element.key == columnComponent.key) add = false;
-                });
+                }
                 if (add) {
                   if (columnComponent.conditional != null) {
                     if (columnComponent.conditional!.eq ==
@@ -312,8 +312,8 @@ class ParseJsonHelper {
     //Loop will not be executed while creating the new service
     List<ColumnComponent> interimCompList = [];
     if (serviceId != null && serviceId.isNotEmpty) {
-      conditionalComponents.forEach((element) {
-        columnComponentList.forEach((eachComponent) {
+      for (var element in conditionalComponents) {
+        for (var eachComponent in columnComponentList) {
           if (eachComponent.key == element.conditional?.when &&
               eachComponent.udfValue == element.conditional?.eq) {
             var contains = interimCompList
@@ -322,8 +322,8 @@ class ParseJsonHelper {
               interimCompList.add(element);
             }
           }
-        });
-      });
+        }
+      }
     }
 
     if (interimCompList.isNotEmpty) {

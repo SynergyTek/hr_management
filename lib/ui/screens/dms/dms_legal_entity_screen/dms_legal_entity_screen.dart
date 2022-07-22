@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/widgets/dms_legal_entity_body_widget.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 class DMSLegalEntityScreen extends StatelessWidget {
   const DMSLegalEntityScreen();

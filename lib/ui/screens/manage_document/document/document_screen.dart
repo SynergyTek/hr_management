@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import '../../../widgets/appbar_widget.dart';
 import '../../../widgets/drawer/nav_drawer_widget.dart';
-import '../../../widgets/internet_connectivity_widget.dart';
 import 'widgets/document_body_widget.dart';
 
 class DocumentScreen extends StatelessWidget {

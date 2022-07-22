@@ -594,7 +594,7 @@ class AppRouter {
           ),
         );
 
-      case DMS_MOVE_WORBOOK_SCREEN: 
+      case DMS_MOVE_WORBOOK_SCREEN:
         final args = routeSettings.arguments as ScreenArguments;
         return MaterialPageRoute(
           builder: (_) => DMSMoveWorkbookScreen(
@@ -640,8 +640,8 @@ class AppRouter {
 
       case SERVICE_HOME_NAV:
         return MaterialPageRoute(
-          builder: (_) =>
-              ServiceHomeScreen(templateCode: 'TMS_GENERAL', isDelete: true),
+          builder: (_) => ServiceHomeScreen(
+              templateCode: 'TMS_GENERAL', isDelete: true, showBack: true),
         );
 
       // 404 route.

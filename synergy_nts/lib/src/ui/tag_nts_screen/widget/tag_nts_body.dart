@@ -11,7 +11,8 @@ class TagNTSBodyWidget extends StatefulWidget {
   final NTSType? ntsType;
   final String? ntsId;
 
-  const TagNTSBodyWidget({Key? key, 
+  const TagNTSBodyWidget({
+    Key? key,
     required this.ntsType,
     required this.ntsId,
   }) : super(key: key);
@@ -31,7 +32,7 @@ class TagNTSBodyWidgetState extends State<TagNTSBodyWidget> {
   }
 
   apiCall() {
-    Map<String, dynamic> queryparams = Map();
+    Map<String, dynamic> queryparams = {};
     serviceBloc.subjectServiceList.sink.add(null);
     queryparams['userId'] = '45bba746-3309-49b7-9c03-b5793369d73c';
     serviceBloc.getServiceHomeListData(queryparams: queryparams);

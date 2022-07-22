@@ -11,7 +11,6 @@ Future<List<NTSDropdownModel>> getMultiSelectList({
   TextEditingController? ddController,
 }) async {
   String _data = udfValue!;
-  List<String> _multiSelectListName = [];
 
   NTSDropdownResponse _response = await ntsDdBloc.getData(
     url: url!,

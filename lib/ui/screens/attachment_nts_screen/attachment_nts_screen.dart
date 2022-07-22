@@ -4,7 +4,7 @@ import 'package:hr_management/routes/screen_arguments.dart';
 import '../../../data/enums/enums.dart';
 import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
-import '../../widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 import 'widgets/attachment_nts_body_widget.dart';
 

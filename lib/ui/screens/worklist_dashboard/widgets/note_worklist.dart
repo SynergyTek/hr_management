@@ -40,7 +40,8 @@ class _NoteWorklistState extends State<NoteWorklist> {
         stream: worklistDashboardBloc.subjectWorklistNoteDashboardList.stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data!.error != null && snapshot.data!.error!.length > 0) {
+            if (snapshot.data!.error != null &&
+                snapshot.data!.error!.length > 0) {
               return Center(
                 child: Text(snapshot.data!.error!),
               );
@@ -56,140 +57,169 @@ class _NoteWorklistState extends State<NoteWorklist> {
   }
 
   Widget noteWorklistGrid() {
-    return StaggeredGridView.count(
-      crossAxisCount: 3,
-      crossAxisSpacing: 10.0,
-      mainAxisSpacing: 12.0,
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
-      children: <Widget>[
-        buildTile(
-          isTile: false,
-          status: 'Created by Me',
-          value: dashboardCount!.createdByMe,
-          context: context,
-        ),
-        buildTile(
-          isTile: true,
-          status: 'Expired',
-          bgColor: Colors.redAccent,
-          context: context,
-          tabName: "userDetails",
-          mode: 'REQ_BY',
-          value: dashboardCount!.createdByMeExpired,
-          ntsType: NTSType.note,
-          image: Image(
-            image: AssetImage('assets/images/notes-overdue.png'),
-          ),
-        ),
-        buildTile(
-            isTile: true,
-            status: 'Complete',
-            bgColor: Colors.green,
-            context: context,
-            value: dashboardCount!.createdByMeActive,
-            image:
-                Image(image: AssetImage('assets/images/notes-completed.png')),
-            tabName: "userDetails",
-            ntsType: NTSType.note,
-            mode: 'REQ_BY'),
-        buildTile(
-            isTile: true,
-            status: 'Draft',
-            bgColor: Colors.lightBlue,
-            context: context,
-            value: dashboardCount!.createdByMeDraft,
-            image: Image(image: AssetImage('assets/images/notes-draft.png')),
-            tabName: "userDetails",
-            ntsType: NTSType.note,
-            mode: 'REQ_BY'),
-        buildTile(
-          isTile: false,
-          status: 'Shared by Me',
-          context: context,
-          value: dashboardCount!.sharedByMe,
-        ),
-        buildTile(
-            isTile: true,
-            status: 'Expired',
-            bgColor: Colors.redAccent,
-            context: context,
-            value: dashboardCount!.sharedByMeExpired,
-            image: Image(image: AssetImage('assets/images/notes-overdue.png')),
-            tabName: "NoteSharedBy",
-            ntsType: NTSType.note,
-            mode: 'ASSIGN_BY'),
-        buildTile(
-            isTile: true,
-            status: 'Complete',
-            bgColor: Colors.green,
-            context: context,
-            value: dashboardCount!.sharedByMeActive,
-            ntsType: NTSType.note,
-            image:
-                Image(image: AssetImage('assets/images/notes-completed.png')),
-            tabName: "NoteSharedBy",
-            mode: 'ASSIGN_BY'),
-        buildTile(
-            isTile: true,
-            status: 'Draft',
-            bgColor: Colors.lightBlue,
-            context: context,
-            value: dashboardCount!.sharedByMeDraft,
-            image: Image(image: AssetImage('assets/images/notes-draft.png')),
-            tabName: "NoteSharedBy",
-            ntsType: NTSType.note,
-            mode: 'ASSIGN_BY'),
-        buildTile(
-            isTile: false,
-            value: null, // dashboardCount.sharedwi,
-            status: 'Shared with Me/Team',
-            context: context),
-        buildTile(
-            isTile: true,
-            status: 'Expired',
-            bgColor: Colors.redAccent,
-            context: context,
-            value: dashboardCount!.sharedWithMeExpired,
-            image: Image(image: AssetImage('assets/images/notes-overdue.png')),
-            ntsType: NTSType.note,
-            tabName: "NoteSharedWith",
-            mode: 'SHARE_TO'),
-        buildTile(
-            isTile: true,
-            status: 'Complete',
-            bgColor: Colors.green,
-            context: context,
-            value: dashboardCount!.sharedWithMeActive,
-            ntsType: NTSType.note,
-            image:
-                Image(image: AssetImage('assets/images/notes-completed.png')),
-            tabName: "NoteSharedWith",
-            mode: 'SHARE_TO'),
-        buildTile(
-            isTile: true,
-            status: 'Draft',
-            bgColor: Colors.lightBlue,
-            context: context,
-            value: dashboardCount!.sharedWithMeDraft,
-            image: Image(image: AssetImage('assets/images/notes-draft.png')),
-            ntsType: NTSType.note,
-            tabName: "NoteSharedWith",
-            mode: 'SHARE_TO'),
-      ],
-      staggeredTiles: [
-        StaggeredTile.extent(3, 60.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 60.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(3, 60.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-        StaggeredTile.extent(1, 130.0),
-      ],
+      child: StaggeredGrid.count(
+        crossAxisCount: 3,
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 12.0,
+        children: <Widget>[
+          StaggeredGridTile.count(
+              crossAxisCellCount: 3,
+              mainAxisCellCount: 60.0,
+              child: buildTile(
+                isTile: false,
+                status: 'Created by Me',
+                value: dashboardCount!.createdByMe,
+                context: context,
+              )),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                isTile: true,
+                status: 'Expired',
+                bgColor: Colors.redAccent,
+                context: context,
+                tabName: "userDetails",
+                mode: 'REQ_BY',
+                value: dashboardCount!.createdByMeExpired,
+                ntsType: NTSType.note,
+                image: Image(
+                  image: AssetImage('assets/images/notes-overdue.png'),
+                ),
+              )),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                  isTile: true,
+                  status: 'Complete',
+                  bgColor: Colors.green,
+                  context: context,
+                  value: dashboardCount!.createdByMeActive,
+                  image: Image(
+                      image: AssetImage('assets/images/notes-completed.png')),
+                  tabName: "userDetails",
+                  ntsType: NTSType.note,
+                  mode: 'REQ_BY')),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                  isTile: true,
+                  status: 'Draft',
+                  bgColor: Colors.lightBlue,
+                  context: context,
+                  value: dashboardCount!.createdByMeDraft,
+                  image:
+                      Image(image: AssetImage('assets/images/notes-draft.png')),
+                  tabName: "userDetails",
+                  ntsType: NTSType.note,
+                  mode: 'REQ_BY')),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 3,
+              mainAxisCellCount: 60.0,
+              child: buildTile(
+                isTile: false,
+                status: 'Shared by Me',
+                context: context,
+                value: dashboardCount!.sharedByMe,
+              )),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                  isTile: true,
+                  status: 'Expired',
+                  bgColor: Colors.redAccent,
+                  context: context,
+                  value: dashboardCount!.sharedByMeExpired,
+                  image: Image(
+                      image: AssetImage('assets/images/notes-overdue.png')),
+                  tabName: "NoteSharedBy",
+                  ntsType: NTSType.note,
+                  mode: 'ASSIGN_BY')),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                  isTile: true,
+                  status: 'Complete',
+                  bgColor: Colors.green,
+                  context: context,
+                  value: dashboardCount!.sharedByMeActive,
+                  ntsType: NTSType.note,
+                  image: Image(
+                      image: AssetImage('assets/images/notes-completed.png')),
+                  tabName: "NoteSharedBy",
+                  mode: 'ASSIGN_BY')),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                  isTile: true,
+                  status: 'Draft',
+                  bgColor: Colors.lightBlue,
+                  context: context,
+                  value: dashboardCount!.sharedByMeDraft,
+                  image:
+                      Image(image: AssetImage('assets/images/notes-draft.png')),
+                  tabName: "NoteSharedBy",
+                  ntsType: NTSType.note,
+                  mode: 'ASSIGN_BY')),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 3,
+              mainAxisCellCount: 60.0,
+              child: buildTile(
+                  isTile: false,
+                  value: null, // dashboardCount.sharedwi,
+                  status: 'Shared with Me/Team',
+                  context: context)),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                  isTile: true,
+                  status: 'Expired',
+                  bgColor: Colors.redAccent,
+                  context: context,
+                  value: dashboardCount!.sharedWithMeExpired,
+                  image: Image(
+                      image: AssetImage('assets/images/notes-overdue.png')),
+                  ntsType: NTSType.note,
+                  tabName: "NoteSharedWith",
+                  mode: 'SHARE_TO')),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                  isTile: true,
+                  status: 'Complete',
+                  bgColor: Colors.green,
+                  context: context,
+                  value: dashboardCount!.sharedWithMeActive,
+                  ntsType: NTSType.note,
+                  image: Image(
+                      image: AssetImage('assets/images/notes-completed.png')),
+                  tabName: "NoteSharedWith",
+                  mode: 'SHARE_TO')),
+          StaggeredGridTile.count(
+              crossAxisCellCount: 1,
+              mainAxisCellCount: 130.0,
+              child: buildTile(
+                  isTile: true,
+                  status: 'Draft',
+                  bgColor: Colors.lightBlue,
+                  context: context,
+                  value: dashboardCount!.sharedWithMeDraft,
+                  image:
+                      Image(image: AssetImage('assets/images/notes-draft.png')),
+                  ntsType: NTSType.note,
+                  tabName: "NoteSharedWith",
+                  mode: 'SHARE_TO')),
+        ],
+      ),
     );
   }
 }

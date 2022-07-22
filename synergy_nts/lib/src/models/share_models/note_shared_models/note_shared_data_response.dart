@@ -8,8 +8,7 @@ class NoteSharedDataResponse {
   NoteSharedDataResponse({this.list});
 
   NoteSharedDataResponse.fromJson(List response)
-      : list =
-            (response).map((i) => new NoteSharedDataModel.fromJson(i)).toList();
+      : list = (response).map((i) => NoteSharedDataModel.fromJson(i)).toList();
 
   NoteSharedDataResponse.withError(String errorValue)
       : list = null,

@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../themes/light_theme.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'section_workboard_details_list_widget.dart';
 import '../../../../constants/api_endpoints.dart';
 import '../../../../data/models/nts_dropdown/nts_dropdown_model.dart';
@@ -36,7 +35,7 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
   List<WorkboardModel>? _searchResult;
   List<WorkboardModel>? fullList;
 
-  String _userPermission = "";
+  String userPermission = "";
 
   @override
   void initState() {
@@ -69,300 +68,311 @@ class _WorkBoardScreenBodyWidgetState extends State<WorkBoardScreenBodyWidget> {
   void loadPrefernces() async {
     var prefs = await SharedPreferences.getInstance();
     setState(() {
-      _userPermission = (prefs.getString('UserPermissions') ?? "");
+      userPermission = (prefs.getString('UserPermissions') ?? "");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Text(_userPermission),
-        ExpansionTile(
-          collapsedBackgroundColor: Colors.grey[200],
-          backgroundColor: Colors.grey[200],
-          trailing: Icon(Icons.filter_list),
-          title: _searchField(),
-          children: [
-            wrappedButtons(),
-          ],
-        ),
-        Expanded(
-          child: StreamBuilder<WorkBoardResponseModel?>(
-            stream: workboardBloc.subjectWorkboardList.stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data!.error != null &&
-                    snapshot.data!.error!.length > 0) {
-                  return Center(
-                    child: Expanded(child: Text(snapshot.data!.error!)),
-                  );
-                }
+    return InternetConnectivityWidget(
+      child: Column(
+        children: [
+          // Text(_userPermission),
+          ExpansionTile(
+            collapsedBackgroundColor: Colors.grey[200],
+            backgroundColor: Colors.grey[200],
+            trailing: Icon(Icons.filter_list),
+            title: _searchField(),
+            children: [
+              wrappedButtons(),
+            ],
+          ),
+          Expanded(
+            child: StreamBuilder<WorkBoardResponseModel?>(
+              stream: workboardBloc.subjectWorkboardList.stream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.error != null &&
+                      snapshot.data!.error!.length > 0) {
+                    return Center(
+                      child: Expanded(child: Text(snapshot.data!.error!)),
+                    );
+                  }
 
-                if (_searchResult != null && _searchResult!.length > 0) {
-                  list = _searchResult;
-                } else if (subjectController.text.isEmpty ||
-                    _searchResult == null) {
-                  list = snapshot.data?.data
-                      ?.where((WorkboardModel element) =>
-                          element.iconFileId != null)
-                      .toList();
-                  fullList = snapshot.data?.data
-                      ?.where((WorkboardModel element) =>
-                          element.iconFileId != null)
-                      .toList();
+                  if (_searchResult != null && _searchResult!.length > 0) {
+                    list = _searchResult;
+                  } else if (subjectController.text.isEmpty ||
+                      _searchResult == null) {
+                    list = snapshot.data?.data
+                        ?.where((WorkboardModel element) =>
+                            element.iconFileId != null)
+                        .toList();
+                    fullList = snapshot.data?.data
+                        ?.where((WorkboardModel element) =>
+                            element.iconFileId != null)
+                        .toList();
+                  } else {
+                    return Center(
+                      child:
+                          Text('No Data Found for ${subjectController.text}'),
+                    );
+                  }
+
+                  if (sortByController.text == "Alphabetical") {
+                    list?.sort(
+                      (a, b) =>
+                          a.workBoardName.toString().toLowerCase().compareTo(
+                                b.workBoardName.toString().toLowerCase(),
+                              ),
+                    );
+                  }
+                  if (sortByController.text == "Recent Activity") {
+                    list?.sort(
+                      (a, b) =>
+                          a.lastUpdatedDate.toString().toLowerCase().compareTo(
+                                b.lastUpdatedDate.toString().toLowerCase(),
+                              ),
+                    );
+                  }
+
+                  return GridView.builder(
+                    itemCount: list?.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1.1, crossAxisCount: 2),
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        child: Card(
+                          margin: DEFAULT_PADDING,
+                          elevation: 6,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              (list![index].iconFileId != null)
+                                  ? Image.network(APIEndpointConstants
+                                          .PROFILE_PICTURE_ENDPOINT +
+                                      list![index].iconFileId!)
+                                  : Container(),
+                              (list?[index].workBoardName != null)
+                                  ? Expanded(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(
+                                              child: Text(
+                                                list![index]
+                                                    .workBoardName
+                                                    .toString(),
+                                                maxLines: 2,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: PopupMenuButton(
+                                                child: Icon(
+                                                  Icons.more_vert,
+                                                ),
+                                                onSelected: (result) async {
+                                                  if (result == 0) {}
+                                                  if (result == 1) {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      DUPLICATE_WORKBOARD_SCREEN,
+                                                      arguments:
+                                                          ScreenArguments(
+                                                              arg1: list?[index]
+                                                                  .workboardId),
+                                                    ).then(
+                                                        (value) => apiCall());
+                                                  }
+
+                                                  if (result == 2) {
+                                                    String? templateTypeText;
+                                                    if (list?[index]
+                                                            .templateTypeId ==
+                                                        "1255fc6e-0e21-4709-a804-074fed296eb3") {
+                                                      templateTypeText =
+                                                          "Monthly";
+                                                    } else if (list?[index]
+                                                            .templateTypeId ==
+                                                        "ee62b9f9-15dc-45da-a5d1-0bc9ab1fc0e0") {
+                                                      templateTypeText =
+                                                          "Yearly";
+                                                    } else if (list?[index]
+                                                            .templateTypeId ==
+                                                        "5958f94a-38c1-499e-aac1-8c1ef388c2d4") {
+                                                      templateTypeText =
+                                                          "Weekly";
+                                                    } else if (list?[index]
+                                                            .templateTypeId ==
+                                                        "3b1cb391-de1b-4df6-b0c1-90df23c273c6") {
+                                                      templateTypeText =
+                                                          "Basic";
+                                                    }
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      CREATE_WORKBOARD_SCREEN,
+                                                      arguments: ScreenArguments(
+                                                          arg3: list?[index]
+                                                              .workBoardType
+                                                              .toString(),
+                                                          val1: true,
+                                                          arg1: list?[index]
+                                                              .workboardId,
+                                                          arg2:
+                                                              templateTypeText),
+                                                    ).then(
+                                                        (value) => apiCall());
+                                                  }
+                                                  if (result == 3) {
+                                                    await workboardBloc
+                                                        .getOpenCloseWorkboard(
+                                                      queryparams: {
+                                                        'id': list?[index]
+                                                            .workboardId,
+                                                        'status': 1,
+                                                      },
+                                                    );
+                                                    if (workboardBloc
+                                                        .subjectOpenCloseWorkboard
+                                                        .hasValue) {
+                                                      displaySnackBar(
+                                                          context: context,
+                                                          text: (workboardBloc
+                                                                      .subjectOpenCloseWorkboard
+                                                                      .value
+                                                                      ?.booldata ==
+                                                                  true)
+                                                              ? 'Successful'
+                                                              : 'Please Try Again Later');
+                                                    }
+                                                    apiCall();
+                                                  }
+                                                  if (result == 4) {
+                                                    await workboardBloc
+                                                        .getOpenCloseWorkboard(
+                                                      queryparams: {
+                                                        'id': list?[index]
+                                                            .workboardId,
+                                                        'status': 0,
+                                                      },
+                                                    );
+                                                    if (workboardBloc
+                                                        .subjectOpenCloseWorkboard
+                                                        .hasValue) {
+                                                      displaySnackBar(
+                                                          context: context,
+                                                          text: (workboardBloc
+                                                                      .subjectOpenCloseWorkboard
+                                                                      .value
+                                                                      ?.booldata ==
+                                                                  true)
+                                                              ? 'Successful'
+                                                              : 'Please Try Again Later');
+                                                    }
+                                                    apiCall();
+                                                  }
+                                                },
+                                                itemBuilder:
+                                                    (BuildContext context) {
+                                                  return (selectStatusController
+                                                              .text ==
+                                                          'Closed')
+                                                      ? [
+                                                          PopupMenuItem(
+                                                            value: 4,
+                                                            child:
+                                                                IconTextRowWidget(
+                                                              iconData: Icons
+                                                                  .arrow_forward_ios_outlined,
+                                                              iconText:
+                                                                  'ReOpen Board',
+                                                            ),
+                                                          ),
+                                                        ]
+                                                      : [
+                                                          PopupMenuItem(
+                                                            value: 0,
+                                                            child:
+                                                                IconTextRowWidget(
+                                                              iconData: Icons
+                                                                  .arrow_forward_ios_outlined,
+                                                              iconText: 'Share',
+                                                            ),
+                                                          ),
+                                                          PopupMenuItem(
+                                                            value: 1,
+                                                            child:
+                                                                IconTextRowWidget(
+                                                              iconData: Icons
+                                                                  .control_point_duplicate,
+                                                              iconText:
+                                                                  'Duplicate Board',
+                                                            ),
+                                                          ),
+                                                          PopupMenuItem(
+                                                            value: 2,
+                                                            child:
+                                                                IconTextRowWidget(
+                                                              iconData:
+                                                                  Icons.edit,
+                                                              iconText:
+                                                                  'Edit Board',
+                                                            ),
+                                                          ),
+                                                          PopupMenuItem(
+                                                            value: 3,
+                                                            child:
+                                                                IconTextRowWidget(
+                                                              iconData:
+                                                                  Icons.close,
+                                                              iconText:
+                                                                  'Close Board',
+                                                            ),
+                                                          ),
+                                                        ];
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          workboardBloc.subjectManageWorkboardDetailsList.sink
+                              .add(null);
+                          print(list?[index].workboardId ?? '');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => SectionWorkBoardDetailsList(
+                                workboardModel: list?[index],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
                 } else {
                   return Center(
-                    child: Text('No Data Found for ${subjectController.text}'),
+                    child: CustomProgressIndicator(),
                   );
                 }
-
-                if (sortByController.text == "Alphabetical") {
-                  list?.sort(
-                    (a, b) =>
-                        a.workBoardName.toString().toLowerCase().compareTo(
-                              b.workBoardName.toString().toLowerCase(),
-                            ),
-                  );
-                }
-                if (sortByController.text == "Recent Activity") {
-                  list?.sort(
-                    (a, b) =>
-                        a.lastUpdatedDate.toString().toLowerCase().compareTo(
-                              b.lastUpdatedDate.toString().toLowerCase(),
-                            ),
-                  );
-                }
-
-                return GridView.builder(
-                  itemCount: list?.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1.1, crossAxisCount: 2),
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      child: Card(
-                        margin: DEFAULT_PADDING,
-                        elevation: 6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            (list![index].iconFileId != null)
-                                ? Image.network(APIEndpointConstants
-                                        .PROFILE_PICTURE_ENDPOINT +
-                                    list![index].iconFileId!)
-                                : Container(),
-                            (list?[index].workBoardName != null)
-                                ? Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              list![index]
-                                                  .workBoardName
-                                                  .toString(),
-                                              maxLines: 2,
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: PopupMenuButton(
-                                              child: Icon(
-                                                Icons.more_vert,
-                                              ),
-                                              onSelected: (result) async {
-                                                if (result == 0) {}
-                                                if (result == 1) {
-                                                  Navigator.pushNamed(
-                                                    context,
-                                                    DUPLICATE_WORKBOARD_SCREEN,
-                                                    arguments: ScreenArguments(
-                                                        arg1: list?[index]
-                                                            .workboardId),
-                                                  ).then((value) => apiCall());
-                                                }
-
-                                                if (result == 2) {
-                                                  String? templateTypeText;
-                                                  if (list?[index]
-                                                          .templateTypeId ==
-                                                      "1255fc6e-0e21-4709-a804-074fed296eb3") {
-                                                    templateTypeText =
-                                                        "Monthly";
-                                                  } else if (list?[index]
-                                                          .templateTypeId ==
-                                                      "ee62b9f9-15dc-45da-a5d1-0bc9ab1fc0e0") {
-                                                    templateTypeText = "Yearly";
-                                                  } else if (list?[index]
-                                                          .templateTypeId ==
-                                                      "5958f94a-38c1-499e-aac1-8c1ef388c2d4") {
-                                                    templateTypeText = "Weekly";
-                                                  } else if (list?[index]
-                                                          .templateTypeId ==
-                                                      "3b1cb391-de1b-4df6-b0c1-90df23c273c6") {
-                                                    templateTypeText = "Basic";
-                                                  }
-                                                  Navigator.pushNamed(
-                                                    context,
-                                                    CREATE_WORKBOARD_SCREEN,
-                                                    arguments: ScreenArguments(
-                                                        arg3: list?[index]
-                                                            .workBoardType
-                                                            .toString(),
-                                                        val1: true,
-                                                        arg1: list?[index]
-                                                            .workboardId,
-                                                        arg2: templateTypeText),
-                                                  ).then((value) => apiCall());
-                                                }
-                                                if (result == 3) {
-                                                  await workboardBloc
-                                                      .getOpenCloseWorkboard(
-                                                    queryparams: {
-                                                      'id': list?[index]
-                                                          .workboardId,
-                                                      'status': 1,
-                                                    },
-                                                  );
-                                                  if (workboardBloc
-                                                      .subjectOpenCloseWorkboard
-                                                      .hasValue) {
-                                                    displaySnackBar(
-                                                        context: context,
-                                                        text: (workboardBloc
-                                                                    .subjectOpenCloseWorkboard
-                                                                    .value
-                                                                    ?.booldata ==
-                                                                true)
-                                                            ? 'Successful'
-                                                            : 'Please Try Again Later');
-                                                  }
-                                                  apiCall();
-                                                }
-                                                if (result == 4) {
-                                                  await workboardBloc
-                                                      .getOpenCloseWorkboard(
-                                                    queryparams: {
-                                                      'id': list?[index]
-                                                          .workboardId,
-                                                      'status': 0,
-                                                    },
-                                                  );
-                                                  if (workboardBloc
-                                                      .subjectOpenCloseWorkboard
-                                                      .hasValue) {
-                                                    displaySnackBar(
-                                                        context: context,
-                                                        text: (workboardBloc
-                                                                    .subjectOpenCloseWorkboard
-                                                                    .value
-                                                                    ?.booldata ==
-                                                                true)
-                                                            ? 'Successful'
-                                                            : 'Please Try Again Later');
-                                                  }
-                                                  apiCall();
-                                                }
-                                              },
-                                              itemBuilder:
-                                                  (BuildContext context) {
-                                                return (selectStatusController
-                                                            .text ==
-                                                        'Closed')
-                                                    ? [
-                                                        PopupMenuItem(
-                                                          value: 4,
-                                                          child:
-                                                              IconTextRowWidget(
-                                                            iconData: Icons
-                                                                .arrow_forward_ios_outlined,
-                                                            iconText:
-                                                                'ReOpen Board',
-                                                          ),
-                                                        ),
-                                                      ]
-                                                    : [
-                                                        PopupMenuItem(
-                                                          value: 0,
-                                                          child:
-                                                              IconTextRowWidget(
-                                                            iconData: Icons
-                                                                .arrow_forward_ios_outlined,
-                                                            iconText: 'Share',
-                                                          ),
-                                                        ),
-                                                        PopupMenuItem(
-                                                          value: 1,
-                                                          child:
-                                                              IconTextRowWidget(
-                                                            iconData: Icons
-                                                                .control_point_duplicate,
-                                                            iconText:
-                                                                'Duplicate Board',
-                                                          ),
-                                                        ),
-                                                        PopupMenuItem(
-                                                          value: 2,
-                                                          child:
-                                                              IconTextRowWidget(
-                                                            iconData:
-                                                                Icons.edit,
-                                                            iconText:
-                                                                'Edit Board',
-                                                          ),
-                                                        ),
-                                                        PopupMenuItem(
-                                                          value: 3,
-                                                          child:
-                                                              IconTextRowWidget(
-                                                            iconData:
-                                                                Icons.close,
-                                                            iconText:
-                                                                'Close Board',
-                                                          ),
-                                                        ),
-                                                      ];
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        workboardBloc.subjectManageWorkboardDetailsList.sink
-                            .add(null);
-                        print(list?[index].workboardId ?? '');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => SectionWorkBoardDetailsList(
-                              workboardModel: list?[index],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                );
-              } else {
-                return Center(
-                  child: CustomProgressIndicator(),
-                );
-              }
-            },
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

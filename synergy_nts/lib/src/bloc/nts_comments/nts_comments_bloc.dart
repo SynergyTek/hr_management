@@ -17,7 +17,7 @@ class NtsCommentBloc {
   getCommentsData({
     String? ntsId,
   }) async {
-    Map<String, dynamic> queryparams = Map();
+    Map<String, dynamic> queryparams = {};
 
     queryparams["taskId"] = ntsId ?? '';
 

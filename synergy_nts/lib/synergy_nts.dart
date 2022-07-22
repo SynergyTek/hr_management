@@ -8,7 +8,7 @@ export './src/models/attachment_model/attachment_model.dart';
 export './src/models/attachment_nts_models/attachment_nts_model.dart';
 export './src/models/attachment_nts_models/attachment_nts_response.dart';
 
-export 'package:geolocator/geolocator.dart';
+// export 'package:geolocator/geolocator.dart';
 
 export 'src/ui/task_widget.dart';
 export 'src/ui/nts_wrapper_widget.dart';

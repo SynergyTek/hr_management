@@ -8,9 +8,9 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 
 import '../../../../../data/enums/enums.dart';
+import '../../../../../logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'document_list_widget.dart';
 import '../../../../widgets/appbar_widget.dart';
-import '../../../../widgets/internet_connectivity_widget.dart';
 import '../../../../widgets/progress_indicator.dart';
 
 import '../../../../../themes/theme_config.dart';

@@ -9,7 +9,7 @@ class ServiceSharedDataResponse {
 
   ServiceSharedDataResponse.fromJson(List response)
       : list =
-            (response).map((i) => new ServiceSharedDataModel.fromJson(i)).toList();
+            (response).map((i) => ServiceSharedDataModel.fromJson(i)).toList();
 
   ServiceSharedDataResponse.withError(String errorValue)
       : list = null,

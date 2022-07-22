@@ -27,7 +27,7 @@ class BlocDropDownWidget extends StatelessWidget {
           labelText: labelName,
           prefixIcon: prefixIcon ?? Icon(Icons.sentiment_satisfied),
         ),
-        itemBuilder: (context, value) => value,
+        itemBuilder: (context, value) => FieldItem(child: Text(value)),
         onChanged: onChanged as void Function(String?)?,
       ),
     );

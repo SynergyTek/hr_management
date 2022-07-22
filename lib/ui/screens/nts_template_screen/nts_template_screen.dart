@@ -5,7 +5,7 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/nts_template_bloc/nts_template_bloc.dart';
 import '../../widgets/appbar_widget.dart';
-import '../../widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'widgets/nts_template_body_widget.dart';
 
 class NTSTemplateScreen extends StatefulWidget {

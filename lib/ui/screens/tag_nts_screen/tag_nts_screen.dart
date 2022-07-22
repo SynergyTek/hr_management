@@ -4,7 +4,7 @@ import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/tag_nts_screen/widget/tag_nts_body.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 import '../../../themes/light_theme.dart';
 

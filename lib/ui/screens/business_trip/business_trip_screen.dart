@@ -4,7 +4,7 @@ import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/themes/light_theme.dart';
 import 'package:hr_management/ui/screens/business_trip/widget/business_trip_widget.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';

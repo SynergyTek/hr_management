@@ -6,7 +6,7 @@ import 'package:hr_management/ui/screens/dms/widget/dms_parent_body.dart';
 import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
-import '../../widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 class DMSParent extends StatelessWidget {
   final String? sourceId;

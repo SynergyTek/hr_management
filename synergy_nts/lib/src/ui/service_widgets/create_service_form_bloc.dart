@@ -8,10 +8,10 @@ class CreateServiceFormBloc extends FormBloc<String, String> {
   );
 
   final description = TextFieldBloc();
-  final startDate = InputFieldBloc<DateTime, dynamic>();
-  final endDate = InputFieldBloc<DateTime, dynamic>();
+  final startDate = InputFieldBloc<DateTime?, dynamic>(initialValue: null);
+  final endDate = InputFieldBloc<DateTime?, dynamic>(initialValue: null);
   final sla = TextFieldBloc();
-  final expiryDate = InputFieldBloc<DateTime, dynamic>();
+  final expiryDate = InputFieldBloc<DateTime?, dynamic>(initialValue: null);
   final priority = SelectFieldBloc();
 
   CreateServiceFormBloc() {

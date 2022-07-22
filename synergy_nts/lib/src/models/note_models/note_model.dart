@@ -370,8 +370,10 @@ class NoteModel {
         noteTemplateVm: json["NoteTemplateVM"],
         templateViewModel: json["TemplateViewModel"],
         noteTable: json["NoteTable"],
-        columnList: json["ColumnList"]!=null?List<ColumnList>.from(
-            json["ColumnList"].map((x) => ColumnList.fromJson(x))):null,
+        columnList: json["ColumnList"] != null
+            ? List<ColumnList>.from(
+                json["ColumnList"].map((x) => ColumnList.fromJson(x)))
+            : null,
         parentTemplateId: json["ParentTemplateId"],
         activeUserId: json["ActiveUserId"],
         noteNo: json["NoteNo"],
@@ -849,22 +851,12 @@ class ColumnList {
   dynamic portalId;
 
   factory ColumnList.fromJson(Map<String, dynamic> json) => ColumnList(
-        foreignKeyTableId: json["ForeignKeyTableId"] == null
-            ? null
-            : json["ForeignKeyTableId"],
-        foreignKeyTableName: json["ForeignKeyTableName"] == null
-            ? null
-            : json["ForeignKeyTableName"],
-        foreignKeyColumnId: json["ForeignKeyColumnId"] == null
-            ? null
-            : json["ForeignKeyColumnId"],
-        foreignKeyColumnName: json["ForeignKeyColumnName"] == null
-            ? null
-            : json["ForeignKeyColumnName"],
+        foreignKeyTableId: json["ForeignKeyTableId"],
+        foreignKeyTableName: json["ForeignKeyTableName"],
+        foreignKeyColumnId: json["ForeignKeyColumnId"],
+        foreignKeyColumnName: json["ForeignKeyColumnName"],
         foreignKeyDisplayColumnId: json["ForeignKeyDisplayColumnId"],
-        foreignKeyDisplayColumnName: json["ForeignKeyDisplayColumnName"] == null
-            ? null
-            : json["ForeignKeyDisplayColumnName"],
+        foreignKeyDisplayColumnName: json["ForeignKeyDisplayColumnName"],
         dataTypestr: json["DataTypestr"],
         value: json["Value"],
         isForeignKeyTableColumn: json["IsForeignKeyTableColumn"],
@@ -874,10 +866,8 @@ class ColumnList {
         tableMetadataName: json["TableMetadataName"],
         isVisible: json["IsVisible"],
         isEditable: json["IsEditable"],
-        activeUserType:
-            json["ActiveUserType"] == null ? null : json["ActiveUserType"],
-        ntsStatusCode:
-            json["NtsStatusCode"] == null ? null : json["NtsStatusCode"],
+        activeUserType: json["ActiveUserType"],
+        ntsStatusCode: json["NtsStatusCode"],
         isChecked: json["IsChecked"],
         ignorePermission: json["IgnorePermission"],
         name: json["Name"],
@@ -901,29 +891,18 @@ class ColumnList {
         referenceTableName: json["ReferenceTableName"],
         referenceTableSchemaName: json["ReferenceTableSchemaName"],
         foreignKeyTable: json["ForeignKeyTable"],
-        foreignKeyTableAliasName: json["ForeignKeyTableAliasName"] == null
-            ? null
-            : json["ForeignKeyTableAliasName"],
-        foreignKeyTableSchemaName: json["ForeignKeyTableSchemaName"] == null
-            ? null
-            : json["ForeignKeyTableSchemaName"],
+        foreignKeyTableAliasName: json["ForeignKeyTableAliasName"],
+        foreignKeyTableSchemaName: json["ForeignKeyTableSchemaName"],
         foreignKeyDisplayColumnReferenceId:
             json["ForeignKeyDisplayColumnReferenceId"],
         foreignKeyColumn: json["ForeignKeyColumn"],
         foreignKeyDisplayColumn: json["ForeignKeyDisplayColumn"],
         foreignKeyDisplayColumnLabelName:
-            json["ForeignKeyDisplayColumnLabelName"] == null
-                ? null
-                : json["ForeignKeyDisplayColumnLabelName"],
-        foreignKeyDisplayColumnAlias:
-            json["ForeignKeyDisplayColumnAlias"] == null
-                ? null
-                : json["ForeignKeyDisplayColumnAlias"],
+            json["ForeignKeyDisplayColumnLabelName"],
+        foreignKeyDisplayColumnAlias: json["ForeignKeyDisplayColumnAlias"],
         foreignKeyDisplayColumnDataType:
             json["ForeignKeyDisplayColumnDataType"],
-        foreignKeyConstraintName: json["ForeignKeyConstraintName"] == null
-            ? null
-            : json["ForeignKeyConstraintName"],
+        foreignKeyConstraintName: json["ForeignKeyConstraintName"],
         tableMetadataId: json["TableMetadataId"],
         tableMetadata: json["TableMetadata"],
         editableBy: List<String>.from(json["EditableBy"].map((x) => x)),
@@ -941,8 +920,7 @@ class ColumnList {
         isDeleted: json["IsDeleted"],
         sequenceOrder: json["SequenceOrder"],
         companyId: json["CompanyId"],
-        legalEntityId:
-            json["LegalEntityId"] == null ? null : json["LegalEntityId"],
+        legalEntityId: json["LegalEntityId"],
         dataAction: json["DataAction"],
         status: json["Status"],
         versionNo: json["VersionNo"],
@@ -950,18 +928,12 @@ class ColumnList {
       );
 
   Map<String, dynamic> toJson() => {
-        "ForeignKeyTableId":
-            foreignKeyTableId == null ? null : foreignKeyTableId,
-        "ForeignKeyTableName":
-            foreignKeyTableName == null ? null : foreignKeyTableName,
-        "ForeignKeyColumnId":
-            foreignKeyColumnId == null ? null : foreignKeyColumnId,
-        "ForeignKeyColumnName":
-            foreignKeyColumnName == null ? null : foreignKeyColumnName,
+        "ForeignKeyTableId": foreignKeyTableId,
+        "ForeignKeyTableName": foreignKeyTableName,
+        "ForeignKeyColumnId": foreignKeyColumnId,
+        "ForeignKeyColumnName": foreignKeyColumnName,
         "ForeignKeyDisplayColumnId": foreignKeyDisplayColumnId,
-        "ForeignKeyDisplayColumnName": foreignKeyDisplayColumnName == null
-            ? null
-            : foreignKeyDisplayColumnName,
+        "ForeignKeyDisplayColumnName": foreignKeyDisplayColumnName,
         "DataTypestr": dataTypestr,
         "Value": value,
         "IsForeignKeyTableColumn": isForeignKeyTableColumn,
@@ -971,8 +943,8 @@ class ColumnList {
         "TableMetadataName": tableMetadataName,
         "IsVisible": isVisible,
         "IsEditable": isEditable,
-        "ActiveUserType": activeUserType == null ? null : activeUserType,
-        "NtsStatusCode": ntsStatusCode == null ? null : ntsStatusCode,
+        "ActiveUserType": activeUserType,
+        "NtsStatusCode": ntsStatusCode,
         "IsChecked": isChecked,
         "IgnorePermission": ignorePermission,
         "Name": name,
@@ -996,25 +968,16 @@ class ColumnList {
         "ReferenceTableName": referenceTableName,
         "ReferenceTableSchemaName": referenceTableSchemaName,
         "ForeignKeyTable": foreignKeyTable,
-        "ForeignKeyTableAliasName":
-            foreignKeyTableAliasName == null ? null : foreignKeyTableAliasName,
-        "ForeignKeyTableSchemaName": foreignKeyTableSchemaName == null
-            ? null
-            : foreignKeyTableSchemaName,
+        "ForeignKeyTableAliasName": foreignKeyTableAliasName,
+        "ForeignKeyTableSchemaName": foreignKeyTableSchemaName,
         "ForeignKeyDisplayColumnReferenceId":
             foreignKeyDisplayColumnReferenceId,
         "ForeignKeyColumn": foreignKeyColumn,
         "ForeignKeyDisplayColumn": foreignKeyDisplayColumn,
-        "ForeignKeyDisplayColumnLabelName":
-            foreignKeyDisplayColumnLabelName == null
-                ? null
-                : foreignKeyDisplayColumnLabelName,
-        "ForeignKeyDisplayColumnAlias": foreignKeyDisplayColumnAlias == null
-            ? null
-            : foreignKeyDisplayColumnAlias,
+        "ForeignKeyDisplayColumnLabelName": foreignKeyDisplayColumnLabelName,
+        "ForeignKeyDisplayColumnAlias": foreignKeyDisplayColumnAlias,
         "ForeignKeyDisplayColumnDataType": foreignKeyDisplayColumnDataType,
-        "ForeignKeyConstraintName":
-            foreignKeyConstraintName == null ? null : foreignKeyConstraintName,
+        "ForeignKeyConstraintName": foreignKeyConstraintName,
         "TableMetadataId": tableMetadataId,
         "TableMetadata": tableMetadata,
         "EditableBy": List<dynamic>.from(editableBy!.map((x) => x)),
@@ -1030,7 +993,7 @@ class ColumnList {
         "IsDeleted": isDeleted,
         "SequenceOrder": sequenceOrder,
         "CompanyId": companyId,
-        "LegalEntityId": legalEntityId == null ? null : legalEntityId,
+        "LegalEntityId": legalEntityId,
         "DataAction": dataAction,
         "Status": status,
         "VersionNo": versionNo,

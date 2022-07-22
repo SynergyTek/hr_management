@@ -60,7 +60,7 @@ class TaskBloc extends AbstractTaskBloc {
       // TODO: Kanishk.
       // _subjectTaskList.sink.add(null);
 
-      Map<String, dynamic> queryparams = Map();
+      Map<String, dynamic> queryparams = {};
       queryparams['userId'] = taskModel.activeUserId;
 
       getTaskHomeListData(queryparams: queryparams);
@@ -87,6 +87,7 @@ class TaskBloc extends AbstractTaskBloc {
     return response;
   }
 
+  @override
   loadServiceAdhocTaskData({
     Map<String, dynamic>? queryparams,
     String? taskListStatus,
@@ -97,7 +98,6 @@ class TaskBloc extends AbstractTaskBloc {
     );
     _subjectTaskList.sink.add(response);
   }
-
 
   @override
   Future<String> lockTaskData({

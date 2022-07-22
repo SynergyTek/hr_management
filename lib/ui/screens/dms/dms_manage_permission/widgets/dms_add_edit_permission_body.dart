@@ -10,7 +10,7 @@ import 'package:hr_management/logic/blocs/common_bloc/common_bloc.dart';
 import 'package:hr_management/logic/blocs/dms_bloc/permission_bloc/permission_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/widgets/dms_legal_entity_body_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'package:hr_management/ui/widgets/nts_dropdown_select.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 import 'package:hr_management/ui/widgets/snack_bar.dart';

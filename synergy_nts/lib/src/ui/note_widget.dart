@@ -233,7 +233,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         );
 
         createServiceFormBloc.description.updateInitialValue(
-          descriptionValue ?? noteModel.noteDescription,
+          (descriptionValue ?? noteModel.noteDescription) ?? "",
         );
 
         widgets.add(
@@ -680,7 +680,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        final textField$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final textField$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           AbsorbPointer(
             // absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
@@ -750,7 +750,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           udfJson[model[i].key] = '';
         }
         // final textArea$i = TextFieldBloc();
-        final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocTextBoxWidget(
             labelName: model[i].label,
@@ -782,7 +782,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         } else {
           initialValue = udfJson[model[i].key];
         }
-        final number$i = TextFieldBloc(initialValue: initialValue);
+        final number$i = TextFieldBloc(initialValue: initialValue!);
         listDynamic.add(
           BlocNumberBoxWidget(
             labelName: model[i].label,
@@ -803,7 +803,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocTextBoxWidget(
             labelName: model[i].label,
@@ -1077,7 +1077,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocTextBoxWidget(
             obscureText: true,
@@ -1102,7 +1102,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final phoneNumber$i =
-            TextFieldBloc(initialValue: udfJson[model[i].key]);
+            TextFieldBloc(initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocNumberBoxWidget(
             labelName: model[i].label,
@@ -1126,7 +1126,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         }
         final email$i = TextFieldBloc(
             validators: [FieldBlocValidators.email],
-            initialValue: udfJson[model[i].key]);
+            initialValue: udfJson[model[i].key]!);
         listDynamic.add(
           BlocTextBoxWidget(
             labelName: model[i].label,

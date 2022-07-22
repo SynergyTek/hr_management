@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 import '../../../../data/models/work_book_models/get_note_book_report_model.dart';
 import 'widgets/dms_email_list_body.dart';

@@ -3,7 +3,7 @@ import 'package:hr_management/ui/screens/resignation_screen/widgets/resignation_
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
-import '../../widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 class ResignationScreen extends StatelessWidget {
   const ResignationScreen({

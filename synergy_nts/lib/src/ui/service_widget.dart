@@ -27,7 +27,7 @@ import '../helpers/download_helper/download.dart';
 // Packages:
 import 'package:dio/dio.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
+// import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:sizer/sizer.dart';
 
 import 'attachment_nts_screen/attachment_nts_screen.dart';
@@ -390,7 +390,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       TextEditingController();
 
   // For storing the location:
-  Position? position;
+  // Position? position;
 
   _parseJsonToUDFModel(
     CreateServiceFormBloc createServiceFormBloc,
@@ -416,7 +416,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   List<Widget> addDynamic(
     model,
-    createServiceFormBloc,
+    CreateServiceFormBloc createServiceFormBloc,
     bool isOtherDetails,
     BuildContext context,
   ) {
@@ -610,7 +610,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             ),
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
+        createServiceFormBloc.addFieldBlocs(fieldBlocs: [
+          number$i,
+        ]);
       } else if (model[i].type == 'password' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
@@ -1479,16 +1481,16 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     );
   }
 
-  Future<List<geocoding.Placemark>> _getCurrentLocationAddress() async {
-    position = await GeolocatorPlatform.instance.getCurrentPosition(
-      locationSettings: const LocationSettings(),
-    );
+  // Future<List<geocoding.Placemark>> _getCurrentLocationAddress() async {
+  //   position = await GeolocatorPlatform.instance.getCurrentPosition(
+  //     locationSettings: const LocationSettings(),
+  //   );
 
-    return geocoding.placemarkFromCoordinates(
-      position!.latitude,
-      position!.longitude,
-    );
-  }
+  //   return geocoding.placemarkFromCoordinates(
+  //     position!.latitude,
+  //     position!.longitude,
+  //   );
+  // }
 
   Widget _mapWidget({
     bool? isGoogleMaps = false,
@@ -1496,14 +1498,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     return const GoogleMapsCurrentLocationWidget();
   }
 
-  String addressToString(geocoding.Placemark data) {
-    return '''
-      ${data.name}, 
-      ${data.street}, ${data.subLocality}, ${data.locality},
-      ${data.subAdministrativeArea}, ${data.administrativeArea}, 
-      ${data.postalCode}. 
-      ''';
-  }
+  // String addressToString(geocoding.Placemark data) {
+  //   return '''
+  //     ${data.name},
+  //     ${data.street}, ${data.subLocality}, ${data.locality},
+  //     ${data.subAdministrativeArea}, ${data.administrativeArea},
+  //     ${data.postalCode}.
+  //     ''';
+  // }
 
   List<Widget> _formFieldsWidgets(context, createServiceFormBloc) {
     List<Widget> widgets = [];
@@ -1551,8 +1553,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     List<Widget> listDynamic = [];
 
     if (!serviceModel!.hideSubject!) {
-      createServiceFormBloc.subject
-          .updateInitialValue(subjectValue ?? serviceModel!.serviceSubject);
+      createServiceFormBloc.subject.updateInitialValue(
+          (subjectValue ?? serviceModel!.serviceSubject) ?? "");
       listDynamic.add(
         Visibility(
           visible: true,
@@ -1572,7 +1574,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     }
     if (widget.serviceId.isNotEmpty) {
       createServiceFormBloc.sla
-          .updateInitialValue(slaValue ?? serviceModel!.serviceSLA);
+          .updateInitialValue((slaValue ?? serviceModel!.serviceSLA) ?? "");
       listDynamic.add(ExpandableField(
         isTileExpanded: isTileVisible,
         valueChanged: (dynamic value) {
@@ -1674,7 +1676,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     }
     if (!serviceModel!.hideDescription!) {
       createServiceFormBloc.description.updateInitialValue(
-          descriptionValue ?? serviceModel!.serviceDescription);
+          (descriptionValue ?? serviceModel!.serviceDescription) ?? "");
       listDynamic.add(Visibility(
         visible: true,
         child: BlocTextBoxWidget(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-UdfJsonForNote udfJsonFromJsonForNote(String str) => UdfJsonForNote.fromJson(json.decode(str));
+UdfJsonForNote udfJsonFromJsonForNote(String str) =>
+    UdfJsonForNote.fromJson(json.decode(str));
 
 String udfJsonToJsonForNote(UdfJsonForNote data) => json.encode(data.toJson());
 
@@ -82,9 +83,9 @@ class UdfJsonComponentForNote {
         tableView: json["tableView"],
         components: json["components"] == null
             ? null
-            : List<ComponentComponentForNote>.from(
-                json["components"].map((x) => ComponentComponentForNote.fromJson(x))),
-        title: json["title"] == null ? null : json["title"],
+            : List<ComponentComponentForNote>.from(json["components"]
+                .map((x) => ComponentComponentForNote.fromJson(x))),
+        title: json["title"],
         data: json['data'] != null ? Data.fromJson(json['data']) : null,
         idPath: json['idPath'],
         template: json['template'],
@@ -109,18 +110,18 @@ class UdfJsonComponentForNote {
         "tableView": tableView,
         "components": components == null
             ? null
-            : List<ComponentComponentForNote>.from(components!.map((x) => x.toJson())),
-        "title": title == null ? null : title,
-        'data': this.data != null ? this.data!.toJson() : null,
-        'idPath': this.idPath,
-        'template': this.template,
-        'inputFormat': this.inputFormat,
-        'validate':
-            this.validate!.toJson() != null ? this.validate!.toJson() : null,
-        'value': this.value,
-        'udfValue': this.udfValue,
-        'disabled': this.disabled,
-        'hidden': this.hidden,
+            : List<ComponentComponentForNote>.from(
+                components!.map((x) => x.toJson())),
+        "title": title,
+        'data': data != null ? data!.toJson() : null,
+        'idPath': idPath,
+        'template': template,
+        'inputFormat': inputFormat,
+        'validate': validate!.toJson(),
+        'value': value,
+        'udfValue': udfValue,
+        'disabled': disabled,
+        'hidden': hidden,
       };
 }
 
@@ -152,8 +153,8 @@ class ColumnsForNote {
       );
 
   Map<String, dynamic> toJson() => {
-        "components":
-            List<ColumnComponentForNote>.from(components!.map((x) => x.toJson())),
+        "components": List<ColumnComponentForNote>.from(
+            components!.map((x) => x.toJson())),
         "width": width,
         "offset": offset,
         "push": push,
@@ -260,24 +261,28 @@ class ColumnComponentForNote {
     label = json['label'];
     tableView = json['tableView'];
     ntsType = json['ntsType'];
-    if (json.containsKey('editableContext'))
+    if (json.containsKey('editableContext')) {
       editableContext = (json['editableContext'] != null &&
               json['editableContext'].isNotEmpty)
           ? json['editableContext'].cast<String>()
           : '' as List<String>?;
-    if (json.containsKey('viewableContext'))
+    }
+    if (json.containsKey('viewableContext')) {
       viewableContext = (json['viewableContext'] != null &&
               json['viewableContext'].isNotEmpty)
           ? json['viewableContext'].cast<String>()
           : '' as List<String>?;
-    if (json.containsKey('viewableBy'))
+    }
+    if (json.containsKey('viewableBy')) {
       viewableBy = (json['viewableBy'] != null && json['viewableBy'].isNotEmpty)
           ? json['viewableBy'].cast<String>()
           : '' as List<String>?;
-    if (json.containsKey('editableBy'))
+    }
+    if (json.containsKey('editableBy')) {
       editableBy = (json['editableBy'] != null && json['editableBy'].isNotEmpty)
           ? json['editableBy'].cast<String>()
           : '' as List<String>?;
+    }
     key = json['key'];
     type = json['type'];
     input = json['input'];
@@ -329,61 +334,61 @@ class ColumnComponentForNote {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['label'] = this.label;
-    data['tableView'] = this.tableView;
-    data['ntsType'] = this.ntsType;
-    data['editableContext'] = this.editableContext;
-    data['viewableContext'] = this.viewableContext;
-    data['viewableBy'] = this.viewableBy;
-    data['editableBy'] = this.editableBy;
-    data['key'] = this.key;
-    data['type'] = this.type;
-    data['input'] = this.input;
-    data['hideOnChildrenHidden'] = this.hideOnChildrenHidden;
-    data['columnMetadataId'] = this.columnMetadataId;
-    data['format'] = this.format;
-    data['enableMinDateInput'] = this.enableMinDateInput;
-    if (this.datePicker != null) {
-      data['datePicker'] = this.datePicker!.toJson();
+    final Map<String, dynamic> data = {};
+    data['label'] = label;
+    data['tableView'] = tableView;
+    data['ntsType'] = ntsType;
+    data['editableContext'] = editableContext;
+    data['viewableContext'] = viewableContext;
+    data['viewableBy'] = viewableBy;
+    data['editableBy'] = editableBy;
+    data['key'] = key;
+    data['type'] = type;
+    data['input'] = input;
+    data['hideOnChildrenHidden'] = hideOnChildrenHidden;
+    data['columnMetadataId'] = columnMetadataId;
+    data['format'] = format;
+    data['enableMinDateInput'] = enableMinDateInput;
+    if (datePicker != null) {
+      data['datePicker'] = datePicker!.toJson();
     }
-    data['enableMaxDateInput'] = this.enableMaxDateInput;
-    data['enableTime'] = this.enableTime;
-    data['onChangeServerLogic'] = this.onChangeServerLogic;
-    if (this.validate != null) {
-      data['validate'] = this.validate!.toJson();
+    data['enableMaxDateInput'] = enableMaxDateInput;
+    data['enableTime'] = enableTime;
+    data['onChangeServerLogic'] = onChangeServerLogic;
+    if (validate != null) {
+      data['validate'] = validate!.toJson();
     }
-    if (this.widget != null) {
-      data['widget'] = this.widget!.toJson();
+    if (widget != null) {
+      data['widget'] = widget!.toJson();
     }
-    data['mask'] = this.mask;
-    data['spellcheck'] = this.spellcheck;
-    data['disabled'] = this.disabled;
-    data['delimiter'] = this.delimiter;
-    data['requireDecimal'] = this.requireDecimal;
-    data['inputFormat'] = this.inputFormat;
-    data['loadTable'] = this.loadTable;
-    data['parameterCode'] = this.parameterCode;
-    data['dataSrc'] = this.dataSrc;
+    data['mask'] = mask;
+    data['spellcheck'] = spellcheck;
+    data['disabled'] = disabled;
+    data['delimiter'] = delimiter;
+    data['requireDecimal'] = requireDecimal;
+    data['inputFormat'] = inputFormat;
+    data['loadTable'] = loadTable;
+    data['parameterCode'] = parameterCode;
+    data['dataSrc'] = dataSrc;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['valueProperty'] = this.valueProperty;
-    data['idPath'] = this.idPath;
-    data['template'] = this.template;
-    data['selectThreshold'] = this.selectThreshold;
-    if (this.indexeddb != null) {
-      data['indexeddb'] = this.indexeddb!.toJson();
+    data['valueProperty'] = valueProperty;
+    data['idPath'] = idPath;
+    data['template'] = template;
+    data['selectThreshold'] = selectThreshold;
+    if (indexeddb != null) {
+      data['indexeddb'] = indexeddb!.toJson();
     }
-    data['isDependantComponent'] = this.isDependantComponent;
-    data['disableLimit'] = this.disableLimit;
-    data['allTable'] = this.allTable;
-    data['mapId'] = this.mapId;
-    data['mapValue'] = this.mapValue;
-    data['rowDataValue'] = this.rowDataValue;
-    data['autoExpand'] = this.autoExpand;
-    data['value'] = this.value;
-    data['udfValue'] = this.udfValue;
+    data['isDependantComponent'] = isDependantComponent;
+    data['disableLimit'] = disableLimit;
+    data['allTable'] = allTable;
+    data['mapId'] = mapId;
+    data['mapValue'] = mapValue;
+    data['rowDataValue'] = rowDataValue;
+    data['autoExpand'] = autoExpand;
+    data['value'] = value;
+    data['udfValue'] = udfValue;
 
     return data;
   }
@@ -538,16 +543,13 @@ class Validate {
   bool? onlyAvailableItems;
 
   factory Validate.fromJson(Map<String, dynamic> json) => Validate(
-        required: json["required"] == null ? null : json["required"],
-        onlyAvailableItems: json["onlyAvailableItems"] == null
-            ? null
-            : json["onlyAvailableItems"],
+        required: json["required"],
+        onlyAvailableItems: json["onlyAvailableItems"],
       );
 
   Map<String, dynamic> toJson() => {
-        "required": required == null ? null : required,
-        "onlyAvailableItems":
-            onlyAvailableItems == null ? null : onlyAvailableItems,
+        "required": required,
+        "onlyAvailableItems": onlyAvailableItems,
       };
 }
 
@@ -673,22 +675,26 @@ class ComponentComponentForNote {
     label = json['label'];
     tableView = json['tableView'];
     ntsType = json['ntsType'];
-    if (json.containsKey('editableContext'))
+    if (json.containsKey('editableContext')) {
       editableContext = (json['editableContext'] != null)
           ? json['editableContext'].cast<String>()
           : '' as List<String>?;
-    if (json.containsKey('viewableContext'))
+    }
+    if (json.containsKey('viewableContext')) {
       viewableContext = (json['viewableContext'] != null)
           ? json['viewableContext'].cast<String>()
           : '' as List<String>?;
-    if (json.containsKey('viewableBy'))
+    }
+    if (json.containsKey('viewableBy')) {
       viewableBy = (json['viewableBy'] != null)
           ? json['viewableBy'].cast<String>()
           : '' as List<String>?;
-    if (json.containsKey('editableBy'))
+    }
+    if (json.containsKey('editableBy')) {
       editableBy = (json['editableBy'] != null)
           ? json['editableBy'].cast<String>()
           : '' as List<String>?;
+    }
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
     disabled = json['disabled'] ?? false;
     key = json['key'];
@@ -705,30 +711,30 @@ class ComponentComponentForNote {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['label'] = this.label;
-    data['tableView'] = this.tableView;
-    data['ntsType'] = this.ntsType;
-    data['editableContext'] = this.editableContext;
-    data['viewableContext'] = this.viewableContext;
-    data['viewableBy'] = this.viewableBy;
-    data['editableBy'] = this.editableBy;
-    data['disabled'] = this.key;
-    data['key'] = this.key;
-    data['type'] = this.type;
-    data['input'] = this.input;
-    data['columnMetadataId'] = this.columnMetadataId;
-    data['autoExpand'] = this.autoExpand;
-    if (this.validate != null) {
-      data['validate'] = this.validate!.toJson();
+    final Map<String, dynamic> data = {};
+    data['label'] = label;
+    data['tableView'] = tableView;
+    data['ntsType'] = ntsType;
+    data['editableContext'] = editableContext;
+    data['viewableContext'] = viewableContext;
+    data['viewableBy'] = viewableBy;
+    data['editableBy'] = editableBy;
+    data['disabled'] = key;
+    data['key'] = key;
+    data['type'] = type;
+    data['input'] = input;
+    data['columnMetadataId'] = columnMetadataId;
+    data['autoExpand'] = autoExpand;
+    if (validate != null) {
+      data['validate'] = validate!.toJson();
     }
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['value'] = this.value;
-    data['udfValue'] = this.udfValue;
-    data['template'] = this.template;
-    data['idPath'] = this.idPath;
+    data['value'] = value;
+    data['udfValue'] = udfValue;
+    data['template'] = template;
+    data['idPath'] = idPath;
     return data;
   }
 }

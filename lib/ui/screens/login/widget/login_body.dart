@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/constants/image_path_constants.dart';
@@ -338,9 +340,9 @@ class _LoginBodyState extends State<LoginBody> {
       },
     );
     if (response != null) {
-      var per = response.data.join("|");
+      var per = response.data;
       var prefs = await SharedPreferences.getInstance();
-      prefs.setString('UserPermissions', per);
+      prefs.setString('UserPermissions', json.encode(per));
     }
     return response;
   }

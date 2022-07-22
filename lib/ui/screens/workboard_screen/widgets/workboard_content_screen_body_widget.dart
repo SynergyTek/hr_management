@@ -105,7 +105,7 @@ class _WorkBoardContentScreenBodyWidgetState
                   headerColor = addContentWorkBoardModel?.colorCode;
                 }
 
-                WidgetsBinding.instance?.addPostFrameCallback(
+                WidgetsBinding.instance.addPostFrameCallback(
                   (_) => _afterLayout(context),
                 );
               } else if (widget.isEdit == true && widget.itemType == 6) {

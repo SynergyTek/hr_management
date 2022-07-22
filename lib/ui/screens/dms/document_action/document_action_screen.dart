@@ -5,7 +5,7 @@ import 'package:hr_management/ui/screens/dms/document_action/widgets/document_hi
 import 'package:hr_management/ui/screens/dms/document_action/widgets/search_document_body.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 class DocumentActionScreen extends StatelessWidget {
   final String? action;

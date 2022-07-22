@@ -30,7 +30,7 @@ class RegistrationFormBloc extends FormBloc<String, String> {
     items: ['Home', 'Work'],
   );
 
-  final dob = InputFieldBloc<DateTime, dynamic>();
+  final dob = InputFieldBloc<DateTime?, dynamic>(initialValue: null);
 
   final country = SelectFieldBloc(
     items: ['India', 'UAE'],
@@ -40,7 +40,7 @@ class RegistrationFormBloc extends FormBloc<String, String> {
     items: ['Hindi', 'English'],
   );
 
-  final suitableTime = InputFieldBloc<TimeOfDay, Object>();
+  final suitableTime = InputFieldBloc<TimeOfDay?, Object>(initialValue: null);
 
   final mode = BooleanFieldBloc();
 

@@ -12,7 +12,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialising the Hydrated Bloc storage.
-  HydratedBloc.storage = await HydratedStorage.build(
+  final storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
@@ -35,6 +35,8 @@ Future<void> main() async {
 
   await Permission.camera.request();
   await Permission.microphone.request();
-
-  runApp(InitScreen());
+  HydratedBlocOverrides.runZoned(
+    () => runApp(InitScreen()),
+    storage: storage,
+  );
 }

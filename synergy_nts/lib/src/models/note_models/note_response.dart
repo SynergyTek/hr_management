@@ -31,7 +31,7 @@ class NoteListResponse {
   });
 
   NoteListResponse.fromJson(List response)
-      : list = (response).map((i) => new NoteListModel.fromJson(i)).toList();
+      : list = (response).map((i) => NoteListModel.fromJson(i)).toList();
 
   NoteListResponse.withError(String errorValue)
       : list = null,

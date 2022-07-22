@@ -4,7 +4,7 @@ import 'package:hr_management/ui/screens/attendance/widgets/mark_attendance_widg
 
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
-import '../../widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import '../../widgets/location_connectivity_widget.dart';
 
 class MarkAttendance extends StatelessWidget {

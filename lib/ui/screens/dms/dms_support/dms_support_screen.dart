@@ -4,7 +4,7 @@ import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'package:sizer/sizer.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
@@ -85,7 +85,7 @@ class _DMSSupportState extends State<DMSSupport> {
   apiCall() {
     taskBloc.subjectTaskList.sink.add(null);
     Map<String, dynamic> queryparams = Map();
-   
+
     queryparams['userId'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../widgets/appbar_widget.dart';
 import '../../../widgets/drawer/nav_drawer_widget.dart';
-import '../../../widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'widgets/dms_manage_workspace_body_widget.dart';
 
 class DMSManageWorkspaceScreen extends StatelessWidget {
   final String? parentWorkspaceId;
   final bool isWorkspace;
-  
 
   DMSManageWorkspaceScreen({
     this.parentWorkspaceId,

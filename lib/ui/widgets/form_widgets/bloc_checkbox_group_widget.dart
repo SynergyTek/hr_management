@@ -14,8 +14,9 @@ class BlocCheckboxGroupWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 0.0),
       child: CheckboxGroupFieldBlocBuilder<String>(
-        multiSelectFieldBloc: multiSelectFieldBloc as MultiSelectFieldBloc<String, dynamic>,
-        itemBuilder: (context, item) => item,
+        multiSelectFieldBloc:
+            multiSelectFieldBloc as MultiSelectFieldBloc<String, dynamic>,
+        itemBuilder: (context, item) => FieldItem(child: Text(item)),
         decoration: InputDecoration(
           labelText: labelName,
           prefixIcon: prefixIcon ?? SizedBox(),

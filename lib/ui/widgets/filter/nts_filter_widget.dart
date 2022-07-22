@@ -4,10 +4,10 @@ import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
 import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/common_bloc/common_bloc.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import '../../../themes/light_theme.dart';
 import '../../screens/tasks/widget/task_home_body.dart';
 import '../appbar_widget.dart';
-import '../internet_connectivity_widget.dart';
 
 class NTSFilterWidget extends StatefulWidget {
   final FilterListTapCallBack? onListTap;

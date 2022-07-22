@@ -3,7 +3,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class BlocDatePickerWidget extends StatelessWidget {
   final String? labelName;
-  final InputFieldBloc<DateTime, dynamic>? inputFieldBloc;
+  final InputFieldBloc<DateTime?, dynamic>? inputFieldBloc;
   final DateTime? selectedDate;
   final Widget? prefixIcon;
   final bool? canSelectTime;

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
 part 'location_bloc_event.dart';
@@ -15,21 +14,43 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   StreamSubscription<LocationData>? locationStreamSubscription;
 
-  LocationBloc() : super(LocationInitialState());
+  LocationBloc() : super(LocationInitialState()) {
+    locationStreamSubscription =
+        locationStreamSubscription = location.onLocationChanged.listen(
+      (LocationData currentLocation) {
+        add(LocationStartedEvent());
+        _determinePosition();
+      },
+    );
 
-  @override
-  Stream<LocationState> mapEventToState(
-    LocationEvent event,
-  ) async* {
-    if (event is LocationStartedEvent) {
-      yield LocationLoadingState();
-      _determinePosition();
-    } else if (event is LocationChangedEvent) {
-      yield LocationLoadSuccessState(
-        locationData: event.locationData,
-      );
-    }
+    on<LocationStartedEvent>(
+      (event, emit) => emit(
+        LocationLoadingState(),
+      ),
+    );
+
+    on<LocationChangedEvent>(
+      (event, emit) => emit(
+        LocationLoadSuccessState(
+          locationData: event.locationData,
+        ),
+      ),
+    );
   }
+
+  // @override
+  // Stream<LocationState> mapEventToState(
+  //   LocationEvent event,
+  // ) async* {
+  //   if (event is LocationStartedEvent) {
+  //     yield LocationLoadingState();
+  //     _determinePosition();
+  //   } else if (event is LocationChangedEvent) {
+  //     yield LocationLoadSuccessState(
+  //       locationData: event.locationData,
+  //     );
+  //   }
+  // }
 
   void dispose() {
     locationStreamSubscription?.cancel();

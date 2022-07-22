@@ -12,7 +12,7 @@ import 'package:hr_management/logic/blocs/dms_bloc/dms_workspace_bloc/manage_wor
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/widgets/dms_legal_entity_body_widget.dart';
 import 'package:hr_management/ui/screens/dms/dms_parent_workspace_id_name_list_screen/widgets/dms_parent_workspace_id_name_list_body_widget.dart';
-import 'package:hr_management/ui/widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'package:hr_management/ui/widgets/multi_select_form_widget/multi_select_form_widget.dart';
 import 'package:hr_management/ui/widgets/primary_button.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';

@@ -3,7 +3,7 @@ import 'package:hr_management/ui/screens/misconduct_screen/widgets/misconduct_bo
 import 'package:hr_management/ui/widgets/appbar_widget.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
-import '../../widgets/internet_connectivity_widget.dart';
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 class MisconductScreen extends StatelessWidget {
   const MisconductScreen({
