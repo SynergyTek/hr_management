@@ -8,6 +8,8 @@ import '../constants/enums.dart';
 class NTSWrapperWidget extends StatelessWidget {
   final String userID;
   final NTSType ntsType;
+  final bool isView;
+
   // final PortalType portalType;
 
   /// Can be interchanged with either of the following:
@@ -34,7 +36,9 @@ class NTSWrapperWidget extends StatelessWidget {
     // Optional
     this.ntsID = "",
     this.templateCode = "",
-    this.extraInformationMap, this.isDelete = false,
+    this.extraInformationMap,
+    this.isDelete = false,
+    this.isView = false,
   }) : super(key: key);
 
   @override
@@ -60,12 +64,11 @@ class NTSWrapperWidget extends StatelessWidget {
       );
     } else if (ntsType == NTSType.note) {
       return NoteWidget(
+        isView: isView,
         userID: userID,
         noteId: ntsID,
         templateCode: templateCode,
-
-        // TODO:
-        // isDependent: ,
+        extraInformationMap: extraInformationMap,
       );
     }
 

@@ -131,13 +131,13 @@ class APIEndpointConstants {
       '$BASE_URL/nts/query/ReadServiceDashBoardGridData';
 
   static const GET_SERVICE_SHARED_COUNT =
-      "http://95.111.235.64:446/cms/GetServiceSharedCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667588";
+      "$BASE_URL/cms/GetServiceSharedCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667588";
 
   static const GET_SERVICE_NOTIFICATION_COUNT =
-      "http://95.111.235.64:446/cms/GetServiceNotificationCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
+      "$BASE_URL/cms/GetServiceNotificationCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99";
 
   static const GET_SERVICE_COMMENTS_COUNT =
-      "http://95.111.235.64:446/cms/GetServiceCommentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667589";
+      "$BASE_URL/cms/GetServiceCommentCount?serviceId=a6262902-8516-48ca-b8b2-3e215e9e6b99&_=1624621667589";
 
   static const READ_SERVICE_HOME_DATA =
       "$BASE_URL/cms/service/ReadServiceHomeData";
@@ -148,7 +148,6 @@ class APIEndpointConstants {
 
   static const GET_ALLOWED_TEMPLATES =
       '$BASE_URL/nts/query/GetAllowedTempaltes';
-  // nts/query/GetAllowedTempaltes?categoryCode=STEP_TASK_CATEGORY&userid=45bba746-3309-49b7-9c03-b5793369d73c&templateType=Task&taskType=StepTask
 
   //************************************************************************//
   //Access Log API Endpoints Block Start
@@ -157,7 +156,6 @@ class APIEndpointConstants {
       '$BASE_URL/common/query/InsertAccessLog';
 
   static const GET_ACCESS_LOG_LIST_DATA = '$BASE_URL/taa/query/accessloglist';
-  // ?startDate=2021-06-20 00:00:00.000&dueDate=2021-07-06 00:00:00.000&userId=cb9272df-0a2c-401b-aed8-b73488ae03aa';
 
   static const String GET_ATTENDANCE_VIEW_DATA =
       '$BASE_URL/taa/query/attendancelist?searchFromDate=2021-06-01 00:00:00.000&searchToDate=2021-07-30 00:00:00.000';
@@ -302,32 +300,6 @@ class APIEndpointConstants {
 
   //Attachment API Endpoints
   //************************************************************************//
-
-  //************************************************************************//
-  // Delete Comments
-
-  static const String DELETE_NOTE_COMMENT_DATA =
-      BASE_URL + '/cms/query/DeleteNoteComment';
-
-  static const String DELETE_TASK_COMMENT_DATA =
-      BASE_URL + '/cms/query/DeleteTaskComment';
-
-  static const String DELETE_SERVICE_COMMENT_DATA =
-      BASE_URL + '/cms/query/DeleteServiceComment';
-
-  // Delete Comments
-  //************************************************************************//
-
-  //Tag API Endpoints
-
-  static const READ_NTS_TAG_DATA = BASE_URL + '/cms/query/ReadNtsTagData';
-
-  static const READ_TAG_CATEGORIES_WITH_TAG =
-      BASE_URL + '/cms/query/ReadTagCategoriesWithTag';
-
-  //Tag API Endpoints
-  //************************************************************************//
-
   // Component Result API
   static const String GET_COMPONENT_RESULT_DATA =
       BASE_URL + '/cms/query/ReadComponentResultData';

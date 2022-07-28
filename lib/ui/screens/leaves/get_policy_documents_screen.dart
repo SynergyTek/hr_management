@@ -7,6 +7,7 @@ import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../constants/api_endpoints.dart';
 import '../../../data/helpers/download_helper/downloader_screen/downloader.dart';
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
 
 class HrPolicyDocumentScreen extends StatefulWidget {
   const HrPolicyDocumentScreen({Key? key}) : super(key: key);
@@ -44,6 +45,7 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
       appBar: AppBar(
         title: Text('Hr Policy Documents'),
       ),
+      drawer: DrawerWidget(),
       body: Container(
         child: StreamBuilder<HrPolicyDocumentResponse?>(
           stream: leaveBloc.subjectHrPolicyDocument.stream,

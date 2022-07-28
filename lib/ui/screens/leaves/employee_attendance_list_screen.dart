@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
 
 class EmployeeAttendanceListScreen extends StatefulWidget {
   EmployeeAttendanceListScreen({Key? key}) : super(key: key);
@@ -96,7 +97,8 @@ class _EmployeeAttendanceListScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Employee Attendance List")),
+      appBar: AppBar(title: Text("Attendance Details")),
+      drawer: DrawerWidget(),
       body: Container(
         padding: DEFAULT_LARGE_PADDING,
         child: Column(

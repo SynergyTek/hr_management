@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../dotted_divider_widget.dart';
-
 class DrawerListTileWidget extends StatelessWidget {
   final String? title;
   final Function? listTileOnTap;
   final String? subtitle;
-  final IconData? icon;
+  final IconData? leadingIcon;
+  final IconData? trailingIcon;
   final bool? isVisible;
   final bool? isLast;
 
@@ -16,7 +15,8 @@ class DrawerListTileWidget extends StatelessWidget {
     required this.title,
     required this.listTileOnTap,
     this.subtitle,
-    this.icon,
+    this.trailingIcon,
+    this.leadingIcon,
     this.isVisible = true,
     this.isLast = false,
   }) : super(key: key);
@@ -32,24 +32,34 @@ class DrawerListTileWidget extends StatelessWidget {
           ListTile(
             enabled: true,
             dense: true,
-            trailing: Icon(icon),
+            leading: leadingIcon != null
+                ? Icon(
+                    leadingIcon,
+                    color: Color.fromARGB(255, 175, 174, 174),
+                  )
+                : null,
+            trailing: Icon(
+              trailingIcon,
+              color: Color.fromARGB(255, 175, 174, 174),
+            ),
             title: Text(
               title!,
               style: TextStyle(
-                fontSize: 10.0.sp,
-                color: const Color(0xFF444444),
+                fontSize: 12.5.sp,
+                color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.normal,
                 letterSpacing: 1,
               ),
             ),
             onTap: () => listTileOnTap!(),
           ),
-
-          //
-          // Visibility(
-          //   visible: !isLast!,
-          //   child: const DottedDividerWidget(),
-          // ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 50, 0),
+            child: Container(
+              height: 1,
+              color: Color.fromARGB(255, 236, 235, 235),
+            ),
+          )
         ],
       ),
     );

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:hr_management/data/models/attachment_nts_models/attachment_nts_model.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/uploaded_content_model/uploaded_content_model.dart';
 import '../../../constants/api_endpoints.dart';
@@ -30,10 +29,10 @@ abstract class AbstractAttachmentNTSRepository {
     Map<String, dynamic>? queryparams,
   });
 
-   Future<bool> postManageUploadedFile({
+  Future<bool> postManageUploadedFile({
     required UploadedContentModel model,
   });
-   Future<bool> postAddUploadedFile({
+  Future<bool> postAddUploadedFile({
     required NoteModel model,
   });
 }

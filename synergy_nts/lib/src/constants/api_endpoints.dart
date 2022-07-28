@@ -149,5 +149,14 @@ class APIEndpointConstants {
 
   //readEmailData
   static const READ_EMAIL_DATA = BASE_URL + "/api/cms/ReadEmailData";
-  
+
+  //Tag API Endpoints
+
+  static const READ_NTS_TAG_DATA = BASE_URL + '/cms/query/ReadNtsTagData';
+
+  static const READ_TAG_CATEGORIES_WITH_TAG =
+      BASE_URL + '/cms/query/ReadTagCategoriesWithTag';
+
+  //Tag API Endpoints
+  //************************************************************************//
 }

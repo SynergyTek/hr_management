@@ -9,6 +9,7 @@ import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
 
 class HRDirectContractScreen extends StatefulWidget {
   HRDirectContractScreen({Key? key}) : super(key: key);
@@ -47,6 +48,7 @@ class _HRDirectContractScreenState extends State<HRDirectContractScreen> {
       appBar: AppBar(
         title: Text("HR Direct Contract"),
       ),
+      drawer: DrawerWidget(),
       body: StreamBuilder<HrDirectContractResponseModel?>(
         stream: resignationTerminationBloc.subjectHrDirectContract.stream,
         builder: (BuildContext context,

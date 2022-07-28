@@ -19,8 +19,8 @@ class ExpansionListTileWidget extends StatelessWidget {
       title: Text(
         title ?? '',
         style: TextStyle(
-          fontSize: 10.0.sp,
-          color: const Color(0xFF444444),
+          fontSize: 12.5.sp,
+          color: Theme.of(context).primaryColor,
           fontWeight: FontWeight.normal,
           letterSpacing: 1.2,
         ),

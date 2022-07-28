@@ -1378,15 +1378,15 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             height: 1.h,
           ),
         );
-        listDynamic.add(
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 25.h,
-            child: _mapWidget(
-              isGoogleMaps: false,
-            ),
-          ),
-        );
+        // listDynamic.add(
+        //   SizedBox(
+        //     width: MediaQuery.of(context).size.width,
+        //     height: 25.h,
+        //     child: _mapWidget(
+        //       isGoogleMaps: false,
+        //     ),
+        //   ),
+        // );
       } else if (model[i].type == 'htmlelement' && model[i].hidden != true) {
         String? content = '';
         if (model[i]?.content != null && model[i]?.content.isNotEmpty) {
@@ -1394,7 +1394,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             content = model[i].content.split('<p>')[1].split('</p>')[0];
           } else if (model[i].content.contains('Payment Link')) {
             content = null;
-            // content = model[i].content.split('>')[1].split('<')[0];
           } else {
             // content = model[i].content ?? '';
 
@@ -1440,9 +1439,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
       return;
     }
-    // AttachmentNTSRepository _apiRepository = AttachmentNTSRepository();
-    // _apiRepository.downloadAttachmentData(
-    //     fileValue: data?.udfValue ?? '', context: context);
     Map<String, String> queryparams = {
       'fileId': data?.udfValue ?? '',
     };
@@ -1492,11 +1488,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   //   );
   // }
 
-  Widget _mapWidget({
-    bool? isGoogleMaps = false,
-  }) {
-    return const GoogleMapsCurrentLocationWidget();
-  }
+  // Widget _mapWidget({
+  //   bool? isGoogleMaps = false,
+  // }) {
+  //   return const GoogleMapsCurrentLocationWidget();
+  // }
 
   // String addressToString(geocoding.Placemark data) {
   //   return '''

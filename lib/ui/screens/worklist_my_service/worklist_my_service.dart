@@ -15,6 +15,7 @@ import 'package:hr_management/ui/screens/note/widgets/note_list_tile.dart';
 import 'package:hr_management/ui/screens/tasks/widget/task_list_tile.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../themes/light_theme.dart';
+import '../../widgets/drawer/nav_drawer_widget.dart';
 import '../nts_charts/widget/charts_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -120,6 +121,7 @@ class _WorkListMyServiceScreenCountState
               : (widget.ntsType == NTSType.task)
                   ? Text('WorkList My Task')
                   : Text('WorkList My Note')),
+      drawer: DrawerWidget(),
       body: _widgetOptions!.elementAt(_selectedIndex),
     );
   }

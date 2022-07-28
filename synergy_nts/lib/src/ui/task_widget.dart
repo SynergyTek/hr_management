@@ -1089,15 +1089,15 @@ class _TaskWidgetState extends State<TaskWidget> {
             height: 1.h,
           ),
         );
-        listDynamic.add(
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 25.h,
-            child: _mapWidget(
-              isGoogleMaps: false,
-            ),
-          ),
-        );
+        // listDynamic.add(
+        //   SizedBox(
+        //     width: MediaQuery.of(context).size.width,
+        //     height: 25.h,
+        //     child: _mapWidget(
+        //       isGoogleMaps: false,
+        //     ),
+        //   ),
+        // );
       } else {
         // TODO: ?
       }
@@ -2003,11 +2003,11 @@ class _TaskWidgetState extends State<TaskWidget> {
     );
   }
 
-  Widget _mapWidget({
-    bool? isGoogleMaps = false,
-  }) {
-    return const GoogleMapsCurrentLocationWidget();
-  }
+  // Widget _mapWidget({
+  //   bool? isGoogleMaps = false,
+  // }) {
+  //   return const GoogleMapsCurrentLocationWidget();
+  // }
 
   _phoneNumberConditions(int i) {
     return ((((columnComponentList[i].type == 'number' &&

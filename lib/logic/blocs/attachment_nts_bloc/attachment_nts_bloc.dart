@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:hr_management/data/models/attachment_nts_models/attachment_nts_model.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:rxdart/rxdart.dart';

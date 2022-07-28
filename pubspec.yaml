@@ -63,6 +63,8 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   synergy_nts:
     path: ./synergy_nts
+  synergy_drawer:
+    path: ./synergy_drawer
 
   flutter_test:
     sdk: flutter

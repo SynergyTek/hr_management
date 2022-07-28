@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sizer/sizer.dart';
 import 'package:synergy_nts/src/bloc/nts_dropdown_bloc/abstract_nts_dropdown_bloc.dart';
+import 'package:synergy_nts/src/theme/theme_config.dart';
 
 import '../../synergy_nts.dart';
 import '../bloc/note_bloc/note_bloc.dart';
@@ -15,6 +17,11 @@ import '../helpers/parse_json_helper.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../models/udf_models/udf_json_model.dart';
 import '../models/udf_models/udf_json_model_for_note.dart';
+import 'attachment_nts_screen/attachment_nts_screen.dart';
+import 'email_nts_screen/email_nts_screen.dart';
+import 'nts_comments/nts_comments_screen.dart';
+import 'share/share_screen.dart';
+import 'tag_nts_screen/tag_nts_screen.dart';
 import 'widgets/form_widgets.dart';
 import 'widgets/form_widgets/attachment.dart';
 import 'widgets/widgets.dart';
@@ -26,6 +33,9 @@ class NoteWidget extends StatefulWidget {
   final String? templateCode;
   final bool? isDependent;
 
+  final bool isView;
+  final Map<String, dynamic>? extraInformationMap;
+
   const NoteWidget({
     Key? key,
 
@@ -34,6 +44,8 @@ class NoteWidget extends StatefulWidget {
     this.templateCode,
     this.noteId = "",
     this.isDependent = false,
+    required this.isView,
+    this.extraInformationMap,
   }) : super(key: key);
 
   @override
@@ -138,6 +150,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                       createServiceFormBloc,
                     ),
                   ),
+                  floatingActionButton: buildSpeedDial(),
                 );
               } else {
                 return const Center(
@@ -146,6 +159,149 @@ class _NoteWidgetState extends State<NoteWidget> {
               }
             }),
       ),
+    );
+  }
+
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: const IconThemeData(size: 28.0),
+      backgroundColor: Colors.blue[900],
+      visible: true,
+      curve: Curves.bounceInOut,
+      children: [
+        //
+        SpeedDialChild(
+          child: const Icon(Icons.tag_sharp, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () => _handleTagOnPressed(),
+          label: 'Tags',
+          labelStyle:
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+
+        //
+        SpeedDialChild(
+          child: const Icon(Icons.info, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () {},
+          label: 'Logs',
+          labelStyle: const TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+          labelBackgroundColor: Colors.black,
+        ),
+
+        //
+        SpeedDialChild(
+          child: const Icon(
+            Icons.attachment_outlined,
+            color: Colors.white,
+          ),
+          backgroundColor: Theme.of(context).textHeadingColor,
+          onTap: () => _handleAttachmentOnPressed(),
+          label: 'Attachment',
+          labelStyle: const TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+          labelBackgroundColor: Colors.black,
+        ),
+
+        //
+        SpeedDialChild(
+          visible: noteModel!.isAddCommentEnabled! && widget.noteId.isNotEmpty,
+          child: const Icon(Icons.comment, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () => _handleCommentOnPressed(),
+          label: 'Comment',
+          labelStyle:
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+
+        //
+        SpeedDialChild(
+          visible: widget.noteId.isNotEmpty,
+          child: const Icon(Icons.share, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () => _handleShareOnPressed(),
+          label: 'Share',
+          labelStyle:
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+
+        //
+        SpeedDialChild(
+          visible: widget.noteId.isNotEmpty,
+          child: const Icon(Icons.email, color: Colors.white),
+          backgroundColor: Colors.blue,
+          onTap: () => _handleEmailOnPressed(),
+          label: 'Email',
+          labelStyle:
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+      ],
+    );
+  }
+
+  _handleEmailOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return const EmailNtsScreen(
+            // ntsId: widget.serviceId,
+            // ntsType: NTSType.service,
+            );
+      }),
+    );
+  }
+
+  _handleShareOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return ShareScreen(
+          ntsId: widget.noteId,
+          ntsType: NTSType.service,
+        );
+      }),
+    );
+  }
+
+  _handleCommentOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return NTSCommentsScreen(
+          userId: widget.userID,
+          ntsId: widget.noteId,
+        );
+      }),
+    );
+  }
+
+  _handleTagOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return TagNTSScreen(
+          ntsId: widget.noteId,
+          ntsType: NTSType.service,
+        );
+      }),
+    );
+  }
+
+  _handleAttachmentOnPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return AttachmentNTSScreen(
+          userId: widget.userID,
+          ntsType: NTSType.task,
+          ntsId: widget.noteId,
+        );
+      }),
     );
   }
 

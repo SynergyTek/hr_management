@@ -16,7 +16,7 @@ class TagRepository extends AbstractTagRepository {
         queryParameters: queryparams ?? {},
       );
       return TagCategoryResponseModel.fromJson(
-      response.data,
+        response.data,
       );
     } catch (err, stacktrace) {
       print(
@@ -38,7 +38,7 @@ class TagRepository extends AbstractTagRepository {
         queryParameters: queryparams ?? {},
       );
       return TagCategoryResponseModel.fromJson(
-      response.data,
+        response.data,
       );
     } catch (err, stacktrace) {
       print(
