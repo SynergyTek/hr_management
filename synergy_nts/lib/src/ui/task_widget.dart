@@ -521,7 +521,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   List<Widget> addDynamic(
     model,
-    createServiceFormBloc,
+    CreateServiceFormBloc createServiceFormBloc,
     bool isOtherDetails,
   ) {
     List<Widget> listDynamic = [];
