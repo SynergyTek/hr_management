@@ -21,8 +21,8 @@ class MarkAttendance extends StatelessWidget {
       body: SafeArea(
         child: InternetConnectivityWidget(
           child: LocationConnectivityWidget(
-            child: MAWidget(),
-            // child: MarkAttendanceWidget(),
+            //child: MAWidget(),
+            child: MarkAttendanceWidget(),
           ),
         ),
       ),
