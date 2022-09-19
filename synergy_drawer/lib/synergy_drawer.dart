@@ -19,7 +19,7 @@ class SynergyDrawer extends StatelessWidget {
       required this.mapRoute})
       : super(key: key);
   final List<Widget> drawerItemList = [];
-  final Function? logoutFunction;
+  final Function(BuildContext)? logoutFunction;
   final String userName;
   final String email;
   final List<dynamic> data;
@@ -95,7 +95,7 @@ class SynergyDrawer extends StatelessWidget {
               isLast: true,
               title: email == null || email.isEmpty ? 'Login' : 'Logout',
               trailingIcon: Icons.logout,
-              listTileOnTap: () => logoutFunction,
+              listTileOnTap: () => logoutFunction!(context),
             ),
           ],
         ),
