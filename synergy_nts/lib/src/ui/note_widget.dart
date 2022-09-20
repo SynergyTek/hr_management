@@ -826,42 +826,46 @@ class _NoteWidgetState extends State<NoteWidget> {
     displaySnackBar(text: resultMsg!, context: context);
   }
 
-  List<Widget> addDynamic(model, createServiceFormBloc) {
+  List<Widget> addDynamic(
+    model,
+    CreateServiceFormBloc createServiceFormBloc,
+  ) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
-      // print(model[i].type);
-      // print(model[i].label);
-      if (model[i].type == 'textfield') {
+      if (model[i].type == 'textfield' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
-        final textField$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
+
+        String initialValue;
+        initialValue = model[i].defaultValue ?? udfJson[model[i].key];
+
+        udfJson[model[i].key] = initialValue;
+
+        final textField$i = TextFieldBloc(initialValue: initialValue);
         listDynamic.add(
-          AbsorbPointer(
-            // absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
-            child: BlocTextBoxWidget(
-              isRequired: model[i].validate?.required,
-              labelName: model[i].label,
-              fieldName: model[i].label,
-              readonly: (model[i].defaultValue != null &&
-                          model[i].defaultValue.isNotEmpty) ||
-                      model[i].disabled.toString() == 'true' ||
-                      widget.noteId.isNotEmpty
-                  ? true
-                  : false,
-              textFieldBloc: textField$i,
-              prefixIcon: const Icon(
-                Icons.note_outlined,
-                color: AppThemeColor.iconColor,
-              ),
-              maxLines: 1,
-              onChanged: (String value) {
-                udfJson[model[i].key] = value;
-              },
+          BlocTextBoxWidget(
+            isRequired: model[i].validate?.required,
+            labelName: model[i].label,
+            fieldName: model[i].label,
+            readonly: (model[i].defaultValue != null &&
+                        model[i].defaultValue.isNotEmpty) ||
+                    model[i].disabled.toString() == 'true' ||
+                    widget.noteId.isNotEmpty
+                ? true
+                : false,
+            textFieldBloc: textField$i,
+            prefixIcon: const Icon(
+              Icons.note_outlined,
+              color: AppThemeColor.iconColor,
             ),
+            maxLines: 1,
+            onChanged: (String value) {
+              udfJson[model[i].key] = value;
+            },
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
@@ -900,7 +904,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         //   //     true,
         //   //     (String val) {}));
         // }
-      } else if (model[i].type == 'textarea') {
+      } else if (model[i].type == 'textarea' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
@@ -923,7 +927,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
-      } else if (model[i].type == 'number') {
+      } else if (model[i].type == 'number' && model[i].hidden != true) {
         String? initialValue;
         // final number$i = TextFieldBloc(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
@@ -954,7 +958,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
-      } else if (model[i].type == 'password') {
+      } else if (model[i].type == 'password' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
@@ -976,7 +980,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
-      } else if (model[i].type == 'checkbox') {
+      } else if (model[i].type == 'checkbox' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
@@ -993,7 +997,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             // model[i].value = check.toString();
           },
         ));
-      } else if (model[i].type == 'selectboxes') {
+      } else if (model[i].type == 'selectboxes' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
@@ -1018,7 +1022,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             // udfJson[model[i].label] = value.toString();
           },
         ));
-      } else if (model[i].type == 'radio') {
+      } else if (model[i].type == 'radio' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
@@ -1033,7 +1037,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
-      } else if (model[i].type == 'select') {
+      } else if (model[i].type == 'select' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
@@ -1093,7 +1097,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             },
           ),
         );
-      } else if (model[i].type == 'file') {
+      } else if (model[i].type == 'file' && model[i].hidden != true) {
         TextEditingController attachmentController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
@@ -1157,7 +1161,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             readOnly: widget.noteId.isNotEmpty ? true : false,
           ),
         );
-      } else if (model[i].type == 'datetime') {
+      } else if (model[i].type == 'datetime' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
@@ -1206,7 +1210,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             },
           ),
         );
-      } else if (model[i].type == 'time') {
+      } else if (model[i].type == 'time' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
         }
@@ -1251,7 +1255,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
-      } else if (model[i].type == 'phoneNumber') {
+      } else if (model[i].type == 'phoneNumber' && model[i].hidden != true) {
         //Phone Number Field
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
@@ -1274,7 +1278,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           ),
         );
         createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
-      } else if (model[i].type == 'email') {
+      } else if (model[i].type == 'email' && model[i].hidden != true) {
         //Email Field
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
           udfJson[model[i].key] = '';
