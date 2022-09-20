@@ -791,6 +791,8 @@ class _NoteWidgetState extends State<NoteWidget> {
     postNoteModel.subject = createServiceFormBloc.subject.value;
     postNoteModel.noteDescription = createServiceFormBloc.description.value;
     postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
+    postNoteModel.portalId = APIEndpointConstants.HR_PORTAL_ID;
+    postNoteModel.portalName = APIEndpointConstants.HR_PORTAL_NAME;
     // postDataAction;
     postNoteModel.noteStatusCode = noteStatusCode;
     postNoteModel.json = jsonEncode(udfJson);

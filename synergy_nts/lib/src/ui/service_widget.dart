@@ -1867,12 +1867,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         createServiceFormBloc.description.value;
     postServiceModel.dataAction = widget.serviceId.isEmpty ? 1 : 2;
     postServiceModel.serviceStatusCode = serviceStatusCode;
-    postServiceModel.portalId = !widget.isEmployeePortal
-        ? APIEndpointConstants.EGOV_CUSTOMER_PORTAL_ID
-        : APIEndpointConstants.EGOV_EMPLOYEE_PORTAL_ID;
-    postServiceModel.portalName = !widget.isEmployeePortal
-        ? APIEndpointConstants.EGOV_CUSTOMER_PORTAL_NAME
-        : APIEndpointConstants.EGOV_EMPLOYEE_PORTAL_NAME;
+    postServiceModel.portalId = APIEndpointConstants.HR_PORTAL_ID;
+    postServiceModel.portalName = APIEndpointConstants.HR_PORTAL_NAME;
     postServiceModel.json = jsonEncode(udfJson);
 
     setState(() {

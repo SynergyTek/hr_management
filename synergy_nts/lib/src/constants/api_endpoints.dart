@@ -7,15 +7,19 @@ class APIEndpointConstants {
   static const IMAGE_BASE_URL = 'https://synergydev.aitalkx.com';
 
   /// Portal ID:
-  static const String EGOV_CUSTOMER_PORTAL_ID =
-      "42999855-8942-4bc4-8715-fc67b9df718a";
+  static const String HR_PORTAL_ID = "8edc86b3-9934-46e3-95de-d76c816404b4";
 
-  static const String EGOV_EMPLOYEE_PORTAL_ID =
-      "79025ae1-fb4e-44c6-8157-cf5a4cd879ed";
+  static const String HR_PORTAL_NAME = "HR";
 
-  static const String EGOV_CUSTOMER_PORTAL_NAME = "EGovCustomer";
+  // static const String EGOV_CUSTOMER_PORTAL_ID =
+  //     "42999855-8942-4bc4-8715-fc67b9df718a";
 
-  static const String EGOV_EMPLOYEE_PORTAL_NAME = "EGovEmployee";
+  // static const String EGOV_EMPLOYEE_PORTAL_ID =
+  //     "79025ae1-fb4e-44c6-8157-cf5a4cd879ed";
+
+  // static const String EGOV_CUSTOMER_PORTAL_NAME = "EGovCustomer";
+
+  // static const String EGOV_EMPLOYEE_PORTAL_NAME = "EGovEmployee";
 
   // Common Repository:
   static const String GET_LOV_LIST_ENDPOINT =

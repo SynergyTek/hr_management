@@ -1812,9 +1812,9 @@ class _TaskWidgetState extends State<TaskWidget> {
     postTaskModel.dataAction = postDataAction;
     postTaskModel.taskStatusCode = taskStatusCode;
 
-    postTaskModel.portalId = APIEndpointConstants.EGOV_CUSTOMER_PORTAL_ID;
+    postTaskModel.portalId = APIEndpointConstants.HR_PORTAL_ID;
 
-    postTaskModel.portalName = APIEndpointConstants.EGOV_CUSTOMER_PORTAL_NAME;
+    postTaskModel.portalName = APIEndpointConstants.HR_PORTAL_NAME;
 
     postTaskModel.json = jsonEncode(udfJson);
 
