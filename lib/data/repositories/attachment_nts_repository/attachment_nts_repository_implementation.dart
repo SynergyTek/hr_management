@@ -3,7 +3,7 @@ part of 'attachment_nts_repository.dart';
 class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
   final Dio _dio = Dio();
 
-  Future<AttachmentNTSResponse> getAPIData({
+  Future<attchmentResponse.AttachmentNTSResponse> getAPIData({
     required NTSType? ntsType,
     required String? ntsId,
   }) async {
@@ -25,11 +25,11 @@ class AttachmentNTSRepository extends AbstractAttachmentNTSRepository {
         endpoint,
       );
 
-      return AttachmentNTSResponse.fromJson(response.data);
+      return attchmentResponse.AttachmentNTSResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return AttachmentNTSResponse.withError("$err");
+      return attchmentResponse.AttachmentNTSResponse.withError("$err");
     }
   }
 

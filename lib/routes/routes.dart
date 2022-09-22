@@ -49,7 +49,7 @@ import '../ui/widgets/custom_controls/team_dropdown_list.dart';
 import '../ui/widgets/custom_controls/user_dropdown_list.dart';
 import '../ui/screens/payroll/manage_accrual_screen.dart';
 import '../ui/screens/payroll/payslip_screen.dart';
-import '../data/enums/enums.dart';
+// import '../data/enums/enums.dart';
 import '../ui/screens/counts_screen/counts_screen.dart';
 import '../ui/screens/note/note_home_screen.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +77,7 @@ import '../ui/screens/tasks/task_home_screen.dart';
 import '../ui/widgets/custom_controls/default_dropdown_list.dart';
 import 'route_constants.dart';
 import 'screen_arguments.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -142,6 +143,7 @@ class AppRouter {
             serviceId: args?.arg2,
             title: args?.arg3,
             isLeave: args?.val1,
+            categoryCode: args?.arg4,
             // portalType: args.portalType,
           ),
         );

@@ -4,12 +4,13 @@ import 'package:hr_management/data/helpers/download_helper/download_helper_new.d
 import 'package:hr_management/data/helpers/download_helper/downloader_screen/downloader.dart';
 import 'package:hr_management/ui/widgets/attachment_view_webview.dart';
 
-import '../../../../data/enums/enums.dart';
-import '../../../../data/models/attachment_nts_models/attachment_nts_model.dart';
-import '../../../../data/models/attachment_nts_models/attachment_nts_response.dart';
+// import '../../../../data/enums/enums.dart';
+import '../../../../data/models/attachment_nts_models/attachment_nts_model.dart'as attchmentModel;
+import '../../../../data/models/attachment_nts_models/attachment_nts_response.dart' as attchmentResponse;
 import '../../../../logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
 import '../../../../themes/theme_config.dart';
 import '../../../widgets/progress_indicator.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class AttachmentNTSBodyWidget extends StatefulWidget {
   final NTSType? ntsType;
@@ -41,7 +42,7 @@ class _AttachmentNTSBodyWidgetState extends State<AttachmentNTSBodyWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_PADDING,
-      child: StreamBuilder<AttachmentNTSResponse>(
+      child: StreamBuilder<attchmentResponse.AttachmentNTSResponse>(
         stream: attachmentNTSBloc.subject.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {

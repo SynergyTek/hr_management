@@ -1,5 +1,6 @@
-import '../../../data/enums/enums.dart';
-import '../../../data/models/api_models/post_response_model.dart';
+// import '../../../data/enums/enums.dart';
+import '../../../data/models/api_models/post_response_model.dart'
+    as postResponseModel;
 import '../../../data/models/share_models/note_shared_models/note_shared_data_response.dart';
 import '../../../data/models/share_models/sevice_shared_models/service_shared_data_response.dart';
 import '../../../data/models/share_models/task_shared_models/task_shared_data_response.dart';
@@ -8,6 +9,7 @@ import '../../../data/models/share_post_model/service_share_post_model/service_s
 import '../../../data/models/share_post_model/task_share_post_model/task_share_post_model.dart';
 import '../../../data/repositories/share_repo/abstract_share_repo.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class ShareBloc {
   final ShareRepository _shareRepository = ShareRepository();
@@ -59,14 +61,14 @@ class ShareBloc {
     }
   }
 
-  Future<PostResponse?> postNTSSharedData({
+  Future<postResponseModel.PostResponse?> postNTSSharedData({
     Map<String, dynamic>? queryparams,
     NTSType? ntsType,
     NoteSharePostModel? noteData,
     TaskSharePostModel? taskData,
     ServiceSharePostModel? serviceData,
   }) async {
-    PostResponse? response;
+    postResponseModel.PostResponse? response;
     if (ntsType == NTSType.service) {
       response = await _shareRepository.postShareService(
           queryparams: queryparams, data: serviceData!);

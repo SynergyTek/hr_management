@@ -6,7 +6,6 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sizer/sizer.dart';
 import 'package:synergy_nts/src/theme/theme_config.dart';
-import 'package:synergy_nts/src/ui/map_widgets/google_maps_current_location_widget.dart';
 import 'package:synergy_nts/src/ui/nts_comments/nts_comments_screen.dart';
 import 'package:synergy_nts/src/ui/share/share_screen.dart';
 import 'package:synergy_nts/src/ui/tag_nts_screen/tag_nts_screen.dart';

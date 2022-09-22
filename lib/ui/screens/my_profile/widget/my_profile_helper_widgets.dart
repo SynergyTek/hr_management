@@ -182,11 +182,12 @@ Widget _personalDetailsWidget({
                   context,
                   ADD_EDIT_NOTE_ROUTE,
                   arguments: ScreenArguments(
-                      arg1: "HRPerson",
-                      arg2: data.personNoteId,
-                      arg3: "",
-                      val1: false,
-                      portalType: PortalType.hr),
+                    arg1: "HRPerson",
+                    arg2: data.personNoteId,
+                    arg3: "",
+                    val1: false,
+                    // portalType: PortalType.hr,
+                  ),
                 ),
             child: Text('Edit')),
       ),
@@ -584,9 +585,8 @@ Widget _emergencyContactInfo1Widget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data.emergencyContactCountryDialCode1! +
-                    ' ' +
-                    data.emergencyContactNo1!,
+                title: data.emergencyContactCountryDialCode1 ??
+                    '' + ' ' + data.emergencyContactNo1!,
                 subtitle: "Emergency Contact No1 ",
                 icon: Icon(
                   Icons.phone,

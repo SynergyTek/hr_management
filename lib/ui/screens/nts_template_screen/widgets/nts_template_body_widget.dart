@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../../data/models/nts_template_models/nts_template_model.dart';
 import '../../../../data/models/nts_template_tree_list_models/nts_template_tree_list_model.dart';
 import '../../../widgets/empty_list_widget.dart';
-import '../../../../data/enums/enums.dart';
+// import '../../../../data/enums/enums.dart';
 import '../../../../themes/theme_config.dart';
 import 'animated_grid_view_widget.dart';
 import '../../../widgets/progress_indicator.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class NTSTemplateBodyWidget extends StatefulWidget {
   /// Stream should be of the type:
@@ -86,6 +87,7 @@ class _NTSTemplateBodyWidgetState extends State<NTSTemplateBodyWidget> {
                       child: AnimatedGridViewWidget(
                         model: _filteredTemplateModels,
                         ntsType: widget.ntsType,
+                        categoryCode: widget.categoryCode,
                       ),
                     ),
                   ],

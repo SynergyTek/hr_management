@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../../data/enums/enums.dart';
+// import '../../../../data/enums/enums.dart';
 import '../../note/widgets/note_dashboard_list.dart';
 import '../../service/widget/service_dashboard_list.dart';
 import '../../tasks/widget/task_dashboard_list.dart';
 import '../nts_charts_screen.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class NTSDashboardBody extends StatefulWidget {
   const NTSDashboardBody({Key? key, this.ntsType}) : super(key: key);

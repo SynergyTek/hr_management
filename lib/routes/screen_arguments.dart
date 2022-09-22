@@ -1,8 +1,9 @@
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
-import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
+// import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
 
-import '../data/enums/enums.dart';
+// import '../data/enums/enums.dart';
 import '../data/models/work_book_models/get_note_book_report_model.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class ScreenArguments {
   final String? arg1;

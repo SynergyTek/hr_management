@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../../../data/models/service_models/service.dart';
+// import '../../../../../data/models/service_models/service.dart';
 import '../../../../../routes/route_constants.dart';
 import '../../../../../routes/screen_arguments.dart';
 import '../../../../widgets/dotted_divider_widget.dart';
 import '../../../../widgets/widgets.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class LeaveListTileWidget extends StatelessWidget {
   final Service data;

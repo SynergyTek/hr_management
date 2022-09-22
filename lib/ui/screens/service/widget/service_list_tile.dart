@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../data/models/service_models/service.dart';
-import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+// import '../../../../data/models/service_models/service.dart';
+// import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class ServiceListCard extends StatelessWidget {
   final bool? onTap;

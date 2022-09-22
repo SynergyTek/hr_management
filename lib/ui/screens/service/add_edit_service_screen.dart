@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
+
 import '../../../logic/blocs/location_bloc/location_bloc.dart';
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../widgets/appbar_widget.dart';
-import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 // Service
 import 'package:synergy_nts/synergy_nts.dart';
@@ -15,6 +16,7 @@ class CreateServiceScreen extends StatelessWidget {
   final String? serviceId;
   final String? title;
   final bool isDelete;
+  final String? categoryCode;
 
   // final PortalType? portalType;
 
@@ -22,13 +24,13 @@ class CreateServiceScreen extends StatelessWidget {
 
   const CreateServiceScreen({
     Key? key,
+    this.isLeave,
     this.templateCode,
     this.serviceId,
     this.title,
-    this.isLeave,
-    this.extraInformationMap,
     this.isDelete = false,
-    // required this.portalType,
+    this.categoryCode,
+    this.extraInformationMap,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,7 @@ class CreateServiceScreen extends StatelessWidget {
                   BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
                       '',
               ntsType: NTSType.service,
+              categoryCode: categoryCode ?? '',
             ),
           ),
         ),

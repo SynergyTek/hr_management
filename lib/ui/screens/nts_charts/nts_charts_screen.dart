@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../constants/formats.dart';
-import '../../../data/enums/enums.dart';
+// import '../../../data/enums/enums.dart';
 import '../../../data/models/nts_charts/chart_model.dart';
 import '../../../data/models/nts_charts/nts_charts_response.dart';
 import '../../../logic/blocs/nts_charts_bloc/nts_charts_bloc.dart';
 import '../../../themes/light_theme.dart';
 import 'widget/charts_widget.dart';
-import '../../widgets/nts_widgets.dart';
+// import '../../widgets/nts_widgets.dart';
 import 'package:sizer/sizer.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class NTSChart extends StatefulWidget {
   final NTSType? ntsType;

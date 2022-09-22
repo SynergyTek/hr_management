@@ -9,6 +9,7 @@ class NTSWrapperWidget extends StatelessWidget {
   final String userID;
   final NTSType ntsType;
   final bool isView;
+  final String categoryCode;
 
   // final PortalType portalType;
 
@@ -27,18 +28,15 @@ class NTSWrapperWidget extends StatelessWidget {
 
   const NTSWrapperWidget({
     Key? key,
-
-    //
+    // Optional
     required this.userID,
     required this.ntsType,
-    // required this.portalType,
-
-    // Optional
+    this.isView = false,
+    this.categoryCode = "",
     this.ntsID = "",
     this.templateCode = "",
     this.extraInformationMap,
     this.isDelete = false,
-    this.isView = false,
   }) : super(key: key);
 
   @override
@@ -52,7 +50,7 @@ class NTSWrapperWidget extends StatelessWidget {
         extraInformationMap: extraInformationMap,
 
         // TODO:
-        // categoryCode: ,
+        categoryCode: categoryCode,
         // isEmployeePortal: ,
       );
     } else if (ntsType == NTSType.task) {

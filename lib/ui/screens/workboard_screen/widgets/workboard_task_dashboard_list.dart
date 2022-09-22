@@ -5,13 +5,14 @@ import 'package:hr_management/logic/blocs/workboard_bloc/workboard_bloc.dart';
 import 'package:hr_management/ui/screens/workboard_screen/widgets/workboard_task_list_tile.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../widgets/empty_list_widget.dart';
-import '../../../../data/enums/enums.dart';
+// import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_list_model.dart';
 import '../../../../data/models/task_models/task_list_resp_model.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../listizer/listizer.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 

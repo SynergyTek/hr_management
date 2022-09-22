@@ -163,4 +163,19 @@ class APIEndpointConstants {
 
   //Tag API Endpoints
   //************************************************************************//
+
+  // read Service Api
+  static const GET_READ_SERVICE_LIST_COUNT =
+      BASE_URL + '/cms/service/ReadServiceListCount';
+  static const GET_READ_SERVICE_DATA =
+      BASE_URL + '/cms/service/ReadServiceData';
+  static const READ_SERVICE_DASHBOARD_DATA =
+      '$BASE_URL/nts/query/ReadServiceDashBoardGridData';
+  static const READ_LEAVE_DETAIL_DATA =
+      '$BASE_URL/chr/leave/ReadLeaveDetailData';
+
+  //read Task api
+  static const GET_READ_TASK_LIST_COUNT =
+      BASE_URL + '/cms/task/ReadTaskListCount';
+  static const GET_READ_TASK_DATA = BASE_URL + '/cms/task/ReadTaskData';
 }

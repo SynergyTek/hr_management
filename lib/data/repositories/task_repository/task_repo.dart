@@ -37,7 +37,7 @@ class TaskRepository extends AbstractTaskRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      
+
       return TaskResponseModel.fromJson(
         response.data,
       );
@@ -60,7 +60,7 @@ class TaskRepository extends AbstractTaskRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      
+
       return TaskSummaryResponse.fromJson(
         response.data,
       );
@@ -185,7 +185,7 @@ class TaskRepository extends AbstractTaskRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
-      
+
       return TaskListResponseModel.fromJson(
         response.data,
       );

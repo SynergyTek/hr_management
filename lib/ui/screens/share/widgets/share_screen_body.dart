@@ -1,17 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../../../data/enums/enums.dart';
-import '../../../../data/models/api_models/post_response_model.dart';
+// import '../../../../data/enums/enums.dart';
+// import '../../../../data/models/api_models/post_response_model.dart';
 import '../../../../data/models/share_post_model/note_share_post_model/note_share_post_model.dart';
 import '../../../../data/models/share_post_model/service_share_post_model/service_share_post_model.dart';
 import '../../../../data/models/share_post_model/task_share_post_model/task_share_post_model.dart';
 import '../../../../data/models/user/team_model.dart';
 import '../../../../data/models/user/user.dart';
 import '../../../../logic/blocs/share_bloc/share_bloc.dart';
-import '../../../widgets/nts_dropdown_select.dart';
+// import '../../../widgets/nts_dropdown_select.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class ShareScreenBody extends StatefulWidget {
   final NTSType? ntsType;

@@ -5,17 +5,19 @@ import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/note/note_model.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../data/enums/enums.dart';
-import '../../../data/models/attachment_nts_models/attachment_nts_response.dart';
+// import '../../../data/enums/enums.dart';
+import '../../../data/models/attachment_nts_models/attachment_nts_response.dart'
+    as attchmentResponse;
 import '../../../data/models/uploaded_content_model/uploaded_content_model.dart';
 import '../../../data/repositories/attachment_nts_repository/attachment_nts_repository.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class AttachmentNTSBloc {
   final AttachmentNTSRepository _apiRepository = AttachmentNTSRepository();
 
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
-  final BehaviorSubject<AttachmentNTSResponse> _subject =
-      BehaviorSubject<AttachmentNTSResponse>();
+  final BehaviorSubject<attchmentResponse.AttachmentNTSResponse> _subject =
+      BehaviorSubject<attchmentResponse.AttachmentNTSResponse>();
   final BehaviorSubject _subjectPostManageUploadedFile = BehaviorSubject();
   final BehaviorSubject _subjectPostAddUploadedFile = BehaviorSubject();
 
@@ -25,7 +27,8 @@ class AttachmentNTSBloc {
     required String? ntsId,
     String? userid,
   }) async {
-    AttachmentNTSResponse response = await _apiRepository.getAPIData(
+    attchmentResponse.AttachmentNTSResponse response =
+        await _apiRepository.getAPIData(
       ntsType: ntsType,
       ntsId: ntsId,
     );
@@ -113,7 +116,8 @@ class AttachmentNTSBloc {
     _subjectPostAddUploadedFile.close();
   }
 
-  BehaviorSubject<AttachmentNTSResponse> get subject => _subject;
+  BehaviorSubject<attchmentResponse.AttachmentNTSResponse> get subject =>
+      _subject;
   BehaviorSubject get subjectPostManageUploadedFile =>
       _subjectPostManageUploadedFile;
   BehaviorSubject get subjectPostAddUploadedFile => _subjectPostAddUploadedFile;

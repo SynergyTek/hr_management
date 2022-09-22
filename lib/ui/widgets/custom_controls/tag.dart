@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/enums/enums.dart';
+// import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
 import '../../listizer/listizer.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 typedef OnTapPressedCallBack = void Function(
   dynamic key,

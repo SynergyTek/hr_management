@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/enums/enums.dart';
+// import '../../../data/enums/enums.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import 'widget/nts_dashboard_body.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class ServiceDashboard extends StatelessWidget {
   const ServiceDashboard({

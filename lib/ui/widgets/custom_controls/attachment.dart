@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/data/enums/enums.dart';
+// import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/attacment/attachment_model.dart';
 import 'package:hr_management/data/models/attacment/video_file.dart';
 import 'package:hr_management/logic/blocs/attachment_nts_bloc/attachment_nts_bloc.dart';
@@ -21,6 +21,7 @@ import '../custom_icons.dart';
 import '../snack_bar.dart';
 import 'body_layout_widget.dart';
 import 'label.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 typedef OnTapPressedCallBack = void Function(
   dynamic key,

@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../widgets/empty_list_widget.dart';
-import '../../../../data/enums/enums.dart';
+// import '../../../../data/enums/enums.dart';
 import '../../../../data/models/task_models/task_list_model.dart';
 import '../../../../data/models/task_models/task_list_resp_model.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
-import '../../../widgets/nts_widgets.dart';
+// import '../../../widgets/nts_widgets.dart';
 import '../../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 
 import '../../../listizer/listizer.dart';
 
 import 'task_list_tile.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 typedef FilterListTapCallBack = void Function(dynamic key1, FilterType key2);
 
@@ -89,7 +90,6 @@ class _TaskHomeBodyState extends State<TaskHomeBody> {
       queryparams['templateMasterCode'] = templateMasterCode;
     if (text != null) queryparams['text'] = text;
 
-    
     queryparams['userId'] =
         BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '';
 

@@ -3,13 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../listizer/listizer.dart';
 
-import '../../../../data/enums/enums.dart';
+// import '../../../../data/enums/enums.dart';
 import '../../../../data/models/note/note_list_model.dart';
 import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../../widgets/progress_indicator.dart';
 import 'note_list_tile.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class NoteDashboardList extends StatefulWidget {
   @override

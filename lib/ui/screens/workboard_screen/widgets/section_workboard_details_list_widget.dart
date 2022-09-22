@@ -15,7 +15,7 @@ import 'package:hr_management/ui/screens/workboard_screen/workboard_content_scre
 import 'package:hr_management/ui/widgets/snack_bar.dart';
 
 import '../../../../constants/api_endpoints.dart';
-import '../../../../data/enums/enums.dart';
+// import '../../../../data/enums/enums.dart';
 import '../../../../data/models/workboard_model/workboard_response_model.dart';
 import '../../../../data/models/workboard_model/workboard_section_model.dart';
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
@@ -26,6 +26,7 @@ import '../../../widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 
 import 'item_task_list_widget.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class SectionWorkBoardDetailsList extends StatefulWidget {
   final AddContentWorkBoardModel? addContentWorkBoardModel;

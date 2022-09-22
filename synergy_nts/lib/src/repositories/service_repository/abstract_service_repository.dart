@@ -33,9 +33,24 @@ abstract class AbstractServiceRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic> queryparams,
   });
-  
 
   Future<PaginationMyRequestsResponse> getMyRequestList({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<ServiceMapResponse> getReadServiceListCount({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<ServiceListResponse> getReadServiceData({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<ServiceListResponse> getServiceDashBoardData({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<ServiceListResponse> readLeaveDetailData({
     Map<String, dynamic>? queryparams,
   });
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
-import 'package:hr_management/data/enums/enums.dart';
+// import 'package:hr_management/data/enums/enums.dart';
 import 'package:hr_management/data/models/cut_copy_paste_model/cut_copy_paste_model.dart';
 import 'package:hr_management/data/models/dms/dms_post_model.dart';
 import 'package:hr_management/data/models/dms/dms_source_folder_model/dms_source_folder_model.dart';
@@ -16,7 +16,8 @@ import 'package:hr_management/logic/blocs/dms_bloc/permission_bloc/permission_bl
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/ui/screens/manage_document/document/widgets/document_bottom_sheet_widget.dart';
-import 'package:hr_management/ui/widgets/custom_controls/attachment.dart';
+import 'package:hr_management/ui/widgets/custom_controls/attachment.dart'
+    as attachment;
 import 'package:hr_management/ui/widgets/custom_icons.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
@@ -30,6 +31,7 @@ import '../../../../logic/blocs/dms_bloc/dms_source_folders_bloc/dms_source_fold
 import '../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../listizer/listizer.dart';
 import '../../../widgets/custom_controls/archive.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class DMSChildBody extends StatefulWidget {
   final DMSSourceFolderModel? parentModel;
@@ -1076,7 +1078,7 @@ class _DMSChildBodyState extends State<DMSChildBody> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return SelectAttachment(
+          return attachment.SelectAttachment(
             ntsId: 'Note',
             onListTap: (
               dynamic value,

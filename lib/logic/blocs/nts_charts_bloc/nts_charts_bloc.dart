@@ -1,8 +1,9 @@
 import 'package:rxdart/rxdart.dart';
 
-import '../../../data/enums/enums.dart';
+// import '../../../data/enums/enums.dart';
 import '../../../data/models/nts_charts/nts_charts_response.dart';
 import '../../../data/repositories/nts_charts/abstract_nts_charts_repo.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class NtsChartBloc {
   final NTSChartRepository _ntsRepository = NTSChartRepository();

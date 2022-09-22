@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/logic/blocs/leave_bloc.dart';
+// import 'package:hr_management/logic/blocs/leave_bloc.dart';
+// import 'package:hr_management/logic/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 
-import '../../../../data/models/service_models/service.dart';
+// import '../../../../data/models/service_models/service.dart';
 import '../../../../themes/light_theme.dart';
 import '../../../widgets/empty_list_widget.dart';
 import 'widget/leave_list_tile_widget.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class DisplayLeavesBody extends StatefulWidget {
   DisplayLeavesBody({Key? key}) : super(key: key);
@@ -23,7 +25,8 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
   }
 
   Future<void> _handleAPI() async {
-    leaveBloc.readLeaveDetailData(queryparams: {
+    serviceBloc.subjectServiceList.sink.add(null);
+    serviceBloc.readLeaveDetailData(queryparams: {
       'userid':
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     });
@@ -34,7 +37,7 @@ class _DisplayLeavesBodyState extends State<DisplayLeavesBody> {
     return RefreshIndicator(
       onRefresh: _handleAPI,
       child: StreamBuilder<ServiceListResponse?>(
-        stream: leaveBloc.subjectServiceList.stream,
+        stream: serviceBloc.subjectServiceList.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.error != null && snapshot.data.error.length > 0) {

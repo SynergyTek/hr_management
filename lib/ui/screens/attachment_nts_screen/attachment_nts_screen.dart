@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
-import '../../../data/enums/enums.dart';
+// import '../../../data/enums/enums.dart';
 import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import 'package:hr_management/logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 
 import 'widgets/attachment_nts_body_widget.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class AttachmentNTSScreen extends StatelessWidget {
   final NTSType? ntsType;

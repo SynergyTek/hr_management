@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../data/enums/enums.dart';
+// import '../../../../data/enums/enums.dart';
 import '../../../../logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
@@ -8,6 +8,7 @@ import '../../../widgets/appbar_widget.dart';
 import '../../../widgets/drawer/nav_drawer_widget.dart';
 
 import 'display_leave_body.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class DisplayLeaves extends StatelessWidget {
   const DisplayLeaves({Key? key}) : super(key: key);

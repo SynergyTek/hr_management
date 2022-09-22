@@ -2,6 +2,7 @@ enum NTSType {
   service,
   task,
   note,
+  workboard,
 }
 
 typedef OnTapPressedCallBack = void Function(
@@ -21,4 +22,12 @@ enum FilterType {
   requestStatus,
   serviceNo,
   date,
+}
+
+enum PortalType {
+  cms,
+  dms,
+  hr,
+  inventoryManagement,
+  projectManagement,
 }

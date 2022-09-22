@@ -245,6 +245,10 @@ class Service {
     this.portalId,
     this.ownerUserUserName,
     this.dueDateDisplay,
+    this.serviceName,
+    this.leaveStatus,
+    this.formattedStartDate,
+    this.formattedEndDate,
   });
   dynamic jsonCopy;
   dynamic dataJson;
@@ -491,6 +495,10 @@ class Service {
   String? ownerUserUserName;
   dynamic portalId;
   String? dueDateDisplay;
+  String? serviceName;
+  String? leaveStatus;
+  String? formattedStartDate;
+  String? formattedEndDate;
 
   Service.fromJson(Map<String, dynamic> jsonValue) {
     jsonCopy = jsonValue["JsonCopy"];
@@ -775,6 +783,10 @@ class Service {
     versionNo = jsonValue['VersionNo'];
     portalId = jsonValue['PortalId'];
     ownerUserUserName = jsonValue['OwnerUserUserName'];
+    serviceName = jsonValue['ServiceName'];
+    leaveStatus = jsonValue['LeaveStatus'];
+    formattedStartDate = jsonValue['FormattedStartDate'];
+    formattedEndDate = jsonValue['FormattedEndDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1030,6 +1042,11 @@ class Service {
     _data['VersionNo'] = versionNo;
     _data['PortalId'] = portalId;
     _data['OwnerUserUserName'] = ownerUserUserName;
+    _data['ServiceName'] = serviceName;
+    _data['LeaveStatus'] = leaveStatus;
+    _data['FormattedStartDate'] = formattedStartDate;
+    _data['FormattedEndDate'] = formattedEndDate;
+
     return _data;
   }
 }

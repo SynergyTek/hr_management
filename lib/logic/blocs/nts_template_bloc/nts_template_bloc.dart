@@ -1,8 +1,9 @@
 import 'package:rxdart/rxdart.dart';
 
-import '../../../data/enums/enums.dart';
+// import '../../../data/enums/enums.dart';
 import '../../../data/models/nts_template_models/nts_template_response.dart';
 import '../../../data/repositories/nts_template_repository/nts_template_repository.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class NTSTemplateBloc {
   final NTSTemplateRepository _apiRepository = NTSTemplateRepository();
@@ -23,7 +24,8 @@ class NTSTemplateBloc {
       _subject.sink.add(null);
       queryparams = {
         "templateType": "Service",
-        "categoryCode":"Employee_Service,Leave,CHR,HR_DOCUMENTS,CMS_SEBI_INT,TMSUSERMGMT,Dependent Documents,PersonDocuments,Separation,TimePermission"
+        "categoryCode":
+            "Employee_Service,Leave,CHR,HR_DOCUMENTS,CMS_SEBI_INT,TMSUSERMGMT,Dependent Documents,PersonDocuments,Separation,TimePermission"
       };
     } else if (ntsType == NTSType.task) {
       _subject.sink.add(null);

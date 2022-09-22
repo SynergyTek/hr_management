@@ -53,6 +53,23 @@ class StepTaskListResponseModel {
         error = errorValue;
 }
 
+class ServiceMapResponse {
+  bool? isSuccess;
+  List<dynamic>? data;
+  String? error;
+
+  ServiceMapResponse({
+    required this.data,
+  });
+
+  ServiceMapResponse.fromJson(List<dynamic> response) : data = response;
+
+  ServiceMapResponse.withError(String errorValue)
+      : data = null,
+        error = errorValue;
+}
+
+
 // New
 class PaginationDashboardTaskListResponse {
   PaginationDashboardTaskListModel? data;

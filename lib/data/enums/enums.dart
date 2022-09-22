@@ -9,22 +9,22 @@ enum NTSType {
   service,
   task,
   note,
-  workboard
+  workboard,
 }
+
 enum ChartType {
   pie,
   doughnut,
-  
 }
 
-enum FilterType {
-  module,
-  status,
-  role,
-  owner,
-  assignee,
-  serviceOwnedRequested,
-}
+// enum FilterType {
+//   module,
+//   status,
+//   role,
+//   owner,
+//   assignee,
+//   serviceOwnedRequested,
+// }
 
 // Endpoint:
 // https://webapidev.aitalkx.com/CHR/query/LoadNoteIndexPageGrid?ownerType=owner&userId=45bba746-3309-49b7-9c03-b5793369d73c&indexPageTemplateId=

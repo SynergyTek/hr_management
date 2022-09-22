@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/data/helpers/hex_colot_convert.dart';
 
 import '../../../../constants/api_endpoints.dart';
-import '../../../../data/enums/enums.dart';
+// import '../../../../data/enums/enums.dart';
 import '../../../../data/models/nts_template_models/nts_template_model.dart';
-import '../../../../logic/blocs/service_bloc/service_bloc.dart';
+// import '../../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
 import '../../leaves/widget/grid_widget.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class AnimatedGridViewWidget extends StatefulWidget {
   final List<NTSTemplateModel>? model;
   final NTSType? ntsType;
+  final String? categoryCode;
 
   AnimatedGridViewWidget({
     required this.model,
     required this.ntsType,
+    this.categoryCode,
   });
 
   @override
@@ -46,6 +49,7 @@ class _AnimatedGridViewWidgetState extends State<AnimatedGridViewWidget> {
           cardKeys: cardKeys,
           response: widget.model![index],
           ntsType: widget.ntsType,
+          categoryCode: widget.categoryCode,
         );
       },
     );
@@ -57,12 +61,14 @@ class GridViewFlipWidget extends StatefulWidget {
   final List<GlobalKey<FlipCardState>> cardKeys;
   final NTSTemplateModel response;
   final NTSType? ntsType;
+  final String? categoryCode;
 
   GridViewFlipWidget({
     required this.index,
     required this.cardKeys,
     required this.response,
     required this.ntsType,
+    this.categoryCode,
   });
 
   @override
@@ -90,6 +96,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
           templateCode: widget.response.code,
           colorCode: widget.response.templateColor ?? '#FFFFFF',
           context: context,
+          categoryCode: widget.categoryCode,
         ),
       ),
     );
@@ -151,6 +158,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
     required String templateName,
     required String colorCode,
     BuildContext? context,
+    String? categoryCode,
   }) {
     List<Widget> widgets = [];
     Color cardBackground = hexToColor(colorCode);
@@ -193,6 +201,7 @@ class _GridViewFlipWidgetState extends State<GridViewFlipWidget> {
                 arg1: templateCode,
                 arg2: '',
                 portalType: PortalType.hr,
+                arg4: categoryCode,
               ),
             );
             resetCards();

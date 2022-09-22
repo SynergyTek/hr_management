@@ -16,7 +16,13 @@ class ServiceBloc extends AbstractServiceBloc {
   final BehaviorSubject<ServiceResponse?> _subjectDeleteService =
       BehaviorSubject<ServiceResponse?>();
 
-//
+  final BehaviorSubject<ServiceMapResponse?> _subjectReadServiceListCount =
+      BehaviorSubject<ServiceMapResponse?>();
+
+  final BehaviorSubject<ServiceListResponse?> _subjectReadServiceData =
+      BehaviorSubject<ServiceListResponse?>();
+
+  //
   @override
   Future<ServiceResponse?> getServiceDetail({
     Map<String, dynamic>? queryparams,
@@ -32,7 +38,7 @@ class ServiceBloc extends AbstractServiceBloc {
   /// Used to create new entries.
   @override
   Future<PostResponse> postServiceData({
-    bool? isEmployeeService,
+    // bool? isleave,
     String? userId,
     String? categoryCode,
     required Service? service,
@@ -44,19 +50,9 @@ class ServiceBloc extends AbstractServiceBloc {
     if (userId != null && userId.isNotEmpty) queryparams["userId"] = userId;
 
     if (response.isSuccess!) {
-      if (isEmployeeService!) {
-        sanitationTaxBloc.subjectSanitationTaxList.sink.add(null);
-        queryparams['showAllOwnersService'] = "False";
-
-        if (categoryCode != null && categoryCode.isNotEmpty) {
-          queryparams["categoryCodes"] = categoryCode;
-        }
-
-        sanitationTaxBloc.getSanitationTaxHomeListData(
-          queryparams: queryparams,
-          endPointValue:
-              APIEndpointConstants.LOAD_CUSTOM_SERVICE_INDEX_PAGE_DATA,
-        );
+      if (categoryCode == "Leave") {
+        subjectServiceList.sink.add(null);
+        readLeaveDetailData(queryparams: queryparams);
       } else {
         subjectServiceList.sink.add(null);
         getServiceHomeListData(queryparams: queryparams);
@@ -104,11 +100,53 @@ class ServiceBloc extends AbstractServiceBloc {
     // return response;
   }
 
+  getReadServiceListCount({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceMapResponse response =
+        await _serviceRepository!.getReadServiceListCount(
+      queryparams: queryparams,
+    );
+    _subjectReadServiceListCount.sink.add(response);
+  }
+
+  getReadServiceData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceListResponse response = await _serviceRepository!.getReadServiceData(
+      queryparams: queryparams,
+    );
+    _subjectReadServiceData.sink.add(response);
+  }
+
+  getServiceDashBoardData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceListResponse response =
+        await _serviceRepository!.getServiceDashBoardData(
+      queryparams: queryparams,
+    );
+    _subjectServiceList.sink.add(response);
+  }
+
+  readLeaveDetailData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    ServiceListResponse response;
+    response = await _serviceRepository!.readLeaveDetailData(
+      queryparams: queryparams,
+    );
+
+    _subjectServiceList.sink.add(response);
+  }
+
   dispose() {
     _subject.close();
     _subjectServiceList.close();
     _subjectMyRequestList.close();
     _subjectDeleteService.close();
+    _subjectReadServiceListCount.close();
+    _subjectReadServiceData.close();
   }
 
   BehaviorSubject<ServiceResponse?> get subject => _subject;
@@ -118,6 +156,10 @@ class ServiceBloc extends AbstractServiceBloc {
       _subjectDeleteService;
   BehaviorSubject<PaginationMyRequestsResponse?> get subjectMyRequestList =>
       _subjectMyRequestList;
+  BehaviorSubject<ServiceMapResponse?> get subjectReadServiceListCount =>
+      _subjectReadServiceListCount;
+  BehaviorSubject<ServiceListResponse?> get subjectReadServiceData =>
+      _subjectReadServiceData;
 }
 
 final serviceBloc = ServiceBloc();

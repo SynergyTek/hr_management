@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/enums/enums.dart';
+// import '../../../data/enums/enums.dart';
 import '../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../routes/route_constants.dart';
 import '../../../routes/screen_arguments.dart';
@@ -8,6 +8,7 @@ import '../../../themes/light_theme.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 import 'widget/task_home_body.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class TaskHomeScreen extends StatelessWidget {
   final String? mode;
