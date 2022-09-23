@@ -9,7 +9,7 @@ class TaskRepository extends AbstractTaskRepository {
   Future<TaskListResponseModel> getTaskHomeListData({
     Map<String, dynamic>? queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.GET_TASK_HOME_DATA;
+    const String endpoint = APIEndpointConstants.GET_TASK_HOME_DATA;
 
     try {
       Response response = await _dio.get(
@@ -24,10 +24,11 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
+  @override
   Future<TaskResponseModel> getTaskDetailsData({
     Map<String, dynamic>? queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.GET_TASK_DETAILS;
+    const String endpoint = APIEndpointConstants.GET_TASK_DETAILS;
 
     try {
       Response response = await _dio.get(
@@ -73,10 +74,11 @@ class TaskRepository extends AbstractTaskRepository {
     }
   }
 
+  @override
   Future<TaskListResponseModel> loadServiceAdhocTaskData({
     Map<String, dynamic>? queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.LOAD_SERVICE_ADHOC_TASK_DATA;
+    const String endpoint = APIEndpointConstants.LOAD_SERVICE_ADHOC_TASK_DATA;
 
     try {
       Response response = await _dio.get(
@@ -100,7 +102,7 @@ class TaskRepository extends AbstractTaskRepository {
   Future<String> lockTaskData({
     Map<String, dynamic>? queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.LOCK_TASK;
+    const String endpoint = APIEndpointConstants.LOCK_TASK;
 
     try {
       Response response = await _dio.get(
@@ -122,7 +124,7 @@ class TaskRepository extends AbstractTaskRepository {
   Future<String> releaseTaskData({
     Map<String, dynamic>? queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.RELEASE_TASK;
+    const String endpoint = APIEndpointConstants.RELEASE_TASK;
 
     try {
       Response response = await _dio.get(
@@ -144,7 +146,7 @@ class TaskRepository extends AbstractTaskRepository {
   Future<PostResponse> startTaskData({
     Map<String, dynamic>? queryparams,
   }) async {
-    final String endpoint = APIEndpointConstants.START_TASK;
+    const String endpoint = APIEndpointConstants.START_TASK;
 
     try {
       Response response = await _dio.get(
@@ -181,7 +183,7 @@ class TaskRepository extends AbstractTaskRepository {
     Map<String, dynamic>? queryparams,
     required TaskModel taskModel,
   }) async {
-    final String endpoint = APIEndpointConstants.MANAGE_TASK;
+    const String endpoint = APIEndpointConstants.MANAGE_TASK;
     try {
       Response response = await _dio.post(
         endpoint,
