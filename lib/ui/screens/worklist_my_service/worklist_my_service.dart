@@ -544,6 +544,7 @@ class _WorkListMyTaskScreenDataState extends State<WorkListMyTaskScreenData> {
                                 index: index,
                                 taskList: list,
                                 onTap: true,
+                                isWorklist: true,
                               );
                             },
                           ),

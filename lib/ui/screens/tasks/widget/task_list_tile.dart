@@ -8,11 +8,16 @@ import '../../../widgets/widgets.dart';
 
 class TaskListCard extends StatelessWidget {
   final bool? onTap;
+  final bool isWorklist;
   final int index;
   final List<TaskListModel>? taskList;
-  const TaskListCard(
-      {Key? key, required this.index, required this.taskList, this.onTap})
-      : super(key: key);
+  const TaskListCard({
+    Key? key,
+    required this.index,
+    required this.taskList,
+    this.onTap,
+    this.isWorklist = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +38,13 @@ class TaskListCard extends StatelessWidget {
                   CREATE_EDIT_TASK_ROUTE,
                   arguments: ScreenArguments(
                     arg1: '',
-                    arg2: taskList![index].taskActionId,
-                    // arg2: taskList![index].id,
+                    arg2: taskList![index].taskActionId ?? taskList![index].id,
                     arg3: taskList![index].taskSubject,
+                    // arg2: isWorklist
+                    //     ? taskList![index].taskActionId
+                    //     : taskList![index].id,
+                    // arg3: _taskList[index].templateMasterCode),
                   ),
-                  // arg3: _taskList[index].templateMasterCode),
                 );
               }
             : () {},
