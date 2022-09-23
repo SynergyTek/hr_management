@@ -543,7 +543,7 @@ class _WorkListMyTaskScreenDataState extends State<WorkListMyTaskScreenData> {
                               return TaskListCard(
                                 index: index,
                                 taskList: list,
-                                onTap: false,
+                                onTap: true,
                               );
                             },
                           ),
