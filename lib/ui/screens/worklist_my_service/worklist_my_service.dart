@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:hr_management/data/enums/enums.dart';
 // import 'package:hr_management/data/models/note/note_list_model.dart';
 // import 'package:hr_management/data/models/note/note_response.dart';
 import 'package:hr_management/data/models/task_models/task_list_model.dart';
@@ -704,7 +705,7 @@ class _WorkListServiceScreenDataState extends State<WorkListServiceScreenData> {
                               return ServiceListCard(
                                 index: index,
                                 serviceList: list,
-                                onTap: false,
+                                onTap: true,
                               );
                             },
                           ),
@@ -807,9 +808,10 @@ Widget _eachFilterListItem(
                                 child: GestureDetector(
                                   onTap: () => _handleOnTap(
                                     'pending',
-                                    'CHR',
+                                    data["TemplateCode"] ?? "",
                                     data,
                                     context,
+                                    ntsType,
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -846,9 +848,10 @@ Widget _eachFilterListItem(
                                 child: GestureDetector(
                                   onTap: () => _handleOnTap(
                                     'completed',
-                                    'Leave',
+                                    data["TemplateCode"] ?? "",
                                     data,
                                     context,
+                                    ntsType,
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -885,9 +888,10 @@ Widget _eachFilterListItem(
                                 child: GestureDetector(
                                   onTap: () => _handleOnTap(
                                     'rejected',
-                                    'CHR_REIMBURSEMENT',
+                                    data["TemplateCode"] ?? "",
                                     data,
                                     context,
+                                    ntsType,
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -968,30 +972,62 @@ String rejectedData(
   }
 }
 
-void _handleOnTap(String type, String categoryCode, dynamic data, context) {
-  String? taskStatus;
+void _handleOnTap(
+  String type,
+  String categoryCode,
+  dynamic data,
+  context,
+  NTSType? ntsType,
+) {
+  String? status;
 
-  if (type == 'pending') {
-    taskStatus = 'TASK_STATUS_INPROGRESS,TASK_STATUS_OVERDUE';
-  } else if (type == 'completed') {
-    taskStatus = 'TASK_STATUS_COMPLETE';
-  } else if (type == 'rejected') {
-    taskStatus = 'TASK_STATUS_REJECT,TASK_STATUS_CANCEL';
+  if (ntsType == NTSType.service) {
+    if (type == 'pending') {
+      status = 'SERVICE_STATUS_INPROGRESS,SERVICE_STATUS_OVERDUE';
+    } else if (type == 'completed') {
+      status = 'SERVICE_STATUS_COMPLETE';
+    } else if (type == 'rejected') {
+      status = 'SERVICE_STATUS_REJECT,SERVICE_STATUS_CANCEL';
+    }
+
+    serviceBloc.subjectReadServiceData.sink.add(null);
+    serviceBloc.getReadServiceData(
+      queryparams: {
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
+        "serviceStatus": status,
+        "categoryCodes": categoryCode,
+        // "showAllTaskForAdmin": "False",
+      },
+    );
+  } else {
+    if (type == 'pending') {
+      status = 'TASK_STATUS_INPROGRESS,TASK_STATUS_OVERDUE';
+    } else if (type == 'completed') {
+      status = 'TASK_STATUS_COMPLETE';
+    } else if (type == 'rejected') {
+      status = 'TASK_STATUS_REJECT,TASK_STATUS_CANCEL';
+    }
+
+    taskBloc.subjectReadTaskData.sink.add(null);
+    taskBloc.getReadTaskData(
+      queryparams: {
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
+        "taskStatus": status,
+        "categoryCodes": categoryCode,
+        "showAllTaskForAdmin": "False",
+      },
+    );
   }
-
-  taskBloc.subjectReadTaskData.sink.add(null);
-  taskBloc.getReadTaskData(
-    queryparams: {
-      "userId":
-          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      "portalName": BlocProvider.of<UserModelBloc>(context)
-              .state
-              .extraUserInformation
-              ?.portalType ??
-          "HR",
-      "taskStatus": taskStatus,
-      "categoryCodes": categoryCode,
-      "showAllTaskForAdmin": "False",
-    },
-  );
 }
