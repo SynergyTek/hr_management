@@ -249,6 +249,7 @@ class Service {
     this.leaveStatus,
     this.formattedStartDate,
     this.formattedEndDate,
+    this.ownerDisplayName,
   });
   dynamic jsonCopy;
   dynamic dataJson;
@@ -499,6 +500,7 @@ class Service {
   String? leaveStatus;
   String? formattedStartDate;
   String? formattedEndDate;
+  String? ownerDisplayName;
 
   Service.fromJson(Map<String, dynamic> jsonValue) {
     jsonCopy = jsonValue["JsonCopy"];
@@ -787,6 +789,7 @@ class Service {
     leaveStatus = jsonValue['LeaveStatus'];
     formattedStartDate = jsonValue['FormattedStartDate'];
     formattedEndDate = jsonValue['FormattedEndDate'];
+    ownerDisplayName = jsonValue['OwnerDisplayName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1046,6 +1049,7 @@ class Service {
     _data['LeaveStatus'] = leaveStatus;
     _data['FormattedStartDate'] = formattedStartDate;
     _data['FormattedEndDate'] = formattedEndDate;
+    _data['OwnerDisplayName'] = ownerDisplayName;
 
     return _data;
   }

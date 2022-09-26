@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/data/models/note/note_list_model.dart';
-import 'package:hr_management/data/models/note/note_response.dart';
+// import 'package:hr_management/data/models/note/note_list_model.dart';
+// import 'package:hr_management/data/models/note/note_response.dart';
 import 'package:hr_management/data/models/task_models/task_list_model.dart';
 import 'package:hr_management/data/models/task_models/task_list_resp_model.dart';
-import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
+// import 'package:hr_management/logic/blocs/note_bloc/note_bloc.dart';
 import 'package:hr_management/logic/blocs/task_bloc/task_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
-import 'package:hr_management/ui/screens/note/widgets/note_list_tile.dart';
+// import 'package:hr_management/ui/screens/note/widgets/note_list_tile.dart';
 import 'package:hr_management/ui/screens/tasks/widget/task_list_tile.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../themes/light_theme.dart';
 import '../../../themes/theme_config.dart';
 import '../../widgets/dotted_divider_widget.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
-import '../nts_charts/widget/charts_widget.dart';
-import 'package:sizer/sizer.dart';
+// import '../nts_charts/widget/charts_widget.dart';
+// import 'package:sizer/sizer.dart';
 
 import '../service/widget/service_list_tile.dart';
 import 'package:synergy_nts/synergy_nts.dart';
 
+import 'my_service_inforgraphics_widget.dart';
 import 'my_task_inforgraphics_widget.dart';
 
 class WorkListMyServiceScreenCount extends StatefulWidget {
@@ -45,17 +46,33 @@ class _WorkListMyServiceScreenCountState
     apiCall();
 
     _widgetOptions = <Widget?>[
-      (widget.ntsType == NTSType.note)
-          ? Container()
-          : (widget.ntsType == NTSType.task)
-              ? taskListScreen()
-              : workListMyServiceScreenChart(widget.ntsType),
+      // (widget.ntsType == NTSType.note)
+      //     ? Container()
+      //     :
+      (widget.ntsType == NTSType.task)
+          ? taskListScreen()
+          : /*(widget.ntsType == NTSType.service)
+              ?*/
+          serviceListScreen(),
+      // : workListMyServiceScreenChart(widget.ntsType),
       (widget.ntsType == NTSType.task)
           ? MyTaskInfographicsWidget()
-          : WorkListMyServiceScreenData(ntsType: widget.ntsType),
+          : /* (widget.ntsType == NTSType.service)
+              ?*/
+          MyServiceInfographicsWidget(),
+      // : WorkListMyServiceScreenData(ntsType: widget.ntsType),
     ];
 
     super.initState();
+  }
+
+  Widget serviceListScreen() {
+    return Stack(
+      children: [
+        workListServiceScreenChart(widget.ntsType),
+        WorkListServiceScreenData(ntsType: widget.ntsType)
+      ],
+    );
   }
 
   Widget taskListScreen() {
@@ -69,6 +86,7 @@ class _WorkListMyServiceScreenCountState
 
   apiCall() {
     if (widget.ntsType == NTSType.service) {
+      serviceBloc.subjectReadServiceListCount.sink.add(null);
       serviceBloc.getReadServiceListCount(
         queryparams: {
           "userId":
@@ -78,7 +96,8 @@ class _WorkListMyServiceScreenCountState
                   .extraUserInformation
                   ?.portalType ??
               "HR",
-          "categoryCodes": "CHR",
+          "showAllTaskForAdmin": "False",
+          // "categoryCodes": "CHR",
         },
       );
     } else if (widget.ntsType == NTSType.task) {
@@ -96,20 +115,21 @@ class _WorkListMyServiceScreenCountState
           "showAllTaskForAdmin": "False",
         },
       );
-    } else {
-      noteBloc.getNoteList(
-        queryparams: {
-          "userId":
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": BlocProvider.of<UserModelBloc>(context)
-                  .state
-                  .extraUserInformation
-                  ?.portalType ??
-              "HR",
-          "categoryCodes": "CHR",
-        },
-      );
     }
+    // else {
+    //   noteBloc.getNoteList(
+    //     queryparams: {
+    //       "userId":
+    //           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+    //       "portalName": BlocProvider.of<UserModelBloc>(context)
+    //               .state
+    //               .extraUserInformation
+    //               ?.portalType ??
+    //           "HR",
+    //       "categoryCodes": "CHR",
+    //     },
+    //   );
+    // }
   }
 
   void _onItemTapped(int index) {
@@ -145,142 +165,173 @@ class _WorkListMyServiceScreenCountState
         //     label: 'Details',
         //   ),
         // ],
-        currentIndex: (widget.ntsType == NTSType.note) ? 1 : _selectedIndex,
+        currentIndex: /*(widget.ntsType == NTSType.note) ? 1 :*/ _selectedIndex,
         selectedItemColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
       ),
       appBar: AppBar(
-          title: (widget.ntsType == NTSType.service)
-              ? Text('My Services')
-              : (widget.ntsType == NTSType.task)
-                  ? Text('My Task')
-                  : Text('My Note')),
+        title: (widget.ntsType == NTSType.service)
+            ? Text('My Services')
+            : /*(widget.ntsType == NTSType.task)
+                  ?*/
+            Text('My Task'), /*: Text('My Note')*/
+      ),
       drawer: DrawerWidget(),
       body: _widgetOptions!.elementAt(_selectedIndex),
     );
   }
 
-  Widget chartCard({Widget? child}) {
-    return Container(
-        margin: EdgeInsets.symmetric(vertical: 0.2.h, horizontal: 1.w),
-        child: Card(
-          elevation: 6,
-          child: child,
-        ));
-  }
+  // Widget chartCard({Widget? child}) {
+  //   return Container(
+  //       margin: EdgeInsets.symmetric(vertical: 0.2.h, horizontal: 1.w),
+  //       child: Card(
+  //         elevation: 6,
+  //         child: child,
+  //       ));
+  // }
 }
 
-Widget workListMyServiceScreenChart(NTSType ntsType) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Container(
-        height: 4.h,
-        width: double.infinity,
-        alignment: Alignment.center,
-        color: Colors.blue.shade200,
-        child: Text(
-          (ntsType == NTSType.service)
-              ? 'My Services'
-              : (ntsType == NTSType.task)
-                  ? 'My Tasks'
-                  : 'My Note',
-          style: TextStyle(fontSize: 14),
-        ),
-      ),
-      SizedBox(
-        height: 6.h,
-      ),
-      (ntsType == NTSType.service)
-          ? StreamBuilder<ServiceMapResponse?>(
-              stream: serviceBloc.subjectReadServiceListCount.stream,
-              builder: (context, AsyncSnapshot<ServiceMapResponse?> snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data?.data == null) {
-                    return Center(
-                        child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('No Data'),
-                    ));
-                  }
-                  var list = [];
-                  Map<String, dynamic>? map = snapshot.data?.data?.first;
-                  map?.forEach(
-                    (k, v) {
-                      if (v != null && v is int) {
-                        list.add(
-                          ChartData(
-                            k,
-                            v,
-                          ),
-                        );
-                      }
-                    },
-                  );
+// Widget workListMyServiceScreenChart(NTSType ntsType) {
+//   return Column(
+//     crossAxisAlignment: CrossAxisAlignment.center,
+//     children: [
+//       Container(
+//         height: 4.h,
+//         width: double.infinity,
+//         alignment: Alignment.center,
+//         color: Colors.blue.shade200,
+//         child: Text(
+//           (ntsType == NTSType.service)
+//               ? 'My Services'
+//               : /*(ntsType == NTSType.task)
+//                   ?*/
+//               'My Tasks',
+//           // : 'My Note',
+//           style: TextStyle(fontSize: 14),
+//         ),
+//       ),
+//       SizedBox(
+//         height: 6.h,
+//       ),
+//       (ntsType == NTSType.service)
+//           ? StreamBuilder<ServiceMapResponse?>(
+//               stream: serviceBloc.subjectReadServiceListCount.stream,
+//               builder: (context, AsyncSnapshot<ServiceMapResponse?> snapshot) {
+//                 if (snapshot.hasData) {
+//                   if (snapshot.data?.data == null) {
+//                     return Center(
+//                         child: Padding(
+//                       padding: const EdgeInsets.all(8.0),
+//                       child: Text('No Data'),
+//                     ));
+//                   }
+//                   var list = [];
+//                   Map<String, dynamic>? map = snapshot.data?.data?.first;
+//                   map?.forEach(
+//                     (k, v) {
+//                       if (v != null && v is int) {
+//                         list.add(
+//                           ChartData(
+//                             k,
+//                             v,
+//                           ),
+//                         );
+//                       }
+//                     },
+//                   );
 
-                  print(list);
+//                   print(list);
 
-                  return Charts(
-                    chartDataLIst: list,
-                    chartType: "donut",
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor:
-                          LightTheme().lightThemeData().primaryColor,
-                    ),
-                  );
-                }
-              },
-            )
-          : (ntsType == NTSType.task)
-              ? StreamBuilder<TaskListDynamicResponse?>(
-                  stream: taskBloc.subjectReadTaskListCount.stream,
-                  builder: (context,
-                      AsyncSnapshot<TaskListDynamicResponse?> snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data?.data == null &&
-                          snapshot.data!.data!.isEmpty) {
-                        return Center(
-                            child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('No Data'),
-                        ));
-                      }
-                      var list = [];
-                      Map<String, dynamic>? map = snapshot.data?.data?.first;
-                      map?.forEach(
-                        (k, v) {
-                          if (v != null && v is int) {
-                            list.add(
-                              ChartData(
-                                k,
-                                v,
-                              ),
-                            );
-                          }
-                        },
-                      );
+//                   return Charts(
+//                     chartDataLIst: list,
+//                     chartType: "donut",
+//                   );
+//                 } else {
+//                   return Center(
+//                     child: CircularProgressIndicator(
+//                       backgroundColor:
+//                           LightTheme().lightThemeData().primaryColor,
+//                     ),
+//                   );
+//                 }
+//               },
+//             )
+//           : (ntsType == NTSType.task)
+//               ? StreamBuilder<TaskListDynamicResponse?>(
+//                   stream: taskBloc.subjectReadTaskListCount.stream,
+//                   builder: (context,
+//                       AsyncSnapshot<TaskListDynamicResponse?> snapshot) {
+//                     if (snapshot.hasData) {
+//                       if (snapshot.data?.data == null &&
+//                           snapshot.data!.data!.isEmpty) {
+//                         return Center(
+//                             child: Padding(
+//                           padding: const EdgeInsets.all(8.0),
+//                           child: Text('No Data'),
+//                         ));
+//                       }
+//                       var list = [];
+//                       Map<String, dynamic>? map = snapshot.data?.data?.first;
+//                       map?.forEach(
+//                         (k, v) {
+//                           if (v != null && v is int) {
+//                             list.add(
+//                               ChartData(
+//                                 k,
+//                                 v,
+//                               ),
+//                             );
+//                           }
+//                         },
+//                       );
 
-                      print(list);
+//                       print(list);
 
-                      return Charts(
-                        chartDataLIst: list,
-                        chartType: "donut",
-                      );
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor:
-                              LightTheme().lightThemeData().primaryColor,
-                        ),
-                      );
-                    }
-                  },
-                )
-              : SizedBox(),
-    ],
+//                       return Charts(
+//                         chartDataLIst: list,
+//                         chartType: "donut",
+//                       );
+//                     } else {
+//                       return Center(
+//                         child: CircularProgressIndicator(
+//                           backgroundColor:
+//                               LightTheme().lightThemeData().primaryColor,
+//                         ),
+//                       );
+//                     }
+//                   },
+//                 )
+//               : SizedBox(),
+//     ],
+//   );
+// }
+
+Widget workListServiceScreenChart(NTSType ntsType) {
+  return StreamBuilder<ServiceMapResponse?>(
+    stream: serviceBloc.subjectReadServiceListCount.stream,
+    builder: (context, AsyncSnapshot<ServiceMapResponse?> snapshot) {
+      if (snapshot.hasData) {
+        if (snapshot.data?.data == null && snapshot.data!.data!.isEmpty) {
+          return Center(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('No Data'),
+          ));
+        }
+
+        return _horzontalListViewWidget(
+          context,
+          data: snapshot.data!.data!,
+          ntsType: ntsType,
+        );
+      } else {
+        return Center(
+          child: CircularProgressIndicator(
+            backgroundColor: LightTheme().lightThemeData().primaryColor,
+          ),
+        );
+      }
+    },
   );
 }
 
@@ -300,6 +351,7 @@ Widget workListMyTaskScreenChart(NTSType ntsType) {
         return _horzontalListViewWidget(
           context,
           data: snapshot.data!.data!,
+          ntsType: ntsType,
         );
       } else {
         return Center(
@@ -312,150 +364,151 @@ Widget workListMyTaskScreenChart(NTSType ntsType) {
   );
 }
 
-class ChartData {
-  String type;
-  int value;
+// class ChartData {
+//   String type;
+//   int value;
 
-  ChartData(
-    this.type,
-    this.value,
-  );
-  @override
-  String toString() {
-    return '{ ${this.type}, ${this.value} }';
-  }
-}
+//   ChartData(
+//     this.type,
+//     this.value,
+//   );
+//   @override
+//   String toString() {
+//     return '{ ${this.type}, ${this.value} }';
+//   }
+// }
 
-class WorkListMyServiceScreenData extends StatefulWidget {
-  final NTSType ntsType;
-  WorkListMyServiceScreenData({Key? key, required this.ntsType})
-      : super(key: key);
+// class WorkListMyServiceScreenData extends StatefulWidget {
+//   final NTSType ntsType;
+//   WorkListMyServiceScreenData({Key? key, required this.ntsType})
+//       : super(key: key);
 
-  @override
-  State<WorkListMyServiceScreenData> createState() =>
-      _WorkListMyServiceScreenDataState();
-}
+//   @override
+//   State<WorkListMyServiceScreenData> createState() =>
+//       _WorkListMyServiceScreenDataState();
+// }
 
-class _WorkListMyServiceScreenDataState
-    extends State<WorkListMyServiceScreenData> {
-  @override
-  void initState() {
-    super.initState();
-    if (widget.ntsType == NTSType.service) {
-      serviceBloc.getReadServiceData(
-        queryparams: {
-          "userId":
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": BlocProvider.of<UserModelBloc>(context)
-                  .state
-                  .extraUserInformation
-                  ?.portalType ??
-              "HR",
-          "categoryCodes": "CHR",
-        },
-      );
-    } else if (widget.ntsType == NTSType.task) {
-      taskBloc.subjectReadTaskData.sink.add(null);
-      taskBloc.getReadTaskData(
-        queryparams: {
-          "userId":
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": BlocProvider.of<UserModelBloc>(context)
-                  .state
-                  .extraUserInformation
-                  ?.portalType ??
-              "HR",
-          // "categoryCodes": "CHR",
-          "showAllTaskForAdmin": "False",
-        },
-      );
-    } else {
-      noteBloc.getNoteList(
-        queryparams: {
-          "userId":
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "portalName": BlocProvider.of<UserModelBloc>(context)
-                  .state
-                  .extraUserInformation
-                  ?.portalType ??
-              "HR",
-          "categoryCodes": "CHR",
-        },
-      );
-    }
-  }
+// class _WorkListMyServiceScreenDataState
+//     extends State<WorkListMyServiceScreenData> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     if (widget.ntsType == NTSType.service) {
+//       serviceBloc.getReadServiceData(
+//         queryparams: {
+//           "userId":
+//               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+//           "portalName": BlocProvider.of<UserModelBloc>(context)
+//                   .state
+//                   .extraUserInformation
+//                   ?.portalType ??
+//               "HR",
+//           // "categoryCodes": "CHR",
+//           "showAllTaskForAdmin": "False",
+//         },
+//       );
+//     } else if (widget.ntsType == NTSType.task) {
+//       taskBloc.subjectReadTaskData.sink.add(null);
+//       taskBloc.getReadTaskData(
+//         queryparams: {
+//           "userId":
+//               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+//           "portalName": BlocProvider.of<UserModelBloc>(context)
+//                   .state
+//                   .extraUserInformation
+//                   ?.portalType ??
+//               "HR",
+//           // "categoryCodes": "CHR",
+//           "showAllTaskForAdmin": "False",
+//         },
+//       );
+//     } else {
+//       noteBloc.getNoteList(
+//         queryparams: {
+//           "userId":
+//               BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+//           "portalName": BlocProvider.of<UserModelBloc>(context)
+//                   .state
+//                   .extraUserInformation
+//                   ?.portalType ??
+//               "HR",
+//           "categoryCodes": "CHR",
+//         },
+//       );
+//     }
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: (widget.ntsType == NTSType.service)
-          ? StreamBuilder<ServiceListResponse?>(
-              stream: serviceBloc.subjectReadServiceData.stream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<ServiceListResponse?> snapshot) {
-                if (snapshot.hasData) {
-                  List<Service>? list = snapshot.data?.list;
-                  return ListView.builder(
-                    itemCount: list?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ServiceListCard(
-                        index: index,
-                        serviceList: list,
-                        onTap: false,
-                      );
-                    },
-                  );
-                } else {
-                  return Center(child: CustomProgressIndicator());
-                }
-              },
-            )
-          : (widget.ntsType == NTSType.task)
-              ? StreamBuilder<TaskListResponseModel?>(
-                  stream: taskBloc.subjectReadTaskData.stream,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<TaskListResponseModel?> snapshot) {
-                    if (snapshot.hasData) {
-                      List<TaskListModel>? list = snapshot.data?.data;
-                      return ListView.builder(
-                        itemCount: list?.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return TaskListCard(
-                            index: index,
-                            taskList: list,
-                            onTap: false,
-                          );
-                        },
-                      );
-                    } else {
-                      return Center(child: CustomProgressIndicator());
-                    }
-                  },
-                )
-              : StreamBuilder<NoteListResponse?>(
-                  stream: noteBloc.subjectNoteList.stream,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<NoteListResponse?> snapshot) {
-                    if (snapshot.hasData) {
-                      List<NoteListModel>? list = snapshot.data?.list;
-                      return ListView.builder(
-                        itemCount: list?.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return NoteListCard(
-                            index: index,
-                            noteList: list,
-                            onTap: false,
-                          );
-                        },
-                      );
-                    } else {
-                      return Center(child: CustomProgressIndicator());
-                    }
-                  },
-                ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: (widget.ntsType == NTSType.service)
+//           ? StreamBuilder<ServiceListResponse?>(
+//               stream: serviceBloc.subjectReadServiceData.stream,
+//               builder: (BuildContext context,
+//                   AsyncSnapshot<ServiceListResponse?> snapshot) {
+//                 if (snapshot.hasData) {
+//                   List<Service>? list = snapshot.data?.list;
+//                   return ListView.builder(
+//                     itemCount: list?.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return ServiceListCard(
+//                         index: index,
+//                         serviceList: list,
+//                         onTap: false,
+//                       );
+//                     },
+//                   );
+//                 } else {
+//                   return Center(child: CustomProgressIndicator());
+//                 }
+//               },
+//             )
+//           : (widget.ntsType == NTSType.task)
+//               ? StreamBuilder<TaskListResponseModel?>(
+//                   stream: taskBloc.subjectReadTaskData.stream,
+//                   builder: (BuildContext context,
+//                       AsyncSnapshot<TaskListResponseModel?> snapshot) {
+//                     if (snapshot.hasData) {
+//                       List<TaskListModel>? list = snapshot.data?.data;
+//                       return ListView.builder(
+//                         itemCount: list?.length,
+//                         itemBuilder: (BuildContext context, int index) {
+//                           return TaskListCard(
+//                             index: index,
+//                             taskList: list,
+//                             onTap: false,
+//                           );
+//                         },
+//                       );
+//                     } else {
+//                       return Center(child: CustomProgressIndicator());
+//                     }
+//                   },
+//                 )
+//               : StreamBuilder<NoteListResponse?>(
+//                   stream: noteBloc.subjectNoteList.stream,
+//                   builder: (BuildContext context,
+//                       AsyncSnapshot<NoteListResponse?> snapshot) {
+//                     if (snapshot.hasData) {
+//                       List<NoteListModel>? list = snapshot.data?.list;
+//                       return ListView.builder(
+//                         itemCount: list?.length,
+//                         itemBuilder: (BuildContext context, int index) {
+//                           return NoteListCard(
+//                             index: index,
+//                             noteList: list,
+//                             onTap: false,
+//                           );
+//                         },
+//                       );
+//                     } else {
+//                       return Center(child: CustomProgressIndicator());
+//                     }
+//                   },
+//                 ),
+//     );
+//   }
+// }
 
 class WorkListMyTaskScreenData extends StatefulWidget {
   final NTSType ntsType;
@@ -483,6 +536,7 @@ class _WorkListMyTaskScreenDataState extends State<WorkListMyTaskScreenData> {
         "showAllTaskForAdmin": "False",
       },
     );
+    super.initState();
   }
 
   @override
@@ -562,10 +616,116 @@ class _WorkListMyTaskScreenDataState extends State<WorkListMyTaskScreenData> {
   }
 }
 
+class WorkListServiceScreenData extends StatefulWidget {
+  final NTSType ntsType;
+  WorkListServiceScreenData({Key? key, required this.ntsType})
+      : super(key: key);
+
+  @override
+  State<WorkListServiceScreenData> createState() =>
+      _WorkListServiceScreenDataState();
+}
+
+class _WorkListServiceScreenDataState extends State<WorkListServiceScreenData> {
+  @override
+  void initState() {
+    serviceBloc.subjectReadServiceData.sink.add(null);
+    serviceBloc.getReadServiceData(
+      queryparams: {
+        "userId":
+            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        "portalName": BlocProvider.of<UserModelBloc>(context)
+                .state
+                .extraUserInformation
+                ?.portalType ??
+            "HR",
+        // "categoryCodes": "CHR",
+        "showAllTaskForAdmin": "False",
+      },
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.70,
+      minChildSize: 0.70,
+      maxChildSize: 1,
+      builder: (BuildContext context, ScrollController controller) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(36.0),
+            topRight: Radius.circular(36.0),
+          ),
+          child: Container(
+              color: Colors.white,
+              padding: DEFAULT_LARGE_HORIZONTAL_PADDING,
+              child: StreamBuilder<ServiceListResponse?>(
+                stream: serviceBloc.subjectReadServiceData.stream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<ServiceListResponse?> snapshot) {
+                  if (snapshot.hasData) {
+                    List<Service>? list = snapshot.data?.list;
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: TextButton(
+                            onPressed: () {
+                              serviceBloc.subjectReadServiceData.sink.add(null);
+                              return serviceBloc.getReadServiceData(
+                                queryparams: {
+                                  "userId":
+                                      BlocProvider.of<UserModelBloc>(context)
+                                              .state
+                                              .userModel
+                                              ?.id ??
+                                          '',
+                                  "portalName":
+                                      BlocProvider.of<UserModelBloc>(context)
+                                              .state
+                                              .extraUserInformation
+                                              ?.portalType ??
+                                          "HR",
+                                  // "categoryCodes": "CHR",
+                                  "showAllTaskForAdmin": "False",
+                                },
+                              );
+                            },
+                            child: const Text("Reset"),
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: list?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ServiceListCard(
+                                index: index,
+                                serviceList: list,
+                                onTap: false,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Center(child: CustomProgressIndicator());
+                  }
+                },
+              )),
+        );
+      },
+    );
+  }
+}
+
 Widget _horzontalListViewWidget(
   context, {
   required List<dynamic> data,
-  // required List<DashboardFilterListModel> data,
+  NTSType? ntsType,
 }) {
   return SizedBox(
     height: MediaQuery.of(context).size.height * .22,
@@ -577,13 +737,21 @@ Widget _horzontalListViewWidget(
         return const SizedBox(width: 8);
       },
       itemBuilder: (BuildContext context, int index) {
-        return _eachFilterListItem(context, data.elementAt(index));
+        return _eachFilterListItem(
+          context,
+          data.elementAt(index),
+          ntsType,
+        );
       },
     ),
   );
 }
 
-Widget _eachFilterListItem(context, dynamic data) {
+Widget _eachFilterListItem(
+  context,
+  dynamic data,
+  NTSType? ntsType,
+) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * .64,
     child: Column(
@@ -655,8 +823,7 @@ Widget _eachFilterListItem(context, dynamic data) {
                                         ),
                                       ),
                                       Text(
-                                        data["AssignedToMeInProgreessOverDueCount"]
-                                            .toString(),
+                                        pendingData(data, ntsType),
                                         style: const TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -695,8 +862,7 @@ Widget _eachFilterListItem(context, dynamic data) {
                                         ),
                                       ),
                                       Text(
-                                        data["AssignedToMeCompleteCount"]
-                                            .toString(),
+                                        completedData(data, ntsType),
                                         style: const TextStyle(
                                           color: Colors.green,
                                           fontWeight: FontWeight.bold,
@@ -735,8 +901,7 @@ Widget _eachFilterListItem(context, dynamic data) {
                                         ),
                                       ),
                                       Text(
-                                        data["AssignedToMeRejectCancelCloseCount"]
-                                            .toString(),
+                                        rejectedData(data, ntsType),
                                         style: const TextStyle(
                                           color: Colors.red,
                                           fontWeight: FontWeight.bold,
@@ -758,16 +923,49 @@ Widget _eachFilterListItem(context, dynamic data) {
           ),
         ),
         const SizedBox(height: 8.0),
-        Text(
-          data["DisplayName"] ?? "",
-          // style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //       color: AppThemeColor.textColor,
-          //     ),
-        ),
+
+        //
+        Text(data["DisplayName"] ?? ""),
+
+        //
         const SizedBox(height: 8.0),
       ],
     ),
   );
+}
+
+String pendingData(
+  dynamic data,
+  NTSType? ntsType,
+) {
+  if (ntsType == NTSType.service) {
+    return (data["CreatedByMeInProgreessOverDueCount"] ?? 0).toString();
+  } else {
+    return (data["AssignedToMeInProgreessOverDueCount"] ?? 0).toString();
+  }
+}
+
+String completedData(
+  dynamic data,
+  NTSType? ntsType,
+) {
+  if (ntsType == NTSType.service) {
+    return (data["CreatedByMeCompleteCount"] ?? 0).toString();
+  } else {
+    return (data["AssignedToMeCompleteCount"] ?? 0).toString();
+  }
+}
+
+String rejectedData(
+  dynamic data,
+  NTSType? ntsType,
+) {
+  if (ntsType == NTSType.service) {
+    return (data["CreatedOrRequestedByMeRejectCancelCloseCount"] ?? 0)
+        .toString();
+  } else {
+    return (data["AssignedToMeRejectCancelCloseCount"] ?? 0).toString();
+  }
 }
 
 void _handleOnTap(String type, String categoryCode, dynamic data, context) {
@@ -796,20 +994,4 @@ void _handleOnTap(String type, String categoryCode, dynamic data, context) {
       "showAllTaskForAdmin": "False",
     },
   );
-//   BlocProvider.of<DashboardNotificationBloc>(context).add(
-//     DashboardNotificationFilterEvent(
-//       data: FilterData(
-//         categoryCodes: data.templateCode,
-//         taskStatus: taskStatus,
-//       ),
-//     ),
-//   );
-// }
-
-// _handleQueryParams(BuildContext context) {
-//   return dashboardBloc.getDashboardFilterAPIData(
-//     queryparams: {
-//       'userId': widget.userId,
-//     },
-//   );
 }

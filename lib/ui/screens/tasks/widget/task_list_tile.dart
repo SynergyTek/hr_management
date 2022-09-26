@@ -141,7 +141,7 @@ class TaskListCard extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

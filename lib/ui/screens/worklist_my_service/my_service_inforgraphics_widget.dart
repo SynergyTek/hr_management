@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../data/models/task_models/task_list_resp_model.dart';
-import '../../../logic/blocs/task_bloc/task_bloc.dart';
+import '../../../data/models/service_models/service_response.dart';
+import '../../../logic/blocs/service_bloc/service_bloc.dart';
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../themes/theme_config.dart';
 import '../../widgets/dotted_divider_widget.dart';
@@ -11,22 +11,21 @@ import '../../widgets/empty_list_widget.dart';
 import '../case_management_screen/helpdesk_dashboard_screen/widgets/chart_widgets/pie_chart_widget.dart';
 import '../case_management_screen/helpdesk_dashboard_screen/widgets/open_requests_by_category_widget.dart';
 
-class MyTaskInfographicsWidget extends StatefulWidget {
-  MyTaskInfographicsWidget({Key? key}) : super(key: key);
+class MyServiceInfographicsWidget extends StatefulWidget {
+  MyServiceInfographicsWidget({Key? key}) : super(key: key);
 
   @override
-  State<MyTaskInfographicsWidget> createState() =>
-      MyTaskdInfographicsWidgetState();
+  State<MyServiceInfographicsWidget> createState() =>
+      _MyServiceInfographicsWidgetState();
 }
 
-class MyTaskdInfographicsWidgetState extends State<MyTaskInfographicsWidget> {
-  //
+class _MyServiceInfographicsWidgetState
+    extends State<MyServiceInfographicsWidget> {
   List<PieChartData> pieChartData = [];
-
   @override
   void initState() {
-    taskBloc.subjectReadTaskListCount.sink.add(null);
-    taskBloc.getReadTaskListCount(
+    serviceBloc.subjectReadServiceListCount.sink.add(null);
+    serviceBloc.getReadServiceListCount(
       queryparams: {
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
@@ -35,8 +34,8 @@ class MyTaskdInfographicsWidgetState extends State<MyTaskInfographicsWidget> {
                 .extraUserInformation
                 ?.portalType ??
             "HR",
-        // "categoryCodes": "CHR",
         "showAllTaskForAdmin": "False",
+        // "categoryCodes": "CHR",
       },
     );
     super.initState();
@@ -51,9 +50,9 @@ class MyTaskdInfographicsWidgetState extends State<MyTaskInfographicsWidget> {
   }
 
   Widget _streambuilderWidget() {
-    return StreamBuilder<TaskListDynamicResponse?>(
-      stream: taskBloc.subjectReadTaskListCount.stream,
-      builder: (context, AsyncSnapshot<TaskListDynamicResponse?> snapshot) {
+    return StreamBuilder<ServiceMapResponse?>(
+      stream: serviceBloc.subjectReadServiceListCount.stream,
+      builder: (context, AsyncSnapshot<ServiceMapResponse?> snapshot) {
         if (snapshot.hasError) {
           return const Center(
             child: Text("An error occured, please try again later."),
@@ -121,6 +120,9 @@ class MyTaskdInfographicsWidgetState extends State<MyTaskInfographicsWidget> {
           //
           Text(
             data["DisplayName"] ?? "",
+            // style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            //       color: AppThemeColor.textHeadingColor,
+            //     ),
           ),
           const SizedBox(height: 16.0),
         ],
@@ -147,7 +149,7 @@ class MyTaskdInfographicsWidgetState extends State<MyTaskInfographicsWidget> {
     pieChartData.add(
       PieChartData(
         x: "Pending",
-        y: data["AssignedToMeInProgreessOverDueCount"].toDouble() ?? 0.0,
+        y: data["CreatedByMeInProgreessOverDueCount"].toDouble() ?? 0.0,
         color: const Color.fromRGBO(75, 135, 185, 1),
       ),
     );
@@ -155,7 +157,7 @@ class MyTaskdInfographicsWidgetState extends State<MyTaskInfographicsWidget> {
     pieChartData.add(
       PieChartData(
         x: "Completed",
-        y: data["AssignedToMeCompleteCount"].toDouble() ?? 0.0,
+        y: data["CreatedByMeCompleteCount"].toDouble() ?? 0.0,
         color: const Color.fromRGBO(116, 180, 155, 1),
       ),
     );
@@ -163,7 +165,8 @@ class MyTaskdInfographicsWidgetState extends State<MyTaskInfographicsWidget> {
     pieChartData.add(
       PieChartData(
         x: "Rejected",
-        y: data["AssignedToMeRejectCancelCloseCount"].toDouble() ?? 0.0,
+        y: data["CreatedOrRequestedByMeRejectCancelCloseCount"].toDouble() ??
+            0.0,
         color: const Color.fromRGBO(246, 114, 128, 1),
       ),
     );
