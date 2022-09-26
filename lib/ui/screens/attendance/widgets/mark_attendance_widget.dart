@@ -2,6 +2,7 @@ import 'package:geocoding/geocoding.dart' as geo;
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
+import '../../../../data/models/login_models/extra_user_information_model.dart';
 import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
@@ -29,8 +30,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   String? _location = "Fetching location data...";
 
   // signed in/out check
-  bool isSignedIn = false;
-  bool isSignedOut = true;
+  late bool isSignedIn;
 
   bool isVisible = false;
 
@@ -48,10 +48,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     bool result = false;
     final double radius = 0.25;
 
-    var officeLatitude = 34.09934;
-    var officeLongitude = 74.8139167;
-    // var officeLatitude = 23.201535;
-    // var officeLongitude = 77.4149217;
+    var officeLatitude = 23.23688;
+    var officeLongitude = 77.433565;
 
     final double distance = Geolocator.distanceBetween(
       BlocProvider.of<LocationBloc>(context).state.locationData?.latitude ??
@@ -72,6 +70,12 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
   @override
   void initState() {
+    isSignedIn = BlocProvider.of<UserModelBloc>(context)
+            .state
+            .extraUserInformation
+            ?.isSignedIn ??
+        false;
+
     super.initState();
 
     _checkLocationService();
@@ -373,7 +377,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       return;
     }
 
-    if (isSignedOut == true) {
+    if (!isSignedIn) {
       setState(() {
         isVisible = true;
       });
@@ -404,8 +408,15 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       );
       if (accessLogBloc.subject.value.isSignIn == 0 &&
           accessLogBloc.subject.value.error == null) {
-        isSignedOut = false;
         isSignedIn = true;
+        BlocProvider.of<UserModelBloc>(context).add(
+          UserModelChangeEvent(
+            userModel: BlocProvider.of<UserModelBloc>(context).state.userModel!,
+            extraUserInformation: ExtraUserInformationModel(
+              isSignedIn: true,
+            ),
+          ),
+        );
       }
     } else
       displaySnackBar(
@@ -456,8 +467,15 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       );
       if (accessLogBloc.subject.value.isSignIn == 1 &&
           accessLogBloc.subject.value.error == null) {
-        isSignedOut = true;
         isSignedIn = false;
+        BlocProvider.of<UserModelBloc>(context).add(
+          UserModelChangeEvent(
+            userModel: BlocProvider.of<UserModelBloc>(context).state.userModel!,
+            extraUserInformation: ExtraUserInformationModel(
+              isSignedIn: false,
+            ),
+          ),
+        );
       }
     } else {
       displaySnackBar(text: 'You have already signed out.', context: context);

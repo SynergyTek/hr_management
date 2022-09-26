@@ -312,7 +312,11 @@ class _LoginBodyState extends State<LoginBody> {
         UserModelChangeEvent(
           userModel: user,
           extraUserInformation: ExtraUserInformationModel(
-            isSignedIn: false,
+            isSignedIn: BlocProvider.of<UserModelBloc>(context)
+                    .state
+                    .extraUserInformation
+                    ?.isSignedIn ??
+                false,
             portalType: selectedPortal,
             userPermissionResponse: response,
           ),

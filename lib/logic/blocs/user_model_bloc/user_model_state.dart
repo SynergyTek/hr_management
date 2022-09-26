@@ -10,7 +10,10 @@ abstract class UserModelState extends Equatable {
   });
 
   @override
-  List<Object> get props => [userModel!];
+  List<Object> get props => [
+        userModel!,
+        extraUserInformation!,
+      ];
 }
 
 class UserModelUserDefinedState extends UserModelState {

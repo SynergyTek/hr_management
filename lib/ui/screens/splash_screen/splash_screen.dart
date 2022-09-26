@@ -72,7 +72,11 @@ class SplashScreen extends StatelessWidget {
       UserModelChangeEvent(
         userModel: model,
         extraUserInformation: ExtraUserInformationModel(
-          isSignedIn: false,
+          isSignedIn: BlocProvider.of<UserModelBloc>(context)
+                  .state
+                  .extraUserInformation
+                  ?.isSignedIn ??
+              false,
           portalType: APIEndpointConstants.PORTAL_NAME,
           userPermissionResponse: null,
         ),
