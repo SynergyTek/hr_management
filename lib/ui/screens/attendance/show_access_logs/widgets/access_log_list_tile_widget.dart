@@ -15,35 +15,44 @@ class AccessLogListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Stack(
-        children: [
-          ListTile(
-            tileColor: _handleListTileColor(context),
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
-            child: ListTile(
-              tileColor: Theme.of(context).notInvertedColor,
-              title: Text(employeeName()),
-              subtitle: Text(punchingTime()),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    eachAccessLogModelElement.devicePunchingTypeText ?? '-',
-                    style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
-                      color: _handleListTileColor(context),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Icon(Icons.chevron_right),
-                ],
-              ),
-              onTap: () => _handleListTileOnTap(context),
+      elevation: 4,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(30.0),
+          topRight: Radius.circular(30.0),
+        ),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          border: Border(
+            left: BorderSide(
+              color: _handleListTileColor(context),
+              width: MediaQuery.of(context).size.width * 0.015,
             ),
           ),
-        ],
+        ),
+        child: ListTile(
+          dense: true,
+          tileColor: Theme.of(context).notInvertedColor,
+          title: Text(employeeName()),
+          subtitle: Text(punchingTime()),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                eachAccessLogModelElement.devicePunchingTypeText ?? '-',
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
+                  color: _handleListTileColor(context),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Icon(Icons.chevron_right),
+            ],
+          ),
+          onTap: () => _handleListTileOnTap(context),
+        ),
       ),
     );
   }

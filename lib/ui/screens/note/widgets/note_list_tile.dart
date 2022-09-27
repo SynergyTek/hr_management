@@ -3,6 +3,8 @@ import '../../../../data/models/note/note_list_model.dart';
 import '../../../../logic/blocs/note_bloc/note_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../../routes/screen_arguments.dart';
+import '../../../widgets/dotted_divider_widget.dart';
+import '../../../widgets/widgets.dart';
 
 class NoteListCard extends StatelessWidget {
   final bool? onTap;
@@ -16,62 +18,15 @@ class NoteListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      child: ListTile(
-        title: Text(
-          noteSubject(index),
-          maxLines: 2,
-          style: Theme.of(context).textTheme.headline6,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(30.0),
+          topRight: Radius.circular(30.0),
         ),
-        subtitle: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text("Note No: "),
-                      Text(noteNoValue(index)),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 6.0, bottom: 6.0),
-              child: Row(
-                children: <Widget>[
-                  Text("From: "),
-                  Flexible(
-                    child: Text(
-                      ownerUserName(index),
-                      style: TextStyle(color: Colors.deepPurple[900]),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    noteStatusName(index),
-                    style: TextStyle(color: Colors.green[800]),
-                  ),
-                ),
-                Text(
-                  expiryDate(index),
-                  style: TextStyle(color: Colors.red[700]),
-                ),
-              ],
-            ),
-          ],
-        ),
+      ),
+      child: GestureDetector(
         onTap: onTap!
             ? () {
-                // noteBloc.subjectNoteList.sink.add(null);
                 noteBloc.subjectNoteDetails.sink.add(null);
                 Navigator.pushNamed(
                   context,
@@ -83,6 +38,84 @@ class NoteListCard extends StatelessWidget {
                 );
               }
             : () {},
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: statusToColorMap[noteStatusName(index)] ??
+                    Colors.transparent,
+                width: MediaQuery.of(context).size.width * 0.015,
+              ),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: titleWidget(
+                      context: context,
+                      caption: noteNoValue(index),
+                      title: noteSubject(index),
+                    ),
+                  ),
+                  Expanded(
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Status",
+                      customChild: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            noteStatusName(index),
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.02),
+                          statusContainerWidget(
+                            statusColor:
+                                statusToColorMap[noteStatusName(index)] ??
+                                    Colors.transparent,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              DottedDividerWidget(),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: subtitleWidget(
+                      context: context,
+                      caption: 'Requested By',
+                      title: ownerUserName(index),
+                    ),
+                  ),
+                  Expanded(
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Exxpiry Date",
+                      title: expiryDate(index),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

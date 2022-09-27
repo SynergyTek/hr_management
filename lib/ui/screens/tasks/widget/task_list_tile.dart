@@ -105,19 +105,19 @@ class TaskListCard extends StatelessWidget {
               DottedDividerWidget(),
               Row(
                 children: <Widget>[
-                  Flexible(
-                    child: Text(
-                      ownerUserName(index),
-                      style: TextStyle(color: Colors.deepPurple[900]),
-                      overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    flex: 2,
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Owner",
+                      title: ownerUserName(index),
                     ),
                   ),
-                  Text(" to "),
-                  Flexible(
-                    child: Text(
-                      assigneeDisplayName(index),
-                      style: TextStyle(color: Colors.deepPurple[900]),
-                      overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Assignee",
+                      title: assigneeDisplayName(index),
                     ),
                   ),
                 ],
@@ -158,11 +158,16 @@ class TaskListCard extends StatelessWidget {
   }
 
   String ownerUserName(int index) {
-    return taskList?[index].serviceOwner ?? "-";
+    return taskList?[index].serviceOwner ??
+        taskList?[index].ownerUserName ??
+        taskList?[index].taskOwnerFirstLetter ??
+        "-";
   }
 
   String assigneeDisplayName(int index) {
-    return taskList?[index].assigneeUserName ?? "-";
+    return taskList?[index].assigneeUserName ??
+        taskList?[index].assigneeDisplayName ??
+        "-";
   }
 
   String taskStatusName(int index) {

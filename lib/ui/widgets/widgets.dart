@@ -92,4 +92,6 @@ Map<String, Color> statusToColorMap = {
   "Completed": Colors.green.shade700,
   "Overdue": Colors.orangeAccent,
   "Planned": Colors.red.shade300,
+  "Active": Colors.blue.shade800,
+  "Inactive": Colors.grey.shade700,
 };
