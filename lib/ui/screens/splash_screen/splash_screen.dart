@@ -106,7 +106,8 @@ class SplashScreen extends StatelessWidget {
       // user is already logged in, use this function to send device token to the backend.
       Navigator.pushReplacementNamed(
         context,
-        WORKBOARD_SCREEN,
+        EMPLOYE_DASHBOARD,
+        // WORKBOARD_SCREEN,
       );
     }
   }

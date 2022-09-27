@@ -114,10 +114,10 @@ class _SalaryDetailsScreenBodyState extends State<SalaryDetailsScreenBody> {
                   Row(
                     children: [
                       Switch(
-                        value: switch0,
+                        value: switch4,
                         onChanged: (value) {
                           setState(() {
-                            switch0 = value;
+                            switch4 = value;
                           });
                         },
                       ),
@@ -127,10 +127,10 @@ class _SalaryDetailsScreenBodyState extends State<SalaryDetailsScreenBody> {
                   Row(
                     children: [
                       Switch(
-                        value: switch1,
+                        value: switch5,
                         onChanged: (value) {
                           setState(() {
-                            switch1 = value;
+                            switch5 = value;
                           });
                         },
                       ),
@@ -142,10 +142,10 @@ class _SalaryDetailsScreenBodyState extends State<SalaryDetailsScreenBody> {
                   Row(
                     children: [
                       Switch(
-                        value: switch2,
+                        value: switch6,
                         onChanged: (value) {
                           setState(() {
-                            switch2 = value;
+                            switch6 = value;
                           });
                         },
                       ),
@@ -157,10 +157,10 @@ class _SalaryDetailsScreenBodyState extends State<SalaryDetailsScreenBody> {
                   Row(
                     children: [
                       Switch(
-                        value: switch3,
+                        value: switch7,
                         onChanged: (value) {
                           setState(() {
-                            switch3 = value;
+                            switch7 = value;
                           });
                         },
                       ),

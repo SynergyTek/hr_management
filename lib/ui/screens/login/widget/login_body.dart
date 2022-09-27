@@ -326,7 +326,8 @@ class _LoginBodyState extends State<LoginBody> {
       // Redirect to Home screen.
       Navigator.pushReplacementNamed(
         context,
-        WORKBOARD_SCREEN,
+        EMPLOYE_DASHBOARD,
+        // WORKBOARD_SCREEN,
       );
     } catch (e, s) {
       print(e);

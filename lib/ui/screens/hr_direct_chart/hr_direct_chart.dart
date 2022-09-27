@@ -53,7 +53,8 @@ class _HrDirectChartState extends State<HrDirectChart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HR Direct Chart'),
+        title: Text('Dashboard'),
+        // title: Text('HR Direct Chart'),
       ),
       drawer: DrawerWidget(),
       body: Column(
@@ -179,35 +180,47 @@ class _HrDirectChartState extends State<HrDirectChart> {
       ),
     );
 
-    return PieChartWidget(
-      series: [
-        PieSeries<PieChartData, String>(
-          dataSource: pieChartData,
-          pointColorMapper: (PieChartData model, _) => model.color,
-          yValueMapper: (PieChartData model, _) => model.y,
-          xValueMapper: (PieChartData model, _) => model.x,
-          dataLabelSettings: const DataLabelSettings(
-            isVisible: true,
-          ),
-        )
-      ],
-      child: TextButton(
-        onPressed: () {
-          (ntsType == NTSType.task)
-              ? Navigator.pushNamed(
-                  context!,
-                  TASK_HOME,
-                  arguments: ScreenArguments(
-                      arg1: '', arg2: '', arg3: '', showBack: true),
-                )
-              : Navigator.pushNamed(
-                  context!,
-                  SERVICE_HOME,
-                  arguments: ScreenArguments(
-                      arg1: '', arg2: '', arg3: '', showBack: true),
-                );
-        },
-        child: Text("View List"),
+    return Card(
+      elevation: 4,
+      color: const Color(0xFFFAFAFC),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(30.0),
+          topRight: Radius.circular(30.0),
+          bottomLeft: Radius.circular(30.0),
+          topLeft: Radius.circular(30.0),
+        ),
+      ),
+      child: PieChartWidget(
+        series: [
+          PieSeries<PieChartData, String>(
+            dataSource: pieChartData,
+            pointColorMapper: (PieChartData model, _) => model.color,
+            yValueMapper: (PieChartData model, _) => model.y,
+            xValueMapper: (PieChartData model, _) => model.x,
+            dataLabelSettings: const DataLabelSettings(
+              isVisible: true,
+            ),
+          )
+        ],
+        child: TextButton(
+          onPressed: () {
+            (ntsType == NTSType.task)
+                ? Navigator.pushNamed(
+                    context!,
+                    TASK_HOME,
+                    arguments: ScreenArguments(
+                        arg1: '', arg2: '', arg3: '', showBack: true),
+                  )
+                : Navigator.pushNamed(
+                    context!,
+                    SERVICE_HOME,
+                    arguments: ScreenArguments(
+                        arg1: '', arg2: '', arg3: '', showBack: true),
+                  );
+          },
+          child: Text("View List"),
+        ),
       ),
     );
   }

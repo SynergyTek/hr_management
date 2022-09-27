@@ -8,6 +8,7 @@ import '../../../constants/api_endpoints.dart';
 import '../../../data/helpers/download_helper/downloader_screen/downloader.dart';
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
+import '../../widgets/widgets.dart';
 
 class HrPolicyDocumentScreen extends StatefulWidget {
   const HrPolicyDocumentScreen({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hr Policy Documents'),
+        title: Text('HR Policy Documents'),
       ),
       drawer: DrawerWidget(),
       body: Container(
@@ -58,60 +59,70 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
                 itemCount: list?.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    margin: DEFAULT_PADDING,
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32),
+                    elevation: 4,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0),
+                      ),
                     ),
                     child: Container(
                       margin: DEFAULT_PADDING,
                       padding: DEFAULT_PADDING,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
                             children: [
-                              Text(
-                                'Policy Name:\t\t' +
-                                    (list?[index].policyName ?? ''),
+                              Expanded(
+                                child: titleWidget(
+                                  context: context,
+                                  caption: 'Policy Name:',
+                                  title: (list?[index].policyName ?? ''),
+                                ),
                               ),
-                              Text(
-                                'Description:\t\t' +
-                                    (list?[index].policyDescription ?? ''),
-                              ),
-                              Text('Released Date:\t\t' +
-                                  (list?[index].startDate.toString()
-                                      as String)),
+                              GestureDetector(
+                                  child: Icon(Icons.remove_red_eye),
+                                  onTap: () {
+                                    print('object');
+                                    _url = APIEndpointConstants
+                                            .GET_ATTACHMENT_VIEW_WEBVIEW_URL +
+                                        list![index].policyDocument!;
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isDismissible: true,
+                                      isScrollControlled: false,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: true,
+                                      builder: (BuildContext context) {
+                                        return Downloader(
+                                          filename: list![index].policyName!,
+                                          url: _url!,
+                                        );
+                                      },
+                                    );
+                                  }),
                             ],
                           ),
-                          Container(
-                            child: Column(
-                              children: [
-                                GestureDetector(
-                                    child: Icon(Icons.remove_red_eye),
-                                    onTap: () {
-                                      print('object');
-                                      _url = APIEndpointConstants
-                                              .GET_ATTACHMENT_VIEW_WEBVIEW_URL +
-                                          list![index].policyDocument!;
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isDismissible: true,
-                                        isScrollControlled: false,
-                                        backgroundColor: Colors.transparent,
-                                        enableDrag: true,
-                                        builder: (BuildContext context) {
-                                          return Downloader(
-                                            filename: list![index].policyName!,
-                                            url: _url!,
-                                          );
-                                        },
-                                      );
-                                    }),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: subtitleWidget(
+                                  context: context,
+                                  caption: 'Description:',
+                                  title: (list?[index].policyDescription ?? ''),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: subtitleWidget(
+                                  context: context,
+                                  caption: 'Released Date:',
+                                  title: date(index),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -128,5 +139,14 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
         ),
       ),
     );
+  }
+
+  String date(int index) {
+    if (list?[index].startDate != null &&
+        list![index].startDate.toString().contains(" ")) {
+      return list![index].startDate!.toString().split(" ")[0];
+    } else {
+      return list![index].startDate?.toString() ?? "-";
+    }
   }
 }
