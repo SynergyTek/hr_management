@@ -23,6 +23,7 @@ class BusinessTripScreen extends StatelessWidget {
           CREATE_SERVICE_ROUTE,
           arguments: ScreenArguments(
             arg1: "BuisnessTrip",
+            arg4: "BuisnessTrip",
             // arg2: "",
             // arg3: "",
             val1: false,

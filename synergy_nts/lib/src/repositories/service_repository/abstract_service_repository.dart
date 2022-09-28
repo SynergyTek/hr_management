@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 import '../../constants/api_endpoints.dart';
+import '../../models/business_trip_model/business_trip_response_model.dart';
 import '../../models/post_model/post_response.dart';
 import '../../models/service_models/service_model.dart';
 import '../../models/service_models/service_response.dart';
@@ -51,6 +52,10 @@ abstract class AbstractServiceRepository {
   });
 
   Future<ServiceListResponse> readLeaveDetailData({
+    Map<String, dynamic>? queryparams,
+  });
+
+  Future<BusinessTripResponse> getBusinessTripDetails({
     Map<String, dynamic>? queryparams,
   });
 }

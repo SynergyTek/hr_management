@@ -216,4 +216,25 @@ class ServiceRepository extends AbstractServiceRepository {
       return ServiceListResponse.withError("$err");
     }
   }
+
+  Future<BusinessTripResponse> getBusinessTripDetails({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    const String endpoint = APIEndpointConstants.GET_BUSINESS_TRIP_DATA;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return BusinessTripResponse.fromJson(
+        response.data,
+      );
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return BusinessTripResponse.withError("$err");
+    }
+  }
 }

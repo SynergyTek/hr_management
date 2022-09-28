@@ -22,6 +22,9 @@ class ServiceBloc extends AbstractServiceBloc {
   final BehaviorSubject<ServiceListResponse?> _subjectReadServiceData =
       BehaviorSubject<ServiceListResponse?>();
 
+  final BehaviorSubject<BusinessTripResponse?> _subjectBusinessTripList =
+      BehaviorSubject<BusinessTripResponse?>();
+
   //
   @override
   Future<ServiceResponse?> getServiceDetail({
@@ -53,6 +56,9 @@ class ServiceBloc extends AbstractServiceBloc {
       if (categoryCode == "Leave") {
         subjectServiceList.sink.add(null);
         readLeaveDetailData(queryparams: queryparams);
+      } else if (categoryCode == "BuisnessTrip") {
+        subjectBusinessTripList.sink.add(null);
+        getBusinessTripDetails(queryparams: queryparams);
       } else {
         subjectServiceList.sink.add(null);
         getServiceHomeListData(queryparams: queryparams);
@@ -140,6 +146,17 @@ class ServiceBloc extends AbstractServiceBloc {
     _subjectServiceList.sink.add(response);
   }
 
+  getBusinessTripDetails({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    BusinessTripResponse response =
+        await _serviceRepository!.getBusinessTripDetails(
+      queryparams: queryparams,
+    );
+
+    _subjectBusinessTripList.sink.add(response);
+  }
+
   dispose() {
     _subject.close();
     _subjectServiceList.close();
@@ -147,6 +164,7 @@ class ServiceBloc extends AbstractServiceBloc {
     _subjectDeleteService.close();
     _subjectReadServiceListCount.close();
     _subjectReadServiceData.close();
+    _subjectBusinessTripList.close();
   }
 
   BehaviorSubject<ServiceResponse?> get subject => _subject;
@@ -160,6 +178,8 @@ class ServiceBloc extends AbstractServiceBloc {
       _subjectReadServiceListCount;
   BehaviorSubject<ServiceListResponse?> get subjectReadServiceData =>
       _subjectReadServiceData;
+  BehaviorSubject<BusinessTripResponse?> get subjectBusinessTripList =>
+      _subjectBusinessTripList;
 }
 
 final serviceBloc = ServiceBloc();

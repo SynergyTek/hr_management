@@ -173,6 +173,8 @@ class APIEndpointConstants {
       '$BASE_URL/nts/query/ReadServiceDashBoardGridData';
   static const READ_LEAVE_DETAIL_DATA =
       '$BASE_URL/chr/leave/ReadLeaveDetailData';
+  static const GET_BUSINESS_TRIP_DATA =
+      '$BASE_URL/chr/leave/GetBusinessTripData';
 
   //read Task api
   static const GET_READ_TASK_LIST_COUNT =

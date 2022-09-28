@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:hr_management/data/models/business_trip_model/business_trip_model.dart';
-import 'package:hr_management/data/models/business_trip_model/business_trip_response_model.dart';
-import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
 import '../../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../routes/route_constants.dart';
 import '../../../widgets/widgets.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class BusinessTripBody extends StatefulWidget {
   BusinessTripBody({Key? key}) : super(key: key);
@@ -33,7 +31,7 @@ class _BusinessTripBodyState extends State<BusinessTripBody> {
 
     queryparams['portalName'] = "HR";
 
-    leaveBloc
+    serviceBloc
       ..getBusinessTripDetails(
         queryparams: queryparams,
       );
@@ -43,8 +41,8 @@ class _BusinessTripBodyState extends State<BusinessTripBody> {
   Widget build(BuildContext context) {
     return Container(
       padding: DEFAULT_LARGE_PADDING,
-      child: StreamBuilder<BusinessTripResponse>(
-          stream: leaveBloc.subjectBusinessTripList.stream,
+      child: StreamBuilder<BusinessTripResponse?>(
+          stream: serviceBloc.subjectBusinessTripList.stream,
           builder: (context, AsyncSnapshot snapshot) {
             print("Snapshot data: ${snapshot.data}");
             if (snapshot.hasData) {

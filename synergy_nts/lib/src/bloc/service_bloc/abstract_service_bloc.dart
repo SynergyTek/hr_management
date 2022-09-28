@@ -1,5 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 
+import '../../models/business_trip_model/business_trip_response_model.dart';
 import '../../models/post_model/post_response.dart';
 import '../../models/service_models/service_model.dart';
 import '../../models/service_models/service_response.dart';
@@ -9,6 +10,8 @@ export '../../models/service_models/service_model.dart';
 export '../../models/service_models/service_response.dart';
 export '../../models/post_model/post_response.dart';
 export '../../repositories/service_repository/abstract_service_repository.dart';
+export '../../models/business_trip_model/business_trip_response_model.dart';
+export '../../models/business_trip_model/business_trip_model.dart';
 
 part 'service_bloc_implementation.dart';
 
