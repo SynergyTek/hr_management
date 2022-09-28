@@ -174,8 +174,7 @@ class NTSDropDownSelect extends StatelessWidget {
                               ),
                             ),
                           );
-                        }
-                        if (isTeamList != null && isTeamList!) {
+                        } else if (isTeamList != null && isTeamList!) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => TeamDropdownList(

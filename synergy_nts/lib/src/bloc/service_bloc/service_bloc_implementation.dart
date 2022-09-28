@@ -25,6 +25,12 @@ class ServiceBloc extends AbstractServiceBloc {
   final BehaviorSubject<BusinessTripResponse?> _subjectBusinessTripList =
       BehaviorSubject<BusinessTripResponse?>();
 
+  final BehaviorSubject<TimePermissionResponse?> _subjectTimePermissionList =
+      BehaviorSubject<TimePermissionResponse?>();
+
+  final BehaviorSubject<ReimbursementResponse?> _subjectReimbursementList =
+      BehaviorSubject<ReimbursementResponse?>();
+
   //
   @override
   Future<ServiceResponse?> getServiceDetail({
@@ -59,6 +65,21 @@ class ServiceBloc extends AbstractServiceBloc {
       } else if (categoryCode == "BuisnessTrip") {
         subjectBusinessTripList.sink.add(null);
         getBusinessTripDetails(queryparams: queryparams);
+      } else if (categoryCode == "TimePermissionBusiness") {
+        subjectTimePermissionList.sink.add(null);
+        getTimePermissionData(queryparams: queryparams);
+      } else if (categoryCode == "REIMB_TRAVEL") {
+        subjectReimbursementList.sink.add(null);
+        getTravelReimbursementData(queryparams: queryparams);
+      } else if (categoryCode == "REIMB_MDECIAL") {
+        subjectReimbursementList.sink.add(null);
+        getMedicalReimbursementData(queryparams: queryparams);
+      } else if (categoryCode == "REIMB_EDUCATIONAL") {
+        subjectReimbursementList.sink.add(null);
+        getEducationalReimbursementData(queryparams: queryparams);
+      } else if (categoryCode == "REIMB_OTHERS") {
+        subjectReimbursementList.sink.add(null);
+        getOtherReimbursementData(queryparams: queryparams);
       } else {
         subjectServiceList.sink.add(null);
         getServiceHomeListData(queryparams: queryparams);
@@ -157,6 +178,69 @@ class ServiceBloc extends AbstractServiceBloc {
     _subjectBusinessTripList.sink.add(response);
   }
 
+  getTimePermissionData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    TimePermissionResponse response =
+        await _serviceRepository!.getTimePermissionData(
+      queryparams: queryparams,
+    );
+
+    _subjectTimePermissionList.sink.add(response);
+  }
+
+  getTravelReimbursementData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    _subjectReimbursementList.sink.add(null);
+
+    ReimbursementResponse response =
+        await _serviceRepository!.getTravelReimbursementData(
+      queryparams: queryparams,
+    );
+
+    _subjectReimbursementList.sink.add(response);
+  }
+
+  getMedicalReimbursementData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    _subjectReimbursementList.sink.add(null);
+
+    ReimbursementResponse response =
+        await _serviceRepository!.getMedicalReimbursementData(
+      queryparams: queryparams,
+    );
+
+    _subjectReimbursementList.sink.add(response);
+  }
+
+  getEducationalReimbursementData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    _subjectReimbursementList.sink.add(null);
+
+    ReimbursementResponse response =
+        await _serviceRepository!.getEducationalReimbursementData(
+      queryparams: queryparams,
+    );
+
+    _subjectReimbursementList.sink.add(response);
+  }
+
+  getOtherReimbursementData({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    _subjectReimbursementList.sink.add(null);
+
+    ReimbursementResponse response =
+        await _serviceRepository!.getOtherReimbursementData(
+      queryparams: queryparams,
+    );
+
+    _subjectReimbursementList.sink.add(response);
+  }
+
   dispose() {
     _subject.close();
     _subjectServiceList.close();
@@ -165,6 +249,8 @@ class ServiceBloc extends AbstractServiceBloc {
     _subjectReadServiceListCount.close();
     _subjectReadServiceData.close();
     _subjectBusinessTripList.close();
+    _subjectTimePermissionList.close();
+    _subjectReimbursementList.close();
   }
 
   BehaviorSubject<ServiceResponse?> get subject => _subject;
@@ -180,6 +266,10 @@ class ServiceBloc extends AbstractServiceBloc {
       _subjectReadServiceData;
   BehaviorSubject<BusinessTripResponse?> get subjectBusinessTripList =>
       _subjectBusinessTripList;
+  BehaviorSubject<TimePermissionResponse?> get subjectTimePermissionList =>
+      _subjectTimePermissionList;
+  BehaviorSubject<ReimbursementResponse?> get subjectReimbursementList =>
+      _subjectReimbursementList;
 }
 
 final serviceBloc = ServiceBloc();

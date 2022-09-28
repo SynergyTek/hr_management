@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/time_permission_model/time_permission_model.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/routes/screen_arguments.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../widgets/dotted_divider_widget.dart';
 import '../../../widgets/widgets.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class TimePermissionListTileWidget extends StatelessWidget {
   final TimePermission data;

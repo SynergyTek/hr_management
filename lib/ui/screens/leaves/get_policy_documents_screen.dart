@@ -75,35 +75,39 @@ class _HrPolicyDocumentScreenState extends State<HrPolicyDocumentScreen> {
                           Row(
                             children: [
                               Expanded(
+                                flex: 2,
                                 child: titleWidget(
                                   context: context,
                                   caption: 'Policy Name:',
                                   title: (list?[index].policyName ?? ''),
                                 ),
                               ),
-                              GestureDetector(
-                                  child: Icon(Icons.remove_red_eye),
-                                  onTap: () {
-                                    print('object');
-                                    _url = APIEndpointConstants
-                                            .GET_ATTACHMENT_VIEW_WEBVIEW_URL +
-                                        list![index].policyDocument!;
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isDismissible: true,
-                                      isScrollControlled: false,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: true,
-                                      builder: (BuildContext context) {
-                                        return Downloader(
-                                          filename: list![index].policyName!,
-                                          url: _url!,
-                                        );
-                                      },
-                                    );
-                                  }),
+                              Expanded(
+                                child: GestureDetector(
+                                    child: Icon(Icons.remove_red_eye),
+                                    onTap: () {
+                                      print('object');
+                                      _url = APIEndpointConstants
+                                              .GET_ATTACHMENT_VIEW_WEBVIEW_URL +
+                                          list![index].policyDocument!;
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isDismissible: true,
+                                        isScrollControlled: false,
+                                        backgroundColor: Colors.transparent,
+                                        enableDrag: true,
+                                        builder: (BuildContext context) {
+                                          return Downloader(
+                                            filename: list![index].policyName!,
+                                            url: _url!,
+                                          );
+                                        },
+                                      );
+                                    }),
+                              ),
                             ],
                           ),
+                          SizedBox(height: 6),
                           Row(
                             children: [
                               Expanded(

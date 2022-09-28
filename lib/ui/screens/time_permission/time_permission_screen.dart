@@ -29,6 +29,7 @@ class TimePermissionScreen extends StatelessWidget {
           onPressed: () => Navigator.pushNamed(context, CREATE_SERVICE_ROUTE,
               arguments: ScreenArguments(
                   arg1: "TimePermissionBusiness",
+                  arg4: "TimePermissionBusiness",
                   val1: false,
                   portalType: PortalType.hr))),
     );

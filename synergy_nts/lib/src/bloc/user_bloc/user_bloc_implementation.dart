@@ -3,8 +3,8 @@ part of 'abstract_user_bloc.dart';
 class UserBloc extends AbstractUserBloc {
   final UserRepository? _userRepository = UserRepository();
 
-  final BehaviorSubject<UserListResponse>? _subjectUserDataList =
-      BehaviorSubject<UserListResponse>();
+  final BehaviorSubject<UserListResponse?> _subjectUserDataList =
+      BehaviorSubject<UserListResponse?>();
 
   final BehaviorSubject<ReadTeamDataResponse>? _subjectReadTeamData =
       BehaviorSubject<ReadTeamDataResponse>();
@@ -19,7 +19,7 @@ class UserBloc extends AbstractUserBloc {
   }) async {
     UserListResponse? response =
         await _userRepository!.readUserData(queryparams: queryparams);
-    _subjectUserDataList?.sink.add(response);
+    _subjectUserDataList.sink.add(response);
     return response;
   }
 
@@ -48,12 +48,12 @@ class UserBloc extends AbstractUserBloc {
   }) async {
     UserListResponse? response =
         await _userRepository!.readTeamUserData(queryparams: queryparams);
-    _subjectUserDataList?.sink.add(response);
+    _subjectUserDataList.sink.add(response);
     return response;
   }
 
   BehaviorSubject<UserListResponse?> get subjectUserDataList =>
-      _subjectUserDataList!;
+      _subjectUserDataList;
 
   BehaviorSubject<ReadTeamDataResponse?> get subjectReadTeamData =>
       _subjectReadTeamData!;
@@ -62,7 +62,7 @@ class UserBloc extends AbstractUserBloc {
       get subjectUserHierarchyDataList => _subjectUserHierarchyDataList!;
 
   dispose() {
-    _subjectUserDataList?.close();
+    _subjectUserDataList.close();
     _subjectReadTeamData?.close();
     _subjectUserHierarchyDataList?.close();
   }

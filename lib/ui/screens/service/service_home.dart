@@ -54,8 +54,8 @@ class ServiceHomeScreen extends StatelessWidget {
                   CREATE_SERVICE_ROUTE,
                   arguments: ScreenArguments(
                     arg1: templateCode,
-                    arg2: '',
-                    arg3: '',
+                    // arg2: '',
+                    // arg3: '',
                     val1: false,
                     val2: isDelete,
                   ),

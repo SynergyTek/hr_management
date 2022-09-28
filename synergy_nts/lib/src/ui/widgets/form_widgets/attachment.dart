@@ -330,7 +330,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
         setState(() {
           _isBusy = false;
         });
-        resultMsg = "File Uploded";
+        resultMsg = "File Uploaded";
       } else {
         setState(() {
           _isBusy = false;

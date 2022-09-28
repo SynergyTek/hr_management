@@ -66,9 +66,18 @@ class _ReimbursementScreenState extends State<ReimbursementScreen> {
                         : (_selectedIndex == 3)
                             ? "REIMB_OTHERS"
                             : null,
-            arg2: "",
+            arg4: (_selectedIndex == 0)
+                ? "REIMB_TRAVEL"
+                : (_selectedIndex == 1)
+                    ? "REIMB_MDECIAL"
+                    : (_selectedIndex == 2)
+                        ? "REIMB_EDUCATIONAL"
+                        : (_selectedIndex == 3)
+                            ? "REIMB_OTHERS"
+                            : null,
+            // arg2: "",
             val1: false,
-            arg3: "",
+            // arg3: "",
             // portalType: PortalType.hr,
           ),
         ),

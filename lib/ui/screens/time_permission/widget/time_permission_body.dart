@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/data/models/time_permission_model/time_permission_model.dart';
-import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/ui/screens/time_permission/widget/time_permission_list_tile_widget.dart';
 
 import '../../../../themes/light_theme.dart';
 import '../../../widgets/empty_list_widget.dart';
+import 'package:synergy_nts/synergy_nts.dart';
 
 class TimePermissionListViewWidget extends StatefulWidget {
   const TimePermissionListViewWidget({
@@ -32,7 +31,7 @@ class _TimePermissionListViewWidgetState
 
   Future<void> _handleAPI() async {
     // Travel
-    await leaveBloc.getTimePermissionData(
+    await serviceBloc.getTimePermissionData(
       queryparams: {
         "userId":
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
@@ -52,7 +51,7 @@ class _TimePermissionListViewWidgetState
     return RefreshIndicator(
       onRefresh: _handleAPI,
       child: StreamBuilder<TimePermissionResponse?>(
-        stream: leaveBloc.subjectTimePermissionList.stream,
+        stream: serviceBloc.subjectTimePermissionList.stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.error != null && snapshot.data.error.length > 0) {

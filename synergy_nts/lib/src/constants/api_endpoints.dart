@@ -175,6 +175,16 @@ class APIEndpointConstants {
       '$BASE_URL/chr/leave/ReadLeaveDetailData';
   static const GET_BUSINESS_TRIP_DATA =
       '$BASE_URL/chr/leave/GetBusinessTripData';
+  static const GET_TIME_PERMISSION_DATA =
+      '$BASE_URL/chr/leave/GetTimePermissionData';
+  static const GET_TRAVEL_REIMBURSEMENT_DATA =
+      '$BASE_URL/chr/leave/GetTravelReimbursementData';
+  static const GET_MEDICAL_REIMBURSEMENT_DATA =
+      '$BASE_URL/chr/leave/GetMedicalReimbursementData';
+  static const GET_EDUCATIONAL_REIMBURSEMENT_DATA =
+      '$BASE_URL/chr/leave/GetEducationalReimbursementData';
+  static const GET_OTHER_REIMBURSEMENT_DATA =
+      '$BASE_URL/chr/leave/GetOtherReimbursementData';
 
   //read Task api
   static const GET_READ_TASK_LIST_COUNT =

@@ -18,7 +18,6 @@ import '../helpers/validation_helper.dart';
 import '../models/nts_dropdown_model/nts_dropdown_model.dart';
 import '../models/udf_models/udf_json_model.dart';
 import '../theme/light_theme.dart';
-import '../ui/map_widgets/google_maps_current_location_widget.dart';
 
 // Helpers:
 import '../helpers/parse_json_helper.dart';
@@ -375,7 +374,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   final Map<String, dynamic> udfJson = {};
 
-  List<String> selectValue = [];
+  final Map<String, dynamic> selectValue = {};
 
   var radioValue = {};
   int? radioValue1 = 0;
@@ -753,13 +752,16 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         }
         if (selectValue.length < model.length) {
           for (var j = selectValue.length; j < model.length; j++) {
-            selectValue.add('');
+            if (model[j].key != null && model[j].key.isNotEmpty) {
+              selectValue[model[j].key] = '';
+            }
           }
         }
 
         if ((selectValue != null && selectValue.isNotEmpty) &&
-            (selectValue[i] != null && selectValue[i].isNotEmpty)) {
-          _ddController.text = selectValue[i];
+            (selectValue[model[i].key] != null &&
+                selectValue[model[i].key].isNotEmpty)) {
+          _ddController.text = selectValue[model[i].key];
         }
 
         if (model[i].defaultValue != null && model[i].defaultValue.isNotEmpty) {
@@ -820,7 +822,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           }
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
-              selectValue.add('');
+              selectValue[model[i].key] = '';
             }
           }
         }
@@ -837,9 +839,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 ),
               ),
             );
+
         if ((selectValue != null && selectValue.isNotEmpty) &&
-            (selectValue[i] != null && selectValue[i].isNotEmpty)) {
-          _ddController.text = selectValue[i];
+            (selectValue[model[i].key] != null &&
+                selectValue[model[i].key].isNotEmpty)) {
+          _ddController.text = selectValue[model[i].key];
         }
 
         if (widget.extraInformationMap != null &&
@@ -913,7 +917,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                   _ddController.text = _selectedIdNameViewModel.name.toString();
                   udfJson[model[i].key] =
                       _selectedIdNameViewModel.id.toString();
-                  selectValue[i] = _ddController.text;
+                  selectValue[model[i].key] = _ddController.text;
                 } else {
                   List<String> _categoryName = [];
                   List<String> _categoryId = [];
@@ -933,7 +937,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
                   _ddController.text =
                       _categoryName.toString().split('[')[1].split(']')[0];
-                  selectValue[i] = _ddController.text;
+                  selectValue[model[i].key] = _ddController.text;
                   setState(() {});
                 }
               },
@@ -1219,7 +1223,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           udfJson[model[i].key] = '';
           if (selectValue.length < model.length) {
             for (var j = selectValue.length; j < model.length; j++) {
-              selectValue.add('');
+              selectValue[model[i].key] = '';
             }
           }
         }
@@ -1229,9 +1233,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 udfJson[model[i].key] == '[]')
             ? model[i].label ?? " Select File to Attach "
             : selectValue.isNotEmpty
-                ? (selectValue[i] == null || selectValue[i].isEmpty)
+                ? (selectValue[model[i].key] == null ||
+                        selectValue[model[i].key].isEmpty)
                     ? " (1) File Attached: " + udfJson[model[i].key]!
-                    : " (1) File Attached: " + selectValue[i]
+                    : " (1) File Attached: " + selectValue[model[i].key]
                 : " (1) File Attached: " + udfJson[model[i].key]!;
 
         // attchmentController.text = udfJson[model[i].key] == null
@@ -1267,11 +1272,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       setState(() {
                         // isAttachmentUploaded = true;
 
-                        selectValue[i] = value2;
+                        selectValue[model[i].key] = value2;
                         model[i].label = value2;
                         udfJson[model[i].key] = value;
                         attachmentController.text =
-                            " (1) File Attached: " + selectValue[i];
+                            " (1) File Attached: " + value2;
                       });
                     },
                   );

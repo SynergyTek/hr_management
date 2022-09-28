@@ -2,8 +2,10 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../models/business_trip_model/business_trip_response_model.dart';
 import '../../models/post_model/post_response.dart';
+import '../../models/reimbursement_model/reimbursement_response.dart';
 import '../../models/service_models/service_model.dart';
 import '../../models/service_models/service_response.dart';
+import '../../models/time_permission_model/time_permission_response.dart';
 import '../../repositories/service_repository/abstract_service_repository.dart';
 
 export '../../models/service_models/service_model.dart';
@@ -12,6 +14,10 @@ export '../../models/post_model/post_response.dart';
 export '../../repositories/service_repository/abstract_service_repository.dart';
 export '../../models/business_trip_model/business_trip_response_model.dart';
 export '../../models/business_trip_model/business_trip_model.dart';
+export '../../models/time_permission_model/time_permission_response.dart';
+export '../../models/time_permission_model/time_permission_model.dart';
+export '../../models/reimbursement_model/reimbursement_response.dart';
+export '../../models/reimbursement_model/reimbursement_model.dart';
 
 part 'service_bloc_implementation.dart';
 
