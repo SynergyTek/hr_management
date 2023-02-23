@@ -55,6 +55,7 @@ dependencies:
   webview_flutter: ^3.0.4
   image_painter: ^0.4.6
   flutter_archive: ^5.0.0
+  file: ^6.1.4
 
 
   

@@ -85,7 +85,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<LocationBloc, LocationState>(
       builder: (context, state) {
-        getUserAddressFromCoord(locationData: state.locationData!);
+        // getUserAddressFromCoord(locationData: state.locationData!);
         return Stack(
           children: <Widget>[
             attendanceTab(),
@@ -254,68 +254,68 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                   SizedBox(
                     height: 15.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.location_on,
-                            color: Colors.red[800],
-                            size: 28,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            _location!,
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  //   child: Row(
+                  //     children: <Widget>[
+                  //       Padding(
+                  //         padding: const EdgeInsets.all(8.0),
+                  //         child: Icon(
+                  //           Icons.location_on,
+                  //           color: Colors.red[800],
+                  //           size: 28,
+                  //         ),
+                  //       ),
+                  //       Expanded(
+                  //         child: Text(
+                  //           _location!,
+                  //           style: TextStyle(fontWeight: FontWeight.w600),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               )),
             ],
           )),
-          Visibility(
-            visible: !_isLocationServiceEnabled,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
-              child: Column(
-                children: <Widget>[
-                  ElevatedButton(
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: new BorderRadius.circular(18.0),
-                    // ),
-                    // color: Theme.of(context).primaryColor,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          " Enable Location",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    onPressed: () async {
-                      // await Geolocator.openAppSettings();
-                      await Geolocator.openLocationSettings();
-                    },
-                  ),
-                  Text(
-                    "You'll need to enable your location in order to access attendance.",
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Visibility(
+          //   visible: !_isLocationServiceEnabled,
+          //   child: Padding(
+          //     padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
+          //     child: Column(
+          //       children: <Widget>[
+          //         ElevatedButton(
+          //           // shape: RoundedRectangleBorder(
+          //           //   borderRadius: new BorderRadius.circular(18.0),
+          //           // ),
+          //           // color: Theme.of(context).primaryColor,
+          //           child: Row(
+          //             mainAxisAlignment: MainAxisAlignment.center,
+          //             children: <Widget>[
+          //               Icon(
+          //                 Icons.settings,
+          //                 color: Colors.white,
+          //               ),
+          //               Text(
+          //                 " Enable Location",
+          //                 style: TextStyle(color: Colors.white),
+          //               ),
+          //             ],
+          //           ),
+          //           onPressed: () async {
+          //             // await Geolocator.openAppSettings();
+          //             await Geolocator.openLocationSettings();
+          //           },
+          //         ),
+          //         Text(
+          //           "You'll need to enable your location in order to access attendance.",
+          //           textAlign: TextAlign.center,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -367,15 +367,15 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   void _handleSignInOnClick() async {
     // Check first whether the user has provided the required permissions and also
     // Whether the location services are on.
-    await _checkLocationService();
+    // await _checkLocationService();
 
-    if (calculateDistance() == false) {
-      displaySnackBar(
-        context: context,
-        text: 'Failure: You are not in the proximity of the office.',
-      );
-      return;
-    }
+    // if (calculateDistance() == false) {
+    //   displaySnackBar(
+    //     context: context,
+    //     text: 'Failure: You are not in the proximity of the office.',
+    //   );
+    //   return;
+    // }
 
     if (!isSignedIn) {
       setState(() {
@@ -428,15 +428,15 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   void _handleSignOutOnClick() async {
     // Check first whether the user has provided the required permissions and also
     // Whether the location services are on.
-    await _checkLocationService();
+    // await _checkLocationService();
 
-    if (calculateDistance() == false) {
-      displaySnackBar(
-        context: context,
-        text: 'Failure: You are not in the proximity of the office.',
-      );
-      return;
-    }
+    // if (calculateDistance() == false) {
+    //   displaySnackBar(
+    //     context: context,
+    //     text: 'Failure: You are not in the proximity of the office.',
+    //   );
+    //   return;
+    // }
 
     if (isSignedIn == true) {
       setState(() {
@@ -482,16 +482,16 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     }
   }
 
-  getUserAddressFromCoord({required LocationData locationData}) async {
-    List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
-      locationData.latitude!,
-      locationData.longitude!,
-    );
+  // getUserAddressFromCoord({required LocationData locationData}) async {
+  //   List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
+  //     locationData.latitude!,
+  //     locationData.longitude!,
+  //   );
 
-    geo.Placemark place = placemarks[0];
-    print(place);
+  //   geo.Placemark place = placemarks[0];
+  //   print(place);
 
-    _location =
-        "${place.name == null || place.name!.isEmpty ? '' : place.name! + ', '}\n${place.street == null || place.street!.isEmpty ? '' : place.street! + ', '}${place.subLocality == null || place.subLocality!.isEmpty ? null : place.subLocality! + ', '}${place.locality == null || place.locality!.isEmpty ? null : place.locality! + ', '}\n${place.subAdministrativeArea == null || place.subAdministrativeArea!.isEmpty ? '' : place.subAdministrativeArea! + ', '}${place.administrativeArea == null || place.administrativeArea!.isEmpty ? '' : place.administrativeArea! + ', '}\n${place.postalCode == null || place.postalCode!.isEmpty ? '' : place.postalCode! + ', '}${place.isoCountryCode == null || place.isoCountryCode!.isEmpty ? '' : place.isoCountryCode! + '.'}";
-  }
+  //   _location =
+  //       "${place.name == null || place.name!.isEmpty ? '' : place.name! + ', '}\n${place.street == null || place.street!.isEmpty ? '' : place.street! + ', '}${place.subLocality == null || place.subLocality!.isEmpty ? null : place.subLocality! + ', '}${place.locality == null || place.locality!.isEmpty ? null : place.locality! + ', '}\n${place.subAdministrativeArea == null || place.subAdministrativeArea!.isEmpty ? '' : place.subAdministrativeArea! + ', '}${place.administrativeArea == null || place.administrativeArea!.isEmpty ? '' : place.administrativeArea! + ', '}\n${place.postalCode == null || place.postalCode!.isEmpty ? '' : place.postalCode! + ', '}${place.isoCountryCode == null || place.isoCountryCode!.isEmpty ? '' : place.isoCountryCode! + '.'}";
+  // }
 }
