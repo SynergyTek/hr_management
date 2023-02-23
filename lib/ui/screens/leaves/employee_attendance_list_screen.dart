@@ -86,10 +86,12 @@ class _EmployeeAttendanceListScreenState
                 .extraUserInformation
                 ?.portalType ??
             "HR",
-        "searchStart": "01 May 2022", //TODO
-        "searchEnd": "10 May 2022", //TODO
-        "searchMonth": "May 2022", //TODO
-        "searchType": "Monthly", //for period =Manual
+        "searchStart":
+            DateFormat('dd MMM yyyy').format(selectedFromDate), //TODO
+        "searchEnd": DateFormat('dd MMM yyyy').format(selectedToDate), //TODO
+        "searchMonth": DateFormat('MMM yyyy').format(selectedMonth), //TODO
+        "searchType":
+            _groupValue == 0 ? "Monthly" : "Period", //for period =Manual
       },
     );
   }
