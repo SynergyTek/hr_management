@@ -91,7 +91,7 @@ class _EmployeeAttendanceListScreenState
         "searchEnd": DateFormat('dd MMM yyyy').format(selectedToDate), //TODO
         "searchMonth": DateFormat('MMM yyyy').format(selectedMonth), //TODO
         "searchType":
-            _groupValue == 0 ? "Monthly" : "Period", //for period =Manual
+            _groupValue == 0 ? "Monthly" : "Manual", //for period =Manual
       },
     );
   }

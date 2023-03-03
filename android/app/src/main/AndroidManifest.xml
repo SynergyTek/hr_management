@@ -6,6 +6,7 @@
         <!-- For location tracking -->
         <uses-permission android:name="android.permisssion.ACCESS_COARSE_LOCATION"/>
         <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
         <!-- Permission for downloading via internet and accessing the device memory to read and write. -->
         <uses-permission android:name="android.permission.INTERNET"/>

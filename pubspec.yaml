@@ -41,7 +41,7 @@ dependencies:
   intl: ^0.17.0
   location: ^4.4.0
   mime_type: ^1.0.0
-  open_file: ^3.2.1
+  # open_file: ^3.2.1
   path_provider: ^2.0.11
   percent_indicator: ^4.2.2
   permission_handler: ^10.0.0
@@ -56,7 +56,9 @@ dependencies:
   image_painter: ^0.4.6
   flutter_archive: ^5.0.0
   file: ^6.1.4
-
+  workmanager: ^0.5.1
+  flutter_local_notifications: ">=12.0.4 <13.0.0"
+  latlong2: ^0.8.1
 
   
 

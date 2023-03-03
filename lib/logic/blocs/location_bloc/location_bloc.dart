@@ -2,17 +2,22 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+
+import '../../../helper/capture_user_location.dart';
 
 part 'location_bloc_event.dart';
 part 'location_bloc_state.dart';
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
   late bool _serviceEnabled;
+  StreamSubscription<LocationData>? locationStreamSubscription;
   Location location = new Location();
   PermissionStatus? _permissionGranted;
-
-  StreamSubscription<LocationData>? locationStreamSubscription;
+  Duration oneSec = Duration(seconds: 120);
+  Timer? timer;
 
   LocationBloc() : super(LocationInitialState()) {
     locationStreamSubscription =
@@ -54,6 +59,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   void dispose() {
     locationStreamSubscription?.cancel();
+    timer?.cancel();
   }
 
   Future<bool> isLocationServiceEnabled() async {
@@ -70,13 +76,48 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   Future<PermissionStatus> checkForLocationPermission() async {
     _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
+    bool _bgModeEnabled = await location.isBackgroundModeEnabled();
+    if (_permissionGranted == PermissionStatus.denied ||
+        _bgModeEnabled == false) {
       _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+      if (_permissionGranted != PermissionStatus.granted && _bgModeEnabled) {
         return await location.hasPermission();
+      } else {
+        try {
+          await location.enableBackgroundMode();
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+        try {
+          _bgModeEnabled = await location.enableBackgroundMode();
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+        print(_bgModeEnabled); //True!
+        return location.hasPermission();
       }
     }
     return await location.hasPermission();
+  }
+
+  Future<bool> enableBackgroundMode() async {
+    bool _bgModeEnabled = await location.isBackgroundModeEnabled();
+    if (_bgModeEnabled) {
+      return true;
+    } else {
+      try {
+        await location.enableBackgroundMode();
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+      try {
+        _bgModeEnabled = await location.enableBackgroundMode();
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+      print(_bgModeEnabled); //True!
+      return _bgModeEnabled;
+    }
   }
 
   _determinePosition() async {
@@ -90,6 +131,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     // Android's shouldShowRequestPermissionRationale
     // returned true. According to Android guidelines
     // your App should show an explanatory UI now.
+    // enableBackgroundMode();
     await checkForLocationPermission();
 
     // Test if location services are enabled.
@@ -98,14 +140,28 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     // App to enable the location services.
     await isLocationServiceEnabled();
 
+    location.enableBackgroundMode(enable: true);
+
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     // i.e. if everything is fine call the LocationChangedEvent.
+    double lastSavedTime = 0;
+
     locationStreamSubscription =
         location.onLocationChanged.listen((LocationData currentLocation) {
       add(
         LocationChangedEvent(locationData: currentLocation),
       );
+      if (currentLocation.time! - lastSavedTime > 100000.0 * 30.0) {
+        // timer = Timer?.periodic(oneSec, (Timer t) {
+        print("Location Added");
+        print(
+            "${currentLocation.latitude ?? 0}, ${currentLocation.longitude ?? 0}");
+        CaptureUserLocation().captureLocationFn(LatLng(
+            currentLocation.latitude ?? 0, currentLocation.longitude ?? 0));
+        // lastSavedTime = currentLocation.time ?? 0;
+        // });
+      }
     });
   }
 }

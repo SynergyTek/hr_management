@@ -1,8 +1,11 @@
 import 'package:geocoding/geocoding.dart' as geo;
+import 'package:hr_management/helper/location_database_provider.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
 import '../../../../data/models/login_models/extra_user_information_model.dart';
+import '../../../../data/models/user_location_model.dart';
+import '../../../../helper/workmanager_helper/workmanager_helper.dart';
 import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
@@ -382,6 +385,9 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         isVisible = true;
       });
 
+      // Trying to schedule the get location task in the background every 5 minutes.
+      // WorkmanagerHelper().registerGetLocationDataBackgroundPeriodicTask();
+
       await accessLogBloc.getInsertAccessLog(
         isSignIn: true,
         userId:
@@ -442,6 +448,13 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       setState(() {
         isVisible = true;
       });
+
+      // cancel background task on click of sign out
+
+      // WorkmanagerHelper().cancelWorkManager();
+      List<UserLocation> locations =
+          await LocationDatabaseProvider().getAllUserLocations();
+      print(locations);
 
       await accessLogBloc.getInsertAccessLog(
         isSignIn: false,
