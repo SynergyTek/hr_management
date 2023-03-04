@@ -39,48 +39,53 @@ class AccessLogModel {
   int? dataAction;
   int? status;
   int? versionNo;
+  double? latitude;
+  double? longitude;
 
-  AccessLogModel(
-      {this.deviceId,
-      this.biometricId,
-      this.punchingTime,
-      this.deviceName,
-      this.deviceMachineNo,
-      this.deviceIpAddress,
-      this.devicePortNo,
-      this.deviceSerialNo,
-      this.devicePunchingType,
-      this.devicePunchingTypeText,
-      this.userInfoId,
-      this.userId,
-      this.personId,
-      this.firstName,
-      this.middleName,
-      this.lastName,
-      this.punchingTimeArray,
-      this.accessLogText,
-      this.accessLogSource,
-      this.personFullName,
-      this.sponsorshipNo,
-      this.startDate,
-      this.endDate,
-      this.serviceNo,
-      this.serviceId,
-      this.signInType,
-      this.accessLogStatus,
-      this.serviceOwner,
-      this.signInLocation,
-      this.id,
-      this.createdDate,
-      this.createdBy,
-      this.lastUpdatedDate,
-      this.lastUpdatedBy,
-      this.isDeleted,
-      this.sequenceOrder,
-      this.companyId,
-      this.dataAction,
-      this.status,
-      this.versionNo});
+  AccessLogModel({
+    this.deviceId,
+    this.biometricId,
+    this.punchingTime,
+    this.deviceName,
+    this.deviceMachineNo,
+    this.deviceIpAddress,
+    this.devicePortNo,
+    this.deviceSerialNo,
+    this.devicePunchingType,
+    this.devicePunchingTypeText,
+    this.userInfoId,
+    this.userId,
+    this.personId,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.punchingTimeArray,
+    this.accessLogText,
+    this.accessLogSource,
+    this.personFullName,
+    this.sponsorshipNo,
+    this.startDate,
+    this.endDate,
+    this.serviceNo,
+    this.serviceId,
+    this.signInType,
+    this.accessLogStatus,
+    this.serviceOwner,
+    this.signInLocation,
+    this.id,
+    this.createdDate,
+    this.createdBy,
+    this.lastUpdatedDate,
+    this.lastUpdatedBy,
+    this.isDeleted,
+    this.sequenceOrder,
+    this.companyId,
+    this.dataAction,
+    this.status,
+    this.versionNo,
+    this.latitude,
+    this.longitude,
+  });
 
   AccessLogModel.fromJson(Map<String, dynamic> json) {
     deviceId = json['DeviceId'];
@@ -123,6 +128,8 @@ class AccessLogModel {
     dataAction = json['DataAction'];
     status = json['Status'];
     versionNo = json['VersionNo'];
+    latitude = json['Latitude'];
+    longitude = json['Longitude'];
   }
 
   Map<String, dynamic> toJson() {
@@ -167,6 +174,8 @@ class AccessLogModel {
     data['DataAction'] = this.dataAction;
     data['Status'] = this.status;
     data['VersionNo'] = this.versionNo;
+    data['Latitude'] = this.latitude;
+    data['Longitude'] = this.longitude;
     return data;
   }
 }
