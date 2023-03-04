@@ -47,6 +47,7 @@ class LoginResponseModel {
   dynamic lockoutEnd;
   bool? lockoutEnabled;
   int? accessFailedCount;
+  String? mobileDeviceToken;
 
   LoginResponseModel({
     this.companyId,
@@ -87,6 +88,7 @@ class LoginResponseModel {
     this.lockoutEnd,
     this.lockoutEnabled,
     this.accessFailedCount,
+    this.mobileDeviceToken,
   });
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -129,6 +131,7 @@ class LoginResponseModel {
         lockoutEnd: json["LockoutEnd"],
         lockoutEnabled: json["LockoutEnabled"],
         accessFailedCount: json["AccessFailedCount"],
+        mobileDeviceToken: json["MobileDeviceToken"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -170,6 +173,7 @@ class LoginResponseModel {
         "LockoutEnd": lockoutEnd,
         "LockoutEnabled": lockoutEnabled,
         "AccessFailedCount": accessFailedCount,
+        "MobileDeviceToken": mobileDeviceToken,
       };
 
   LoginResponseModel copyWith({

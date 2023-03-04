@@ -27,6 +27,16 @@ class UserBloc {
     _subjectReadTeamData.sink.add(response);
   }
 
+  Future<bool> updateUserMobileDeviceToken({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    bool response = await _userRepository.updateUserMobileDeviceToken(
+      queryparams: queryparams,
+    );
+
+    return response;
+  }
+
   BehaviorSubject<UserListResponse?> get subjectUserDataList =>
       _subjectUserDataList;
 
