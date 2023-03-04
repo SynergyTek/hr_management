@@ -33,6 +33,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   dynamic isInLocation;
   String? _location = "Fetching location data...";
 
+  var officeLatitude = 23.23688;
+  var officeLongitude = 77.433565;
   // signed in/out check
   late bool isSignedIn;
 
@@ -44,6 +46,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         LocationBloc().isLocationServiceEnabled().then(
               (value) => _isLocationServiceEnabled = value,
             );
+        print(LocationBloc().location);
       },
     );
   }
@@ -396,6 +399,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       // WorkmanagerHelper().registerGetLocationDataBackgroundPeriodicTask();
 
       await accessLogBloc.getInsertAccessLog(
+        latitude: officeLatitude,
+        longitude: officeLongitude,
         isSignIn: true,
         userId:
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
@@ -468,6 +473,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       print(locations);
 
       await accessLogBloc.getInsertAccessLog(
+        latitude: officeLatitude,
+        longitude: officeLongitude,
         isSignIn: false,
         userId:
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',

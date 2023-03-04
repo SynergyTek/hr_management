@@ -24,6 +24,8 @@ class MAWidget extends StatefulWidget {
 class _MAWidgetState extends State<MAWidget> {
   bool isLoading = false;
   bool? isSignedIn;
+  var officeLatitude = 23.201535;
+  var officeLongitude = 77.4149217;
 
   @override
   void initState() {
@@ -235,6 +237,8 @@ class _MAWidgetState extends State<MAWidget> {
     });
 
     AccessLogResponse response = await accessLogBloc.getInsertAccessLog(
+      latitude: officeLatitude,
+      longitude: officeLongitude,
       isSignIn: false,
       userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     );
@@ -307,6 +311,8 @@ class _MAWidgetState extends State<MAWidget> {
     });
 
     AccessLogResponse response = await accessLogBloc.getInsertAccessLog(
+      latitude: officeLatitude,
+      longitude: officeLongitude,
       isSignIn: true,
       userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
     );
