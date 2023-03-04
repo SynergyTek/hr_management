@@ -31,7 +31,7 @@ allprojects {
         }
     }
     }
-}
+
 
 rootProject.buildDir = '../build'
 subprojects {

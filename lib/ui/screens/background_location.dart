@@ -39,7 +39,7 @@ class _BackgroundLocation extends State<BackgroundLocation> {
             desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
             distanceFilter: 10.0,
             stopOnTerminate: false,
-            startOnBoot: true,
+            startOnBoot: true,                                                                                                              
             debug: true,
             logLevel: bg.Config.LOG_LEVEL_VERBOSE,
             reset: true))
