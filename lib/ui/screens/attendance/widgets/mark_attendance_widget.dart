@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
@@ -13,10 +14,8 @@ import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
 
-// import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:geolocator/geolocator.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
 import 'package:http/http.dart' as http;
@@ -31,57 +30,70 @@ class MarkAttendanceWidget extends StatefulWidget {
 class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isInternetConnection = false;
   bool isPermissonGranted = false;
-  bool isSignInActive = true;
-
-  bool _isLocationServiceEnabled = false;
+  bool isSignInActive = false;
 
   dynamic isInLocation;
-  String? _location = "Fetching location data...";
 
   var officeLatitude = 23.23688;
   var officeLongitude = 77.433565;
+
   // signed in/out check
   late bool isSignedIn;
 
   bool isVisible = true;
 
-  // _checkLocationService() async {
-  //   setState(
-  //     () {
-  //       LocationBloc().isLocationServiceEnabled().then(
-  //             (value) => _isLocationServiceEnabled = value,
-  //           );
-  //       print(LocationBloc().location);
-  //     },
-  //   );
-  // }
+  calculateDistance({
+    double? latitude,
+    double? longitude,
+  }) {
+    bool result = false;
+    final double radius = 0.20;
 
-  // calculateDistance({
-  //   double? latitude,
-  //   double? longitude,
-  // }) {
-  //   bool result = false;
-  //   final double radius = 0.20;
+    double _officeLatitude = 13.2734817;
+    double _officeLongitude = 74.7249583;
 
-  //   var officeLatitude = 13.2734817;
-  //   var officeLongitude = 74.7249583;
+    // Fetch current location
+    bg.BackgroundGeolocation.getCurrentPosition(
+            persist: false, // <-- do not persist this location
+            desiredAccuracy: 0, // <-- desire best possible accuracy
+            timeout: 30000, // <-- wait 30s before giving up.
+            samples: 3 // <-- sample 3 location before selecting best.
+            )
+        .then((bg.Location location) {
+      _officeLatitude = location.coords.latitude;
+      _officeLongitude = location.coords.longitude;
+      print('[getCurrentPosition] - $location');
+    }).catchError((error) {
+      print('[getCurrentPosition] ERROR: $error');
+    });
 
-  //   // final double distance = Geolocator.distanceBetween(
-  //   //   BlocProvider.of<LocationBloc>(context).state.locationData?.latitude ??
-  //   //       0.0,
-  //   //   BlocProvider.of<LocationBloc>(context).state.locationData?.longitude ??
-  //   //       0.0,
-  //   //   latitude ?? officeLatitude,
-  //   //   longitude ?? officeLongitude,
-  //   // );
+    final double distance = distanceBetween(
+      _officeLatitude,
+      _officeLongitude,
+      latitude ?? 0.0,
+      longitude ?? 0.0,
+    );
 
-  //   // var distanceInkm = distance / 1000;
-  //   distanceInkm < radius ? result = true : result = false;
+    var distanceInkm = distance / 1000;
+    distanceInkm < radius ? result = true : result = false;
 
-  //   print(
-  //       "Distance from Office: $distanceInkm & \nis in the proximity of the office: $result, Current location: (${BlocProvider.of<LocationBloc>(context).state.locationData?.latitude}, ${BlocProvider.of<LocationBloc>(context).state.locationData?.longitude})");
-  //   return result;
-  // }
+    return result;
+  }
+
+  // Manually fetch the current position.
+  void _onClickGetCurrentPosition() {
+    bg.BackgroundGeolocation.getCurrentPosition(
+            persist: false, // <-- do not persist this location
+            desiredAccuracy: 0, // <-- desire best possible accuracy
+            timeout: 30000, // <-- wait 30s before giving up.
+            samples: 3 // <-- sample 3 location before selecting best.
+            )
+        .then((bg.Location location) {
+      print('[getCurrentPosition] - $location');
+    }).catchError((error) {
+      print('[getCurrentPosition] ERROR: $error');
+    });
+  }
 
   activateSignIn() async {
     UserGeolocationResponse? response =
@@ -97,10 +109,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
       for (var i = 0; i < list!.length; i++) {
         // Check if location is within 20m radius
-        // isSignInActive = calculateDistance(
-        //   latitude: response.data?[i].latitude ?? 0.00,
-        //   longitude: response.data?[i].longtitude ?? 0.0,
-        // );
+        isSignInActive = calculateDistance(
+          latitude: response.data?[i].latitude ?? 0.00,
+          longitude: response.data?[i].longtitude ?? 0.0,
+        );
         if (isSignInActive) {
           // Stop checking if location is found to be within 20m radius
           break;
@@ -157,15 +169,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         bg.BackgroundGeolocation.startSchedule();
       }
     });
-
-    // _checkLocationService();
   }
 
   @override
   Widget build(BuildContext context) {
-    // return BlocBuilder<LocationBloc, LocationState>(
-    //   builder: (context, state) {
-    // getUserAddressFromCoord(locationData: state.locationData!);
     return Stack(
       children: <Widget>[
         attendanceTab(),
@@ -177,8 +184,6 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         ),
       ],
     );
-    //   },
-    // );
   }
 
   attendanceTab() {
@@ -311,33 +316,27 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                             ),
                             Expanded(
                               flex: 5,
-                              child: Opacity(
-                                opacity: isSignInActive ? 1.0 : 0.4,
-                                child: AbsorbPointer(
-                                  absorbing: !isSignInActive,
-                                  child: Column(
-                                    children: <Widget>[
-                                      InkWell(
-                                        child: CircleAvatar(
-                                          radius: 35,
-                                          backgroundColor: Colors.red,
-                                          child: CircleAvatar(
-                                            radius: 33,
-                                            backgroundColor: Colors.white,
-                                            child: Icon(
-                                              Icons.power_settings_new,
-                                              color: Colors.red,
-                                              size: 40.0,
-                                            ),
-                                          ),
+                              child: Column(
+                                children: <Widget>[
+                                  InkWell(
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      backgroundColor: Colors.red,
+                                      child: CircleAvatar(
+                                        radius: 33,
+                                        backgroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.power_settings_new,
+                                          color: Colors.red,
+                                          size: 40.0,
                                         ),
-                                        onTap: () => _handleSignOutOnClick(),
                                       ),
-                                      Text("Sign Out",
-                                          style: TextStyle(color: Colors.red))
-                                    ],
+                                    ),
+                                    onTap: () => _handleSignOutOnClick(),
                                   ),
-                                ),
+                                  Text("Sign Out",
+                                      style: TextStyle(color: Colors.red))
+                                ],
                               ),
                             )
                           ],
@@ -346,10 +345,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                   SizedBox(
                     height: 15.0,
                   ),
-                  ElevatedButton(
-                    onPressed: () => _handleSyncDataOnPressed(),
-                    child: Text("Sync Data"),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () => _handleSyncDataOnPressed(),
+                  //   child: Text("Sync Data"),
+                  // ),
                   // Padding(
                   //   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   //   child: Row(
@@ -489,44 +488,103 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       // Trying to schedule the get location task in the background every 15 minutes.
       // WorkmanagerHelper().registerGetLocationDataBackgroundPeriodicTask();
 
-      await accessLogBloc.getInsertAccessLog(
-        latitude: officeLatitude,
-        longitude: officeLongitude,
-        isSignIn: true,
-        userId:
-            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      );
+      double _officeLatitude = 0.0;
+      double _officeLongitude = 0.0;
 
-      setState(() {
-        isVisible = false;
+      // Fetch current location
+      bg.BackgroundGeolocation.getCurrentPosition(
+              persist: false, // <-- do not persist this location
+              desiredAccuracy: 0, // <-- desire best possible accuracy
+              timeout: 30000, // <-- wait 30s before giving up.
+              samples: 3 // <-- sample 3 location before selecting best.
+              )
+          .then((bg.Location location) {
+        _officeLatitude = location.coords.latitude;
+        _officeLongitude = location.coords.longitude;
+        accessLogBloc
+            .getInsertAccessLog(
+          latitude: _officeLatitude,
+          longitude: _officeLongitude,
+          isSignIn: true,
+          userId:
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        )
+            .then((value) {
+          setState(() {
+            isVisible = false;
+          });
+
+          print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
+          print(
+              "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                accessLogBloc.subject.value.isSignIn == 0 &&
+                        accessLogBloc.subject.value.error == null
+                    ? "Sign in successful!"
+                    : "An error occured please try again later.",
+              ),
+            ),
+          );
+          if (accessLogBloc.subject.value.isSignIn == 0 &&
+              accessLogBloc.subject.value.error == null) {
+            isSignedIn = true;
+            BlocProvider.of<UserModelBloc>(context).add(
+              UserModelChangeEvent(
+                userModel:
+                    BlocProvider.of<UserModelBloc>(context).state.userModel!,
+                extraUserInformation: ExtraUserInformationModel(
+                  isSignedIn: true,
+                ),
+              ),
+            );
+          }
+        });
+        print('[getCurrentPosition] - $location');
+      }).catchError((error) {
+        print('[getCurrentPosition] ERROR: $error');
       });
 
-      print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
-      print(
-          "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
+      // await accessLogBloc.getInsertAccessLog(
+      //   latitude: _officeLatitude,
+      //   longitude: _officeLongitude,
+      //   isSignIn: true,
+      //   userId:
+      //       BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+      // );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            accessLogBloc.subject.value.isSignIn == 0 &&
-                    accessLogBloc.subject.value.error == null
-                ? "Sign in successful!"
-                : "An error occured please try again later.",
-          ),
-        ),
-      );
-      if (accessLogBloc.subject.value.isSignIn == 0 &&
-          accessLogBloc.subject.value.error == null) {
-        isSignedIn = true;
-        BlocProvider.of<UserModelBloc>(context).add(
-          UserModelChangeEvent(
-            userModel: BlocProvider.of<UserModelBloc>(context).state.userModel!,
-            extraUserInformation: ExtraUserInformationModel(
-              isSignedIn: true,
-            ),
-          ),
-        );
-      }
+      // setState(() {
+      //   isVisible = false;
+      // });
+
+      // print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
+      // print(
+      //     "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text(
+      //       accessLogBloc.subject.value.isSignIn == 0 &&
+      //               accessLogBloc.subject.value.error == null
+      //           ? "Sign in successful!"
+      //           : "An error occured please try again later.",
+      //     ),
+      //   ),
+      // );
+      // if (accessLogBloc.subject.value.isSignIn == 0 &&
+      //     accessLogBloc.subject.value.error == null) {
+      //   isSignedIn = true;
+      //   BlocProvider.of<UserModelBloc>(context).add(
+      //     UserModelChangeEvent(
+      //       userModel: BlocProvider.of<UserModelBloc>(context).state.userModel!,
+      //       extraUserInformation: ExtraUserInformationModel(
+      //         isSignedIn: true,
+      //       ),
+      //     ),
+      //   );
+      // }
     } else
       displaySnackBar(
           text:
@@ -610,6 +668,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     setState(() {
       isVisible = true;
     });
+
+    _onClickGetCurrentPosition();
 
     // List<UserLocation> locations =
     //     await LocationDatabaseProvider().getAllUserLocations();
@@ -746,5 +806,29 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     } finally {
       client.close();
     }
+  }
+
+  /// Calculate distance between 2 co-ordinates
+  double distanceBetween(
+    double startLatitude,
+    double startLongitude,
+    double endLatitude,
+    double endLongitude,
+  ) {
+    var earthRadius = 6378137.0;
+    var dLat = _toRadians(endLatitude - startLatitude);
+    var dLon = _toRadians(endLongitude - startLongitude);
+
+    var a = pow(sin(dLat / 2), 2) +
+        pow(sin(dLon / 2), 2) *
+            cos(_toRadians(startLatitude)) *
+            cos(_toRadians(endLatitude));
+    var c = 2 * asin(sqrt(a));
+
+    return earthRadius * c;
+  }
+
+  static _toRadians(double degree) {
+    return degree * pi / 180;
   }
 }
