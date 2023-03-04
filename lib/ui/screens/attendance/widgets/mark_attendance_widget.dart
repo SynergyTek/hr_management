@@ -1,8 +1,8 @@
-import 'package:hr_management/helper/location_database_provider.dart';
+import 'dart:convert';
+
 import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
-import 'package:workmanager/workmanager.dart';
 
 import '../../../../data/models/employee_tracking_model/employee_tracking_model.dart';
 import '../../../../data/models/login_models/extra_user_information_model.dart';
@@ -13,10 +13,13 @@ import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
 
-import '../../../../logic/blocs/location_bloc/location_bloc.dart';
+// import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
+import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
+    as bg;
+import 'package:http/http.dart' as http;
 
 class MarkAttendanceWidget extends StatefulWidget {
   MarkAttendanceWidget();
@@ -28,7 +31,7 @@ class MarkAttendanceWidget extends StatefulWidget {
 class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isInternetConnection = false;
   bool isPermissonGranted = false;
-  bool isSignInActive = false;
+  bool isSignInActive = true;
 
   bool _isLocationServiceEnabled = false;
 
@@ -42,43 +45,43 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
   bool isVisible = true;
 
-  _checkLocationService() async {
-    setState(
-      () {
-        LocationBloc().isLocationServiceEnabled().then(
-              (value) => _isLocationServiceEnabled = value,
-            );
-        print(LocationBloc().location);
-      },
-    );
-  }
+  // _checkLocationService() async {
+  //   setState(
+  //     () {
+  //       LocationBloc().isLocationServiceEnabled().then(
+  //             (value) => _isLocationServiceEnabled = value,
+  //           );
+  //       print(LocationBloc().location);
+  //     },
+  //   );
+  // }
 
-  calculateDistance({
-    double? latitude,
-    double? longitude,
-  }) {
-    bool result = false;
-    final double radius = 0.20;
+  // calculateDistance({
+  //   double? latitude,
+  //   double? longitude,
+  // }) {
+  //   bool result = false;
+  //   final double radius = 0.20;
 
-    var officeLatitude = 13.2734817;
-    var officeLongitude = 74.7249583;
+  //   var officeLatitude = 13.2734817;
+  //   var officeLongitude = 74.7249583;
 
-    final double distance = Geolocator.distanceBetween(
-      BlocProvider.of<LocationBloc>(context).state.locationData?.latitude ??
-          0.0,
-      BlocProvider.of<LocationBloc>(context).state.locationData?.longitude ??
-          0.0,
-      latitude ?? officeLatitude,
-      longitude ?? officeLongitude,
-    );
+  //   // final double distance = Geolocator.distanceBetween(
+  //   //   BlocProvider.of<LocationBloc>(context).state.locationData?.latitude ??
+  //   //       0.0,
+  //   //   BlocProvider.of<LocationBloc>(context).state.locationData?.longitude ??
+  //   //       0.0,
+  //   //   latitude ?? officeLatitude,
+  //   //   longitude ?? officeLongitude,
+  //   // );
 
-    var distanceInkm = distance / 1000;
-    distanceInkm < radius ? result = true : result = false;
+  //   // var distanceInkm = distance / 1000;
+  //   distanceInkm < radius ? result = true : result = false;
 
-    print(
-        "Distance from Office: $distanceInkm & \nis in the proximity of the office: $result, Current location: (${BlocProvider.of<LocationBloc>(context).state.locationData?.latitude}, ${BlocProvider.of<LocationBloc>(context).state.locationData?.longitude})");
-    return result;
-  }
+  //   print(
+  //       "Distance from Office: $distanceInkm & \nis in the proximity of the office: $result, Current location: (${BlocProvider.of<LocationBloc>(context).state.locationData?.latitude}, ${BlocProvider.of<LocationBloc>(context).state.locationData?.longitude})");
+  //   return result;
+  // }
 
   activateSignIn() async {
     UserGeolocationResponse? response =
@@ -94,10 +97,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
       for (var i = 0; i < list!.length; i++) {
         // Check if location is within 20m radius
-        isSignInActive = calculateDistance(
-          latitude: response.data?[i].latitude ?? 0.00,
-          longitude: response.data?[i].longtitude ?? 0.0,
-        );
+        // isSignInActive = calculateDistance(
+        //   latitude: response.data?[i].latitude ?? 0.00,
+        //   longitude: response.data?[i].longtitude ?? 0.0,
+        // );
         if (isSignInActive) {
           // Stop checking if location is found to be within 20m radius
           break;
@@ -121,28 +124,61 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         false;
 
     super.initState();
+    bg.BackgroundGeolocation.onLocation(_onLocation);
+    bg.BackgroundGeolocation.onMotionChange(_onMotionChange);
+    bg.BackgroundGeolocation.onActivityChange(_onActivityChange);
+    bg.BackgroundGeolocation.onProviderChange(_onProviderChange);
+    bg.BackgroundGeolocation.onConnectivityChange(_onConnectivityChange);
+    bg.BackgroundGeolocation.onGeofence(_onGeofence);
+    bg.BackgroundGeolocation.onHttp(_onHttp);
 
-    _checkLocationService();
+    // 2.  Configure the plugin
+    bg.BackgroundGeolocation.ready(bg.Config(
+            desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
+            autoSync: true,
+            distanceFilter: 10.0,
+            stopOnTerminate: false,
+            stopTimeout: 5,
+            startOnBoot: true,
+            debug: true,
+            enableHeadless: true,
+            logLevel: bg.Config.LOG_LEVEL_VERBOSE,
+            heartbeatInterval: 60,
+            backgroundPermissionRationale: bg.PermissionRationale(
+                title:
+                    "Allow {applicationName} to access this device's location even when the app is closed or not in use.",
+                message:
+                    "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
+                positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
+                negativeAction: 'Cancel'),
+            reset: true))
+        .then((bg.State state) {
+      if (state.schedule!.isNotEmpty) {
+        bg.BackgroundGeolocation.startSchedule();
+      }
+    });
+
+    // _checkLocationService();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LocationBloc, LocationState>(
-      builder: (context, state) {
-        // getUserAddressFromCoord(locationData: state.locationData!);
-        return Stack(
-          children: <Widget>[
-            attendanceTab(),
-            Visibility(
-              visible: isVisible,
-              child: Center(
-                child: CustomProgressIndicator(),
-              ),
-            ),
-          ],
-        );
-      },
+    // return BlocBuilder<LocationBloc, LocationState>(
+    //   builder: (context, state) {
+    // getUserAddressFromCoord(locationData: state.locationData!);
+    return Stack(
+      children: <Widget>[
+        attendanceTab(),
+        Visibility(
+          visible: isVisible,
+          child: Center(
+            child: CustomProgressIndicator(),
+          ),
+        ),
+      ],
     );
+    //   },
+    // );
   }
 
   attendanceTab() {
@@ -441,6 +477,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       setState(() {
         isVisible = true;
       });
+      bg.BackgroundGeolocation.start();
+      bg.BackgroundGeolocation.changePace(true);
 
       // initialize work manager.
       // Workmanager().initialize(
@@ -517,13 +555,15 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       setState(() {
         isVisible = true;
       });
+      bg.BackgroundGeolocation.changePace(false);
+      bg.BackgroundGeolocation.stop();
 
       // cancel background task on click of sign out
       // WorkmanagerHelper().cancelWorkManager();
 
-      List<UserLocation> locations =
-          await LocationDatabaseProvider().getAllUserLocations();
-      print(locations);
+      // List<UserLocation> locations =
+      //     await LocationDatabaseProvider().getAllUserLocations();
+      // print(locations);
 
       await accessLogBloc.getInsertAccessLog(
         latitude: officeLatitude,
@@ -571,9 +611,9 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       isVisible = true;
     });
 
-    List<UserLocation> locations =
-        await LocationDatabaseProvider().getAllUserLocations();
-    print(locations);
+    // List<UserLocation> locations =
+    //     await LocationDatabaseProvider().getAllUserLocations();
+    // print(locations);
 
     setState(() {
       isVisible = false;
@@ -608,4 +648,102 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   //   _location =
   //       "${place.name == null || place.name!.isEmpty ? '' : place.name! + ', '}\n${place.street == null || place.street!.isEmpty ? '' : place.street! + ', '}${place.subLocality == null || place.subLocality!.isEmpty ? null : place.subLocality! + ', '}${place.locality == null || place.locality!.isEmpty ? null : place.locality! + ', '}\n${place.subAdministrativeArea == null || place.subAdministrativeArea!.isEmpty ? '' : place.subAdministrativeArea! + ', '}${place.administrativeArea == null || place.administrativeArea!.isEmpty ? '' : place.administrativeArea! + ', '}\n${place.postalCode == null || place.postalCode!.isEmpty ? '' : place.postalCode! + ', '}${place.isoCountryCode == null || place.isoCountryCode!.isEmpty ? '' : place.isoCountryCode! + '.'}";
   // }
+
+  // background location flutter changes
+
+  void _onLocation(bg.Location location) {
+    print('[location] - $location');
+
+    // String odometerKM = (location.odometer / 1000.0).toStringAsFixed(1);
+    apicall(lat: location.coords.latitude, long: location.coords.longitude);
+
+    // bg.BackgroundGeolocation.startBackgroundTask().then((int taskId) async {
+    //   // Execute an HTTP request to test an async operation completes.
+    //   String url =
+    //       "https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTracking";
+    //   var client = http.Client();
+    //   List<UserLocation> list = [
+    //     UserLocation(
+    //         userId: '45bba746-3309-49b7-9c03-b5793369d73c',
+    //         trackingDate: DateTime.now().toIso8601String(),
+    //         latitude: location.coords.latitude,
+    //         longitude: location.coords.longitude)
+    //   ];
+    //   try {
+    //     var response = await http.post(Uri.parse(url),
+    //         headers: <String, String>{
+    //           'Content-Type': 'application/json; charset=UTF-8',
+    //         },
+    //         body: jsonEncode(list.map((e) => e.toJson()).toList()));
+    //     bg.BackgroundGeolocation.stopBackgroundTask(taskId);
+    //     print(response);
+    //   } finally {
+    //     client.close();
+    //   }
+    // });
+    // setState(() {
+    //   _content = encoder.convert(location.toMap());
+    //   _odometer = odometerKM;
+    // });
+  }
+
+  void _onMotionChange(bg.Location location) {
+    print('[motionchange] - $location');
+    apicall(lat: location.coords.latitude, long: location.coords.longitude);
+  }
+
+  void _onActivityChange(bg.ActivityChangeEvent event) {
+    print('[activitychange] - $event');
+    // setState(() {
+    //   _motionActivity = event.activity;
+    // });
+  }
+
+  void _onProviderChange(bg.ProviderChangeEvent event) {
+    print('$event');
+
+    // setState(() {
+    //   _content = encoder.convert(event.toMap());
+    // });
+  }
+
+  void _onConnectivityChange(bg.ConnectivityChangeEvent event) {
+    print('$event.');
+  }
+
+  void _onHttp(bg.HttpEvent event) async {
+    print('[${bg.Event.HTTP}] - $event');
+    // apicall(
+    //     lat: event.responseText.coords.latitude,
+    //     long: event.location.coords.longitude);
+  }
+
+  void _onGeofence(bg.GeofenceEvent event) async {
+    apicall(
+        lat: event.location.coords.latitude,
+        long: event.location.coords.longitude);
+  }
+
+  Future<void> apicall({required double lat, required long}) async {
+    String url =
+        "https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTracking";
+    var client = http.Client();
+    List<UserLocation> list = [
+      UserLocation(
+          userId: "45bba746-3309-49b7-9c03-b5793369d73c",
+          trackingDate: DateTime.now().toIso8601String(),
+          latitude: lat,
+          longitude: long)
+    ];
+    try {
+      var response = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(list.map((e) => e.toJson()).toList()));
+      print(response);
+    } finally {
+      client.close();
+    }
+  }
 }

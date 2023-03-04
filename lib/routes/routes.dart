@@ -74,8 +74,6 @@ import '../ui/screens/note/add_edit_note.dart';
 import '../ui/screens/onboarding_screen/onboarding_screen.dart';
 import '../ui/screens/registration/registration_screen.dart';
 import '../ui/screens/splash_screen/splash_screen.dart';
-import '../ui/screens/tasks/task_home_screen.dart';
-import '../ui/widgets/custom_controls/default_dropdown_list.dart';
 import 'route_constants.dart';
 import 'screen_arguments.dart';
 import 'package:synergy_nts/synergy_nts.dart';
@@ -647,11 +645,10 @@ class AppRouter {
               templateCode: 'TMS_GENERAL', isDelete: true, showBack: true),
         );
 
-          case BACKGROUND_LOCATION:
+      case BACKGROUND_LOCATION:
         return MaterialPageRoute(
           builder: (_) => BackgroundLocation(),
         );
-
 
       // 404 route.
       default:
