@@ -38,9 +38,9 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            subtitle: Text(
-              eachAccessLogModelElement.personId ?? '-',
-            ),
+            // subtitle: Text(
+            //   eachAccessLogModelElement.personId ?? '-',
+            // ),
             trailing: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -74,7 +74,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
           // For Sponsorship Number
           ListTile(
             title: Text(
-              "Sponsorship Number",
+              "Employee Number",
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
@@ -84,36 +84,39 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
           ),
 
           // For Biomeric ID and Device name
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: ListTile(
-                  title: Text(
-                    "Device name",
-                    // style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  subtitle: Text(
-                    eachAccessLogModelElement.deviceName ??
-                        '-' +
-                            '(${eachAccessLogModelElement.deviceIpAddress ?? '-'})',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListTile(
-                  title: Text(
-                    "Biometric ID",
-                    // style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  subtitle: Text(
-                    eachAccessLogModelElement.biometricId ?? '-',
-                    style: Theme.of(context).textTheme.bodyText1,
+          Visibility(
+            visible: false,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: ListTile(
+                    title: Text(
+                      "Device name",
+                      // style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    subtitle: Text(
+                      eachAccessLogModelElement.deviceName ??
+                          '-' +
+                              '(${eachAccessLogModelElement.deviceIpAddress ?? '-'})',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: ListTile(
+                    title: Text(
+                      "Biometric ID",
+                      // style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    subtitle: Text(
+                      eachAccessLogModelElement.biometricId ?? '-',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 
           // For Sign In Location.
