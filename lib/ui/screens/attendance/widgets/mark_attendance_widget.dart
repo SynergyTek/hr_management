@@ -730,7 +730,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     var client = http.Client();
     List<UserLocation> list = [
       UserLocation(
-          userId: "45bba746-3309-49b7-9c03-b5793369d73c",
+          userId:
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
           trackingDate: DateTime.now().toIso8601String(),
           latitude: lat,
           longitude: long)
