@@ -133,3 +133,4 @@ const String EMPLOYE_ATTENDANCE_LIST_SCREEN =
 const String WORKLIST_BY_SERVICE = '/worklist_by_service';
 const String WORKLIST_BY_TASK = '/worklist_by_task';
 const String SERVICE_HOME_NAV = "/service_home_nav";
+const String BACKGROUND_LOCATION = '/background_location';

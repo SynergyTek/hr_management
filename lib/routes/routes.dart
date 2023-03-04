@@ -1,3 +1,4 @@
+import 'package:hr_management/ui/screens/background_location.dart';
 import 'package:hr_management/ui/screens/dms/dms_child.dart';
 import 'package:hr_management/ui/screens/dms/dms_legal_entity_screen/dms_legal_entity_screen.dart';
 import 'package:hr_management/ui/screens/dms/dms_manage_permission/dms_add_edit_permission_screen.dart';
@@ -645,6 +646,12 @@ class AppRouter {
           builder: (_) => ServiceHomeScreen(
               templateCode: 'TMS_GENERAL', isDelete: true, showBack: true),
         );
+
+          case BACKGROUND_LOCATION:
+        return MaterialPageRoute(
+          builder: (_) => BackgroundLocation(),
+        );
+
 
       // 404 route.
       default:
