@@ -2,20 +2,20 @@ class EmployeeTrackingViewModel {
   String? userId;
   double? latitude;
   double? longitude;
-  String? trackingTime;
+  String? trackingDate;
 
   EmployeeTrackingViewModel({
     this.userId,
     this.latitude,
     this.longitude,
-    this.trackingTime,
+    this.trackingDate,
   });
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
         "latitude": latitude,
         "longitude": longitude,
-        "trackingTime": trackingTime,
+        "trackingDate": trackingDate,
       };
 }
 
