@@ -686,7 +686,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
       latitude: 25.0764769,
       longitude: 55.1492950389648,
-      trackingTime: "0001-01-01T00:00:00",
+      trackingDate: "0001-01-01T00:00:00",
     ));
 
     jsonEncodedList.add(list[0].toJson());
