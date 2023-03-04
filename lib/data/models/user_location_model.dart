@@ -1,10 +1,10 @@
 class UserLocation {
-  int? id;
-  String? time;
+  String? userId;
+  String? trackingDate;
   double? latitude;
   double? longitude;
 
-  UserLocation({this.id, this.time, this.latitude, this.longitude});
+  UserLocation({this.userId, this.trackingDate, this.latitude, this.longitude});
 
   factory UserLocation.fromJson(Map<String, dynamic> json) =>
       _$UserLocationFromJson(json);
@@ -13,8 +13,8 @@ class UserLocation {
 
 UserLocation _$UserLocationFromJson(Map<String, dynamic> json) {
   return UserLocation(
-    id: json['id'],
-    time: json['time'],
+    userId: json['userId'],
+    trackingDate: json['trackingDate'],
     latitude: json["latitude"],
     longitude: json["longitude"],
   );
@@ -22,8 +22,8 @@ UserLocation _$UserLocationFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$UserLocationToJson(UserLocation instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'time': instance.time,
+      'userId': instance.userId,
+      'trackingDate': instance.trackingDate,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
     };

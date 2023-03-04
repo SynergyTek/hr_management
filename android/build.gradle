@@ -3,8 +3,8 @@ buildscript {
     ext {
     compileSdkVersion   = 33                // or higher
     targetSdkVersion    = 33                // or higher
-    appCompatVersion    = "1.4.2"           // or higher
-    playServicesLocationVersion = "20.0.0"  // or higher
+    appCompatVersion    = "1.4.2"
+    playServicesLocationVersion = "21.0.1"  // or higher
     }
     repositories {
         google()
