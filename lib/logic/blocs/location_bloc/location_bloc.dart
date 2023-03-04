@@ -152,16 +152,14 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       add(
         LocationChangedEvent(locationData: currentLocation),
       );
-      if (currentLocation.time! - lastSavedTime > 100000.0 * 30.0) {
-        // timer = Timer?.periodic(oneSec, (Timer t) {
-        print("Location Added");
-        print(
-            "${currentLocation.latitude ?? 0}, ${currentLocation.longitude ?? 0}");
-        CaptureUserLocation().captureLocationFn(LatLng(
-            currentLocation.latitude ?? 0, currentLocation.longitude ?? 0));
-        // lastSavedTime = currentLocation.time ?? 0;
-        // });
-      }
+      // if (currentLocation.time! - lastSavedTime > 100000.0 * 30.0) {
+      //   print("Location Added");
+      //   print(
+      //       "${currentLocation.latitude ?? 0}, ${currentLocation.longitude ?? 0}");
+      //   CaptureUserLocation().captureLocationFn(LatLng(
+      //       currentLocation.latitude ?? 0, currentLocation.longitude ?? 0));
+      //   lastSavedTime = currentLocation.time ?? 0;
+      // }
     });
   }
 }

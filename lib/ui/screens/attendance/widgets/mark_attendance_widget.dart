@@ -2,6 +2,7 @@ import 'package:hr_management/helper/location_database_provider.dart';
 import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../../../../data/models/employee_tracking_model/employee_tracking_model.dart';
 import '../../../../data/models/login_models/extra_user_information_model.dart';
@@ -34,6 +35,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   dynamic isInLocation;
   String? _location = "Fetching location data...";
 
+  var officeLatitude = 23.23688;
+  var officeLongitude = 77.433565;
   // signed in/out check
   late bool isSignedIn;
 
@@ -45,6 +48,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         LocationBloc().isLocationServiceEnabled().then(
               (value) => _isLocationServiceEnabled = value,
             );
+        print(LocationBloc().location);
       },
     );
   }
@@ -438,10 +442,18 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         isVisible = true;
       });
 
-      // Trying to schedule the get location task in the background every 5 minutes.
+      // initialize work manager.
+      // Workmanager().initialize(
+      //   callbackDispatcher,
+      //   isInDebugMode: true,
+      // );
+
+      // Trying to schedule the get location task in the background every 15 minutes.
       // WorkmanagerHelper().registerGetLocationDataBackgroundPeriodicTask();
 
       await accessLogBloc.getInsertAccessLog(
+        latitude: officeLatitude,
+        longitude: officeLongitude,
         isSignIn: true,
         userId:
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
@@ -497,19 +509,25 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     //   return;
     // }
 
+    // List<UserLocation> locations =
+    //     await LocationDatabaseProvider().getAllUserLocations();
+    // print(locations);
+
     if (isSignedIn == true) {
       setState(() {
         isVisible = true;
       });
 
       // cancel background task on click of sign out
-
       // WorkmanagerHelper().cancelWorkManager();
+
       List<UserLocation> locations =
           await LocationDatabaseProvider().getAllUserLocations();
       print(locations);
 
       await accessLogBloc.getInsertAccessLog(
+        latitude: officeLatitude,
+        longitude: officeLongitude,
         isSignIn: false,
         userId:
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
