@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.hr_management">
     
         <!-- xmlns:tools="http://schemas.android.com/tools" -->
@@ -20,6 +21,7 @@
         <uses-permission android:name="android.permission.AUDIO_CAPTURE" />
 
    <application
+        tools:replace="android:label"
         android:label="Synergy HRM"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"

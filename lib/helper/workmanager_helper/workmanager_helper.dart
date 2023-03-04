@@ -19,10 +19,6 @@ callbackDispatcher() async {
 
 class WorkmanagerHelper {
   void registerGetLocationDataBackgroundPeriodicTask() {
-    Workmanager().initialize(
-      callbackDispatcher,
-      isInDebugMode: false,
-    );
     print(
         "[${DateTime.now()}] Scheduling task: Get Location Data in Background");
 
@@ -31,7 +27,7 @@ class WorkmanagerHelper {
       "getLocationDataBackgroundTask",
       tag: 'locationTask',
       frequency: Duration(
-        minutes: 2,
+        minutes: 15,
       ),
       // TODO: Need to figure out the exact policy for this.
       existingWorkPolicy: ExistingWorkPolicy.replace,
