@@ -1,11 +1,13 @@
-import 'package:geocoding/geocoding.dart' as geo;
 import 'package:hr_management/helper/location_database_provider.dart';
+import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 
+import '../../../../data/models/employee_tracking_model/employee_tracking_model.dart';
 import '../../../../data/models/login_models/extra_user_information_model.dart';
+import '../../../../data/models/user_geo_location_model/user_geo_location_model.dart';
+import '../../../../data/models/user_geo_location_model/user_geo_location_response.dart';
 import '../../../../data/models/user_location_model.dart';
-import '../../../../helper/workmanager_helper/workmanager_helper.dart';
 import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
@@ -14,7 +16,6 @@ import '../../../../logic/blocs/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:location/location.dart';
 
 class MarkAttendanceWidget extends StatefulWidget {
   MarkAttendanceWidget();
@@ -26,6 +27,7 @@ class MarkAttendanceWidget extends StatefulWidget {
 class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isInternetConnection = false;
   bool isPermissonGranted = false;
+  bool isSignInActive = false;
 
   bool _isLocationServiceEnabled = false;
 
@@ -35,7 +37,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   // signed in/out check
   late bool isSignedIn;
 
-  bool isVisible = false;
+  bool isVisible = true;
 
   _checkLocationService() async {
     setState(
@@ -47,20 +49,23 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     );
   }
 
-  calculateDistance() {
+  calculateDistance({
+    double? latitude,
+    double? longitude,
+  }) {
     bool result = false;
-    final double radius = 0.25;
+    final double radius = 0.20;
 
-    var officeLatitude = 23.23688;
-    var officeLongitude = 77.433565;
+    var officeLatitude = 13.2734817;
+    var officeLongitude = 74.7249583;
 
     final double distance = Geolocator.distanceBetween(
       BlocProvider.of<LocationBloc>(context).state.locationData?.latitude ??
           0.0,
       BlocProvider.of<LocationBloc>(context).state.locationData?.longitude ??
           0.0,
-      officeLatitude,
-      officeLongitude,
+      latitude ?? officeLatitude,
+      longitude ?? officeLongitude,
     );
 
     var distanceInkm = distance / 1000;
@@ -71,8 +76,40 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     return result;
   }
 
+  activateSignIn() async {
+    UserGeolocationResponse? response =
+        await attendanceViewBloc.getUserGeoLocation(queryparams: {
+      "userId":
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+    });
+
+    if (response != null &&
+        response.data != null &&
+        response.data!.isNotEmpty) {
+      List<UserGeolocationModel>? list = response.data;
+
+      for (var i = 0; i < list!.length; i++) {
+        // Check if location is within 20m radius
+        isSignInActive = calculateDistance(
+          latitude: response.data?[i].latitude ?? 0.00,
+          longitude: response.data?[i].longtitude ?? 0.0,
+        );
+        if (isSignInActive) {
+          // Stop checking if location is found to be within 20m radius
+          break;
+        }
+      }
+    }
+
+    setState(() {
+      isVisible = false;
+    });
+  }
+
   @override
   void initState() {
+    activateSignIn();
+
     isSignedIn = BlocProvider.of<UserModelBloc>(context)
             .state
             .extraUserInformation
@@ -203,52 +240,64 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                           children: <Widget>[
                             Expanded(
                               flex: 5,
-                              child: Column(
-                                children: <Widget>[
-                                  InkWell(
-                                    child: CircleAvatar(
-                                      radius: 35,
-                                      backgroundColor: Colors.green,
-                                      child: CircleAvatar(
-                                        radius: 33,
-                                        backgroundColor: Colors.white,
-                                        child: Icon(
-                                          Icons.fingerprint,
-                                          color: Colors.green,
-                                          size: 40.0,
+                              child: Opacity(
+                                opacity: isSignInActive ? 1.0 : 0.4,
+                                child: AbsorbPointer(
+                                  absorbing: !isSignInActive,
+                                  child: Column(
+                                    children: <Widget>[
+                                      InkWell(
+                                        child: CircleAvatar(
+                                          radius: 35,
+                                          backgroundColor: Colors.green,
+                                          child: CircleAvatar(
+                                            radius: 33,
+                                            backgroundColor: Colors.white,
+                                            child: Icon(
+                                              Icons.fingerprint,
+                                              color: Colors.green,
+                                              size: 40.0,
+                                            ),
+                                          ),
                                         ),
+                                        onTap: () => _handleSignInOnClick(),
                                       ),
-                                    ),
-                                    onTap: () => _handleSignInOnClick(),
+                                      Text("Sign In",
+                                          style: TextStyle(color: Colors.green))
+                                    ],
                                   ),
-                                  Text("Sign In",
-                                      style: TextStyle(color: Colors.green))
-                                ],
+                                ),
                               ),
                             ),
                             Expanded(
                               flex: 5,
-                              child: Column(
-                                children: <Widget>[
-                                  InkWell(
-                                    child: CircleAvatar(
-                                      radius: 35,
-                                      backgroundColor: Colors.red,
-                                      child: CircleAvatar(
-                                        radius: 33,
-                                        backgroundColor: Colors.white,
-                                        child: Icon(
-                                          Icons.power_settings_new,
-                                          color: Colors.red,
-                                          size: 40.0,
+                              child: Opacity(
+                                opacity: isSignInActive ? 1.0 : 0.4,
+                                child: AbsorbPointer(
+                                  absorbing: !isSignInActive,
+                                  child: Column(
+                                    children: <Widget>[
+                                      InkWell(
+                                        child: CircleAvatar(
+                                          radius: 35,
+                                          backgroundColor: Colors.red,
+                                          child: CircleAvatar(
+                                            radius: 33,
+                                            backgroundColor: Colors.white,
+                                            child: Icon(
+                                              Icons.power_settings_new,
+                                              color: Colors.red,
+                                              size: 40.0,
+                                            ),
+                                          ),
                                         ),
+                                        onTap: () => _handleSignOutOnClick(),
                                       ),
-                                    ),
-                                    onTap: () => _handleSignOutOnClick(),
+                                      Text("Sign Out",
+                                          style: TextStyle(color: Colors.red))
+                                    ],
                                   ),
-                                  Text("Sign Out",
-                                      style: TextStyle(color: Colors.red))
-                                ],
+                                ),
                               ),
                             )
                           ],
@@ -256,6 +305,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                   ),
                   SizedBox(
                     height: 15.0,
+                  ),
+                  ElevatedButton(
+                    onPressed: () => _handleSyncDataOnPressed(),
+                    child: Text("Sync Data"),
                   ),
                   // Padding(
                   //   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -493,6 +546,36 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     } else {
       displaySnackBar(text: 'You have already signed out.', context: context);
     }
+  }
+
+  _handleSyncDataOnPressed() async {
+    setState(() {
+      isVisible = true;
+    });
+
+    List<UserLocation> locations =
+        await LocationDatabaseProvider().getAllUserLocations();
+    print(locations);
+
+    setState(() {
+      isVisible = false;
+    });
+
+    List<EmployeeTrackingViewModel> list = [];
+    List<dynamic> jsonEncodedList = [];
+
+    list.add(EmployeeTrackingViewModel(
+      userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+      latitude: 25.0764769,
+      longitude: 55.1492950389648,
+      trackingTime: "0001-01-01T00:00:00",
+    ));
+
+    jsonEncodedList.add(list[0].toJson());
+    jsonEncodedList.add(list[0].toJson());
+    jsonEncodedList.add(list[0].toJson());
+
+    attendanceViewBloc.postInsertEmployeeTracking(data: jsonEncodedList);
   }
 
   // getUserAddressFromCoord({required LocationData locationData}) async {

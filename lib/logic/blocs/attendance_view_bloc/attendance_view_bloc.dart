@@ -1,6 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 
 import '../../../data/models/attendance_view_models/attendance_view_response.dart';
+import '../../../data/models/user_geo_location_model/user_geo_location_response.dart';
 import '../../../data/repositories/attendance_view_repository/attendance_view_repository.dart';
 
 class AttendanceViewBloc {
@@ -18,6 +19,37 @@ class AttendanceViewBloc {
       queryparams: queryparams,
     );
     _subject.sink.add(response);
+  }
+
+  postInsertEmployeeTracking({
+    Map<String, dynamic>? queryparams,
+    List<dynamic>? data,
+  }) async {
+    AttendanceViewResponse response =
+        await _apiRepository.postInsertEmployeeTracking(
+      queryparams: queryparams,
+      data: data,
+    );
+    _subject.sink.add(response);
+  }
+
+  getEmployeeTrackingByDate({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    AttendanceViewResponse response =
+        await _apiRepository.getEmployeeTrackingByDate(
+      queryparams: queryparams,
+    );
+    _subject.sink.add(response);
+  }
+
+  Future<UserGeolocationResponse> getUserGeoLocation({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    UserGeolocationResponse response = await _apiRepository.getUserGeoLocation(
+      queryparams: queryparams,
+    );
+    return response;
   }
 
   /// Used to create new entries.

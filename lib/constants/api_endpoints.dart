@@ -508,10 +508,19 @@ class APIEndpointConstants {
   static const GET_READ_TASK_LIST_COUNT =
       BASE_URL + '/cms/task/ReadTaskListCount';
   static const GET_READ_TASK_DATA = BASE_URL + '/cms/task/ReadTaskData';
+
 // attendance api
   static const GET_EMPLOYEE_ATTENDANCE_LIST =
       BASE_URL + "/taa/attendance/GetEmployeeAtendanceList";
-  // ?userId=45bba746-3309-49b7-9c03-b5793369d73c&portalName=HR&searchStart=&searchEnd=&searchMonth=&searchType=
+
+  static const POST_INSERT_EMPLOYEE_TRACKING =
+      BASE_URL + "/taa/attendance/InsertEmployeeTracking";
+
+  static const GET_EMPLOYEE_TRACKING_BY_DATE =
+      BASE_URL + "/taa/attendance/GetEmployeeTrackingByDate";
+
+  static const String  GET_USER_GEO_LOCATION =
+      '$BASE_URL/cms/user/GetUserGeoLocation';
 
   // Hr Direct Contract api
   static const GET_HRDIRECT_CONTRACT = BASE_URL + '/chr/hrdirect/Contract';
