@@ -39,6 +39,7 @@ import '../ui/screens/leaves/employee_attendance_list_screen.dart';
 import '../ui/screens/leaves/get_policy_documents_screen.dart';
 import '../ui/screens/login/login_screen.dart';
 import '../ui/screens/manage_dependent/manage_dependent_screen.dart';
+import '../ui/screens/map_screen.dart';
 import '../ui/screens/misconduct_screen/misconduct_screen.dart';
 import '../ui/screens/my_profile/my_profile_screen.dart';
 import '../ui/screens/share/share_screen.dart';
@@ -258,7 +259,7 @@ class AppRouter {
           builder: (_) => AttendanceViewScreen(),
         );
 
-         case ROSTER_SCHEDULE:
+      case ROSTER_SCHEDULE:
         return MaterialPageRoute(
           builder: (_) => RosterScheduleScreen(),
         );
@@ -648,6 +649,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ServiceHomeScreen(
               templateCode: 'TMS_GENERAL', isDelete: true, showBack: true),
+        );
+
+      case MAP_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => MapScreen(),
         );
 
       // 404 route.

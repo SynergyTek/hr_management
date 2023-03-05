@@ -1246,6 +1246,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         isSignIn: true,
         userId:
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        location: '',
       );
 
       setState(() {
@@ -1322,6 +1323,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         isSignIn: false,
         userId:
             BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        location: '',
       );
       setState(() {
         isVisible = false;
