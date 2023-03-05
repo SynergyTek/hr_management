@@ -500,6 +500,8 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
               samples: 3 // <-- sample 3 location before selecting best.
               )
           .then((bg.Location location) {
+        _officeLatitude = location.coords.latitude;
+        _officeLongitude = location.coords.longitude;
         geocoding
             .placemarkFromCoordinates(
           officeLatitude,
@@ -508,9 +510,6 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
             .then((data) async {
           String address =
               "${data.first.name == null || data.first.name!.isEmpty ? '' : data.first.name! + ', '}${data.first.street == null || data.first.street!.isEmpty ? '' : data.first.street! + ', '}${data.first.subLocality == null || data.first.subLocality!.isEmpty ? '' : data.first.subLocality! + ', '}${data.first.locality == null || data.first.locality!.isEmpty ? '' : data.first.locality! + ', '}${data.first.subAdministrativeArea == null || data.first.subAdministrativeArea!.isEmpty ? '' : data.first.subAdministrativeArea! + ', '}${data.first.administrativeArea == null || data.first.administrativeArea!.isEmpty ? '' : data.first.administrativeArea! + ', '}${data.first.postalCode == null || data.first.postalCode!.isEmpty ? '' : data.first.postalCode! + ', '}${data.first.isoCountryCode == null || data.first.isoCountryCode!.isEmpty ? '' : data.first.isoCountryCode! + '.'}";
-
-          _officeLatitude = location.coords.latitude;
-          _officeLongitude = location.coords.longitude;
           accessLogBloc
               .getInsertAccessLog(
             latitude: _officeLatitude,
