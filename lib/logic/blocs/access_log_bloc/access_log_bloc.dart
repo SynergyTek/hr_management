@@ -16,17 +16,20 @@ class AccessLogBloc {
       BehaviorSubject<AccessLogListDataResponse>();
 
   /// Used to insert new entries.
-  Future<AccessLogResponse> getInsertAccessLog(
-      {required bool isSignIn,
-      required String userId,
-      required double latitude,
-      required double longitude}) async {
+  Future<AccessLogResponse> getInsertAccessLog({
+    required bool isSignIn,
+    required String userId,
+    required double latitude,
+    required double longitude,
+    required String location,
+  }) async {
     Map<String, dynamic> queryparams = Map();
     queryparams["punchingTime"] = DateTime.now().toString();
     queryparams["punchingType"] = isSignIn ? "0" : "1";
     queryparams["userId"] = userId;
     queryparams["Latitude"] = latitude;
     queryparams["Longitude"] = longitude;
+    queryparams["Location"] = location;
 
     AccessLogResponse response = await _accessLogRepository.getInsertAccessLog(
       queryparams: queryparams,

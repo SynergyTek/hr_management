@@ -20,6 +20,7 @@ class AccessLogRepository extends AbstractAccessLogRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
+      json.encode(queryparams);
 
       if (response.data != null)
         return AccessLogResponse.fromJson(

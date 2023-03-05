@@ -19,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
 import 'package:http/http.dart' as http;
+import 'package:geocoding/geocoding.dart' as geocoding;
 
 class MarkAttendanceWidget extends StatefulWidget {
   MarkAttendanceWidget();
@@ -499,52 +500,64 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
               samples: 3 // <-- sample 3 location before selecting best.
               )
           .then((bg.Location location) {
-        _officeLatitude = location.coords.latitude;
-        _officeLongitude = location.coords.longitude;
-        accessLogBloc
-            .getInsertAccessLog(
-          latitude: _officeLatitude,
-          longitude: _officeLongitude,
-          isSignIn: true,
-          userId:
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        geocoding
+            .placemarkFromCoordinates(
+          officeLatitude,
+          officeLatitude,
         )
-            .then((value) {
-          setState(() {
-            isVisible = false;
-          });
+            .then((data) async {
+          String address =
+              "${data.first.name == null || data.first.name!.isEmpty ? '' : data.first.name! + ', '}${data.first.street == null || data.first.street!.isEmpty ? '' : data.first.street! + ', '}${data.first.subLocality == null || data.first.subLocality!.isEmpty ? '' : data.first.subLocality! + ', '}${data.first.locality == null || data.first.locality!.isEmpty ? '' : data.first.locality! + ', '}${data.first.subAdministrativeArea == null || data.first.subAdministrativeArea!.isEmpty ? '' : data.first.subAdministrativeArea! + ', '}${data.first.administrativeArea == null || data.first.administrativeArea!.isEmpty ? '' : data.first.administrativeArea! + ', '}${data.first.postalCode == null || data.first.postalCode!.isEmpty ? '' : data.first.postalCode! + ', '}${data.first.isoCountryCode == null || data.first.isoCountryCode!.isEmpty ? '' : data.first.isoCountryCode! + '.'}";
 
-          print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
-          print(
-              "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
+          _officeLatitude = location.coords.latitude;
+          _officeLongitude = location.coords.longitude;
+          accessLogBloc
+              .getInsertAccessLog(
+            latitude: _officeLatitude,
+            longitude: _officeLongitude,
+            isSignIn: true,
+            userId:
+                BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
+                    '',
+            location: address,
+          )
+              .then((value) {
+            setState(() {
+              isVisible = false;
+            });
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                accessLogBloc.subject.value.isSignIn == 0 &&
-                        accessLogBloc.subject.value.error == null
-                    ? "Sign in successful!"
-                    : "An error occured please try again later.",
-              ),
-            ),
-          );
-          if (accessLogBloc.subject.value.isSignIn == 0 &&
-              accessLogBloc.subject.value.error == null) {
-            isSignedIn = true;
-            BlocProvider.of<UserModelBloc>(context).add(
-              UserModelChangeEvent(
-                userModel:
-                    BlocProvider.of<UserModelBloc>(context).state.userModel!,
-                extraUserInformation: ExtraUserInformationModel(
-                  isSignedIn: true,
+            print("Sign In isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
+            print(
+                "Sign In Error?: ${accessLogBloc.subject.value.error}, ${accessLogBloc.subject.value.error.runtimeType}");
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  accessLogBloc.subject.value.isSignIn == 0 &&
+                          accessLogBloc.subject.value.error == null
+                      ? "Sign in successful!"
+                      : "An error occured please try again later.",
                 ),
               ),
             );
-          }
+            if (accessLogBloc.subject.value.isSignIn == 0 &&
+                accessLogBloc.subject.value.error == null) {
+              isSignedIn = true;
+              BlocProvider.of<UserModelBloc>(context).add(
+                UserModelChangeEvent(
+                  userModel:
+                      BlocProvider.of<UserModelBloc>(context).state.userModel!,
+                  extraUserInformation: ExtraUserInformationModel(
+                    isSignedIn: true,
+                  ),
+                ),
+              );
+            }
+          });
+          print('[getCurrentPosition] - $location');
+        }).catchError((error) {
+          print('[getCurrentPosition] ERROR: $error');
         });
-        print('[getCurrentPosition] - $location');
-      }).catchError((error) {
-        print('[getCurrentPosition] ERROR: $error');
       });
 
       // await accessLogBloc.getInsertAccessLog(
@@ -623,42 +636,54 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
       //     await LocationDatabaseProvider().getAllUserLocations();
       // print(locations);
 
-      await accessLogBloc.getInsertAccessLog(
-        latitude: officeLatitude,
-        longitude: officeLongitude,
-        isSignIn: false,
-        userId:
-            BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      );
-      setState(() {
-        isVisible = false;
-      });
+      geocoding
+          .placemarkFromCoordinates(
+        officeLatitude,
+        officeLatitude,
+      )
+          .then((data) async {
+        String address =
+            "${data.first.name == null || data.first.name!.isEmpty ? '' : data.first.name! + ', '}${data.first.street == null || data.first.street!.isEmpty ? '' : data.first.street! + ', '}${data.first.subLocality == null || data.first.subLocality!.isEmpty ? '' : data.first.subLocality! + ', '}${data.first.locality == null || data.first.locality!.isEmpty ? '' : data.first.locality! + ', '}${data.first.subAdministrativeArea == null || data.first.subAdministrativeArea!.isEmpty ? '' : data.first.subAdministrativeArea! + ', '}${data.first.administrativeArea == null || data.first.administrativeArea!.isEmpty ? '' : data.first.administrativeArea! + ', '}${data.first.postalCode == null || data.first.postalCode!.isEmpty ? '' : data.first.postalCode! + ', '}${data.first.isoCountryCode == null || data.first.isoCountryCode!.isEmpty ? '' : data.first.isoCountryCode! + '.'}";
 
-      print("Sign Out isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
-      print("Sign Out Error?: ${accessLogBloc.subject.value.error}");
+        await accessLogBloc.getInsertAccessLog(
+            latitude: officeLatitude,
+            longitude: officeLongitude,
+            isSignIn: false,
+            userId:
+                BlocProvider.of<UserModelBloc>(context).state.userModel?.id ??
+                    '',
+            location: address);
+        setState(() {
+          isVisible = false;
+        });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            accessLogBloc.subject.value.isSignIn == 1 &&
-                    accessLogBloc.subject.value.error == null
-                ? "Sign out successful!"
-                : "Error occured please try again later.",
-          ),
-        ),
-      );
-      if (accessLogBloc.subject.value.isSignIn == 1 &&
-          accessLogBloc.subject.value.error == null) {
-        isSignedIn = false;
-        BlocProvider.of<UserModelBloc>(context).add(
-          UserModelChangeEvent(
-            userModel: BlocProvider.of<UserModelBloc>(context).state.userModel!,
-            extraUserInformation: ExtraUserInformationModel(
-              isSignedIn: false,
+        print("Sign Out isSignIn?: ${accessLogBloc.subject.value.isSignIn}");
+        print("Sign Out Error?: ${accessLogBloc.subject.value.error}");
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              accessLogBloc.subject.value.isSignIn == 1 &&
+                      accessLogBloc.subject.value.error == null
+                  ? "Sign out successful!"
+                  : "Error occured please try again later.",
             ),
           ),
         );
-      }
+        if (accessLogBloc.subject.value.isSignIn == 1 &&
+            accessLogBloc.subject.value.error == null) {
+          isSignedIn = false;
+          BlocProvider.of<UserModelBloc>(context).add(
+            UserModelChangeEvent(
+              userModel:
+                  BlocProvider.of<UserModelBloc>(context).state.userModel!,
+              extraUserInformation: ExtraUserInformationModel(
+                isSignedIn: false,
+              ),
+            ),
+          );
+        }
+      });
     } else {
       displaySnackBar(text: 'You have already signed out.', context: context);
     }
