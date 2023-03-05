@@ -4,12 +4,6 @@ import '../drawer_model.dart';
 
 List<dynamic> navDrawerList = [
   NavDrawerModel(
-      title: 'Background Location',
-      trailingIcon: Icons.location_city,
-      // route: FLUTTER_BACKGROUND_LOCATION,
-      pageName: '"Background Location',
-      isExpanded: false),
-  NavDrawerModel(
       title: 'Employee Dashboard',
       // title: 'Workboard',
       trailingIcon: Icons.home,

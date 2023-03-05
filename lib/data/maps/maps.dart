@@ -62,6 +62,5 @@ Map<String, String> drawerMenuRouteMap = {
   "Helpdesk Dashbaord": "/case_management_helpdesk_dashboard",
   "My Requests": "/service_home_nav",
   "My Tasks": "/task_home",
-  "Background Location": '/background_location',
-   "Roster Schedule": '/roster_schedule_screen',
+  "Roster Schedule": '/roster_schedule_screen',
 };

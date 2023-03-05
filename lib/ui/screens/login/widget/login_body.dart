@@ -53,7 +53,6 @@ class _LoginBodyState extends State<LoginBody> {
   @override
   void initState() {
     super.initState();
-
     // LocationBloc().checkForLocationPermission();
     NewDownloadHelper().handlePermissions();
   }
