@@ -221,6 +221,9 @@ class APIEndpointConstants {
 
   static const READ_TEAM_DATA = '$BASE_URL/cms/query/ReadTeamData';
 
+  static const UPDATE_USER_MOBILE_DEVICE_TOKEN =
+      BASE_URL + "/taa/attendance/UpdateUserMobileDeviceToken";
+
   //User API Endpoints Block End
   //************************************************************************//
 

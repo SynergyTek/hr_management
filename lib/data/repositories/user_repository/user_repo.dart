@@ -41,4 +41,25 @@ class UserRepository extends AbstractUserRepository {
       return ReadTeamDataResponse.withError("$err");
     }
   }
+
+  Future<bool> updateUserMobileDeviceToken({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint =
+        APIEndpointConstants.UPDATE_USER_MOBILE_DEVICE_TOKEN;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      return response.data;
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return false;
+    }
+  }
 }

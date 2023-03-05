@@ -4,6 +4,7 @@ import '../../../../../constants/formats.dart';
 import '../../../../../data/models/access_log/access_log_model.dart';
 import '../../../../../themes/theme_config.dart';
 import 'access_log_bottom_sheet_widget.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
 
 class AccessLogListTileWidget extends StatelessWidget {
   final AccessLogModel eachAccessLogModelElement;
@@ -59,18 +60,44 @@ class AccessLogListTileWidget extends StatelessWidget {
 
   /// _handleListTileOnTap on tap event opens the bottom sheet with
   /// descripitive details of the employee access log.
-  void _handleListTileOnTap(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      enableDrag: true,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return AccessLogBottomSheetWidget(
-          eachAccessLogModelElement: eachAccessLogModelElement,
-        );
-      },
-    );
+  void _handleListTileOnTap(BuildContext context) async {
+    geocoding
+        .placemarkFromCoordinates(
+      eachAccessLogModelElement.latitude ?? 0.0,
+      eachAccessLogModelElement.longitude ?? 0.0,
+    )
+        .then((data) {
+      String address =
+          "${data.first.name == null || data.first.name!.isEmpty ? '' : data.first.name! + ', '}${data.first.street == null || data.first.street!.isEmpty ? '' : data.first.street! + ', '}${data.first.subLocality == null || data.first.subLocality!.isEmpty ? '' : data.first.subLocality! + ', '}${data.first.locality == null || data.first.locality!.isEmpty ? '' : data.first.locality! + ', '}${data.first.subAdministrativeArea == null || data.first.subAdministrativeArea!.isEmpty ? '' : data.first.subAdministrativeArea! + ', '}${data.first.administrativeArea == null || data.first.administrativeArea!.isEmpty ? '' : data.first.administrativeArea! + ', '}${data.first.postalCode == null || data.first.postalCode!.isEmpty ? '' : data.first.postalCode! + ', '}${data.first.isoCountryCode == null || data.first.isoCountryCode!.isEmpty ? '' : data.first.isoCountryCode! + '.'}";
+
+      showModalBottomSheet(
+        context: context,
+        enableDrag: true,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext context) {
+          return AccessLogBottomSheetWidget(
+            eachAccessLogModelElement: eachAccessLogModelElement,
+            address: address,
+          );
+        },
+      );
+    }).catchError((error) {
+      print('Get Address ERROR: $error');
+
+      showModalBottomSheet(
+        context: context,
+        enableDrag: true,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext context) {
+          return AccessLogBottomSheetWidget(
+            eachAccessLogModelElement: eachAccessLogModelElement,
+            address: '-',
+          );
+        },
+      );
+    });
   }
 
   Color _handleListTileColor(BuildContext context) {

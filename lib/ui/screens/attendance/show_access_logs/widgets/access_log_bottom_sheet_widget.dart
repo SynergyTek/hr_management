@@ -5,10 +5,13 @@ import '../../../../../themes/theme_config.dart';
 
 class AccessLogBottomSheetWidget extends StatelessWidget {
   final AccessLogModel eachAccessLogModelElement;
+  final String address;
 
   const AccessLogBottomSheetWidget({
+    Key? key,
     required this.eachAccessLogModelElement,
-  });
+    this.address = '-',
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +129,7 @@ class AccessLogBottomSheetWidget extends StatelessWidget {
               // style: Theme.of(context).textTheme.bodyText1,
             ),
             subtitle: Text(
-              eachAccessLogModelElement.signInLocation ?? '-',
+              address,
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),

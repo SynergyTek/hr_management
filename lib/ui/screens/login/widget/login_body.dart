@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:hr_management/constants/image_path_constants.dart';
 import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
 import 'package:hr_management/data/models/login_models/portal_view_model.dart';
 import 'package:hr_management/logic/blocs/location_bloc/location_bloc.dart';
+import 'package:hr_management/logic/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_management/routes/route_constants.dart';
 import 'package:hr_management/themes/light_theme.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
@@ -51,7 +54,7 @@ class _LoginBodyState extends State<LoginBody> {
   void initState() {
     super.initState();
 
-    LocationBloc().checkForLocationPermission();
+    // LocationBloc().checkForLocationPermission();
     NewDownloadHelper().handlePermissions();
   }
 
@@ -393,6 +396,21 @@ class _LoginBodyState extends State<LoginBody> {
         queryparams: queryparams,
       );
       if (data != null) {
+        // if (data.mobileDeviceToken == null || data.mobileDeviceToken!.isEmpty) {
+        //   var deviceData = <String, dynamic>{};
+        //   DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+        //   if (Platform.isAndroid) {
+        //     deviceData =
+        //         _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+        //     // } else if (Platform.isIOS) {
+        //     //   deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+        //   }
+        //   userBLoc.updateUserMobileDeviceToken(queryparams: {
+        //     "userId": data.id,
+        //     "deviceToken": "",
+        //   });
+        // }
+
         setState(() {
           showCPI = false;
         });
@@ -415,4 +433,27 @@ class _LoginBodyState extends State<LoginBody> {
       throw e.toString();
     }
   }
+
+  // Map<String, dynamic> _readAndroidBuildData(AndroidDeviceInfo build) {
+  //   return <String, dynamic>{
+  //     'id': build.id,
+  //   };
+  // }
+
+  // Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo data) {
+  //   return <String, dynamic>{
+  //     'name': data.name,
+  //     'systemName': data.systemName,
+  //     'systemVersion': data.systemVersion,
+  //     'model': data.model,
+  //     'localizedModel': data.localizedModel,
+  //     'identifierForVendor': data.identifierForVendor,
+  //     'isPhysicalDevice': data.isPhysicalDevice,
+  //     'utsname.sysname:': data.utsname.sysname,
+  //     'utsname.nodename:': data.utsname.nodename,
+  //     'utsname.release:': data.utsname.release,
+  //     'utsname.version:': data.utsname.version,
+  //     'utsname.machine:': data.utsname.machine,
+  //   };
+  // }
 }

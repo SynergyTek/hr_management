@@ -12,4 +12,8 @@ abstract class AbstractUserRepository {
   Future<UserListResponse> readUserData();
 
   Future<ReadTeamDataResponse> readTeamData();
+
+  Future<bool> updateUserMobileDeviceToken({
+    Map<String, dynamic>? queryparams,
+  });
 }
