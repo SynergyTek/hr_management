@@ -29,11 +29,11 @@ allprojects {
            // [required] background_fetch
             url "${project(':background_fetch').projectDir}/libs"
         }
-        // configurations.all {
-        //     resolutionStrategy {
-        //         force "com.google.android.gms:play-services-location:21.0.1"
-        //     }
-        // }
+        configurations.all {
+            resolutionStrategy {
+                force "com.google.android.gms:play-services-location:21.0.1"
+            }
+        }
     }
 }
 
