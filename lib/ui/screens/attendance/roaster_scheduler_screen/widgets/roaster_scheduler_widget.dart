@@ -162,7 +162,11 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
                 Container(
                     padding: DEFAULT_PADDING,
                     margin: DEFAULT_PADDING,
-                    child: Text('Total Hours:${totalHours}'))
+                    child: Text(
+                      'Total Hours: ${totalHours}',
+                      style: TextStyle(
+                          fontSize: 13.sp, fontWeight: FontWeight.w500),
+                    ))
               ],
             );
           } else {
@@ -225,9 +229,16 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
             // Text('Friday:${element?.friday?.toString() ?? 'OFF'}'),
             // Text('Saturaday:${element?.saturday?.toString() ?? 'OFF'}'),
             // Text('Total Hours:${}'),
-            element?.totalHours != "00:00:00" && element?.dutyText != null
+            element?.totalHours != "00:00:00" &&
+                    element?.dutyText != null &&
+                    element?.dutyText?.trim() != ""
                 ? Text('${element?.dutyText?.toString() ?? 'NA'}')
-                : Text(''),
+                : element?.draftDuty1StartTime != null
+                    ? Text(
+                        '${element?.draftDuty1StartTime?.toString() ?? 'NA'}-${element?.draftDuty1EndTime?.toString() ?? 'NA'}',
+                        style: TextStyle(color: Colors.blue),
+                      )
+                    : SizedBox(),
 
             // Row(
             //   children: [
