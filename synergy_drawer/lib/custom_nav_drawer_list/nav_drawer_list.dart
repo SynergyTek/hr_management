@@ -77,6 +77,9 @@ List<dynamic> navDrawerList = [
     NavDrawerModel(
         title: 'Access Logs', //route: DISPLAY_ACCESS_LOG,
         pageName: 'AccessLog'),
+    NavDrawerModel(
+        title: 'Roster Schedule', //route: DISPLAY_ACCESS_LOG,
+        pageName: 'RosterScheduleScreen'),
   ]),
 
   // Leave

@@ -519,7 +519,7 @@ class APIEndpointConstants {
   static const GET_EMPLOYEE_TRACKING_BY_DATE =
       BASE_URL + "/taa/attendance/GetEmployeeTrackingByDate";
 
-  static const String  GET_USER_GEO_LOCATION =
+  static const String GET_USER_GEO_LOCATION =
       '$BASE_URL/cms/user/GetUserGeoLocation';
 
   // Hr Direct Contract api
@@ -596,4 +596,7 @@ class APIEndpointConstants {
   //salary info
   static const GET_SALARY_INFO =
       BASE_URL + "/Pay/SalaryInfo/ReadSalaryElementInfoData";
+
+  static const GET_ROASTER_SCHEDULER_LIST =
+      '$BASE_URL/taa/attendance/GetRosterSchedulerList';
 }

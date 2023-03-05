@@ -230,7 +230,7 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
   @override
   void initState() {
     super.initState();
-    _firstRowIndex = PageStorage.of(context).readState(context) ??
+    _firstRowIndex = PageStorage.of(context)?.readState(context) ??
         widget.initialFirstRowIndex ??
         0;
     widget.source.addListener(_handleDataSourceChanged);

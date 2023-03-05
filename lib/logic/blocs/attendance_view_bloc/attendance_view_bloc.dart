@@ -1,3 +1,4 @@
+import 'package:hr_management/data/models/roaster_scheduler_list_model/roaster_scheduler_list_response.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../data/models/attendance_view_models/attendance_view_response.dart';
@@ -10,6 +11,9 @@ class AttendanceViewBloc {
   // [NOTE]: Can use a Stream controller as well instead of BehaviourSubject.
   final BehaviorSubject<AttendanceViewResponse> _subject =
       BehaviorSubject<AttendanceViewResponse>();
+
+  final BehaviorSubject<RoasterSchedulerListResponse> _subjectRoasterScheduler =
+      BehaviorSubject<RoasterSchedulerListResponse>();
 
   /// Used to fetch new entries.
   getData({
@@ -52,6 +56,17 @@ class AttendanceViewBloc {
     return response;
   }
 
+  Future<RoasterSchedulerListResponse> getRoasterSchedulerList({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    RoasterSchedulerListResponse response =
+        await _apiRepository.getRoasterSchedulerList(
+      queryparams: queryparams,
+    );
+    _subjectRoasterScheduler.sink.add(response);
+    return response;
+  }
+
   /// Used to create new entries.
   postData() async {}
 
@@ -78,6 +93,8 @@ class AttendanceViewBloc {
   }
 
   BehaviorSubject<AttendanceViewResponse> get subject => _subject;
+  BehaviorSubject<RoasterSchedulerListResponse> get subjectRoasterScheduler =>
+      _subjectRoasterScheduler;
 }
 
 final attendanceViewBloc = AttendanceViewBloc();

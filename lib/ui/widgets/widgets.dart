@@ -40,12 +40,14 @@ Widget subtitleWidget({
     crossAxisAlignment:
         isCentered! ? CrossAxisAlignment.center : CrossAxisAlignment.start,
     children: [
-      Text(
-        caption,
-        style: Theme.of(context).textTheme.caption!.copyWith(
-              color: const Color(0xFF757575),
-            ),
-      ),
+      caption != ""
+          ? Text(
+              caption,
+              style: Theme.of(context).textTheme.caption!.copyWith(
+                    color: const Color(0xFF757575),
+                  ),
+            )
+          : SizedBox(),
       customChild ??
           Text(
             title,
@@ -73,11 +75,11 @@ Widget statusContainerWidget({
   );
 }
 
-String? formatDate({required String? date}) {
+String? formatDate({required String? date, String? format}) {
   if (date == null || date.isEmpty || date == '-') return "NA";
 
   try {
-    return DateFormat('dd-MM-yyyy').format(DateTime.parse(date));
+    return DateFormat(format ?? 'dd-MM-yyyy').format(DateTime.parse(date));
   } catch (e, _) {
     return date;
   }

@@ -26,6 +26,7 @@ import 'package:hr_management/ui/screens/workboard_screen/workboard_screen.dart'
 import 'package:hr_management/ui/widgets/custom_controls/tag.dart';
 import 'package:hr_management/ui/widgets/drawer/nav_drawer_widget.dart';
 
+import '../ui/screens/attendance/roaster_scheduler_screen/roaster_scheduler_screen.dart';
 import '../ui/screens/case_management_screen/case_management_screen.dart';
 
 // import '../ui/screens/dms/dms_workbook_screen/dms_workbook_screen.dart';
@@ -255,6 +256,11 @@ class AppRouter {
       case ATTENDANCE_VIEW_ROUTE:
         return MaterialPageRoute(
           builder: (_) => AttendanceViewScreen(),
+        );
+
+         case ROSTER_SCHEDULE:
+        return MaterialPageRoute(
+          builder: (_) => RosterScheduleScreen(),
         );
 
       case SERVICE_DASHBOARD:
