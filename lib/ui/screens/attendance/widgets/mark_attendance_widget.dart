@@ -116,7 +116,6 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                 negativeAction: 'Cancel'),
             reset: true))
         .then((bg.State state) {
-      // calculateDistance();
       if (state.schedule!.isNotEmpty) {
         bg.BackgroundGeolocation.startSchedule();
       }
@@ -206,91 +205,96 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                     SizedBox(
                       height: 15.0,
                     ),
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 5,
-                            child: Opacity(
-                              opacity: isSignInActive ? 1.0 : 0.4,
-                              child: AbsorbPointer(
-                                absorbing: !isSignInActive,
-                                child: Column(
-                                  children: <Widget>[
-                                    InkWell(
-                                      child: CircleAvatar(
-                                        radius: 35,
-                                        backgroundColor: Colors.green,
+                    Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(10.0),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 5,
+                                child: Opacity(
+                                  opacity: isSignInActive ? 1.0 : 0.4,
+                                  child: AbsorbPointer(
+                                    absorbing: isSignInActive,
+                                    child: Column(
+                                      children: <Widget>[
+                                        InkWell(
+                                          child: CircleAvatar(
+                                            radius: 35,
+                                            backgroundColor: Colors.green,
+                                            child: CircleAvatar(
+                                              radius: 33,
+                                              backgroundColor: Colors.white,
+                                              child: Icon(
+                                                Icons.fingerprint,
+                                                color: Colors.green,
+                                                size: 40.0,
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: () => _handleSignInOnClick(),
+                                        ),
+                                        Text("Sign In",
+                                            style:
+                                                TextStyle(color: Colors.green))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 5,
+                                child: AbsorbPointer(
+                                  absorbing: isSignInActive,
+                                  child: Column(
+                                    children: <Widget>[
+                                      InkWell(
                                         child: CircleAvatar(
-                                          radius: 33,
-                                          backgroundColor: Colors.white,
-                                          child: Icon(
-                                            Icons.fingerprint,
-                                            color: Colors.green,
-                                            size: 40.0,
+                                          radius: 35,
+                                          backgroundColor: Colors.red,
+                                          child: CircleAvatar(
+                                            radius: 33,
+                                            backgroundColor: Colors.white,
+                                            child: Icon(
+                                              Icons.power_settings_new,
+                                              color: Colors.red,
+                                              size: 40.0,
+                                            ),
                                           ),
                                         ),
+                                        onTap: () => _handleSignOutOnClick(),
                                       ),
-                                      onTap: () => _handleSignInOnClick(),
-                                    ),
-                                    Text("Sign In",
-                                        style: TextStyle(color: Colors.green))
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: AbsorbPointer(
-                              absorbing: !isSignInActive,
-                              child: Column(
-                                children: <Widget>[
-                                  InkWell(
-                                    child: CircleAvatar(
-                                      radius: 35,
-                                      backgroundColor: Colors.red,
-                                      child: CircleAvatar(
-                                        radius: 33,
-                                        backgroundColor: Colors.white,
-                                        child: Icon(
-                                          Icons.power_settings_new,
-                                          color: Colors.red,
-                                          size: 40.0,
-                                        ),
-                                      ),
-                                    ),
-                                    onTap: () => _handleSignOutOnClick(),
-                                  ),
-                                  Text("Sign Out",
-                                      style: TextStyle(color: Colors.red))
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, right: 10.0),
-                            child: Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.location_on,
-                                    color: Colors.red[800],
-                                    size: 28,
+                                      Text("Sign Out",
+                                          style: TextStyle(color: Colors.red))
+                                    ],
                                   ),
                                 ),
-                                Text(
-                                  _location!,
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: Colors.red[800],
+                                  size: 28,
+                                ),
+                              ),
+                              Text(
+                                _location,
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 )),
@@ -533,20 +537,6 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     final double radius = 0.20;
 
     // Fetch current location
-    bg.BackgroundGeolocation.getCurrentPosition(
-            persist: false, // <-- do not persist this location
-            desiredAccuracy: 0, // <-- desire best possible accuracy
-            timeout: 30000, // <-- wait 30s before giving up.
-            samples: 3 // <-- sample 3 location before selecting best.
-            )
-        .then((bg.Location location) {
-      signInLatitude = location.coords.latitude;
-      signInLongitude = location.coords.longitude;
-      print('[getCurrentPosition] - $location');
-    }).catchError((error) {
-      print('[getCurrentPosition] ERROR: $error');
-    });
-
     final double distance = distanceBetween(
       signInLatitude,
       signInLongitude,
