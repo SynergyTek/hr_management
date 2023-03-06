@@ -5,9 +5,11 @@ import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/widgets.dart';
 
 import '../../../../../data/models/roaster_scheduler_list_model/roaster_scheduler_list_model.dart';
+import '../../../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../../../widgets/empty_list_widget.dart';
 import '../../../../widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RosterScheduleWidget extends StatefulWidget {
   RosterScheduleWidget();
@@ -19,7 +21,8 @@ class RosterScheduleWidget extends StatefulWidget {
 class _RosterScheduleWidget extends State<RosterScheduleWidget> {
   List<RoasterSchedulerListModel>? _roasterSchedulerList;
 
-  dynamic totalHours;
+  String totalHours = "";
+  // dynamic totalHours;
   List<dynamic> totalHoursList = [];
 
   @override
@@ -33,14 +36,14 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
 
   _handleQueryparams() {
     return {
-      //  'userId':
-      // BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      "userId": "45bba746-3309-49b7-9c03-b5793369d73c",
+      'userId':
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+      // "userId": "45bba746-3309-49b7-9c03-b5793369d73c",
       "start": DateTime.now().toString(),
       // "2023-02-26",
       "end": DateTime.now()
           .add(Duration(
-            days: 7,
+            days: 6,
           ))
           .toString()
       // "2023-03-4",
@@ -70,25 +73,25 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
             _roasterSchedulerList!.sort(
               (a, b) => a.rosterDate!.compareTo(b.rosterDate!),
             );
+
+            int hr = 0;
+            int min = 0;
+            int sec = 0;
             for (var element in _roasterSchedulerList!) {
               if (element.totalHours != "00:00:00" &&
                   element.draftTotalHours != "00:00:00") {
-                //     var duration = Duration(
-                //         hours: element.totalHours
-                //             .split(':')[0]
-                //             .replaceAll(RegExp(r'[^\w\s]+'), ''),
-                //         minutes: element.totalHours
-                //             .split(':')[1]
-                //             .replaceAll(RegExp(r'[^\w\s]+'), ''),
-                //         seconds: element.totalHours
-                //             .split(':')[2]
-                //             .replaceAll(RegExp(r'[^\w\s]+'), ''));
-                totalHoursList
-                    .add(element.totalHours ?? element.draftTotalHours);
+                hr = hr + (int.parse(element.totalHours?.split(":")[0]));
+                min = min + (int.parse(element.totalHours?.split(":")[1]));
+                sec = sec + (int.parse(element.totalHours?.split(":")[2]));
               }
             }
-            totalHours = totalHoursList[0];
-            // totalHoursList.reduce((a, b) => a + b);
+            min = min + (sec / 60).floor();
+            hr = hr + (min / 60).floor();
+            min = min % 60;
+            sec = sec % 60;
+
+            totalHours =
+                "$hr:${min.toString().padLeft(2, '0')}:${sec.toString().padLeft(2, '0')}";
 
             return Column(
               children: [
@@ -232,7 +235,8 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
             element?.totalHours != "00:00:00" &&
                     element?.dutyText != null &&
                     element?.dutyText?.trim() != ""
-                ? Text('${element?.dutyText?.toString() ?? 'NA'}')
+                ? Text(
+                    '${element?.dutyText?.replaceAll("<br/>", "\n") ?? 'NA'}')
                 : element?.draftDuty1StartTime != null
                     ? Text(
                         '${element?.draftDuty1StartTime?.toString() ?? 'NA'}-${element?.draftDuty1EndTime?.toString() ?? 'NA'}',

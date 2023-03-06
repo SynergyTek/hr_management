@@ -586,7 +586,7 @@ Widget _emergencyContactInfo1Widget({
               child: _statisticWidget(
                 context: context,
                 title: data.emergencyContactCountryDialCode1 ??
-                    '' + ' ' + data.emergencyContactNo1!,
+                    '' + ' ' + (data.emergencyContactNo1 ?? ''),
                 subtitle: "Emergency Contact No1 ",
                 icon: Icon(
                   Icons.phone,
@@ -658,9 +658,9 @@ Widget _emergencyContactInfo2Widget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data.emergencyContactCountryDialCode1! +
+                title: (data.emergencyContactCountryDialCode1 ?? '') +
                     ' ' +
-                    data.emergencyContactNo2!,
+                    (data.emergencyContactNo2 ?? ''),
                 subtitle: "Emergency Contact No2 ",
                 icon: Icon(
                   Icons.phone,
@@ -732,9 +732,9 @@ Widget _assignmentWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data.emergencyContactCountryDialCode1! +
+                title: (data.emergencyContactCountryDialCode1 ?? '') +
                     ' ' +
-                    data.emergencyContactNo2!,
+                    (data.emergencyContactNo2 ?? ''),
                 subtitle: "Job ",
                 icon: Icon(
                   Icons.phone,
@@ -761,9 +761,9 @@ Widget _assignmentWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data.emergencyContactCountryDialCode1! +
+                title: (data.emergencyContactCountryDialCode1 ?? '') +
                     ' ' +
-                    data.emergencyContactNo2!,
+                    (data.emergencyContactNo2 ?? ''),
                 subtitle: "Position ",
                 icon: Icon(
                   Icons.phone,
@@ -790,9 +790,9 @@ Widget _assignmentWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data.emergencyContactCountryDialCode1! +
+                title: (data.emergencyContactCountryDialCode1 ?? '') +
                     ' ' +
-                    data.emergencyContactNo2!,
+                    (data.emergencyContactNo2 ?? ''),
                 subtitle: "Location ",
                 icon: Icon(
                   Icons.phone,
@@ -819,9 +819,9 @@ Widget _assignmentWidget({
             Expanded(
               child: _statisticWidget(
                 context: context,
-                title: data.emergencyContactCountryDialCode1! +
+                title: (data.emergencyContactCountryDialCode1 ?? '') +
                     ' ' +
-                    data.emergencyContactNo2!,
+                    (data.emergencyContactNo2 ?? ''),
                 subtitle: "ProbationPeriod ",
                 icon: Icon(
                   Icons.phone,

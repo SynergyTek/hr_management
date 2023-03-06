@@ -31,7 +31,7 @@ class MarkAttendanceWidget extends StatefulWidget {
 class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   bool isInternetConnection = false;
   bool isPermissonGranted = false;
-  bool isSignInActive = true;
+  bool isSignInActive = false;
 
   dynamic isInLocation;
 
@@ -61,6 +61,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         isSignInActive = calculateDistance(
           latitude: response.data?[i].latitude ?? 0.00,
           longitude: response.data?[i].longtitude ?? 0.0,
+          radius: (response.data?[i].meter ?? 20) / 1000,
         );
         if (isSignInActive) {
           // Stop checking if location is found to be within 20m radius
@@ -241,30 +242,27 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                           ),
                           Expanded(
                             flex: 5,
-                            child: AbsorbPointer(
-                              absorbing: !isSignInActive,
-                              child: Column(
-                                children: <Widget>[
-                                  InkWell(
+                            child: Column(
+                              children: <Widget>[
+                                InkWell(
+                                  child: CircleAvatar(
+                                    radius: 35,
+                                    backgroundColor: Colors.red,
                                     child: CircleAvatar(
-                                      radius: 35,
-                                      backgroundColor: Colors.red,
-                                      child: CircleAvatar(
-                                        radius: 33,
-                                        backgroundColor: Colors.white,
-                                        child: Icon(
-                                          Icons.power_settings_new,
-                                          color: Colors.red,
-                                          size: 40.0,
-                                        ),
+                                      radius: 33,
+                                      backgroundColor: Colors.white,
+                                      child: Icon(
+                                        Icons.power_settings_new,
+                                        color: Colors.red,
+                                        size: 40.0,
                                       ),
                                     ),
-                                    onTap: () => _handleSignOutOnClick(),
                                   ),
-                                  Text("Sign Out",
-                                      style: TextStyle(color: Colors.red))
-                                ],
-                              ),
+                                  onTap: () => _handleSignOutOnClick(),
+                                ),
+                                Text("Sign Out",
+                                    style: TextStyle(color: Colors.red))
+                              ],
                             ),
                           ),
                         ],
@@ -517,9 +515,10 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   calculateDistance({
     double? latitude,
     double? longitude,
+    double radius = 0.20,
   }) {
     bool result = false;
-    final double radius = 0.20;
+    // final double radius = 0.20;
 
     // Fetch current location
     final double distance = distanceBetween(
