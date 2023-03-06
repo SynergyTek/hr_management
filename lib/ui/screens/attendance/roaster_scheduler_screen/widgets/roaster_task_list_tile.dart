@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/roaster_scheduler_list_model/roaster_scheduler_list_model.dart';
 import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/ui/widgets/dotted_divider_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
+import 'package:geolocator/geolocator.dart' as geolocator;
 
 import '../../../../../data/models/task_models/task_list_model.dart';
 import '../../../../../logic/blocs/task_bloc/task_bloc.dart';
@@ -16,13 +20,16 @@ class RoasterTaskListCard extends StatelessWidget {
   final int index;
   final List<TaskListModel>? taskList;
 
-  const RoasterTaskListCard({
+  RoasterTaskListCard({
     Key? key,
     required this.index,
     required this.taskList,
     this.onTap,
     this.isWorklist = false,
   }) : super(key: key);
+
+  double signInLatitude = 0.0;
+  double signInLongitude = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -161,32 +168,12 @@ class RoasterTaskListCard extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: subtitleWidget(
-                      context: context,
-                      caption: "Sign In",
-                      customChild: Icon(
-                        Icons.fingerprint,
-                        color: Colors.green,
-                        size: 40.0,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: subtitleWidget(
-                      context: context,
-                      caption: "Sign Out",
-                      customChild: Icon(
-                        Icons.power_settings_new,
-                        color: Colors.red,
-                        size: 40.0,
-                      ),
-                    ),
-                  ),
-                ],
+              _futureBuilderWidget(
+                latitude: taskList![index].latitude,
+                longitude: taskList![index].longitude,
+                radius: taskList![index].meter,
+                udfNoteId: taskList![index].udfNoteId,
+                status: taskList![index].taskStatusName ?? "",
               ),
             ],
           ),
@@ -256,13 +243,147 @@ class RoasterTaskListCard extends StatelessWidget {
     return taskList?[index].location ?? "-";
   }
 
+  Widget _futureBuilderWidget<T>({
+    double latitude = 0.0,
+    double longitude = 0.0,
+    int radius = 1,
+    required String udfNoteId,
+    required String status,
+  }) {
+    return FutureBuilder(
+      future: geolocator.Geolocator.getCurrentPosition(
+          desiredAccuracy: geolocator.LocationAccuracy.high),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot snapshot,
+      ) {
+        if (snapshot.hasData) {
+          signInLatitude = snapshot.data.latitude;
+          signInLongitude = snapshot.data.longitude;
+
+          bool withinRange = calculateDistance(
+            latitude: latitude,
+            longitude: longitude,
+            radius: radius / 1000,
+          );
+
+          if (withinRange && status == "In Progress") {
+            return Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: GestureDetector(
+                    onTap: () => postTaskTimeEntry(
+                      udfNoteId: udfNoteId,
+                      isSignedIn: true,
+                    ),
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Sign In",
+                      customChild: Icon(
+                        Icons.fingerprint,
+                        color: Colors.green,
+                        size: 40.0,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => postTaskTimeEntry(
+                      udfNoteId: udfNoteId,
+                      isSignedIn: false,
+                    ),
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Sign Out",
+                      customChild: Icon(
+                        Icons.power_settings_new,
+                        color: Colors.red,
+                        size: 40.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return SizedBox();
+          }
+        }
+        return _loadingWidget(text: "Fetching metadata details...");
+      },
+    );
+  }
+
+  Widget _loadingWidget({
+    String? text,
+  }) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CircularProgressIndicator(),
+          SizedBox(height: 10.h),
+          Text(text ?? "Loading..."),
+        ],
+      ),
+    );
+  }
+
+  calculateDistance({
+    double? latitude,
+    double? longitude,
+    double radius = 0.20,
+  }) {
+    bool result = false;
+    // final double radius = 0.20;
+
+    // Fetch current location
+    final double distance = distanceBetween(
+      signInLatitude,
+      signInLongitude,
+      latitude ?? 0.0,
+      longitude ?? 0.0,
+    );
+
+    var distanceInkm = distance / 1000;
+    distanceInkm < radius ? result = true : result = false;
+
+    return result;
+  }
+
+  /// Calculate distance between 2 co-ordinates
+  double distanceBetween(
+    double startLatitude,
+    double startLongitude,
+    double endLatitude,
+    double endLongitude,
+  ) {
+    var earthRadius = 6378137.0;
+    var dLat = _toRadians(endLatitude - startLatitude);
+    var dLon = _toRadians(endLongitude - startLongitude);
+
+    var a = pow(sin(dLat / 2), 2) +
+        pow(sin(dLon / 2), 2) *
+            cos(_toRadians(startLatitude)) *
+            cos(_toRadians(endLatitude));
+    var c = 2 * asin(sqrt(a));
+
+    return earthRadius * c;
+  }
+
+  static _toRadians(double degree) {
+    return degree * pi / 180;
+  }
+
   postTaskTimeEntry({
-    required TaskListModel? item,
+    required String? udfNoteId,
     required bool? isSignedIn,
   }) async {
     Map<String, dynamic> queryparams = {};
 
-    queryparams['udfNoteId'] = item?.udfNoteId;
+    queryparams['udfNoteId'] = udfNoteId;
     if (isSignedIn == true) {
       queryparams['start'] = DateTime.now().toString();
     } else {

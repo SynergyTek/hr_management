@@ -40,7 +40,13 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
     return {
       'userId':
           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      "start": DateTime.now().toString(),
+      "start": DateTime.now()
+          .add(
+            Duration(
+              days: -1,
+            ),
+          )
+          .toString(),
       "end": DateTime.now()
           .add(
             Duration(

@@ -107,7 +107,7 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
     }
   }
 
-  Future<RoasterSchedulerListResponse> getPostTaskTimeEntry({
+  Future<bool> getPostTaskTimeEntry({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   }) async {
@@ -119,14 +119,20 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
         queryParameters: queryparams ?? {},
       );
 
-      return RoasterSchedulerListResponse.fromJson(response.data);
+      // if (response.data['success'] == true) {
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+      // return RoasterSchedulerListResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print("Stacktrace: $stacktrace \nError: $err");
 
-      return RoasterSchedulerListResponse.withError("$err");
+      return false;
+      // return RoasterSchedulerListResponse.withError("$err");
     }
   }
-
 
   @override
   Future<AttendanceViewResponse> deleteAPIData(
