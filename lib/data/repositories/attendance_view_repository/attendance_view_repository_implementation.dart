@@ -28,7 +28,7 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
   Future<AttendanceViewResponse> postInsertEmployeeTracking({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
-    List<dynamic>? data,
+    List<UserLocation>? data,
   }) async {
     final String endpoint = APIEndpointConstants.POST_INSERT_EMPLOYEE_TRACKING;
 

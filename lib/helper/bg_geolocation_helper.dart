@@ -27,7 +27,6 @@ class BgGeolocationHelper {
             stopTimeout: 5,
             startOnBoot: true,
             debug: true,
-            enableHeadless: true,
             logLevel: bg.Config.LOG_LEVEL_VERBOSE,
             heartbeatInterval: 60,
             backgroundPermissionRationale: bg.PermissionRationale(
@@ -37,6 +36,11 @@ class BgGeolocationHelper {
                     "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
                 positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
                 negativeAction: 'Cancel'),
+            url:
+                'https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTrackingBG',
+            params: {
+              "userId": '1721be46-402a-412a-b3c9-e176f32e3536',
+            },
             reset: true))
         .then((bg.State state) {
       if (state.schedule!.isNotEmpty) {
@@ -92,14 +96,14 @@ class BgGeolocationHelper {
   }
 
   Future<void> apicall({required double lat, required long}) async {
-    AttendanceViewRepository repo = AttendanceViewRepository();
-    List<UserLocation> list = [
-      UserLocation(
-          userId: this.userId,
-          trackingDate: DateTime.now().toIso8601String(),
-          latitude: lat,
-          longitude: long)
-    ];
-    repo.postInsertEmployeeTracking(data: list);
+    // AttendanceViewRepository repo = AttendanceViewRepository();
+    // List<UserLocation> list = [
+    //   UserLocation(
+    //       userId: this.userId,
+    //       trackingDate: DateTime.now().toIso8601String(),
+    //       latitude: lat,
+    //       longitude: long)
+    // ];
+    // repo.postInsertEmployeeTracking(data: list);
   }
 }

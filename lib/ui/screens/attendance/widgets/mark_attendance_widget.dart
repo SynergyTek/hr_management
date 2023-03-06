@@ -10,6 +10,7 @@ import '../../../../data/models/login_models/extra_user_information_model.dart';
 import '../../../../data/models/user_geo_location_model/user_geo_location_model.dart';
 import '../../../../data/models/user_geo_location_model/user_geo_location_response.dart';
 import '../../../../data/models/user_location_model.dart';
+import '../../../../helper/bg_geolocation_helper.dart';
 import '../../../../logic/blocs/access_log_bloc/access_log_bloc.dart';
 import '../../../widgets/progress_indicator.dart';
 import '../../../widgets/snack_bar.dart';
@@ -20,6 +21,7 @@ import 'package:flutter_background_geolocation/flutter_background_geolocation.da
     as bg;
 import 'package:http/http.dart' as http;
 import 'package:geocoding/geocoding.dart' as geo;
+import 'dart:convert';
 
 class MarkAttendanceWidget extends StatefulWidget {
   MarkAttendanceWidget();
@@ -43,6 +45,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
   bool isVisible = true;
   String _location = 'Fetching location...';
+  JsonEncoder encoder = const JsonEncoder.withIndent("     ");
 
   activateSignIn() async {
     UserGeolocationResponse? response =
@@ -87,6 +90,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
         false;
 
     super.initState();
+    // BgGeolocationHelper(userId: BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '').initializeBgGeolocation();
     bg.BackgroundGeolocation.onLocation(_onLocation);
     bg.BackgroundGeolocation.onMotionChange(_onMotionChange);
     bg.BackgroundGeolocation.onActivityChange(_onActivityChange);
@@ -97,29 +101,32 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
     // 2.  Configure the plugin
     bg.BackgroundGeolocation.ready(bg.Config(
-            desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
-            autoSync: true,
-            distanceFilter: 10.0,
-            stopOnTerminate: false,
-            stopTimeout: 5,
-            startOnBoot: true,
-            debug: true,
-            enableHeadless: true,
-            logLevel: bg.Config.LOG_LEVEL_VERBOSE,
-            heartbeatInterval: 60,
-            backgroundPermissionRationale: bg.PermissionRationale(
-                title:
-                    "Allow {applicationName} to access this device's location even when the app is closed or not in use.",
-                message:
-                    "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
-                positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
-                negativeAction: 'Cancel'),
-            reset: true))
-        .then((bg.State state) {
-      if (state.schedule!.isNotEmpty) {
-        bg.BackgroundGeolocation.startSchedule();
-      }
-    });
+        desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
+        autoSync: true,
+        distanceFilter: 10.0,
+        stopOnTerminate: false,
+        stopTimeout: 5,
+        startOnBoot: true,
+        debug: true,
+        enableHeadless: true,
+        logLevel: bg.Config.LOG_LEVEL_VERBOSE,
+        heartbeatInterval: 60,
+        backgroundPermissionRationale: bg.PermissionRationale(
+            title:
+                "Allow {applicationName} to access this device's location even when the app is closed or not in use.",
+            message:
+                "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
+            positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
+            negativeAction: 'Cancel'),
+        url:
+            'https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTrackingBG',
+        params: {
+          "userId":
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+          "trackingDate": DateTime.now().toIso8601String()
+        },
+        enableTimestampMeta: true,
+        reset: true));
   }
 
   @override
@@ -453,7 +460,6 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
 
   void _onLocation(bg.Location location) {
     print('[location] - $location');
-
     apicall(lat: location.coords.latitude, long: location.coords.longitude);
     signInLatitude = location.coords.latitude;
     signInLongitude = location.coords.longitude;
@@ -479,7 +485,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   void _onHttp(bg.HttpEvent event) async {
-    print('[${bg.Event.HTTP}] - $event');
+    print('Roshan:-[${bg.Event.HTTP}] - $event');
   }
 
   void _onGeofence(bg.GeofenceEvent event) async {
@@ -489,27 +495,27 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   Future<void> apicall({required double lat, required long}) async {
-    String url =
-        "https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTracking";
-    var client = http.Client();
-    List<UserLocation> list = [
-      UserLocation(
-          userId:
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          trackingDate: DateTime.now().toIso8601String(),
-          latitude: lat,
-          longitude: long)
-    ];
-    try {
-      var response = await http.post(Uri.parse(url),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(list.map((e) => e.toJson()).toList()));
-      print(response);
-    } finally {
-      client.close();
-    }
+    // String url =
+    //     "https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTracking";
+    // var client = http.Client();
+    // List<UserLocation> list = [
+    //   UserLocation(
+    //       userId:
+    //           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+    //       trackingDate: DateTime.now().toIso8601String(),
+    //       latitude: lat,
+    //       longitude: long)
+    // ];
+    // try {
+    //   var response = await http.post(Uri.parse(url),
+    //       headers: <String, String>{
+    //         'Content-Type': 'application/json; charset=UTF-8',
+    //       },
+    //       body: jsonEncode(list.map((e) => e.toJson()).toList()));
+    //   print(response);
+    // } finally {
+    //   client.close();
+    // }
   }
 
   calculateDistance({
