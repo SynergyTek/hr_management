@@ -560,18 +560,13 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   Future<void> _getCurrentPosition() async {
-    // final hasPermission = await _handleLocationPermission();
-    // if (!hasPermission) return;
     await geolo.Geolocator.getCurrentPosition(
             desiredAccuracy: geolo.LocationAccuracy.high)
         .then((geolo.Position position) {
-      // setState(() {
       signInLatitude = position.latitude;
       signInLongitude = position.longitude;
       activateSignIn();
       getUserAddressFromCoord();
-      // });
-      // setState(() => _currentPosition = position);
     }).catchError((e) {
       debugPrint(e);
     });
