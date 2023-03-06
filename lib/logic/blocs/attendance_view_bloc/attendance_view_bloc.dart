@@ -1,4 +1,5 @@
 import 'package:hr_management/data/models/roaster_scheduler_list_model/roaster_scheduler_list_response.dart';
+import 'package:hr_management/data/models/user_location_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../data/models/attendance_view_models/attendance_view_response.dart';
@@ -27,7 +28,7 @@ class AttendanceViewBloc {
 
   postInsertEmployeeTracking({
     Map<String, dynamic>? queryparams,
-    List<dynamic>? data,
+    List<UserLocation>? data,
   }) async {
     AttendanceViewResponse response =
         await _apiRepository.postInsertEmployeeTracking(

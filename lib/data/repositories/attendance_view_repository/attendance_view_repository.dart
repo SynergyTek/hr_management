@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:hr_management/data/models/user_location_model.dart';
 import '../../models/attendance_view_models/attendance_view_response.dart';
 
 import '../../../constants/api_endpoints.dart';
@@ -21,7 +22,7 @@ abstract class AbstractAttendanceViewRepository {
   Future<AttendanceViewResponse> postInsertEmployeeTracking({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
-    List<dynamic>? data,
+    List<UserLocation>? data,
   });
 
   Future<AttendanceViewResponse> getEmployeeTrackingByDate({

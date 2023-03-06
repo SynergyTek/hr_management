@@ -5,38 +5,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:location/location.dart' as loc;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
-    as bg;
+
 import 'ui/screens/init_screen/init_screen.dart';
-
-/// Receive events from BackgroundGeolocation in Headless state.
-@pragma('vm:entry-point')
-void backgroundGeolocationHeadlessTask(bg.HeadlessEvent headlessEvent) async {
-  print('📬 --> $headlessEvent');
-
-  switch (headlessEvent.name) {
-    case bg.Event.BOOT:
-      bg.State state = await bg.BackgroundGeolocation.state;
-      print("📬 didDeviceReboot: ${state.didDeviceReboot}");
-      break;
-    case bg.Event.LOCATION:
-      bg.Location location = headlessEvent.event;
-      print(location);
-      break;
-    case bg.Event.MOTIONCHANGE:
-      bg.Location location = headlessEvent.event;
-      print(location);
-      break;
-    case bg.Event.GEOFENCE:
-      bg.GeofenceEvent geofenceEvent = headlessEvent.event;
-      print(geofenceEvent);
-      break;
-    case bg.Event.GEOFENCESCHANGE:
-      bg.GeofencesChangeEvent event = headlessEvent.event;
-      print(event);
-      break;
-  }
-}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,13 +35,8 @@ Future<void> main() async {
 
   await Permission.camera.request();
   await Permission.microphone.request();
-
   HydratedBlocOverrides.runZoned(
     () => runApp(InitScreen()),
     storage: storage,
   );
-
-  /// Register BackgroundGeolocation headless-task.
-  bg.BackgroundGeolocation.registerHeadlessTask(
-      backgroundGeolocationHeadlessTask);
 }
