@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/roaster_scheduler_list_model/roaster_scheduler_list_model.dart';
+import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/ui/widgets/dotted_divider_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -13,6 +15,7 @@ class RoasterTaskListCard extends StatelessWidget {
   final bool isWorklist;
   final int index;
   final List<TaskListModel>? taskList;
+
   const RoasterTaskListCard({
     Key? key,
     required this.index,
@@ -251,5 +254,22 @@ class RoasterTaskListCard extends StatelessWidget {
 
   String address(int index) {
     return taskList?[index].location ?? "-";
+  }
+
+  postTaskTimeEntry({
+    required TaskListModel? item,
+    required bool? isSignedIn,
+  }) async {
+    Map<String, dynamic> queryparams = {};
+
+    queryparams['udfNoteId'] = item?.udfNoteId;
+    if (isSignedIn == true) {
+      queryparams['start'] = DateTime.now().toString();
+    } else {
+      queryparams['end'] = DateTime.now().toString();
+    }
+    queryparams['type'] = 'automaticTimeEntry';
+
+    await attendanceViewBloc.getPostTaskTimeEntry(queryparams: queryparams);
   }
 }
