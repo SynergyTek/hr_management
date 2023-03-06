@@ -854,10 +854,27 @@ class _TaskWidgetState extends State<TaskWidget> {
                       .split(' ')[0]
                       .contains(RegExp(r'[a-z]'))
                   ? null
-                  : DateFormat("yyyy-MM-dd")
-                      .parse(udfJson[model[i].key]!)
-                      .toString()
+                  : udfJson[model[i].key]!.contains('/')
+                      ? DateFormat("dd/MM/yyyy hh:mm")
+                          .parse(udfJson[model[i].key]!)
+                          .toString()
+                      : DateFormat("yyyy-MM-dd")
+                          .parse(udfJson[model[i].key]!)
+                          .toString()
               : null,
+
+          //  udfJson[model[i].key]!.isNotEmpty
+          //     ? model[i]
+          //             .udfValue
+          //             .toString()
+          //             .split(' ')[0]
+          //             .contains(RegExp(r'[a-z]'))
+          //         ? null
+          //         : DateFormat("yyyy-MM-dd")
+          //             .parse(udfJson[model[i].key]!)
+          //             .toString()
+          //     : null,
+
           name: model[i].label,
           key: Key(model[i].label),
           selectDate: (DateTime date) {

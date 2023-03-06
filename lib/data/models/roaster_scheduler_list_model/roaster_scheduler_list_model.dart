@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:hr_management/data/models/task_models/task_list_model.dart';
+
 List<RoasterSchedulerListModel> roasterSchedulerListModelFromJson(String str) =>
     List<RoasterSchedulerListModel>.from(
         json.decode(str).map((x) => RoasterSchedulerListModel.fromJson(x)));
@@ -367,6 +369,8 @@ class RoasterSchedulerListModel {
     this.status,
     this.versionNo,
     this.portalId,
+    this.taskList,
+   
   });
 
   dynamic legalEntityCode;
@@ -723,6 +727,8 @@ class RoasterSchedulerListModel {
   int? status;
   int? versionNo;
   dynamic portalId;
+  List<TaskListModel>? taskList;
+ 
 
   factory RoasterSchedulerListModel.fromJson(Map<String, dynamic> json) =>
       RoasterSchedulerListModel(
@@ -1088,6 +1094,11 @@ class RoasterSchedulerListModel {
         status: json["Status"],
         versionNo: json["VersionNo"],
         portalId: json["PortalId"],
+       
+        taskList: json["TaskList"] == null
+            ? []
+            : List<TaskListModel>.from(
+                json["TaskList"]!.map((x) => TaskListModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -1445,5 +1456,9 @@ class RoasterSchedulerListModel {
         "Status": status,
         "VersionNo": versionNo,
         "PortalId": portalId,
+       
+        "TaskList": taskList == null
+            ? []
+            : List<dynamic>.from(taskList!.map((x) => x.toJson())),
       };
 }
