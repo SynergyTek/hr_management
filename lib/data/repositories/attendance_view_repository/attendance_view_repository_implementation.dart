@@ -119,7 +119,8 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
         queryParameters: queryparams ?? {},
       );
 
-      if (response.data['success'] == 'true') {
+      // if (response.data['success'] == true) {
+      if (response.statusCode == 200) {
         return true;
       } else {
         return false;
