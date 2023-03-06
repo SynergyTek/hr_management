@@ -52,4 +52,8 @@ abstract class AbstractAttendanceViewRepository {
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
+  Future<bool> getPostTaskTimeEntry({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  });
 }

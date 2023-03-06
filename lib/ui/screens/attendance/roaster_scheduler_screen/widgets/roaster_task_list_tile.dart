@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hr_management/data/models/roaster_scheduler_list_model/roaster_scheduler_list_model.dart';
+import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/ui/widgets/dotted_divider_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
@@ -170,6 +172,8 @@ class RoasterTaskListCard extends StatelessWidget {
                 latitude: taskList![index].latitude,
                 longitude: taskList![index].longitude,
                 radius: taskList![index].meter,
+                udfNoteId: taskList![index].udfNoteId,
+                status: taskList![index].taskStatusName ?? "",
               ),
             ],
           ),
@@ -243,6 +247,8 @@ class RoasterTaskListCard extends StatelessWidget {
     double latitude = 0.0,
     double longitude = 0.0,
     int radius = 1,
+    required String udfNoteId,
+    required String status,
   }) {
     return FutureBuilder(
       future: geolocator.Geolocator.getCurrentPosition(
@@ -254,41 +260,56 @@ class RoasterTaskListCard extends StatelessWidget {
         if (snapshot.hasData) {
           signInLatitude = snapshot.data.latitude;
           signInLongitude = snapshot.data.longitude;
+
           bool withinRange = calculateDistance(
             latitude: latitude,
             longitude: longitude,
             radius: radius / 1000,
           );
-          if (!withinRange) {
+
+          if (withinRange && status == "In Progress") {
+            return Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: GestureDetector(
+                    onTap: () => postTaskTimeEntry(
+                      udfNoteId: udfNoteId,
+                      isSignedIn: true,
+                    ),
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Sign In",
+                      customChild: Icon(
+                        Icons.fingerprint,
+                        color: Colors.green,
+                        size: 40.0,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => postTaskTimeEntry(
+                      udfNoteId: udfNoteId,
+                      isSignedIn: false,
+                    ),
+                    child: subtitleWidget(
+                      context: context,
+                      caption: "Sign Out",
+                      customChild: Icon(
+                        Icons.power_settings_new,
+                        color: Colors.red,
+                        size: 40.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          } else {
             return SizedBox();
           }
-          return Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: subtitleWidget(
-                  context: context,
-                  caption: "Sign In",
-                  customChild: Icon(
-                    Icons.fingerprint,
-                    color: Colors.green,
-                    size: 40.0,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: subtitleWidget(
-                  context: context,
-                  caption: "Sign Out",
-                  customChild: Icon(
-                    Icons.power_settings_new,
-                    color: Colors.red,
-                    size: 40.0,
-                  ),
-                ),
-              ),
-            ],
-          );
         }
         return _loadingWidget(text: "Fetching metadata details...");
       },
@@ -354,5 +375,22 @@ class RoasterTaskListCard extends StatelessWidget {
 
   static _toRadians(double degree) {
     return degree * pi / 180;
+  }
+
+  postTaskTimeEntry({
+    required String? udfNoteId,
+    required bool? isSignedIn,
+  }) async {
+    Map<String, dynamic> queryparams = {};
+
+    queryparams['udfNoteId'] = udfNoteId;
+    if (isSignedIn == true) {
+      queryparams['start'] = DateTime.now().toString();
+    } else {
+      queryparams['end'] = DateTime.now().toString();
+    }
+    queryparams['type'] = 'automaticTimeEntry';
+
+    await attendanceViewBloc.getPostTaskTimeEntry(queryparams: queryparams);
   }
 }

@@ -70,6 +70,15 @@ class AttendanceViewBloc {
     return response;
   }
 
+  Future<bool> getPostTaskTimeEntry({
+    Map<String, dynamic>? queryparams,
+  }) async {
+    bool response = await _apiRepository.getPostTaskTimeEntry(
+      queryparams: queryparams,
+    );
+    return response;
+  }
+
   /// Used to create new entries.
   postData() async {}
 
@@ -93,6 +102,7 @@ class AttendanceViewBloc {
 
   dispose() {
     _subject.close();
+    _subjectRoasterScheduler.close();
   }
 
   BehaviorSubject<AttendanceViewResponse> get subject => _subject;

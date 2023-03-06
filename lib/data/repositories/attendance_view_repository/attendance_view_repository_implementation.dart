@@ -107,6 +107,32 @@ class AttendanceViewRepository extends AbstractAttendanceViewRepository {
     }
   }
 
+  Future<bool> getPostTaskTimeEntry({
+    // Optional Params to be added to the request if required.
+    Map<String, dynamic>? queryparams,
+  }) async {
+    final String endpoint = APIEndpointConstants.GET_POST_TASK_TIME_ENTRY;
+
+    try {
+      Response response = await _dio.get(
+        endpoint,
+        queryParameters: queryparams ?? {},
+      );
+
+      if (response.data['success'] == 'true') {
+        return true;
+      } else {
+        return false;
+      }
+      // return RoasterSchedulerListResponse.fromJson(response.data);
+    } catch (err, stacktrace) {
+      print("Stacktrace: $stacktrace \nError: $err");
+
+      return false;
+      // return RoasterSchedulerListResponse.withError("$err");
+    }
+  }
+
   @override
   Future<AttendanceViewResponse> deleteAPIData(
       {Map<String, dynamic>? queryparams}) {

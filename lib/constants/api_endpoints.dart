@@ -602,4 +602,7 @@ class APIEndpointConstants {
 
   static const GET_ROASTER_SCHEDULER_LIST =
       '$BASE_URL/taa/attendance/GetRosterSchedulerList';
+
+  //
+  static const GET_POST_TASK_TIME_ENTRY = '$BASE_URL/nts/command/PostTaskTimeEntry';
 }
