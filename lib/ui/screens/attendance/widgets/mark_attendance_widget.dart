@@ -5,7 +5,6 @@ import 'package:geolocator/geolocator.dart' as geolo;
 import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
-import 'package:location/location.dart';
 
 import '../../../../data/models/login_models/extra_user_information_model.dart';
 import '../../../../data/models/user_geo_location_model/user_geo_location_model.dart';
@@ -205,96 +204,82 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                     SizedBox(
                       height: 15.0,
                     ),
-                    Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 5,
-                                child: Opacity(
-                                  opacity: isSignInActive ? 1.0 : 0.4,
-                                  child: AbsorbPointer(
-                                    absorbing: isSignInActive,
-                                    child: Column(
-                                      children: <Widget>[
-                                        InkWell(
-                                          child: CircleAvatar(
-                                            radius: 35,
-                                            backgroundColor: Colors.green,
-                                            child: CircleAvatar(
-                                              radius: 33,
-                                              backgroundColor: Colors.white,
-                                              child: Icon(
-                                                Icons.fingerprint,
-                                                color: Colors.green,
-                                                size: 40.0,
-                                              ),
-                                            ),
-                                          ),
-                                          onTap: () => _handleSignInOnClick(),
-                                        ),
-                                        Text("Sign In",
-                                            style:
-                                                TextStyle(color: Colors.green))
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 5,
-                                child: AbsorbPointer(
-                                  absorbing: isSignInActive,
-                                  child: Column(
-                                    children: <Widget>[
-                                      InkWell(
+                    Container(
+                      padding: EdgeInsets.all(10.0),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 5,
+                            child: Opacity(
+                              opacity: isSignInActive ? 1.0 : 0.4,
+                              child: AbsorbPointer(
+                                absorbing: isSignInActive,
+                                child: Column(
+                                  children: <Widget>[
+                                    InkWell(
+                                      child: CircleAvatar(
+                                        radius: 35,
+                                        backgroundColor: Colors.green,
                                         child: CircleAvatar(
-                                          radius: 35,
-                                          backgroundColor: Colors.red,
-                                          child: CircleAvatar(
-                                            radius: 33,
-                                            backgroundColor: Colors.white,
-                                            child: Icon(
-                                              Icons.power_settings_new,
-                                              color: Colors.red,
-                                              size: 40.0,
-                                            ),
+                                          radius: 33,
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.fingerprint,
+                                            color: Colors.green,
+                                            size: 40.0,
                                           ),
                                         ),
-                                        onTap: () => _handleSignOutOnClick(),
                                       ),
-                                      Text("Sign Out",
-                                          style: TextStyle(color: Colors.red))
-                                    ],
+                                      onTap: () => _handleSignInOnClick(),
+                                    ),
+                                    Text("Sign In",
+                                        style: TextStyle(color: Colors.green))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 5,
+                            child: AbsorbPointer(
+                              absorbing: isSignInActive,
+                              child: Column(
+                                children: <Widget>[
+                                  InkWell(
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      backgroundColor: Colors.red,
+                                      child: CircleAvatar(
+                                        radius: 33,
+                                        backgroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.power_settings_new,
+                                          color: Colors.red,
+                                          size: 40.0,
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () => _handleSignOutOnClick(),
                                   ),
-                                ),
+                                  Text("Sign Out",
+                                      style: TextStyle(color: Colors.red))
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.red[800],
-                                  size: 28,
-                                ),
-                              ),
-                              Text(
-                                _location,
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.location_on,
+                        color: Colors.red[800],
+                        size: 28,
+                      ),
+                      title: Text(
+                        _location,
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ],
                 )),
