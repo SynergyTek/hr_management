@@ -102,7 +102,6 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
     // 2.  Configure the plugin
     bg.BackgroundGeolocation.ready(bg.Config(
         desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
-        autoSync: true,
         distanceFilter: 10.0,
         stopOnTerminate: false,
         stopTimeout: 5,
@@ -118,13 +117,13 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                 "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
             positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
             negativeAction: 'Cancel'),
-        url:
-            'https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTrackingBG',
-        params: {
-          "userId":
-              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-          "trackingDate": DateTime.now().toIso8601String()
-        },
+        // url:
+        //     'https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTrackingBG',
+        // params: {
+        //   "userId":
+        //       BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+        //   "trackingDate": DateTime.now().toIso8601String()
+        // },
         enableTimestampMeta: true,
         reset: true));
   }
@@ -495,27 +494,27 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
   }
 
   Future<void> apicall({required double lat, required long}) async {
-    // String url =
-    //     "https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTracking";
-    // var client = http.Client();
-    // List<UserLocation> list = [
-    //   UserLocation(
-    //       userId:
-    //           BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-    //       trackingDate: DateTime.now().toIso8601String(),
-    //       latitude: lat,
-    //       longitude: long)
-    // ];
-    // try {
-    //   var response = await http.post(Uri.parse(url),
-    //       headers: <String, String>{
-    //         'Content-Type': 'application/json; charset=UTF-8',
-    //       },
-    //       body: jsonEncode(list.map((e) => e.toJson()).toList()));
-    //   print(response);
-    // } finally {
-    //   client.close();
-    // }
+    String url =
+        "https://webapidev.aitalkx.com/taa/attendance/InsertEmployeeTracking";
+    var client = http.Client();
+    List<UserLocation> list = [
+      UserLocation(
+          userId:
+              BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+          trackingDate: DateTime.now().toIso8601String(),
+          latitude: lat,
+          longitude: long)
+    ];
+    try {
+      var response = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(list.map((e) => e.toJson()).toList()));
+      print(response);
+    } finally {
+      client.close();
+    }
   }
 
   calculateDistance({
