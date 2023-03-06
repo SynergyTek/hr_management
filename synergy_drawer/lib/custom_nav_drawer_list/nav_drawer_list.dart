@@ -59,25 +59,29 @@ List<dynamic> navDrawerList = [
   // ]),
 
   // Attendance
-  ExapnsionTileModel(title: 'Attendance', isExpanded: true, childList: [
-    NavDrawerModel(
-        title: 'Remote Signin/Signout Request',
-        //route: MARK_ATTENDANCE_ROUTE,
-        pageName: 'RemoteSignInSignOutRequest'),
-    NavDrawerModel(
-        title: 'Attendance Details',
-        //route: EMPLOYE_ATTENDANCE_LIST_SCREEN,
-        pageName: 'EmployeeAttendanceReport'),
-    NavDrawerModel(
-        title: 'Access Logs', //route: DISPLAY_ACCESS_LOG,
-        pageName: 'AccessLog'),
-    NavDrawerModel(
-        title: 'Roster Schedule', //route: DISPLAY_ACCESS_LOG,
-        pageName: 'RosterScheduleScreen'),
-    NavDrawerModel(
-        title: 'Map', //route: DISPLAY_ACCESS_LOG,
-        pageName: 'MapScreen'),
-  ]),
+  ExapnsionTileModel(
+    title: 'Attendance',
+    isExpanded: true,
+    childList: [
+      NavDrawerModel(
+          title: 'Remote Signin/Signout Request',
+          //route: MARK_ATTENDANCE_ROUTE,
+          pageName: 'RemoteSignInSignOutRequest'),
+      NavDrawerModel(
+          title: 'Attendance Details',
+          //route: EMPLOYE_ATTENDANCE_LIST_SCREEN,
+          pageName: 'EmployeeAttendanceReport'),
+      NavDrawerModel(
+          title: 'Access Logs', //route: DISPLAY_ACCESS_LOG,
+          pageName: 'AccessLog'),
+      NavDrawerModel(
+          title: 'Roster Schedule', //route: DISPLAY_ACCESS_LOG,
+          pageName: 'RosterScheduleScreen'),
+      // NavDrawerModel(
+      //     title: 'Map', //route: DISPLAY_ACCESS_LOG,
+      //     pageName: 'MapScreen'),
+    ],
+  ),
 
   // Leave
   ExapnsionTileModel(title: 'Leave', isExpanded: true, childList: [

@@ -651,10 +651,10 @@ class AppRouter {
               templateCode: 'TMS_GENERAL', isDelete: true, showBack: true),
         );
 
-      case MAP_SCREEN:
-        return MaterialPageRoute(
-          builder: (_) => MapScreen(),
-        );
+      // case MAP_SCREEN:
+      //   return MaterialPageRoute(
+      //     builder: (_) => MapScreen(),
+      //   );
 
       // 404 route.
       default:

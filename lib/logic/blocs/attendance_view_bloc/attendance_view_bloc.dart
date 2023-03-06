@@ -13,8 +13,9 @@ class AttendanceViewBloc {
   final BehaviorSubject<AttendanceViewResponse> _subject =
       BehaviorSubject<AttendanceViewResponse>();
 
-  final BehaviorSubject<RoasterSchedulerListResponse> _subjectRoasterScheduler =
-      BehaviorSubject<RoasterSchedulerListResponse>();
+  final BehaviorSubject<RoasterSchedulerListResponse?>
+      _subjectRoasterScheduler =
+      BehaviorSubject<RoasterSchedulerListResponse?>();
 
   /// Used to fetch new entries.
   getData({
@@ -60,6 +61,7 @@ class AttendanceViewBloc {
   Future<RoasterSchedulerListResponse> getRoasterSchedulerList({
     Map<String, dynamic>? queryparams,
   }) async {
+    _subjectRoasterScheduler.sink.add(null);
     RoasterSchedulerListResponse response =
         await _apiRepository.getRoasterSchedulerList(
       queryparams: queryparams,
@@ -94,7 +96,7 @@ class AttendanceViewBloc {
   }
 
   BehaviorSubject<AttendanceViewResponse> get subject => _subject;
-  BehaviorSubject<RoasterSchedulerListResponse> get subjectRoasterScheduler =>
+  BehaviorSubject<RoasterSchedulerListResponse?> get subjectRoasterScheduler =>
       _subjectRoasterScheduler;
 }
 
