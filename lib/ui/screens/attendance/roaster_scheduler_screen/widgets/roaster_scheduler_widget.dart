@@ -77,22 +77,27 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
             for (var element in _roasterSchedulerList!) {
               if (element.totalHours != "00:00:00" &&
                   element.draftTotalHours != "00:00:00") {
-                //     var duration = Duration(
-                //         hours: element.totalHours
-                //             .split(':')[0]
-                //             .replaceAll(RegExp(r'[^\w\s]+'), ''),
-                //         minutes: element.totalHours
-                //             .split(':')[1]
-                //             .replaceAll(RegExp(r'[^\w\s]+'), ''),
-                //         seconds: element.totalHours
-                //             .split(':')[2]
-                //             .replaceAll(RegExp(r'[^\w\s]+'), ''));
-                totalHoursList
-                    .add(element.totalHours ?? element.draftTotalHours);
+                var hours = element.totalHours
+                    .split(':')[0]
+                    .replaceAll(RegExp(r'[^\w\s]+'), '');
+                var minutes = element.totalHours
+                    .split(':')[1]
+                    .replaceAll(RegExp(r'[^\w\s]+'), '');
+                var seconds = element.totalHours
+                    .split(':')[2]
+                    .replaceAll(RegExp(r'[^\w\s]+'), '');
+                var duration = Duration(
+                    hours: int.parse(hours),
+                    minutes: int.parse(minutes),
+                    seconds: int.parse(seconds));
+                totalHoursList.add(duration
+                    // element.totalHours ?? element.draftTotalHours
+                    );
               }
             }
-            totalHours = totalHoursList[0];
-            // totalHoursList.reduce((a, b) => a + b);
+            totalHours =
+                // totalHoursList[0];
+                totalHoursList.reduce((a, b) => a + b);
 
             return Column(
               children: [
@@ -236,7 +241,8 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
             element?.totalHours != "00:00:00" &&
                     element?.dutyText != null &&
                     element?.dutyText?.trim() != ""
-                ? Text('${element?.dutyText?.toString() ?? 'NA'}')
+                ? Text(
+                    '${element?.dutyText?.toString().replaceAll('<br/>', ", ") ?? 'NA'}')
                 : element?.draftDuty1StartTime != null
                     ? Text(
                         '${element?.draftDuty1StartTime?.toString() ?? 'NA'}-${element?.draftDuty1EndTime?.toString() ?? 'NA'}',
