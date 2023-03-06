@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/data/models/roaster_scheduler_list_model/roaster_scheduler_list_response.dart';
 import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
+import 'package:hr_management/logic/blocs/user_model_bloc/user_model_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/widgets.dart';
 
@@ -8,6 +9,7 @@ import '../../../../../data/models/roaster_scheduler_list_model/roaster_schedule
 import '../../../../widgets/empty_list_widget.dart';
 import '../../../../widgets/progress_indicator.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RosterScheduleWidget extends StatefulWidget {
   RosterScheduleWidget();
@@ -34,13 +36,15 @@ class _RosterScheduleWidget extends State<RosterScheduleWidget> {
   _handleQueryparams() {
     return {
       //  'userId':
-      // BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
-      "userId": "45bba746-3309-49b7-9c03-b5793369d73c",
+
+      "userId":
+          BlocProvider.of<UserModelBloc>(context).state.userModel?.id ?? '',
+      // "45bba746-3309-49b7-9c03-b5793369d73c",
       "start": DateTime.now().toString(),
       // "2023-02-26",
       "end": DateTime.now()
           .add(Duration(
-            days: 7,
+            days: 6,
           ))
           .toString()
       // "2023-03-4",
