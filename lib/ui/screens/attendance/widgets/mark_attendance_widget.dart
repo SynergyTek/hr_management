@@ -216,7 +216,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                                 child: Opacity(
                                   opacity: isSignInActive ? 1.0 : 0.4,
                                   child: AbsorbPointer(
-                                    absorbing: isSignInActive,
+                                    absorbing: !isSignInActive,
                                     child: Column(
                                       children: <Widget>[
                                         InkWell(
@@ -246,7 +246,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
                               Expanded(
                                 flex: 5,
                                 child: AbsorbPointer(
-                                  absorbing: isSignInActive,
+                                  absorbing: !isSignInActive,
                                   child: Column(
                                     children: <Widget>[
                                       InkWell(
@@ -357,7 +357,7 @@ class _MarkAttendanceWidgetState extends State<MarkAttendanceWidget> {
           .then((data) async {
         String address =
             "${data.first.name == null || data.first.name!.isEmpty ? '' : data.first.name! + ', '}${data.first.street == null || data.first.street!.isEmpty ? '' : data.first.street! + ', '}${data.first.subLocality == null || data.first.subLocality!.isEmpty ? '' : data.first.subLocality! + ', '}${data.first.locality == null || data.first.locality!.isEmpty ? '' : data.first.locality! + ', '}${data.first.subAdministrativeArea == null || data.first.subAdministrativeArea!.isEmpty ? '' : data.first.subAdministrativeArea! + ', '}${data.first.administrativeArea == null || data.first.administrativeArea!.isEmpty ? '' : data.first.administrativeArea! + ', '}${data.first.postalCode == null || data.first.postalCode!.isEmpty ? '' : data.first.postalCode! + ', '}${data.first.isoCountryCode == null || data.first.isoCountryCode!.isEmpty ? '' : data.first.isoCountryCode! + '.'}";
-        accessLogBloc.getInsertAccessLog(
+        await accessLogBloc.getInsertAccessLog(
           latitude: signInLatitude,
           longitude: signInLongitude,
           isSignIn: true,
