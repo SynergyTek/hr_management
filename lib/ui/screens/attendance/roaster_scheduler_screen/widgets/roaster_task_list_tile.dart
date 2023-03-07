@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hr_management/data/models/roaster_scheduler_list_model/roaster_scheduler_list_model.dart';
 import 'package:hr_management/logic/blocs/attendance_view_bloc/attendance_view_bloc.dart';
 import 'package:hr_management/ui/widgets/dotted_divider_widget.dart';
 import 'package:intl/intl.dart';
@@ -12,9 +11,10 @@ import '../../../../../data/models/task_models/task_list_model.dart';
 import '../../../../../logic/blocs/task_bloc/task_bloc.dart';
 import '../../../../../routes/route_constants.dart';
 import '../../../../../routes/screen_arguments.dart';
+import '../../../../widgets/progress_indicator.dart';
 import '../../../../widgets/widgets.dart';
 
-class RoasterTaskListCard extends StatelessWidget {
+class RoasterTaskListCard extends StatefulWidget {
   final bool? onTap;
   final bool isWorklist;
   final int index;
@@ -28,219 +28,248 @@ class RoasterTaskListCard extends StatelessWidget {
     this.isWorklist = false,
   }) : super(key: key);
 
+  @override
+  State<RoasterTaskListCard> createState() => _RoasterTaskListCardState();
+
+  static _toRadians(double degree) {
+    return degree * pi / 180;
+  }
+}
+
+class _RoasterTaskListCardState extends State<RoasterTaskListCard> {
   double signInLatitude = 0.0;
   double signInLongitude = 0.0;
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
-        ),
-      ),
-      child: GestureDetector(
-        onTap: onTap!
-            ? () {
-                taskBloc.subjectGetTaskDetails.sink.add(null);
-                Navigator.pushNamed(
-                  context,
-                  CREATE_EDIT_TASK_ROUTE,
-                  arguments: ScreenArguments(
-                    arg1: '',
-                    arg2: taskList![index].taskActionId ?? taskList![index].id,
-                    arg3: taskList![index].taskSubject,
-                    // arg2: isWorklist
-                    //     ? taskList![index].taskActionId
-                    //     : taskList![index].id,
-                    // arg3: _taskList[index].templateMasterCode),
+    return Stack(
+      children: [
+        Card(
+          elevation: 4,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
+          ),
+          child: GestureDetector(
+            onTap: widget.onTap!
+                ? () {
+                    taskBloc.subjectGetTaskDetails.sink.add(null);
+                    Navigator.pushNamed(
+                      context,
+                      CREATE_EDIT_TASK_ROUTE,
+                      arguments: ScreenArguments(
+                        arg1: '',
+                        arg2: widget.taskList![widget.index].taskActionId ??
+                            widget.taskList![widget.index].id,
+                        arg3: widget.taskList![widget.index].taskSubject,
+                        // arg2: isWorklist
+                        //     ? taskList![index].taskActionId
+                        //     : taskList![index].id,
+                        // arg3: _taskList[index].templateMasterCode),
+                      ),
+                    );
+                  }
+                : () {},
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: statusToColorMap[taskStatusName(widget.index)] ??
+                        Colors.transparent,
+                    width: MediaQuery.of(context).size.width * 0.015,
                   ),
-                );
-              }
-            : () {},
-        child: Container(
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: statusToColorMap[taskStatusName(index)] ??
-                    Colors.transparent,
-                width: MediaQuery.of(context).size.width * 0.015,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: titleWidget(
+                          context: context,
+                          caption: taskNoValue(widget.index),
+                          title: taskSubject(widget.index),
+                        ),
+                      ),
+                      Expanded(
+                        child: subtitleWidget(
+                          context: context,
+                          caption: "Status",
+                          customChild: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                taskStatusName(widget.index),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.02),
+                              statusContainerWidget(
+                                statusColor: statusToColorMap[
+                                        taskStatusName(widget.index)] ??
+                                    Colors.transparent,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  DottedDividerWidget(),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: subtitleWidget(
+                          context: context,
+                          caption: "Owner",
+                          title: ownerUserName(widget.index),
+                        ),
+                      ),
+                      Expanded(
+                        child: subtitleWidget(
+                          context: context,
+                          caption: "Assignee",
+                          title: assigneeDisplayName(widget.index),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: subtitleWidget(
+                          context: context,
+                          caption: "Start Date",
+                          title: requestedDate(widget.index),
+                        ),
+                      ),
+                      Expanded(
+                        child: subtitleWidget(
+                          context: context,
+                          caption: "End Date",
+                          title: dueDate(widget.index),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: subtitleWidget(
+                          context: context,
+                          caption: "Address",
+                          title: address(widget.index),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  ((widget.taskList![widget.index].taskStatusName ?? "") ==
+                              "In Progress" ||
+                          (widget.taskList![widget.index].taskStatusName ??
+                                  "") ==
+                              "Overdue")
+                      ? _futureBuilderWidget(
+                          latitude: widget.taskList![widget.index].latitude,
+                          longitude: widget.taskList![widget.index].longitude,
+                          radius: widget.taskList![widget.index].meter,
+                          udfNoteId: widget.taskList![widget.index].udfNoteId,
+                          status:
+                              widget.taskList![widget.index].taskStatusName ??
+                                  "",
+                        )
+                      : SizedBox(),
+                ],
               ),
             ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: titleWidget(
-                      context: context,
-                      caption: taskNoValue(index),
-                      title: taskSubject(index),
-                    ),
-                  ),
-                  Expanded(
-                    child: subtitleWidget(
-                      context: context,
-                      caption: "Status",
-                      customChild: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            taskStatusName(index),
-                            style:
-                                Theme.of(context).textTheme.bodyText1!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                          ),
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.02),
-                          statusContainerWidget(
-                            statusColor:
-                                statusToColorMap[taskStatusName(index)] ??
-                                    Colors.transparent,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              DottedDividerWidget(),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: subtitleWidget(
-                      context: context,
-                      caption: "Owner",
-                      title: ownerUserName(index),
-                    ),
-                  ),
-                  Expanded(
-                    child: subtitleWidget(
-                      context: context,
-                      caption: "Assignee",
-                      title: assigneeDisplayName(index),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: subtitleWidget(
-                      context: context,
-                      caption: "Start Date",
-                      title: requestedDate(index),
-                    ),
-                  ),
-                  Expanded(
-                    child: subtitleWidget(
-                      context: context,
-                      caption: "End Date",
-                      title: dueDate(index),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: subtitleWidget(
-                      context: context,
-                      caption: "Address",
-                      title: address(index),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
-              _futureBuilderWidget(
-                latitude: taskList![index].latitude,
-                longitude: taskList![index].longitude,
-                radius: taskList![index].meter,
-                udfNoteId: taskList![index].udfNoteId,
-                status: taskList![index].taskStatusName ?? "",
-              ),
-            ],
+        ),
+        Visibility(
+          visible: isVisible,
+          child: Center(
+            child: CustomProgressIndicator(),
           ),
         ),
-      ),
+      ],
     );
   }
 
   String taskSubject(int index) {
-    return taskList?[index].taskSubject ?? "-";
+    return widget.taskList?[index].taskSubject ?? "-";
   }
 
   String taskNoValue(int index) {
-    return taskList?[index].taskNo ?? "-";
+    return widget.taskList?[index].taskNo ?? "-";
   }
 
   String ownerUserName(int index) {
-    return taskList?[index].serviceOwner ??
-        taskList?[index].ownerUserName ??
-        taskList?[index].taskOwnerFirstLetter ??
+    return widget.taskList?[index].serviceOwner ??
+        widget.taskList?[index].ownerUserName ??
+        widget.taskList?[index].taskOwnerFirstLetter ??
         "-";
   }
 
   String assigneeDisplayName(int index) {
-    return taskList?[index].assigneeUserName ??
-        taskList?[index].assigneeDisplayName ??
+    return widget.taskList?[index].assigneeUserName ??
+        widget.taskList?[index].assigneeDisplayName ??
         "-";
   }
 
   String taskStatusName(int index) {
-    return taskList?[index].taskStatusName ?? "-";
+    return widget.taskList?[index].taskStatusName ?? "-";
   }
 
   // String dueDateDisplay(int index) {
-  //   return taskList?[index].dueDateDisplay ?? "-";
-  // }
-
   String dueDate(int index) {
-    if (taskList?[index].dueDate != null &&
-        taskList![index].dueDate!.isNotEmpty &&
-        taskList![index].dueDate!.contains("T")) {
-      var date = taskList![index].createdDate!.replaceAll("T", ' ');
+    if (widget.taskList?[index].dueDate != null &&
+        widget.taskList![index].dueDate!.isNotEmpty &&
+        widget.taskList![index].dueDate!.contains("T")) {
+      var date = widget.taskList![index].createdDate!.replaceAll("T", ' ');
       return DateFormat('yyyy-MM-dd HH:mm:ss')
           .parse(date)
           .toString()
           .split('.')[0];
     } else {
-      return taskList?[index].dueDate ?? "-";
+      return widget.taskList?[index].dueDate ?? "-";
     }
   }
 
   String requestedDate(int index) {
-    if (taskList?[index].createdDate != null &&
-        taskList![index].createdDate!.isNotEmpty &&
-        taskList![index].createdDate!.contains("T")) {
-      var date = taskList![index].createdDate!.replaceAll("T", ' ');
+    if (widget.taskList?[index].createdDate != null &&
+        widget.taskList![index].createdDate!.isNotEmpty &&
+        widget.taskList![index].createdDate!.contains("T")) {
+      var date = widget.taskList![index].createdDate!.replaceAll("T", ' ');
       return DateFormat('yyyy-MM-dd HH:mm:ss')
           .parse(date)
           .toString()
           .split('.')[0];
     } else {
-      return taskList?[index].createdDate ?? "-";
+      return widget.taskList?[index].createdDate ?? "-";
     }
   }
 
   String address(int index) {
-    return taskList?[index].location ?? "-";
+    return widget.taskList?[index].location ?? "-";
   }
 
   Widget _futureBuilderWidget<T>({
@@ -267,7 +296,7 @@ class RoasterTaskListCard extends StatelessWidget {
             radius: radius / 1000,
           );
 
-          if (withinRange && status == "In Progress") {
+          if (withinRange) {
             return Row(
               children: [
                 Expanded(
@@ -361,26 +390,25 @@ class RoasterTaskListCard extends StatelessWidget {
     double endLongitude,
   ) {
     var earthRadius = 6378137.0;
-    var dLat = _toRadians(endLatitude - startLatitude);
-    var dLon = _toRadians(endLongitude - startLongitude);
+    var dLat = RoasterTaskListCard._toRadians(endLatitude - startLatitude);
+    var dLon = RoasterTaskListCard._toRadians(endLongitude - startLongitude);
 
     var a = pow(sin(dLat / 2), 2) +
         pow(sin(dLon / 2), 2) *
-            cos(_toRadians(startLatitude)) *
-            cos(_toRadians(endLatitude));
+            cos(RoasterTaskListCard._toRadians(startLatitude)) *
+            cos(RoasterTaskListCard._toRadians(endLatitude));
     var c = 2 * asin(sqrt(a));
 
     return earthRadius * c;
   }
 
-  static _toRadians(double degree) {
-    return degree * pi / 180;
-  }
-
   postTaskTimeEntry({
-    required String? udfNoteId,
-    required bool? isSignedIn,
+    required String udfNoteId,
+    required bool isSignedIn,
   }) async {
+    setState(() {
+      isVisible = true;
+    });
     Map<String, dynamic> queryparams = {};
 
     queryparams['udfNoteId'] = udfNoteId;
@@ -391,6 +419,23 @@ class RoasterTaskListCard extends StatelessWidget {
     }
     queryparams['type'] = 'automaticTimeEntry';
 
-    await attendanceViewBloc.getPostTaskTimeEntry(queryparams: queryparams);
+    bool response =
+        await attendanceViewBloc.getPostTaskTimeEntry(queryparams: queryparams);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          response
+              ? isSignedIn
+                  ? "Sign in successful!"
+                  : "Sign out successful!"
+              : "An error occured please try again later.",
+        ),
+      ),
+    );
+
+    setState(() {
+      isVisible = false;
+    });
   }
 }
