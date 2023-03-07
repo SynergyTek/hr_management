@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
+import '../../models/attendance_details_model/attendance_details_response.dart';
 import '../../models/business_trip_model/business_trip_response_model.dart';
 import '../../../constants/api_endpoints.dart';
 import '../../models/hr_policy_document_model/hr_policy_response_model.dart';
@@ -53,9 +56,8 @@ abstract class AbstractLeaveRepository {
     Map<String, dynamic>? queryparams,
   });
 
-  Future<ServiceListResponse> getEmployeeAttendanceList({
+  Future<AttendanceDetailsListResponse> getEmployeeAttendanceList({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   });
-  
 }

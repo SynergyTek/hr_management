@@ -49,7 +49,7 @@ class LeaveRepository extends AbstractLeaveRepository {
     }
   }
 
-  Future<ServiceListResponse> getEmployeeAttendanceList({
+  Future<AttendanceDetailsListResponse> getEmployeeAttendanceList({
     // Optional Params to be added to the request if required.
     Map<String, dynamic>? queryparams,
   }) async {
@@ -59,8 +59,9 @@ class LeaveRepository extends AbstractLeaveRepository {
         endpoint,
         queryParameters: queryparams ?? {},
       );
+      json.encode(queryparams);
       print("DIO Response: ${response.data} ${response.data.runtimeType}");
-      return ServiceListResponse.fromJson(response.data);
+      return AttendanceDetailsListResponse.fromJson(response.data);
     } catch (err, stacktrace) {
       print(
           "[Exception]: Error occured while fetching the API Response for endpoint: ${endpoint}.");
@@ -68,7 +69,7 @@ class LeaveRepository extends AbstractLeaveRepository {
       print("Stack: \n\n\n $stacktrace");
       print("Err: \n\n\n $err");
 
-      return ServiceListResponse.withError("$err");
+      return AttendanceDetailsListResponse.withError("$err");
     }
   }
 
