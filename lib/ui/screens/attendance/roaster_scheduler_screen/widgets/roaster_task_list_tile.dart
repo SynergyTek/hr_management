@@ -170,6 +170,30 @@ class _RoasterTaskListCardState extends State<RoasterTaskListCard> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 8),
+                  (widget.taskList![widget.index].actualStartDate != null &&
+                          widget.taskList![widget.index].actualStartDate!
+                              .isNotEmpty)
+                      ? Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: subtitleWidget(
+                                context: context,
+                                caption: "Actual Start Date",
+                                title: actualStartDate(widget.index),
+                              ),
+                            ),
+                            Expanded(
+                              child: subtitleWidget(
+                                context: context,
+                                caption: "Actual End Date",
+                                title: actualEndDate(widget.index),
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
                   SizedBox(height: 12),
                   Row(
                     children: [
@@ -265,6 +289,34 @@ class _RoasterTaskListCardState extends State<RoasterTaskListCard> {
           .split('.')[0];
     } else {
       return widget.taskList?[index].createdDate ?? "-";
+    }
+  }
+
+  String actualStartDate(int index) {
+    if (widget.taskList?[index].actualStartDate != null &&
+        widget.taskList![index].actualStartDate!.isNotEmpty &&
+        widget.taskList![index].actualStartDate!.contains("T")) {
+      var date = widget.taskList![index].actualStartDate!.replaceAll("T", ' ');
+      return DateFormat('yyyy-MM-dd HH:mm:ss')
+          .parse(date)
+          .toString()
+          .split('.')[0];
+    } else {
+      return widget.taskList?[index].actualStartDate ?? "-";
+    }
+  }
+
+  String actualEndDate(int index) {
+    if (widget.taskList?[index].actualEndDate != null &&
+        widget.taskList![index].actualEndDate!.isNotEmpty &&
+        widget.taskList![index].actualEndDate!.contains("T")) {
+      var date = widget.taskList![index].actualEndDate!.replaceAll("T", ' ');
+      return DateFormat('yyyy-MM-dd HH:mm:ss')
+          .parse(date)
+          .toString()
+          .split('.')[0];
+    } else {
+      return widget.taskList?[index].actualEndDate ?? "-";
     }
   }
 

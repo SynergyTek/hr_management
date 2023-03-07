@@ -238,6 +238,8 @@ class TaskListModel {
   dynamic longitude;
   dynamic meter;
   String? location;
+  String? actualStartDate;
+  String? actualEndDate;
 
   TaskListModel({
     this.pageName,
@@ -479,6 +481,8 @@ class TaskListModel {
     this.longitude,
     this.meter,
     this.location,
+    this.actualStartDate,
+    this.actualEndDate,
   });
 
   TaskListModel.fromJson(Map<String, dynamic> json) {
@@ -742,6 +746,8 @@ class TaskListModel {
     longitude = json["Longitude"];
     meter = json["Meter"];
     location = json["Location"];
+    actualStartDate = json["ActualStartDate"];
+    actualEndDate = json["ActualEndDate"];
   }
 
   Map<String, dynamic> toJson() {
@@ -1006,6 +1012,8 @@ class TaskListModel {
     data["Longitude"] = longitude;
     data["Meter"] = meter;
     data["Location"] = location;
+    data["ActualStartDate"] = actualStartDate;
+    data["ActualEndDate"] = actualEndDate;
 
     return data;
   }
