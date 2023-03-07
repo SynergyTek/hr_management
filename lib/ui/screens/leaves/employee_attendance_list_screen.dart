@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_management/data/models/attendance_details_model/attendance_details_model.dart';
 import 'package:hr_management/data/models/service_models/service.dart';
 import 'package:hr_management/logic/blocs/leave_bloc.dart';
 import 'package:hr_management/themes/theme_config.dart';
 import 'package:hr_management/ui/widgets/empty_list_widget.dart';
 import 'package:hr_management/ui/widgets/progress_indicator.dart';
+import 'package:hr_management/ui/widgets/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../constants/formats.dart';
+import '../../../data/models/attendance_details_model/attendance_details_response.dart';
 import '../../../logic/blocs/user_model_bloc/user_model_bloc.dart';
 import '../../widgets/drawer/nav_drawer_widget.dart';
 
@@ -21,7 +25,7 @@ class EmployeeAttendanceListScreen extends StatefulWidget {
 
 class _EmployeeAttendanceListScreenState
     extends State<EmployeeAttendanceListScreen> {
-  int? _groupValue = -1;
+  int? _groupValue = 0;
   bool? isToDate = false;
   bool? isFromDate = false;
   bool? isMonth = false;
@@ -36,7 +40,7 @@ class _EmployeeAttendanceListScreenState
   String? selectedToDateString;
   String? selectedString;
 
-  List<Service>? list;
+  List<AttendanceDetailsListModel>? list;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -86,10 +90,9 @@ class _EmployeeAttendanceListScreenState
                 .extraUserInformation
                 ?.portalType ??
             "HR",
-        "searchStart":
-            DateFormat('dd MMM yyyy').format(selectedFromDate), //TODO
-        "searchEnd": DateFormat('dd MMM yyyy').format(selectedToDate), //TODO
-        "searchMonth": DateFormat('MMM yyyy').format(selectedMonth), //TODO
+        "searchStart": dateformatterWithSlash.format(selectedFromDate), //TODO
+        "searchEnd": dateformatterWithSlash.format(selectedToDate), //TODO
+        "searchMonth": dateformatterWithSlash.format(selectedMonth), //TODO
         "searchType":
             _groupValue == 0 ? "Monthly" : "Manual", //for period =Manual
       },
@@ -104,7 +107,6 @@ class _EmployeeAttendanceListScreenState
       body: Container(
         padding: DEFAULT_LARGE_PADDING,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,122 +137,235 @@ class _EmployeeAttendanceListScreenState
                 ),
               ],
             ),
-            Flexible(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  (_groupValue == 0)
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Text('Select Month :'),
-                                SizedBox(
-                                  width: 2.w,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isMonth = true;
-                                    });
-                                    _selectDate(context);
-                                  },
-                                  child: DateUi(
-                                    dateString:
-                                        DateFormat.yMMM().format(selectedMonth),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                //TODO
-                                apiCall();
-                              },
-                              child: Text('Search'),
-                            ),
-                          ],
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Text('From date :'),
-                                SizedBox(
-                                  width: 2.w,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isFromDate = true;
-                                    });
-                                    _selectDate(context);
-                                  },
-                                  child: DateUi(
-                                    dateString: DateFormat('d MMM yyyy')
-                                        .format(selectedFromDate),
-
-                                    //  "${selectedFromDate.toLocal()}"
-                                    //     .split(' ')[0],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                apiCall();
-                                //TODO
-                              },
-                              child: Text('Search'),
-                            ),
-                          ],
-                        ),
-                  (_groupValue == 1)
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('To date :\t\t\t\t'),
-                            SizedBox(
-                              width: 2.w,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isToDate = true;
-                                });
-                                _selectDate(context);
-                              },
-                              child: DateUi(
-                                dateString: DateFormat('d MMM yyyy')
-                                    .format(selectedToDate),
+            Column(
+              children: [
+                (_groupValue == 0)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text('Select Month :'),
+                              SizedBox(
+                                width: 2.w,
                               ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isMonth = true;
+                                  });
+                                  _selectDate(context);
+                                },
+                                child: DateUi(
+                                  dateString:
+                                      DateFormat.yMMM().format(selectedMonth),
+                                ),
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              //TODO
+                              apiCall();
+                            },
+                            child: Text('Search'),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text('From date :'),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isFromDate = true;
+                                  });
+                                  _selectDate(context);
+                                },
+                                child: DateUi(
+                                  dateString: DateFormat('d MMM yyyy')
+                                      .format(selectedFromDate),
+
+                                  //  "${selectedFromDate.toLocal()}"
+                                  //     .split(' ')[0],
+                                ),
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              apiCall();
+                              //TODO
+                            },
+                            child: Text('Search'),
+                          ),
+                        ],
+                      ),
+                (_groupValue == 1)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('To date :\t\t\t\t'),
+                          SizedBox(
+                            width: 2.w,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isToDate = true;
+                              });
+                              _selectDate(context);
+                            },
+                            child: DateUi(
+                              dateString: DateFormat('d MMM yyyy')
+                                  .format(selectedToDate),
                             ),
-                          ],
-                        )
-                      : SizedBox(),
-                ],
-              ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+              ],
             ),
             Flexible(
-              child: StreamBuilder<ServiceListResponse?>(
+              child: StreamBuilder<AttendanceDetailsListResponse?>(
                 stream: leaveBloc.subjectGetEmployeeAttendanceList.stream,
                 builder: (BuildContext context,
-                    AsyncSnapshot<ServiceListResponse?> snapshot) {
+                    AsyncSnapshot<AttendanceDetailsListResponse?> snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data?.list == null ||
-                        snapshot.data!.list!.isEmpty) {
+                    if (snapshot.data?.data == null ||
+                        snapshot.data!.data.isEmpty) {
                       return EmptyListWidget();
                     }
-                    list = snapshot.data?.list;
+                    list = snapshot.data?.data;
 
                     return ListView.builder(
+                      padding: DEFAULT_PADDING,
                       shrinkWrap: true,
                       itemCount: list?.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
-                          child: Text('data'),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          elevation: 5,
+                          child: Container(
+                            padding: DEFAULT_PADDING,
+                            margin: DEFAULT_PADDING,
+                            child: Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                        child: subtitleWidget(
+                                            context: context,
+                                            caption: 'Date',
+                                            title: formatDate(
+                                                    date: list?[index]
+                                                        .date
+                                                        ?.toString()) ??
+                                                '')),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          subtitleWidget(
+                                              context: context,
+                                              caption: 'Time-In Time-Out',
+                                              title: list?[index]
+                                                      .roster
+                                                      ?.toString() ??
+                                                  '-'),
+                                          subtitleWidget(
+                                              context: context,
+                                              title: list?[index]
+                                                      .duty2Roster
+                                                      ?.toString() ??
+                                                  '-'),
+                                          subtitleWidget(
+                                              context: context,
+                                              title: list?[index]
+                                                      .duty3Roster
+                                                      ?.toString() ??
+                                                  '-'),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 1.25.h,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          subtitleWidget(
+                                              context: context,
+                                              caption:
+                                                  'Actual Time-In Time-Out',
+                                              title: list?[index]
+                                                      .actual
+                                                      ?.toString() ??
+                                                  '-'),
+                                          subtitleWidget(
+                                              context: context,
+                                              title: list?[index]
+                                                      .duty2Actual
+                                                      ?.toString() ??
+                                                  '-'),
+                                          subtitleWidget(
+                                              context: context,
+                                              title: list?[index]
+                                                      .duty3Actual
+                                                      ?.toString() ??
+                                                  '-'),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                        child: subtitleWidget(
+                                            context: context,
+                                            caption: 'Employee Comments',
+                                            title: list?[index]
+                                                    .employeeComments
+                                                    ?.toString() ??
+                                                '-'))
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 1.25.h,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                        child: subtitleWidget(
+                                            context: context,
+                                            caption: 'Override Comments',
+                                            title: list?[index]
+                                                    .overrideComments
+                                                    ?.toString() ??
+                                                '-')),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         );
                       },
                     );

@@ -1,3 +1,4 @@
+import 'package:hr_management/data/models/attendance_details_model/attendance_details_response.dart';
 import 'package:hr_management/data/models/business_trip_model/business_trip_response_model.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../data/models/hr_policy_document_model/hr_policy_response_model.dart';
@@ -24,8 +25,9 @@ class LeaveBloc {
   final BehaviorSubject<ServiceListResponse> _subjectServiceList =
       BehaviorSubject<ServiceListResponse>();
 
-  final BehaviorSubject<ServiceListResponse> _subjectGetEmployeeAttendanceList =
-      BehaviorSubject<ServiceListResponse>();
+  final BehaviorSubject<AttendanceDetailsListResponse>
+      _subjectGetEmployeeAttendanceList =
+      BehaviorSubject<AttendanceDetailsListResponse>();
 
   final BehaviorSubject<TimePermissionResponse> _subjectTimePermissionList =
       BehaviorSubject<TimePermissionResponse>();
@@ -57,7 +59,7 @@ class LeaveBloc {
   getEmployeeAttendanceList({
     Map<String, dynamic>? queryparams,
   }) async {
-    ServiceListResponse response =
+    AttendanceDetailsListResponse response =
         await _leaveRepository.getEmployeeAttendanceList(
       queryparams: queryparams,
     );
@@ -157,8 +159,8 @@ class LeaveBloc {
       _subjectTimePermissionList;
   BehaviorSubject<ReimbursementResponse?> get subjectReimbursementList =>
       _subjectReimbursementList;
-  BehaviorSubject<ServiceListResponse?> get subjectGetEmployeeAttendanceList =>
-      _subjectGetEmployeeAttendanceList;
+  BehaviorSubject<AttendanceDetailsListResponse?>
+      get subjectGetEmployeeAttendanceList => _subjectGetEmployeeAttendanceList;
 }
 
 final leaveBloc = LeaveBloc();
