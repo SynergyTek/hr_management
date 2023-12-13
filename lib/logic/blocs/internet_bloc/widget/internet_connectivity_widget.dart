@@ -4,12 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../constants/image_path_constants.dart';
 import '../internet_bloc.dart';
 
-
 class InternetConnectivityWidget extends StatelessWidget {
   final Widget child;
 
-  const InternetConnectivityWidget({required this.child, Key? key})
-      : super(key: key);
+  const InternetConnectivityWidget({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +42,10 @@ class InternetConnectivityWidget extends StatelessWidget {
         } else if (state is InternetConnectedState) {
           return child;
         }
-        return Center(
+        return const Center(
             child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             CircularProgressIndicator(),
             SizedBox(
               height: 16.0,

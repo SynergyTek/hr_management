@@ -36,7 +36,7 @@ class SplashScreenBodyWidget extends StatelessWidget {
               subtitleText ?? "",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).canvasColor,
                   ),
             ),
             SizedBox(

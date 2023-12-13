@@ -36,7 +36,7 @@ class SplashPageDots extends StatelessWidget {
           decoration: BoxDecoration(
             color: index == state
                 ? Theme.of(context).textHeadingColor
-                : Theme.of(context).accentColor,
+                : Theme.of(context).canvasColor,
             borderRadius: BorderRadius.circular(4.0),
           ),
         );

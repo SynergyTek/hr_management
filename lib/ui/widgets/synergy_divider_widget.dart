@@ -24,7 +24,7 @@ class SynergyDividerWidget extends StatelessWidget {
               height: dashHeight,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                    color: color ?? Theme.of(context).accentColor),
+                    color: color ?? Theme.of(context).canvasColor),
               ),
             );
           }),

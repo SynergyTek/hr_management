@@ -70,6 +70,7 @@ class _LoginBodyState extends State<LoginBody> {
             Container(
               padding: DEFAULT_PADDING,
               child: StreamBuilder<LoginAPIResponse>(
+                stream: null,
                 builder: (context, AsyncSnapshot snapshot) {
                   final createLoginFormBloc =
                       context.read<CreateLoginFormBloc>();

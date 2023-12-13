@@ -35,7 +35,7 @@ class LightTheme {
       brightness: Brightness.light,
       primaryColor: _PRIMARY_COLOR,
       primaryColorLight: _PRIMARY_LIGHT_COLOR,
-      accentColor: _SECONDARY_COLOR,
+      canvasColor: _SECONDARY_COLOR,
 
       // checkbox color theme:
       checkboxTheme: CheckboxThemeData(
@@ -96,16 +96,16 @@ class LightTheme {
       foregroundColor: _TEXT_COLOR,
       elevation: 0,
       backgroundColor: Colors.transparent,
-      brightness: Brightness.light,
+      // brightness: Brightness.light,
       iconTheme: IconThemeData(
         color: Colors.black,
       ),
-      textTheme: TextTheme(
-        headline6: TextStyle(
-          color: _PRIMARY_COLOR,
-          fontSize: 18.0,
-        ),
-      ),
+      // textTheme: TextTheme(
+      //   headline6: TextStyle(
+      //     color: _PRIMARY_COLOR,
+      //     fontSize: 18.0,
+      //   ),
+      // ),
     );
   }
 }

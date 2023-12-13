@@ -5,6 +5,8 @@ class DarkTheme {
   static const Color _PRIMARY_COLOR = Color(0xFF1A2127);
   static const Color _PRIMARY_LIGHT_COLOR = Color(0xFFFFECDF);
   static const Color _SECONDARY_COLOR = Colors.blue;
+  static const Color accentColor = Colors.blue;
+
   // static const Color _SECONDARY_COLOR = Color(0xFFFF7643);
   static const Color _TEXT_COLOR = Colors.white;
 
@@ -30,8 +32,8 @@ class DarkTheme {
       backgroundColor: _PRIMARY_COLOR,
       brightness: Brightness.dark,
       primaryColor: _PRIMARY_COLOR,
-      primaryColorLight: _PRIMARY_LIGHT_COLOR,
-      accentColor: _SECONDARY_COLOR,
+      primaryColorLight: _PRIMARY_LIGHT_COLOR, canvasColor: _SECONDARY_COLOR,
+      // accentColor: _SECONDARY_COLOR,
 
       // checkbox color theme:
       checkboxTheme: CheckboxThemeData(
@@ -92,16 +94,16 @@ class DarkTheme {
       foregroundColor: _TEXT_COLOR,
       elevation: 0,
       backgroundColor: _PRIMARY_COLOR,
-      brightness: Brightness.dark,
-      iconTheme: IconThemeData(
-        color: Colors.white,
-      ),
-      textTheme: TextTheme(
-        headline6: TextStyle(
-          color: _SECONDARY_COLOR,
-          fontSize: 18.0,
-        ),
-      ),
+      // brightness: Brightness.dark,
+      // iconTheme: IconThemeData(
+      //   color: Colors.white,
+      // ),
+      // textTheme: TextTheme(
+      //   headline6: TextStyle(
+      //     color: _SECONDARY_COLOR,
+      //     fontSize: 18.0,
+      //   ),
+      // ),
     );
   }
 }

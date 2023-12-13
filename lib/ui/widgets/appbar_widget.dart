@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/themes/light_theme.dart';
 
-class AppbarWidget extends StatefulWidget with PreferredSizeWidget {
+class AppbarWidget extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;

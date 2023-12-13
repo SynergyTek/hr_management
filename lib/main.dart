@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -12,9 +13,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialising the Hydrated Bloc storage.
-  final storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
-  );
+  // final storage = await HydratedStorage.build(
+  //   storageDirectory: await getApplicationDocumentsDirectory(),
+  // );
 
   // Status bar config
   SystemChrome.setSystemUIOverlayStyle(
@@ -31,12 +32,16 @@ Future<void> main() async {
     _permissionGranted = await loc.Location().requestPermission();
   }
 
-  await FlutterDownloader.initialize(debug: false);
+  if (!kIsWeb) {
+    await FlutterDownloader.initialize(debug: false);
+    await Permission.camera.request();
+    await Permission.microphone.request();
+  }
 
-  await Permission.camera.request();
-  await Permission.microphone.request();
-  HydratedBlocOverrides.runZoned(
-    () => runApp(InitScreen()),
-    storage: storage,
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getApplicationDocumentsDirectory(),
   );
+  runApp(const InitScreen());
 }

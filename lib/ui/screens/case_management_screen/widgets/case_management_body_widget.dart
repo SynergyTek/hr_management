@@ -72,7 +72,7 @@ class _CaseManagementBodyWidgetState extends State<CaseManagementBodyWidget> {
                   ),
                 ),
                 SynergyDividerWidget(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).canvasColor,
                 ),
                 Container(
                   padding: DEFAULT_PADDING,

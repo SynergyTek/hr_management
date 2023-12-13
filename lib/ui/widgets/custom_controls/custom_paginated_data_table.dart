@@ -442,7 +442,7 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
             child: DefaultTextStyle(
               style: _selectedRowCount! > 0
                   ? themeData.textTheme.subtitle1!
-                      .copyWith(color: themeData.accentColor)
+                      .copyWith(color: themeData.canvasColor)
                   : themeData.textTheme.headline6!
                       .copyWith(fontWeight: FontWeight.w400),
               child: IconTheme.merge(

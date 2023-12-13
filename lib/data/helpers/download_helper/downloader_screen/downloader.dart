@@ -4,22 +4,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:hr_management/data/helpers/download_helper/download_helper_new.dart';
-import 'package:hr_management/themes/theme_config.dart';
 import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
-import '../../../../logic/blocs/internet_bloc/widget/internet_connectivity_widget.dart';
-import '../../../../themes/light_theme.dart';
+import '../download_helper_new.dart';
 
 class Downloader extends StatefulWidget {
-  final String filename;
-  final String url;
+  final String? filename;
+  final String? url;
 
-  Downloader({
-    required this.filename,
-    required this.url,
-  });
+  const Downloader({required this.filename, required this.url, Key? key})
+      : super(key: key);
 
   @override
   _DownloaderState createState() => _DownloaderState();
@@ -27,18 +21,21 @@ class Downloader extends StatefulWidget {
 
 class _DownloaderState extends State<Downloader> {
   String? taskId = "";
-  DownloadTaskStatus? taskStatus = DownloadTaskStatus.undefined;
+  // DownloadTaskStatus? taskStatus = DownloadTaskStatus.undefined;
+  int? taskStatus = 0; // DownloadTaskStatus.undefined;
   double? taskProgress = 0.0;
 
-  bool? isOverwritePermitted = true;
+  bool isOverwritePermitted = true;
 
   // This is being initialised in the main isolate as it will receive
   // the data from the background isolate.
   ReceivePort receivePort = ReceivePort();
+  String fileName = "";
 
   @override
   void initState() {
     super.initState();
+    fileName = widget.filename!.replaceAll("\"", "");
 
     _bindPortToMainIsolate();
 
@@ -64,71 +61,80 @@ class _DownloaderState extends State<Downloader> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: InternetConnectivityWidget(
-        child: Container(
-          padding: DEFAULT_LARGE_PADDING,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.0),
-              topRight: Radius.circular(16.0),
-            ),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16.0),
+            topRight: Radius.circular(16.0),
           ),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Center(
-                child: Text(
-                  "Downloads",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline6?.copyWith(
+        ),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Center(
+              child: Text(
+                "Downloads",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Colors.blue,
+                    ),
+              ),
+            ),
+            Divider(
+              color: Colors.blue,
+              height: 16.0,
+              thickness: 1.50,
+              indent: MediaQuery.of(context).size.width * 0.25,
+              endIndent: MediaQuery.of(context).size.width * 0.25,
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: ListTile(
+                // leading: Icon(Icons.attach_file),
+                title: Text(
+                  fileName.toString(),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Colors.blue,
                       ),
                 ),
-              ),
-              Divider(
-                color: Colors.blue,
-                height: 16.0,
-                thickness: 1.50,
-                indent: MediaQuery.of(context).size.width * 0.25,
-                endIndent: MediaQuery.of(context).size.width * 0.25,
-              ),
-              Container(
-                padding: DEFAULT_LARGE_VERTICAL_PADDING,
-                child: ListTile(
-                  // leading: Icon(Icons.attach_file),
-                  title: Text(widget.filename),
-                  subtitle: Text(
-                    taskStatus == DownloadTaskStatus.complete
-                        ? "Downloaded"
-                        : "${taskProgress.toString()} %",
-                  ),
-                  trailing: taskStatus == DownloadTaskStatus.complete
-                      ? TextButton(
-                          child: Text(
-                            "View",
-                            style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                          ),
-                          onPressed: () => _openfile(),
-                        )
-                      : Container(
-                          width: 64,
-                          height: 64,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              backgroundColor:
-                                  LightTheme().lightThemeData().primaryColor,
-                            ),
-                          ),
-                        ),
+                subtitle: Text(
+                  taskStatus == 3 //  DownloadTaskStatus.complete
+                      ? "Downloaded"
+                      : "${taskProgress.toString()} %",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Colors.blue,
+                      ),
                 ),
+                trailing: taskStatus == 3 // DownloadTaskStatus.complete
+                    // ? const SizedBox()
+                    ? TextButton(
+                        child: Text(
+                          "View",
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.color,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        onPressed: () => _openfile(),
+                      )
+                    : SizedBox(
+                        width: 64,
+                        height: 64,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor),
+                        ),
+                      ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -155,17 +161,18 @@ class _DownloaderState extends State<Downloader> {
         taskProgress = receivedDataFromBackgroundIsolate['progress'].toDouble();
       });
 
-      if (taskStatus == DownloadTaskStatus.complete) {
+      if (taskStatus == 3) {
+        // DownloadTaskStatus.complete
         NewDownloadHelper().unbindPortToMainIsolate();
       }
     });
   }
 
   void _openfile() async {
-    String dir = (await getExternalStorageDirectory())!.path;
-    String savePath = '$dir/${widget.filename}';
+    String dir = await NewDownloadHelper().prepareSaveDir();
+    String savePath = '$dir/$fileName';
     if (await File(savePath).exists()) {
-      OpenResult _openResult = await OpenFile.open(savePath);
+      OpenResult? _openResult = await OpenFile.open(savePath);
 
       if (_openResult.type != ResultType.done) {
         Navigator.of(context).pop();
@@ -180,7 +187,7 @@ class _DownloaderState extends State<Downloader> {
       Navigator.of(context).pop();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("File couldn't be saved, Pl try again later."),
         ),
       );
@@ -188,8 +195,8 @@ class _DownloaderState extends State<Downloader> {
   }
 
   _showAlertDialog() async {
-    String dir = (await getExternalStorageDirectory())!.path;
-    String savePath = '$dir/${widget.filename}';
+    String dir = await NewDownloadHelper().prepareSaveDir();
+    String savePath = '$dir/$fileName';
 
     // File exists already.
     if (await File(savePath).exists()) {
@@ -197,10 +204,10 @@ class _DownloaderState extends State<Downloader> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(
+            title: const Text(
               "File already exists",
             ),
-            content: Text(
+            content: const Text(
               "The file already exists in the device. Do you wish to continue download and overwrite the existing file?",
             ),
             actions: [
@@ -209,11 +216,11 @@ class _DownloaderState extends State<Downloader> {
                   Navigator.of(context).pop(false);
                   _openfile();
                 },
-                child: Text("View file"),
+                child: const Text("View file"),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text("Download and Overwrite"),
+                child: const Text("Download and Overwrite"),
               ),
             ],
           );
@@ -222,14 +229,14 @@ class _DownloaderState extends State<Downloader> {
     }
 
     // Download and overwrite the file:
-    if (isOverwritePermitted == null || isOverwritePermitted == false) {
+    if (isOverwritePermitted == false) {
       setState(() {
-        taskStatus = DownloadTaskStatus.complete;
+        taskStatus = 3; // DownloadTaskStatus.complete
       });
-    } else if (isOverwritePermitted != null && isOverwritePermitted == true) {
+    } else if (isOverwritePermitted == true) {
       NewDownloadHelper().requestDownload(
         url: widget.url,
-        filename: widget.filename,
+        filename: fileName,
       );
     }
   }

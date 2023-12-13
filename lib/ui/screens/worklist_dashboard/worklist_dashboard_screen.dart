@@ -237,7 +237,7 @@ class _WorklistDashboardState extends State<WorklistDashboard> {
   //               trailing: IconButton(
   //                 icon: Icon(
   //                   Icons.close,
-  //                   color: Theme.of(context).accentColor,
+  //                   color: Theme.of(context).canvasColor,
   //                 ),
   //                 onPressed: () => Navigator.of(context).pop(),
   //               ),

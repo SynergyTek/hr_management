@@ -34,7 +34,7 @@ class SplashImageContent extends StatelessWidget {
             subtitleText ?? "",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).canvasColor,
                 ),
           ),
           SizedBox(height: 64.0),
