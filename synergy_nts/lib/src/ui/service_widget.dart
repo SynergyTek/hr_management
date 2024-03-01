@@ -25,7 +25,7 @@ import '../helpers/download_helper/download.dart';
 
 // Packages:
 import 'package:dio/dio.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+//import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 // import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:sizer/sizer.dart';
 
@@ -38,6 +38,7 @@ import 'task_widgets/step_task_widgets/step_task_list_screen.dart';
 import 'widgets/form_widgets.dart';
 import 'widgets/form_widgets/attachment.dart';
 import 'widgets/widgets.dart';
+import 'package:intl/intl.dart';
 
 class ServiceWidget extends StatefulWidget {
   final String userID;
@@ -69,12 +70,19 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   Service? serviceModel;
   int? noOfConnectionsValue = 1;
   int? truckLoadTrips = 1;
+  int? noOfBins = 0;
 
   String? subjectValue;
   String? descriptionValue;
   bool isTileVisible = true;
   TextEditingController _fromddController = TextEditingController();
   String? ownerUserId;
+
+  TextEditingController subject = TextEditingController();
+  TextEditingController sla = TextEditingController();
+  TextEditingController description = TextEditingController();
+
+  List<String> previousValue = [];
 
   @override
   void initState() {
@@ -94,8 +102,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CreateServiceFormBloc(),
+    return SafeArea(
       child: StreamBuilder<ServiceResponse?>(
           stream: serviceBloc.subject.stream,
           builder: (context, snapshot) {
@@ -108,57 +115,48 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               }
               serviceModel = snapshot.data?.data;
 
-              final createServiceFormBloc =
-                  context.read<CreateServiceFormBloc>();
+              // final createServiceFormBloc =
+              //     context.read<CreateServiceFormBloc>();
 
               _parseJsonToUDFModel(
-                createServiceFormBloc,
+                //createServiceFormBloc,
                 serviceModel?.json,
                 widget.templateCode,
               );
 
-              return Scaffold(
-                body: FormBlocListener<CreateServiceFormBloc, String, String>(
-                  onSubmitting: (context, state) {},
-                  onSuccess: (context, state) {},
-                  onFailure: (context, state) {},
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Stack(
-                      children: [
-                        SingleChildScrollView(
-                          physics: const ClampingScrollPhysics(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: _formFieldsWidgets(
-                              context,
-                              createServiceFormBloc,
+              return Container(
+                padding: const EdgeInsets.all(8),
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: _formFieldsWidgets(context
+                            //createServiceFormBloc,
                             ),
-                          ),
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Expanded(child: Container()),
-                            Container(
-                              height: 50,
-                              color: AppThemeColor.backgroundColor,
-                              child: _displayFooterWidget(
-                                createServiceFormBloc,
+                      ),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Expanded(child: Container()),
+                        Container(
+                          height: 50,
+                          color: AppThemeColor.backgroundColor,
+                          child: _displayFooterWidget(
+                              //createServiceFormBloc,
                               ),
-                            ),
-                          ],
-                        ),
-                        Visibility(
-                          visible: isVisible,
-                          child: const Center(
-                            child: CustomProgressIndicator(),
-                          ),
                         ),
                       ],
                     ),
-                  ),
+                    Visibility(
+                      visible: isVisible,
+                      child: const Center(
+                        child: CustomProgressIndicator(),
+                      ),
+                    ),
+                  ],
                 ),
-                floatingActionButton: buildSpeedDial(),
               );
             } else {
               return const Center(
@@ -392,21 +390,23 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   // Position? position;
 
   _parseJsonToUDFModel(
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
     String? templateCode,
   ) {
     ParseJsonHelper _parseJsonHelper = ParseJsonHelper();
     columnComponentList = [];
+
     columnComponentList = _parseJsonHelper.parseGenericUDFs(
       udfJsonString,
       conditionalValues,
       widget.serviceId,
     );
+
     if (columnComponentList.isNotEmpty) {
       columnComponentWidgets = addDynamic(
         columnComponentList,
-        createServiceFormBloc,
+        // createServiceFormBloc,
         false,
         context,
       );
@@ -415,7 +415,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   List<Widget> addDynamic(
     model,
-    CreateServiceFormBloc createServiceFormBloc,
+    // CreateServiceFormBloc createServiceFormBloc,
     bool isOtherDetails,
     BuildContext context,
   ) {
@@ -481,11 +481,18 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
         udfJson[model[i].key] = initialValue;
 
-        final textField$i = TextFieldBloc(initialValue: initialValue);
+        final textField$i = TextEditingController(text: initialValue);
+        if (previousValue.isNotEmpty) {
+          if (textField$i.text != previousValue[i] &&
+              previousValue[i].isNotEmpty) {
+            textField$i.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
           AbsorbPointer(
             absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
-            child: BlocTextBoxWidget(
+            child: CustomTextFormFieldWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
               fieldName: model[i].label,
@@ -495,7 +502,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       widget.serviceId.isNotEmpty
                   ? true
                   : false,
-              textFieldBloc: textField$i,
+              textEditingController: textField$i,
               prefixIcon: const Icon(
                 Icons.note_outlined,
                 color: AppThemeColor.iconColor,
@@ -503,11 +510,18 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               maxLines: 1,
               onChanged: (String value) {
                 udfJson[model[i].key] = value;
+                for (var j = 0; j < model.length; j++) {
+                  if (previousValue.length <= model.length) {
+                    previousValue.add('');
+                  }
+                }
+
+                previousValue[i] = value;
               },
             ),
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
       } else if (model[i].type == 'textarea' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
@@ -522,12 +536,18 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           udfJson[model[i].key] = widget.extraInformationMap![model[i].key];
         }
 
-        final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
-
+        final textArea$i = TextEditingController(text: udfJson[model[i].key]);
+        if (previousValue.isNotEmpty) {
+          if (textArea$i.text != previousValue[i] &&
+              previousValue[i].isNotEmpty) {
+            textArea$i.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
           AbsorbPointer(
             absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
-            child: BlocTextBoxWidget(
+            child: CustomTextFormFieldWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
               fieldName: model[i].label,
@@ -537,7 +557,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       widget.serviceId.isNotEmpty
                   ? true
                   : false,
-              textFieldBloc: textArea$i,
+              textEditingController: textArea$i,
               prefixIcon: const Icon(
                 Icons.note_outlined,
                 color: AppThemeColor.iconColor,
@@ -545,11 +565,17 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               maxLines: 3,
               onChanged: (String value) {
                 udfJson[model[i].key] = value;
+                for (var j = 0; j < model.length; j++) {
+                  if (previousValue.length <= model.length) {
+                    previousValue.add('');
+                  }
+                }
+                previousValue[i] = value;
               },
             ),
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
       } else if (model[i].type == 'number' && model[i].hidden != true) {
         String initialValue;
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
@@ -585,11 +611,18 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           initialValue = widget.extraInformationMap![model[i].key].toString();
         }
 
-        final number$i = TextFieldBloc(initialValue: initialValue);
+        final number$i = TextEditingController();
+        if (previousValue.isNotEmpty) {
+          if (number$i.text != previousValue[i] &&
+              previousValue[i].isNotEmpty) {
+            number$i.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
           AbsorbPointer(
             absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
-            child: BlocNumberBoxWidget(
+            child: CustomTextFormFieldWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
               fieldName: model[i].label,
@@ -597,7 +630,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       model[i].defaultValue.toString().isNotEmpty) ||
                   model[i].disabled.toString() == 'true' ||
                   widget.serviceId.isNotEmpty,
-              textFieldBloc: number$i,
+              textEditingController: number$i,
               prefixIcon: const Icon(
                 Icons.format_list_numbered,
                 color: AppThemeColor.iconColor,
@@ -605,13 +638,19 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               decimal: false,
               onChanged: (String value) {
                 udfJson[model[i].key] = value;
+
+                for (var j = 0; j < model.length; j++) {
+                  if (previousValue.length <= model.length) {
+                    previousValue.add('');
+                  }
+                }
+
+                previousValue[i] = value;
               },
             ),
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [
-          number$i,
-        ]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
@@ -626,15 +665,16 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           udfJson[model[i].key] = widget.extraInformationMap![model[i].key];
         }
 
-        final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final password$i = TextEditingController(text: udfJson[model[i].key]);
+
         listDynamic.add(
           AbsorbPointer(
             absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
-            child: BlocTextBoxWidget(
+            child: CustomTextFormFieldWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
               fieldName: model[i].label,
-              textFieldBloc: password$i,
+              textEditingController: password$i,
               prefixIcon: const Icon(
                 Icons.visibility_off_rounded,
                 color: AppThemeColor.iconColor,
@@ -646,7 +686,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             ),
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
@@ -709,42 +749,110 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        List radioItemsList = [];
-        model[i].values.forEach((element) {
-          if (element.label.isEmpty) {
-            radioItemsList.add(element.value);
-          } else {
-            radioItemsList.add(element.label);
-          }
-        });
-        final radio$i = SelectFieldBloc(
-            initialValue: (udfJson[model[i].key] != null &&
-                    udfJson[model[i].key]!.isNotEmpty)
-                ? udfJson[model[i].key]
-                : model[i].defaultValue is int
-                    ? radioItemsList[model[i].defaultValue - 1]
-                    : model[i].defaultValue,
-            items: radioItemsList);
+
+        // List radioItemsList = [];
+        // model[i].values.forEach((element) {
+        //   if (element.label.isEmpty) {
+        //     radioItemsList.add(element.value);
+        //   } else {
+        //     radioItemsList.add(element.label);
+        //   }
+        // });
+        // final radio$i = TextEditingController(
+        //     initialValue: (udfJson[model[i].key] != null &&
+        //             udfJson[model[i].key]!.isNotEmpty)
+        //         ? udfJson[model[i].key]
+        //         : model[i].defaultValue is int
+        //             ? radioItemsList[model[i].defaultValue - 1]
+        //             : model[i].defaultValue,
+        //     items: radioItemsList);
+        // listDynamic.add(
+        //   AbsorbPointer(
+        //     absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
+        //     child: BlocRadioButtonWidget(
+        //       labelName: model[i].label,
+        //       selectFieldBloc: radio$i,
+        //     ),
+        //   ),
+        // );
+        // radio$i.onValueChanges(onData: (previous, current) async* {
+        //   udfJson[model[i].key] = current.value;
+        //   for (var j = 0; j < radioItemsList.length; j++) {
+        //     if (radioItemsList[j] == current.value) {
+        //       setState(() {
+        //         radioValue[model[i].key] = model[i].values[j].value;
+        //       });
+        //     }
+        //   }
+        // });
+        //========================
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
+
+        List<dynamic> radioItemsList = model[i].values.map((element) {
+          return element.label.isNotEmpty ? element.label : element.value;
+        }).toList();
+
+        String selectedRadioValue = udfJson[model[i].key] ?? '';
+
+        if (model[i].defaultValue != null && udfJson[model[i].key].isEmpty) {
+          selectedRadioValue = model[i].defaultValue is int
+              ? radioItemsList[model[i].defaultValue - 1]
+              : model[i].defaultValue;
+          udfJson[model[i].key] = selectedRadioValue;
+        }
+
         listDynamic.add(
           AbsorbPointer(
-            absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
-            child: BlocRadioButtonWidget(
-              labelName: model[i].label,
-              selectFieldBloc: radio$i,
+            absorbing: !widget.isEmployeePortal &&
+                (widget.serviceId != null &&
+                    (widget.serviceId.isNotEmpty &&
+                        serviceModel?.serviceStatusCode !=
+                            'SERVICE_STATUS_DRAFT')),
+            child: Container(
+              margin: EdgeInsets.only(left: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 36, top: 12),
+                    child: Text(model[i].label),
+                  ),
+                  Wrap(
+                    children: radioItemsList.map((item) {
+                      return Row(
+                        children: [
+                          Radio<String>(
+                            value: item,
+                            groupValue: selectedRadioValue,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedRadioValue = value!;
+                                udfJson[model[i].key] = value;
+                                for (var j = 0;
+                                    j < radioItemsList.length;
+                                    j++) {
+                                  if (radioItemsList[j] == value) {
+                                    radioValue[model[i].key] =
+                                        model[i].values[j].value;
+                                    if (model[i].key == 'ApplicantType') {
+                                      conditionalValues[model[i].key] =
+                                          model[i].values[j].value;
+                                    }
+                                  }
+                                }
+                              });
+                            },
+                          ),
+                          Text(item),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
           ),
         );
-        radio$i.onValueChanges(onData: (previous, current) async* {
-          udfJson[model[i].key] = current.value;
-          for (var j = 0; j < radioItemsList.length; j++) {
-            if (radioItemsList[j] == current.value) {
-              setState(() {
-                radioValue[model[i].key] = model[i].values[j].value;
-              });
-            }
-          }
-        });
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
@@ -1090,14 +1198,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]);
+        final hidden$i = TextEditingController(text: udfJson[model[i].key]);
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             obscureText: true,
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            textFieldBloc: hidden$i,
+            textEditingController: hidden$i,
             prefixIcon: const Icon(
               Icons.visibility,
               color: AppThemeColor.iconColor,
@@ -1108,7 +1216,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
       } else if (model[i].type == 'phoneNumber' && model[i].hidden != true) {
         //Phone Number Field
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
@@ -1125,11 +1233,18 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         }
 
         final phoneNumber$i =
-            TextFieldBloc(initialValue: udfJson[model[i].key]);
+            TextEditingController(text: udfJson[model[i].key]);
+        if (previousValue.isNotEmpty) {
+          if (phoneNumber$i.text != previousValue[i] &&
+              previousValue[i].isNotEmpty) {
+            phoneNumber$i.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
           AbsorbPointer(
             absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
-            child: BlocNumberBoxWidget(
+            child: CustomTextFormFieldWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
               fieldName: model[i].label,
@@ -1138,18 +1253,25 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       widget.serviceId.isNotEmpty
                   ? true
                   : false,
-              textFieldBloc: phoneNumber$i,
+              textEditingController: phoneNumber$i,
               prefixIcon: const Icon(
                 Icons.phone_rounded,
                 color: AppThemeColor.iconColor,
               ),
               onChanged: (String value) {
                 udfJson[model[i].key] = value;
+                for (var j = 0; j < model.length; j++) {
+                  if (previousValue.length <= model.length) {
+                    previousValue.add('');
+                  }
+                }
+
+                previousValue[i] = value;
               },
             ),
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
       } else if (model[i].type == 'email' && model[i].hidden != true) {
         //Email Field
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
@@ -1165,13 +1287,19 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           udfJson[model[i].key] = widget.extraInformationMap![model[i].key];
         }
 
-        final email$i = TextFieldBloc(
-            validators: [FieldBlocValidators.email],
-            initialValue: udfJson[model[i].key]);
+        final email$i = TextEditingController(
+            // validators: [FieldBlocValidators.email],
+            text: udfJson[model[i].key]);
+        if (previousValue.isNotEmpty) {
+          if (email$i.text != previousValue[i] && previousValue[i].isNotEmpty) {
+            email$i.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
           AbsorbPointer(
             absorbing: !widget.isEmployeePortal && widget.serviceId.isNotEmpty,
-            child: BlocTextBoxWidget(
+            child: CustomTextFormFieldWidget(
               isRequired: model[i].validate?.required,
               labelName: model[i].label,
               fieldName: model[i].label,
@@ -1181,7 +1309,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       widget.serviceId.isNotEmpty
                   ? true
                   : false,
-              textFieldBloc: email$i,
+              textEditingController: email$i,
               prefixIcon: const Icon(
                 Icons.email_outlined,
                 color: AppThemeColor.iconColor,
@@ -1189,12 +1317,19 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               maxLines: 1,
               onChanged: (String value) {
                 udfJson[model[i].key] = value;
+                for (var j = 0; j < model.length; j++) {
+                  if (previousValue.length <= model.length) {
+                    previousValue.add('');
+                  }
+                }
+
+                previousValue[i] = value;
               },
               keyboardType: TextInputType.emailAddress,
             ),
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else if (model[i].type == 'file' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && widget.serviceId.isEmpty) {
           udfJson[model[i].key] = '';
@@ -1508,7 +1643,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   //     ''';
   // }
 
-  List<Widget> _formFieldsWidgets(context, createServiceFormBloc) {
+  List<Widget> _formFieldsWidgets(context) {
     List<Widget> widgets = [];
 
     widgets.add(Container(
@@ -1531,7 +1666,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     widgets.addAll(
       _staticFieldsWidget(
         context,
-        createServiceFormBloc,
+        //createServiceFormBloc,
       ),
     );
 
@@ -1549,22 +1684,21 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   List<Widget> _staticFieldsWidget(
     BuildContext context,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
   ) {
     List<Widget> listDynamic = [];
 
     if (!serviceModel!.hideSubject!) {
-      createServiceFormBloc.subject.updateInitialValue(
-          (subjectValue ?? serviceModel!.serviceSubject) ?? "");
+      subject.text = subjectValue ?? serviceModel!.serviceSubject!;
       listDynamic.add(
         Visibility(
           visible: true,
-          child: BlocTextBoxWidget(
+          child: CustomTextFormFieldWidget(
             fieldName: 'Subject',
             readonly: false,
             maxLines: 1,
             labelName: 'Subject',
-            textFieldBloc: createServiceFormBloc.subject,
+            textEditingController: subject,
             prefixIcon: const Icon(Icons.note),
             onChanged: (value) {
               subjectValue = value.toString();
@@ -1574,8 +1708,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       );
     }
     if (widget.serviceId.isNotEmpty) {
-      createServiceFormBloc.sla
-          .updateInitialValue((slaValue ?? serviceModel!.serviceSLA) ?? "");
+      sla.text = slaValue ?? serviceModel!.serviceSLA!;
       listDynamic.add(ExpandableField(
         isTileExpanded: isTileVisible,
         valueChanged: (dynamic value) {
@@ -1650,12 +1783,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           ),
           Visibility(
             visible: !serviceModel!.hideSLA!,
-            child: BlocTextBoxWidget(
+            child: CustomTextFormFieldWidget(
               fieldName: 'SLA',
               readonly: false,
               maxLines: 1,
               labelName: 'SLA',
-              textFieldBloc: createServiceFormBloc.sla,
+              textEditingController: sla,
               prefixIcon: const Icon(Icons.note),
               onChanged: (value) {
                 slaValue = value.toString();
@@ -1664,31 +1797,46 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           ),
           Visibility(
             visible: !serviceModel!.hideExpiryDate!,
-            child: BlocDatePickerWidget(
-              labelName: 'Reminder Date',
-              canSelectTime: false,
-              inputFieldBloc: createServiceFormBloc.expiryDate,
-              height: 75.0,
-              width: MediaQuery.of(context).size.width,
+            child: DynamicDateTimeBox(
+              name: 'Reminder Date',
+              // canSelectTime: false,
+              //textEditingController: createServiceFormBloc.expiryDate,
+              // height: 75.0,
+              // width: MediaQuery.of(context).size.width,
+              key: const Key(
+                'Reminder Date',
+              ),
+              selectDate: (
+                DateTime date,
+              ) {
+                if (date != null) {
+                  setState(
+                    () {
+                      reminderDate = date;
+                    },
+                  );
+                  // udfJson[model[i].key] = date.toString();
+                }
+              },
             ),
           ),
         ],
       ));
     }
     if (!serviceModel!.hideDescription!) {
-      createServiceFormBloc.description.updateInitialValue(
-          (descriptionValue ?? serviceModel!.serviceDescription) ?? "");
+      description.text = descriptionValue ?? serviceModel!.serviceDescription!;
       listDynamic.add(Visibility(
         visible: true,
-        child: BlocTextBoxWidget(
+        child: CustomTextFormFieldWidget(
           fieldName: 'Description',
           readonly: false,
           maxLines: 3,
           labelName: 'Description',
-          textFieldBloc: createServiceFormBloc.description,
+          textEditingController: description,
           prefixIcon: const Icon(Icons.note),
           onChanged: (value) {
             descriptionValue = value.toString();
+            description.text = value.toString();
           },
         ),
       ));
@@ -1715,8 +1863,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   }
 
   _displayFooterWidget(
-    CreateServiceFormBloc createServiceFormBloc,
-  ) {
+      //CreateServiceFormBloc createServiceFormBloc,
+      ) {
     return Center(
       child: ListView(
         shrinkWrap: true,
@@ -1772,7 +1920,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 serviceViewModelPostRequest(
                   1,
                   'SERVICE_STATUS_DRAFT',
-                  createServiceFormBloc,
+                  //createServiceFormBloc,
                 );
               },
               width: 100,
@@ -1831,7 +1979,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 serviceViewModelPostRequest(
                   1,
                   'SERVICE_STATUS_INPROGRESS',
-                  createServiceFormBloc,
+                  //createServiceFormBloc,
                 );
               },
               width: 100,
@@ -1849,8 +1997,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   Service postServiceModel = Service();
   String resultMsg = '';
 
-  serviceViewModelPostRequest(int postDataAction, String serviceStatusCode,
-      CreateServiceFormBloc createServiceFormBloc) async {
+  serviceViewModelPostRequest(
+    int postDataAction,
+    String serviceStatusCode,
+    //CreateServiceFormBloc createServiceFormBloc)
+  ) async {
     String userId = widget.userID;
     postServiceModel = Service.fromJson(serviceModel!.toJson());
     postServiceModel.ownerUserId = userId;
@@ -1867,9 +2018,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       postServiceModel.sla = slaValue;
     }
     postServiceModel.requestedByUserId = userId;
-    postServiceModel.serviceSubject = createServiceFormBloc.subject.value;
-    postServiceModel.serviceDescription =
-        createServiceFormBloc.description.value;
+    postServiceModel.serviceSubject = subject.text;
+    postServiceModel.serviceDescription = description.text;
     postServiceModel.dataAction = widget.serviceId.isEmpty ? 1 : 2;
     postServiceModel.serviceStatusCode = serviceStatusCode;
     postServiceModel.portalId = APIEndpointConstants.HR_PORTAL_ID;

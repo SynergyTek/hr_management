@@ -24,6 +24,7 @@ import 'tag_nts_screen/tag_nts_screen.dart';
 import 'widgets/form_widgets.dart';
 import 'widgets/form_widgets/attachment.dart';
 import 'widgets/widgets.dart';
+import 'package:intl/intl.dart';
 
 class NoteWidget extends StatefulWidget {
   final String userID;
@@ -88,6 +89,9 @@ class _NoteWidgetState extends State<NoteWidget> {
   final TextEditingController leaveDurationControllerCalendarDays =
       TextEditingController();
 
+  TextEditingController subject = TextEditingController();
+  TextEditingController description = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -115,49 +119,49 @@ class _NoteWidgetState extends State<NoteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CreateServiceFormBloc(),
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        child: StreamBuilder<NoteResponse?>(
-            stream: noteBloc.subjectNoteDetails.stream,
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data?.error != null &&
-                    snapshot.data.error.length > 0) {
-                  return Center(
-                    child: Text(snapshot.data.error),
-                  );
-                }
-                final createServiceFormBloc =
-                    context.read<CreateServiceFormBloc>();
-
-                noteModel = snapshot.data?.data;
-
-                parseJsonToUDFModel(
-                  createServiceFormBloc,
-                  noteModel!.json,
-                );
-
-                return Scaffold(
-                  body: FormBlocListener<CreateServiceFormBloc, String, String>(
-                    onSubmitting: (context, state) {},
-                    onSuccess: (context, state) {},
-                    onFailure: (context, state) {},
-                    child: setServiceView(
-                      context,
-                      createServiceFormBloc,
-                    ),
-                  ),
-                  floatingActionButton: buildSpeedDial(),
-                );
-              } else {
-                return const Center(
-                  child: CustomProgressIndicator(),
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      child: StreamBuilder<NoteResponse?>(
+          stream: noteBloc.subjectNoteDetails.stream,
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data?.error != null &&
+                  snapshot.data.error.length > 0) {
+                return Center(
+                  child: Text(snapshot.data.error),
                 );
               }
-            }),
-      ),
+              // final createServiceFormBloc =
+              //     context.read<CreateServiceFormBloc>();
+
+              noteModel = snapshot.data?.data;
+
+              parseJsonToUDFModel(
+                //createServiceFormBloc,
+                noteModel!.json,
+              );
+
+              return Scaffold(
+                // body: FormBlocListener<
+                //     //CreateServiceFormBloc,
+                //     String,
+                //     String>(
+                //   onSubmitting: (context, state) {},
+                //   onSuccess: (context, state) {},
+                //   onFailure: (context, state) {},
+                //   child: setServiceView(
+                //     context,
+                //     //createServiceFormBloc,
+                //   ),
+                // ),
+                floatingActionButton: buildSpeedDial(),
+              );
+            } else {
+              return const Center(
+                child: CustomProgressIndicator(),
+              );
+            }
+          }),
     );
   }
 
@@ -305,7 +309,7 @@ class _NoteWidgetState extends State<NoteWidget> {
   }
 
   parseJsonToUDFModel(
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
   ) {
     ParseJsonHelper _parseJsonHelper = ParseJsonHelper();
@@ -319,14 +323,14 @@ class _NoteWidgetState extends State<NoteWidget> {
     if (columnComponentList.isNotEmpty) {
       columnComponentWidgets = addDynamic(
         columnComponentList,
-        createServiceFormBloc,
+        //createServiceFormBloc,
       );
     }
   }
 
   Widget setServiceView(
     BuildContext context,
-    CreateServiceFormBloc createServiceFormBloc,
+    // CreateServiceFormBloc createServiceFormBloc,
   ) {
     _fromddController.text =
         noteModel!.ownerUserName != null ? noteModel!.ownerUserName! : "";
@@ -336,7 +340,7 @@ class _NoteWidgetState extends State<NoteWidget> {
           shrinkWrap: true,
           children: formFieldsWidgets(
             context,
-            createServiceFormBloc,
+            //createServiceFormBloc,
             noteModel!,
           ),
         ),
@@ -348,7 +352,7 @@ class _NoteWidgetState extends State<NoteWidget> {
               color: Colors.grey[100],
               child: displayFooterWidget(
                 noteModel!,
-                createServiceFormBloc,
+                //createServiceFormBloc,
               ),
             ),
           ],
@@ -364,7 +368,9 @@ class _NoteWidgetState extends State<NoteWidget> {
   }
 
   List<Widget> formFieldsWidgets(
-      context, createServiceFormBloc, NoteModel noteModel) {
+      context,
+      //createServiceFormBloc,
+      NoteModel noteModel) {
     List<Widget> widgets = [];
 
     widgets.add(Container(
@@ -383,21 +389,17 @@ class _NoteWidgetState extends State<NoteWidget> {
     ));
     if (!widget.isDependent!) {
       if (!noteModel.hideSubject!) {
-        createServiceFormBloc.subject.updateInitialValue(
-          subjectValue ?? noteModel.noteSubject ?? "",
-        );
+        subject.text = subjectValue ?? noteModel.noteSubject!;
 
-        createServiceFormBloc.description.updateInitialValue(
-          (descriptionValue ?? noteModel.noteDescription) ?? "",
-        );
+        description.text = descriptionValue ?? noteModel.noteDescription!;
 
         widgets.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             fieldName: 'Subject',
             readonly: false,
             maxLines: 1,
             labelName: 'Subject',
-            textFieldBloc: createServiceFormBloc.subject,
+            textEditingController: subject,
             prefixIcon: const Icon(Icons.note),
             onChanged: (value) {
               subjectValue = value.toString();
@@ -476,12 +478,12 @@ class _NoteWidgetState extends State<NoteWidget> {
                 // Expanded(
                 //   child: Visibility(
                 //     visible: !taskModel.hideSla,
-                //     child: BlocTextBoxWidget(
+                //     child: CustomTextFormFieldWidget(
                 //       fieldName: 'SLA',
                 //       readonly: false,
                 //       maxLines: 1,
                 //       labelName: 'SLA',
-                //       textFieldBloc: createServiceFormBloc.sla,
+                //       textEditingController: createServiceFormBloc.sla,
                 //       prefixIcon: const Icon(Icons.note),
                 //       onChanged: (value) {
                 //         slaValue = value.toString();
@@ -504,12 +506,12 @@ class _NoteWidgetState extends State<NoteWidget> {
             ),
             Visibility(
               visible: !noteModel.hideDescription!,
-              child: BlocTextBoxWidget(
+              child: CustomTextFormFieldWidget(
                 fieldName: 'Description',
                 readonly: false,
                 maxLines: 3,
                 labelName: 'Description',
-                textFieldBloc: createServiceFormBloc.description,
+                textEditingController: description,
                 prefixIcon: const Icon(Icons.note),
                 onChanged: (value) {
                   descriptionValue = value.toString();
@@ -581,7 +583,7 @@ class _NoteWidgetState extends State<NoteWidget> {
 
   displayFooterWidget(
     NoteModel noteModel,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
   ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -599,7 +601,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                   noteViewModelPostRequest(
                     2,
                     'NOTE_STATUS_COMPLETE',
-                    createServiceFormBloc,
+                    //createServiceFormBloc,
                   );
                 },
                 width: 100,
@@ -635,7 +637,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                   noteViewModelPostRequest(
                     1,
                     'NOTE_STATUS_DRAFT',
-                    createServiceFormBloc,
+                    //createServiceFormBloc,
                   );
                 },
                 width: 100,
@@ -650,7 +652,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                   noteViewModelPostRequest(
                     2,
                     'NOTE_STATUS_EXPIRE',
-                    createServiceFormBloc,
+                    //createServiceFormBloc,
                   );
                 },
                 width: 100,
@@ -713,7 +715,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                   noteViewModelPostRequest(
                     1,
                     'NOTE_STATUS_INPROGRESS',
-                    createServiceFormBloc,
+                    //createServiceFormBloc,
                   );
                 },
                 width: 100,
@@ -778,7 +780,7 @@ class _NoteWidgetState extends State<NoteWidget> {
   noteViewModelPostRequest(
     int postDataAction,
     String noteStatusCode,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
   ) async {
     String? userId = widget.userID;
     String stringModel = jsonEncode(noteModel);
@@ -787,8 +789,8 @@ class _NoteWidgetState extends State<NoteWidget> {
 
     postNoteModel.ownerUserId = userId;
     postNoteModel.requestedByUserId = userId;
-    postNoteModel.subject = createServiceFormBloc.subject.value;
-    postNoteModel.noteDescription = createServiceFormBloc.description.value;
+    postNoteModel.subject = subject.text;
+    postNoteModel.noteDescription = description.text;
     postNoteModel.dataAction = widget.noteId.isEmpty ? 1 : 2;
     postNoteModel.portalId = APIEndpointConstants.HR_PORTAL_ID;
     postNoteModel.portalName = APIEndpointConstants.HR_PORTAL_NAME;
@@ -827,7 +829,7 @@ class _NoteWidgetState extends State<NoteWidget> {
 
   List<Widget> addDynamic(
     model,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
   ) {
     List<Widget> listDynamic = [];
     for (var i = 0; i < model.length; i++) {
@@ -844,9 +846,9 @@ class _NoteWidgetState extends State<NoteWidget> {
 
         udfJson[model[i].key] = initialValue;
 
-        final textField$i = TextFieldBloc(initialValue: initialValue);
+        final textField$i = TextEditingController(text: initialValue);
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             isRequired: model[i].validate?.required,
             labelName: model[i].label,
             fieldName: model[i].label,
@@ -856,7 +858,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                     widget.noteId.isNotEmpty
                 ? true
                 : false,
-            textFieldBloc: textField$i,
+            textEditingController: textField$i,
             prefixIcon: const Icon(
               Icons.note_outlined,
               color: AppThemeColor.iconColor,
@@ -867,15 +869,15 @@ class _NoteWidgetState extends State<NoteWidget> {
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
 
         // if (model[i].disabled != null && !model[i].disabled) {
         //   listDynamic.add(
-        //     BlocTextBoxWidget(
+        //     CustomTextFormFieldWidget(
         //       labelName: model[i].label,
         //       fieldName: model[i].label,
         //       readonly: model[i].disabled,
-        //       textFieldBloc: textField$i,
+        //       textEditingController: textField$i,
         //       prefixIcon: const Icon(Icons.note),
         //       maxLines: 1,
         //       onChanged: (value) {
@@ -910,25 +912,27 @@ class _NoteWidgetState extends State<NoteWidget> {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
+
         // final textArea$i = TextFieldBloc();
-        final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
-        listDynamic.add(
-          BlocTextBoxWidget(
-            labelName: model[i].label,
-            fieldName: model[i].label,
-            readonly: model[i].disabled,
-            textFieldBloc: textArea$i,
-            prefixIcon: const Icon(Icons.note),
-            maxLines: 3,
-            onChanged: (value) {
-              udfJson[model[i].key] = value.toString();
-            },
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
+        // final textArea$i = TextEditingController(initialValue: udfJson[model[i].key]!);
+        // listDynamic.add(
+        //   CustomTextFormFieldWidget(
+        //     labelName: model[i].label,
+        //     fieldName: model[i].label,
+        //     readonly: model[i].disabled,
+        //     textEditingController: textArea$i,
+        //     prefixIcon: const Icon(Icons.note),
+        //     maxLines: 3,
+        //     onChanged: (value) {
+        //       udfJson[model[i].key] = value.toString();
+        //     },
+        //   ),
+        // );
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
+        //=====================
       } else if (model[i].type == 'number' && model[i].hidden != true) {
         String? initialValue;
-        // final number$i = TextFieldBloc(initialValue: initialValue);
+        // final number$i = TextEditingController(initialValue: initialValue);
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
         }
@@ -943,20 +947,20 @@ class _NoteWidgetState extends State<NoteWidget> {
         } else {
           initialValue = udfJson[model[i].key];
         }
-        final number$i = TextFieldBloc(initialValue: initialValue!);
+        final number$i = TextEditingController();
         listDynamic.add(
-          BlocNumberBoxWidget(
+          CustomTextFormFieldWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: false,
-            textFieldBloc: number$i,
+            textEditingController: number$i,
             prefixIcon: const Icon(Icons.format_list_numbered),
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
@@ -964,13 +968,13 @@ class _NoteWidgetState extends State<NoteWidget> {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
+        final password$i = TextEditingController(text: udfJson[model[i].key]!);
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: model[i].disabled,
-            textFieldBloc: password$i,
+            textEditingController: password$i,
             prefixIcon: const Icon(Icons.visibility_off_rounded),
             obscureText: true,
             onChanged: (value) {
@@ -978,7 +982,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
           udfJson[model[i].key] = '';
@@ -986,6 +990,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
+
         listDynamic.add(DynamicCheckBoxValue(
           readonly: model[i].disabled.toString() == 'true',
           code: udfJson[model[i].key],
@@ -1005,37 +1010,39 @@ class _NoteWidgetState extends State<NoteWidget> {
           udfJson[model[i].key] = model[i].udfValue ?? '';
           _ddController.text = udfJson[model[i].key]!;
         }
-        listDynamic.add(NTSDropDownSelect(
-          title: model[i].label,
-          controller: _ddController,
-          hint: model[i].label,
-          validationMessage: "Select " + model[i].label,
-          isShowArrow: true,
-          nameKey: model[i].template,
-          idKey: model[i].idPath,
-          url: model[i].data,
-          onListTap: (dynamic value) {
-            NTSDropdownModel _selectedIdNameViewModel = value;
-            _ddController.text = _selectedIdNameViewModel.name!;
-            udfJson[model[i].label] = _selectedIdNameViewModel.id;
-            // udfJson[model[i].label] = value.toString();
-          },
-        ));
-      } else if (model[i].type == 'radio' && model[i].hidden != true) {
-        if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
-          udfJson[model[i].key] = '';
-        }
-        if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
-          udfJson[model[i].key] = model[i].udfValue ?? '';
-        }
-        final radio$i = SelectFieldBloc(initialValue: udfJson[model[i].key]);
-        listDynamic.add(
-          BlocRadioButtonWidget(
-            labelName: model[i].label,
-            selectFieldBloc: radio$i,
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
+
+        //   listDynamic.add(NTSDropDownSelect(
+        //     title: model[i].label,
+        //     controller: _ddController,
+        //     hint: model[i].label,
+        //     validationMessage: "Select " + model[i].label,
+        //     isShowArrow: true,
+        //     nameKey: model[i].template,
+        //     idKey: model[i].idPath,
+        //     url: model[i].data,
+        //     onListTap: (dynamic value) {
+        //       NTSDropdownModel _selectedIdNameViewModel = value;
+        //       _ddController.text = _selectedIdNameViewModel.name!;
+        //       udfJson[model[i].label] = _selectedIdNameViewModel.id;
+        //       // udfJson[model[i].label] = value.toString();
+        //     },
+        //   ));
+        // } else if (model[i].type == 'radio' && model[i].hidden != true) {
+        //   if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
+        //     udfJson[model[i].key] = '';
+        //   }
+        //   if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
+        //     udfJson[model[i].key] = model[i].udfValue ?? '';
+        //   }
+
+        //   final radio$i = SelectFieldBloc(initialValue: udfJson[model[i].key]);
+        //   listDynamic.add(
+        //     BlocRadioButtonWidget(
+        //       labelName: model[i].label,
+        //       selectFieldBloc: radio$i,
+        //     ),
+        //   );
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) && (widget.noteId.isEmpty)) {
@@ -1238,14 +1245,14 @@ class _NoteWidgetState extends State<NoteWidget> {
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
+        final hidden$i = TextEditingController(text: udfJson[model[i].key]!);
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             obscureText: true,
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            textFieldBloc: hidden$i,
+            textEditingController: hidden$i,
             prefixIcon: const Icon(Icons.visibility),
             maxLines: 1,
             onChanged: (value) {
@@ -1253,7 +1260,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
       } else if (model[i].type == 'phoneNumber' && model[i].hidden != true) {
         //Phone Number Field
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
@@ -1263,20 +1270,20 @@ class _NoteWidgetState extends State<NoteWidget> {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final phoneNumber$i =
-            TextFieldBloc(initialValue: udfJson[model[i].key]!);
+            TextEditingController(text: udfJson[model[i].key]!);
         listDynamic.add(
-          BlocNumberBoxWidget(
+          CustomTextFormFieldWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: false,
-            textFieldBloc: phoneNumber$i,
+            textEditingController: phoneNumber$i,
             prefixIcon: const Icon(Icons.phone_rounded),
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
       } else if (model[i].type == 'email' && model[i].hidden != true) {
         //Email Field
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isEmpty) {
@@ -1285,15 +1292,15 @@ class _NoteWidgetState extends State<NoteWidget> {
         if (!udfJson.containsKey(model[i].key) && widget.noteId.isNotEmpty) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final email$i = TextFieldBloc(
-            validators: [FieldBlocValidators.email],
-            initialValue: udfJson[model[i].key]!);
+        final email$i = TextEditingController(
+            // validators: [FieldBlocValidators.email],
+            text: udfJson[model[i].key]!);
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: model[i].disabled,
-            textFieldBloc: email$i,
+            textEditingController: email$i,
             prefixIcon: const Icon(Icons.email),
             maxLines: 1,
             onChanged: (value) {
@@ -1301,7 +1308,7 @@ class _NoteWidgetState extends State<NoteWidget> {
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else if (model[i].type == 'htmlelement' && model[i].hidden != true) {
         String? content = '';
         if (model[i]?.content != null && model[i]?.content.isNotEmpty) {
@@ -1331,7 +1338,7 @@ class _NoteWidgetState extends State<NoteWidget> {
     // var groupControls = model?.controls
     //     ?.where((x) => x.groupTemplateFieldId == element.templateFieldId);
     // groupControls?.forEach((group) {
-    var tableWidgets = addDynamic(model, createServiceFormBloc);
+    var tableWidgets = addDynamic(model);
     for (var row in tableWidgets) {
       table.add(TableRow(children: [row]));
     }

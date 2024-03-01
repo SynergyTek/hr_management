@@ -118,7 +118,7 @@ class _SelectAttachmentState extends State<SelectAttachment> {
                           } // uploadAttachment();
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
+                          backgroundColor: Theme.of(context).primaryColor,
                         ),
                         child: Label(
                           text: "Upload",

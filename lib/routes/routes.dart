@@ -124,10 +124,10 @@ class AppRouter {
           ),
         );
 
-      case REGISTRATION_ROUTE:
-        return MaterialPageRoute(
-          builder: (_) => RegistrationScreen(),
-        );
+      // case REGISTRATION_ROUTE:
+      //   return MaterialPageRoute(
+      //     builder: (_) => RegistrationScreen(),
+      //   );
 
       case CREATE_SERVICE_ROUTE:
         final args = routeSettings.arguments as ScreenArguments?;

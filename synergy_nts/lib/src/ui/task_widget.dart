@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+//import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
@@ -103,6 +103,15 @@ class _TaskWidgetState extends State<TaskWidget> {
   TextEditingController leaveDurationControllerWorkingDays =
       TextEditingController();
 
+  TextEditingController taskSubject = TextEditingController();
+  TextEditingController taskSLA = TextEditingController();
+  TextEditingController taskDescription = TextEditingController();
+  TextEditingController taskNoText = TextEditingController();
+  TextEditingController numberGenerationType = TextEditingController();
+  //TextEditingController taskNoText = TextEditingController();
+
+  List<String> previousValue = [];
+
   List<String> selectValue = [];
 
   DateTime? leaveStartDate;
@@ -132,45 +141,40 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CreateServiceFormBloc(),
+    return SafeArea(
       child: Container(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<TaskResponseModel?>(
             stream: taskBloc.subjectGetTaskDetails.stream,
-            builder: (context, AsyncSnapshot snapshot) {
+            builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data?.error != null &&
-                    snapshot.data!.error.length > 0) {
+                    snapshot.data!.error!.isNotEmpty) {
                   return Center(
                     child: Text(snapshot.data!.error!),
                   );
                 }
 
-                final createServiceFormBloc =
-                    context.read<CreateServiceFormBloc>();
+                // final createServiceFormBloc =
+                //     context.read<CreateServiceFormBloc>();
 
-                taskModel = snapshot.data?.data;
+                TaskModel? taskModel = snapshot.data?.data;
 
-                if (taskModel.json != null) {
-                  parseJsonToUDFModel(
-                    createServiceFormBloc,
+                if (taskModel!.json != null) {
+                  _parseJsonToUDFModel(
+                    // createServiceFormBloc,
                     taskModel.json,
-                    snapshot.data?.data?.templateCode,
+                    widget.taskTemplateCode,
                   );
                 }
 
                 return Scaffold(
-                  body: FormBlocListener<CreateServiceFormBloc, String, String>(
-                    onSuccess: (context, state) {},
-                    onFailure: (context, state) {},
-                    child: taskModel.id != null
-                        ? setTaskView(
-                            context,
-                            createServiceFormBloc,
-                          )
-                        : Container(),
-                  ),
+                  body: taskModel.id != null
+                      ? setTaskView(
+                          context,
+                          //createServiceFormBloc,
+                        )
+                      : Container(),
                   floatingActionButton: buildSpeedDial(),
                 );
               } else {
@@ -459,7 +463,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   Widget setTaskView(
     BuildContext context,
-    CreateServiceFormBloc createServiceFormBloc,
+    // CreateServiceFormBloc createServiceFormBloc,
   ) {
     return Stack(
       children: [
@@ -469,7 +473,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             mainAxisSize: MainAxisSize.min,
             children: formFieldsWidgets(
               context,
-              createServiceFormBloc,
+              // createServiceFormBloc,
               taskModel,
             ),
           ),
@@ -482,7 +486,7 @@ class _TaskWidgetState extends State<TaskWidget> {
               color: AppThemeColor.backgroundColor,
               child: displayFooterWidget(
                 taskModel,
-                createServiceFormBloc,
+                //createServiceFormBloc,
               ),
             ),
           ],
@@ -497,31 +501,33 @@ class _TaskWidgetState extends State<TaskWidget> {
     );
   }
 
-  parseJsonToUDFModel(
-    CreateServiceFormBloc createServiceFormBloc,
+  _parseJsonToUDFModel(
+    //CreateServiceFormBloc createServiceFormBloc,
     udfJsonString,
     String? templateCode,
   ) {
-    ParseJsonHelper _parseJsonHelper = ParseJsonHelper();
+    ParseJsonHelper parseJsonHelper = ParseJsonHelper();
     columnComponentList = [];
 
-    columnComponentList = _parseJsonHelper.parseGenericUDFs(
+    columnComponentList = parseJsonHelper.parseGenericUDFs(
       udfJsonString,
       conditionalValues,
       widget.taskId,
     );
-    if (columnComponentList.isNotEmpty) {
+
+    if (columnComponentList != null && columnComponentList.isNotEmpty) {
       columnComponentWidgets = addDynamic(
         columnComponentList,
-        createServiceFormBloc,
+        //createServiceFormBloc,
         false,
+        //context,
       );
     }
   }
 
   List<Widget> addDynamic(
     model,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
     bool isOtherDetails,
   ) {
     List<Widget> listDynamic = [];
@@ -536,26 +542,25 @@ class _TaskWidgetState extends State<TaskWidget> {
           udfJson[model[i].key] = '';
         }
 
-        final textField$i = TextFieldBloc(
-          initialValue: model[i].defaultValue ?? udfJson[model[i].key],
-        );
+        // final textField$i = TextFieldBloc(initialValue: model[i].defaultValue ?? udfJson[model[i].key],);
 
-        listDynamic.add(
-          BlocTextBoxWidget(
-            isRequired: model[i].validate?.required,
-            labelName: model[i].label,
-            fieldName: model[i].label,
-            readonly: true,
-            // readonly: model[i].disabled,
-            textFieldBloc: textField$i,
-            prefixIcon: const Icon(Icons.note, color: AppThemeColor.iconColor),
-            maxLines: 1,
-            onChanged: (value) {
-              udfJson[model[i].key] = value.toString();
-            },
-          ),
-        );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+        // listDynamic.add(
+        //    BlocTextBoxWidgetNew(
+        //     isRequired: model[i].validate?.required,
+        //     labelName: model[i].label,
+        //     fieldName: model[i].label,
+        //     readonly: true,
+        //     // readonly: model[i].disabled,
+        //     textFieldBloc: textField$i,
+        //     prefixIcon: const Icon(Icons.note, color: AppThemeColor.iconColor),
+        //     maxLines: 1,
+        //     onChanged: (value) {
+        //       udfJson[model[i].key] = value.toString();
+        //     },
+        //   ),
+        // );
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [textField$i]);
+
         // } else {
         //   listDynamic.add(StaticField(
         //     // initialValue: difference.toString(),
@@ -583,15 +588,23 @@ class _TaskWidgetState extends State<TaskWidget> {
           udfJson[model[i].key] = '';
         }
         // final textArea$i = TextFieldBloc();
-        final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
+        //  final textArea$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
+
+        if (previousValue.isNotEmpty) {
+          if (taskNoText.text != previousValue[i] &&
+              previousValue[i].isNotEmpty) {
+            taskNoText.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             isRequired: model[i].validate?.required,
             readonly: true,
             labelName: model[i].label,
             fieldName: model[i].label,
             // readonly: model[i].disabled,
-            textFieldBloc: textArea$i,
+            textEditingController: taskNoText,
             prefixIcon: const Icon(
               Icons.note,
               color: AppThemeColor.iconColor,
@@ -599,10 +612,16 @@ class _TaskWidgetState extends State<TaskWidget> {
             maxLines: 3,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
+              for (var j = 0; j < model.length; j++) {
+                if (previousValue.length <= model.length) {
+                  previousValue.add('');
+                }
+              }
+              previousValue[i] = value;
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [textArea$i]);
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [taskNoText]);
       } else if (model[i].type == 'number' && model[i].hidden != true) {
         String initialValue;
 
@@ -627,21 +646,36 @@ class _TaskWidgetState extends State<TaskWidget> {
 
         udfJson[model[i].key] = initialValue;
 
-        final number$i = TextFieldBloc(initialValue: initialValue);
+        final numberGenerationType =
+            TextEditingController(text: udfJson[model[i].key]);
+        if (previousValue.isNotEmpty) {
+          if (numberGenerationType.text != previousValue[i] &&
+              previousValue[i].isNotEmpty) {
+            numberGenerationType.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
-          BlocNumberBoxWidget(
+          CustomTextFormFieldWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            textFieldBloc: number$i,
+            textEditingController: numberGenerationType,
             prefixIcon: const Icon(Icons.format_list_numbered,
                 color: AppThemeColor.iconColor),
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
+              for (var j = 0; j < model.length; j++) {
+                if (previousValue.length <= model.length) {
+                  previousValue.add('');
+                }
+              }
+
+              previousValue[i] = value;
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [number$i]);
       } else if (model[i].type == 'password' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
@@ -651,14 +685,14 @@ class _TaskWidgetState extends State<TaskWidget> {
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final password$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
+        final password$i = TextEditingController(text: udfJson[model[i].key]!);
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             isRequired: model[i].validate?.required,
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            textFieldBloc: password$i,
+            textEditingController: password$i,
             prefixIcon: const Icon(Icons.visibility_off_rounded),
             obscureText: true,
             onChanged: (value) {
@@ -666,7 +700,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [password$i]);
       } else if (model[i].type == 'checkbox' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
@@ -727,14 +761,14 @@ class _TaskWidgetState extends State<TaskWidget> {
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final radio$i = SelectFieldBloc(initialValue: udfJson[model[i].key]);
+        final radio$i = TextEditingController(text: udfJson[model[i].key]);
         listDynamic.add(
-          BlocRadioButtonWidget(
+          CustomTextFormFieldWidget(
             labelName: model[i].label,
-            selectFieldBloc: radio$i,
+            textEditingController: radio$i,
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [radio$i]);
       } else if (model[i].type == 'select' && model[i].hidden != true) {
         TextEditingController _ddController = TextEditingController();
         if (!udfJson.containsKey(model[i].key) &&
@@ -933,14 +967,14 @@ class _TaskWidgetState extends State<TaskWidget> {
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final hidden$i = TextFieldBloc(initialValue: udfJson[model[i].key]!);
+        final hidden$i = TextEditingController(text: udfJson[model[i].key]!);
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             obscureText: true,
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            textFieldBloc: hidden$i,
+            textEditingController: hidden$i,
             prefixIcon:
                 const Icon(Icons.visibility, color: AppThemeColor.iconColor),
             maxLines: 1,
@@ -949,7 +983,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [hidden$i]);
       } else if (model[i].type == 'phoneNumber' && model[i].hidden != true) {
         //Phone Number Field
         if (!udfJson.containsKey(model[i].key) &&
@@ -961,22 +995,36 @@ class _TaskWidgetState extends State<TaskWidget> {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
         final phoneNumber$i =
-            TextFieldBloc(initialValue: udfJson[model[i].key]!);
+            TextEditingController(text: udfJson[model[i].key]!);
+        if (previousValue.isNotEmpty) {
+          if (phoneNumber$i.text != previousValue[i] &&
+              previousValue[i].isNotEmpty) {
+            phoneNumber$i.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
-          BlocNumberBoxWidget(
+          CustomTextFormFieldWidget(
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
             // readonly: false,
-            textFieldBloc: phoneNumber$i,
+            textEditingController: phoneNumber$i,
             prefixIcon:
                 const Icon(Icons.phone_rounded, color: AppThemeColor.iconColor),
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
+              for (var j = 0; j < model.length; j++) {
+                if (previousValue.length <= model.length) {
+                  previousValue.add('');
+                }
+              }
+
+              previousValue[i] = value;
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
+        // createServiceFormBloc.addFieldBlocs(fieldBlocs: [phoneNumber$i]);
       } else if (model[i].type == 'email' && model[i].hidden != true) {
         //Email Field
         if (!udfJson.containsKey(model[i].key) &&
@@ -987,25 +1035,43 @@ class _TaskWidgetState extends State<TaskWidget> {
             (widget.taskId != null || widget.taskId.isNotEmpty)) {
           udfJson[model[i].key] = model[i].udfValue ?? '';
         }
-        final email$i = TextFieldBloc(
-            validators: [FieldBlocValidators.email],
-            initialValue: udfJson[model[i].key]!);
+        final requestedByUserEmail = TextEditingController(
+            // validator: (input) => input.isValidEmail()
+            //     ? null
+            //     : requestedByUserEmail.text.isNotEmpty
+            //         ? "Enter Valid Email"
+            //         : null,
+            text: udfJson[model[i].key]);
+        if (previousValue.isNotEmpty) {
+          if (requestedByUserEmail.text != previousValue[i] &&
+              previousValue[i].isNotEmpty) {
+            requestedByUserEmail.text = previousValue[i];
+            udfJson[model[i].key] = previousValue[i];
+          }
+        }
         listDynamic.add(
-          BlocTextBoxWidget(
+          CustomTextFormFieldWidget(
             isRequired: model[i].validate?.required,
             labelName: model[i].label,
             fieldName: model[i].label,
             readonly: true,
-            textFieldBloc: email$i,
+            textEditingController: requestedByUserEmail,
             prefixIcon: const Icon(Icons.email_outlined,
                 color: AppThemeColor.iconColor),
             maxLines: 1,
             onChanged: (value) {
               udfJson[model[i].key] = value.toString();
+              for (var j = 0; j < model.length; j++) {
+                if (previousValue.length <= model.length) {
+                  previousValue.add('');
+                }
+              }
+
+              previousValue[i] = value;
             },
           ),
         );
-        createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
+        //createServiceFormBloc.addFieldBlocs(fieldBlocs: [email$i]);
       } else if (model[i].type == 'file' && model[i].hidden != true) {
         if (!udfJson.containsKey(model[i].key) &&
             (widget.taskId == null || widget.taskId.isEmpty)) {
@@ -1149,7 +1215,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   List<Widget> formFieldsWidgets(
     BuildContext context,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
     TaskModel taskModel,
   ) {
     List<Widget> widgets = [];
@@ -1161,7 +1227,7 @@ class _TaskWidgetState extends State<TaskWidget> {
     widgets.addAll(
       _staticFieldsWidget(
         context,
-        createServiceFormBloc,
+        //createServiceFormBloc,
       ),
     );
 
@@ -1354,7 +1420,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   List<Widget> _staticFieldsWidget(
     BuildContext context,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
   ) {
     List<Widget> listDynamic = [];
 
@@ -1362,22 +1428,20 @@ class _TaskWidgetState extends State<TaskWidget> {
     ownerUserId = taskModel.ownerUserId;
 
     if (!taskModel.hideSubject!) {
-      createServiceFormBloc.subject
-          .updateInitialValue((subjectValue ?? taskModel.taskSubject) ?? "");
-      listDynamic.add(BlocTextBoxWidget(
+      taskSubject.text = subjectValue ?? taskModel!.taskSubject!;
+      listDynamic.add(CustomTextFormFieldWidget(
         fieldName: 'Subject',
         readonly: false,
         maxLines: 1,
         labelName: 'Subject',
-        textFieldBloc: createServiceFormBloc.subject,
+        textEditingController: taskSubject,
         prefixIcon: const Icon(Icons.note),
         onChanged: (value) {
           subjectValue = value.toString();
         },
       ));
     }
-    createServiceFormBloc.sla
-        .updateInitialValue((slaValue ?? taskModel.taskSLA) ?? "");
+    taskSLA.text = slaValue ?? taskModel!.taskSLA!;
     listDynamic.add(
       ExpandableField(
         isTileExpanded: isTileVisible,
@@ -1447,12 +1511,12 @@ class _TaskWidgetState extends State<TaskWidget> {
               Expanded(
                 child: Visibility(
                   visible: !taskModel.hideSLA!,
-                  child: BlocTextBoxWidget(
+                  child: CustomTextFormFieldWidget(
                     fieldName: 'SLA',
                     readonly: false,
                     maxLines: 1,
                     labelName: 'SLA',
-                    textFieldBloc: createServiceFormBloc.sla,
+                    textEditingController: taskSLA,
                     prefixIcon: const Icon(Icons.note),
                     onChanged: (value) {
                       slaValue = value.toString();
@@ -1480,14 +1544,13 @@ class _TaskWidgetState extends State<TaskWidget> {
     );
 
     if (!taskModel.hideDescription!) {
-      createServiceFormBloc.description.updateInitialValue(
-          (descriptionValue ?? taskModel.taskDescription) ?? "");
-      listDynamic.add(BlocTextBoxWidget(
+      taskDescription.text = descriptionValue ?? taskModel!.taskDescription!;
+      listDynamic.add(CustomTextFormFieldWidget(
         fieldName: 'Description',
         readonly: false,
         maxLines: 3,
         labelName: 'Description',
-        textFieldBloc: createServiceFormBloc.description,
+        textEditingController: taskDescription,
         prefixIcon: const Icon(Icons.note),
         onChanged: (value) {
           descriptionValue = value.toString();
@@ -1517,7 +1580,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   displayFooterWidget(
     TaskModel taskModel,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
   ) {
     return Center(
       child: ListView(
@@ -1632,7 +1695,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 taskViewModelPostRequest(
                   2,
                   'TASK_STATUS_SAVECHAGES',
-                  createServiceFormBloc,
+                  //createServiceFormBloc,
                 );
               },
               width: 100,
@@ -1647,7 +1710,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 taskViewModelPostRequest(
                   2,
                   'TASK_STATUS_COMPLETE',
-                  createServiceFormBloc,
+                  //createServiceFormBloc,
                 );
 
                 // if (taskModel.isCompleteReasonRequired)
@@ -1666,7 +1729,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 taskViewModelPostRequest(
                   1,
                   'TASK_STATUS_DRAFT',
-                  createServiceFormBloc,
+                  //createServiceFormBloc,
                 );
               },
               width: 100,
@@ -1685,7 +1748,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 taskViewModelPostRequest(
                   2,
                   'TASK_STATUS_REJECT',
-                  createServiceFormBloc,
+                  //createServiceFormBloc,
                 );
               },
               width: 100,
@@ -1720,7 +1783,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 taskViewModelPostRequest(
                   1,
                   'TASK_STATUS_INPROGRESS',
-                  createServiceFormBloc,
+                  //createServiceFormBloc,
                 );
               },
               width: 100,
@@ -1813,7 +1876,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   taskViewModelPostRequest(
     int postDataAction,
     String taskStatusCode,
-    CreateServiceFormBloc createServiceFormBloc,
+    //CreateServiceFormBloc createServiceFormBloc,
   ) async {
     String userId = widget.userId;
 
@@ -1824,8 +1887,8 @@ class _TaskWidgetState extends State<TaskWidget> {
     postTaskModel.ownerUserId = userId;
     postTaskModel.requestedByUserId = userId;
     postTaskModel.assignedToUserId = userId;
-    postTaskModel.taskSubject = createServiceFormBloc.subject.value;
-    postTaskModel.taskDescription = createServiceFormBloc.description.value;
+    postTaskModel.taskSubject = taskSubject.text;
+    postTaskModel.taskDescription = taskDescription.text;
     postTaskModel.dataAction = postDataAction;
     postTaskModel.taskStatusCode = taskStatusCode;
 
